@@ -12,6 +12,7 @@ node_modules
 /build
 *.py
 .gitignore
+rough.*
 
 # misc
 .DS_Store

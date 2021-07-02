@@ -4,10 +4,9 @@ const defState = {
 }
 
 const wallReducer = (state=defState, action)=>{
-  if(action.payload){
-    return {theme: action.type, src: `img${action.payload}.jpg`};
-  }else{
-    return state;
+  switch(action.type){
+    default:
+      return state
   }
 }
 

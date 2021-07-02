@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*::selection{
+  background: initial;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -25,17 +29,39 @@ code {
   height: 100vh;
 }
 
-.wnicon{
-  width: 100%;
-  height: 100%;
+.uicon{
+  position: relative;
   display: grid;
   place-items: center;
 }
 
-.uicon{
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+img[data-invert='true'], svg[data-invert='true']{
+  filter: invert(1);
+}
+
+img[data-rounded='true'], svg[data-rounded='true']{
+  border-radius: 1000px;
+}
+
+.desktop{
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 39px);
+  top: 0;
+}
+
+.dpShad{
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
+}
+
+.prtclk *{
+  pointer-events: none;
+}
+
+.handcr{
+  cursor: pointer;
+}
+
+.none{
+  display: none !important;
 }
