@@ -35,12 +35,40 @@ code {
   place-items: center;
 }
 
+input{
+  border: none;
+  outline: none;
+}
+
+input::selection{
+  background: #0074ff;
+  color: #fefefe;
+}
+
+.redBorder{
+  border: solid 1px red;
+}
+
 img[data-invert='true'], svg[data-invert='true']{
   filter: invert(1);
 }
 
 img[data-rounded='true'], svg[data-rounded='true']{
   border-radius: 1000px;
+}
+
+img[data-flip='true'], svg[data-flip='true']{
+  transform: scale(-1,1);
+}
+
+.uicon img{
+  transform-origin: center;
+  transition: 400ms ease-in-out;
+}
+
+.uicon img[data-click="true"]:active{
+  transform: scale(0.7);
+  transition: 100ms ease-in-out;
 }
 
 .desktop{
@@ -54,6 +82,10 @@ img[data-rounded='true'], svg[data-rounded='true']{
   filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
 }
 
+.ltShad{
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+}
+
 .prtclk *{
   pointer-events: none;
 }
@@ -64,4 +96,8 @@ img[data-rounded='true'], svg[data-rounded='true']{
 
 .none{
   display: none !important;
+}
+
+.text-xss{
+  font-size: 0.64em;
 }

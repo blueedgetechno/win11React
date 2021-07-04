@@ -6,6 +6,7 @@ import taskReducer from './taskbar';
 import deskReducer from './desktop';
 import menuReducer from './startmenu';
 import paneReducer from './sidepane';
+import widReducer from './widpane';
 
 const allReducers = combineReducers({
   counter: counterReducer,
@@ -13,7 +14,8 @@ const allReducers = combineReducers({
   taskbar: taskReducer,
   desktop: deskReducer,
   startmenu: menuReducer,
-  sidepane: paneReducer
+  sidepane: paneReducer,
+  widpane: widReducer
 });
 
 export default allReducers;

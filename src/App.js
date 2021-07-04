@@ -2,10 +2,18 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {increment, decrement} from './actions';
 import './index.css';
+import './short.css';
 
 import Background from './containers/background';
 import Taskbar from './components/taskbar';
-import {StartMenu,DesktopApp,SidePane,WidPane} from './components/start';
+import {
+  StartMenu,
+  DesktopApp,
+  SidePane,
+  WidPane
+} from './components/start';
+
+import * as Applications from './containers/applications';
 
 function App() {
   const counter = useSelector(state => state.counter);
@@ -15,7 +23,8 @@ function App() {
   window.addEventListener("click", event => {
     var ess = [
       ["START","STARTHID"],
-      ["PANE","PANEHIDE"]
+      ["PANE","PANEHIDE"],
+      ["WIDG","WIDGHIDE"]
     ];
 
     try{
@@ -38,6 +47,9 @@ function App() {
       <Background/>
       <div className="desktop">
         <DesktopApp/>
+        {Object.keys(Applications).map((key,idx)=>{
+          return <div>{Applications[key]()}</div>;
+        })}
         <StartMenu/>
         <SidePane/>
         <WidPane/>

@@ -9,17 +9,20 @@ const defState = {
   rcApps: recentApps,
   allApps: allApps,
   hide: true,
+  menu: false,
   showAll: false,
   alpha: false,
-  curAlpha: 'A'
+  curAlpha: 'A',
+  qksrch: [
+    ["faClock",1,"Today in history"],
+    ["faFilm",null,"New movies"],
+    ["faNewspaper",1,"Top news"],
+    ["faChartLine",null,"Markets today"]
+  ]
 };
 
 const menuReducer = (state = defState, action) => {
   switch (action.type) {
-    case 'STARTADD':
-      return state;
-    case 'STARTREM':
-      return state;
     case 'STARTSHW':
       return {
         ...state, hide: false
@@ -30,24 +33,27 @@ const menuReducer = (state = defState, action) => {
       };
     case 'STARTOGG':
       return {
-        ...state,
-        hide: !state.hide,
-        showAll: !state.hide && state.showAll ? true : null,
-        alpha: false,
-        curAlpha: 'A'
+        ...state, hide: !(state.hide || !state.menu),
+          menu: true, alpha: false, curAlpha: 'A',
+          showAll: state.menu && state.showAll ? true : null
       };
     case 'STARTALL':
       return {
         ...state,
         showAll: !state.showAll,
-        alpha: false,
-        curAlpha: 'A'
+          alpha: false,
+          curAlpha: 'A'
       };
     case 'STARTALPHA':
       return {
         ...state,
         alpha: !state.alpha,
-        curAlpha: action.payload || 'A'
+          curAlpha: action.payload || 'A'
+      };
+    case 'STARTSRC':
+      return {
+        ...state, hide: !(state.hide || state.menu),
+          menu: false
       };
     default:
       return state;

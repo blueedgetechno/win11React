@@ -1,0 +1,102 @@
+.floatTab{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  transition: all ease-in-out 200ms;
+}
+
+.edgeBrowser{
+  background: rgb(231, 234, 236);
+}
+
+.toolbar{
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 26px;
+  justify-content: space-between;
+  align-items: center;
+
+  &[data-back="light"]{
+    background: #fefefe;
+  }
+
+  &[data-back="dark"]{
+    background: #181818;
+  }
+}
+
+.topInfo{
+  &[data-float="true"]{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .uicon{
+    margin: 0 10px;
+  }
+}
+
+.actbtns{
+  .uicon{
+    margin: 0 14px;
+  }
+}
+
+.appFullName[data-white="true"]{
+  color: #fefefe;
+}
+
+.windowScreen{
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 24px);
+  bottom: 0;
+
+  &[data-full="true"]{
+    height: 100%;
+  }
+}
+
+.overTool{
+  width: 100%;
+  height: 26px;
+
+  .btab{
+    width: 176px;
+    height: 100%;
+    margin: 0 4px;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 2px 0 2px rgba(80, 80, 80, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 0.72em;
+
+    .uicon{
+      color: #505050;
+    }
+  }
+}
+
+.restWindow{
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+  height: max-content;
+}
+
+.addCont{
+  width: 80%;
+
+  input{
+    box-sizing: border-box;
+  }
+}

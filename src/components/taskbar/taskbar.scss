@@ -36,14 +36,15 @@
   width: 44px;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  font-size: 0.64em;
   padding: 6px 0;
+  font-size: 0.64em;
   margin: 0 8px 0 6px;
+  flex-direction: column;
 
   div{
     width: 100%;
     text-align: right;
+    font-weight: 400;
   }
 }
 

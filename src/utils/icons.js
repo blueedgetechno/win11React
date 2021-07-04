@@ -37,7 +37,7 @@ export default [
 {
   idx: 5,
   name: 'Edge',
-  icon: 'msEdge',
+  icon: 'edge',
   type: 'app',
   action: 'MSEDGE'
 },

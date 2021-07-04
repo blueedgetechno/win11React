@@ -13,8 +13,8 @@ const Taskbar = ()=>{
         <div className="tasksCont" data-side={tasks.align}>
           <div className="tsbar">
             <Icon className="tsIcon" src='home' width={22} click='STARTOGG'/>
-            <Icon className="tsIcon" src='search' width={22}/>
-            <Icon className="tsIcon" src='widget' width={22}/>
+            <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
+            <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
             {tasks.apps.map((task,i)=>{
               return <Icon key={i} className="tsIcon" src={task.icon} width={22}/>
             })}
