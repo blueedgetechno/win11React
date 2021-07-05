@@ -5,6 +5,7 @@ import './taskbar.scss';
 
 const Taskbar = ()=>{
   const tasks = useSelector(state=>state.taskbar);
+  const apps = useSelector(state=>state.apps);
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +17,11 @@ const Taskbar = ()=>{
             <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
             <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
             {tasks.apps.map((task,i)=>{
-              return <Icon key={i} className="tsIcon" src={task.icon} width={22}/>
+              return <Icon key={i} className="tsIcon"
+                      open={apps[task.icon].hide?null:true}
+                      active={apps[task.icon].z==apps.hz}
+                      click={task.action} payload="togg"
+                      src={task.icon} width={22}/>
             })}
           </div>
         </div>

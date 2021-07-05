@@ -14,9 +14,10 @@ import {
 } from './components/start';
 
 import * as Applications from './containers/applications';
+import {EdgeMenu} from './containers/applications';
 
 function App() {
-  const counter = useSelector(state => state.counter);
+  const apps = useSelector(state => state.apps);
   const dispatch = useDispatch();
 
   // window.addEventListener("contextmenu", e => e. preventDefault());
@@ -48,7 +49,8 @@ function App() {
       <div className="desktop">
         <DesktopApp/>
         {Object.keys(Applications).map((key,idx)=>{
-          return <div>{Applications[key]()}</div>;
+          var WinApp = Applications[key];
+          return <WinApp/>;
         })}
         <StartMenu/>
         <SidePane/>

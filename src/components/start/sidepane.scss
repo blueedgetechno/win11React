@@ -10,6 +10,7 @@
   backdrop-filter: blur(20px);
   overflow: hidden;
   transition: all ease-in-out 200ms;
+  z-index: 9999;
 
   &[data-hide="true"] {
     right: -330px;
@@ -90,6 +91,7 @@
   padding: 5px;
   overflow: hidden;
   transition: all ease-in-out 200ms;
+  z-index: 9999;
 
   &[data-hide="true"] {
     left: -620px;

@@ -1,51 +1,49 @@
 .floatTab{
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   overflow: hidden;
+  border-radius: 6px;
   transition: all ease-in-out 200ms;
-}
-
-.edgeBrowser{
-  background: rgb(231, 234, 236);
-}
-
-.toolbar{
+  transform-origin: center;
   display: flex;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 26px;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 
-  &[data-back="light"]{
-    background: #fefefe;
+  &[data-size="full"]{
+    border-radius: 0;
   }
 
-  &[data-back="dark"]{
-    background: #181818;
+  &[data-size="cstm"]{
+    border-radius: 0;
+    filter: none;
+    border: solid 1px #c7c7c7;
   }
-}
 
-.topInfo{
-  &[data-float="true"]{
+  &[data-hide="true"]{
+    top: 0;
+    left: 0;
+    transform: scale(0.8);
     opacity: 0;
     pointer-events: none;
   }
 
-  .uicon{
-    margin: 0 10px;
+  &[data-max="false"]{
+    top: calc(100% + 10px);
+    transform: scale(0);
+    transform-origin: bottom;
+    opacity: 0;
+    pointer-events: none;
   }
-}
 
-.actbtns{
-  .uicon{
-    margin: 0 14px;
+  &[data-size="mini"]{
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    height: 80%;
   }
 }
 
@@ -54,18 +52,14 @@
 }
 
 .windowScreen{
-  position: absolute;
   width: 100%;
-  height: calc(100% - 24px);
-  bottom: 0;
-
-  &[data-full="true"]{
-    height: 100%;
-  }
+  flex-grow: 1;
 }
 
 .overTool{
-  width: 100%;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 150px);
   height: 26px;
 
   .btab{
@@ -87,10 +81,10 @@
 }
 
 .restWindow{
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   flex-grow: 1;
-  height: max-content;
 }
 
 .addCont{
@@ -99,4 +93,39 @@
   input{
     box-sizing: border-box;
   }
+}
+
+.storeNav{
+  .uicon{
+    padding: 12px 0;
+    margin: 0 4px 2px 4px;
+    color: #888888;
+    position: relative;
+    transition: all ease-in-out 100ms;
+    border-radius: 4px;
+
+    &[data-payload="true"]::after{
+      content: "";
+      position: absolute;
+      width: 3px;
+      left: 0;
+      height: 50%;
+      border-radius: 10px;
+      background: #2570ff;
+    }
+
+    &:hover, &[data-payload="true"]{
+      background: #ffffff;
+      color: #2570ff;
+    }
+  }
+}
+
+.frontPage{
+  height: 80%;
+}
+
+.panelName{
+  color: #fefefe;
+  text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.4);
 }

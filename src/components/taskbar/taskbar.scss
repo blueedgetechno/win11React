@@ -6,6 +6,7 @@
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   bottom: 0;
+  z-index: 10000;
 }
 
 .taskcont{

@@ -58,16 +58,22 @@ export const StartMenu = ()=>{
       payload: event.target.dataset.payload
     };
 
-    dispatch(action)
+    if(action.type){
+      dispatch(action);
+    }
+
+    if(action.type && (action.payload=="full" || action.type=="EDGELINK")){
+      dispatch({type: "STARTHID"});
+    }
 
     if(action.type=="STARTALPHA"){
       var target = document.getElementById("char"+action.payload);
       if(target){
         target.parentNode.scrollTop = target.offsetTop;
+      }else{
+        var target = document.getElementById("charA");
+        target.parentNode.scrollTop = 0;
       }
-    }else{
-      var target = document.getElementById("charA");
-      target.parentNode.scrollTop = 0;
     }
   }
 
@@ -101,7 +107,8 @@ export const StartMenu = ()=>{
                     <div key={i} className="pnApp pnEmpty"></div>
                   ):(
                     <div key={i} className="pnApp">
-                      <Icon className="pnIcon" src={app.icon} width={24}/>
+                      <Icon className="pnIcon" src={app.icon} payload="full"
+                        onClick={clickDispatch} click={app.action} width={24}/>
                       <div className="appName">{app.name}</div>
                     </div>
                   );
@@ -158,7 +165,8 @@ export const StartMenu = ()=>{
 
                 ldx.forEach((app,j) => {
                   tpApps.push(
-                    <div key={j} className="allApp">
+                    <div key={j} className="allApp prtclk" onClick={clickDispatch}
+                      data-action={app.action} data-payload="full">
                       <Icon className="pnIcon" src={app.icon} width={20}/>
                       <div className="appName">{app.name}</div>
                     </div>
@@ -228,7 +236,9 @@ export const StartMenu = ()=>{
                       <div className="text-xss">App</div>
                     </div>
                   </div>
-                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded">
+                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded prtclk"
+                    onClick={clickDispatch} data-action="EDGELINK"
+                    data-payload={query}>
                     <Icon src="search" ui width={20}/>
                     <div className="matchInfo flex-col px-2">
                       <div className="font-semibold text-xs">Search online</div>
@@ -239,10 +249,11 @@ export const StartMenu = ()=>{
               ):(
                 <>
                 <div className="topApps flex w-full justify-between">
-                  {start.rcApps.slice(0,5).map((app,i)=>{
+                  {start.rcApps.slice(2,7).map((app,i)=>{
                     return(
                       <div className="topApp pt-4 py-2 bg-gray-100 ltShad">
-                        <Icon src={app.icon} width={24}/>
+                        <Icon onClick={clickDispatch} click={app.action}
+                          payload="full" src={app.icon} width={24}/>
                         <div className="text-xs mt-2">{app.name}</div>
                       </div>
                     );
@@ -251,10 +262,12 @@ export const StartMenu = ()=>{
                 <div className="text-xss font-semibold mt-8">
                   Quick Searches
                 </div>
-                <div className="quickSearches pl-4">
+                <div className="quickSearches pl-4 mt-2">
                   {start.qksrch.map(srch=>{
                     return (
-                      <div className="qksrch flex align-center my-6">
+                      <div className="qksrch flex align-center py-3 handcr prtclk"
+                        onClick={clickDispatch} data-action="EDGELINK"
+                        data-payload={srch[2]}>
                         <Icon fafa={srch[0]} reg={srch[1]}/>
                         <div className="ml-4 text-xs">{srch[2]}</div>
                       </div>
@@ -269,8 +282,10 @@ export const StartMenu = ()=>{
                 <Icon className="mt-6" src={match.icon} width={64}/>
                 <div className="">{match.name}</div>
                 <div className="text-xss mt-2">App</div>
-                <div className="hline mt-8 mb-3"></div>
-                <div className="openlink w-4/5 flex">
+                <div className="hline mt-8"></div>
+                <div className="openlink w-4/5 flex prtclk handcr pt-3"
+                  onClick={clickDispatch} data-action={match.action}
+                  data-payload="full">
                   <Icon src="link" ui width={16}/>
                   <div className="text-xss ml-3">Open</div>
                 </div>
@@ -287,14 +302,15 @@ export const StartMenu = ()=>{
 
 export const DesktopApp = ()=>{
   const deskApps = useSelector(state=>state.desktop);
-
   const dispatch = useDispatch();
+
   return (
     <div className="desktopCont">
       {deskApps.apps.map((app,i)=>{
         return (
           <div key={i} className="dskApp">
-            <Icon className="dskIcon" src={app.icon} width={36}/>
+            <Icon click={app.action} payload="full" className="dskIcon"
+              src={app.icon} width={36}/>
             <div className="appName">{app.name}</div>
           </div>
         )

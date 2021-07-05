@@ -24,15 +24,13 @@ export default [
   idx: 3,
   name: 'Settings',
   icon: 'settings',
-  type: 'app',
-  action: 'SETTINGS'
+  type: 'app'
 },
 {
   idx: 4,
   name: 'File Explorer',
   icon: 'explorer',
-  type: 'app',
-  action: 'FILEXP'
+  type: 'app'
 },
 {
   idx: 5,
