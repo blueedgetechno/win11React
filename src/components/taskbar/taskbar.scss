@@ -21,7 +21,7 @@
   right: 0;
   width: auto;
   height: 100%;
-  margin: 0 10px;
+  margin-left: 10px;
   display: flex;
 }
 
@@ -79,6 +79,8 @@
   box-sizing: border-box;
   border-radius: 0;
   background: rgba(254, 254, 254, 0);
+  transform-origin: center;
+  animation: popintro 800ms ease-in-out;
 
   &:hover{
     background: rgba(#fefefe, 0.64);
@@ -100,5 +102,25 @@
   &[data-active='true']:after{
     width: 12px;
     background: #1f4dcd;
+  }
+}
+
+.graybd{
+  border: solid 1px #c3c3c3;
+  border-width: 0 0 0 2px;
+}
+
+@keyframes popintro {
+  0%{
+    transform: scale(0);
+  }
+  40%{
+    transform: scale(1.125);
+  }
+  70%{
+    transform: scale(0.725);
+  }
+  100%{
+    transform: scale(1);
   }
 }

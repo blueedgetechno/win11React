@@ -1,3 +1,7 @@
-# https://www.robotstxt.org/robotstxt.html
+#Dark Shadows were following me
+#Getting immense on every sight
+#The Moon was the only witness
+#Of my murder on that night
+
 User-agent: *
 Disallow:

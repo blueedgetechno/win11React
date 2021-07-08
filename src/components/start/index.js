@@ -107,8 +107,9 @@ export const StartMenu = ()=>{
                     <div key={i} className="pnApp pnEmpty"></div>
                   ):(
                     <div key={i} className="pnApp">
-                      <Icon className="pnIcon" src={app.icon} payload="full"
-                        onClick={clickDispatch} click={app.action} width={24}/>
+                      <Icon className="pnIcon" src={app.icon} width={24}
+                        onClick={clickDispatch} click={app.action}
+                        payload={app.payload?app.payload:"full"}/>
                       <div className="appName">{app.name}</div>
                     </div>
                   );
@@ -166,7 +167,7 @@ export const StartMenu = ()=>{
                 ldx.forEach((app,j) => {
                   tpApps.push(
                     <div key={j} className="allApp prtclk" onClick={clickDispatch}
-                      data-action={app.action} data-payload="full">
+                      data-action={app.action} payload={app.payload?app.payload:"full"}>
                       <Icon className="pnIcon" src={app.icon} width={20}/>
                       <div className="appName">{app.name}</div>
                     </div>
@@ -197,8 +198,9 @@ export const StartMenu = ()=>{
           </div>
         </div>
         <div className="menuBar">
-          <div className="profile">
-            <Icon src="blueProf" ui rounded width={26}/>
+          <div className="profile handcr">
+            <Icon src="blueProf" ui rounded width={26}
+              click="EXTERNAL" payload="https://blueedge.me"/>
             <div className="usName">Blue Edge</div>
           </div>
           <div className="powerCtrl">
@@ -253,7 +255,8 @@ export const StartMenu = ()=>{
                     return(
                       <div className="topApp pt-4 py-2 bg-gray-100 ltShad">
                         <Icon onClick={clickDispatch} click={app.action}
-                          payload="full" src={app.icon} width={24}/>
+                          payload={app.payload?app.payload:"full"}
+                          src={app.icon} width={24} />
                         <div className="text-xs mt-2">{app.name}</div>
                       </div>
                     );

@@ -5,7 +5,14 @@ import './taskbar.scss';
 
 const Taskbar = ()=>{
   const tasks = useSelector(state=>state.taskbar);
-  const apps = useSelector(state=>state.apps);
+  const apps = useSelector(state=>{
+    var tmpApps = {...state.apps};
+    for (var i = 0; i < state.taskbar.apps.length; i++) {
+      tmpApps[state.taskbar.apps[i].icon].task = true;
+    }
+
+    return tmpApps;
+  });
   const dispatch = useDispatch();
 
   return (
@@ -23,6 +30,14 @@ const Taskbar = ()=>{
                       click={task.action} payload="togg"
                       src={task.icon} width={22}/>
             })}
+            {Object.keys(apps).map((key,i)=>{
+              return key!="hz" && !apps[key].task && !apps[key].hide?(
+                <Icon key={i} className="tsIcon" width={22}
+                      active={apps[key].z==apps.hz}
+                      click={apps[key].action} payload="togg"
+                      open="true" src={apps[key].icon}/>
+              ):null;
+            })}
           </div>
         </div>
         <div className="taskright">
@@ -34,7 +49,8 @@ const Taskbar = ()=>{
             <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
           </div>
-          <Icon className="taskIcon" ui src='sidepane' width={16} invert click='PANETOGG'/>
+          <Icon className="taskIcon mr-2" ui src='sidepane' width={16} invert click='PANETOGG'/>
+          <Icon className="graybd" ui width={6} click='SHOWDSK' pr/>
         </div>
       </div>
     </div>

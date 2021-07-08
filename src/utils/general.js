@@ -44,7 +44,7 @@ export const Icon = (props)=>{
             data-click={props.click!=null}
             onClick={props.click!=null?clickDispatch:null}
             data-flip={props.flip!=null}
-            height={props.height || props.width}
+            height={props.height}
             data-invert={props.invert!=null?'true':'false'}
             data-rounded={props.rounded!=null?'true':'false'}
             src={src}
@@ -74,13 +74,17 @@ export const Icon = (props)=>{
 }
 
 export const Image = (props)=>{
-  var src = `/img/${props.src}.png`;
+  var src = `/img/${(props.dir?props.dir+"/":"")+props.src}.png`;
 
   return (
-    <div className={`imageCont ${props.className||""}`} style={{
-      backgroundImage: `url(${src})`
-    }} data-back={props.back!=null}>
-        {!props.back?<img src={src} alt=""/>:null}
+    <div className={`imageCont ${props.className||""}`} id={props.id} style={{
+      backgroundImage: props.back && `url(${src})`
+    }} data-back={props.back!=null} data-var={props.var}>
+        {!props.back?<img
+          width={props.w}
+          height={props.h}
+          data-var={props.var}
+          src={src} alt=""/>:null}
     </div>
   )
 }
@@ -88,103 +92,9 @@ export const Image = (props)=>{
 export const SnapScreen = (props)=>{
   const dispatch = useDispatch();
   const [delay, setDelay] = useState(false);
+  const lays = useSelector(state => state.globals.lays);
 
   const vr = "var(--radii)";
-  const lays = [
-    [{
-      dim: {
-        width: "50%"
-      }, br: 14
-    },{
-      dim: {
-        width: "50%",
-        left: "50%"
-      }, br: 15
-    }],
-    [{
-      dim: {
-        width: "66%"
-      }, br: 14
-    },{
-      dim: {
-        width: "34%",
-        left: "66%"
-      },br: 15
-    }],
-    [{
-      dim: {
-        width: "33%"
-      },br: 14
-    },{
-      dim: {
-        width: "34%",
-        left: "33%"
-      },br:1
-    },{
-      dim: {
-        width: "33%",
-        left: "67%"
-      },br: 15
-    }],
-    [{
-      dim: {
-        width: "50%"
-      },br: 14
-    },{
-      dim: {
-        width: "50%",
-        height: "50%",
-        left: "50%"
-      },br: 3
-    },{
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%",
-        left: "50%"
-      },br: 5
-    }],
-    [{
-      dim: {
-        width: "50%",
-        height: "50%"
-      },br:2
-    },{
-      dim: {
-        width: "50%",
-        height: "50%",
-        left: "50%"
-      },br:3
-    },{
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%"
-      },br:7
-    },{
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%",
-        left: "50%"
-      },br:5
-    }],
-    [{
-      dim: {
-        width: "25%"
-      },br: 14
-    },{
-      dim: {
-        width: "50%",
-        left: "25%"
-      },br:1
-    },{
-      dim: {
-        width: "25%",
-        left: "75%"
-      },br:15
-    }]
-  ];
 
   const clickDispatch = (event)=>{
     var action = {
@@ -203,7 +113,7 @@ export const SnapScreen = (props)=>{
     if(delay && props.snap){
       setTimeout(()=>{
         setDelay(false);
-      },1000);
+      },800);
     }else if(props.snap){
       setDelay(true);
     }
@@ -245,23 +155,23 @@ export const ToolBar = (props)=>{
   return (
     <div className="toolbar" style={{
       background: props.bg
-    }}>
+    }} data-float={props.float!=null}>
       <div className="topInfo flex items-center" data-float={props.float!=null}>
-        <Icon src={props.icon} width={12}/>
+        <Icon src={props.icon} width={14}/>
         <div
           className="appFullName text-xss"
-          data-white={false}
+          data-white={props.invert!=null}
           >{props.name}</div>
       </div>
       <div className="actbtns flex items-center">
-        <Icon click={props.app} payload="mnmz" pr src="minimize" ui width={8}/>
+        <Icon invert={props.invert} click={props.app} payload="mnmz" pr src="minimize" ui width={8}/>
         <div className="snapbox h-full" data-hv={snap}
           onMouseOver={openSnap} onMouseLeave={closeSnap}>
-          <Icon click={props.app} payload="mxmz" pr src="maximize" ui width={8}/>
+          <Icon invert={props.invert} click={props.app} payload="mxmz" pr src="maximize" ui width={8}/>
           <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap}/>
           {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
         </div>
-        <Icon click={props.app} payload="close" pr src="close" ui width={8}/>
+        <Icon invert={props.invert} click={props.app} payload="close" pr src="close" ui width={8}/>
       </div>
     </div>
   );

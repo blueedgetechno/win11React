@@ -29,6 +29,13 @@ code {
   height: 100vh;
 }
 
+.w-max{
+  width: max-content;
+}
+
+.h-max{
+  height: max-content;
+}
 
 input{
   border: none;
@@ -113,4 +120,23 @@ img[data-flip='true'], svg[data-flip='true']{
 
 .text-xss{
   font-size: 0.64em;
+}
+
+.noscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.thinScroll::-webkit-scrollbar {
+  width: 2px;
+  background-color: transparent;
+}
+
+.thinScroll:hover::-webkit-scrollbar-thumb{
+  background: rgba(32, 24, 148, 0.4);
+}
+
+.thinScroll::-webkit-scrollbar-thumb {
+  width: 2px;
+  border-radius: 10px;
+  background-color: transparent;
 }

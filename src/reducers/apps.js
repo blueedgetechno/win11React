@@ -1,6 +1,6 @@
 import {allApps} from '../utils';
 
-var dev = "store";
+var dev = "";
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {
@@ -86,6 +86,26 @@ const appReducer = (state = defState, action) => {
     obj.z = tmpState.hz;
     tmpState["edge"] = obj;
     return tmpState;
+  }else if(action.type=="SHOWDSK"){
+    var tmpState = {...state};
+    var keys = Object.keys(tmpState);
+
+    for (var i = 0; i < keys.length; i++) {
+      var obj = tmpState[keys[i]];
+      if(obj.hide==false){
+        obj.max = false;
+        if(obj.max==tmpState.hz){
+          tmpState.hz-=1;
+        }
+        obj.z = -1;
+        tmpState[keys[i]] = obj;
+      }
+    }
+
+    return tmpState;
+
+  }else if (action.type=="EXTERNAL") {
+    window.open(action.payload, '_blank');
   }else{
     var keys = Object.keys(state);
     for (var i = 0; i < keys.length; i++) {

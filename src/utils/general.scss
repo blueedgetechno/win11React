@@ -4,6 +4,11 @@
   height: 26px;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+
+  &[data-float="false"]{
+    z-index: 10;
+  }
 
   &[data-back="light"]{
     background: #fefefe;
@@ -21,7 +26,7 @@
   }
 
   .uicon{
-    margin: 0 10px;
+    margin: 0 10px 0 6px;
   }
 }
 
@@ -64,7 +69,6 @@
   height: 130px;
   position: absolute;
   display: grid;
-  margin-top: -6px;
   right: -24px;
   grid-template-columns: repeat(3,minmax(0,1fr));
   grid-template-rows: repeat(2,minmax(0,1fr));
@@ -156,13 +160,17 @@
 }
 
 .uicon{
+  position: relative;
   display: grid;
   place-items: center;
 }
 
 .imageCont{
   position: relative;
-  overflow: hidden;
+  display: grid;
+  place-items: center;
+  width: auto;
+  height: auto;
 
   &[data-back="true"]{
     background-position: center;
@@ -170,9 +178,7 @@
   }
 
   img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
   }
 }

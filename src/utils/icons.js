@@ -85,22 +85,19 @@ export default [
   idx: 12,
   name: 'Camera',
   icon: 'camera',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 13,
   name: 'VS Code',
   icon: 'code',
-  type: 'app',
-  action: 'VSCODE'
+  type: 'app'
 },
 {
   idx: 14,
   name: 'Excel',
   icon: 'excel',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 15,
@@ -113,36 +110,31 @@ export default [
   idx: 16,
   name: 'Feedback',
   icon: 'feedback',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 17,
   name: 'Get Started',
   icon: 'getstarted',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 18,
   name: 'Groove Music',
   icon: 'groove',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 19,
   name: 'Help',
   icon: 'help',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 20,
   name: 'Yammer',
   icon: 'yammer',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 21,
@@ -155,15 +147,13 @@ export default [
   idx: 22,
   name: 'Maps',
   icon: 'maps',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 23,
   name: 'Movies',
   icon: 'movies',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 24,
@@ -176,22 +166,19 @@ export default [
   idx: 25,
   name: 'MsOffice',
   icon: 'msoffice',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 26,
   name: 'Narrator',
   icon: 'narrator',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 27,
   name: 'News',
   icon: 'news',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 28,
@@ -204,15 +191,13 @@ export default [
   idx: 29,
   name: 'Sticky Notes',
   icon: 'notes',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 30,
   name: 'OneDrive',
   icon: 'oneDrive',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 31,
@@ -225,8 +210,7 @@ export default [
   idx: 32,
   name: 'Outlook',
   icon: 'outlook',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 33,
@@ -239,8 +223,7 @@ export default [
   idx: 34,
   name: 'People',
   icon: 'people',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 35,
@@ -253,8 +236,7 @@ export default [
   idx: 36,
   name: 'Pinterest',
   icon: 'pinterest',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 37,
@@ -267,29 +249,27 @@ export default [
   idx: 38,
   name: 'Security',
   icon: 'security',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 39,
   name: 'Spotify',
   icon: 'spotify',
   type: 'app',
-  action: 'LNKSPOTIFY'
+  action: 'EXTERNAL',
+  payload: "https://open.spotify.com/user/62axxw0etmycj09el078cock0"
 },
 {
   idx: 40,
   name: 'Share',
   icon: 'share',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 41,
   name: 'Skype',
   icon: 'skype',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 42,
@@ -301,22 +281,21 @@ export default [
   idx: 43,
   name: 'Soltaire',
   icon: 'soltaire',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 44,
   name: 'Twitter',
   icon: 'twitter',
   type: 'app',
-  action: 'LNKTWITTER'
+  action: 'EXTERNAL',
+  payload: "https://twitter.com/blueedgetechno"
 },
 {
   idx: 45,
   name: 'Teams',
   icon: 'teams',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 46,
@@ -329,8 +308,7 @@ export default [
   idx: 47,
   name: 'Tips',
   icon: 'tips',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 48,
@@ -343,15 +321,13 @@ export default [
   idx: 49,
   name: 'Voice Recorder',
   icon: 'voice',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 50,
   name: 'Weather',
   icon: 'weather',
-  type: 'app',
-  action: 'ACTION'
+  type: 'app'
 },
 {
   idx: 51,
@@ -379,6 +355,7 @@ export default [
   name: 'Github',
   icon: 'github',
   type: 'app',
-  action: 'LNKTWITTER'
+  action: 'EXTERNAL',
+  payload: "https://github.com/blueedgetechno"
 }
 ];
