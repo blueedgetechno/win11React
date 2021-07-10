@@ -152,11 +152,20 @@ export const ToolBar = (props)=>{
     setSnap(false);
   }
 
+  const toolClick = ()=>{
+    console.log("Toolkit");
+    dispatch({
+      type: props.app,
+      payload: "front"
+    });
+  }
+
   return (
     <div className="toolbar" style={{
       background: props.bg
     }} data-float={props.float!=null}>
-      <div className="topInfo flex items-center" data-float={props.float!=null}>
+      <div className="topInfo flex flex-grow items-center"
+        data-float={props.float!=null} onClick={toolClick}>
         <Icon src={props.icon} width={14}/>
         <div
           className="appFullName text-xss"

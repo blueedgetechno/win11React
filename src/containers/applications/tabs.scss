@@ -299,3 +299,28 @@
     background: #ccc;
   }
 }
+
+.noteText{
+  background: inherit;
+  color: #111;
+  font-family: inherit;
+  font-size: 0.88em;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  padding: 4px 8px;
+
+  &::selection{
+    background: #0074ff;
+    color: #fefefe;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}

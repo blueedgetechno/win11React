@@ -50,22 +50,18 @@ export default [
   idx: 7,
   name: 'Recycle Bin',
   icon: 'bin0',
-  type: 'app',
-  action: 'RECYCLE'
+  type: 'app'
 },
 {
   idx: 8,
   name: 'Blue',
   icon: 'win/userDir',
-  type: 'short',
-  action: 'FOLDER',
-  payload: '/'
+  type: 'short'
 }, {
   idx: 9,
   name: 'Alarms',
   icon: 'alarm',
-  type: 'app',
-  action: 'ALARMAPP'
+  type: 'app'
 },
 {
   idx: 10,
@@ -78,8 +74,7 @@ export default [
   idx: 11,
   name: 'Calender',
   icon: 'calender',
-  type: 'app',
-  action: 'CALENDER'
+  type: 'app'
 },
 {
   idx: 12,
@@ -103,8 +98,7 @@ export default [
   idx: 15,
   name: 'Your Phone',
   icon: 'yphone',
-  type: 'app',
-  action: 'YOURPHONE'
+  type: 'app'
 },
 {
   idx: 16,
@@ -140,8 +134,7 @@ export default [
   idx: 21,
   name: 'Mail',
   icon: 'mail',
-  type: 'app',
-  action: 'MSEMAIL'
+  type: 'app'
 },
 {
   idx: 22,
@@ -159,8 +152,7 @@ export default [
   idx: 24,
   name: 'Xbox',
   icon: 'xbox',
-  type: 'app',
-  action: 'XBOXAPP'
+  type: 'app'
 },
 {
   idx: 25,
@@ -203,8 +195,7 @@ export default [
   idx: 31,
   name: 'OneNote',
   icon: 'onenote',
-  type: 'app',
-  action: 'ONENOTE'
+  type: 'app'
 },
 {
   idx: 32,
@@ -236,14 +227,15 @@ export default [
   idx: 36,
   name: 'Pinterest',
   icon: 'pinterest',
-  type: 'app'
+  type: 'app',
+  action: 'EXTERNAL',
+  payload: 'https://pinterest.com/blue_edge'
 },
 {
   idx: 37,
   name: 'PowerPoint',
   icon: 'powerpoint',
-  type: 'app',
-  action: 'POWERPNT'
+  type: 'app'
 },
 {
   idx: 38,
@@ -314,8 +306,7 @@ export default [
   idx: 48,
   name: 'To Do',
   icon: 'todo',
-  type: 'app',
-  action: 'MSTODO'
+  type: 'app'
 },
 {
   idx: 49,
@@ -333,22 +324,19 @@ export default [
   idx: 51,
   name: 'Word',
   icon: 'winWord',
-  type: 'app',
-  action: 'MSWORD'
+  type: 'app'
 },
 {
   idx: 52,
   name: 'White Board',
   icon: 'board',
-  type: 'app',
-  action: 'WHITEBOARD'
+  type: 'app'
 },
 {
   idx: 53,
   name: 'Cortana',
   icon: 'cortana',
-  type: 'app',
-  action: 'WHITEBOARD'
+  type: 'app'
 },
 {
   idx: 54,

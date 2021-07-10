@@ -22,6 +22,7 @@ function App() {
 
   // window.addEventListener("contextmenu", e => e. preventDefault());
   window.addEventListener("click", event => {
+    // console.log(event.target);
     var ess = [
       ["START","STARTHID"],
       ["PANE","PANEHIDE"],

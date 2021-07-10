@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../utils/general';
 import './tabs.scss';
+import './tabs2.scss';
 import './wnapp.css';
 
 import dirs from './dir.json';
@@ -539,6 +540,104 @@ export const WnTerminal = ()=>{
                 {/* <input id="curcmd" className="ipcmd" type="text" defaultValue="tyler"/> */}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Notepad = ()=>{
+  const apps = useSelector(state => state.apps);
+  const wnapp = useSelector(state => state.apps.notepad);
+  const dispatch = useDispatch();
+
+  return (
+    <div
+      className="notepad floatTab dpShad" data-size={wnapp.size}
+      data-max={wnapp.max} style={{
+       ...(wnapp.size=="cstm"?wnapp.dim:null),
+       zIndex: wnapp.z
+       }} data-hide={wnapp.hide}>
+      <ToolBar app={wnapp.action} icon={wnapp.icon}
+        name="Untitled - Notepad"/>
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="flex text-xss pb-1 border-gray-200 border-0 border-b-2 border-solid">
+          <div className="mx-2">File</div>
+          <div className="mx-2">Edit</div>
+          <div className="mx-2">Format</div>
+          <div className="mx-2">View</div>
+          <div className="mx-2">Help</div>
+        </div>
+        <div className="restWindow h-full flex-grow text-gray-100">
+          <div className="w-full h-full overflow-hidden">
+            <textarea className="noteText thinScroll" id="textpad"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Calculator = ()=>{
+  const apps = useSelector(state => state.apps);
+  const wnapp = useSelector(state => state.apps.calculator);
+  const dispatch = useDispatch();
+
+  return (
+    <div
+      className="calcApp floatTab dpShad" data-size={wnapp.size}
+      data-max={wnapp.max} style={{
+       ...(wnapp.size=="cstm"?wnapp.dim:null),
+       zIndex: wnapp.z
+       }} data-hide={wnapp.hide}>
+      <ToolBar app={wnapp.action} icon={wnapp.icon}
+        name="Calculator"/>
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="flex pt-2">
+          <div className="flex pl-2 items-center">
+            <Icon fafa="faBars" color="#222" width={14}/>
+            <div className="mx-4 font-semibold pb-1">Standard</div>
+          </div>
+        </div>
+        <div className="restWindow h-full flex-grow flex">
+          <div className="flex-grow relative">
+            <div className="valCont w-full">0</div>
+            <div className="opcont">
+              <div className="oper">%</div>
+              <div className="oper">CE</div>
+              <div className="oper">C</div>
+              <div className="oper">back</div>
+              <div className="oper">1/x</div>
+              <div className="oper">
+                x
+                <sup className="text-xss">2</sup>
+              </div>
+              <div className="oper">
+                <sup className="text-xss">2</sup>
+                √x
+              </div>
+              <div className="oper">÷</div>
+              <div className="oper">7</div>
+              <div className="oper">8</div>
+              <div className="oper">9</div>
+              <div className="oper crossOp">x</div>
+              <div className="oper">4</div>
+              <div className="oper">5</div>
+              <div className="oper">6</div>
+              <div className="oper">-</div>
+              <div className="oper">1</div>
+              <div className="oper">2</div>
+              <div className="oper">3</div>
+              <div className="oper">+</div>
+              <div className="oper">+/-</div>
+              <div className="oper">0</div>
+              <div className="oper">.</div>
+              <div className="oper">=</div>
+            </div>
+          </div>
+          <div className="calcHis">
+            <div className="text-xs font-semibold">History</div>
           </div>
         </div>
       </div>

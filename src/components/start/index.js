@@ -167,7 +167,7 @@ export const StartMenu = ()=>{
                 ldx.forEach((app,j) => {
                   tpApps.push(
                     <div key={j} className="allApp prtclk" onClick={clickDispatch}
-                      data-action={app.action} payload={app.payload?app.payload:"full"}>
+                      data-action={app.action} data-payload={app.payload?app.payload:"full"}>
                       <Icon className="pnIcon" src={app.icon} width={20}/>
                       <div className="appName">{app.name}</div>
                     </div>

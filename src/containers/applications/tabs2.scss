@@ -1,0 +1,51 @@
+.calcHis{
+  width: 0;
+  transition: all ease-in-out 200ms;
+}
+
+.calcApp[data-size="full"] .calcHis{
+  width: 260px;
+  display: block;
+}
+
+.valCont{
+  box-sizing: border-box;
+  height: 30%;
+  font-size: 6em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px;
+  color: #333;
+}
+
+.opcont{
+  height: 70%;
+  display: grid;
+  position: relative;
+  box-sizing: border-box;
+  grid-template-rows: repeat(6,minmax(0,1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
+}
+
+.oper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: solid 2px #eee;
+  background: #f9f9f9;
+
+  &:nth-child(-n + 8), &:nth-child(4n){
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  &:last-child{
+    background: rgba(0, 100, 255, 0.48);
+  }
+}
+
+.crossOp{
+  font-family: monospace;
+  font-size: 2em
+}

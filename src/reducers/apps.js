@@ -1,6 +1,6 @@
 import {allApps} from '../utils';
 
-var dev = "";
+var dev = "calculator";
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {
@@ -94,7 +94,7 @@ const appReducer = (state = defState, action) => {
       var obj = tmpState[keys[i]];
       if(obj.hide==false){
         obj.max = false;
-        if(obj.max==tmpState.hz){
+        if(obj.z==tmpState.hz){
           tmpState.hz-=1;
         }
         obj.z = -1;
@@ -155,7 +155,7 @@ const appReducer = (state = defState, action) => {
         }else if(action.payload=="mnmz"){
           obj.max = false;
           obj.hide = false;
-          if(obj.max==tmpState.hz){
+          if(obj.z==tmpState.hz){
             tmpState.hz-=1;
           }
           obj.z = -1;
@@ -166,6 +166,13 @@ const appReducer = (state = defState, action) => {
           tmpState.hz+=1;
           obj.z = tmpState.hz;
           obj.dim = action.dim;
+        }else if (action.payload=="front") {
+          obj.hide = false;
+          obj.max = true;
+          if(obj.z!=tmpState.hz){
+            tmpState.hz+=1;
+            obj.z = tmpState.hz;
+          }
         }
 
         tmpState[keys[i]] = obj;
