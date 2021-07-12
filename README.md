@@ -3,6 +3,6 @@
 
 ![blueweb](./public/img/home.png)
 
-site: [win11eleven.netlify.app](https://win11eleven.netlify.app)
+site: [win11eleven.netlify.app](https://win11.blueedge.me)
 
 Check out the game 🎮 , **UNESCAPE** , I am working on [blueedge.me/unescape](https://blueedge.me/unescape)
