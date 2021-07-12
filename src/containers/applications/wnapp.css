@@ -2,6 +2,10 @@
   background: rgb(231, 234, 236);
 }
 
+.vscodeWn{
+  background: rgb(37, 37, 38);
+}
+
 .wnstore{
   background: rgb(241, 243, 245);
 }
@@ -16,4 +20,8 @@
 
 .calcApp{
   background: #eee;
+}
+
+.msfiles{
+  background: #fefefe;
 }

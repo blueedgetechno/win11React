@@ -30,7 +30,8 @@ export default [
   idx: 4,
   name: 'File Explorer',
   icon: 'explorer',
-  type: 'app'
+  type: 'app',
+  action: 'EXPLORER'
 },
 {
   idx: 5,
@@ -86,7 +87,8 @@ export default [
   idx: 13,
   name: 'VS Code',
   icon: 'code',
-  type: 'app'
+  type: 'app',
+  action: 'VSCODE'
 },
 {
   idx: 14,
@@ -207,8 +209,7 @@ export default [
   idx: 33,
   name: 'Paint',
   icon: 'paint',
-  type: 'app',
-  action: 'PAINTAPP'
+  type: 'app'
 },
 {
   idx: 34,
@@ -220,8 +221,7 @@ export default [
   idx: 35,
   name: 'Photos',
   icon: 'photos',
-  type: 'app',
-  action: 'PHOTOSAPP'
+  type: 'app'
 },
 {
   idx: 36,
@@ -330,7 +330,8 @@ export default [
   idx: 52,
   name: 'White Board',
   icon: 'board',
-  type: 'app'
+  type: 'app',
+  action: 'WHITEBOARD'
 },
 {
   idx: 53,

@@ -379,14 +379,17 @@ export const WidPane = ()=>{
   }
 
   useEffect(async ()=>{
-    if(!widget.updated){
-      var tmpWdgt = await fetchApi(widget);
-      console.log("Fetching Api's");
-      if(tmpWdgt.updated){
-        dispatch({
-          type: "WIDGREST",
-          payload: tmpWdgt
-        })
+    console.log(process.env.REACT_APP_DEVELOPEMENT);
+    if(process.env.REACT_APP_DEVELOPEMENT!="development"){
+      if(!widget.updated){
+        var tmpWdgt = await fetchApi(widget);
+        console.log("Fetching Api's");
+        if(tmpWdgt.updated){
+          dispatch({
+            type: "WIDGREST",
+            payload: tmpWdgt
+          })
+        }
       }
     }
   })

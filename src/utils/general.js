@@ -35,7 +35,7 @@ export const Icon = (props)=>{
     <>{props.fafa==null?(
       <div className={`uicon ${props.className||""} ${prtclk}`}
         data-open={props.open!=null} data-action={props.click}
-        data-active={props.active!=null} data-payload={props.payload}
+        data-active={props.active} data-payload={props.payload}
         onClick={props.onClick || (props.pr && clickDispatch) || null}>
           <img
             width={props.width}
@@ -103,7 +103,7 @@ export const SnapScreen = (props)=>{
       dim: JSON.parse(event.target.dataset.dim)
     };
 
-    if(action.dim){
+    if(action.dim && action.type){
       dispatch(action);
       props.closeSnap();
     }

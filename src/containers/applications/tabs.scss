@@ -227,6 +227,12 @@
   margin: auto 6px;
   height: auto;
   width: 120px;
+  transform-origin: center;
+  transition: all ease-in-out 200ms;
+
+  &:hover{
+    transform: scale(1.06);
+  }
 
   .uicon {
     color: #aaa;

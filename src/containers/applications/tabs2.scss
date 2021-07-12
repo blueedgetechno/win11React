@@ -1,31 +1,95 @@
+.calcApp[data-size="mini"]{
+  top: 4%;
+  left: 8%;
+  width: 18%;
+  height: 50%;
+}
+
 .calcHis{
-  width: 0;
+  display: none;
   transition: all ease-in-out 200ms;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .calcApp[data-size="full"] .calcHis{
   width: 260px;
-  display: block;
+  display: flex;
+}
+
+.histCont{
+  position: relative;
+  flex-grow: 1;
+  margin-right: 2px;
+  overflow-y: scroll;
+}
+
+.hct{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 10px;
 }
 
 .valCont{
   box-sizing: border-box;
-  height: 30%;
-  font-size: 6em;
+  height: 25%;
+  font-size: 4.8em;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  // justify-content: flex-end;
   padding: 0 32px;
   color: #333;
+}
+
+.eqCont{
+  font-size: 0.22em;
+  color: #888;
+}
+
+.msrVal{
+  display: flex;
+  padding: 16px 0;
+  font-size: 0.64em;
+  color: #888;
+
+  div{
+    margin: 0 24px;
+
+    &:nth-child(n+3){
+      color: #111;
+      font-weight: 600;
+    }
+  }
 }
 
 .opcont{
   height: 70%;
   display: grid;
+  flex-grow: 1;
   position: relative;
   box-sizing: border-box;
   grid-template-rows: repeat(6,minmax(0,1fr));
   grid-template-columns: repeat(4,minmax(0,1fr));
+
+  &[data-err="true"]{
+
+    .oper{
+      color: #aaa;
+      pointer-events: none;
+
+      &:nth-child(3){
+        pointer-events: auto;
+        color: #444;
+      }
+
+      &:last-child{
+        color: #ccc;
+      }
+    }
+  }
 }
 
 .oper{
@@ -35,17 +99,71 @@
   box-sizing: border-box;
   border: solid 2px #eee;
   background: #f9f9f9;
+  font-size: 1.128em;
+  font-weight: 600;
+  cursor: pointer;
+
+  *{
+    pointer-events: none;
+  }
 
   &:nth-child(-n + 8), &:nth-child(4n){
     background: rgba(255, 255, 255, 0.3);
+    color: #444;
+  }
+
+  &:hover{
+    background: rgba(136, 136, 136, 0.12);
   }
 
   &:last-child{
     background: rgba(0, 100, 255, 0.48);
+
+    &:hover{
+      background: rgba(0, 101, 255, 0.72);
+    }
   }
+
+  &:nth-child(4n){
+    font-size: 1.8em;
+  }
+
+  &:nth-child(4){
+    font-size: 1em;
+    color: #333;
+  }
+
+  &:nth-child(8){
+    font-size: 1.2em;
+  }
+
+  &:nth-child(12){
+    font-family: monospace;
+  }
+}
+
+.opow sup{
+  margin-top: -8px;
 }
 
 .crossOp{
   font-family: monospace;
-  font-size: 2em
+}
+
+.calcApp[data-size="mini"]{
+  .msrVal{
+    display: none;
+  }
+
+  .valCont{
+    font-size: 3em;
+  }
+
+  .vlcCont{
+    font-size: 0.8em;
+  }
+
+  .oper{
+    font-size: 0.88em;
+  }
 }
