@@ -23,7 +23,7 @@
 
 <br>
 
-<img align=top src="./public/img/widgets.png" height="400"/>
+<img align=top src="./public/img/widgets.png"/>
 
 
 ### site: [win11.blueedge.me](https://win11.blueedge.me)
