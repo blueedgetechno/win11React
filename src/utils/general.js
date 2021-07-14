@@ -153,7 +153,6 @@ export const ToolBar = (props)=>{
   }
 
   const toolClick = ()=>{
-    console.log("Toolkit");
     dispatch({
       type: props.app,
       payload: "front"

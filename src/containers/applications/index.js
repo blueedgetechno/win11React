@@ -78,7 +78,7 @@ export const EdgeMenu = ()=>{
       data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
-      }} data-hide={wnapp.hide}>
+      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Microsoft Edge" float/>
       <div className="windowScreen flex flex-col">
@@ -110,7 +110,11 @@ export const EdgeMenu = ()=>{
             </div>
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
-            <iframe src={url} id="isite" className="w-full h-full" frameborder="0"></iframe>
+            {wnapp.hide?null:(
+              <iframe src={url} id="isite" className="w-full h-full"
+                frameborder="0">
+              </iframe>
+            )}
           </div>
         </div>
       </div>
@@ -153,7 +157,7 @@ export const MicroStore = ()=>{
       data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
-       }} data-hide={wnapp.hide}>
+     }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Microsoft Store"/>
       <div className="windowScreen flex">
@@ -524,7 +528,7 @@ export const WnTerminal = ()=>{
       data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
-       }} data-hide={wnapp.hide}>
+       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name={wntitle} invert bg="#060606"/>
       <div className="windowScreen flex" data-dock="true">
@@ -558,7 +562,7 @@ export const Notepad = ()=>{
       data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
-       }} data-hide={wnapp.hide}>
+       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Untitled - Notepad"/>
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -723,7 +727,7 @@ export const Calculator = ()=>{
       data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
-       }} data-hide={wnapp.hide}>
+       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Calculator"/>
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -826,13 +830,16 @@ export const VsCode = ()=>{
       data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
-      }} data-hide={wnapp.hide}>
+      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="VS Code" bg="#1c1c1c" invert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
-            <iframe src={url} id="isite" className="w-full h-full" frameborder="0"></iframe>
+            {wnapp.hide?null:(
+              <iframe src={url} id="isite" className="w-full h-full"
+                frameborder="0"></iframe>
+            )}
           </div>
         </div>
       </div>
@@ -843,6 +850,7 @@ export const VsCode = ()=>{
 export const Explorer = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.explorer);
+  const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
 
   return (
@@ -851,7 +859,7 @@ export const Explorer = ()=>{
       data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
-      }} data-hide={wnapp.hide}>
+      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="File Explorer" bg="#f0f0f0"/>
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -872,11 +880,11 @@ export const WhiteBoard = ()=>{
 
   return (
     <div
-      className="msfiles floatTab dpShad" data-size={wnapp.size}
+      className="whiteBoard floatTab dpShad" data-size={wnapp.size}
       data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
-      }} data-hide={wnapp.hide}>
+      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Microsoft Whiteboard" bg="#f0f0f0"/>
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -885,6 +893,39 @@ export const WhiteBoard = ()=>{
             Coming soon
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export const ScreenPreview = ()=>{
+  const tasks = useSelector(state=>state.taskbar);
+  const [boolCh, setCheck] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(tasks.prevApp!="" && tasks.prev){
+      var wnapp = document.getElementById(tasks.prevApp+'App');
+      var clone = wnapp.cloneNode(true);
+      clone.id = "prevsc";
+      clone.dataset.hide="false";
+      clone.dataset.max="true";
+      clone.dataset.size="full";
+      clone.style.zIndex="1";
+      var parentDiv = document.getElementById('prevApp');
+      var prevsc = document.getElementById('prevsc');
+
+      parentDiv.replaceChild(clone, prevsc);
+      // setCheck(false);
+    }
+  });
+
+  return (
+    <div className="prevCont" style={{
+      left: tasks.prevPos+'%'
+    }}>
+      <div className="prevScreen" id="prevApp" data-show={tasks.prev}>
+        <div id="prevsc"></div>
       </div>
     </div>
   );

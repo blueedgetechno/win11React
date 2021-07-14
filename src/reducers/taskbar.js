@@ -1,7 +1,12 @@
-import {taskApps} from '../utils';
+import {
+  taskApps
+} from '../utils';
 
 const defState = {
   apps: taskApps,
+  prev: false,
+  prevApp: '',
+  prevPos: 0,
   align: 'center'
 };
 
@@ -13,15 +18,25 @@ const taskReducer = (state = defState, action) => {
       return state;
     case 'TASKCEN':
       return {
-        apps: state.apps, align: 'center'
+        ...state, align: 'center'
       };
     case 'TASKLEF':
       return {
-        apps: state.apps, align: 'left'
+        ...state, align: 'left'
       };
     case 'TASKTOG':
       return {
-        apps: state.apps, align: state.align=='left'?'center':'left'
+        ...state, align: state.align == 'left' ? 'center' : 'left'
+      };
+    case 'TASKPSHOW':
+      return {
+        ...state, prev: true,
+          prevApp: (action.payload && action.payload.app) || 'store',
+          prevPos: (action.payload && action.payload.pos) || 50
+      };
+    case 'TASKPHIDE':
+      return {
+        ...state, prev: false
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon} from '../../utils/general';
 import './taskbar.scss';
@@ -10,32 +10,65 @@ const Taskbar = ()=>{
     for (var i = 0; i < state.taskbar.apps.length; i++) {
       tmpApps[state.taskbar.apps[i].icon].task = true;
     }
-
     return tmpApps;
   });
   const dispatch = useDispatch();
+
+  const showPrev = (event)=>{
+    var ele = event.target;
+    while(ele && ele.getAttribute('value')==null){
+      ele = ele.parentElement;
+    }
+
+    var appPrev = ele.getAttribute('value');
+    var xpos = window.scrollX + ele.getBoundingClientRect().left;
+
+    var offsetx = Math.round(xpos*10000/window.innerWidth)/100;
+
+    dispatch({type: "TASKPSHOW", payload: {
+      app: appPrev,
+      pos: offsetx
+    }})
+  }
+
+  const hidePrev = ()=>{
+    dispatch({type: "TASKPHIDE"})
+  }
 
   return (
     <div className="taskbar">
       <div className="taskcont">
         <div className="tasksCont" data-side={tasks.align}>
-          <div className="tsbar">
+          <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src='home' width={22} click='STARTOGG'/>
             <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
             <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
             {tasks.apps.map((task,i)=>{
-              return <Icon key={i} className="tsIcon"
-                      open={apps[task.icon].hide?null:true}
-                      active={apps[task.icon].z==apps.hz}
-                      click={task.action} payload="togg"
-                      src={task.icon} width={22}/>
+              var isHidden = apps[task.icon].hide;
+              var isActive = apps[task.icon].z==apps.hz;
+              return (
+                <div onMouseOver={!isActive && !isHidden && showPrev}
+                  value={task.icon}>
+                  <Icon key={i} className="tsIcon"
+                        open={isHidden?null:true}
+                        active={isActive}
+                        click={task.action} payload="togg"
+                        src={task.icon} width={22}/>
+                </div>
+              )
             })}
             {Object.keys(apps).map((key,i)=>{
+              if(key!="hz"){
+                var isActive = apps[key].z==apps.hz;
+              }
+
               return key!="hz" && !apps[key].task && !apps[key].hide?(
-                <Icon key={i} className="tsIcon" width={22}
-                      active={apps[key].z==apps.hz}
-                      click={apps[key].action} payload="togg"
-                      open="true" src={apps[key].icon}/>
+                <div onMouseOver={!isActive && showPrev}
+                  value={apps[key].icon}>
+                  <Icon key={i} className="tsIcon" width={22}
+                      active={isActive} click={apps[key].action}
+                      payload="togg" open="true" src={apps[key].icon}/>
+                </div>
               ):null;
             })}
           </div>
