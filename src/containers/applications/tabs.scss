@@ -1,3 +1,45 @@
+.prevCont{
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+.prevScreen{
+  position: absolute;
+  bottom: 6px;
+  margin-left: auto;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  transform-origin: bottom left;
+  transition: all ease-in-out 200ms;
+  pointer-events: none;
+
+  &[data-show="true"]{
+    display: block;
+    // transform: scale(0.5);
+    transform: scale(0.12, 0.12) translate(-44%, 0);
+    animation: fadein 1s ease-in-out;
+  }
+
+  &:after{
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: -60px;
+    width: calc(100% + 120px);
+    height: calc(100% + 160px);
+    background: rgba(224, 224, 224, 0.8);
+    z-index: 0;
+  }
+
+  .dpShad{
+    filter: none;
+  }
+}
+
 .floatTab {
   position: absolute;
   top: 0;
