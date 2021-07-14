@@ -17,8 +17,8 @@
 <br>
 
 <div align="center">
-    <img align=top src="./public/img/snapping.png" height="300"/>
-    <img align=top src="./public/img/layout.png" height="300"/>
+    <img align=top src="./public/img/snapping.png" height="280"/>
+    <img align=top src="./public/img/layout.png" height="280"/>
 <div>
 
 <br>
