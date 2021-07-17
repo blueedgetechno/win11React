@@ -216,7 +216,8 @@ export const MicroStore = ()=>{
 
             <div id="gamerib" className="frontCont amzGames my-8 py-20 w-auto mx-8 flex justify-between noscroll overflow-x-scroll overflow-y-hidden">
               <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-                <div className="text-xl">Featured Games</div>
+                <div className="text-xl">
+                  Games</div>
                 <div className="text-xs mt-2">Explore fun to play xbox games and find a new favorite</div>
               </div>
               <div className="flex w-max pr-8">
@@ -244,8 +245,8 @@ export const MicroStore = ()=>{
 
             <div id="movrib" className="frontCont amzMovies my-8 py-20 w-auto mx-8 flex justify-between noscroll overflow-x-scroll overflow-y-hidden">
               <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-                <div className="text-xl">Featured Games</div>
-                <div className="text-xs mt-2">Explore fun to play xbox games and find a new favorite</div>
+                <div className="text-xl">Featured Films</div>
+                <div className="text-xs mt-2">Rent or buy the latest hit films and watch them at home or on the go</div>
               </div>
               <div className="flex w-max pr-8">
                 {movrib && movrib.map(x=>{
