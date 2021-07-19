@@ -1,35 +1,46 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Icon} from '../../utils/general';
+import React, {
+  useState,
+  useEffect
+} from 'react';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import {
+  Icon
+} from '../../utils/general';
 import './startmenu.scss';
 import './sidepane.scss';
 import './searchpane.scss';
 
 import axios from 'axios';
 
-export const StartMenu = ()=>{
-  const start = useSelector(state=>{
+export const StartMenu = () => {
+  const start = useSelector(state => {
     var arr = state.startmenu,
-    ln = (6-arr.pnApps.length%6)%6;
+      ln = (6 - arr.pnApps.length % 6) % 6;
 
     for (var i = 0; i < ln; i++) {
-      arr.pnApps.push({empty: true});
+      arr.pnApps.push({
+        empty: true
+      });
     }
 
     for (var i = 0; i < arr.rcApps.length; i++) {
-      if(arr.rcApps[i].lastUsed<0){
+      if (arr.rcApps[i].lastUsed < 0) {
         arr.rcApps[i].lastUsed = "Recently Added"
-      }else if(arr.rcApps[i].lastUsed<10){
+      } else if (arr.rcApps[i].lastUsed < 10) {
         arr.rcApps[i].lastUsed = "Just Now"
-      }else if(arr.rcApps[i].lastUsed<60){
+      } else if (arr.rcApps[i].lastUsed < 60) {
         arr.rcApps[i].lastUsed += "m ago"
-      }else if(arr.rcApps[i].lastUsed<360){
-        arr.rcApps[i].lastUsed = Math.floor(arr.rcApps[i].lastUsed/60)+ "h ago"
+      } else if (arr.rcApps[i].lastUsed < 360) {
+        arr.rcApps[i].lastUsed = Math.floor(arr.rcApps[i].lastUsed / 60) + "h ago"
       }
     }
 
-    var tmpApps = [...arr.allApps], allApps=[];
-    tmpApps.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+    var tmpApps = [...arr.allApps],
+      allApps = [];
+    tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
     for (var i = 0; i < 27; i++) {
       allApps[i] = [];
@@ -37,9 +48,9 @@ export const StartMenu = ()=>{
 
     for (var i = 0; i < tmpApps.length; i++) {
       var t1 = tmpApps[i].name.trim().toUpperCase().charCodeAt(0);
-      if(t1>64 && t1<91){
-        allApps[t1-64].push(tmpApps[i]);
-      }else{
+      if (t1 > 64 && t1 < 91) {
+        allApps[t1 - 64].push(tmpApps[i]);
+      } else {
         allApps[0].push(tmpApps[i]);
       }
     }
@@ -52,41 +63,43 @@ export const StartMenu = ()=>{
   const [match, setMatch] = useState({});
 
   const dispatch = useDispatch();
-  const clickDispatch = (event)=>{
+  const clickDispatch = (event) => {
     var action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload
     };
 
-    if(action.type){
+    if (action.type) {
       dispatch(action);
     }
 
-    if(action.type && (action.payload=="full" || action.type=="EDGELINK")){
-      dispatch({type: "STARTHID"});
+    if (action.type && (action.payload == "full" || action.type == "EDGELINK")) {
+      dispatch({
+        type: "STARTHID"
+      });
     }
 
-    if(action.type=="STARTALPHA"){
-      var target = document.getElementById("char"+action.payload);
-      if(target){
+    if (action.type == "STARTALPHA") {
+      var target = document.getElementById("char" + action.payload);
+      if (target) {
         target.parentNode.scrollTop = target.offsetTop;
-      }else{
+      } else {
         var target = document.getElementById("charA");
         target.parentNode.scrollTop = 0;
       }
     }
   }
 
-  useEffect(()=>{
-    if(query.length){
+  useEffect(() => {
+    if (query.length) {
       for (var i = 0; i < start.allApps.length; i++) {
-        if(start.allApps[i].name.toLowerCase().includes(query.toLowerCase())){
+        if (start.allApps[i].name.toLowerCase().includes(query.toLowerCase())) {
           setMatch(start.allApps[i]);
           break;
         }
       }
     }
-  },[query])
+  }, [query])
 
   return (
     <div className="startMenu dpShad" data-hide={start.hide} style={{'--prefix':'START'}}>
@@ -109,7 +122,7 @@ export const StartMenu = ()=>{
                     <div key={i} className="pnApp">
                       <Icon className="pnIcon" src={app.icon} width={24}
                         onClick={clickDispatch} click={app.action}
-                        payload={app.payload?app.payload:"full"}/>
+                        payload={app.payload || "full"}/>
                       <div className="appName">{app.name}</div>
                     </div>
                   );
@@ -167,7 +180,7 @@ export const StartMenu = ()=>{
                 ldx.forEach((app,j) => {
                   tpApps.push(
                     <div key={j} className="allApp prtclk" onClick={clickDispatch}
-                      data-action={app.action} data-payload={app.payload?app.payload:"full"}>
+                      data-action={app.action} data-payload={app.payload || "full"}>
                       <Icon className="pnIcon" src={app.icon} width={20}/>
                       <div className="appName">{app.name}</div>
                     </div>
@@ -238,7 +251,7 @@ export const StartMenu = ()=>{
                       <div className="text-xss">App</div>
                     </div>
                   </div>
-                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded prtclk"
+                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded handcr prtclk"
                     onClick={clickDispatch} data-action="EDGELINK"
                     data-payload={query}>
                     <Icon src="search" ui width={20}/>
@@ -255,7 +268,7 @@ export const StartMenu = ()=>{
                     return(
                       <div className="topApp pt-4 py-2 bg-gray-100 ltShad">
                         <Icon onClick={clickDispatch} click={app.action}
-                          payload={app.payload?app.payload:"full"}
+                          payload={app.payload || "full"}
                           src={app.icon} width={24} />
                         <div className="text-xs mt-2">{app.name}</div>
                       </div>
@@ -288,7 +301,7 @@ export const StartMenu = ()=>{
                 <div className="hline mt-8"></div>
                 <div className="openlink w-4/5 flex prtclk handcr pt-3"
                   onClick={clickDispatch} data-action={match.action}
-                  data-payload="full">
+                  data-payload={match.payload?match.payload:"full"}>
                   <Icon src="link" ui width={16}/>
                   <div className="text-xss ml-3">Open</div>
                 </div>
@@ -303,17 +316,20 @@ export const StartMenu = ()=>{
   );
 }
 
-export const DesktopApp = ()=>{
-  const deskApps = useSelector(state=>state.desktop);
+export const DesktopApp = () => {
+  const deskApps = useSelector(state => state.desktop);
   const dispatch = useDispatch();
 
   return (
-    <div className="desktopCont">
-      {deskApps.apps.map((app,i)=>{
+    <div className="desktopCont" style={{
+      gridTemplateColumns: `repeat(auto-fit, ${Math.round(deskApps.size*90)}px)`,
+      gridTemplateRows: `repeat(auto-fit, ${Math.round(deskApps.size*98)}px)`
+    }}>
+      {!deskApps.hide && deskApps.apps.map((app,i)=>{
         return (
           <div key={i} className="dskApp">
-            <Icon click={app.action} payload="full" className="dskIcon"
-              src={app.icon} width={36}/>
+            <Icon click={app.action} width={Math.round(deskApps.size*36)}
+              className="dskIcon" src={app.icon} payload={app.payload || "full"}/>
             <div className="appName">{app.name}</div>
           </div>
         )
@@ -322,11 +338,11 @@ export const DesktopApp = ()=>{
   );
 }
 
-export const SidePane = ()=>{
-  const paneApps = useSelector(state=>state.sidepane);
+export const SidePane = () => {
+  const paneApps = useSelector(state => state.sidepane);
   const dispatch = useDispatch();
 
-  const clickDispatch = (event)=>{
+  const clickDispatch = (event) => {
     var action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload
@@ -370,21 +386,21 @@ export const SidePane = ()=>{
   );
 }
 
-export const WidPane = ()=>{
+export const WidPane = () => {
   const dispatch = useDispatch();
-  const widget = useSelector(state=>state.widpane);
+  const widget = useSelector(state => state.widpane);
 
-  const getRandom = (x=0) => {
+  const getRandom = (x = 0) => {
     return `hsl(${Math.floor(Math.random()*360)}deg 36% 84%)`;
   }
 
-  useEffect(async ()=>{
-    console.log(process.env.REACT_APP_DEVELOPEMENT);
-    if(process.env.REACT_APP_DEVELOPEMENT!="development"){
-      if(!widget.updated){
+  useEffect(async () => {
+    // console.log(process.env.REACT_APP_DEVELOPEMENT);
+    if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+      if (!widget.updated) {
         var tmpWdgt = await fetchApi(widget);
         console.log("Fetching Api's");
-        if(tmpWdgt.updated){
+        if (tmpWdgt.updated) {
           dispatch({
             type: "WIDGREST",
             payload: tmpWdgt
@@ -548,31 +564,59 @@ export const WidPane = ()=>{
   );
 }
 
-const fetchApi = async (widget)=>{
-  var tmpWdgt = {...widget};
+export const CalnWid = () => {
+  const sidepane = useSelector(state => state.sidepane);
+  const [loaded, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoad(true);
+      window.dycalendar.draw({
+        target: '#dycalendar',
+        type: 'month',
+        dayformat: 'ddd',
+        monthformat: "full",
+        prevnextbutton: 'show',
+        highlighttoday: true
+      });
+    }
+  })
+
+  return (
+    <div className="calnpane dpShad" data-hide={sidepane.calhide}
+      style={{'--prefix':'CALN'}}>
+      <div id="dycalendar"></div>
+    </div>
+  );
+}
+
+const fetchApi = async (widget) => {
+  var tmpWdgt = {
+    ...widget
+  };
   var date = new Date();
 
   console.log('fetching ON THIS DAY');
   await axios.get(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${date.getMonth()}/${date.getDay()}`)
-    .then(res=>res.data).then(data => {
+    .then(res => res.data).then(data => {
       console.log("Fetched");
-      var event = data.events.[Math.floor(Math.random() * data.events.length)];
+      var event = data.events. [Math.floor(Math.random() * data.events.length)];
       date.setYear(event.year);
 
-    tmpWdgt.data.date = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
+      tmpWdgt.data.date = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
 
-    tmpWdgt.data.event = event;
-  }).catch((error) => {
-    console.log("Fetch failed");
-  });
+      tmpWdgt.data.event = event;
+    }).catch((error) => {
+      console.log("Fetch failed");
+    });
 
   console.log('fetching NEWS');
   await axios.get(`https://saurav.tech/NewsAPI/top-headlines/category/general/in.json`)
-    .then(res=>res.data).then(data => {
+    .then(res => res.data).then(data => {
       console.log('NEWS Fetched');
       var newsList = [];
       for (var i = 0; i < data.totalResults; i++) {
@@ -584,9 +628,9 @@ const fetchApi = async (widget)=>{
       }
 
       tmpWdgt.data.news = newsList;
-  }).catch((error) => {
-    console.log("Fetch failed");
-  });
+    }).catch((error) => {
+      console.log("Fetch failed");
+    });
 
   tmpWdgt.updated = true;
   return tmpWdgt;

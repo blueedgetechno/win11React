@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  scrollbar-width: none;
+}
+
 *::selection{
   background: initial;
 }
@@ -155,4 +159,9 @@ img[data-flip='true'], svg[data-flip='true']{
   100%{
     opacity: 1;
   }
+}
+
+.hvdark:hover{
+  background: rgba(0, 0, 0, 0.08);
+  transition: all 200ms ease-in-out;
 }

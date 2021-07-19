@@ -1,16 +1,17 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {increment, decrement} from './actions';
 import './index.css';
 import './short.css';
 
 import Background from './containers/background';
 import Taskbar from './components/taskbar';
+import ActMenu from './components/menu';
 import {
   StartMenu,
   DesktopApp,
   SidePane,
-  WidPane
+  WidPane,
+  CalnWid
 } from './components/start';
 
 import * as Applications from './containers/applications';
@@ -20,13 +21,19 @@ function App() {
   const apps = useSelector(state => state.apps);
   const dispatch = useDispatch();
 
-  // window.addEventListener("contextmenu", e => e. preventDefault());
+  window.addEventListener("contextmenu", e => {
+    e. preventDefault();
+    dispatch({ type: 'GARBAGE'});
+  });
+
   window.addEventListener("click", event => {
     // console.log(event.target);
     var ess = [
       ["START","STARTHID"],
       ["PANE","PANEHIDE"],
-      ["WIDG","WIDGHIDE"]
+      ["WIDG","WIDGHIDE"],
+      ["CALN","CALNHIDE"],
+      ["MENU","MENUHIDE"]
     ];
 
     try{
@@ -44,10 +51,22 @@ function App() {
     });
   });
 
+  const rightClick = (e)=>{
+    if(e.target.getAttribute('class')=="desktop"){
+      dispatch({
+        type: 'MENUSHOW',
+        payload: {
+          top: e.clientY,
+          left: e.clientX
+        }
+      });
+    }
+  }
+
   return (
     <div className="App">
       <Background/>
-      <div className="desktop">
+      <div className="desktop" onContextMenu={rightClick}>
         <DesktopApp/>
         {Object.keys(Applications).map((key,idx)=>{
           var WinApp = Applications[key];
@@ -56,8 +75,10 @@ function App() {
         <StartMenu/>
         <SidePane/>
         <WidPane/>
+        <CalnWid/>
       </div>
       <Taskbar/>
+      <ActMenu/>
     </div>
   );
 }

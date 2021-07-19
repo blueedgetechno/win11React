@@ -69,3 +69,22 @@
 .qksrch svg{
   color: #333;
 }
+
+.calnpane{
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  // width: 280px;
+  min-height: 300px;
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: all ease-in-out 200ms;
+  z-index: 9999;
+  border-radius: 6px;
+
+  &[data-hide="true"] {
+    bottom: -330px;
+  }
+}

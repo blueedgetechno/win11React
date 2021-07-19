@@ -1,8 +1,11 @@
-import {desktopApps} from '../utils';
+import {
+  desktopApps
+} from '../utils';
 
 const defState = {
   apps: desktopApps,
-  hide: false
+  hide: false,
+  size: 1
 };
 
 const deskReducer = (state = defState, action) => {
@@ -13,15 +16,19 @@ const deskReducer = (state = defState, action) => {
       return state;
     case 'DESKHIDE':
       return {
-        apps: state.apps, hide: true
+        ...state, hide: true
       };
     case 'DESKSHOW':
       return {
-        apps: state.apps, hide: false
+        ...state, hide: false
       };
     case 'DESKTOGG':
       return {
-        apps: state.apps, hide: !state.hide
+        ...state, hide: !state.hide
+      };
+    case 'DESKSIZE':
+      return {
+        ...state, size: action.payload
       };
     default:
       return state;
