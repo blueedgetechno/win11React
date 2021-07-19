@@ -7,6 +7,7 @@ import menuReducer from './startmenu';
 import paneReducer from './sidepane';
 import widReducer from './widpane';
 import appReducer from './apps';
+import menusReducer from './menu';
 import globalReducer from './globals'
 
 const allReducers = combineReducers({
@@ -17,6 +18,7 @@ const allReducers = combineReducers({
   sidepane: paneReducer,
   widpane: widReducer,
   apps: appReducer,
+  menus: menusReducer,
   globals: globalReducer
 });
 

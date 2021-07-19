@@ -35,6 +35,17 @@ const Taskbar = ()=>{
     dispatch({type: "TASKPHIDE"})
   }
 
+  const clickDispatch = (event)=>{
+    var action = {
+      type: event.target.dataset.action,
+      payload: event.target.dataset.payload
+    };
+
+    if(action.type){
+      dispatch(action);
+    }
+  }
+
   return (
     <div className="taskbar">
       <div className="taskcont">
@@ -78,11 +89,12 @@ const Taskbar = ()=>{
           <Icon className="taskIcon" src="wifi" ui width={14}/>
           <Icon className="taskIcon" src="battery" ui width={16}/>
           <Icon className="taskIcon" src='audio' ui width={22}/>
-          <div className="taskDate">
+          <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
+            data-action="CALNTOGG">
             <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
           </div>
-          <Icon className="taskIcon mr-2" ui src='sidepane' width={16} invert click='PANETOGG'/>
+          <Icon className="taskIcon mr-2 hvdark" ui src='sidepane' width={16} invert click='PANETOGG'/>
           <Icon className="graybd" ui width={6} click='SHOWDSK' pr/>
         </div>
       </div>

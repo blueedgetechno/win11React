@@ -106,6 +106,18 @@ const appReducer = (state = defState, action) => {
 
   }else if (action.type=="EXTERNAL") {
     window.open(action.payload, '_blank');
+  }else if (action.type=="OPENTERM") {
+    var tmpState = {...state};
+    var obj = {...tmpState["terminal"]};
+    obj.dir = action.payload;
+
+    obj.size = "full";
+    obj.hide = false;
+    obj.max = true;
+    tmpState.hz+=1;
+    obj.z = tmpState.hz;
+    tmpState["terminal"] = obj;
+    return tmpState;
   }else{
     var keys = Object.keys(state);
     for (var i = 0; i < keys.length; i++) {

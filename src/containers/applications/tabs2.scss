@@ -5,6 +5,15 @@
   height: 50%;
 }
 
+.aboutApp{
+  top: 8%;
+  left: 10%;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  background: #eee;
+}
+
 .calcHis{
   display: none;
   transition: all ease-in-out 200ms;
@@ -165,5 +174,90 @@
 
   .oper{
     font-size: 0.88em;
+  }
+}
+
+.canvaCont{
+  position: relative;
+  flex-grow: 1;
+  z-index: 0;
+}
+
+.clickCont{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paintTool{
+  min-width: 60px;
+  height: 60px;
+  background: #fefefe;
+  display: flex;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.25);
+  padding: 0 12px;
+}
+
+.ptool{
+  position: relative;
+  width: 48px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4px;
+  transition: all 50ms ease-in-out;
+
+  &[data-active="true"]{
+    background: #ddd;
+    &::before{
+      content: "";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 10px;
+      background: #222;
+    }
+  }
+
+  &:hover{
+    background: #eee;
+  }
+
+  svg{
+    margin-top: 36%;
+    max-height: 72%;
+  }
+
+  img{
+    margin-top: 36%;
+    width: 56%;
+  }
+}
+
+.abCont{
+  font-size: 9px;
+  width: 19rem;
+  color: #000;
+  font-weight: 500;
+}
+
+.okbtn{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  div{
+    border: solid 1px #007efb;
+    padding: 2px 24px;
+    border-radius: 4px;
+    cursor: pointer;
   }
 }

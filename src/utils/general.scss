@@ -176,7 +176,7 @@
     background-size: cover;
   }
 
-  img{
+  img[data-free="false"]{
     max-width: 100%;
     max-height: 100%;
   }

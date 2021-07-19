@@ -136,7 +136,9 @@ export default [
   idx: 21,
   name: 'Mail',
   icon: 'mail',
-  type: 'app'
+  type: 'app',
+  action: 'EXTERNAL',
+  payload: 'mailto:blueedgetechno@gmail.com'
 },
 {
   idx: 22,
@@ -346,4 +348,13 @@ export default [
   type: 'app',
   action: 'EXTERNAL',
   payload: "https://github.com/blueedgetechno/windows11"
-}];
+},
+{
+  idx: 55,
+  name: 'Unescape',
+  icon: 'unescape',
+  type: 'action',
+  action: 'EXTERNAL',
+  payload: 'https://blueedge.me/unescape'
+}
+];

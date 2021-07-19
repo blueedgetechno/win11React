@@ -26,8 +26,8 @@
 <img align=top src="./public/img/widgets.png"/>
 
 
-### site: [win11.blueedge.me](https://win11.blueedge.me)
+### visit: [win11.blueedge.me](https://win11.blueedge.me)
 
 Check out the game 🎮 , **UNESCAPE** , I am working on [blueedge.me/unescape](https://blueedge.me/unescape)
 
-[contact me](mailto:blueedgetechno@gmail.com) if you want to collab or make an issue for any upcoming update you want 
+[contact me](mailto:blueedgetechno@gmail.com) if you want to collab or make an issue for any upcoming update you want

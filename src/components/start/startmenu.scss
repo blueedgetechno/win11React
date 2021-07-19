@@ -1,21 +1,17 @@
 .desktopCont {
-  width: 100%;
+  width: fit-content;
   height: 100%;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fit, 90px);
-  grid-template-rows: repeat(auto-fit, 98px);
+  align-content: space-evenly;
 }
 
 .dskApp {
-  width: 48px;
-  height: 66px;
   margin: 4px;
   padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   font-size: 0.8em;
   transition: all ease-in-out 200ms;
 
