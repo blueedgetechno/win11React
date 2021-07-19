@@ -3,7 +3,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
 
 export const AboutWin = ()=>{
-  const [open, setOpen] = useState(!true);
+  const [open, setOpen] = useState(()=>{
+    if(localStorage.getItem('closeAbout')=="true"){
+      return false;
+    }else{
+      return true;
+    }
+  });
 
   return open?(
     <div className="aboutApp floatTab dpShad">
@@ -43,6 +49,7 @@ export const AboutWin = ()=>{
             <div className="okbtn">
               <div className="bg-gray-100" onClick={()=>{
                 setOpen(false);
+                localStorage.setItem('closeAbout',true);
               }}>Ok</div>
             </div>
           </div>
