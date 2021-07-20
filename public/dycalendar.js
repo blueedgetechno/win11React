@@ -172,6 +172,7 @@
       elem.setAttribute("data-date", option.date);
       elem.setAttribute("data-month", option.month);
       elem.setAttribute("data-year", option.year);
+      elem.setAttribute("data-action", "CALNPREV");
       elem.setAttribute("data-btn", "prev");
       elem.innerHTML = "&#x25C1;";
       //add prev button span to header div
@@ -182,6 +183,7 @@
       elem.setAttribute("data-date", option.date);
       elem.setAttribute("data-month", option.month);
       elem.setAttribute("data-year", option.year);
+      elem.setAttribute("data-action", "CALNNEXT");
       elem.setAttribute("data-btn", "next");
       elem.innerHTML = "&#x25B7;";
       //add prev button span to header div
