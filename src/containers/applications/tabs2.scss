@@ -12,6 +12,7 @@
   height: auto;
   border-radius: 4px;
   background: #eee;
+  z-index: 0;
 }
 
 .calcHis{
@@ -246,6 +247,12 @@
   width: 19rem;
   color: #000;
   font-weight: 500;
+
+  mark{
+    background: none;
+    color: #008216;
+    font-weight: 600;
+  }
 }
 
 .okbtn{

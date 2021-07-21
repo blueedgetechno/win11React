@@ -1,7 +1,6 @@
 .actmenu{
   position: absolute;
   width: 200px;
-  // min-height: 280px;
   background: #f7f7f7;
   z-index: 9998;
   animation: fadein 200ms ease-in-out;
@@ -24,7 +23,7 @@
   z-index: 9999;
   padding: 4px 0;
   border: solid 1px #aaa;
-  animation: fadein 50ms ease-in-out;
+  animation: fadein 600ms ease-in-out;
 }
 
 .menuopt{
@@ -58,6 +57,16 @@
   .prtclk{
     left: unset;
     right: 4px;
+  }
+
+  .dotIcon, .checkIcon{
+    top: 8px;
+    left: 8px;
+    right: unset;
+  }
+
+  .checkIcon{
+    top: 6px;
   }
 }
 
