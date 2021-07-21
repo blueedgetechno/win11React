@@ -5,7 +5,9 @@ import {
 const defState = {
   apps: desktopApps,
   hide: false,
-  size: 1
+  size: 1,
+  sort: "none",
+  abOpen: false
 };
 
 const deskReducer = (state = defState, action) => {
@@ -30,6 +32,14 @@ const deskReducer = (state = defState, action) => {
       return {
         ...state, size: action.payload
       };
+    case 'DESKSORT':
+      return {
+        ...state, sort: action.payload || "none"
+      };
+      case 'DESKABOUT':
+        return {
+          ...state, abOpen: action.payload
+        };
     default:
       return state;
   }

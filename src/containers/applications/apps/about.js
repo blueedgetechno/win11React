@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
 
 export const AboutWin = ()=>{
+  const {abOpen} = useSelector(state=> state.desktop);
   const [open, setOpen] = useState(()=>{
     if(localStorage.getItem('closeAbout')=="true"){
       return false;
@@ -10,8 +11,15 @@ export const AboutWin = ()=>{
       return true;
     }
   });
+  const dispatch = useDispatch();
 
-  return open?(
+  const action = ()=>{
+    setOpen(false);
+    localStorage.setItem('closeAbout',true);
+    dispatch({type: "DESKABOUT", payload: false});
+  }
+
+  return open || abOpen?(
     <div className="aboutApp floatTab dpShad">
       <div className="py-1 px-2 bg-gray-100 text-xss">
         <div className="">About Windows</div>
@@ -40,17 +48,27 @@ export const AboutWin = ()=>{
             <div className="mt-1">
               &nbsp;&nbsp;
               &nbsp;&nbsp;
-              contact: <a href="mailto:blueedgetechno@gmail.com">blueedgetechno@gmail.com</a>
+              contact: <a target="_blank" href="mailto:blueedgetechno@gmail.com">blueedgetechno@gmail.com</a>
+            </div>
+            <br/>
+            <br/>
+            <div>
+              <span> The current working apps are
+                <mark> Calculator</mark>,
+                <mark> Edge</mark>,
+                <mark> Notepad</mark>,
+                <mark> Store</mark>,
+                <mark> Terminal</mark>,
+                <mark> Vscode</mark>,
+                <mark> Whiteboard.</mark>
+              </span>
             </div>
             <br/>
             <br/>
             <br/>
             <br/>
             <div className="okbtn">
-              <div className="bg-gray-100" onClick={()=>{
-                setOpen(false);
-                localStorage.setItem('closeAbout',true);
-              }}>Ok</div>
+              <div className="bg-gray-100" onClick={action}>Ok</div>
             </div>
           </div>
         </div>

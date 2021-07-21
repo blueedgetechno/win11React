@@ -1,14 +1,6 @@
-import React, {
-  useState,
-  useEffect
-} from 'react';
-import {
-  useSelector,
-  useDispatch
-} from 'react-redux';
-import {
-  Icon
-} from '../../utils/general';
+import React, { useState, useEffect} from 'react';
+import { useSelector, useDispatch} from 'react-redux';
+import {Icon} from '../../utils/general';
 import './startmenu.scss';
 import './sidepane.scss';
 import './searchpane.scss';
@@ -226,7 +218,7 @@ export const StartMenu = () => {
             <Icon src="search" ui width={16}/>
             <input type="text" onChange={(event)=>{
               setQuery(event.target.value.trim());
-            }} defaultValue={query}/>
+            }} defaultValue={query} placeholder="search something ..."/>
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 text-gray-700 flex justify-between">
@@ -317,7 +309,34 @@ export const StartMenu = () => {
 }
 
 export const DesktopApp = () => {
-  const deskApps = useSelector(state => state.desktop);
+  const deskApps = useSelector(state => {
+    var arr = {...state.desktop};
+    var tmpApps = [... arr.apps];
+
+    if(arr.sort=="name"){
+      tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+    }else if (arr.sort=="size") {
+      tmpApps.sort((a, b) => {
+        var anm = a.name, bnm = b.name;
+
+        return (anm[bnm.charCodeAt(0)%anm.length] >
+                  bnm[anm.charCodeAt(0)%bnm.length]
+                )?1:-1
+      })
+    }else if (arr.sort=="date") {
+      tmpApps.sort((a, b) => {
+        var anm = a.name, bnm = b.name;
+        var anml = anm.length, bnml = bnm.length;
+
+        return (
+          anm[(bnml*13)%anm.length]>bnm[(anml*17)%bnm.length]
+        )?1:-1
+      })
+    }
+
+    arr.apps = tmpApps;
+    return arr;
+  });
   const dispatch = useDispatch();
 
   return (
@@ -397,7 +416,7 @@ export const WidPane = () => {
   useEffect(async () => {
     // console.log(process.env.REACT_APP_DEVELOPEMENT);
     if (process.env.REACT_APP_DEVELOPEMENT != "development") {
-      if (!widget.updated) {
+      if (!widget.updated && !widget.hide) {
         var tmpWdgt = await fetchApi(widget);
         console.log("Fetching Api's");
         if (tmpWdgt.updated) {
@@ -412,7 +431,7 @@ export const WidPane = () => {
 
   return (
     <div className="widPaneCont" data-hide={widget.hide} style={{'--prefix':'WIDG'}}>
-      <div className="WidPane">
+      <div className="WidPane" loading="lazy">
         <div className="widtop">
           <Icon fafa="faEllipsisH" width={12}/>
         </div>

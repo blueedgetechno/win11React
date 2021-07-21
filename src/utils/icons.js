@@ -73,8 +73,8 @@ export default [
 },
 {
   idx: 11,
-  name: 'Calender',
-  icon: 'calender',
+  name: 'Calendar',
+  icon: 'calendar',
   type: 'app'
 },
 {
