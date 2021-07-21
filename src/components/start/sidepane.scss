@@ -1,5 +1,6 @@
 .sidePane {
-  --nfheight: 200px;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0;
   right: 0;
@@ -20,7 +21,7 @@
 .notifArea {
   position: relative;
   width: 100%;
-  height: calc(100% - var(--nfheight));
+  flex-grow: 1;
 }
 
 .quickSettings {
@@ -43,7 +44,6 @@
 
 .qkbtn {
   width: 60px;
-  height: 36px;
   display: flex;
   margin-bottom: 4px;
   border-radius: 4px;
@@ -54,18 +54,22 @@
   border-bottom-color: rgba(0,0,0, 0.2);
   background: rgba(255, 255, 255, 0.9);
   border: solid 0.1px rgba(17, 17, 17, 0.1);
+  transition: background 0.2s ease-in-out;
 
   &[data-state="true"] {
     background: rgb(0, 90, 255);
 
     .qktext {
       color: #ececec;
+      margin-top: 0.5rem;
     }
   }
 }
 
 .qktext {
   font-size: 0.6em;
+  margin-top: 0.5rem;
+  transition: color 0.2s ease-in-out;
 }
 
 .managentf {
