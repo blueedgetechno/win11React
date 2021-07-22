@@ -6,7 +6,7 @@
 
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
 
-Website🌈: [win11.blueedge.me](https://win11.blueedge.me)
+ #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
 ![home](./public/img/home.png)
 
@@ -33,7 +33,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 - [ ] Startup and Lock screen
 - [ ] Themes and Background
 
-📑 [suggest more](https://github.com/blueedgetechno/windows11/issues/new?title=New+Suggestion&body=)
+📑 [suggest more](https://github.com/blueedgetechno/windows11/issues/new/choose)
 
 # Stack
 
@@ -53,11 +53,11 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 
 - Can I contribute?
-  - Yes, you can, open an issue or create a pull request.
+  - Yes, you can! Open an issue, create a pull request or head over to [discussions](https://github.com/blueedgetechno/windows11/discussions).
 
 
 - Where did you get the inspiration from, if you have?
-  - I got the inspiration from [this youtube video](https://www.youtube.com/watch?v=OtOmxa9UMe8)
+  - I got the inspiration from [this youtube video](https://www.youtube.com/watch?v=OtOmxa9UMe8).
 
 
 - What is the answer of Life, the Universe, and Everything?
