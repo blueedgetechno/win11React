@@ -7,6 +7,37 @@ import * as Actions from '../../actions';
 
 export const ActMenu = ()=>{
   const menu = useSelector(state=>state.menus);
+  const {abpos, isLeft} = useSelector(state=>{
+    var acount = state.menus.menus[state.menus.opts].length;
+    var tmpos = {
+      'top': state.menus.top,
+      'left': state.menus.left
+    }, tmpleft = false;
+
+    var wnwidth = window.innerWidth,
+        wnheight = window.innerHeight;
+
+    var ewidth = 200,
+        eheight = acount*18.8;
+
+    tmpleft = (wnwidth - tmpos.left) > 360;
+    if(wnwidth - tmpos.left < ewidth){
+      tmpos.right = wnwidth - tmpos.left;
+      tmpos.left = null;
+    }
+
+
+    if(wnheight - tmpos.top < eheight){
+      tmpos.bottom = wnheight - tmpos.top;
+      tmpos.top = null;
+    }
+
+    return {
+      abpos: tmpos,
+      isLeft: tmpleft
+    };
+  })
+
   const dispatch = useDispatch();
 
   const clickDispatch = (event)=>{
@@ -54,44 +85,10 @@ export const ActMenu = ()=>{
     return mnode;
   }
 
-  const returnPos = ()=>{
-    var tmpos = {
-      'top': menu.top,
-      'left': menu.left
-    }
-
-
-    var wnwidth = window.innerWidth,
-        wnheight = window.innerHeight;
-
-    var ele = document.getElementById('actmenu');
-    if(ele){
-      var ewidth = getComputedStyle(ele).getPropertyValue('width').replace("px","");
-      var eheight = getComputedStyle(ele).getPropertyValue('height').replace("px","");
-
-      eheight = eheight=="auto"?0:eheight;
-      ewidth = parseInt(ewidth) + 2;
-      eheight = parseInt(eheight) + 10;
-      // console.log(ewidth, eheight);
-    }
-
-    if(wnwidth - tmpos.left < ewidth){
-      tmpos.right = wnwidth - tmpos.left;
-      tmpos.left = null;
-    }
-
-    if(wnheight - tmpos.top < eheight){
-      tmpos.bottom = wnheight - tmpos.top;
-      tmpos.top = null;
-    }
-
-    return tmpos;
-  }
-
   return (
     <div className="actmenu" id="actmenu" style={{
-      ...returnPos(),
-      '--prefix':'MENU'}} data-hide={menu.hide}>
+      ...abpos,
+      '--prefix':'MENU'}} data-hide={menu.hide} data-left={isLeft}>
       {menuobj(menu.menus[menu.opts])}
     </div>
   );

@@ -91,7 +91,7 @@ export const EdgeMenu = ()=>{
             <Icon src="right" onClick={action} payload={5} width={14} ui margin="0 8px"/>
             <Icon fafa="faRedo" onClick={action} payload={0} width={14} color="#343434" margin="0 8px"/>
             <Icon fafa="faHome" onClick={action} payload={1} width={18} color="#343434" margin="0 16px"/>
-            <div className="addCont relative">
+            <div className="addCont relative flex items-center">
               <input
                 className="ltShad w-full bg-gray-0 h-6 px-4 text-gray-900"
                 onKeyDown={action}
@@ -99,9 +99,9 @@ export const EdgeMenu = ()=>{
                 defaultValue={url}
                 placeholder="Type url or a query to search"
                 type="text"/>
-                <Icon className="absolute top-0 right-0 z-1 handcr"
+                <Icon className="z-1 handcr"
                   src="google" ui onClick={action}
-                  payload={2} width={16} margin="7px 10px"/>
+                  payload={2} width={14} margin="0 10px"/>
             </div>
           </div>
           <div className="siteFrame flex-grow overflow-hidden">

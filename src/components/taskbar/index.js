@@ -49,11 +49,15 @@ const Taskbar = ()=>{
   return (
     <div className="taskbar">
       <div className="taskcont">
-        <div className="tasksCont" data-side={tasks.align}>
+        <div className="tasksCont" data-menu="task" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src='home' width={22} click='STARTOGG'/>
-            <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
-            <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
+            {tasks.search?(
+              <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
+            ):null}
+            {tasks.widgets?(
+              <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
+            ):null}
             {tasks.apps.map((task,i)=>{
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z==apps.hz;

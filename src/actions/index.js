@@ -22,6 +22,7 @@ export const changeIconSize = (dispatch, size, menu) =>{
     tmpMenu.menus.desk[0].opts[2].dot = true;
   }
 
+  refresh(dispatch, "", tmpMenu);
   dispatch({type: "DESKSIZE", payload: isize});
   dispatch({type: "MENUCHNG", payload: tmpMenu});
 }
@@ -49,5 +50,24 @@ export const changeSort = (dispatch, sort, menu) =>{
 
   refresh(dispatch, "", tmpMenu);
   dispatch({type: "DESKSORT", payload: sort});
+  dispatch({type: "MENUCHNG", payload: tmpMenu});
+}
+
+export const changeTaskAlign = (dispatch, align, menu) =>{
+  var tmpMenu = {...menu};
+  if(
+    tmpMenu.menus.task[0].opts[align=="left"?0:1].dot
+  ) return;
+
+  tmpMenu.menus.task[0].opts[0].dot = false;
+  tmpMenu.menus.task[0].opts[1].dot = false;
+
+  if(align=="left"){
+    tmpMenu.menus.task[0].opts[0].dot = true;
+  }else{
+    tmpMenu.menus.task[0].opts[1].dot = true;
+  }
+
+  dispatch({type: "TASKTOG"});
   dispatch({type: "MENUCHNG", payload: tmpMenu});
 }

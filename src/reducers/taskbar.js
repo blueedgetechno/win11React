@@ -7,7 +7,9 @@ const defState = {
   prev: false,
   prevApp: '',
   prevPos: 0,
-  align: 'center'
+  align: 'center',
+  search: true,
+  widgets: true
 };
 
 const taskReducer = (state = defState, action) => {
@@ -37,6 +39,14 @@ const taskReducer = (state = defState, action) => {
     case 'TASKPHIDE':
       return {
         ...state, prev: false
+      };
+    case 'TASKSRCH':
+      return {
+        ...state, search: action.payload=="true"
+      };
+    case 'TASKWIDG':
+      return {
+        ...state, widgets: action.payload=="true"
       };
     default:
       return state;
