@@ -8,6 +8,7 @@ import './searchpane.scss';
 import axios from 'axios';
 
 export const StartMenu = () => {
+  const {align} = useSelector(state=>state.taskbar);
   const start = useSelector(state => {
     var arr = state.startmenu,
       ln = (6 - arr.pnApps.length % 6) % 6;
@@ -94,7 +95,8 @@ export const StartMenu = () => {
   }, [query])
 
   return (
-    <div className="startMenu dpShad" data-hide={start.hide} style={{'--prefix':'START'}}>
+    <div className="startMenu dpShad" data-hide={start.hide}
+      style={{'--prefix':'START'}} data-align={align}>
       {start.menu?(
         <><div className="stmenu" data-allapps={start.showAll}>
           <div className="menuUp">

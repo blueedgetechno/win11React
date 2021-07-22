@@ -15,7 +15,7 @@
   font-size: 0.8em;
   transition: all ease-in-out 200ms;
 
-  &:hover{
+  &:hover {
     background: rgba(255, 255, 255, 0.25);
   }
 
@@ -31,9 +31,21 @@
   --roundRad: 6px;
   position: absolute;
   bottom: 10px;
-  left: calc(50% - 260px);
   width: 520px;
+  left: 0;
+  // left: calc(50% - 260px);
   // height: 200px;
+  &[data-align="center"]{
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    text-align: center;
+  }
+
+  &[data-align="left"]{
+    left: 8px;
+  }
+
   background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -55,11 +67,11 @@
   width: 520px;
   height: 480px;
 
-  &[data-allapps='false']{
+  &[data-allapps='false'] {
     transition: ease-in-out 200ms;
   }
 
-  &[data-allapps='true']{
+  &[data-allapps='true'] {
     margin-left: -520px;
     transition: ease-in-out 200ms;
   }
@@ -151,20 +163,20 @@
     align-items: center;
     margin: 10px 0;
 
-    .pnIcon::after{
+    .pnIcon::after {
       content: "";
       position: absolute;
       width: 0;
       height: 0;
       top: -12px;
-      padding: 0 42px 60px 42px;
+      padding: 0 42px 60px;
       background: rgba(255, 255, 255, 0);
       z-index: -1;
       transition: all ease-in-out 100ms;
       border-radius: 4px;
     }
 
-    .pnIcon:hover::after{
+    .pnIcon:hover::after {
       background: rgba(255, 255, 255, 0.5);
     }
 
@@ -196,7 +208,7 @@
   pointer-events: none;
 }
 
-.recApps{
+.recApps {
   margin-top: 12px;
 }
 
@@ -233,11 +245,11 @@
   }
 }
 
-.appCont{
+.appCont {
   position: relative;
   padding: 36px 4px 36px 36px;
 
-  .stAcbar{
+  .stAcbar {
     padding-left: 12px;
     padding-right: 44px;
   }
@@ -247,14 +259,13 @@
   margin-top: 10px;
   display: flex;
   flex-direction: column;
-
   height: 400px;
   overflow-x: visible;
   overflow-y: scroll;
   transition: all ease-in-out 200ms;
   transform-origin: center;
 
-  &[data-alpha='true']{
+  &[data-alpha='true'] {
     transform: scale(0);
     opacity: 0;
     pointer-events: none;
@@ -266,7 +277,7 @@
     background-color: transparent;
   }
 
-  &:hover::-webkit-scrollbar{
+  &:hover::-webkit-scrollbar {
     display: block;
   }
 
@@ -284,19 +295,19 @@
     z-index: 1;
     cursor: pointer;
 
-    &:hover::after{
+    &:hover::after {
       content: "";
       position: absolute;
       width: 94%;
       height: 100%;
       top: 0;
-      left: 0px;
+      left: 0;
       z-index: -1;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.4);
     }
 
-    .ltName{
+    .ltName {
       width: 18px;
       text-align: center;
       font-size: 0.76em;
@@ -314,7 +325,7 @@
   }
 }
 
-.alphaBox{
+.alphaBox {
   position: absolute;
   top: 14%;
   width: 94%;
@@ -325,14 +336,14 @@
   transform-origin: center;
   transition: all ease-in-out 200ms;
 
-  &[data-alpha='false']{
+  &[data-alpha='false'] {
     opacity: 0;
     transform: scale(2);
     pointer-events: none;
   }
 }
 
-.alphaCont{
+.alphaCont {
   margin-left: -48px;
   width: 160px;
   height: 280px;
@@ -342,12 +353,12 @@
   color: #010101;
   cursor: pointer;
 
-  .allApp{
+  .allApp {
     display: grid;
     place-items: center;
   }
 
-  .dullApp{
+  .dullApp {
     cursor: default;
     color: rgba(0, 0, 0, 0.36);
   }

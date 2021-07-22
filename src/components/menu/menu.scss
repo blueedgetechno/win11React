@@ -2,13 +2,19 @@
   position: absolute;
   width: 200px;
   background: #f7f7f7;
-  z-index: 9998;
+  z-index: 10000;
   animation: fadein 200ms ease-in-out;
   padding: 4px 0;
-  border: solid 1px #aaa;
+  border: solid 1px #ccc;
+  border-radius: 2px;
 
   &[data-hide="true"]{
     display: none;
+  }
+
+  &[data-left="false"] .minimenu{
+    left: unset;
+    right: 98%;
   }
 }
 

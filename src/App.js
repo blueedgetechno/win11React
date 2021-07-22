@@ -21,13 +21,7 @@ function App() {
   const apps = useSelector(state => state.apps);
   const dispatch = useDispatch();
 
-  window.addEventListener("contextmenu", e => {
-    e. preventDefault();
-    dispatch({ type: 'GARBAGE'});
-  });
-
-  window.addEventListener("click", event => {
-    // console.log(event.target);
+  const afterMath = (event)=>{
     var ess = [
       ["START","STARTHID"],
       ["PANE","PANEHIDE"],
@@ -49,24 +43,33 @@ function App() {
         dispatch({type: item[1]});
       }
     });
+  }
+
+  window.addEventListener("contextmenu", e => {
+    afterMath(e);
+    e.preventDefault();
+    // dispatch({ type: 'GARBAGE'});
+    var data = {
+      top: e.clientY,
+      left: e.clientX
+    };
+
+    if(e.target.dataset.menu!=null){
+      data.menu = e.target.dataset.menu;
+      dispatch({ type: 'MENUSHOW', payload: data});
+    }
+
   });
 
-  const rightClick = (e)=>{
-    if(e.target.getAttribute('class')=="desktop"){
-      dispatch({
-        type: 'MENUSHOW',
-        payload: {
-          top: e.clientY,
-          left: e.clientX
-        }
-      });
-    }
-  }
+  window.addEventListener("click", e => {
+    // console.log(event.target);
+    afterMath(e);
+  });
 
   return (
     <div className="App">
       <Background/>
-      <div className="desktop" onContextMenu={rightClick}>
+      <div className="desktop" data-menu="desk">
         <DesktopApp/>
         {Object.keys(Applications).map((key,idx)=>{
           var WinApp = Applications[key];
