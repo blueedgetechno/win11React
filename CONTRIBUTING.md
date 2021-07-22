@@ -17,7 +17,7 @@ If you spot something new, [open an issue](https://github.com/blueedgetechno/win
 
 - Fork using [GitHub Desktop](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/getting-started-with-github-desktop)
 
-- Fork using the [command line]((https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
+- Fork using the [command line](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)
 
 - Fork with [GitHub Codespaces](https://github.com/features/codespaces):
 
