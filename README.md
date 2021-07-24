@@ -2,7 +2,7 @@
 
 [![Follow me](https://img.shields.io/github/followers/blueedgetechno?label=follow%20me&style=social)](https://github.com/blueedgetechno)
 [![Follow Twitter](https://img.shields.io/twitter/follow/blueedgetechno?label=Follow%20me&style=social)](https://twitter.com/blueedgetechno)
-![Vercel](https://img.shields.io/github/deployments/blueedgetechno/windows11/production?color=blue&label=Vercel&logo=vercel&logoColor=white)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c6e89fb6-b2f1-48a8-b5d0-94a29fc632f9/deploy-status)](https://app.netlify.com/sites/win11blue/deploys)
 [![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.com/invite/Fz3Dkc4S)
 
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
