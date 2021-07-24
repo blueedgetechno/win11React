@@ -356,5 +356,13 @@ export default [
   type: 'action',
   action: 'EXTERNAL',
   payload: 'https://blueedge.me/unescape'
+},
+{
+  idx: 56,
+  name: 'Discord',
+  icon: 'discord',
+  type: 'app',
+  action: 'EXTERNAL',
+  payload: 'https://discord.gg/Fz3Dkc4S'
 }
 ];
