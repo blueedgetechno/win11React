@@ -3,6 +3,7 @@
 [![Follow me](https://img.shields.io/github/followers/blueedgetechno?label=follow%20me&style=social)](https://github.com/blueedgetechno)
 [![Follow Twitter](https://img.shields.io/twitter/follow/blueedgetechno?label=Follow%20me&style=social)](https://twitter.com/blueedgetechno)
 ![Vercel](https://img.shields.io/github/deployments/blueedgetechno/windows11/production?color=blue&label=Vercel&logo=vercel&logoColor=white)
+[![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.com/invite/Fz3Dkc4S)
 
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
 
@@ -53,7 +54,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 
 - Can I contribute?
-  - Yes, you can! Open an issue, create a pull request or head over to [discussions](https://github.com/blueedgetechno/windows11/discussions).
+  - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/windows11/discussions) or join the [discord](https://discord.gg/Fz3Dkc4S).
 
 
 - Where did you get the inspiration from, if you have?
