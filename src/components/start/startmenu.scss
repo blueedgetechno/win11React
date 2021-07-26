@@ -162,6 +162,19 @@
     flex-direction: column;
     align-items: center;
     margin: 10px 0;
+    position: relative;
+
+    &[value="true"] .pnIcon::before{
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 3px;
+      height: 3px;
+      border: solid 1px #88b7ee;
+      border-radius: 6px;
+      background: #1372e3;
+    }
 
     .pnIcon::after {
       content: "";

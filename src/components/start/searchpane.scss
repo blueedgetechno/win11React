@@ -1,6 +1,7 @@
 .searchMenu{
   min-height: 500px;
   padding: 12px;
+  text-align: left;
 }
 
 .searchBar{
@@ -24,10 +25,11 @@
 
 .opts div{
   border: solid 0 #1f4aff;
-}
+  cursor: pointer;
 
-.border-b-2{
-  border-bottom-width: 2px !important;
+  &[value="true"]{
+    border-bottom-width: 2px;
+  }
 }
 
 .leftSide{

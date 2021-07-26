@@ -41,7 +41,7 @@ export const WnTerminal = ()=>{
     var tmpStack = [...stack];
     tmpStack.push(pwd+">"+cmd);
     var arr = cmd.split(" "),
-        type = arr[0].trim(), arg = arr.splice(1,arr.length).join(" ") || "";
+        type = arr[0].trim().toLowerCase(), arg = arr.splice(1,arr.length).join(" ") || "";
 
     arg = arg.trim();
 
