@@ -113,9 +113,9 @@ export const StartMenu = () => {
                   return app.empty?(
                     <div key={i} className="pnApp pnEmpty"></div>
                   ):(
-                    <div key={i} className="pnApp">
-                      <Icon className="pnIcon" src={app.icon} width={24}
-                        onClick={clickDispatch} click={app.action}
+                    <div key={i} className="pnApp" onClick={clickDispatch} data-action={app.action}
+                        data-payload={app.payload || "full"}>
+                      <Icon className="pnIcon" src={app.icon} width={24} click={app.action}
                         payload={app.payload || "full"}/>
                       <div className="appName">{app.name}</div>
                     </div>
