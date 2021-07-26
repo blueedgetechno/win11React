@@ -25,11 +25,11 @@ const menuReducer = (state = defState, action) => {
   switch (action.type) {
     case 'STARTSHW':
       return {
-        ...state, hide: false
+        ...state, menu: true, hide: false
       };
     case 'STARTHID':
       return {
-        ...state, hide: true, menu: true, showAll: false
+        ...state, hide: true, showAll: false
       };
     case 'STARTOGG':
       return {

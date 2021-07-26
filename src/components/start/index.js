@@ -54,8 +54,13 @@ export const StartMenu = () => {
 
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
+  const [atab, setTab] = useState("All");
 
   const dispatch = useDispatch();
+  const tabSw = (e)=>{
+    setTab(e.target.innerText.trim());
+  }
+
   const clickDispatch = (event) => {
     var action = {
       type: event.target.dataset.action,
@@ -113,8 +118,9 @@ export const StartMenu = () => {
                   return app.empty?(
                     <div key={i} className="pnApp pnEmpty"></div>
                   ):(
-                    <div key={i} className="pnApp" onClick={clickDispatch} data-action={app.action}
-                        data-payload={app.payload || "full"}>
+                    <div key={i} className="pnApp" value={app.action!=null}
+                      onClick={clickDispatch} data-action={app.action}
+                      data-payload={app.payload || "full"}>
                       <Icon className="pnIcon" src={app.icon} width={24} click={app.action}
                         payload={app.payload || "full"}/>
                       <div className="appName">{app.name}</div>
@@ -213,8 +219,8 @@ export const StartMenu = () => {
           <div className="powerCtrl">
             <Icon src="power" ui width={14} invert/>
           </div>
-        </div></>
-      ):(
+        </div>
+      </>):(
         <div className="searchMenu">
           <div className="searchBar">
             <Icon src="search" ui width={16}/>
@@ -224,11 +230,11 @@ export const StartMenu = () => {
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 text-gray-700 flex justify-between">
-              <div className="border-b-2">All</div>
-              <div>Apps</div>
-              <div>Documents</div>
-              <div>Web</div>
-              <div>More</div>
+              <div value={atab=="All"} onClick={tabSw}>All</div>
+              <div value={atab=="Apps"} onClick={tabSw}>Apps</div>
+              <div value={atab=="Documents"} onClick={tabSw}>Documents</div>
+              <div value={atab=="Web"} onClick={tabSw}>Web</div>
+              <div value={atab=="More"} onClick={tabSw}>More</div>
             </div>
           </div>
           <div className="shResult w-full flex justify-between">
@@ -369,8 +375,16 @@ export const SidePane = () => {
       payload: event.target.dataset.payload
     };
 
-    dispatch(action);
+    if(action.type) dispatch(action);
   }
+
+  useEffect(()=>{
+    if(paneApps.quicks[2].state){
+      document.body.dataset.sepia = true;
+    }else{
+      document.body.dataset.sepia = false;
+    }
+  })
 
   return (
     <div className="sidePane dpShad" data-hide={paneApps.hide} style={{'--prefix':'PANE'}}>

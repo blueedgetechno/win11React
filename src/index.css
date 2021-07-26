@@ -23,6 +23,11 @@ body {
   overflow: hidden;
 }
 
+body[data-sepia="true"]{
+  filter: sepia(0.25);
+  transition: 1s ease-in-out;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

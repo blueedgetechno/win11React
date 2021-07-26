@@ -65,10 +65,10 @@ const Taskbar = ()=>{
                 <div onMouseOver={!isActive && !isHidden && showPrev}
                   value={task.icon}>
                   <Icon key={i} className="tsIcon"
-                        open={isHidden?null:true}
-                        active={isActive}
-                        click={task.action} payload="togg"
-                        src={task.icon} width={22}/>
+                    open={isHidden?null:true}
+                    active={isActive}
+                    click={task.action} payload="togg"
+                    src={task.icon} width={22}/>
                 </div>
               )
             })}
