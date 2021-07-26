@@ -176,10 +176,6 @@
       border-radius: 4px;
     }
 
-    .pnIcon:hover::after {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
     .appName {
       width: 24px;
       display: flex;
@@ -190,6 +186,7 @@
       text-align: center;
       white-space: nowrap;
       justify-content: center;
+      cursor: default;
     }
 
     &:nth-child(6n+1) {
@@ -201,6 +198,10 @@
       width: 10%;
       align-items: flex-end;
     }
+  }
+
+  .pnApp:hover .pnIcon::after {
+    background: rgba(255, 255, 255, 0.5);
   }
 }
 
