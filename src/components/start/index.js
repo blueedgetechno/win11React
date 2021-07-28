@@ -468,7 +468,7 @@ export const WidPane = () => {
               <div className="wthInfo">
                 <div className="wthTemp">
                   <Icon
-                    src={`https://www.metaweather.com/static/img/weather/png/64/${
+                    src={widget.data.weather.iconFrom === "owm" ? widget.data.weather.icon : `https://www.metaweather.com/static/img/weather/png/64/${
                       widget.data.weather.icon
                     }.png`} ext
                     width={32}/>
@@ -497,9 +497,9 @@ export const WidPane = () => {
                     <div className="weekDay">
                       <div>{i==0?"Today":item.day}</div>
                       <Icon
-                        src={`https://www.metaweather.com/static/img/weather/png/64/${
-                          item.icon
-                        }.png`} ext
+                        src={item.iconFrom === "owm" ? item.icon : `https://www.metaweather.com/static/img/weather/png/64/${
+                            item.icon
+                          }.png`} ext
                         width={24}/>
 
                       <div className="tempCont">{item.min}º</div>

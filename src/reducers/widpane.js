@@ -81,6 +81,50 @@ const defState = {
   updated: false
 };
 
+const openWeatherMapAuth = "6dae2ee11ec5267eb03ccc630a67139c";
+axios.get("http://ip-api.com/json/")
+    .then((response)=>{
+        //Read API Result from localstorage
+        let weatherStorage = JSON.parse(localStorage.getItem("weatherInfo"));
+        if(weatherStorage == null)
+            weatherStorage = {};
+        if(weatherStorage.city == response.data.city && weatherStorage.day == new Date().getDay()){
+            defState.data.weather = weatherStorage.data;
+            return;
+        }
+        defState.data.weather.city = response.data.city;
+        defState.data.weather.country = response.data.country;
+        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.lat}&lon=${response.data.lon}&units=metric&appid=${openWeatherMapAuth}`)
+            .then((response)=>{
+                defState.data.weather.wstate = response.data.current.weather[0].main
+                defState.data.weather.temp = Math.round(response.data.current.temp)
+                defState.data.weather.rain = response.data.current.humidity
+                defState.data.weather.wind = Math.round(response.data.current.wind_gust)
+                defState.data.weather.iconFrom = "owm";
+                defState.data.weather.icon = `https://openweathermap.org/img/wn/${response.data.current.weather[0].icon}@2x.png`;
+                for(let i = 0;i < 4;i++){
+                    console.log(`https://openweathermap.org/img/wn/${response.data.daily[i].weather[0].icon}@2x.png`)
+                    defState.data.weather.days[i] = {
+                        day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
+                            (new Date().getDay() + i) % 7
+                        ],
+                        icon: `https://openweathermap.org/img/wn/${response.data.daily[i].weather[0].icon}@2x.png`,
+                        iconFrom: "owm",
+                        min: Math.round(response.data.daily[i].temp.min),
+                        max: Math.round(response.data.daily[i].temp.max)
+                        }
+                }
+                //Save API Result
+                weatherStorage = {
+                    city: defState.data.weather.city,
+                    day: new Date().getDay(),
+                    data: defState.data.weather
+                }
+                localStorage.setItem('weatherInfo',JSON.stringify(weatherStorage));
+            })
+    })
+
+
 const widReducer = (state = defState, action) => {
 
   switch (action.type) {
