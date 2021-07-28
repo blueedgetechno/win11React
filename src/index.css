@@ -23,9 +23,22 @@ body {
   overflow: hidden;
 }
 
-body[data-sepia="true"]{
-  filter: sepia(0.25);
-  transition: 1s ease-in-out;
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  z-index: 99999999999;
+  background: #ff00003b;
+  pointer-events: none;
+  transition: all 2s ease;
+}
+body[data-sepia="true"]:before {
+  opacity: 0.8;
 }
 
 code {
