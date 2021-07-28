@@ -224,7 +224,9 @@
 
 .recApps {
   margin-top: 12px;
+  
 }
+
 
 .reApps {
   width: 100%;
@@ -238,6 +240,10 @@
   .rnApp {
     display: flex;
     align-items: center;
+    &:hover {
+      border-radius: 4px;   
+      background: rgba(255, 255, 255, 0.25);
+    }
 
     .acInfo {
       width: 100px;
