@@ -140,11 +140,13 @@ export const StartMenu = () => {
               <div className="reApps">
                 {start.rcApps.slice(0,6).map((app,i)=>{
                   return app.name?(
-                    <div key={i} className="rnApp">
-                      <Icon className="pnIcon" src={app.icon} width={22}/>
+                    <div key={i} className="rnApp" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <img width="10" src=""></img> 
+                      <Icon onClick={clickDispatch} click={app.action} payload={app.payload || "full"} className="pnIcon" src={app.icon} width={22}/>
                       <div className="acInfo">
-                        <div className="appName">{app.name}</div>
-                        <div className="timeUsed">{app.lastUsed}</div>
+                        <div className="appName" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>{app.name}</div>
+                        <div className="timeUsed" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>{app.lastUsed}</div>
+
                       </div>
                     </div>
                   ):null
@@ -193,7 +195,7 @@ export const StartMenu = () => {
             <div className="alphaBox" data-alpha={start.alpha}>
               <div className="alphaCont">
                 <div className="dullApp allApp">
-                  <div className="ltName">&</div>
+                  <div className="ltName"></div>
                 </div>
                 {start.contApps.map((ldx,i)=>{
                   return (
