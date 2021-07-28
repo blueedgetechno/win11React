@@ -195,7 +195,7 @@ export const StartMenu = () => {
             <div className="alphaBox" data-alpha={start.alpha}>
               <div className="alphaCont">
                 <div className="dullApp allApp">
-                  <div className="ltName"></div>
+                  <div className="ltName">&</div>
                 </div>
                 {start.contApps.map((ldx,i)=>{
                   return (
