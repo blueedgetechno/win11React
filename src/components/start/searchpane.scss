@@ -87,6 +87,7 @@
   border-radius: 6px;
 
   &[data-hide="true"] {
-    bottom: -330px;
+    bottom: 10px;
+    transform: translateY(120%);
   }
 }
