@@ -82,7 +82,7 @@ const defState = {
 };
 
 const openWeatherMapAuth = "6dae2ee11ec5267eb03ccc630a67139c";
-axios.get("http://ip-api.com/json/")
+axios.get("https://ipapi.co/json")
     .then((response)=>{
         //Read API Result from localstorage
         let weatherStorage = JSON.parse(localStorage.getItem("weatherInfo"));
@@ -93,8 +93,8 @@ axios.get("http://ip-api.com/json/")
             return;
         }
         defState.data.weather.city = response.data.city;
-        defState.data.weather.country = response.data.country;
-        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.lat}&lon=${response.data.lon}&units=metric&appid=${openWeatherMapAuth}`)
+        defState.data.weather.country = response.data.country_name;
+        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.latitude}&lon=${response.data.longitude}&units=metric&appid=${openWeatherMapAuth}`)
             .then((response)=>{
                 defState.data.weather.wstate = response.data.current.weather[0].main
                 defState.data.weather.temp = Math.round(response.data.current.temp)
