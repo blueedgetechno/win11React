@@ -66,6 +66,10 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
     ![answer](./public/answer.png)
 
+## Contributors
+<a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
+</a>
 
 ## License
 
