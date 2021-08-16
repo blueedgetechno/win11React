@@ -1,0 +1,866 @@
+{
+  "home": [{
+      "name": "Made for you",
+      "desc": "Get better recommendations the more you listen",
+      "cards": [{
+          "type": "mix",
+          "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+          "name": "Daily Mix 1",
+          "desc": "Arijit Singh, Jubin Nautiyal, Darshan Raval and more",
+          "data": []
+        },
+        {
+          "type": "mix",
+          "img": "http://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg",
+          "name": "Daily Mix 2",
+          "desc": "Kavita Seth, Alka Yagnik, Shubha Mudgal and more"
+        }, {
+          "type": "mix",
+          "img": "http://c.saavncdn.com/067/NF-English-2014-500x500.jpg",
+          "name": "Daily Mix 3",
+          "desc": "NF, Billie Eilish, Powfu and more"
+        }, {
+          "type": "mix",
+          "img": "http://c.saavncdn.com/365/Runaway-English-2015-500x500.jpg",
+          "name": "Daily Mix 4",
+          "desc": "AURORA, Ane Brun, SVRCINA and more"
+        }, {
+          "type": "cstm",
+          "img": "http://c.saavncdn.com/editorial/JhankarBeats_saavn_radio_20201215120219_500x500.jpg",
+          "name": "Discover weekly",
+          "desc": "Your weekly mixtape of fresh music. Enjoy new music and deep cuts picked for you. Updates every Monday."
+        }, {
+          "type": "cstm",
+          "img": "http://c.saavncdn.com/editorial/Chill_saavn_radio_500x500.jpg",
+          "name": "Chill station",
+          "desc": "Arrive! Your one stop shop to relax and groove."
+        }, {
+          "type": "mix",
+          "img": "http://c.saavncdn.com/artists/Taylor_Swift_150x150.jpg",
+          "name": "Daily Mix 5",
+          "desc": "Taylor Swift, Katy Perry, Sara Kays and more"
+        }
+      ]
+    },
+    {
+      "name": "Recently Played",
+      "cards": [{
+        "type": "song",
+        "img": "https://c.saavncdn.com/228/Ek-Nazar-Hindi-2020-20200518060806-500x500.jpg",
+        "name": "Ek Nazar",
+        "desc": "Kavita Seth"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/323/Better-Days-English-2020-20200325160343-500x500.jpg",
+        "name": "Better Days",
+        "desc": "OneRepublic"
+      }, {
+        "type": "artist",
+        "img": "https://c.saavncdn.com/artists/Sanam_-Band-_002_20201020080410_500x500.jpg",
+        "name": "Sanam",
+        "desc": "Band"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/066/R-I-S-E-English-2020-20201119060656-500x500.jpg",
+        "name": "RISE",
+        "desc": "By WILLOW, Jahnavi Harrison",
+        "data": "23601363"
+      }]
+    },
+    {
+      "name": "Favorite Songs",
+      "cards": [{
+        "type": "song",
+        "img": "https://c.saavncdn.com/994/Tamasha-Hindi-2015-500x500.jpg",
+        "name": "Agar Tum Saath Ho",
+        "desc": "Alka Yagnik, Arijit Singh"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/565/Human-English-2016-500x500.jpg",
+        "name": "Human",
+        "desc": "Rag'N'Bone Man"
+      }, {
+        "type": "song",
+        "img": "http://c.saavncdn.com/855/Homesick-English-2018-20181025170408-500x500.jpg",
+        "name": "Falling",
+        "desc": "Trevor Daniel"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/790/Gangs-Of-Wasseypur-2012-500x500.jpg",
+        "name": "Ik Bagal",
+        "desc": "Piyush Mishra"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/032/Jaane-Woh-Kaise-Sanam-Hindi-2017-20171204-500x500.jpg",
+        "name": "Jaane Woh Kaise",
+        "desc": "Sanam (Band)"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/165/Stand-Up-From-Harriet--English-2019-20200414191117-500x500.jpg",
+        "name": "Stand Up (From Harriet)",
+        "desc": "Cynthia Erivo"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/562/Different-World-English-2018-20181130144209-500x500.jpg",
+        "name": "Lily",
+        "desc": "Alan Walker, K-391, ..."
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/065/Citylights-Hindi-2014-20190607111647-500x500.jpg",
+        "name": "Muskurane",
+        "desc": "Arijit Singh, Jeet Gannguli"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/702/Dee-MC--Hindi-2019-20191015104339-500x500.jpg",
+        "name": "Rang",
+        "desc": "Dee MC (Deepa Unnikrishnan)"
+      }, {
+        "type": "song",
+        "img": "https://c.saavncdn.com/024/Madness-English-2016-500x500.jpg",
+        "name": "Game of Survival",
+        "desc": "Ruelle"
+      }]
+    }, {
+      "name": "Favorite Albums",
+      "cards": [{
+        "type": "album",
+        "img": "https://c.saavncdn.com/531/Gulaal-Hindi-2009-500x500.jpg",
+        "name": "Gulaal",
+        "desc": "Piyush Mishra",
+        "data": "1028531"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-500x500.jpg",
+        "name": "Raincoat",
+        "desc": "Hariharan, Meena Mishra",
+        "data": "15827352"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/742/A-Star-Is-Born-Soundtrack-Without-Dialogue--English-2018-20181004234940-500x500.jpg",
+        "name": "A Star Is Born Soundtrack",
+        "desc": "Lady Gaga, Bradley Cooper",
+        "data": "14014305"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/228/Lover-English-2019-20190823031817-500x500.jpg",
+        "name": "Lover",
+        "desc": "Taylor Swift",
+        "data": "17037435"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/430/Aashiqui-2-Hindi-2013-500x500.jpg",
+        "name": "Aashiqui 2",
+        "desc": "Palak Muchhal, Arijit Singh",
+        "data": "1139549"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/369/I-Lost-a-Friend-English-2019-20200104144314-500x500.jpg",
+        "name": "I Lost a Friend",
+        "desc": "FINNEAS",
+        "data": "15655769"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/078/MELT-English-2018-20180919230507-500x500.jpg",
+        "name": "MELT",
+        "desc": "SHAED",
+        "data": "13912413"
+      }, {
+        "type": "album",
+        "img": "http://c.saavncdn.com/836/Malang-Unleash-The-Madness-Hindi-2020-20200619175502-500x500.jpg",
+        "name": "Malang",
+        "desc": "2020",
+        "data": "18574421"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/585/Cradles-English-2019-20191028124508-500x500.jpg",
+        "name": "Cradles",
+        "desc": "Sub Urban",
+        "data": "17442635"
+      }, {
+        "type": "album",
+        "img": "https://c.saavncdn.com/662/Chalo-Chalein-Hindi-2021-20210208203817-500x500.jpg",
+        "name": "Chalo Chalein",
+        "desc": "Ritviz",
+        "data": "25211111"
+      }]
+    }, {
+      "name": "Favorite Artists",
+      "cards": [{
+        "type": "artist",
+        "img": "https://c.saavncdn.com/artists/Ed_Sheeran_500x500.jpg",
+        "name": "Ed Sheeran",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "img": "https://c.saavncdn.com/artists/Selena_Gomez_500x500.jpg",
+        "name": "Selena Gomez",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Neeti Mohan",
+        "img": "http://c.saavncdn.com/artists/Neeti_Mohan_003_20200211100510_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Alan Walker",
+        "img": "http://c.saavncdn.com/artists/Alan_Walker_002_20190507112228_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Armaan Malik",
+        "img": "http://c.saavncdn.com/artists/Armaan_Malik_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Shalmali",
+        "img": "http://c.saavncdn.com/artists/Shalmali_Kholgade_004_20200226073940_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Justin Bieber",
+        "img": "http://c.saavncdn.com/artists/Justin_Bieber_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "DJ Snake",
+        "img": "http://c.saavncdn.com/artists/Dj_Snake_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Sia",
+        "img": "http://c.saavncdn.com/artists/Sia_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Arijit Singh",
+        "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Alessia Cara",
+        "img": "http://c.saavncdn.com/artists/Alessia_Cara_20190306095839_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "The Chainsmokers",
+        "img": "http://c.saavncdn.com/artists/The_Chainsmokers_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Alec Benjamin",
+        "img": "http://c.saavncdn.com/artists/Alec_Benjamin_000_20191129075848_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Darshan Raval",
+        "img": "http://c.saavncdn.com/artists/Darshan_Raval_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Atif Aslam",
+        "img": "http://c.saavncdn.com/artists/Atif_Aslam_500x500.jpg",
+        "desc": "Artist"
+      }, {
+        "type": "artist",
+        "name": "Monali Thakur",
+        "img": "http://c.saavncdn.com/artists/Monali_Thakur_500x500.jpg",
+        "desc": "Artist"
+      }]
+    }
+  ],
+  "queue": [{
+      "id": "Szz0RZFb",
+      "type": "",
+      "song": "Piya Tora Kaisa Abhiman",
+      "album": "Raincoat",
+      "year": "2004",
+      "music": "Debojyoti Mishra",
+      "music_id": "468220",
+      "primary_artists": "Shubha Mudgal",
+      "primary_artists_id": "455422",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Shubha Mudgal",
+      "starring": "",
+      "image": "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
+      "label": "Shree Venkatesh Films Pvt. Ltd.",
+      "albumid": "15827352",
+      "language": "hindi",
+      "origin": "none",
+      "play_count": 78975,
+      "copyright_text": "© 2004 Shree Venkatesh Films Pvt. Ltd.",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "Saghan saawan laayi, Kadam bahaar,",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyaKPFtADTuvu4rocgFDKQhaAiyA5/qPnrL4mi5MRapTC0+H7ETuHj0Rw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/Fg01FOjb5TD+LUYkku8AIEF64PPwZkdZNilJ+ffCeo8XrwX+vT17BTh",
+      "media_preview_url": "https://preview.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/piya-tora-kaisa-abhiman/IxIRASZqcVE",
+      "album_url": "https://www.jiosaavn.com/album/raincoat/pRBHHCeTDJ4_",
+      "duration": "297",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Debojyoti Mishra": "468220",
+        "Shubha Mudgal": "455422",
+        "Rituparno Ghosh": "483792"
+      },
+      "release_date": "2004-10-09",
+      "triller_available": false,
+      "label_url": "/label/shree-venkatesh-films-pvt.-ltd.-albums/9ijex,8qafE_"
+    },
+    {
+      "id": "cgM-pRO9",
+      "type": "",
+      "song": "Ek Nazar",
+      "album": "Ek Nazar",
+      "year": "2020",
+      "music": "Kavita Seth",
+      "music_id": "459150",
+      "primary_artists": "Kavita Seth",
+      "primary_artists_id": "459150",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Kavita Seth",
+      "starring": "",
+      "image": "https://c.saavncdn.com/228/Ek-Nazar-Hindi-2020-20200518060806-150x150.jpg",
+      "label": "Kavita Seth",
+      "albumid": "20439730",
+      "language": "hindi",
+      "origin": "none",
+      "play_count": 600,
+      "copyright_text": "℗ 2020 Kavita Seth",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "khwaja piya mere khwaja piya",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyqfp4r9j2jAQUBmMLeD9qso5gObsySfxQloAB4OSW84uIRevHKi/SIRw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FjwZFNYYkyeq2a8CtfHwAz3DXF171BWwxb1LKMsBntIdd1UlIS+MvSu",
+      "media_preview_url": "https://preview.saavncdn.com/228/ca09b6e6d9f3f34f40c433fe9d34afdc_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/ek-nazar/Ew8mHARieAo",
+      "album_url": "https://www.jiosaavn.com/album/ek-nazar/Uj1mQk-qzFk_",
+      "duration": "444",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Kavita Seth": "459150"
+      },
+      "release_date": "2020-05-21",
+      "triller_available": false,
+      "label_url": "/label/kavita-seth-albums/jjHf1RjCLcQ_"
+    },
+    {
+      "id": "mPk9X_H_",
+      "type": "",
+      "song": "Akele Hum Nadiya Kinare",
+      "album": "Raincoat",
+      "year": "2004",
+      "music": "Debojyoti Mishra",
+      "music_id": "468220",
+      "primary_artists": "Shubha Mudgal",
+      "primary_artists_id": "455422",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Shubha Mudgal",
+      "starring": "",
+      "image": "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
+      "label": "Shree Venkatesh Films Pvt. Ltd.",
+      "albumid": "15827352",
+      "language": "hindi",
+      "origin": "none",
+      "play_count": 34688,
+      "copyright_text": "© 2004 Shree Venkatesh Films Pvt. Ltd.",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "Sham Dhale Sakhiya Sab",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyJerQT9zZZbNIoQY3eg1EPjLu9Vd6F4kr0vs5nTn0gFTNMCzsKCfNLxw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FhS60gvZ6PDUrOWw2xfQP+DJqCCM59SeuXz2Kv4+ahlrjouenPQafjW",
+      "media_preview_url": "https://preview.saavncdn.com/432/c6d28dd01eb810fd4bda6d98ffd918d3_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/akele-hum-nadiya-kinare/HTgACCxvf2w",
+      "album_url": "https://www.jiosaavn.com/album/raincoat/pRBHHCeTDJ4_",
+      "duration": "139",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Debojyoti Mishra": "468220",
+        "Shubha Mudgal": "455422",
+        "Rituparno Ghosh": "483792"
+      },
+      "release_date": "2004-10-09",
+      "triller_available": false,
+      "label_url": "/label/shree-venkatesh-films-pvt.-ltd.-albums/9ijex,8qafE_"
+    },
+    {
+      "id": "R2GnvPCo",
+      "type": "",
+      "song": "Duniya",
+      "album": "Gulaal",
+      "year": "2009",
+      "music": "Piyush Mishra",
+      "music_id": "464333",
+      "primary_artists": "Piyush Mishra",
+      "primary_artists_id": "464333",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Piyush Mishra",
+      "starring": "",
+      "image": "https://c.saavncdn.com/531/Gulaal-Hindi-2009-150x150.jpg",
+      "label": "",
+      "albumid": "1028531",
+      "language": "hindi",
+      "origin": "none",
+      "play_count": 371860,
+      "copyright_text": "© 2009 Super Cassettes Industries Private Limited",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "ye duniyaa agar mil bhee jae to kya hai",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyUA4AwZnevElsfKX/CMAe6/u0y/t6EWJkPZiOGxmW1HEGFqtPOWzZ5Bw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/Fg2IoATGueTRPK93LUqrSJHDyUicLAhrRaBJb81sefoOKBt9NqbeSdd",
+      "media_preview_url": "https://preview.saavncdn.com/531/bf06da5265af48db7bd2827f2e5f2d62_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/duniya/IlosXwJgdFw",
+      "album_url": "https://www.jiosaavn.com/album/gulaal/zmvsDKoP3lU_",
+      "duration": "405",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Piyush Mishra": "464333"
+      },
+      "release_date": "2009-02-27",
+      "vcode": "010910090119596",
+      "vlink": "https://jiotunepreview.jio.com/content/Converted/010910090132341.mp3",
+      "triller_available": false,
+      "label_url": "/label/-albums/6DLuXO3VoTo_"
+    },
+    {
+      "id": "eR_xs61E",
+      "type": "",
+      "song": "Titliaan",
+      "album": "Titliaan",
+      "year": "2020",
+      "music": "",
+      "music_id": "",
+      "primary_artists": "Afsana Khan",
+      "primary_artists_id": "781801",
+      "featured_artists": "Harrdy Sandhu, Sargun Mehta",
+      "featured_artists_id": "672167, 882826",
+      "singers": "Afsana Khan, Harrdy Sandhu, Sargun Mehta",
+      "starring": "",
+      "image": "https://c.saavncdn.com/887/Titliaan-Punjabi-2020-20201107053501-150x150.jpg",
+      "label": "Universal Music India Pvt Ltd.",
+      "albumid": "23384511",
+      "language": "punjabi",
+      "origin": "none",
+      "play_count": 28644728,
+      "copyright_text": "℗ 2020 Desi Melodies",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "yaar mera titlia warga",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDy/3VtMrZNbdC/OCmwkfYuUusbC/jmL5BlztCVedIRkxlreFUsQS8jURw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/Fi1uTmGnnHgpm/zPFwBuh82l8+e/N8yf5CeMqEUUZU1K28ueGiXqrfN",
+      "media_preview_url": "https://preview.saavncdn.com/887/a9ac75cf1159375c3a39cf23981f206f_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/titliaan/FTo0SQcGBnY",
+      "album_url": "https://www.jiosaavn.com/album/titliaan/B1FU,XztHSo_",
+      "duration": "195",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Afsana Khan": "781801",
+        "Harrdy Sandhu": "672167",
+        "Sargun Mehta": "882826",
+        "Jaani": "680475"
+      },
+      "release_date": "2020-11-09",
+      "vcode": "010912291196923",
+      "vlink": "https://jiotunepreview.jio.com/content/Converted/010912291152925.mp3",
+      "triller_available": false,
+      "label_url": "/label/universal-music-india-pvt-ltd.-albums/yCRRDUDuazo_"
+    },
+    {
+      "id": "ZGifVkqI",
+      "type": "",
+      "song": "Humein Bharat Kehte Hain",
+      "album": "Hotel Mumbai",
+      "year": "2019",
+      "music": "Sunny Inder",
+      "music_id": "7155284",
+      "primary_artists": "Stebin Ben",
+      "primary_artists_id": "4670197",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Stebin Ben",
+      "starring": "Dev Patel, Anupam Kher",
+      "image": "https://c.saavncdn.com/704/Hotel-Mumbai-Hindi-2019-20191122162726-150x150.jpg",
+      "label": "Zee Music Co.",
+      "albumid": "17920341",
+      "language": "hindi",
+      "origin": "none",
+      "play_count": 664851,
+      "copyright_text": "© 2019 Zee Music Company",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "hamen  bharat  kehthe hain  hamen  bharat  kehthe hain",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDymqDRUgEqsZis+ODJV7ectLhAHI7tFLDKSgJxdJ80Zs8ajPRq9uNwkRw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FgWSk8tVRFFUdwBtM3t4IuSO7FZDh6v8JUIMazGVPONIrV4xX5HSlDV",
+      "media_preview_url": "https://preview.saavncdn.com/704/aad433b3b9df83420db54b9312825751_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/humein-bharat-kehte-hain/Ki8CVyJbRno",
+      "album_url": "https://www.jiosaavn.com/album/hotel-mumbai/GHPFxWdJ-k0_",
+      "duration": "241",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Sunny Inder": "7155284",
+        "Stebin Ben": "4670197",
+        "Kumaar": "455665",
+        "Dev Patel": "486774",
+        "Anupam Kher": "455444"
+      },
+      "release_date": "2019-11-13",
+      "vcode": "010910441040747",
+      "vlink": "https://jiotunepreview.jio.com/content/Converted/010910440997133.mp3",
+      "triller_available": false,
+      "label_url": "/label/zee-music-co.-albums/06cepoPTlhU_"
+    },
+    {
+      "id": "TEG8c_EJ",
+      "type": "",
+      "song": "bury a friend",
+      "album": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+      "year": "2019",
+      "music": "",
+      "music_id": "",
+      "primary_artists": "Billie Eilish",
+      "primary_artists_id": "1918741",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Billie Eilish",
+      "starring": "",
+      "image": "https://c.saavncdn.com/640/WHEN-WE-ALL-FALL-ASLEEP-WHERE-DO-WE-GO--English-2019-20190328231137-150x150.jpg",
+      "label": "Darkroom/Interscope Records",
+      "albumid": "15478520",
+      "language": "english",
+      "origin": "none",
+      "play_count": 1970726,
+      "copyright_text": "℗ 2019 Darkroom/Interscope Records",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "false",
+      "lyrics_snippet": "",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyfqVWOilq0OfxpQ/9IAXAQibAYmw5V12nwrg2WStM7orIgUgmAg+r1hw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FgdDaNXgwknE1Qh0+iNotr5I3nLC+yRZ9b4oC+eMPCIkc2xo3UU85pl",
+      "media_preview_url": "https://preview.saavncdn.com/640/a74840bbd8f610180518530f1fa10fcf_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/bury-a-friend/JC0sCRdvcnk",
+      "album_url": "https://www.jiosaavn.com/album/when-we-all-fall-asleep-where-do-we-go/eZW9bAVxhSk_",
+      "duration": "192",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Billie Eilish": "1918741"
+      },
+      "release_date": "2019-03-29",
+      "vcode": "010912291152157",
+      "vlink": "https://jiotunepreview.jio.com/content/Converted/010912291108433.mp3",
+      "triller_available": false,
+      "label_url": "/label/darkroominterscope-records-albums/b6AVffsMmsA_"
+    },
+    {
+      "id": "gy17KLcd",
+      "type": "",
+      "song": "death bed (coffee for your head)",
+      "album": "death bed (coffee for your head)",
+      "year": "2020",
+      "music": "Isaiah Faber, Beatrice Laus, Oscar Lang, Christian Klosterman",
+      "music_id": "6385784, 5379210, 5292799, 7595596",
+      "primary_artists": "Powfu, Beabadoobee",
+      "primary_artists_id": "4861951, 4072492",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Powfu, Beabadoobee, Powfu &amp; Beabadoobee",
+      "starring": "",
+      "image": "https://c.saavncdn.com/180/death-bed-English-2020-20200228133600-150x150.jpg",
+      "label": "Columbia",
+      "albumid": "18957637",
+      "language": "english",
+      "origin": "none",
+      "play_count": 6244329,
+      "copyright_text": "(P) 2020 Columbia Records [Robots and Humans].",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "false",
+      "lyrics_snippet": "",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyOnb494Mz4y8Z/R9e3XgXi1ppXH3R/00OynWm/Zx0A2d96h+H4wBbNhw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FhTAd7z22kq97k7ZLnZZ86RdHyHDxcrbyoai19iW0DUxy4WVuFnbfrm",
+      "media_preview_url": "https://preview.saavncdn.com/180/77375fc68cbb672798c601d8047c46d1_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/death-bed-coffee-for-your-head/FxFaBj98VFc",
+      "album_url": "https://www.jiosaavn.com/album/death-bed-coffee-for-your-head/iUHuwfoIUuE_",
+      "duration": "173",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Isaiah Faber": "6385784",
+        "Beatrice Laus": "5379210",
+        "Oscar Lang": "5292799",
+        "Christian Klosterman": "7595596",
+        "Powfu": "4861951",
+        "beabadoobee": "4072492",
+        "Powfu &amp; beabadoobee": "8007171"
+      },
+      "release_date": "2020-02-08",
+      "triller_available": false,
+      "label_url": "/label/columbia-albums/wMrKglyRi74_"
+    },
+    {
+      "id": "rkpNHSo1",
+      "type": "",
+      "song": "Brahma’s Song",
+      "album": "R I S E",
+      "year": "2020",
+      "music": "",
+      "music_id": "",
+      "primary_artists": "Willow, Jahnavi Harrison",
+      "primary_artists_id": "570494, 1817510",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Willow, Jahnavi Harrison",
+      "starring": "",
+      "image": "https://c.saavncdn.com/066/R-I-S-E-English-2020-20201119060656-150x150.jpg",
+      "label": "MSFTSMusic / Roc Nation Records, LLC",
+      "albumid": "23601363",
+      "language": "sanskrit",
+      "origin": "none",
+      "play_count": 3967,
+      "copyright_text": "℗ 2020 MSFTSMusic / Roc Nation Records, LLC",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "true",
+      "lyrics_snippet": "Govindam aadi purusham",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyjkRl3WIjf3d6pqkQZChVruU+hOSK8Mj3Nbd+x2H5TBWbsEALC2Ftnxw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FiucILAKqtCm6L6qFyW04B3IjFbeMiYDu9qPexIyJ/99At93uERiMHs",
+      "media_preview_url": "https://preview.saavncdn.com/066/64a1562fff7bae660615a846ddda0165_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/brahma’s-song/AgMbfzxjWAI",
+      "album_url": "https://www.jiosaavn.com/album/r-i-s-e/vhAMpU9rmz4_",
+      "duration": "172",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Willow": "570494",
+        "Jahnavi Harrison": "1817510"
+      },
+      "release_date": "2020-11-20",
+      "triller_available": false,
+      "label_url": "/label/msftsmusic--roc-nation-records-llc-albums/EDTm7HcbXm0_"
+    },
+    {
+      "id": "o8jkpKcg",
+      "type": "",
+      "song": "Let You Down",
+      "album": "Perception",
+      "year": "2017",
+      "music": "",
+      "music_id": "",
+      "primary_artists": "NF",
+      "primary_artists_id": "733767",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "NF",
+      "starring": "",
+      "image": "https://c.saavncdn.com/885/Perception-English-2017-20171005000746-150x150.jpg",
+      "label": "NF Real Music",
+      "albumid": "11597689",
+      "language": "english",
+      "origin": "none",
+      "play_count": 1482421,
+      "copyright_text": "℗ 2017 NF Real Music, LLC",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "false",
+      "lyrics_snippet": "",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDyAjAvPPjjUaWwi2ewLJb8/XwOq/inK+r25HqwxZkvwphmUGfs+UaseRw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FiQuJoY3Iiza1WN+WK0wNuFGgBo8vuwbv80Yiu/J1d8SJdFCIggGz6X",
+      "media_preview_url": "https://preview.saavncdn.com/885/f3e9d8f597206d8545f61178580ac6c7_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/let-you-down/H1ABWgR7VFQ",
+      "album_url": "https://www.jiosaavn.com/album/perception/E1LyPHfxVkk_",
+      "duration": "212",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "NF": "733767"
+      },
+      "release_date": "2017-10-06",
+      "vcode": "010912291154871",
+      "vlink": "https://jiotunepreview.jio.com/content/Converted/010912291111327.mp3",
+      "triller_available": false,
+      "label_url": "/label/nf-real-music-albums/0RPF7RUbst8_"
+    },
+    {
+      "id": "tUjXvoKS",
+      "type": "",
+      "song": "Runaway",
+      "album": "Runaway",
+      "year": "2015",
+      "music": "",
+      "music_id": "",
+      "primary_artists": "Aurora",
+      "primary_artists_id": "580280",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Aurora",
+      "starring": "",
+      "image": "https://c.saavncdn.com/365/Runaway-English-2015-150x150.jpg",
+      "label": "Universal Music India Pvt Ltd.",
+      "albumid": "1221938",
+      "language": "english",
+      "origin": "none",
+      "play_count": 2777960,
+      "copyright_text": "℗ 2015 Decca, a division of Universal Music Operations Limited",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "false",
+      "lyrics_snippet": "",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDy2PqYViG02MEyNP19Oy/TLP0+jd8cpOor4yU08erbNo0tQXe9zIAqixw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/Fj+W/STuxwcUkZfkcl7wNTHqEwmxVJ+xCAOgjApcAs2rHdfVjH+ceku",
+      "media_preview_url": "https://preview.saavncdn.com/365/2c56539e2d0b8d9daf86381d65217970_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/runaway/BD0BaQJffGA",
+      "album_url": "https://www.jiosaavn.com/album/runaway/3QomL-ZoWBY_",
+      "duration": "253",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Aurora": "580280"
+      },
+      "release_date": "2015-02-09",
+      "triller_available": false,
+      "label_url": "/label/universal-music-india-pvt-ltd.-albums/yCRRDUDuazo_"
+    },
+    {
+      "id": "Kv6rGi1G",
+      "type": "",
+      "song": "Older",
+      "album": "Older",
+      "year": "2018",
+      "music": "Sasha Alex Sloan, Henry Agincourt Allen, Daniel Silberstein",
+      "music_id": "11064490, 2664109, 5727475",
+      "primary_artists": "Sasha Alex Sloan",
+      "primary_artists_id": "11064490",
+      "featured_artists": "",
+      "featured_artists_id": "",
+      "singers": "Sasha Alex Sloan",
+      "starring": "",
+      "image": "https://c.saavncdn.com/564/Older-English-2018-20181103012920-150x150.jpg",
+      "label": "RCA Records Label",
+      "albumid": "14267221",
+      "language": "english",
+      "origin": "none",
+      "play_count": 455643,
+      "copyright_text": "(P) 2018 RCA Records, a division of Sony Music Entertainment",
+      "320kbps": "true",
+      "is_dolby_content": false,
+      "explicit_content": 0,
+      "has_lyrics": "false",
+      "lyrics_snippet": "",
+      "encrypted_media_url": "ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDy7X8vzjR8Adxkf84tlTX/D5OnSmQm0vkWWo+gD0VSFvq3vfVuJSLdahw7tS9a8Gtq",
+      "encrypted_media_path": "NMKyboFo/FgvxLlXyRLHR1FJUoToXopVTefN8OIoh+rA+Ean98AGiI/DA9F1CyQO",
+      "media_preview_url": "https://preview.saavncdn.com/564/196e934fe41c075808d1034cf4d2392e_96_p.mp4",
+      "perma_url": "https://www.jiosaavn.com/song/older/Ox5dQzNZBnQ",
+      "album_url": "https://www.jiosaavn.com/album/older/ked,XgluKe8_",
+      "duration": "184",
+      "rights": {
+        "code": 0,
+        "reason": "",
+        "cacheable": true,
+        "delete_cached_object": false
+      },
+      "cache_state": "false",
+      "starred": "false",
+      "artistMap": {
+        "Sasha Alex Sloan": "11064490",
+        "Henry Agincourt Allen": "2664109",
+        "Daniel Silberstein": "5727475"
+      },
+      "release_date": "2018-11-09",
+      "triller_available": false,
+      "label_url": "/label/rca-records-label-albums/pNms9lY2pSI_"
+    }
+  ]
+}

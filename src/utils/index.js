@@ -1,4 +1,4 @@
-import icons from './icons';
+import icons from './apps';
 
 var iconIdx = {
   taskbar: [3,4,5,6],

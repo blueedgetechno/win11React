@@ -1,6 +1,6 @@
 import {allApps} from '../utils';
 
-var dev = "";
+var dev = "spotify";
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {
