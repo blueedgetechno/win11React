@@ -100,6 +100,10 @@ img[data-flip='true'], svg[data-flip='true']{
   transform: scale(-1,1);
 }
 
+.uicon:hover{
+  cursor:pointer;
+}
+
 .uicon img{
   transform-origin: center;
   transition: 400ms ease-in-out;
