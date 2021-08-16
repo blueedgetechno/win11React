@@ -1,27 +1,36 @@
-.edgeBrowser{
+@import url('https://db.onlinewebfonts.com/c/1ccdd11fd9d1d81756c40d7acb17d0aa?family=Spotify');
+/* http://www.onlinewebfonts.com */
+
+.edgeBrowser {
   background: rgb(231, 234, 236);
 }
 
-.vscodeWn{
+.vscodeWn {
   background: rgb(37, 37, 38);
 }
 
-.wnstore{
+.wnstore {
   background: rgb(241, 243, 245);
 }
 
-.wnterm{
+.wnterm {
   background: rgb(16, 16, 16);
 }
 
-.notepad{
+.notepad {
   background: #fefefe;
 }
 
-.calcApp{
+.calcApp {
   background: #eee;
 }
 
-.msfiles, .whiteBoard{
+.msfiles, .whiteBoard {
   background: #fefefe;
+}
+
+.spotify {
+  background: rgb(24, 24, 24);
+  /* background: linear-gradient(0deg, #1d1d1f 75%, #1e1e1f 100%); */
+  /* background: linear-gradient(0deg, #1d1d1f 75%, #2d2d2d 100%); */
 }

@@ -46,6 +46,10 @@ code {
   height: max-content;
 }
 
+.smoothsc{
+  scroll-behavior: smooth;
+}
+
 input{
   border: none;
   outline: none;
@@ -119,6 +123,14 @@ img[data-flip='true'], svg[data-flip='true']{
   pointer-events: none;
 }
 
+*[data-prtclk="true"]{
+  pointer-events: none !important;
+}
+
+.nopt{
+  pointer-events: none;
+}
+
 .handcr{
   cursor: pointer;
 }
@@ -145,6 +157,10 @@ img[data-flip='true'], svg[data-flip='true']{
   background: rgba(32, 24, 148, 0.4);
 }
 
+.lightScroll:hover::-webkit-scrollbar-thumb{
+  background: rgba(162, 159, 209, 0.4);
+}
+
 .thinScroll::-webkit-scrollbar-thumb {
   width: 2px;
   height: 2px;
@@ -169,4 +185,8 @@ img[data-flip='true'], svg[data-flip='true']{
 .hvdark:hover{
   background: rgba(0, 0, 0, 0.08);
   transition: all 200ms ease-in-out;
+}
+
+.acol{
+  color: #aaa;
 }

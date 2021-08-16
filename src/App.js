@@ -62,7 +62,6 @@ function App() {
   });
 
   window.addEventListener("click", e => {
-    // console.log(event.target);
     afterMath(e);
   });
 

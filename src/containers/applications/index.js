@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import './tabs.scss';
 import './tabs2.scss';
 import './wnapp.css';
+import './apps/assets/spotify.scss';
 
 export * from './apps/whiteboard';
 export * from './apps/edge';
@@ -14,6 +15,7 @@ export * from './apps/calculator';
 export * from './apps/vscode';
 export * from './apps/explorer';
 export * from './apps/about';
+export * from './apps/spotify';
 
 export const ScreenPreview = ()=>{
   const tasks = useSelector(state=>state.taskbar);
