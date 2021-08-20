@@ -148,7 +148,7 @@ input {
 }
 
 .text-xss{
-  font-size: 0.64em;
+  font-size: 12px;
 }
 
 .noscroll::-webkit-scrollbar {
@@ -285,4 +285,13 @@ input {
 
 #loads {
   fill: #0178D4 !important;
+}
+a {
+    text-decoration: none;
+    color: #0080E1;
+}
+#textpad {
+    font-family: Consolas , monospace;
+    font-size: 18px;
+    font-weight: 500;
 }

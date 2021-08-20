@@ -78,7 +78,6 @@
   background: rgb(250, 250, 250);
   border: solid 1px rgba(150, 150, 150, 0.2);
   border-radius: 6px;
-  transform-origin: center;
   animation: popup 1s ease-in-out;
 }
 
@@ -89,7 +88,7 @@
 
   90%{
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.8);
   }
 
   100%{
@@ -102,6 +101,7 @@
   display: grid;
   grid-column-gap: 3px;
   grid-row-gap: 3px;
+  transform-origin:top right;
 
   &:nth-child(1){
     grid-template-columns: auto auto;
