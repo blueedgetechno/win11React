@@ -3,7 +3,6 @@
   "description": "Windows 11 made in React",
   "repository": "https://github.com/blueedgetechno/windows11",
   "version": "0.1.0",
-  "homepage": "https://blueedgetechno.github.io/windows11",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
