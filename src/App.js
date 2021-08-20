@@ -66,6 +66,10 @@ function App() {
     afterMath(e);
   });
 
+  window.addEventListener("load", e => {
+    document.querySelector('#loader').remove();
+  });
+
   return (
     <div className="App">
       <Background/>

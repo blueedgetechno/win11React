@@ -38,12 +38,13 @@ body:before {
   pointer-events: none;
   transition: all 2s ease;
 }
+
 body[data-sepia="true"]:before {
   opacity: 0.8;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, "Consolas", Courier New, monospace;
 }
 
 .App{
@@ -118,15 +119,20 @@ img[data-flip='true'], svg[data-flip='true']{
 }
 
 .dpShad{
-  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }
 
 .mdShad{
-  filter: drop-shadow(0 0 8px rgba(41, 41, 41, 0.1));
+  box-shadow: 0 0 8px rgba(41, 41, 41, 0.1);
 }
 
 .ltShad{
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
 }
 
 .prtclk *{
@@ -183,4 +189,19 @@ img[data-flip='true'], svg[data-flip='true']{
 .hvdark:hover{
   background: rgba(0, 0, 0, 0.08);
   transition: all 200ms ease-in-out;
+}
+
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #0178D4;
+  z-index: 99999999999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
 }
