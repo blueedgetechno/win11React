@@ -54,7 +54,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 
 - Can I contribute?
-  - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/windows11/discussions) or join the [discord](https://discord.gg/Fz3Dkc4S).
+  - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/windows11/discussions) or join the [discord](https://discord.gg/qmEZwUhb4b).
 
 
 - Where did you get the inspiration from, if you have?
