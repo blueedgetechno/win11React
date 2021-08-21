@@ -7,7 +7,8 @@
           "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
           "name": "Daily Mix 1",
           "desc": "Arijit Singh, Jubin Nautiyal, Darshan Raval and more",
-          "data": []
+          "data": ["1F6WUTJk", "m6DcVXHw","DDTSWyUX","3x-IwBwd","aOEJX-ur",
+                  "tIn7iq-R","7pyE_xRk","CaFn4YtS","9MZHxohI","gf4cA9Jj"]
         },
         {
           "type": "mix",
@@ -48,12 +49,14 @@
         "type": "song",
         "img": "https://c.saavncdn.com/228/Ek-Nazar-Hindi-2020-20200518060806-500x500.jpg",
         "name": "Ek Nazar",
-        "desc": "Kavita Seth"
+        "desc": "Kavita Seth",
+        "data": "cgM-pRO9"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/323/Better-Days-English-2020-20200325160343-500x500.jpg",
         "name": "Better Days",
-        "desc": "OneRepublic"
+        "desc": "OneRepublic",
+        "data": "JDJfNgEY"
       }, {
         "type": "artist",
         "img": "https://c.saavncdn.com/artists/Sanam_-Band-_002_20201020080410_500x500.jpg",
@@ -73,52 +76,62 @@
         "type": "song",
         "img": "https://c.saavncdn.com/994/Tamasha-Hindi-2015-500x500.jpg",
         "name": "Agar Tum Saath Ho",
-        "desc": "Alka Yagnik, Arijit Singh"
+        "desc": "Alka Yagnik, Arijit Singh",
+        "data": "Ni6noMmw"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/565/Human-English-2016-500x500.jpg",
         "name": "Human",
-        "desc": "Rag'N'Bone Man"
+        "desc": "Rag'N'Bone Man",
+        "data": "gLbWqLKC"
       }, {
         "type": "song",
         "img": "http://c.saavncdn.com/855/Homesick-English-2018-20181025170408-500x500.jpg",
         "name": "Falling",
-        "desc": "Trevor Daniel"
+        "desc": "Trevor Daniel",
+        "data": "Jm6qLR3V"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/790/Gangs-Of-Wasseypur-2012-500x500.jpg",
         "name": "Ik Bagal",
-        "desc": "Piyush Mishra"
+        "desc": "Piyush Mishra",
+        "data": "Lo1zbaMa"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/032/Jaane-Woh-Kaise-Sanam-Hindi-2017-20171204-500x500.jpg",
         "name": "Jaane Woh Kaise",
-        "desc": "Sanam (Band)"
+        "desc": "Sanam (Band)",
+        "data": "FHIMkqMv"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/165/Stand-Up-From-Harriet--English-2019-20200414191117-500x500.jpg",
         "name": "Stand Up (From Harriet)",
-        "desc": "Cynthia Erivo"
+        "desc": "Cynthia Erivo",
+        "data": "tWFkBuSv"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/562/Different-World-English-2018-20181130144209-500x500.jpg",
         "name": "Lily",
-        "desc": "Alan Walker, K-391, ..."
+        "desc": "Alan Walker, K-391, ...",
+        "data": "1c-VGSyw"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/065/Citylights-Hindi-2014-20190607111647-500x500.jpg",
         "name": "Muskurane",
-        "desc": "Arijit Singh, Jeet Gannguli"
+        "desc": "Arijit Singh, Jeet Gannguli",
+        "data": "1K9IsVVU"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/702/Dee-MC--Hindi-2019-20191015104339-500x500.jpg",
         "name": "Rang",
-        "desc": "Dee MC (Deepa Unnikrishnan)"
+        "desc": "Dee MC (Deepa Unnikrishnan)",
+        "data": "4bjKwhJ1"
       }, {
         "type": "song",
         "img": "https://c.saavncdn.com/024/Madness-English-2016-500x500.jpg",
         "name": "Game of Survival",
-        "desc": "Ruelle"
+        "desc": "Ruelle",
+        "data": "dN9V6uUk"
       }]
     }, {
       "name": "Favorite Albums",
@@ -141,6 +154,12 @@
         "desc": "Lady Gaga, Bradley Cooper",
         "data": "14014305"
       }, {
+        "type": "album",
+        "img": "http://sklktcdnems06.cdnsrv.jio.com/c.saavncdn.com/113/Main-Aur-Mera-Saya-Bhupen-Hazarika-2001-500x500.jpg",
+        "name": "Main Aur Mera Saya",
+        "desc": "Gulzar, Bhupen Hazarika",
+        "data": "1066045"
+      },{
         "type": "album",
         "img": "https://c.saavncdn.com/228/Lover-English-2019-20190823031817-500x500.jpg",
         "name": "Lover",

@@ -55,7 +55,8 @@
   z-index: 9999;
 
   &[data-hide='true'] {
-    bottom: -300px;
+    // bottom: -300px;
+    transform: translateY(300px);
     opacity: 0;
     pointer-events: none;
   }

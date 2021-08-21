@@ -24,7 +24,8 @@ class JioSaavn {
     ];
 
     this.dfdata = [{
-      album: "Raincoat",
+      id: "Szz0RZFb",//"Szz0RZFb",
+      album: "Raincoat 0",
       albumArt: "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
       name: "Piya Tora Kaisa Abhiman",
       artist: "Shubha Mudgal",
@@ -50,7 +51,7 @@ class JioSaavn {
     });
   }
 
-  fetchSongs(pids) {
+  fetchSong(pids) {
     if (typeof(pids) != "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
@@ -59,8 +60,14 @@ class JioSaavn {
     })
   }
 
+  fetchSongs(pids) {
+    if (typeof(pids) != "object") pids = [pids];
+    return Promise.all(pids.map(id => this.fetchSong(id).then(r => r)));
+  }
+
   mapToSong(obj) {
     return {
+      id: obj.song_id,
       album: obj.album_name,
       albumArt: obj.song_image,
       name: obj.song_name,
@@ -83,7 +90,7 @@ class JioSaavn {
     return new Promise(resolve => {
       resolve(this.dfdata);
       return;
-      this.fetchSongs(
+      this.fetchSong(
         this.defaultSongs[floor(random() * this.defaultSongs.length)]
       ).then(res => {
         resolve([this.mapToSong(res.data)]);

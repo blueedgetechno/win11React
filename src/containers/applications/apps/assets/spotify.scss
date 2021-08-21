@@ -61,7 +61,10 @@
   height: 88px;
   padding: 0 16px;
   display: flex;
+  // display: grid;
   align-items: center;
+  // grid-template-columns: [snfo] 0.6fr [songAct] minmax(720px, 1.5fr) [sctrl] 142px;
+  // grid-template-columns: [snfo] 280px [songAct] 720px [sctrl] 142px;
 }
 
 .snfo {
@@ -87,10 +90,11 @@
 .songAct {
   max-width: 720px;
   flex-grow: 1;
+  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
 
   .cticon {
     margin: 0 16px;
@@ -266,7 +270,9 @@
 
 .songCont {
   border-radius: 6px;
-  cursor: default;
+  display: grid;
+  align-items: center;
+  grid-template-columns: [index] 24px [first] 72px [var1] 3.8fr [var2] 3fr [last] 10px;
 
   &:hover {
     background: rgba(255, 255, 255, 0.12);
@@ -295,7 +301,7 @@
   border-radius: 6px;
   cursor: pointer;
 
-  .fplay {
+  .fplay, .fpause {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -307,8 +313,6 @@
     display: grid;
     place-items: center;
     transform-origin: center;
-    opacity: 0;
-    transform: translateY(12px);
     transition: all 50ms ease-in-out;
 
     &:hover {
@@ -321,6 +325,27 @@
       background: #fefefe;
       clip-path: polygon(20% 0, 100% 50%, 20% 100%);
     }
+
+    .fbars{
+      width: 12px;
+      height: 12px;
+      position: relative;
+      background: #fefefe;
+
+      &::after{
+        content: "";
+        position: absolute;
+        left: 4px;
+        width: 4px;
+        height: 12px;
+        background: #1db954;
+      }
+    }
+  }
+
+  .fplay{
+    opacity: 0;
+    transform: translateY(12px);
   }
 
   &:hover {
@@ -426,9 +451,15 @@
 }
 
 .playtitle {
-  font-size: 6em;
+  font-size: 4em;
+  // font-weight: 900;
+  letter-spacing: 4px;
   margin-top: 8px;
-  -webkit-text-stroke-width: 6px;
+  max-width: 64vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -webkit-text-stroke-width: 4px;
 }
 
 .playbtn {
@@ -436,7 +467,7 @@
   font-weight: 600;
   font-size: 0.72rem;
   width: 64px;
-  padding: 6px 12px;
+  padding: 8px 12px;
   padding-top: 10px;
   margin-top: 12px;
   border-radius: 24px;
@@ -530,6 +561,15 @@
 
 .scol2,
 .scol3 {
+  max-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.dotdot{
   max-height: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
