@@ -19,7 +19,7 @@ export const StartMenu = () => {
       });
     }
 
-    for (var i = 0; i < arr.rcApps.length; i++) {
+    for (i = 0; i < arr.rcApps.length; i++) {
       if (arr.rcApps[i].lastUsed < 0) {
         arr.rcApps[i].lastUsed = "Recently Added"
       } else if (arr.rcApps[i].lastUsed < 10) {
@@ -35,11 +35,11 @@ export const StartMenu = () => {
       allApps = [];
     tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
-    for (var i = 0; i < 27; i++) {
+    for (i = 0; i < 27; i++) {
       allApps[i] = [];
     }
 
-    for (var i = 0; i < tmpApps.length; i++) {
+    for (i = 0; i < tmpApps.length; i++) {
       var t1 = tmpApps[i].name.trim().toUpperCase().charCodeAt(0);
       if (t1 > 64 && t1 < 91) {
         allApps[t1 - 64].push(tmpApps[i]);

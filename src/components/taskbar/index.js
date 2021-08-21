@@ -62,7 +62,7 @@ const Taskbar = ()=>{
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z==apps.hz;
               return (
-                <div onMouseOver={!isActive && !isHidden && showPrev}
+                <div onMouseOver={(!isActive && !isHidden && showPrev) || null}
                   value={task.icon}>
                   <Icon key={i} className="tsIcon"
                     open={isHidden?null:true}
@@ -78,7 +78,7 @@ const Taskbar = ()=>{
               }
 
               return key!="hz" && !apps[key].task && !apps[key].hide?(
-                <div onMouseOver={!isActive && showPrev}
+                <div onMouseOver={(!isActive && showPrev) || null}
                   value={apps[key].icon}>
                   <Icon key={i} className="tsIcon" width={22}
                       active={isActive} click={apps[key].action}
