@@ -162,7 +162,7 @@ export const SnapScreen = (props)=>{
   })
 
   return props.snap?(
-    <div className="snapcont mdShad">
+    <div className="snapcont mdShad" data-dark={props.invert!=null}>
       {lays.map(x=>{
         return (
           <div className="snapLay">
@@ -218,7 +218,7 @@ export const ToolBar = (props)=>{
         <div className="snapbox h-full" data-hv={snap}
           onMouseOver={openSnap} onMouseLeave={closeSnap}>
           <Icon invert={props.invert} click={props.app} payload="mxmz" pr src="maximize" ui width={8}/>
-          <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap}/>
+          <SnapScreen invert={props.invert} app={props.app} snap={snap} closeSnap={closeSnap}/>
           {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
         </div>
         <Icon invert={props.invert} click={props.app} payload="close" pr src="close" ui width={8}/>

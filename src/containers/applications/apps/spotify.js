@@ -25,7 +25,6 @@ export const Spotify = ()=>{
   const dispatch = useDispatch();
 
   const libr = ["Made For You","Recently Played","Favorite Songs","Albums","Artist"];
-  const plays = ["Hip Hop","Hindi","English"];
   const action = (e)=>{
     var act = e.target.dataset.action,
         payload = e.target.dataset.payload;
@@ -95,7 +94,7 @@ export const Spotify = ()=>{
         album_image: aldata.img,
         year: 2021,
         album_artist: aldata.desc
-      };
+      }
       if(saved[key]!=null){
         songArr = saved[key];
         setPlay({
@@ -107,6 +106,7 @@ export const Spotify = ()=>{
         });
         setTab(39);
       }else{
+        setTab(39);
         var arr = aldata.data;
         jiosaavn.fetchSongs(arr).then(res=>{
           songArr = res;
@@ -119,25 +119,58 @@ export const Spotify = ()=>{
               songs: songArr
             }
           })
-          setTab(39);
+        })
+      }
+    }else if (act=="playlist") {
+      var aldata = data.playlist[payload],
+        songArr = [], key = "play_"+aldata.name, tdata = {
+        album_name: aldata.name,
+        album_image: aldata.img,
+        year: 2020 + aldata.name=="Community",
+        album_artist: aldata.desc
+      }
+      if(saved[key]!=null){
+        songArr = saved[key];
+        setPlay({
+          type: act,
+          tdata: {
+            ...tdata,
+            songs: songArr
+          }
+        });
+        setTab(39);
+      }else{
+        setTab(39);
+        var arr = aldata.data;
+        jiosaavn.fetchSongs(arr).then(res=>{
+          songArr = res;
+          saved[key] = songArr;
+          setSaved(saved);
+          setPlay({
+            type: act,
+            tdata: {
+              ...tdata,
+              songs: songArr
+            }
+          })
         })
       }
     }
   }
 
-  const action2 = (type, data)=>{
+  const action2 = (type, payload)=>{
     if(type=="playall"){
-      setQueue(data.map(item=>jiosaavn.mapToSong(item)))
+      setQueue(payload.map(item=>jiosaavn.mapToSong(item)))
       setPause(false)
       setProg(0)
       setPerProg(0)
       setCurr(0)
-      setMxq(jiosaavn.mixQueue(data.length))
+      setMxq(jiosaavn.mixQueue(payload.length))
     }else if (type=="clickq") {
       setProg(0)
       setPerProg(0)
       setPause(false)
-      setCurr(data)
+      setCurr(payload)
     }
   }
 
@@ -205,10 +238,10 @@ export const Spotify = ()=>{
                   <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
                     PLAYLISTS
                   </div>
-                  {plays.map((play, i)=>(
+                  {data.playlist.map((play, i)=>(
                     <div className="snav mb-4 handcr text-sm font-semibold" key={i}
                       data-act={tab==(i+2+libr.length)} onClick={action}
-                      data-action="discv" data-payload={i+2+libr.length}>{play}</div>
+                      data-action="playlist" data-payload={i}>{play.name}</div>
                   ))}
                 </div>
               </div>
@@ -218,16 +251,14 @@ export const Spotify = ()=>{
             id="sphome">
             <div className="h-max relative">
               <div className="absolute w-full pb-8">
-                {tab==10?<Queue {...{queue,curr,paused,action,action2}}/>:null}
+                {tab==41?<Queue {...{queue,curr,paused,action,action2}}/>:null}
                 {tab==0?<Home tab={tab} action={action} paused={paused}
                   sid={queue[curr] && queue[curr].id}/>:null}
                 {tab>1 && tab<2+libr.length?
                   <Home tab={tab} action={action} paused={paused}
                     sid={queue[curr] && queue[curr].id}/>:null}
-                {tab>6 && tab<10?<Playlist {...{action,paused,action2}}
-                  sid={queue[curr] && queue[curr].id}/>:null}
-                {tab==39?<Playlist {...playd} {...{action,paused,action2}}
-                  sid={queue[curr] && queue[curr].id}/>:null}
+                {tab==39 || (tab>6 && tab<10)?<Playlist {...{action,paused,action2}}
+                  sid={queue[curr] && queue[curr].id} {...playd}/>:null}
               </div>
             </div>
           </div>
@@ -235,11 +266,11 @@ export const Spotify = ()=>{
             <div className="snfo flex items-center">
               {queue[curr].albumArt?<Image src={queue[curr].albumArt} w={56} ext/>:
                   <Icon src="./img/asset/album.png" ext width={56}/>}
-              <div className="ml-3">
+              <div className="sname ml-3">
                 <div className="text-sm mb-2 text-gray-100 font-semibold"
                   dangerouslySetInnerHTML={{__html: queue[curr].name || "Album"}}>
                 </div>
-                <div className="text-xss tracking-wider text-gray-400"
+                <div className="text-xs tracking-wider text-gray-400"
                   dangerouslySetInnerHTML={{__html: queue[curr].artist || "Artist"}}>
                 </div>
               </div>
@@ -279,8 +310,8 @@ export const Spotify = ()=>{
             </div>
             <div className="sctrl flex items-center justify-between">
               <div className="prtclk handcr mr-6" onClick={action} data-action="discv"
-                data-payload="10">
-                <Icon className="sficon" fafa="faListUl" width={14} payload={tab==10?1:0}/>
+                data-payload="41">
+                <Icon className="sficon" fafa="faListUl" width={14} payload={tab==41?1:0}/>
               </div>
               <div className="rctrl flex items-center">
                 <Icon className="sficon mr-2" width={16} fafa={[
@@ -307,36 +338,34 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
   const [totTime, setTotime] = useState(0);
 
   useEffect(()=>{
-    if(data.fake){
-      var prt = document.getElementById('sphome');
-      if(prt){
-        prt.scrollTop = 0;
-      }
-
-      if(type=="album"){
-        setPtype(false);
-        jiosaavn.getAlbum(typeof(tdata)=="string"?tdata:"").then(res=>{
-          setData(res);
-          var tmptot = 0;
-          for (var i = 0; i < res.songs.length; i++) {
-            tmptot += parseInt(res.songs[i].song_duration);
-          }
-
-          setTotime(tmptot)
-        }).catch(err=> {
-          console.log(err);
-        })
-      }else if (type=="mix") {
-        setPtype(true);
-        setData(tdata);
-        var tmptot = 0;
-        for (var i = 0; i < tdata.songs.length; i++) {
-          tmptot += parseInt(tdata.songs[i].song_duration);
-        }
-        setTotime(tmptot)
-      }
+    var prt = document.getElementById('sphome');
+    if(prt){
+      prt.scrollTop = 0;
     }
-  },[data])
+
+    if(type=="album"){
+      setPtype(false);
+      jiosaavn.getAlbum(typeof(tdata)=="string"?tdata:"").then(res=>{
+        setData(res);
+        var tmptot = 0;
+        for (var i = 0; i < res.songs.length; i++) {
+          tmptot += parseInt(res.songs[i].song_duration);
+        }
+
+        setTotime(tmptot)
+      }).catch(err=> {
+        console.log(err);
+      })
+    }else if (type=="mix" || type=="playlist") {
+      setPtype(true);
+      setData(tdata);
+      var tmptot = 0;
+      for (var i = 0; i < tdata.songs.length; i++) {
+        tmptot += parseInt(tdata.songs[i].song_duration);
+      }
+      setTotime(tmptot)
+    }
+  },[tdata])
 
   return(
     <div className="relative">
@@ -346,7 +375,7 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
         <div className="playdet ml-6 text-gray-100 flex flex-col justify-end">
           <div className="text-xs font-bold uppercase">{type}</div>
           <div className="playtitle"
-            dangerouslySetInnerHTML={{__html: data.album_name}}></div>
+            dangerouslySetInnerHTML={{__html: data.album_name || tdata && tdata.album_name}}></div>
           <div className="text-sm font-semibold">
             {data.album_artist && data.album_artist.split(", ").join(" • ")
               || ""}{" "}
@@ -366,14 +395,14 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
           <div className="font-bold text-right">#</div>
           <div className="scol1 text-xs">TITLE</div>
           <div className="text-xs">{ptype?"ALBUM":null}</div>
-          <div className="text-xs">{ptype?"DATE ADDED":null}</div>
+          <div className="text-xs">{ptype?"YEAR":null}</div>
           <div className="flex justify-end">
             <Icon fafa="faClock" width={16} reg/>
           </div>
         </div>
         <div className="hr"></div>
         {data.songs && data.songs.map((song,i)=>(
-          <div className="srow handcr prtclk" data-action="song"
+          <div className="srow handcr prtclk" data-action="song" key={i}
             data-payload={`"` + song.song_id + `"`} onClick={action}>
 
             {sid!=song.song_id?<div className="sidx font-semibold">{i+1}</div>:null}
@@ -394,7 +423,7 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
               </div>
             </div>
             <div className="scol2 font-semibold">{ptype?song.album_name:null}</div>
-            <div className="scol3 font-semibold">{ptype?"Apr 14, 2021":null}</div>
+            <div className="scol3 font-semibold">{ptype?song.year:null}</div>
             <div className="font-semibold flex justify-end">
               {jiosaavn.formatTime(song.song_duration)}
             </div>

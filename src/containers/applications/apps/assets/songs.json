@@ -7,24 +7,30 @@
           "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
           "name": "Daily Mix 1",
           "desc": "Arijit Singh, Jubin Nautiyal, Darshan Raval and more",
-          "data": ["1F6WUTJk", "m6DcVXHw","DDTSWyUX","3x-IwBwd","aOEJX-ur",
+          "data": ["1F6WUTJk","ZGifVkqI","m6DcVXHw","3x-IwBwd","aOEJX-ur",
                   "tIn7iq-R","7pyE_xRk","CaFn4YtS","9MZHxohI","gf4cA9Jj"]
         },
         {
           "type": "mix",
           "img": "http://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg",
           "name": "Daily Mix 2",
-          "desc": "Kavita Seth, Alka Yagnik, Shubha Mudgal and more"
+          "desc": "Kavita Seth, Alka Yagnik, Shubha Mudgal and more",
+          "data": ["aUTlRd3u","9B8qM5Gv","Ut_lKlWE","DHrY5Sdd","3Be_U0qz",
+                  "cgM-pRO9","mPk9X_H_","Ni6noMmw","0-5hUtBO","mbKEo3nm"]
         }, {
           "type": "mix",
           "img": "http://c.saavncdn.com/067/NF-English-2014-500x500.jpg",
           "name": "Daily Mix 3",
-          "desc": "NF, Billie Eilish, Powfu and more"
+          "desc": "NF, Billie Eilish, Powfu and more",
+          "data": ["o8jkpKcg","ICA-0R1l","Kv6rGi1G","gy17KLcd","TEG8c_EJ",
+                  "4t496tbc","4RmwbCw4","-Uu7zEWP","5QcFgcqA","2oWa2CKB"]
         }, {
           "type": "mix",
           "img": "http://c.saavncdn.com/365/Runaway-English-2015-500x500.jpg",
           "name": "Daily Mix 4",
-          "desc": "AURORA, Ane Brun, SVRCINA and more"
+          "desc": "AURORA, Ane Brun, SVRCINA and more",
+          "data": ["tUjXvoKS","tO4KdkvZ","ZScWgymd","6IUC2JRX","ig1HkOTh",
+                  "gSJ7LtZz","2DxytgUN","rkpNHSo1","SxdL_VN6","E0XUOgb0"]
         }, {
           "type": "cstm",
           "img": "http://c.saavncdn.com/editorial/JhankarBeats_saavn_radio_20201215120219_500x500.jpg",
@@ -880,6 +886,31 @@
       "release_date": "2018-11-09",
       "triller_available": false,
       "label_url": "/label/rca-records-label-albums/pNms9lY2pSI_"
+    }
+  ],
+  "playlist": [
+    {
+      "type": "play",
+      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "name": "Hindi",
+      "desc": "Created by blueedge",
+      "data": ["jZj6FxTn","lWfLyI7Q","1EvZOLZA","7pyE_xRk","Vnpn-XBN","sRfXrLI3",
+        "5MALSALT","OhWCnpFD","nXoABtkj","466Fxnry","VCeN_rCT","DHrY5Sdd","eR_xs61E",
+        "L03PNwY-","sqCyEI52","p3CNoOta","W6RoExZr","m87V1xS7","egbFbCZA"]
+    },
+    {
+      "type": "play",
+      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "name": "English",
+      "desc": "Created by blueedge",
+      "data": ["m6DcVXHw"]
+    },
+    {
+      "type": "play",
+      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "name": "Community",
+      "desc": "Created by community",
+      "data": ["1F6WUTJk"]
     }
   ]
 }

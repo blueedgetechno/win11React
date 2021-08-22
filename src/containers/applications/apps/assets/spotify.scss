@@ -61,10 +61,7 @@
   height: 88px;
   padding: 0 16px;
   display: flex;
-  // display: grid;
   align-items: center;
-  // grid-template-columns: [snfo] 0.6fr [songAct] minmax(720px, 1.5fr) [sctrl] 142px;
-  // grid-template-columns: [snfo] 280px [songAct] 720px [sctrl] 142px;
 }
 
 .snfo {
@@ -508,7 +505,7 @@
   align-items: center;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(20px,1fr);
+  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(20px,1fr);
   padding: 8px;
   letter-spacing: 1px;
   border-radius: 4px;

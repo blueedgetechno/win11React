@@ -80,6 +80,26 @@
   border-radius: 6px;
   transform-origin: center;
   animation: popup 1s ease-in-out;
+
+  .snapper{
+    background: #e6e6e6;
+    border: solid 1px #999;
+    &:hover{
+      background: #0066ff;
+    }
+  }
+
+  &[data-dark="true"]{
+    background: #222;
+
+    .snapper{
+      background: #444;
+      border: solid 1px #333;
+      &:hover{
+        background: #0066ff;
+      }
+    }
+  }
 }
 
 @keyframes popup{
@@ -149,13 +169,7 @@
 
 .snapper{
   box-sizing: border-box;
-  border: solid 1px #999;
-  background: #e6e6e6;
   transition: all ease-in-out 100ms;
-
-  &:hover{
-    background: #0066ff;
-  }
 }
 
 .uicon{
