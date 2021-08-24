@@ -69,7 +69,12 @@ jobs:
         publish_dir: ./build
         cname: ${{ github.event.pull_request.number }}.pr.andrewstech.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
-       
+     
+    - name: Sleep for 30 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '120s'
+        
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@master
       with:
