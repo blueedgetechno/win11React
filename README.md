@@ -4,7 +4,7 @@
 [![Follow Twitter](https://img.shields.io/twitter/follow/blueedgetechno?label=Follow%20me&style=social)](https://twitter.com/blueedgetechno)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c6e89fb6-b2f1-48a8-b5d0-94a29fc632f9/deploy-status)](https://app.netlify.com/sites/win11blue/deploys)
 [![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qmEZwUhb4b)
-
+[![Build & deploy to GitHub](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml)
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
 
  #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
