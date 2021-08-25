@@ -6,11 +6,14 @@ import jiosaavn from './assets/jiosaavn';
 import data from './assets/songs.json';
 
 const {round,floor,max,min,random,ceil,abs} = Math;
+String.prototype.to150 = function(){
+  return this.replace("500x500","150x150");
+}
 
 export const Spotify = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.spotify);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(1);
   const [paused, setPause] = useState(true);
   const [shfle, setShuffle] = useState(0);
   const [mxqueue, setMxq] = useState([]);
@@ -259,12 +262,15 @@ export const Spotify = ()=>{
                     sid={queue[curr] && queue[curr].id}/>:null}
                 {tab==39 || (tab>6 && tab<10)?<Playlist {...{action,paused,action2}}
                   sid={queue[curr] && queue[curr].id} {...playd}/>:null}
+                {tab==1?<Search {...{action,paused,action2}}
+                  sid={queue[curr] && queue[curr].id}/>:null}
               </div>
             </div>
           </div>
           <div className="splayer">
             <div className="snfo flex items-center">
-              {queue[curr].albumArt?<Image src={queue[curr].albumArt} w={56} ext/>:
+              {queue[curr].albumArt?
+                <Image src={queue[curr].albumArt.to150()} w={56} ext/>:
                   <Icon src="./img/asset/album.png" ext width={56}/>}
               <div className="sname ml-3">
                 <div className="text-sm mb-2 text-gray-100 font-semibold"
@@ -329,6 +335,59 @@ export const Spotify = ()=>{
       </div>
     </div>
   );
+}
+
+const Search = ({sid, paused, action,action2})=>{
+  const [query, setQuery] = useState("");
+
+  return(
+    <div className="mt-12">
+      <div className="absolute w-full top-0 -mt-8">
+        <div className="flex bg-gray-100 px-4 w-max rounded-full overflow-hidden">
+          <Icon icon="search"/>
+          <input className="ml-2 bg-transparent py-3 rounded-full text-base"
+            defaultValue="Okay" type="text" onChange={e=> setQuery(e.target.value)}/>
+        </div>
+      </div>
+      <div className="flex">
+        <div className="flex flex-col text-gray-100 max-w-2/5">
+          <span className="text-2xl font-black">Recent searches</span>
+          <div className="topcard handcr mt-4 p-5 flex flex-col items-start">
+            <Image src="/img/asset/mix.jpg" ext w={92} err='/img/asset/mixdef.jpg'/>
+            <div className="text-gray-100 mt-6 text-3xl thiker dotdot">
+              BEST OF ARIJIT SINGH
+            </div>
+            <div className="acol mt-1 text-sm font-semibold">
+              Arijit singh
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col text-gray-100 ml-8 flex-grow">
+          <span className="flex justify-between">
+            <span className="text-2xl font-black">Songs</span>
+            <span className="acol font-semibold handcr">see all</span>
+          </span>
+          <div className="mt-4">
+            {data.queue.splice(0,4).map((song, i)=>(
+              <div className="srCont flex p-2 items-center prtclk" onClick={action}
+                data-action="song" data-payload={`"`+song.id+`"`} key={i}>
+                <Image src={song.image.to150()} w={40} ext/>
+                <div className="acol ml-4 flex-grow">
+                  <div className={"capitalize text-gray-100 dotdot font-semibold"+
+                    (sid==song.id?" gcol":"")}
+                    dangerouslySetInnerHTML={{__html: song.song}}></div>
+                  <div className="capitalize dotdot text-sm mt-1 font-semibold"
+                    dangerouslySetInnerHTML={{__html: song.singers}}></div>
+                </div>
+                <div className="acol text-sm font-semibold">
+                  {jiosaavn.formatTime(song.duration)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const Playlist = ({type, tdata, action, action2, sid, paused})=>{
@@ -410,7 +469,7 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
             {sid==song.song_id && !paused?<Icon src="./img/asset/equaliser.gif" ext width={14}/>:null}
 
             <div className="scol1">
-              {ptype?<Image src={song.song_image}
+              {ptype?<Image src={song.song_image.to150()}
                 w={40} h={40} ext err='/img/asset/mixdef.jpg'/>:null}
               <div className="scolsong flex flex-col" data-play={ptype}>
                 <div className={"font-semibold capitalize text-gray-100"+
@@ -422,7 +481,8 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
                 </div>
               </div>
             </div>
-            <div className="scol2 font-semibold">{ptype?song.album_name:null}</div>
+            <div className="scol2 font-semibold"
+              dangerouslySetInnerHTML={{__html: ptype?song.album_name:null}}></div>
             <div className="scol3 font-semibold">{ptype?song.year:null}</div>
             <div className="font-semibold flex justify-end">
               {jiosaavn.formatTime(song.song_duration)}
@@ -510,7 +570,9 @@ const Home = ({tab, action, sid, paused})=>{
                       <div className={paused?"tria":"fbars"}></div>
                     </div>
                   ):null}
-                  <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold">{card.name}</div>
+                  <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold">
+                    {card.name}
+                  </div>
                   <div className="my-1 leading-5 text-xs font-semibold tracking-wider">
                     {card.desc}
                   </div>
@@ -535,7 +597,7 @@ const Queue = ({queue, curr, action, action2, paused})=>{
         <div className="w-10 text-center gcol">
           {paused?"1":<Icon src="./img/asset/equaliser.gif" ext width={16}/>}
         </div>
-        <Image src={queue[curr].albumArt} w={40} ext/>
+        <Image src={queue[curr].albumArt.to150()} w={40} ext/>
         <div className="flex flex-col">
           <div className="capitalize dotdot font-semibold gcol"
             dangerouslySetInnerHTML={{__html: queue[curr].name}}></div>
@@ -552,7 +614,7 @@ const Queue = ({queue, curr, action, action2, paused})=>{
           <div className="songCont handcr prtclk acol pr-12 py-2"
             onClick={()=> action2("clickq",(curr+i+1)%queue.length)}>
             <div className="w-10 text-center font-semibold">{i+2}</div>
-            <Image src={qs.albumArt} w={40} ext/>
+            <Image src={qs.albumArt.to150()} w={40} ext/>
             <div className="flex flex-col">
               <div className="capitalize dotdot font-semibold text-gray-100"
                 dangerouslySetInnerHTML={{__html: qs.name}}></div>
