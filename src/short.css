@@ -17880,6 +17880,10 @@
 	width: 4rem
 }
 
+.w-18 {
+	width: 4.5rem
+}
+
 .w-20 {
 	width: 5rem
 }
@@ -17924,6 +17928,10 @@
 	width: 24.5rem
 }
 
+.w-100{
+	width: 25rem
+}
+
 .w-auto {
 	width: auto
 }
@@ -17962,6 +17970,10 @@
 
 .w-2\/5 {
 	width: 40%
+}
+
+.max-w-2\/5 {
+	max-width: 40%
 }
 
 .w-3\/5 {

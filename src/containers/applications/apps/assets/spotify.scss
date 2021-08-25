@@ -1,5 +1,6 @@
 .spotify .windowScreen {
   font-family: 'Spotify', sans-serif;
+  cursor: default;
 }
 
 .spnav {
@@ -573,4 +574,27 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.thiker{
+  -webkit-text-stroke-width: 2px;
+  letter-spacing: 2px;
+  max-height: 48px;
+}
+
+.topcard{
+  background: #222;
+  border-radius: 4px;
+
+  .imageCont{
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.srCont {
+  border-radius: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 }

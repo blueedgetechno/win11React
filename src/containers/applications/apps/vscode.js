@@ -27,7 +27,7 @@ export const VsCode = ()=>{
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
             {wnapp.hide?null:(
-              <iframe src={url} id="isite" className="w-full h-full"
+              <iframe src={url} className="w-full h-full"
                 frameborder="0"></iframe>
             )}
           </div>

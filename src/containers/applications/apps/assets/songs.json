@@ -32,20 +32,24 @@
           "data": ["tUjXvoKS","tO4KdkvZ","ZScWgymd","6IUC2JRX","ig1HkOTh",
                   "gSJ7LtZz","2DxytgUN","rkpNHSo1","SxdL_VN6","E0XUOgb0"]
         }, {
-          "type": "cstm",
+          "type": "mix",
           "img": "http://c.saavncdn.com/editorial/JhankarBeats_saavn_radio_20201215120219_500x500.jpg",
           "name": "Discover weekly",
-          "desc": "Your weekly mixtape of fresh music. Enjoy new music and deep cuts picked for you. Updates every Monday."
+          "desc": "Your weekly mixtape of fresh music. Enjoy new music and deep cuts picked for you. Updates every Monday.",
+          "data": ["bniN_G_9","k0pZ9SOq","lteSMrqT","dPE6CaaW","-5HuljV0","izo8AG5O"]
         }, {
-          "type": "cstm",
+          "type": "mix",
           "img": "http://c.saavncdn.com/editorial/Chill_saavn_radio_500x500.jpg",
           "name": "Chill station",
-          "desc": "Arrive! Your one stop shop to relax and groove."
+          "desc": "Arrive! Your one stop shop to relax and groove.",
+          "data": ["1ZbsmMvx","49_6hqO9","sEdO8hht","QUNHFVVV",
+                  "VM_1g4L3", "djov7ptD","GQDz4Ji6","4o2SQj5_"]
         }, {
           "type": "mix",
           "img": "http://c.saavncdn.com/artists/Taylor_Swift_150x150.jpg",
           "name": "Daily Mix 5",
-          "desc": "Taylor Swift, Katy Perry, Sara Kays and more"
+          "desc": "Taylor Swift, Katy Perry, Sophia Somajo and more",
+          "data": ["ywYcM5y0","CW0maQeQ","Bx-MHJzW","r1L8gMRa","3zP4JQOU"]
         }
       ]
     },
@@ -74,6 +78,12 @@
         "name": "RISE",
         "desc": "By WILLOW, Jahnavi Harrison",
         "data": "23601363"
+      },{
+        "type": "album",
+        "img": "https://c.saavncdn.com/019/Still-Here-Hindi-2021-20210309211207-500x500.jpg",
+        "name": "Still Here",
+        "desc": "KR$NA",
+        "data": "25817358"
       }]
     },
     {
@@ -891,7 +901,7 @@
   "playlist": [
     {
       "type": "play",
-      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "img": "/img/asset/hindi.jpg",
       "name": "Hindi",
       "desc": "Created by blueedge",
       "data": ["jZj6FxTn","lWfLyI7Q","1EvZOLZA","7pyE_xRk","Vnpn-XBN","sRfXrLI3",
@@ -900,17 +910,20 @@
     },
     {
       "type": "play",
-      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "img": "/img/asset/english.jpg",
       "name": "English",
       "desc": "Created by blueedge",
-      "data": ["m6DcVXHw"]
+      "data": ["Qh1CjVg7","bodW4p3V","TEG8c_EJ","Mej5z1fx","TS2O2Tve","3g5G9QTu",
+        "vMVZNcBe","j8hvJDPs","QW2Cc9f_","2DxytgUN","lkuNi3jw","ob5CYzSj",
+        "StDihZvc","r18ZGRhZ","w45WxXVs","SCViGhWY","hRwARnmN","NcZREsTd"]
     },
     {
       "type": "play",
-      "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+      "img": "/img/asset/community.jpg",
       "name": "Community",
       "desc": "Created by community",
-      "data": ["1F6WUTJk"]
+      "data": ["mPk9X_H_","gy17KLcd","VD6u6NAU","0v8zw64U","-flLKGvp","4J4hpD8f",
+            "6-xaXxqJ","b5X96rOy"]
     }
   ]
 }

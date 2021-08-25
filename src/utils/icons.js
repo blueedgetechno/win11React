@@ -7,7 +7,6 @@ export const home = (props) => {
     viewBox="0 0 512 512"
     width={24}
     height={24}
-    xmlns="http://www.w3.org/2000/svg"
     {...props}>
     <path
       d="M448 463.746H298.667V314.413h-85.334v149.333H64V148.318L256 36.572l192 110.984v316.19z"
@@ -71,7 +70,6 @@ export const play = (props) => {
       height={16}
       width={16}
       viewBox="0 0 16 16"
-      className="Svg-sc-1bi12j5-0 fIDrcz"
       {...props}
     >
       <path d="M4.018 14L14.41 8 4.018 2z" />
@@ -85,11 +83,27 @@ export const pause = (props) => {
       height={16}
       width={16}
       viewBox="0 0 16 16"
-      className="Svg-sc-1bi12j5-0 fIDrcz"
       {...props}
     >
       <path fill="none" d="M0 0h16v16H0z" />
       <path d="M3 2h3v12H3zm7 0h3v12h-3z" />
+    </svg>
+  )
+}
+
+export const search = (props) => {
+  return (
+    <svg
+      height={24}
+      width={24}
+      viewBox="0 0 512 512"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285T224 57.397t-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286T224 377.397z"
+        fill="currentColor"
+      />
     </svg>
   )
 }

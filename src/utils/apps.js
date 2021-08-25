@@ -361,7 +361,6 @@ export default [
   name: 'Discord',
   icon: 'discord',
   type: 'app',
-  action: 'EXTERNAL',
-  payload: 'https://discord.gg/Fz3Dkc4S'
+  action: 'DISCORD',
 }
 ];
