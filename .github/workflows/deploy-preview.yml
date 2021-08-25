@@ -24,6 +24,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
+    - name: Sleep for 40 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '40s'
+
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
@@ -61,7 +66,7 @@ jobs:
         cname: ${{ github.event.pull_request.number }}.pr.andrewstech.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
     
-    - name: Sleep for 30 seconds
+    - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
       with:
         time: '120s'
