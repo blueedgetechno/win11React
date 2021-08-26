@@ -7,8 +7,24 @@ on:
   
   
 jobs:
+  repo:
+    name: Repo
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: create git
+      run: git init my-project && cd my-project
+
+        
+    - name: create repo
+      run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public -y
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT }}
+    
   build:
     name: Build
+    needs: repo
     runs-on: ubuntu-latest
     
     steps:
@@ -53,15 +69,6 @@ jobs:
         name: production-files
         path: ./build
         
-    - name: create git
-      run: git init my-project && cd my-project
-
-        
-    - name: create repo
-      run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public -y
-      env:
-        GITHUB_TOKEN: ${{ secrets.BOT }}
-        
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -76,7 +83,7 @@ jobs:
               ⌛ Deploy Preview - Build in Progress 
          GITHUB_TOKEN: ${{ secrets.BOT }}
          
-    - name: Sleep for 30 seconds
+    - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
       with:
         time: '120s'
