@@ -67,7 +67,7 @@ jobs:
       with:
         personal_token: ${{ secrets.BOT }}
         publish_dir: ./build
-        cname: ${{ github.event.pull_request.number }}.pr.andrewstech.me
+        cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
      
     - name: Sleep for 30 seconds
@@ -78,5 +78,5 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@master
       with:
-         message: 'Deploy Preview: https://${{ github.event.pull_request.number }}.pr.andrewstech.me !'
+         message: 'Deploy Preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !'
          GITHUB_TOKEN: ${{ secrets.BOT }}
