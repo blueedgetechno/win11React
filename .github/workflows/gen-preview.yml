@@ -69,7 +69,13 @@ jobs:
         publish_dir: ./build
         cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
-     
+    - name: Comment PR
+      uses: thollander/actions-comment-pull-request@master
+      with:
+         message: |
+              ⌛ Deploy Preview - Build in Progress 
+         GITHUB_TOKEN: ${{ secrets.BOT }}
+         
     - name: Sleep for 30 seconds
       uses: jakejarvis/wait-action@master
       with:
@@ -78,5 +84,8 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@master
       with:
-         message: 'Deploy Preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !'
+         message: |
+              ✔️ Deploy Preview for win11blue ready! 
+              😎 Browse the preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !
+              🔨 If you experience an SSL issue then wait 2 minutes and try gain.
          GITHUB_TOKEN: ${{ secrets.BOT }}
