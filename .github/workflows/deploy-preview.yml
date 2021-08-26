@@ -69,7 +69,7 @@ jobs:
     - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '320s'
+        time: '120s'
         
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@master
