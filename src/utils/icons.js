@@ -363,6 +363,6 @@ export default [
   icon: 'discord',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://discord.gg/Fz3Dkc4S'
+  payload: 'https://discord.gg/qmEZwUhb4b'
 }
 ];
