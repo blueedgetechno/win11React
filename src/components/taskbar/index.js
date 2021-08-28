@@ -95,8 +95,8 @@ const Taskbar = ()=>{
           <Icon className="taskIcon" src='audio' ui width={22}/>
           <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
             data-action="CALNTOGG">
-            <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
+            <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
           </div>
           <Icon className="taskIcon mr-2 hvdark" ui src='sidepane' width={16} invert click='PANETOGG'/>
           <Icon className="graybd" ui width={6} click='SHOWDSK' pr/>
