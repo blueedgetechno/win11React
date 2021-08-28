@@ -1,0 +1,18 @@
+name: can-docker-build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Build 
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
