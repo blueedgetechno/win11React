@@ -92,7 +92,7 @@ jobs:
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
     
     - name: Comment PR
-      uses: thollander/actions-comment-pull-request@main
+      uses: unofficial-skills/actions-comment-pull-request@main
       with:
          message: |
               ⌛ Deploy Preview - Build in Progress 
@@ -104,7 +104,7 @@ jobs:
         time: '120s'
         
     - name: Comment PR
-      uses: thollander/actions-comment-pull-request@main
+      uses: unofficial-skills/actions-comment-pull-request@main
       with:
          message: |
               ✔️ Deploy Preview for win11blue ready! 
