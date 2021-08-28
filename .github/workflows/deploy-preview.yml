@@ -69,10 +69,10 @@ jobs:
     - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '320s'
+        time: '120s'
         
     - name: Comment PR
-      uses: thollander/actions-comment-pull-request@master
+      uses: unofficial-skills/actions-comment-pull-request@main
       with:
          message: 'Deploy Preview has been updated !'
          GITHUB_TOKEN: ${{ secrets.BOT }}
