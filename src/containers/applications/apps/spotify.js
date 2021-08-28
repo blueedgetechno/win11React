@@ -13,7 +13,7 @@ String.prototype.to150 = function(){
 export const Spotify = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.spotify);
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const [paused, setPause] = useState(true);
   const [shfle, setShuffle] = useState(0);
   const [mxqueue, setMxq] = useState([]);

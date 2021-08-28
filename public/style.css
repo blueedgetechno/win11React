@@ -1,0 +1,86 @@
+body {
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+  background: #3973aa;
+  color: #fefeff;
+  height: 100vh;
+  margin: 0;
+}
+
+#page {
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: -10px;
+  width: 70%;
+  font-size: 1.9vw;
+}
+
+#container {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+  padding: 0;
+  margin: 25px 0;
+  margin-top: 0;
+  font-weight: 300;
+}
+
+h1 {
+  font-size: 6.5em;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.4em;
+  line-height: 1.5em;
+}
+
+h5 {
+  line-height: 1.1em;
+  font-size: 1.3em;
+}
+
+#details {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  padding-top: 10px;
+}
+
+#qr {
+  flex: 0 1 auto;
+}
+
+#image {
+  background: white;
+  padding: 5px;
+  line-height: 0;
+}
+
+#image img {
+  width: 9.8em;
+  height: 9.8em;
+}
+
+#stopcode {
+  padding-left: 10px;
+  flex: 1 1 auto;
+}
+
+@media (min-width: 840px) {
+  #page {
+    font-size: 140%;
+    width: 800px;
+  }
+}
