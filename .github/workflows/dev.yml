@@ -50,7 +50,7 @@ jobs:
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.BOT }}
+        personal_token: ${{ secrets.BOT }}
         cname: dev.blueedge.me
         external_repository: win11bot/dev-build
         publish_dir: ./build
