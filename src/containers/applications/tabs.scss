@@ -291,11 +291,11 @@
 }
 
 .cmdLine {
-  font-size: 0.84em;
-  color: rgba(255, 255, 255, 0.72);
-  font-family: monospace, sans-serif;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.94);
+  font-family: "consolas", monospace;
   height: 1.2em;
-  font-weight: lighter;
+  font-weight: 400;
   overflow: hidden;
   max-width: 100%;
 }

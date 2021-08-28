@@ -11,6 +11,9 @@
  *
  * Date: 2014-08-17 sunday
  */
+/**
+ CSS modified by https://www.tronic247.com/ for https://win11.blueedge.me/
+**/
 .dycalendar-container {
   display: inline-block;
   border: 1px solid #eee;
@@ -57,15 +60,19 @@
  *-------------------------------------------------*/
 .dycalendar-month-container {
   padding: 10px;
+  font-family: "Segoe ui";
+  transition: all 0.2s ease;
   text-align: center;
-  font-family: Arial;
 }
 
 .dycalendar-month-container div {
   padding: 0;
   margin-bottom: 10px;
+  text-align: inherit;
 }
-
+.dycalendar-body {
+  text-align: left !important;
+}
 .dycalendar-month-container .dycalendar-header {
   position: relative;
 }
@@ -90,10 +97,17 @@
 }
 
 .dycalendar-month-container .dycalendar-body table tr td {
-  padding: 12px;
-  font-size: 0.64em;
+  padding: 0;
+  font-size: 13px;
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  width: 40px;
+  height: 40px;
+  display: inline-grid;
+  margin-top: 10px;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 
 .dycalendar-month-container .dycalendar-body table tr td:hover {
@@ -341,8 +355,10 @@
 }
 
 .dycalendar-span-month-year {
-  font-size: 0.8em;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 400;
+  text-shadow: 0px 0px 0px white;
+  text-align: center;
 }
 
 .dycalendar-prev-next-btn {
