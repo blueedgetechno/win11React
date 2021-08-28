@@ -1,4 +1,4 @@
-name: Build & deploy to GitHub
+name: Build
 
 on:
   push:
