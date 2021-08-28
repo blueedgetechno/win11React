@@ -15,7 +15,6 @@ import {
 } from './components/start';
 
 import * as Applications from './containers/applications';
-import {EdgeMenu} from './containers/applications';
 
 function App() {
   const apps = useSelector(state => state.apps);
@@ -30,11 +29,10 @@ function App() {
       ["MENU","MENUHIDE"]
     ];
 
+    var actionType = "";
     try{
-      var actionType = event.target.dataset.action || "";
-    }catch(err){
-      var actionType = "";
-    }
+      actionType = event.target.dataset.action || "";
+    }catch(err){}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue('--prefix');
 

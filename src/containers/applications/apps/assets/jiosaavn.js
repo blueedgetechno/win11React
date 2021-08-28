@@ -1,7 +1,8 @@
 'use babel';
 import axios from 'axios';
 
-const search_url = "/search?query="
+const search_song_url = "/search?song="
+const search_album_url = "/search?album="
 const song_url = "/song?id="
 const album_url = "/album?id="
 const playlist_url = "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid="
@@ -83,6 +84,22 @@ class JioSaavn {
       this.fetch(album_url + id).then(res => {
         resolve(res);
       }).catch(err => reject(err))
+    })
+  }
+
+  searchQuery(query){
+    if(query.length<1) return;
+    return new Promise((resolve, reject) => {
+      this.fetch(search_song_url + query)
+        .then(res => resolve(res)).catch(err => reject(err))
+    })
+  }
+
+  albumQuery(query){
+    if(query.length<1) return;
+    return new Promise((resolve, reject) => {
+      this.fetch(search_album_url + query)
+        .then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
