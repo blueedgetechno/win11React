@@ -1,0 +1,113 @@
+name: Generate Preview
+
+on:
+  pull_request:
+    types: [opened]
+
+  
+  
+jobs:
+  repo:
+    name: Repo
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: create git
+      run: git init my-project && cd my-project
+
+        
+    - name: create repo
+      run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public -y
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT }}
+        
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        repository: win11bot/win11bot
+        path: ./build
+     
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.BOT }}
+        publish_dir: ./build
+        cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
+        external_repository: win11bot/pr-${{ github.event.pull_request.number }} 
+    
+  build:
+    name: Build
+    needs: repo
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+        
+    - uses: actions/checkout@v1
+      # Find the PR associated with this push, if there is one.
+      # This will echo "Your PR is 7", or be skipped if there is no current PR.
+    - run: echo "Your PR is ${PR_NUMBER}"
+      env:
+       PR_NUMBER: ${{ github.event.pull_request.number }}
+    
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '16.6.1'
+    
+    - name: Install NPM packages
+      run: npm ci
+    
+    - name: Build project
+      run: CI=false npm run build
+
+    - name: Upload production-ready build files
+      uses: actions/upload-artifact@v2
+      with:
+        name: production-files
+        path: ./build
+  
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: production-files
+        path: ./build
+        
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.BOT }}
+        publish_dir: ./build
+        cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
+        external_repository: win11bot/pr-${{ github.event.pull_request.number }}
+    
+    - name: Comment PR
+      uses: thollander/actions-comment-pull-request@master
+      with:
+         message: |
+              ⌛ Deploy Preview - Build in Progress 
+         GITHUB_TOKEN: ${{ secrets.BOT }}
+         
+    - name: Sleep for 120 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '120s'
+        
+    - name: Comment PR
+      uses: thollander/actions-comment-pull-request@master
+      with:
+         message: |
+              ✔️ Deploy Preview for win11blue ready! 
+              😎 Browse the preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !
+              🔨 If you experience an SSL issue then wait 2 minutes and try gain.
+         GITHUB_TOKEN: ${{ secrets.BOT }}

@@ -24,7 +24,7 @@ export const ScreenPreview = ()=>{
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    if(tasks.prevApp!="" && tasks.prev){
+    if(tasks.prevApp!="" && tasks.prev && false){
       var wnapp = document.getElementById(tasks.prevApp+'App');
       var clone = wnapp.cloneNode(true);
       clone.id = "prevsc";
@@ -44,7 +44,7 @@ export const ScreenPreview = ()=>{
     <div className="prevCont" style={{
       left: tasks.prevPos+'%'
     }}>
-      <div className="prevScreen" id="prevApp" data-show={tasks.prev}>
+      <div className="prevScreen" id="prevApp" data-show={tasks.prev && false}>
         <div id="prevsc"></div>
       </div>
     </div>

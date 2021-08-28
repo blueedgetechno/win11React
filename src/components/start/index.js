@@ -226,7 +226,7 @@ export const StartMenu = () => {
             <Icon src="search" ui width={16}/>
             <input type="text" onChange={(event)=>{
               setQuery(event.target.value.trim());
-            }} defaultValue={query} placeholder="search something ..."/>
+            }} defaultValue={query} placeholder="Search something ..."/>
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 text-gray-700 flex justify-between">
