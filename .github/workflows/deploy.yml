@@ -51,5 +51,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.BOT }}
-        cname: test.blueedge.me
+        cname: win11.blueedge.me
         publish_dir: ./build
