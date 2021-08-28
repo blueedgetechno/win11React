@@ -4,7 +4,7 @@
       "desc": "Get better recommendations the more you listen",
       "cards": [{
           "type": "mix",
-          "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+          "img": "https://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
           "name": "Daily Mix 1",
           "desc": "Arijit Singh, Jubin Nautiyal, Darshan Raval and more",
           "data": ["1F6WUTJk","ZGifVkqI","m6DcVXHw","3x-IwBwd","aOEJX-ur",
@@ -12,41 +12,41 @@
         },
         {
           "type": "mix",
-          "img": "http://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg",
+          "img": "https://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg",
           "name": "Daily Mix 2",
           "desc": "Kavita Seth, Alka Yagnik, Shubha Mudgal and more",
           "data": ["aUTlRd3u","9B8qM5Gv","Ut_lKlWE","DHrY5Sdd","3Be_U0qz",
                   "cgM-pRO9","mPk9X_H_","Ni6noMmw","0-5hUtBO","mbKEo3nm"]
         }, {
           "type": "mix",
-          "img": "http://c.saavncdn.com/067/NF-English-2014-500x500.jpg",
+          "img": "https://c.saavncdn.com/067/NF-English-2014-500x500.jpg",
           "name": "Daily Mix 3",
           "desc": "NF, Billie Eilish, Powfu and more",
           "data": ["o8jkpKcg","ICA-0R1l","Kv6rGi1G","gy17KLcd","TEG8c_EJ",
                   "4t496tbc","4RmwbCw4","-Uu7zEWP","5QcFgcqA","2oWa2CKB"]
         }, {
           "type": "mix",
-          "img": "http://c.saavncdn.com/365/Runaway-English-2015-500x500.jpg",
+          "img": "https://c.saavncdn.com/365/Runaway-English-2015-500x500.jpg",
           "name": "Daily Mix 4",
           "desc": "AURORA, Ane Brun, SVRCINA and more",
           "data": ["tUjXvoKS","tO4KdkvZ","ZScWgymd","6IUC2JRX","ig1HkOTh",
                   "gSJ7LtZz","2DxytgUN","rkpNHSo1","SxdL_VN6","E0XUOgb0"]
         }, {
           "type": "mix",
-          "img": "http://c.saavncdn.com/editorial/JhankarBeats_saavn_radio_20201215120219_500x500.jpg",
+          "img": "https://c.saavncdn.com/editorial/JhankarBeats_saavn_radio_20201215120219_500x500.jpg",
           "name": "Discover weekly",
           "desc": "Your weekly mixtape of fresh music. Enjoy new music and deep cuts picked for you. Updates every Monday.",
           "data": ["bniN_G_9","k0pZ9SOq","lteSMrqT","dPE6CaaW","-5HuljV0","izo8AG5O"]
         }, {
           "type": "mix",
-          "img": "http://c.saavncdn.com/editorial/Chill_saavn_radio_500x500.jpg",
+          "img": "https://c.saavncdn.com/editorial/Chill_saavn_radio_500x500.jpg",
           "name": "Chill station",
           "desc": "Arrive! Your one stop shop to relax and groove.",
           "data": ["1ZbsmMvx","49_6hqO9","sEdO8hht","QUNHFVVV",
                   "VM_1g4L3", "djov7ptD","GQDz4Ji6","4o2SQj5_"]
         }, {
           "type": "mix",
-          "img": "http://c.saavncdn.com/artists/Taylor_Swift_150x150.jpg",
+          "img": "https://c.saavncdn.com/artists/Taylor_Swift_150x150.jpg",
           "name": "Daily Mix 5",
           "desc": "Taylor Swift, Katy Perry, Sophia Somajo and more",
           "data": ["ywYcM5y0","CW0maQeQ","Bx-MHJzW","r1L8gMRa","3zP4JQOU"]
@@ -102,7 +102,7 @@
         "data": "gLbWqLKC"
       }, {
         "type": "song",
-        "img": "http://c.saavncdn.com/855/Homesick-English-2018-20181025170408-500x500.jpg",
+        "img": "https://c.saavncdn.com/855/Homesick-English-2018-20181025170408-500x500.jpg",
         "name": "Falling",
         "desc": "Trevor Daniel",
         "data": "Jm6qLR3V"
@@ -171,7 +171,7 @@
         "data": "14014305"
       }, {
         "type": "album",
-        "img": "http://sklktcdnems06.cdnsrv.jio.com/c.saavncdn.com/113/Main-Aur-Mera-Saya-Bhupen-Hazarika-2001-500x500.jpg",
+        "img": "https://sklktcdnems06.cdnsrv.jio.com/c.saavncdn.com/113/Main-Aur-Mera-Saya-Bhupen-Hazarika-2001-500x500.jpg",
         "name": "Main Aur Mera Saya",
         "desc": "Gulzar, Bhupen Hazarika",
         "data": "1066045"
@@ -201,7 +201,7 @@
         "data": "13912413"
       }, {
         "type": "album",
-        "img": "http://c.saavncdn.com/836/Malang-Unleash-The-Madness-Hindi-2020-20200619175502-500x500.jpg",
+        "img": "https://c.saavncdn.com/836/Malang-Unleash-The-Madness-Hindi-2020-20200619175502-500x500.jpg",
         "name": "Malang",
         "desc": "2020",
         "data": "18574421"
@@ -233,72 +233,72 @@
       }, {
         "type": "artist",
         "name": "Neeti Mohan",
-        "img": "http://c.saavncdn.com/artists/Neeti_Mohan_003_20200211100510_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Neeti_Mohan_003_20200211100510_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Alan Walker",
-        "img": "http://c.saavncdn.com/artists/Alan_Walker_002_20190507112228_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Alan_Walker_002_20190507112228_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Armaan Malik",
-        "img": "http://c.saavncdn.com/artists/Armaan_Malik_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Armaan_Malik_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Shalmali",
-        "img": "http://c.saavncdn.com/artists/Shalmali_Kholgade_004_20200226073940_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Shalmali_Kholgade_004_20200226073940_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Justin Bieber",
-        "img": "http://c.saavncdn.com/artists/Justin_Bieber_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Justin_Bieber_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "DJ Snake",
-        "img": "http://c.saavncdn.com/artists/Dj_Snake_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Dj_Snake_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Sia",
-        "img": "http://c.saavncdn.com/artists/Sia_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Sia_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Arijit Singh",
-        "img": "http://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Alessia Cara",
-        "img": "http://c.saavncdn.com/artists/Alessia_Cara_20190306095839_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Alessia_Cara_20190306095839_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "The Chainsmokers",
-        "img": "http://c.saavncdn.com/artists/The_Chainsmokers_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/The_Chainsmokers_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Alec Benjamin",
-        "img": "http://c.saavncdn.com/artists/Alec_Benjamin_000_20191129075848_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Alec_Benjamin_000_20191129075848_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Darshan Raval",
-        "img": "http://c.saavncdn.com/artists/Darshan_Raval_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Darshan_Raval_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Atif Aslam",
-        "img": "http://c.saavncdn.com/artists/Atif_Aslam_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Atif_Aslam_500x500.jpg",
         "desc": "Artist"
       }, {
         "type": "artist",
         "name": "Monali Thakur",
-        "img": "http://c.saavncdn.com/artists/Monali_Thakur_500x500.jpg",
+        "img": "https://c.saavncdn.com/artists/Monali_Thakur_500x500.jpg",
         "desc": "Artist"
       }]
     }
