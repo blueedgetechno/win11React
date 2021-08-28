@@ -78,6 +78,15 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
   <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
 </a>
 
+### Known Issues
+
+- Blur not working in Firefox browser.
+
+###### Solution:
+
+1. Open `about:config` in your firefox browser.
+2. Search for `layout.css.backdrop-filter.enabled` and set it to `true`.
+
 ## License
 
 ⚖️ CC0-1.0 License
