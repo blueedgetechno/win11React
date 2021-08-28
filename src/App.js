@@ -64,7 +64,7 @@ function App() {
   });
 
   window.addEventListener("load", e => {
-    document.querySelector('#loader').remove();
+    // document.querySelector('#loader').remove();
   });
 
   return (

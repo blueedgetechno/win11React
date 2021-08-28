@@ -8,35 +8,39 @@ const album_url = "/album?id="
 const playlist_url = "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid="
 const lyrics_url = "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id="
 
-const {
-  round,
-  floor,
-  max,
-  min,
-  random
-} = Math;
+const {round, floor, max, min, random} = Math;
 
 class JioSaavn {
   constructor() {
     // this.ignorewhitespace = true;
     this.defaultSongs = [
-      "Szz0RZFb", "cgM-pRO9", "mPk9X_H_", "R2GnvPCo", "eR_xs61E", "ZGifVkqI",
-      "TEG8c_EJ", "gy17KLcd", "rkpNHSo1", "o8jkpKcg", "tUjXvoKS", "Kv6rGi1G"
+      "Szz0RZFb",
+      "cgM-pRO9",
+      "mPk9X_H_",
+      "R2GnvPCo",
+      "eR_xs61E",
+      "ZGifVkqI",
+      "TEG8c_EJ",
+      "gy17KLcd",
+      "rkpNHSo1",
+      "o8jkpKcg",
+      "tUjXvoKS",
+      "Kv6rGi1G"
     ];
 
-    this.dfdata = [{
-      id: "Szz0RZFb",//"Szz0RZFb",
-      album: "Raincoat",
-      albumArt: "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
-      name: "Piya Tora Kaisa Abhiman",
-      artist: "Shubha Mudgal",
-      duration: 297,
-      src: "http://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4"
-    }]
+    this.dfdata = [
+      {
+        id: "Szz0RZFb", //"Szz0RZFb",
+        album: "Raincoat",
+        albumArt: "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
+        name: "Piya Tora Kaisa Abhiman",
+        artist: "Shubha Mudgal",
+        duration: 297,
+        src: "https://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4"
+      }
+    ]
 
-    this.instance = axios.create({
-      baseURL: "https://saavn.me"
-    });
+    this.instance = axios.create({baseURL: "https://saavn.me"});
   }
 
   fetch(url, config = {}) {
@@ -44,16 +48,14 @@ class JioSaavn {
       this.instance(url, config).then((res) => {
         resolve(res.data);
       }).catch(error => {
-        reject({
-          error: 'axios',
-          data: error
-        });
+        reject({error: 'axios', data: error});
       });
     });
   }
 
   fetchSong(pids) {
-    if (typeof(pids) != "object") pids = [pids];
+    if (typeof(pids) != "object") 
+      pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
         resolve(res);
@@ -62,9 +64,9 @@ class JioSaavn {
   }
 
   fetchSongs(pids) {
-    if (typeof(pids) != "object") pids = [pids];
-    return Promise.all(pids.map(id => this.fetchSong(id).then(r => r)
-            .catch(err=> null))).then(songs => songs.filter(song=> song!=null));
+    if (typeof(pids) != "object") 
+      pids = [pids];
+    return Promise.all(pids.map(id => this.fetchSong(id).then(r => r).catch(err => null))).then(songs => songs.filter(song => song != null));
   }
 
   mapToSong(obj) {
@@ -87,19 +89,19 @@ class JioSaavn {
     })
   }
 
-  searchQuery(query){
-    if(query.length<1) return;
+  searchQuery(query) {
+    if (query.length < 1) 
+      return;
     return new Promise((resolve, reject) => {
-      this.fetch(search_song_url + query)
-        .then(res => resolve(res)).catch(err => reject(err))
+      this.fetch(search_song_url + query).then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
-  albumQuery(query){
-    if(query.length<1) return;
+  albumQuery(query) {
+    if (query.length < 1) 
+      return;
     return new Promise((resolve, reject) => {
-      this.fetch(search_album_url + query)
-        .then(res => resolve(res)).catch(err => reject(err))
+      this.fetch(search_album_url + query).then(res => resolve(res)).catch(err => reject(err))
     })
   }
 
@@ -108,9 +110,7 @@ class JioSaavn {
     return new Promise(resolve => {
       resolve(this.dfdata);
       return;
-      this.fetchSong(
-        this.defaultSongs[floor(random() * this.defaultSongs.length)]
-      ).then(res => {
+      this.fetchSong(this.defaultSongs[floor(random() * this.defaultSongs.length)]).then(res => {
         resolve([this.mapToSong(res.data)]);
       }).catch(err => {
         console.log(err);
@@ -120,22 +120,27 @@ class JioSaavn {
   }
 
   formatTime(sec) {
-    if (!sec) return "0:00";
+    if (!sec) 
+      return "0:00";
     var res = floor(sec / 60);
     res += ':';
     sec %= 60;
-    if (sec < 10) res += "0";
+    if (sec < 10) 
+      res += "0";
     res += sec;
 
     return res;
   }
 
   formatPeriod(sec) {
-    if (!sec) return "";
-    var res ="", h = floor(sec/3600);
-    if(h!=0) res+=h+" hr ";
-    sec = sec%3600;
-    res += floor(sec / 60)+' min ';
+    if (!sec) 
+      return "";
+    var res = "",
+      h = floor(sec / 3600);
+    if (h != 0) 
+      res += h + " hr ";
+    sec = sec % 3600;
+    res += floor(sec / 60) + ' min ';
     sec %= 60;
     res += sec + ' sec';
     return res;
@@ -143,7 +148,8 @@ class JioSaavn {
 
   shuffle(arr) {
     var currentIndex = arr.length,
-      temporaryValue, randomIndex;
+      temporaryValue,
+      randomIndex;
     while (0 !== currentIndex) {
       randomIndex = floor(random() * currentIndex);
       currentIndex -= 1;
@@ -156,9 +162,11 @@ class JioSaavn {
 
   mixQueue(n) {
     var arr = []
-    for (var i = 0; i < n; i++) arr.push(i)
+    for (var i = 0; i < n; i++) 
+      arr.push(i)
     var brr = this.shuffle([...arr])
-    for (var i = 0; i < n; i++) arr[brr[i]] = brr[(i + 1) % n]
+    for (var i = 0; i < n; i++) 
+      arr[brr[i]] = brr[(i + 1) % n]
 
     return arr
   }

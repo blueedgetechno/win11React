@@ -357,7 +357,8 @@ const Search = ({sid, paused, action,action2})=>{
   const [recentSearches, setRecent] = useState([
     "Perfect",
     "Agar tum sath ho",
-    "One Republic"
+    "One Republic",
+    "Cheap thrills"
   ]);
 
   const handleQuery = (e)=>{
@@ -394,7 +395,7 @@ const Search = ({sid, paused, action,action2})=>{
       <div className="absolute w-full flex top-0 -mt-8">
         <div className="flex bg-gray-100 px-4 w-max rounded-full overflow-hidden">
           <input className="w-64 ml-2 bg-transparent py-3 rounded-full text-base"
-            value={query} defaultValue={query} type="text" placeholder="Artist, song or album"
+            value={query} type="text" placeholder="Artist, song or album"
             onChange={handleQuery}/>
           <Icon className="handcr" icon="search" onClick={searchSpotify}/>
         </div>

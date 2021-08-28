@@ -14,13 +14,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
   height: 100vh;
-  user-select:none;
+  user-select: none;
   overflow: hidden !important;
 }
 
@@ -110,10 +110,9 @@ img[data-flip='true'], svg[data-flip='true'] {
   transition: 400ms ease-in-out;
 }
 
-
-.uicon img[data-click="true"]:active{
-  transform: scale(0.8);
-  transition: 0.1s ease;
+.uicon img[data-click="true"]:active {
+  transform: scale(0.7);
+  transition: 100ms ease-in-out;
 }
 
 .desktop {
@@ -122,7 +121,6 @@ img[data-flip='true'], svg[data-flip='true'] {
   height: calc(100vh - 39px);
   top: 0;
 }
-
 
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
@@ -146,9 +144,9 @@ img[data-flip='true'], svg[data-flip='true'] {
 
 input {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
-} 
-  
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+}
+
 .ltShad0 {
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
 }
@@ -173,9 +171,8 @@ input {
   display: none !important;
 }
 
-
-.text-xss{
-  font-size: 12px;
+.text-xss {
+  font-size: 0.64em;
 }
 
 .noscroll::-webkit-scrollbar {
@@ -222,121 +219,26 @@ input {
   transition: all 200ms ease-in-out;
 }
 
-
-#loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: #000000;
-  z-index: 99999999999999;
-  display: grid;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-}
-
-.circledots {
-  position: relative;
-  top: 0;
-  left: 0;
-  transform: scale(.9);
-  width: 50px;
-  height: 50px;
-  margin: auto;
-}
-.circledots .circle {
-  position: absolute;
-  width: 38px;
-  height: 38px;
-  opacity: 0;
-  border-radius: 100px;
-  transform: rotate(225deg);
-  animation-iteration-count: infinite;
-  animation-name: orbit;
-  animation-duration: 5.5s;
-}
-.circledots .circle:after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  clip-path: circle(100%);
-  border-radius: 100px;
-  background: #fff;
-}
-.circledots .circle:nth-child(2) {
-  animation-delay: 240ms;
-}
-.circledots .circle:nth-child(3) {
-  animation-delay: 480ms;
-}
-.circledots .circle:nth-child(4) {
-  animation-delay: 720ms;
-}
-.circledots .circle:nth-child(5) {
-  animation-delay: 960ms;
-}
-@keyframes orbit {
-  0% {
-    transform: rotate(225deg);
-    opacity: 1;
-    animation-timing-function: ease-out;
-  }
-  7% {
-    transform: rotate(345deg);
-    animation-timing-function: linear;
-  }
-  30% {
-    transform: rotate(455deg);
-    animation-timing-function: ease-in-out;
-  }
-  39% {
-    transform: rotate(690deg);
-    animation-timing-function: linear;
-  }
-  70% {
-    transform: rotate(815deg);
-    opacity: 1;
-    animation-timing-function: ease-out;
-  }
-  75% {
-    transform: rotate(945deg);
-    animation-timing-function: ease-out;
-  }
-  76% {
-    transform: rotate(945deg);
-    opacity: 0;
-  }
-  100% {
-    transform: rotate(945deg);
-    opacity: 0;
-  }
-}
-
-#loads {
-  fill: #0178D4 !important;
-}
 a {
-    text-decoration: none;
-    color: #0080E1;
+  text-decoration: none;
+  color: #0080E1;
 }
+
 #textpad {
-    font-family: Consolas , monospace;
-    font-size: 18px;
-    font-weight: 500;
+  font-family: Consolas, monospace;
+  font-size: 18px;
+  font-weight: 500;
 }
-  
+
 .acol {
   color: #aaa;
 }
 
-#probtn{
+#probtn {
   display: none;
 }
 
-#warningmsg{
+#warningmsg {
   display: none;
 }
 
@@ -345,18 +247,18 @@ a {
     display: none;
   }
 
-  body[data-force="false"]{
+  body[data-force="false"] {
     display: grid;
     background: #2b2a2f;
     place-items: center;
     overflow: hidden;
   }
 
-  body[data-force="false"]::before{
+  body[data-force="false"]::before {
     display: none;
   }
 
-  body[data-force="false"] #warningmsg{
+  body[data-force="false"] #warningmsg {
     display: block;
     font-size: 1.6rem;
     color: #fefefe;
@@ -371,7 +273,7 @@ a {
     pointer-events: none;
   }
 
-  body[data-force="false"] #probtn{
+  body[data-force="false"] #probtn {
     display: block;
     color: #aaa;
     font-weight: 600;
@@ -380,6 +282,5 @@ a {
     background: #16161b;
     border-radius: 8px;
     border: none;
-  }  
-
+  }
 }

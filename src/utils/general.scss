@@ -121,7 +121,6 @@
   display: grid;
   grid-column-gap: 3px;
   grid-row-gap: 3px;
-  transform-origin:top right;
 
   &:nth-child(1){
     grid-template-columns: auto auto;

@@ -46,7 +46,8 @@ export const AboutWin = ()=>{
               This product is licensed with <a target="_blank" href="https://github.com/blueedgetechno/windows11/blob/master/LICENSE">Creative Commons</a>.
             </div>
             <div className="mt-1">
-              
+              &nbsp;&nbsp;
+              &nbsp;&nbsp;
               contact: <a target="_blank" href="mailto:blueedgetechno@gmail.com">blueedgetechno@gmail.com</a>
             </div>
             <br/>

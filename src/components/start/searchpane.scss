@@ -1,10 +1,10 @@
-.searchMenu{
+.searchMenu {
   min-height: 500px;
   padding: 12px;
   text-align: left;
 }
 
-.searchBar{
+.searchBar {
   height: 30px;
   border: solid 2px #0e60e4;
   border-radius: 6px;
@@ -12,35 +12,35 @@
   display: flex;
   padding: 0 10px;
 
-  .uicon{
+  .uicon {
     filter: brightness(0.6);
     margin-right: 12px;
   }
 
-  input{
+  input {
     width: 400px;
     color: #222;
   }
 }
 
-.opts div{
+.opts div {
   border: solid 0 #1f4aff;
   cursor: pointer;
 
-  &[value="true"]{
+  &[value="true"] {
     border-bottom-width: 2px;
   }
 }
 
-.leftSide{
+.leftSide {
   width: 100%;
 }
 
-.leftSide[data-width="true"]{
+.leftSide[data-width="true"] {
   width: 32%;
 }
 
-.rightSide{
+.rightSide {
   margin: 8px;
   height: 400px;
   background: #fafafa;
@@ -48,7 +48,7 @@
   flex-direction: column;
   align-items: center;
 
-  .hline{
+  .hline {
     width: 90%;
     height: 1px;
     border-radius: 10px;
@@ -56,7 +56,7 @@
   }
 }
 
-.topApp{
+.topApp {
   width: 19%;
   display: flex;
   flex-direction: column;
@@ -64,20 +64,20 @@
   border-radius: 4px;
 }
 
-.qksrch{
+.qksrch {
   color: #111;
 }
 
-.qksrch svg{
+.qksrch svg {
   color: #333;
 }
 
-.calnpane{
+.calnpane {
   position: absolute;
   bottom: 12px;
   right: 12px;
   // width: 280px;
-  min-height: 300px;
+  // min-height: 300px;
   background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
