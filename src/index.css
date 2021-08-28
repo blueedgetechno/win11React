@@ -20,7 +20,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
   height: 100vh;
-
   user-select:none;
   overflow: hidden !important;
 }
@@ -148,6 +147,7 @@ img[data-flip='true'], svg[data-flip='true'] {
 input {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+} 
   
 .ltShad0 {
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
