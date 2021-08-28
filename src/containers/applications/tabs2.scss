@@ -268,3 +268,86 @@
     cursor: pointer;
   }
 }
+
+.dsbar{
+  background: #282a2f;
+  position: relative;
+}
+
+.servCont{
+  padding: 0 12px;
+  height: max-content;
+  overflow-y: scroll;
+  position: absolute;
+
+  .svIcon, .dsIcon{
+    height: 48px;
+    background: #36393f;
+    border-radius: 24px;
+    margin-bottom: 8px;
+
+    img{
+      border-radius: 24px;
+    }
+
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+
+    &::after{
+      content: "";
+      width: 4px;
+      height: 0px;
+      position: absolute;
+      left: -12px;
+      background: #fefefe;
+      z-index: 1;
+      border-radius: 0 6px 6px 0;
+      transition: all 200ms ease-in-out;
+    }
+
+    &:hover, &:nth-child(3){
+      background: none;
+      border-radius: 16px;
+      img{
+        border-radius: 16px;
+      }
+
+      &::after{
+        height: 20px;
+      }
+
+      &:nth-child(1){
+        background: #5865F2;
+      }
+    }
+
+    &:nth-child(3){
+      &::after{
+        height: 40px;
+      }
+    }
+  }
+
+  hr{
+    width: 60%;
+    border-style: solid;
+    border-color: #36393f;
+  }
+}
+
+.wnServer{
+  &::before{
+    content: "";
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background-image: url('./apps/assets/server.jpg');
+    background-size: cover;
+    border-radius: 16px;
+    z-index: 1;
+  }
+
+  &:hover::before{
+    display: none;
+  }
+}

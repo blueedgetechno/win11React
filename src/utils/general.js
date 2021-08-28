@@ -5,6 +5,7 @@ import './general.scss';
 
 import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import * as FaRegIcons from '@fortawesome/free-regular-svg-icons';
+import * as AllIcons from './icons.js';
 
 export const Icon = (props)=>{
   const dispatch = useDispatch();
@@ -31,8 +32,44 @@ export const Icon = (props)=>{
     }
   }
 
-  return (
-    <>{props.fafa==null?(
+  if(props.fafa!=null){
+    return (
+      <div className={`uicon prtclk ${props.className||""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click} data-payload={props.payload}>
+        <FontAwesomeIcon
+          data-flip={props.flip!=null}
+          data-invert={props.invert!=null?'true':'false'}
+          data-rounded={props.rounded!=null?'true':'false'}
+          style={{
+          width: props.width,
+          height: props.height || props.width,
+          color: props.color || null,
+          margin: props.margin || null
+        }}
+          icon={props.reg==null?FaIcons[props.fafa]:FaRegIcons[props.fafa]} />
+      </div>
+    );
+  }else if (props.icon!=null) {
+    var CustomIcon = AllIcons[props.icon];
+    return(
+      <div className={`uicon prtclk ${props.className||""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click} data-payload={props.payload}>
+        <CustomIcon
+          data-flip={props.flip!=null}
+          data-invert={props.invert!=null?'true':'false'}
+          data-rounded={props.rounded!=null?'true':'false'}
+          style={{
+          width: props.width,
+          height: props.height || props.width,
+          fill: props.color || null,
+          margin: props.margin || null
+        }}/>
+      </div>
+    );
+  }else{
+    return (
       <div className={`uicon ${props.className||""} ${prtclk}`}
         data-open={props.open!=null} data-action={props.click}
         data-active={props.active} data-payload={props.payload}
@@ -53,39 +90,43 @@ export const Icon = (props)=>{
             }}
             alt=""/>
       </div>
-    ):(
-      <div className={`uicon prtclk ${props.className||""}`}
-        onClick={props.onClick || (props.click && clickDispatch) || null}
-        data-action={props.click} data-payload={props.payload}>
-        <FontAwesomeIcon
-          data-flip={props.flip!=null}
-          data-invert={props.invert!=null?'true':'false'}
-          data-rounded={props.rounded!=null?'true':'false'}
-          style={{
-          width: props.width,
-          height: props.height || props.width,
-          color: props.color || null,
-          margin: props.margin || null
-        }}
-          icon={props.reg==null?FaIcons[props.fafa]:FaRegIcons[props.fafa]} />
-      </div>
-    )}</>
-  );
+    );
+  }
 }
 
 export const Image = (props)=>{
+  const dispatch = useDispatch();
   var src = `/img/${(props.dir?props.dir+"/":"")+props.src}.png`;
+  if(props.ext!=null){
+    src = props.src
+  }
+
+  const errorHandler = (e)=>{
+    e.target.src = props.err
+  }
+
+  const clickDispatch = (event)=>{
+    var action = {
+      type: event.target.dataset.action,
+      payload: event.target.dataset.payload
+    };
+
+    if(action.type){
+      dispatch(action);
+    }
+  }
 
   return (
-    <div className={`imageCont ${props.className||""}`} id={props.id} style={{
+    <div className={`imageCont prtclk ${props.className||""}`} id={props.id} style={{
       backgroundImage: props.back && `url(${src})`
-    }} data-back={props.back!=null} data-var={props.var}>
+    }} data-back={props.back!=null} onClick={props.onClick || (props.click && clickDispatch)}
+      data-action={props.click} data-payload={props.payload} data-var={props.var}>
         {!props.back?<img
           width={props.w}
           height={props.h}
           data-free={props.free!=null}
           data-var={props.var}
-          src={src} alt=""/>:null}
+          src={src} alt="" onError={errorHandler}/>:null}
     </div>
   )
 }
@@ -120,8 +161,8 @@ export const SnapScreen = (props)=>{
     }
   })
 
-  return props.snap || delay?(
-    <div className="snapcont mdShad">
+  return props.snap?(
+    <div className="snapcont mdShad" data-dark={props.invert!=null}>
       {lays.map(x=>{
         return (
           <div className="snapLay">
@@ -177,7 +218,7 @@ export const ToolBar = (props)=>{
         <div className="snapbox h-full" data-hv={snap}
           onMouseOver={openSnap} onMouseLeave={closeSnap}>
           <Icon invert={props.invert} click={props.app} payload="mxmz" pr src="maximize" ui width={8}/>
-          <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap}/>
+          <SnapScreen invert={props.invert} app={props.app} snap={snap} closeSnap={closeSnap}/>
           {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
         </div>
         <Icon invert={props.invert} click={props.app} payload="close" pr src="close" ui width={8}/>

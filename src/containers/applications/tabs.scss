@@ -46,8 +46,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  // -webkit-backdrop-filter: blur(5px);
+  // backdrop-filter: blur(5px);
   overflow: hidden;
   border-radius: 6px;
   transition: all ease-in-out 200ms;
@@ -102,7 +102,7 @@
   flex-grow: 1;
 
   &[data-dock="true"]{
-    height: calc(100% - 26px);
+    // height: calc(100% - 26px);
   }
 }
 
