@@ -31,7 +31,7 @@ class JioSaavn {
       name: "Piya Tora Kaisa Abhiman",
       artist: "Shubha Mudgal",
       duration: 297,
-      src: "http://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4"
+      src: "https://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4"
     }]
 
     this.instance = axios.create({
