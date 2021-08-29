@@ -11,9 +11,10 @@
   overflow: hidden;
   transition: all ease-in-out 200ms;
   z-index: 9999;
+  transform: translateX(0);
 
   &[data-hide="true"] {
-    right: -330px;
+    transform: translateX(330px);
   }
 }
 
@@ -55,6 +56,7 @@
   background: rgba(255, 255, 255, 0.9);
   border: solid 0.1px rgba(17, 17, 17, 0.1);
   transition: all 0.1s ease;
+
   &[data-state="true"] {
     background: rgb(0, 90, 255);
 
@@ -89,13 +91,17 @@
   left: 0;
   width: 610px;
   height: 100%;
-  padding: 5px;
+  margin: 6px;
   overflow: hidden;
-  transition: all ease-in-out 200ms;
+  transform: translateX(0);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+  transition: all 0.3s cubic-bezier(.77,0,.18,1);
   z-index: 9999;
 
   &[data-hide="true"] {
-    left: -620px;
+    transform: translateX(-110%);
+    transition: all 0.6s cubic-bezier(.77,0,.18,1);
   }
 }
 
@@ -103,31 +109,12 @@
   width: 100%;
   border-radius: 8px;
   height: calc(100% - 12px);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
   background: rgba(255, 255, 255, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
-
   overflow-x: hidden;
   overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 1.6px;
-    background-color: transparent;
-  }
-
-  &:hover::-webkit-scrollbar-thumb{
-    background: rgba(0, 0, 0, 0.4);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    width: 1.6px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background-color: transparent;
-  }
 
   .widtop {
     width: 96%;
@@ -161,9 +148,9 @@
       border-radius: 6px;
       box-sizing: border-box;
       background: rgb(255,255,255);
-      background: -webkit-linear-gradient(top left, rgba(255,255,255,0.9951330874146533) 0%, rgba(255,243,190,1) 80%);
-      background: -o-linear-gradient(top left, rgba(255,255,255,0.9951330874146533) 0%, rgba(255,243,190,1) 80%);
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.9951330874146533) 0%, rgba(255,243,190,1) 80%);
+      background: -webkit-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
+      background: -o-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
+      background: linear-gradient(to bottom right, #fefefe 0%, #fff3be 80%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -350,7 +337,7 @@
         background-position: center;
         z-index: 1;
 
-        &::after{
+        &::after {
           content: "";
           position: absolute;
           top: 0;
@@ -365,14 +352,13 @@
           z-index: -1;
         }
 
-        &::before{
+        &::before {
           content: "";
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-
           backdrop-filter: brightness(0.8);
           -webkit-backdrop-filter: brightness(0.8);
           filter: blur(10px);
@@ -389,7 +375,7 @@
           }
         }
 
-        .infotextCont{
+        .infotextCont {
           position: absolute;
           bottom: 6px;
           padding-right: 10px;
@@ -411,7 +397,7 @@
           text-align: justify;
         }
 
-        a{
+        a {
           text-decoration: none;
           font-size: 0.64em;
           color: #c1e2ff;
@@ -441,7 +427,7 @@
   background: -o-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255,255,255,1) 100%);
   background: linear-gradient(to bottom right, rgba(230, 230, 230, 1) 0%, rgba(255,255,255,1) 100%);
 
-  &::after{
+  &::after {
     content: "source: saurav.tech/NewsAPI";
     position: absolute;
     bottom: 0;

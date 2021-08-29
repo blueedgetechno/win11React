@@ -9,6 +9,21 @@ export const DScord = ()=>{
   const wnapp = useSelector(state => state.apps.discord);
   const [url, setUrl] = useState(null);
   const dispatch = useDispatch();
+  const servers = [
+    {
+      src: "arrtective.png",
+      link: "https://discord.io/arttective"
+    },{
+      src: "mimi.png",
+      link: "https://discord.gg/AGSCfjgDMc"
+    },{
+      src: "narjiday.png",
+      link: "https://discord.gg/K9wcgZJfXS"
+    },{
+      src: "aliyss.png",
+      link: "https://discord.gg/zAypMTH"
+    }
+  ]
 
   useEffect(()=>{
     if(url==null){
@@ -34,14 +49,10 @@ export const DScord = ()=>{
               <hr/>
               <Icon className="wnServer svIcon" src="./img/asset/server.gif" click="EXTERNAL"
                     payload="https://discord.gg/qmEZwUhb4b" ext width={48}/>
-              <Icon className="svIcon" src="./img/asset/arrtective.png" click="EXTERNAL"
-                    payload="https://discord.io/arttective" ext width={48}/>
-              <Icon className="svIcon" src="./img/asset/mimi.png" click="EXTERNAL"
-                    payload="https://discord.gg/AGSCfjgDMc" ext width={48}/>
-              <Icon className="svIcon" src="./img/asset/narjiday.png" click="EXTERNAL"
-                    payload="https://discord.gg/K9wcgZJfXS" ext width={48}/>
-              <Icon className="svIcon" src="./img/asset/lucina.png" click="EXTERNAL"
-                    payload="https://discord.gg/zAypMTH" ext width={48}/>
+              {servers.map(server=>(
+                <Icon className="svIcon" src={"./img/asset/"+server.src}
+                  click="EXTERNAL" payload={server.link} ext width={48}/>
+              ))}
             </div>
           </div>
           <div className="flex-grow overflow-hidden">

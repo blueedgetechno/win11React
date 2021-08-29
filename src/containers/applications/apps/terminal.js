@@ -275,7 +275,7 @@ export const WnTerminal = ()=>{
               <div className="cmdLine actmd">
                 {pwd}>
                 <div className="ipcmd" id="curcmd" contentEditable
-                  data-action="enter" onKeyDown={action}></div>
+                  data-action="enter" onKeyDown={action} spellCheck="false"></div>
                 {/* <input id="curcmd" className="ipcmd" type="text" defaultValue="tyler"/> */}
               </div>
             </div>
