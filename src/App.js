@@ -1,9 +1,15 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import './index.css';
 import './short.css';
 
-import Background from './containers/background';
+import {
+  Background,
+  BootScreen
+} from './containers/background';
 import Taskbar from './components/taskbar';
 import ActMenu from './components/menu';
 import {
@@ -20,25 +26,27 @@ function App() {
   const apps = useSelector(state => state.apps);
   const dispatch = useDispatch();
 
-  const afterMath = (event)=>{
+  const afterMath = (event) => {
     var ess = [
-      ["START","STARTHID"],
-      ["PANE","PANEHIDE"],
-      ["WIDG","WIDGHIDE"],
-      ["CALN","CALNHIDE"],
-      ["MENU","MENUHIDE"]
+      ["START", "STARTHID"],
+      ["PANE", "PANEHIDE"],
+      ["WIDG", "WIDGHIDE"],
+      ["CALN", "CALNHIDE"],
+      ["MENU", "MENUHIDE"]
     ];
 
     var actionType = "";
-    try{
+    try {
       actionType = event.target.dataset.action || "";
-    }catch(err){}
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue('--prefix');
 
     ess.forEach((item, i) => {
-      if(!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])){
-        dispatch({type: item[1]});
+      if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+        dispatch({
+          type: item[1]
+        });
       }
     });
   }
@@ -52,9 +60,12 @@ function App() {
       left: e.clientX
     };
 
-    if(e.target.dataset.menu!=null){
+    if (e.target.dataset.menu != null) {
       data.menu = e.target.dataset.menu;
-      dispatch({ type: 'MENUSHOW', payload: data});
+      dispatch({
+        type: 'MENUSHOW',
+        payload: data
+      });
     }
 
   });
@@ -63,22 +74,29 @@ function App() {
     afterMath(e);
   });
 
+  window.addEventListener("load", e => {
+    // document.querySelector('#loader').remove();
+  });
+
   return (
     <div className="App">
-      <Background/>
-      <div className="desktop" data-menu="desk">
-        <DesktopApp/>
-        {Object.keys(Applications).map((key,idx)=>{
-          var WinApp = Applications[key];
-          return <WinApp/>;
-        })}
-        <StartMenu/>
-        <SidePane/>
-        <WidPane/>
-        <CalnWid/>
+      {/* <BootScreen/> */}
+      <div className="">
+        <Background/>
+        <div className="desktop" data-menu="desk">
+          <DesktopApp/>
+          {Object.keys(Applications).map((key,idx)=>{
+            var WinApp = Applications[key];
+            return <WinApp/>;
+          })}
+          <StartMenu/>
+          <SidePane/>
+          <WidPane/>
+          <CalnWid/>
+        </div>
+        <Taskbar/>
+        <ActMenu/>
       </div>
-      <Taskbar/>
-      <ActMenu/>
     </div>
   );
 }

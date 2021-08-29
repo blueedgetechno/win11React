@@ -447,7 +447,7 @@ export const WidPane = () => {
 
   return (
     <div className="widPaneCont" data-hide={widget.hide} style={{'--prefix':'WIDG'}}>
-      <div className="WidPane" loading="lazy">
+      <div className="WidPane thinScroll" loading="lazy">
         <div className="widtop">
           <Icon fafa="faEllipsisH" width={12}/>
         </div>

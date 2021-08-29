@@ -21,7 +21,7 @@ body {
   width: 100vw;
   height: 100vh;
   user-select: none;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 body:before {
@@ -44,7 +44,7 @@ body[data-sepia="true"]:before {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, "Consolas", Courier New, monospace;
 }
 
 .App {
@@ -142,6 +142,11 @@ img[data-flip='true'], svg[data-flip='true'] {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
+input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+}
+
 .ltShad0 {
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
 }
@@ -214,15 +219,26 @@ img[data-flip='true'], svg[data-flip='true'] {
   transition: all 200ms ease-in-out;
 }
 
+a {
+  text-decoration: none;
+  color: #0080E1;
+}
+
+#textpad {
+  font-family: Consolas, monospace;
+  /* font-size: 18px; */
+  font-weight: 500;
+}
+
 .acol {
   color: #aaa;
 }
 
-#probtn{
+#probtn {
   display: none;
 }
 
-#warningmsg{
+#warningmsg {
   display: none;
 }
 
@@ -231,18 +247,18 @@ img[data-flip='true'], svg[data-flip='true'] {
     display: none;
   }
 
-  body[data-force="false"]{
+  body[data-force="false"] {
     display: grid;
     background: #2b2a2f;
     place-items: center;
     overflow: hidden;
   }
 
-  body[data-force="false"]::before{
+  body[data-force="false"]::before {
     display: none;
   }
 
-  body[data-force="false"] #warningmsg{
+  body[data-force="false"] #warningmsg {
     display: block;
     font-size: 1.6rem;
     color: #fefefe;
@@ -257,7 +273,7 @@ img[data-flip='true'], svg[data-flip='true'] {
     pointer-events: none;
   }
 
-  body[data-force="false"] #probtn{
+  body[data-force="false"] #probtn {
     display: block;
     color: #aaa;
     font-weight: 600;

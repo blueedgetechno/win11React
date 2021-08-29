@@ -12,19 +12,19 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    
+
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '16.6.1'
-    
+
     - name: Install NPM packages
       run: npm ci
-    
+
     - name: Build project
       run: CI=false npm run build
 
@@ -33,13 +33,13 @@ jobs:
       with:
         name: production-files
         path: ./build
-  
+
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    
+
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v2

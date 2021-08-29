@@ -185,9 +185,9 @@
     position: absolute;
     bottom: 0;
     background: rgb(255,255,255);
-    background: -webkit-linear-gradient(bottom, rgba(244, 244, 244, 1) 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
-    background: -o-linear-gradient(bottom, rgba(244, 244, 244, 1) 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
-    background: linear-gradient(to top, rgba(244, 244, 244, 1) 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(bottom, #f4f4f4 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(bottom, #f4f4f4 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(to top, #f4f4f4 10%, rgba(135, 135, 135, 0.4) 50%, rgba(0,0,0,0) 100%);
   }
 }
 
@@ -245,23 +245,23 @@
 
 .amzApps {
   background: #670cd7;
-  background: -webkit-linear-gradient(48deg, rgba(82, 47, 139, 1) 0%, rgba(113, 35, 133, 1) 100%);
-  background: -o-linear-gradient(48deg, rgba(82, 47, 139, 1) 0%, rgba(113, 35, 133, 1) 100%);
-  background: linear-gradient(138deg, rgba(82, 47, 139, 1) 0%, rgba(113, 35, 133, 1) 100%);
+  background: -webkit-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
+  background: -o-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
+  background: linear-gradient(138deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
 }
 
 .amzGames {
   background: #214458;
-  background: -webkit-linear-gradient(47deg, rgba(33,68,88,1) 0%, rgba(9,134,146,1) 100%);
-  background: -o-linear-gradient(47deg, rgba(33,68,88,1) 0%, rgba(9,134,146,1) 100%);
-  background: linear-gradient(137deg, rgba(33,68,88,1) 0%, rgba(9,134,146,1) 100%);
+  background: -webkit-linear-gradient(47deg, #214458 0%, #098793 100%);
+  background: -o-linear-gradient(47deg, #214458 0%, #098793 100%);
+  background: linear-gradient(137deg, #214458 0%, #098793 100%);
 }
 
 .amzMovies {
   background: #217558;
-  background: -webkit-linear-gradient(47deg, rgba(33,117,88,1) 0%, rgba(15,163,69,1) 100%);
-  background: -o-linear-gradient(47deg, rgba(33,117,88,1) 0%, rgba(15,163,69,1) 100%);
-  background: linear-gradient(137deg, rgba(33,117,88,1) 0%, rgba(15,163,69,1) 100%);
+  background: -webkit-linear-gradient(47deg, #217558 0%, #0fa345 100%);
+  background: -o-linear-gradient(47deg, #217558 0%, #0fa345 100%);
+  background: linear-gradient(137deg, #217558 0%, #0fa345 100%);
 }
 
 .ribcont {
@@ -293,9 +293,9 @@
 .cmdLine {
   font-size: 0.84em;
   color: rgba(255, 255, 255, 0.72);
-  font-family: monospace, sans-serif;
+  font-family: "consolas", monospace;
   height: 1.2em;
-  font-weight: lighter;
+  font-weight: 400;
   overflow: hidden;
   max-width: 100%;
 }

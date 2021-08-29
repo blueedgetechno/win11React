@@ -13,7 +13,7 @@ todo*
 # production
 /build
 *.py
-rough.*
+rough*
 
 # misc
 .DS_Store

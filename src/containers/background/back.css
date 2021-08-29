@@ -6,3 +6,15 @@
   background-size: cover;
   background-position: center;
 }
+
+.bootscreen{
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #010001;
+  z-index: 20000;
+  display: grid;
+  place-items: center;
+}
