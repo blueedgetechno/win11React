@@ -48,7 +48,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
   - Honestly It took 2-3 days collecting assets, 2-3 planning and about 6 days programming it.
 
 
-- Did you used any UI/Library?
+- Did you use any UI/Library?
   - No.
 
 
