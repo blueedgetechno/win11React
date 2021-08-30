@@ -12,19 +12,19 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    
+
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '16.6.1'
-    
+
     - name: Install NPM packages
       run: npm ci
-    
+
     - name: Build project
       run: CI=false npm run build
 
@@ -33,48 +33,47 @@ jobs:
       with:
         name: production-files
         path: ./build
-  
+
   deploy:
     name: electron
     needs: build
     runs-on: windows-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
         repository: win11bot/electron
         path: ./build
-     
+
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '16.6.1'
-        
+
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
         name: production-files
         path: ./build/public
-        
+
     - name: Install NPM packages
       run: cd ./build && npm i && npm install -g electron-packager
-      
+
     - name: Build
       run: cd ./build && npm run electron-packager D:\a\windows11\windows11\build --platform=win32 --arch=x64
-      
-    - uses: actions/upload-artifact@v2 
+
+    - uses: actions/upload-artifact@v2
       with:
         name: win11-build
         path: ./build/win11-win32-x64
-     
+
     - uses: papeloto/action-zip@v1
       with:
         files: ./build
         dest: source.zip
-        
-    - uses: actions/upload-artifact@v2 
+
+    - uses: actions/upload-artifact@v2
       with:
         name: win11-source
         path: source.zip     
-      

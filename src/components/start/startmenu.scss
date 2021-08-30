@@ -1,5 +1,5 @@
 .desktopCont {
-  width: fit-content;
+  width: 0;
   height: 100%;
   display: grid;
   grid-auto-flow: column;
@@ -35,14 +35,14 @@
   left: 0;
   // left: calc(50% - 260px);
   // height: 200px;
-  &[data-align="center"]{
+  &[data-align="center"] {
     margin-left: auto;
     margin-right: auto;
     right: 0;
     text-align: center;
   }
 
-  &[data-align="left"]{
+  &[data-align="left"] {
     left: 8px;
   }
 
@@ -73,7 +73,8 @@
   }
 
   &[data-allapps='true'] {
-    margin-left: -520px;
+    // margin-left: -520px;
+    transform: translateX(-520px);
     transition: ease-in-out 200ms;
   }
 }
@@ -165,7 +166,7 @@
     margin: 10px 0;
     position: relative;
 
-    &[value="true"] .pnIcon::before{
+    &[value="true"] .pnIcon::before {
       content: "";
       position: absolute;
       top: -2px;
