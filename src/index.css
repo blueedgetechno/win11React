@@ -93,15 +93,15 @@ input::selection {
   border: solid 1px blue;
 }
 
-img[data-invert='true'], svg[data-invert='true'] {
+img[data-invert='true'], svg[data-invert='true'], i[data-invert='true'] {
   filter: invert(1);
 }
 
-img[data-rounded='true'], svg[data-rounded='true'] {
+img[data-rounded='true'], svg[data-rounded='true'], i[data-rounded='true'] {
   border-radius: 1000px;
 }
 
-img[data-flip='true'], svg[data-flip='true'] {
+img[data-flip='true'], svg[data-flip='true'], i[data-flip='true'] {
   transform: scale(-1, 1);
 }
 
@@ -206,6 +206,20 @@ input {
   }
 
   99% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slowfadein {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
     opacity: 0;
   }
 
