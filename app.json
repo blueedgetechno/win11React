@@ -5,6 +5,6 @@
   "logo": "https://cdn.discordapp.com/icons/868499076432408627/330fbfea1aa14cc574e8d3053283ee72.png",
   "keywords": ["Windows11", "React", "open-source"],
   "engines": {
-    "node": "14.x"
+    "npm": "5.x"
   }
 }
