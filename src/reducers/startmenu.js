@@ -12,12 +12,13 @@ const defState = {
   menu: false,
   showAll: false,
   alpha: false,
+  pwctrl: false,
   curAlpha: 'A',
   qksrch: [
-    ["faClock",1,"Today in history"],
-    ["faFilm",null,"New movies"],
-    ["faNewspaper",1,"Top news"],
-    ["faChartLine",null,"Markets today"]
+    ["faClock", 1, "Today in history"],
+    ["faFilm", null, "New movies"],
+    ["faNewspaper", 1, "Top news"],
+    ["faChartLine", null, "Markets today"]
   ]
 };
 
@@ -25,16 +26,17 @@ const menuReducer = (state = defState, action) => {
   switch (action.type) {
     case 'STARTSHW':
       return {
-        ...state, menu: true, hide: false
+        ...state, menu: true, hide: false, pwctrl: false,
       };
     case 'STARTHID':
       return {
-        ...state, hide: true, showAll: false
+        ...state, hide: true, showAll: false, pwctrl: false,
       };
     case 'STARTOGG':
       return {
         ...state, hide: !(state.hide || !state.menu),
           menu: true, alpha: false, curAlpha: 'A',
+          pwctrl: false,
           showAll: state.menu && state.showAll ? true : null
       };
     case 'STARTALL':
@@ -42,18 +44,24 @@ const menuReducer = (state = defState, action) => {
         ...state,
         showAll: !state.showAll,
           alpha: false,
+          pwctrl: false,
           curAlpha: 'A'
       };
     case 'STARTALPHA':
       return {
         ...state,
         alpha: !state.alpha,
+          pwctrl: false,
           curAlpha: action.payload || 'A'
       };
     case 'STARTSRC':
       return {
         ...state, hide: !(state.hide || state.menu),
-          menu: false
+          menu: false, pwctrl: false
+      };
+    case 'STARTPWC':
+      return {
+        ...state, pwctrl: true
       };
     default:
       return state;

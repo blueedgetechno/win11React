@@ -73,7 +73,8 @@
   }
 
   &[data-allapps='true'] {
-    margin-left: -520px;
+    // margin-left: -520px;
+    transform: translateX(-520px);
     transition: ease-in-out 200ms;
   }
 }

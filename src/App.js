@@ -26,7 +26,6 @@ import * as Applications from './containers/applications';
 function App() {
   const apps = useSelector(state => state.apps);
   const wall = useSelector(state => state.wallpaper);
-  const [booted, setBoot] = useState(false);
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -78,13 +77,13 @@ function App() {
   });
 
   window.addEventListener("load", e => {
-    setBoot(true);
+    dispatch({type: "WALLBOOTED"})
   });
 
   return (
     <div className="App">
-      {!booted?<BootScreen/>:null}
-      {wall.locked?<LockScreen/>:null}
+      {!wall.booted?<BootScreen dir={wall.dir}/>:null}
+      {wall.locked?<LockScreen dir={wall.dir}/>:null}
       <div className="appwrap">
         <Background/>
         <div className="desktop" data-menu="desk">

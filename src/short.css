@@ -15639,6 +15639,14 @@
 	top: 0
 }
 
+.top-full {
+	top: 100%
+}
+
+.-top-full {
+	top: -100%
+}
+
 .right-0 {
 	right: 0
 }

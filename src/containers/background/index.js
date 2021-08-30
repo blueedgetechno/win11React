@@ -16,18 +16,44 @@ export const Background = () => {
 
   return (
     <div className="background" style={{
-      backgroundImage: `url(${`/img/wallpaper/${wall.theme}/${wall.src}`})`
+      backgroundImage: `url(/img/wallpaper/${wall.src})`
     }}>
     </div>
   );
 }
 
-export const BootScreen = () => {
+export const BootScreen = (props) => {
   const dispatch = useDispatch();
+  const wall = useSelector(state => state.wallpaper);
+  const [blackout, setBlackOut] = useState(false);
+
+  useEffect(()=>{
+    if(props.dir<0){
+      setTimeout(()=>{
+        console.log("blackout");
+        setBlackOut(true);
+      },4000)
+    }
+  },[props.dir])
+
+  useEffect(()=>{
+    if(props.dir<0){
+      if(blackout){
+        if(wall.act=="restart"){
+          setTimeout(()=>{
+            setBlackOut(false)
+            setTimeout(()=>{
+              dispatch({type: "WALLBOOTED"})
+            },4000)
+          },2000)
+        }
+      }
+    }
+  }, [blackout])
 
   return (
     <div className="bootscreen">
-      <div>
+      <div className={blackout?"hidden":""}>
         <Image src="asset/bootlogo" w={180}/>
         <div className="mt-48" id="loader">
           <div class="circledots">
@@ -43,7 +69,7 @@ export const BootScreen = () => {
   );
 }
 
-export const LockScreen = () => {
+export const LockScreen = (props) => {
   const wall = useSelector(state => state.wallpaper);
   const [lock, setLock] = useState(false);
   const [unlocked, setUnLock] = useState(false);
@@ -79,7 +105,8 @@ export const LockScreen = () => {
   }
 
   return (
-    <div className="lockscreen" data-unlock={unlocked} style={{
+    <div className={"lockscreen " +
+      (props.dir==-1?"slowfadein":"")} data-unlock={unlocked} style={{
         backgroundImage: `url(${`/img/wallpaper/lock.jpg`})`
       }} onClick={action} data-action="splash" data-blur={lock}>
       <div className="splashScreen mt-40" data-faded={lock}>
