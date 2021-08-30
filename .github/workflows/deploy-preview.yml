@@ -1,7 +1,7 @@
 name: Generate Preview2
 
 on:
-  pull_request:
+  pull_request_target:
     types: [assigned, synchronize, reopened, edited]
 
   
