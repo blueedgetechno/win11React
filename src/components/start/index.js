@@ -55,6 +55,7 @@ export const StartMenu = () => {
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
   const [atab, setTab] = useState("All");
+  // const [pwctrl, setPowCtrl] = useState
 
   const dispatch = useDispatch();
   const tabSw = (e)=>{
@@ -216,8 +217,25 @@ export const StartMenu = () => {
               click="EXTERNAL" payload="https://blueedge.me"/>
             <div className="usName">Blue Edge</div>
           </div>
-          <div className="powerCtrl">
-            <Icon src="power" ui width={14} invert/>
+          <div className="relative">
+            <div className="powerCont" data-vis={start.pwctrl}>
+              <div className="flex prtclk" onClick={clickDispatch}
+                data-action="WALLSHUTDN">
+                <Icon msi="PowerButton" width={12}/>
+                <span>Shut down</span>
+              </div>
+              <div className="flex prtclk" onClick={clickDispatch}
+                data-action="WALLRESTART">
+                <Icon msi="Refresh" width={12} flip/>
+                <span>Restart</span>
+              </div>
+              <div className="flex prtclk" onClick={clickDispatch}
+                data-action="WALLALOCK">
+                <Icon msi="Lock" width={12}/>
+                <span>Lock</span>
+              </div>
+            </div>
+            <Icon msi="PowerButton" width={14} click="STARTPWC"/>
           </div>
         </div>
       </>):(

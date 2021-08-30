@@ -68,6 +68,19 @@ export const Icon = (props)=>{
         }}/>
       </div>
     );
+  }else if(props.msi!=null){
+    return (
+      <div className={`uicon prtclk ${props.className||""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click} data-payload={props.payload}>
+          <i class={"ms-Icon ms-Icon--"+props.msi} style={{
+            fontSize: props.width || '16px',
+            margin: props.margin || null
+          }} aria-hidden="true"
+          data-flip={props.flip!=null}
+          data-invert={!!props.invert}></i>
+      </div>
+    );
   }else{
     return (
       <div className={`uicon ${props.className||""} ${prtclk}`}

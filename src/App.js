@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   useSelector,
   useDispatch
@@ -8,7 +8,8 @@ import './short.css';
 
 import {
   Background,
-  BootScreen
+  BootScreen,
+  LockScreen
 } from './containers/background';
 import Taskbar from './components/taskbar';
 import ActMenu from './components/menu';
@@ -24,6 +25,7 @@ import * as Applications from './containers/applications';
 
 function App() {
   const apps = useSelector(state => state.apps);
+  const wall = useSelector(state => state.wallpaper);
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -75,13 +77,14 @@ function App() {
   });
 
   window.addEventListener("load", e => {
-    // document.querySelector('#loader').remove();
+    dispatch({type: "WALLBOOTED"})
   });
 
   return (
     <div className="App">
-      {/* <BootScreen/> */}
-      <div className="">
+      {!wall.booted?<BootScreen dir={wall.dir}/>:null}
+      {wall.locked?<LockScreen dir={wall.dir}/>:null}
+      <div className="appwrap">
         <Background/>
         <div className="desktop" data-menu="desk">
           <DesktopApp/>
