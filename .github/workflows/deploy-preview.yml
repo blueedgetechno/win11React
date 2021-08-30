@@ -2,7 +2,7 @@ name: Generate Preview2
 
 on:
   pull_request_target:
-    types: [assigned, synchronize, reopened, edited]
+    types: [synchronize, reopened, edited]
 
   
   
@@ -23,11 +23,6 @@ jobs:
     
     - name: Checkout code
       uses: actions/checkout@v2
-    
-    - name: Sleep for 40 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '40s'
 
     - name: Install Node.js
       uses: actions/setup-node@v1
