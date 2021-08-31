@@ -1,0 +1,15 @@
+name: issue-text
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: ben-z/actions-comment-on-issue@1.0.2
+      with:
+        message: "Hey thanks for creating an issue. We will normally respond within 24 hours."
+        GITHUB_TOKEN: ${{ secrets.BOT }}
