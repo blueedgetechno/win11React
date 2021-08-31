@@ -62,11 +62,7 @@ export const EdgeMenu = ()=>{
       tmp[activeTab]="https://www.bing.com";
       setUrl(tmp);
 
-      /*
-      setHist([url, "https://www.bing.com" ])
-      setUrl("https://www.bing.com");
-
-      */
+      
     }else if(iframe && x==2){
                               //googling
       //setActiveTab(id);    
