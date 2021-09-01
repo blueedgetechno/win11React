@@ -10,7 +10,7 @@ import * as AllIcons from './icons.js';
 export const Icon = (props)=>{
   const dispatch = useDispatch();
   var src = `/img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
-  if(props.ext!=null){
+  if(props.ext!=null || (props.src && props.src.includes("http"))){
     src = props.src
   }
 

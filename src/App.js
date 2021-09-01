@@ -21,7 +21,9 @@ import {
   CalnWid
 } from './components/start';
 
+import appdata from './utils/apps.js';
 import * as Applications from './containers/applications';
+import * as Drafts from './containers/applications/draft.js';
 
 function App() {
   const apps = useSelector(state => state.apps);
@@ -89,8 +91,14 @@ function App() {
         <div className="desktop" data-menu="desk">
           <DesktopApp/>
           {Object.keys(Applications).map((key,idx)=>{
-            var WinApp = Applications[key];
-            return <WinApp/>;
+            var WinApp = Applications[key]
+            return <WinApp/>
+          })}
+          {appdata.map(app=>{
+            if(app.pwa){
+              var WinApp = Drafts[app.data.type]
+              return <WinApp icon={app.icon} {...app.data}/>
+            }
           })}
           <StartMenu/>
           <SidePane/>

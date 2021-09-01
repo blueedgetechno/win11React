@@ -89,6 +89,7 @@ export const LockScreen = (props) => {
         val = val.substring(0,4)
         val = !Number(val)?"":val
       }
+
       setPass(val)
     }else if (act=="forgot") setForget(true);
     else if (act=="pinlock") setType(0);
@@ -102,6 +103,10 @@ export const LockScreen = (props) => {
     setTimeout(()=>{
       dispatch({type: "WALLUNLOCK"})
     },1000)
+  }
+
+  const action2 = (e)=>{
+    if(e.key=="Enter") proceed()
   }
 
   return (
@@ -127,7 +132,7 @@ export const LockScreen = (props) => {
         <div className="mt-2 text-xl font-medium text-gray-200">Blue Edge</div>
         <div className="flex items-center mt-6">
           <input type={passType?"text":"password"} value={password} onChange={action}
-            data-action="inpass" placeholder={passType?"Password":"PIN"}/>
+            data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
           <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
             color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
         </div>
