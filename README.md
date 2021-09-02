@@ -17,6 +17,15 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
 ![pic1](./public/img/gallery3.png)
 
+# Known Issues
+
+- Blur not working in Firefox browser.
+
+#### Solution:
+
+1. Open `about:config` in your firefox browser.
+2. Search for `layout.css.backdrop-filter.enabled` and set it to `true`.
+
 # Why
 
 WHY NOT? Why not just waste a week of your life creating a react project just to coverup your insecurities of how incompetent you are. Just Why not!
@@ -76,16 +85,6 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 <a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
 </a>
-
-### Known Issues
-
-- Blur not working in Firefox browser.
-
-###### Solution:
-
-1. Open `about:config` in your firefox browser.
-2. Search for `layout.css.backdrop-filter.enabled` and set it to `true`.
-
 ## License
 
 ⚖️ CC0-1.0 License
