@@ -47,3 +47,11 @@
 .discordWn{
   background: #36393f;
 }
+
+.lightWindow {
+  background: rgb(231, 234, 236);
+}
+
+.darkWindow {
+  background: rgb(25, 22, 20);
+}

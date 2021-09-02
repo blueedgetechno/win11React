@@ -55,6 +55,9 @@ const defState = {
         dsb: true
       },{
         name: "Undo Delete"
+      },{
+        name: "Next desktop background",
+        action: "WALLNEXT"
       }, {
         name: "Open in Windows Terminal",
         icon: 'terminal',

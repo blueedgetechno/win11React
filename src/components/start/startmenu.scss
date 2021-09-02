@@ -45,6 +45,7 @@
   &[data-align="left"] {
     left: 8px;
   }
+
   background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -72,7 +73,8 @@
   }
 
   &[data-allapps='true'] {
-    margin-left: -520px;
+    // margin-left: -520px;
+    transform: translateX(-520px);
     transition: ease-in-out 200ms;
   }
 }
@@ -329,6 +331,7 @@
     }
 
     .appName {
+      text-align: left;
       width: 20%;
       padding-left: 4px;
       color: #2f2f2f;

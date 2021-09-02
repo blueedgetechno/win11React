@@ -10,7 +10,7 @@ import * as AllIcons from './icons.js';
 export const Icon = (props)=>{
   const dispatch = useDispatch();
   var src = `/img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
-  if(props.ext!=null){
+  if(props.ext!=null || (props.src && props.src.includes("http"))){
     src = props.src
   }
 
@@ -66,6 +66,19 @@ export const Icon = (props)=>{
           fill: props.color || null,
           margin: props.margin || null
         }}/>
+      </div>
+    );
+  }else if(props.msi!=null){
+    return (
+      <div className={`uicon prtclk ${props.className||""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click} data-payload={props.payload}>
+          <i class={"ms-Icon ms-Icon--"+props.msi} style={{
+            fontSize: props.width || '16px',
+            margin: props.margin || null
+          }} aria-hidden="true"
+          data-flip={props.flip!=null}
+          data-invert={!!props.invert}></i>
       </div>
     );
   }else{

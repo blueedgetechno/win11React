@@ -183,6 +183,8 @@ export const WnTerminal = ()=>{
       for (var i = 0; i < helpArr.length; i++) {
         tmpStack.push(helpArr[i]);
       }
+    }else if (type=="") {
+
     }else{
       tmpStack.push(`'${type}' is not recognized as an internal or external command,`);
       tmpStack.push("operable program or batch file.")
@@ -190,7 +192,7 @@ export const WnTerminal = ()=>{
       tmpStack.push("Type \"help\" for available commands")
     }
 
-    tmpStack.push("");
+    if(type.length>0) tmpStack.push("");
     setStack(tmpStack);
   }
 

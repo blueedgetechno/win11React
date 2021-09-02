@@ -282,7 +282,7 @@ export default [
   icon: 'twitter',
   type: 'app',
   action: 'EXTERNAL',
-  payload: "https://twitter.com/blueedgetechno"
+  payload: 'https://twitter.com/blueedgetechno'
 },
 {
   idx: 45,
@@ -346,7 +346,7 @@ export default [
   icon: 'github',
   type: 'app',
   action: 'EXTERNAL',
-  payload: "https://github.com/blueedgetechno/windows11"
+  payload: 'https://github.com/blueedgetechno/windows11'
 },
 {
   idx: 55,
@@ -362,5 +362,38 @@ export default [
   icon: 'discord',
   type: 'app',
   action: 'DISCORD',
-}
-];
+}, {
+  idx: 57,
+  name: 'Minecraft',
+  icon: 'https://wishapplist.monwindows.com/images/logos/cache/impg_df5f605db32e6f7_150_150.jpg',
+  type: 'app',
+  action: 'MINECRAFT',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://classic.minecraft.net'
+  }
+},{
+  idx: 58,
+  name: 'Krunker',
+  icon: 'https://krunker.io/img/newp.png',
+  type: 'app',
+  action: 'KRUNKER',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://krunker.io',
+    invert: true
+  }
+},{
+  idx: 59,
+  name: 'Smash karts',
+  icon: 'https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg',
+  type: 'app',
+  action: 'SMASHKART',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://smashkarts.io'
+  }
+}];

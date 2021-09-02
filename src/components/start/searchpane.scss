@@ -91,3 +91,38 @@
     transform: translateY(120%);
   }
 }
+
+.powerCont{
+  position: absolute;
+  top: -90px;
+  left: -68px;
+  width: 96px;
+  font-size: 12px;
+  background: #fefefe;
+  padding: 4px 6px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 12px rgba(46, 40, 40, 0.25);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 200ms ease-in-out;
+
+  &[data-vis="true"]{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .flex{
+    padding: 4px 6px;
+    border-radius: 4px;
+
+    &:hover{
+      background: #ededed;
+    }
+  }
+
+  .uicon{
+    margin-right: 8px;
+  }
+}
