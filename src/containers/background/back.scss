@@ -1,0 +1,242 @@
+.appwrap {
+  position: relative;
+  z-index: 0;
+}
+
+.background {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #fefefe;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.bootscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #010001;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+/* Loader css */
+
+#loader {
+  position: relative;
+  top: 0;
+  left: 0;
+  /* height: 100%; */
+  /* width: 100%; */
+  display: grid;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.circledots {
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: rotate(-45deg);
+  width: 50px;
+  height: 50px;
+}
+
+.circledots .circle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  border-radius: 100px;
+  transform: rotate(225deg);
+  animation-iteration-count: infinite;
+  animation-name: orbit;
+  animation-duration: 5.5s;
+}
+
+.circledots .circle:after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  clip-path: circle(100%);
+  border-radius: 100px;
+  background: #aaa;
+}
+
+.circledots .circle:nth-child(2) {
+  animation-delay: 240ms;
+}
+
+.circledots .circle:nth-child(3) {
+  animation-delay: 480ms;
+}
+
+.circledots .circle:nth-child(4) {
+  animation-delay: 720ms;
+}
+
+.circledots .circle:nth-child(5) {
+  animation-delay: 960ms;
+}
+@keyframes orbit {
+  0% {
+    transform: rotate(225deg);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+
+  7% {
+    transform: rotate(345deg);
+    animation-timing-function: linear;
+  }
+
+  30% {
+    transform: rotate(455deg);
+    animation-timing-function: ease-in-out;
+  }
+
+  39% {
+    transform: rotate(690deg);
+    animation-timing-function: linear;
+  }
+
+  70% {
+    transform: rotate(815deg);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+
+  75% {
+    transform: rotate(945deg);
+    animation-timing-function: ease-out;
+  }
+
+  76% {
+    transform: rotate(945deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(945deg);
+    opacity: 0;
+  }
+}
+
+.lockscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 1s ease-in-out;
+
+  &[data-unlock="true"]{
+    opacity: 0;
+  }
+
+  &::after {
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    transition: all 200ms ease-in-out;
+  }
+
+  &[data-blur="true"]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.bottomInfo {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+}
+
+.splashScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(0);
+  transition: all 200ms ease-in-out;
+
+  &[data-faded="true"] {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-200px);
+  }
+}
+
+.fadeinScreen {
+  position: absolute;
+  top: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 400ms ease-in-out;
+  pointer-events: none;
+
+  &[data-faded="false"] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0px);
+  }
+
+  &[data-unlock="true"]{
+    opacity: 0;
+  }
+
+  input {
+    width: 200px;
+    background: rgba(28, 28, 40, 0.6);
+    font-size: 12px;
+    padding: 8px 12px;
+    font-weight: 500;
+    color: #cfcfcf;
+    border: 1px solid rgba(117, 117, 164, 0.6);
+
+    &::-webkit-input-placeholder {
+      font-weight: 400;
+      color: rgba(207, 207, 207, 0.6);
+    }
+  }
+}
+
+.lockOpt{
+  margin-top: 10px;
+
+  .uicon{
+    margin: 0 4px;
+    cursor: pointer;
+
+    &[data-payload="true"]{
+      box-sizing: border-box;
+      border: 1px solid #888;
+    }
+  }
+}
+
+.slowfadein{
+  opacity: 1;
+  animation: slowfadein 1s ease-in-out;
+}
