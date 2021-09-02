@@ -1,18 +1,21 @@
-FROM node:current-alpine
+FROM node:14-alpine3.14
 
 # set working directory
-WORKDIR /app
+WORKDIR /usr/src/windows11/
 
-# add `/app/node_modules/.bin` to $PATH
+# setup env vars
 ENV PATH /app/node_modules/.bin:$PATH
+ENV NODE_ENV=production
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install 
+COPY package*.json ./
+RUN npm install --production --frozen-lockfile # install only production deps with exact lockfile versions
 
-# add app
-COPY . ./
+# add app (add .dockerignore to remove useless files from the image)
+COPY . .
+
+# expose port
+EXPOSE 3000
 
 # start app
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "start"]
