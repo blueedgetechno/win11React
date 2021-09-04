@@ -1,9 +1,8 @@
 'use babel';
 import axios from 'axios';
 
-const search_song_url = "/search?song="
-const search_album_url = "/search?album="
-const song_url = "/song?id="
+const search_url = "/search?query="
+const song_url = "/song?pids="
 const album_url = "/album?id="
 const playlist_url = "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid="
 const lyrics_url = "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id="
@@ -35,7 +34,7 @@ class JioSaavn {
     }]
 
     this.instance = axios.create({
-      baseURL: "https://saavn.me"
+      baseURL: "https://dev.saavn.me"
     });
   }
 
@@ -56,15 +55,18 @@ class JioSaavn {
     if (typeof(pids) != "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
-        resolve(res);
+        resolve(res[0]);
       }).catch(err => reject(err))
     })
   }
 
   fetchSongs(pids) {
     if (typeof(pids) != "object") pids = [pids];
-    return Promise.all(pids.map(id => this.fetchSong(id).then(r => r)
-            .catch(err=> null))).then(songs => songs.filter(song=> song!=null));
+    return new Promise((resolve, reject) => {
+      this.fetch(song_url + pids.join(",")).then(res => {
+        resolve(res);
+      }).catch(err => reject(err))
+    })
   }
 
   mapToSong(obj) {
@@ -90,15 +92,7 @@ class JioSaavn {
   searchQuery(query){
     if(query.length<1) return;
     return new Promise((resolve, reject) => {
-      this.fetch(search_song_url + query)
-        .then(res => resolve(res)).catch(err => reject(err))
-    })
-  }
-
-  albumQuery(query){
-    if(query.length<1) return;
-    return new Promise((resolve, reject) => {
-      this.fetch(search_album_url + query)
+      this.fetch(search_url + query)
         .then(res => resolve(res)).catch(err => reject(err))
     })
   }
@@ -106,12 +100,10 @@ class JioSaavn {
   getDefault() {
     // console.log("Okay");
     return new Promise(resolve => {
-      resolve(this.dfdata);
-      return;
       this.fetchSong(
         this.defaultSongs[floor(random() * this.defaultSongs.length)]
       ).then(res => {
-        resolve([this.mapToSong(res.data)]);
+        resolve([this.mapToSong(res)]);
       }).catch(err => {
         console.log(err);
         resolve(this.dfdata);

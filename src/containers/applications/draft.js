@@ -9,7 +9,7 @@ export const IFrame = (props)=>{
   const dispatch = useDispatch();
   const data = appdata.filter(x=> x.icon == wnapp.icon)[0].data || {};
 
-  return (
+  return wnapp.hide?null:(
     <div data-size={wnapp.size} className={"floatTab dpShad " +
       (data.invert!=true?"lightWindow":"darkWindow")
     } data-max={wnapp.max} style={{
@@ -21,13 +21,11 @@ export const IFrame = (props)=>{
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
-            {wnapp.hide?null:(
-              <iframe src={data.url} className="w-full h-full"
-                frameborder="0"></iframe>
-            )}
+            <iframe src={data.url} className="w-full h-full"
+              frameborder="0"></iframe>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

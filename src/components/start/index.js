@@ -595,10 +595,10 @@ export const WidPane = () => {
             <div className="allNewsCont">
               {[...widget.data.news].splice(4, widget.data.news.length).map((article, i)=>{
                 return (
-                  <div className="articleCont ltShad" key={i} style={{
+                  <a className="articleCont ltShad" key={i} style={{
                     '--backgrad': getRandom(2),
                     backgroundImage: `url(${article.urlToImage})`
-                  }}>
+                  }} href={article.url} target="_blank">
                     <div className="tpNews">
                       <div className="tpSource">{article.source.name}</div>
                       <div className="tpArticle">{article.title}</div>
@@ -606,7 +606,7 @@ export const WidPane = () => {
                         <div className="tpdesc">{article.content}</div>:
                         null}
                     </div>
-                  </div>
+                  </a>
                 )
               })}
             </div>

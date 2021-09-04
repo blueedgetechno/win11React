@@ -7,7 +7,13 @@ import data from './assets/songs.json';
 
 const {round,floor,max,min,random,ceil,abs} = Math;
 String.prototype.to150 = function(){
-  return this.replace("500x500","150x150");
+  return this.replace("500x500","150x150").replace("50x50","150x150");
+}
+
+String.prototype.to250 = function(){
+  return this.replace("500x500","250x250")
+            .replace("150x150","250x250")
+            .replace("50x50","250x250");
 }
 
 export const Spotify = ()=>{
@@ -17,7 +23,7 @@ export const Spotify = ()=>{
   const [paused, setPause] = useState(true);
   const [shfle, setShuffle] = useState(0);
   const [mxqueue, setMxq] = useState([]);
-  const [repeat, setRepeat] = useState(0);
+  const [repeat, setRepeat] = useState(1);
   const [prog, setProg] = useState(0);
   const [perProg, setPerProg] = useState(0);
   const [volume, setVolume] = useState(50);
@@ -370,10 +376,8 @@ const Search = ({sid, paused, action,action2})=>{
     if(newQuery && query.length>1){
       setNew(false)
       jiosaavn.searchQuery(query).then(res=>{
-        setSResults(res)
-      }).catch(err => console.log(err))
-      jiosaavn.albumQuery(query).then(res=>{
-        setAResults(res)
+        setSResults(res.songs.data)
+        setAResults(res.albums.data)
       }).catch(err => console.log(err))
     }
   }
@@ -414,18 +418,18 @@ const Search = ({sid, paused, action,action2})=>{
           ):null}
           {songResults.length? (
             <div className="topcard mt-4 p-5" onClick={action}
-              data-action="song" data-payload={`"`+songResults[0].song_id+`"`}>
-              <Image src={songResults[0].song_image.to150()} ext w={92}
+              data-action="song" data-payload={`"`+songResults[0].id+`"`}>
+              <Image src={songResults[0].image.to150()} ext w={92}
                 err='/img/asset/mixdef.jpg'
               />
               <div className="fplay">
                 <div className="tria"></div>
               </div>
               <div className="text-gray-100 mt-6 text-3xl thiker dotdot"
-                dangerouslySetInnerHTML={{__html: songResults[0].song_name}}>
+                dangerouslySetInnerHTML={{__html: songResults[0].title}}>
               </div>
               <div className="acol mt-1 text-sm font-semibold"
-                dangerouslySetInnerHTML={{__html: songResults[0].song_artist}}>
+                dangerouslySetInnerHTML={{__html: songResults[0].description}}>
               </div>
             </div>
           ):null}
@@ -439,17 +443,18 @@ const Search = ({sid, paused, action,action2})=>{
             <div className="mt-4">
               {[...songResults].splice(1,4).map((song, i)=>(
                 <div className="srCont flex p-2 items-center prtclk" onClick={action}
-                  data-action="song" data-payload={`"`+song.song_id+`"`} key={i}>
-                  <Image src={song.song_image.to150()} w={40} ext/>
+                  data-action="song" data-payload={`"`+song.id+`"`} key={i}>
+                  <Image src={song.image.to150()} w={40} ext/>
                   <div className="acol ml-4 flex-grow">
                     <div className={"capitalize text-gray-100 dotdot font-semibold"+
-                      (sid==song.song_id?" gcol":"")}
-                      dangerouslySetInnerHTML={{__html: song.song_name}}></div>
+                      (sid==song.id?" gcol":"")}
+                      dangerouslySetInnerHTML={{__html: song.title}}></div>
                     <div className="capitalize dotdot text-sm mt-1 font-semibold"
-                      dangerouslySetInnerHTML={{__html: song.song_artist}}></div>
+                      dangerouslySetInnerHTML={{__html: song.description}}></div>
                   </div>
                   <div className="acol text-sm font-semibold">
-                    {jiosaavn.formatTime(song.song_duration)}</div>
+                    {/* {jiosaavn.formatTime(song.song_duration)} */}
+                  </div>
                 </div>
               ))}
             </div>
@@ -468,12 +473,12 @@ const Search = ({sid, paused, action,action2})=>{
             <div className="w-max flex">
               {albumResults.map((card,idx)=>(
                 <div className="scard pt-3 px-3 acol">
-                  <Image src={card.album_image} ext w={200} err='/img/asset/mixdef.jpg'
-                  onClick={action} click="album" payload={card.album_id}/>
+                  <Image src={card.image.to250()} ext w={200} err='/img/asset/mixdef.jpg'
+                  onClick={action} click="album" payload={card.id}/>
                   <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold"
-                    dangerouslySetInnerHTML={{__html: card.album_name}}></div>
+                    dangerouslySetInnerHTML={{__html: card.title}}></div>
                   <div className="my-1 leading-5 text-xs font-semibold tracking-wider"
-                    dangerouslySetInnerHTML={{__html: card.album_artist}}></div>
+                    dangerouslySetInnerHTML={{__html: card.music || card.description}}></div>
                 </div>
               ))}
             </div>
@@ -628,6 +633,13 @@ const Home = ({tab, action, sid, paused})=>{
 
   return(
     <div className="spHome mt-12">
+      <div className="absolute right-0 -mt-8 text-xs font-medium acol">
+        Powered by {" "}
+        <a href="https://github.com/sumitkolhe/jiosaavn-api"
+          className="text-gray-400 underline" target="_blank">
+          sumitkolhe/jiosaavn-api
+        </a>
+      </div>
       {data.home.map((bar,ix)=>(
         <div className="sitem w-full mb-8" id={"tab"+(ix+2)}>
           <div className="scbCont" data-var={!bar.desc}>
