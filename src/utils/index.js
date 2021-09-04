@@ -1,30 +1,32 @@
 import icons from './apps';
 
-var iconIdx = {
-  taskbar: [3,4,5,6,39],
-  desktop: [8,55,7,4,6,5,54,39,57,58,59],
-  pinned: [5,51,37,31,21,48,6,35,15,28,52,10,39,44,13,46,54,56],
-  recent: [21,44,46,54,13,39,5]
+var {taskbar,
+  desktop,
+  pinned,
+  recent} = {
+  taskbar: ["Settings","File Explorer","Edge","Store","Spotify"],
+  desktop: ["Blue","Unescape","Recycle Bin","File Explorer","Store",
+      "Edge","Github","Spotify","Minecraft","Krunker","Smash karts"],
+  pinned: ["Edge","Word","PowerPoint","OneNote","Mail","To Do","Store",
+          "Photos","Your Phone","Notepad","White Board","Calculator",
+          "Spotify","Twitter","VS Code","Terminal","Github","Discord"],
+  recent: ["Mail","Twitter","Terminal","Github","VS Code","Spotify","Edge"]
 };
 
-export const desktopApps = iconIdx.desktop.map(x=>{
-  return icons[x]
+export const taskApps = icons.filter(x=>taskbar.includes(x.name));
+
+export const desktopApps = icons.filter(x=>desktop.includes(x.name)).sort((a,b)=>{
+  return desktop.indexOf(a.name)>desktop.indexOf(b.name)?1:-1;
 });
 
-export const pinnedApps = iconIdx.pinned.map(x=>{
-  return icons[x]
+export const pinnedApps = icons.filter(x=>pinned.includes(x.name)).sort((a,b)=>{
+  return pinned.indexOf(a.name)>pinned.indexOf(b.name)?1:-1;
 });
 
-export const recentApps = iconIdx.recent.map(x=>{
-  var obj = icons[x];
-  obj.lastUsed = Math.floor(Math.random()*400) - 40;
-  return obj
-});
+export const recentApps = icons.filter(x=>recent.includes(x.name)).sort((a,b)=>{
+  return recent.indexOf(a.name)>recent.indexOf(b.name)?1:-1;
+});;
 
 export const allApps = icons.filter(app=>{
   return app.type=='app'
-});
-
-export const taskApps = iconIdx.taskbar.map(x=>{
-  return icons[x]
 });
