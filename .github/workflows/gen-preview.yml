@@ -4,18 +4,13 @@ on:
   pull_request_target:
     types: [opened]
 
-env: 
-  BUILD_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-  
+ 
 jobs:
   repo:
     name: Repo
     runs-on: ubuntu-latest
     
     steps:
-    
-    - name: print
-      run: echo ${{ env.BUILD_URL }}
 
     - name: create git
       run: git init my-project && cd my-project
