@@ -66,8 +66,13 @@ jobs:
       with:
         time: '120s'
         
-    - name: Comment PR
-      uses: unofficial-skills/actions-comment-pull-request@main
+    - name: pr
+      uses: mshick/add-pr-comment@v1
+      env:
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.BOT }}
       with:
-         message: 'Deploy Preview has been updated !'
-         GITHUB_TOKEN: ${{ secrets.BOT }}
+        message: |
+            ✔️ Deploy Preview Updated! 
+            🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
+        allow-repeats: true
