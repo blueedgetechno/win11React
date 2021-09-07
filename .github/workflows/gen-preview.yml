@@ -106,6 +106,7 @@ jobs:
       uses: mshick/add-pr-comment@v1
       env:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.BOT }}
       with:
         message: |
             ✔️ Deploy Preview for win11blue ready! 
