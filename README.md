@@ -68,9 +68,11 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 To use docker use the following command ``` docker run -d  --restart unless-stopped --name windows11 -p 3000:3000 ghcr.io/blueedgetechno/windows11:master ```
 
-## Heroku
+## Online Deployment
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11&referralCode=andrewstech)
 
 ## Contributors
 <a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
