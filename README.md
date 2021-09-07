@@ -76,6 +76,8 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/blueedgetechno/windows11)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11%2F&project-name=windows11&repo-name=windows11-react&demo-title=Windows%2011%20Demo&demo-description=Static&demo-url=https%3A%2F%2Fwin11.blueedge.me%2F)
+
 ## Contributors
 <a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
