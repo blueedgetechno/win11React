@@ -74,6 +74,8 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11&referralCode=andrewstech)
 
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/blueedgetechno/windows11)
+
 ## Contributors
 <a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
