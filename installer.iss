@@ -25,7 +25,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 ChangesAssociations=yes
 DefaultGroupName={#MyAppName}
-LicenseFile=C:\Users\andrew\Downloads\win11-build44\windows-l.txt.txt
+LicenseFile=D:\a\windows11\windows11\windows-l.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputBaseFilename=mysetup
