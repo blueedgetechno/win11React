@@ -85,3 +85,8 @@ jobs:
       run: |
         "%programfiles(x86)%\Inno Setup 6\iscc.exe" "installer.iss"
       shell: cmd
+      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: packaged
+        path: D:\a\windows11\windows11\Output 
