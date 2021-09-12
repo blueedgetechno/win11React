@@ -76,4 +76,12 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: win11-source
-        path: source.zip     
+        path: source.zip
+        
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: installer
+      run: |
+        "%programfiles(x86)%\Inno Setup 6\iscc.exe" "installer.iss"
+      shell: cmd
