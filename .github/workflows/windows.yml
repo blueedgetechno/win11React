@@ -77,9 +77,6 @@ jobs:
       with:
         name: win11-source
         path: source.zip
-        
-    - name: Checkout code
-      uses: actions/checkout@v2
       
     - name: installer
       run: |
