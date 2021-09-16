@@ -21,8 +21,10 @@ jobs:
       env:
        PR_NUMBER: ${{ github.event.pull_request.number }}
     
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout PR
+      uses: dawidd6/action-checkout-pr@v1
+      with:
+        pr: ${{ github.event.pull_request.number }}
 
     - name: Install Node.js
       uses: actions/setup-node@v1
