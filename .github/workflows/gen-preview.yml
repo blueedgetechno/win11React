@@ -50,8 +50,9 @@ jobs:
       env:
        PR_NUMBER: ${{ github.event.pull_request.number }}
     
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        ref: "refs/pull/${{ github.event.pull_request.number }}/merge"
     
     - name: Install Node.js
       uses: actions/setup-node@v1
