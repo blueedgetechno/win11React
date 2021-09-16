@@ -22,7 +22,7 @@ jobs:
     
     - uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.pull_request.head.sha }}
+        ref: "refs/pull/${{ github.event.pull_request.number }}/merge"
 
     - name: Install Node.js
       uses: actions/setup-node@v1
