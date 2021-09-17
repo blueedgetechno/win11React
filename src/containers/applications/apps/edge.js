@@ -36,7 +36,6 @@ export const EdgeMenu = ()=>{
       setUrl("https://www.google.com/webhp?igu=1");
     }else if(iframe && x==3){
       if(e.key==="Enter"){
-        console.log("Wow");
         var qry = e.target.value;
 
         if(isValidURL(qry)){

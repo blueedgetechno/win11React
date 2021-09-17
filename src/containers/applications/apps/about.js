@@ -68,7 +68,7 @@ export const AboutWin = ()=>{
             <br/>
             <br/>
             <div className="okbtn">
-              <div className="bg-gray-100" onClick={action}>Ok</div>
+              <div className="bg-gray-100" onClick={action}>OK</div>
             </div>
           </div>
         </div>

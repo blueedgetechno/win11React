@@ -51,13 +51,12 @@
   backdrop-filter: blur(20px);
   border-radius: var(--roundRad);
   overflow: hidden;
-  transition: all ease-in-out 200ms;
+  transition: all ease 0.2s;
   z-index: 9999;
 
   &[data-hide='true'] {
-    // bottom: -300px;
-    transform: translateY(300px);
     opacity: 0;
+    transform: translateY(100%);
     pointer-events: none;
   }
 }
@@ -68,14 +67,27 @@
   width: 520px;
   height: 480px;
 
-  &[data-allapps='false'] {
-    transition: ease-in-out 200ms;
+  & .menuUp , &[data-allapps] {
+    transition: all 0.6s ease;
   }
 
   &[data-allapps='true'] {
-    // margin-left: -520px;
     transform: translateX(-520px);
-    transition: ease-in-out 200ms;
+    margin-left: 40px;
+  }
+
+  &:nth-of-type(2) .appCont {
+   opacity: 0; 
+   transform: translateX(-40px);
+   transition: all 0.2s ease !important;
+  }
+
+  &[data-allapps="true"]:nth-of-type(2) .appCont{
+    opacity: 1 !important;
+  }
+
+  &[data-allapps="true"] .menuUp{
+    opacity: 0 !important;
   }
 }
 

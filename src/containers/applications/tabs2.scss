@@ -243,7 +243,7 @@
 }
 
 .abCont{
-  font-size: 9px;
+  font-size: 11px;
   width: 19rem;
   color: #000;
   font-weight: 500;
@@ -261,11 +261,16 @@
   flex-direction: column;
   align-items: flex-end;
 
-  div{
-    border: solid 1px #007efb;
+  & div{
+    border: solid 1px #44a2ff;
     padding: 2px 24px;
     border-radius: 4px;
     cursor: pointer;
+    transition: opacity 0.2s ease , margin-left 0.2s ease , transform 0.2s ease;
+  }
+
+  & div:hover {
+    border: solid 1px #007efb;
   }
 }
 
