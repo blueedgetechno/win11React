@@ -30,7 +30,6 @@
 .dycalendar-day-container {
   padding: 10px;
   text-align: center;
-  font-family: Arial;
 }
 
 .dycalendar-day-container div {
@@ -58,16 +57,17 @@
 .dycalendar-month-container {
   padding: 10px;
   text-align: center;
-  font-family: Arial;
 }
 
 .dycalendar-month-container div {
   padding: 0;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .dycalendar-month-container .dycalendar-header {
   position: relative;
+  text-align: center;
 }
 
 .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn {
@@ -90,10 +90,15 @@
 }
 
 .dycalendar-month-container .dycalendar-body table tr td {
-  padding: 12px;
-  font-size: 0.64em;
+  width: 40px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  height: 40px;
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .dycalendar-month-container .dycalendar-body table tr td:hover {
@@ -341,8 +346,8 @@
 }
 
 .dycalendar-span-month-year {
-  font-size: 0.8em;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .dycalendar-prev-next-btn {
