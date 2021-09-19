@@ -96,7 +96,7 @@ export const EdgeMenu = ()=>{
                 className="ltShad w-full bg-gray-0 h-6 px-4 text-gray-900"
                 onKeyDown={action}
                 data-payload={3}
-                value={url}
+                defaultValue={url}
                 placeholder="Type url or a query to search"
                 type="text"/>
                 <Icon className="z-1 handcr"
