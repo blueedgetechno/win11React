@@ -112,6 +112,6 @@ jobs:
         message: |
             ✔️ Deploy Preview for win11blue ready! 
             😎 Browse the preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !
-            🔨 If you experience an SSL issue then wait 2 minutes and try gain.
+            🔨 If you experience an SSL issue then wait 2 minutes and try again.
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
         allow-repeats: true
