@@ -15,11 +15,15 @@
   color:black;
 }
 
+.battery .fa{
+  font:normal normal normal 14px/2 FontAwesome;
+}
+
 .battery .animate{
   width:88%; 
   position:absolute;
   left:0; 
-  top:1px; 
+  top:0; 
   overflow: hidden;
   color:black;
   z-index: -1;
