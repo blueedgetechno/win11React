@@ -114,3 +114,15 @@ jobs:
             🔨 If you experience an SSL issue then wait 2 minutes and try again.
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
         allow-repeats: true
+
+  run-if-fail:
+    if: ${{ always() && (needs.repo.result=='failure' || needs.build.result=='failure'|| needs.deploy.result=='failure') }}
+    needs: [repo, build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Comment PR
+      uses: unofficial-skills/actions-comment-pull-request@main
+      with:
+         message: |
+              ❌ DEPLOY PREVIEW BUILD HAS FAILED 
+         GITHUB_TOKEN: ${{ secrets.BOT }}
