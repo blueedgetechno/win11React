@@ -114,13 +114,13 @@ function App() {
 
 export default App;
 
-// Register Service worker 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', { scope: '/windows11/' }).then(function(reg) {
+  navigator.serviceWorker.register('../public/sw.js', {scope: '../public'})
+  .then((reg) => {
     // registration worked
     console.log('Registration succeeded. Scope is ' + reg.scope);
-  }).catch(function(error) {
+  }).catch((error) => {
     // registration failed
     console.log('Registration failed with ' + error);
   });
-};
+}
