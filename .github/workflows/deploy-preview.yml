@@ -77,3 +77,15 @@ jobs:
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
             😎 Browse the preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !
         allow-repeats: true
+
+  run-if-fail:
+    if: ${{ always() && (needs.build.result=='failure'|| needs.deploy.result=='failure') }}
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Comment PR
+      uses: unofficial-skills/actions-comment-pull-request@main
+      with:
+         message: |
+              ❌ DEPLOY PREVIEW BUILD HAS FAILED 
+         GITHUB_TOKEN: ${{ secrets.BOT }}
