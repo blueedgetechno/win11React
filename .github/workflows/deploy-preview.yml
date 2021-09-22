@@ -75,4 +75,5 @@ jobs:
         message: |
             ✔️ Deploy Preview Updated! 
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
+            😎 Browse the preview: https://${{ github.event.pull_request.number }}.pr.blueedge.me !
         allow-repeats: true
