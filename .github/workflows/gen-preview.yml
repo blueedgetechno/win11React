@@ -15,7 +15,13 @@ jobs:
     - name: create git
       run: git init my-project && cd my-project
 
-        
+    - name: Comment PR
+      uses: unofficial-skills/actions-comment-pull-request@main
+      with:
+         message: |
+              ⌛ Deploy Preview - Build in Progress 
+         GITHUB_TOKEN: ${{ secrets.BOT }}
+         
     - name: create repo
       run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public -y
       env:
@@ -90,13 +96,6 @@ jobs:
         publish_dir: ./build
         cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
-    
-    - name: Comment PR
-      uses: unofficial-skills/actions-comment-pull-request@main
-      with:
-         message: |
-              ⌛ Deploy Preview - Build in Progress 
-         GITHUB_TOKEN: ${{ secrets.BOT }}
          
     - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
