@@ -64,9 +64,19 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
   - 42
 
     ![answer](./public/answer.png)
-## Docker
+## Local Deployment
+
+# Docker
 
 To use docker use the following command ``` docker run -d  --restart unless-stopped --name windows11 -p 3000:3000 ghcr.io/blueedgetechno/windows11:master ```
+
+# Homeassistant
+
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Funofficial-skills%2Faddons)
+
+# Windows
+
+You can find a compiled exe in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/windows11/releases)
 
 ## Online Deployment
 
