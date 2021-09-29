@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon} from '../../utils/general';
+import Battery from './Battery';
 import './taskbar.scss';
 
 const Taskbar = ()=>{
+
+  const [batterylevel, setbatterylevel] = useState(0);
+
   const tasks = useSelector(state=>state.taskbar);
   const apps = useSelector(state=>{
     var tmpApps = {...state.apps};
@@ -45,6 +49,62 @@ const Taskbar = ()=>{
       dispatch(action);
     }
   }
+
+
+  const changebatterystatus=(bt)=>{
+     
+       let level=bt.level*100;
+       
+       if(bt.charging){ 
+           setbatterylevel('*');
+           return;
+       }
+       else
+       {
+         if(level<=10){
+           level+=10;
+         }
+         else if(level>=80){
+           level-=10;
+         }
+         setbatterylevel(level);
+       }
+
+      
+
+  }
+
+  useEffect(() => {
+    
+    async function getBatteryDetails(){
+
+      let bt=await navigator.getBattery();
+
+      changebatterystatus(bt);
+
+      bt.onlevelchange=()=>{
+        
+        changebatterystatus(bt);
+        
+      }
+
+      bt.onchargingchange=()=>{
+        changebatterystatus(bt);
+      }
+
+    }
+
+    if(window.BatteryManager){
+         getBatteryDetails();
+
+    }
+
+  
+
+    return () => {
+      
+    }
+  }, [])
 
   return (
     <div className="taskbar">
@@ -91,7 +151,9 @@ const Taskbar = ()=>{
         <div className="taskright">
           <Icon className="taskIcon" fafa='faChevronUp' width={10}/>
           <Icon className="taskIcon" src="wifi" ui width={14}/>
-          <Icon className="taskIcon" src="battery" ui width={16}/>
+
+          <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
+
           <Icon className="taskIcon" src='audio' ui width={22}/>
           <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
             data-action="CALNTOGG">

@@ -9,6 +9,29 @@
   z-index: 10000;
 }
 
+.battery{
+  display: inline-block;
+  position:relative;
+  color:black;
+}
+
+.battery .fa{
+  font:normal normal normal 14px/2 FontAwesome;
+}
+
+.battery .animate{
+  width:88%; 
+  position:absolute;
+  left:0; 
+  top:0; 
+  overflow: hidden;
+  color:black;
+  z-index: -1;
+  -webkit-transition:all 0.5s ease;
+  -moz-transition:all 0.5s ease;
+  transition:all 0.5s ease;
+}
+
 .taskcont{
   position: relative;
   width: 100%;
