@@ -1,10 +1,9 @@
 .sidePane {
-  --nfheight: 200px;
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 320px;
-  height: 100%;
+  bottom: 1rem;
+  right: 1rem;
+  width: 360px;
+  border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -14,19 +13,15 @@
   transform: translateX(0);
 
   &[data-hide="true"] {
-    transform: translateX(330px);
+    transform: translateX(376px);
   }
 }
 
-.notifArea {
-  position: relative;
-  width: 100%;
-  height: calc(100% - var(--nfheight));
-}
-
 .quickSettings {
-  height: var(--nfheight);
-  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.25rem;
 }
 
 .btnText {
@@ -36,23 +31,25 @@
 
 .quickCont {
   width: 100%;
-  padding: 14px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.qkbtn {
-  width: 60px;
-  height: 36px;
+.actionCenter {
   display: flex;
-  margin-bottom: 4px;
-  border-radius: 4px;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 8px 4px 4px;
-  justify-content: space-between;
-  border-bottom-color: rgba(0,0,0, 0.2);
+  align-items: center;
+}
+
+.qkbtn {
+  width: 6rem;
+  height: 3rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
   background: rgba(255, 255, 255, 0.9);
   border: solid 0.1px rgba(17, 17, 17, 0.1);
   transition: all 0.1s ease;
@@ -68,7 +65,24 @@
 
 .qktext {
   width: max-content;
-  font-size: 0.6em;
+  font-size: 0.75em;
+  margin: 0.33rem 0 1rem 0;
+}
+
+.sliderCont {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sliders {
+  width: 100%;
+  height: 4px;
+}
+
+.sliders::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgb(255, 255, 255) inset;
+  border-radius: 8px;
 }
 
 .managentf {
@@ -96,12 +110,12 @@
   transform: translateX(0);
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
-  transition: all 0.3s cubic-bezier(.77,0,.18,1);
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
   z-index: 9999;
 
   &[data-hide="true"] {
     transform: translateX(-110%);
-    transition: all 0.6s cubic-bezier(.77,0,.18,1);
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.18, 1);
   }
 }
 
@@ -147,7 +161,7 @@
       padding: 12px 14px;
       border-radius: 6px;
       box-sizing: border-box;
-      background: rgb(255,255,255);
+      background: rgb(255, 255, 255);
       background: -webkit-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
       background: -o-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
       background: linear-gradient(to bottom right, #fefefe 0%, #fff3be 80%);
@@ -322,7 +336,7 @@
             background: #eb3535;
             color: #fefefe;
 
-            &[data-pos='true'] {
+            &[data-pos="true"] {
               background: #09d031;
             }
           }
@@ -422,10 +436,10 @@
   position: relative;
   border-radius: 4px;
   padding: 12px;
-  background: rgb(209,209,209);
-  background: -webkit-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255,255,255,1) 100%);
-  background: -o-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255,255,255,1) 100%);
-  background: linear-gradient(to bottom right, rgba(230, 230, 230, 1) 0%, rgba(255,255,255,1) 100%);
+  background: rgb(209, 209, 209);
+  background: -webkit-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  background: -o-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(to bottom right, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
 
   &::after {
     content: "source: saurav.tech/NewsAPI";
@@ -447,8 +461,8 @@
     width: 100%;
     display: grid;
     padding-bottom: 12px;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    grid-template-rows: repeat(2,minmax(0,1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
 
     .tpNews {
       padding: 16px 12px 0 0;
@@ -478,7 +492,7 @@
 .allNewsCont {
   margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 }
@@ -502,7 +516,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgb(255,255,255);
+    background: rgb(255, 255, 255);
     background: -webkit-linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
     background: -o-linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
     background: linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
@@ -549,7 +563,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgb(255,255,255);
+      background: rgb(255, 255, 255);
       background: -webkit-linear-gradient(right, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
       background: -o-linear-gradient(right, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
       background: linear-gradient(to left, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
