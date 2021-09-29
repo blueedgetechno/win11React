@@ -150,7 +150,7 @@ const Taskbar = ()=>{
         </div>
         <div className="taskright">
           <Icon className="taskIcon" fafa='faChevronUp' width={10}/>
-          <Icon className="taskIcon" src="wifi" ui width={14}/>
+          <Icon className="taskIcon" src="wifi" ui width={16}/>
 
           <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
 
