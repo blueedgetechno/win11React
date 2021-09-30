@@ -307,7 +307,7 @@ export default [
   action: 'DISCORD',
 }, {
   name: 'Minecraft',
-  icon: 'https://wishapplist.monwindows.com/images/logos/cache/impg_df5f605db32e6f7_150_150.jpg',
+  icon: 'minecraft',
   type: 'app',
   action: 'MINECRAFT',
   pwa: true,

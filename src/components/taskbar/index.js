@@ -5,9 +5,6 @@ import Battery from './Battery';
 import './taskbar.scss';
 
 const Taskbar = ()=>{
-
-  const [batterylevel, setbatterylevel] = useState(0);
-
   const tasks = useSelector(state=>state.taskbar);
   const apps = useSelector(state=>{
     var tmpApps = {...state.apps};
@@ -16,6 +13,7 @@ const Taskbar = ()=>{
     }
     return tmpApps;
   });
+  const [batterylevel, setbatterylevel] = useState(0);
   const dispatch = useDispatch();
 
   const showPrev = (event)=>{
@@ -52,58 +50,36 @@ const Taskbar = ()=>{
 
 
   const changebatterystatus=(bt)=>{
-     
-       let level=bt.level*100;
-       
-       if(bt.charging){ 
-           setbatterylevel('*');
-           return;
-       }
-       else
-       {
-         if(level<=10){
-           level+=10;
-         }
-         else if(level>=80){
-           level-=10;
-         }
-         setbatterylevel(level);
-       }
+    let level=bt.level*100;
 
-      
-
+    if(bt.charging){
+      setbatterylevel('*');
+    }else{
+      if(level<=10) level+=10;
+      else if(level>=80) level-=10;
+      setbatterylevel(level);
+    }
   }
 
   useEffect(() => {
-    
     async function getBatteryDetails(){
-
       let bt=await navigator.getBattery();
-
       changebatterystatus(bt);
 
       bt.onlevelchange=()=>{
-        
         changebatterystatus(bt);
-        
       }
 
       bt.onchargingchange=()=>{
         changebatterystatus(bt);
       }
-
     }
 
     if(window.BatteryManager){
-         getBatteryDetails();
-
+      getBatteryDetails();
     }
 
-  
-
-    return () => {
-      
-    }
+    return () => {}
   }, [])
 
   return (
@@ -154,7 +130,7 @@ const Taskbar = ()=>{
 
           <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
 
-          <Icon className="taskIcon" src='audio' ui width={22}/>
+          <Icon className="taskIcon" src={'audio'+tasks.audio} ui width={16}/>
           <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
             data-action="CALNTOGG">
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>

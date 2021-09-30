@@ -6,8 +6,12 @@
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Windows 11 made in React" />
-  <meta name="og:description" content="Windows 11 made in React." />
+  <meta name="description" property="description"
+        content="Windows 11 made in React" />
+  <meta name="og:title" property="og:title"
+        content="Windows 11 made in React">
+  <meta name="og:description" property="og:description"
+        content="Windows 11 made in React" />
   <meta name="og:color" content="#303030" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -20,6 +24,7 @@
 <body data-force="false">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <div id="brightoverlay"></div>
   <script type="text/javascript" src="dycalendar.js"></script>
   <script type="text/javascript" src="console.js"></script>
   <div id="warningmsg">Even Microsoft couldn't make it far with windows on phone then how could I?</div>
