@@ -385,6 +385,7 @@ export const DesktopApp = () => {
 
 export const SidePane = () => {
   const paneApps = useSelector(state => state.sidepane);
+  const tasks = useSelector(state=>state.taskbar);
   const dispatch = useDispatch();
 
   const clickDispatch = (event) => {
@@ -396,16 +397,31 @@ export const SidePane = () => {
     if(action.type) dispatch(action);
   }
 
+  const setVolume = (e)=>{
+    var aud = 3
+    if(e.target.value < 70) aud=2
+    if(e.target.value < 30) aud=1
+    if(e.target.value == 0) aud=0
+    
+    dispatch({type: "TASKAUDO", payload: aud})
+  }
+
+  const setBrightness = (e)=>{
+    document.getElementById('brightoverlay').style.opacity = (100 - e.target.value)/100
+  }
+
   useEffect(()=>{
-    if(paneApps.quicks[6].state){
-      document.body.dataset.sepia = true;
-    }else{
-      document.body.dataset.sepia = false;
-    }
+    paneApps.quicks.map(item=>{
+      if(item.src=="nightlight"){
+        if(item.state) document.body.dataset.sepia = true;
+        else document.body.dataset.sepia = false;
+      }
+    })
   })
 
   return (
-    <div className="sidePane dpShad" data-hide={paneApps.hide} style={{'--prefix':'PANE'}}>
+    <div className="sidePane dpShad" data-hide={paneApps.hide}
+      style={{'--prefix':'PANE'}}>
       <div className="quickSettings">
         <div className="quickCont">
           {paneApps.quicks.map((qk, idx)=>{
@@ -433,11 +449,13 @@ export const SidePane = () => {
         </div>
         <div className="sliderCont">
           <Icon className="mx-2" src='brightness' ui width={20}/>
-          <input className="sliders" type="range"/>
+          <input className="sliders" onChange={setBrightness}
+            type="range" min="10" max="100" defaultValue="100"/>
         </div>
         <div className="sliderCont">
-          <Icon className="mx-2" src='audio' ui width={20}/>
-          <input className="sliders" type="range"/>
+          <Icon className="mx-2" src={'audio'+tasks.audio} ui width={16}/>
+          <input className="sliders" onChange={setVolume}
+            type="range" min="0" max="100" defaultValue="100"/>
         </div>
       </div>
     </div>

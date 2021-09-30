@@ -8,14 +8,14 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
  #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
-![home](./public/img/home.png)
+![home](./public/img/home.jpg)
 
 # Gallery
-![pic1](./public/img/gallery1.png)
+![pic1](./public/img/gallery1.jpg)
 
-![pic1](./public/img/gallery2.png)
+![pic1](./public/img/gallery2.jpg)
 
-![pic1](./public/img/gallery3.png)
+![pic1](./public/img/gallery3.jpg)
 
 # Why
 
@@ -30,7 +30,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 - [x] Notepad, Vscode, Whiteboard
 - [ ] File Explorer + other apps
 - [ ] Drag and Resize windows
-- [ ] Startup and Lock screen
+- [x] Startup and Lock screen
 - [ ] Themes and Background
 
 📑 [suggest more](https://github.com/blueedgetechno/windows11/issues/new/choose)

@@ -49,7 +49,7 @@ export const MicroStore = ()=>{
         </div>
         <div className="restWindow msfull thinScroll">
           <div className="storeSection w-full absolute top-0">
-            <Image id="sthome" className="frontPage w-full" src="store/lucacover"/>
+            <Image id="sthome" className="frontPage w-full" src="img/store/lucacover.jpg" ext/>
             <div className="panelName absolute m-6 text-xl top-0">Home</div>
             <div className="w-full overflow-x-scroll thinScroll overflow-y-hidden -mt-16">
               <div className="storeRibbon">

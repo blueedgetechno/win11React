@@ -60,7 +60,7 @@ export const AboutWin = ()=>{
                 <mark> Store</mark>,
                 <mark> Terminal</mark>,
                 <mark> Vscode</mark>,
-                <mark> Whiteboard.</mark>
+                <mark> Whiteboard and many more</mark>
               </span>
             </div>
             <br/>

@@ -82,6 +82,15 @@ function App() {
     dispatch({type: "WALLBOOTED"})
   });
 
+  useEffect(()=>{
+    if(!window.onstart){
+      window.onstart = setTimeout(()=>{
+        console.log("prematurely loading ( ﾉ ﾟｰﾟ)ﾉ");
+        dispatch({type: "WALLBOOTED"})
+      },5000)
+    }
+  })
+
   return (
     <div className="App">
       {!wall.booted?<BootScreen dir={wall.dir}/>:null}
