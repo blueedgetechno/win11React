@@ -397,6 +397,9 @@ export const SidePane = () => {
     if(action.type) dispatch(action);
   }
 
+  let vSlider = document.querySelector(".vSlider");
+  let bSlider = document.querySelector(".bSlider");
+
   const setVolume = (e)=>{
     var aud = 3
     if(e.target.value < 70) aud=2
@@ -404,11 +407,21 @@ export const SidePane = () => {
     if(e.target.value == 0) aud=0
     
     dispatch({type: "TASKAUDO", payload: aud})
+
+    silderBackground(vSlider, e.target.value);
+  }
+  
+
+  function silderBackground(elem, e) {
+    elem.style.setProperty("--track-color", `linear-gradient(90deg, #005fba ${e}%, #888888 ${e}%)`)
   }
 
   const setBrightness = (e)=>{
     document.getElementById('brightoverlay').style.opacity = (100 - e.target.value)/100
+    
+    silderBackground(bSlider, e.target.value);
   }
+
 
   useEffect(()=>{
     paneApps.quicks.map(item=>{
@@ -449,12 +462,12 @@ export const SidePane = () => {
         </div>
         <div className="sliderCont">
           <Icon className="mx-2" src='brightness' ui width={20}/>
-          <input className="sliders" onChange={setBrightness}
+          <input className="sliders bSlider" onChange={setBrightness}
             type="range" min="10" max="100" defaultValue="100"/>
         </div>
         <div className="sliderCont">
-          <Icon className="mx-2" src={'audio'+tasks.audio} ui width={16}/>
-          <input className="sliders" onChange={setVolume}
+          <Icon className="mx-2" src={'audio'+tasks.audio} ui width={18}/>
+          <input className="sliders vSlider" onChange={setVolume}
             type="range" min="0" max="100" defaultValue="100"/>
         </div>
       </div>
