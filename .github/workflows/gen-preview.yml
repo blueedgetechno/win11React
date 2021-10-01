@@ -19,7 +19,8 @@ jobs:
       uses: unofficial-skills/actions-comment-pull-request@main
       with:
          message: |
-              ⌛ Deploy Preview - Build in Progress 
+              ⌛ Deploy Preview - Build in Progress
+              If you are part of our discord server then leave your discord name for a role.
          GITHUB_TOKEN: ${{ secrets.BOT }}
          
     - name: create repo
