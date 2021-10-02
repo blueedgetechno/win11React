@@ -119,11 +119,6 @@ export default [
   payload: 'mailto:blueedgetechno@gmail.com'
 },
 {
-  name: 'Maps',
-  icon: 'maps',
-  type: 'app'
-},
-{
   name: 'Movies',
   icon: 'movies',
   type: 'app'
@@ -172,11 +167,6 @@ export default [
 {
   name: 'Outlook',
   icon: 'outlook',
-  type: 'app'
-},
-{
-  name: 'Paint',
-  icon: 'paint',
   type: 'app'
 },
 {
@@ -261,6 +251,11 @@ export default [
   type: 'app'
 },
 {
+  name: 'Maps',
+  icon: 'maps',
+  type: 'app'
+},
+{
   name: 'Voice Recorder',
   icon: 'voice',
   type: 'app'
@@ -336,4 +331,14 @@ export default [
     type: 'IFrame',
     url: 'https://smashkarts.io'
   }
+},{
+  name: 'Paint',
+  icon: 'paint',
+  type: 'app',
+  action: 'PAINT',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://jspaint.app/'
+  }  
 }];
