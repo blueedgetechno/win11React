@@ -218,11 +218,6 @@ export default [
   type: 'app'
 },
 {
-  name: 'Soltaire',
-  icon: 'soltaire',
-  type: 'app'
-},
-{
   name: 'Twitter',
   icon: 'twitter',
   type: 'app',
@@ -340,5 +335,15 @@ export default [
   data: {
     type: 'IFrame',
     url: 'https://jspaint.app/'
-  }  
+  }
+},{
+  name: 'Soltaire',
+  icon: 'soltaire',
+  type: 'app',
+  action: 'SOLTAIRE',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://www.squidbyte.com/games/spidersolitairewindowsxp/'
+  }    
 }];
