@@ -7,7 +7,7 @@ var {taskbar,
   taskbar: ["Settings","File Explorer","Edge","Store","Spotify"],
   desktop: ["Blue","Unescape","Recycle Bin","File Explorer","Store",
       "Edge","Github","Spotify","Minecraft","Krunker","Smash karts"],
-  pinned: ["Edge","Soltaire","paint","OneNote","Mail","To Do","Store",
+  pinned: ["Edge","Soltaire","Paint","OneNote","Mail","To Do","Store",
           "Photos","Wikipedia","Notepad","White Board","Calculator",
           "Spotify","Twitter","VS Code","Terminal","Github","Discord"],
   recent: ["Mail","Twitter","Terminal","Github","VS Code","Spotify","Edge"]
