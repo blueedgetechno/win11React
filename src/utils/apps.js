@@ -345,5 +345,15 @@ export default [
   data: {
     type: 'IFrame',
     url: 'https://www.squidbyte.com/games/spidersolitairewindowsxp/'
-  }    
+  }
+},{
+  name: 'Wikipedia',
+  icon: 'https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2@1.5x.png',
+  type: 'app',
+  action: 'Wikipedia',
+  pwa: true,
+  data: {
+    type: 'IFrame',
+    url: 'https://www.wikipedia.org/'
+  }   
 }];
