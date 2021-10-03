@@ -13,7 +13,9 @@
   transform: translateX(0);
 
   &[data-hide="true"] {
-    transform: translateX(376px);
+    bottom: 0.9rem;
+    transform: translateX(110%);
+    animation: overflow-hider 0s ease-in-out 0.2s forwards;
   }
 }
 
