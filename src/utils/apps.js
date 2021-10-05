@@ -125,11 +125,6 @@ var apps = [{
   payload: 'mailto:blueedgetechno@gmail.com'
 },
 {
-  name: 'Maps',
-  icon: 'maps',
-  type: 'app'
-},
-{
   name: 'Movies',
   icon: 'movies',
   type: 'app'
@@ -181,11 +176,6 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'Paint',
-  icon: 'paint',
-  type: 'app'
-},
-{
   name: 'People',
   icon: 'people',
   type: 'app'
@@ -234,11 +224,6 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'Soltaire',
-  icon: 'soltaire',
-  type: 'app'
-},
-{
   name: 'Twitter',
   icon: 'twitter',
   type: 'app',
@@ -264,6 +249,11 @@ var apps = [{
 {
   name: 'To Do',
   icon: 'todo',
+  type: 'app'
+},
+{
+  name: 'Maps',
+  icon: 'maps',
   type: 'app'
 },
 {
