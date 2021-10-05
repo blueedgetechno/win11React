@@ -1,5 +1,11 @@
-export default [
-{
+const gene_name = ()=> Math.random().toString(36).substring(2,10).toUpperCase()
+
+var installed = localStorage.getItem("installed")
+if(!installed) installed="[]"
+
+installed = JSON.parse(installed)
+
+var apps = [{
   name: 'Start',
   icon: 'home',
   type: 'action',
@@ -309,7 +315,7 @@ export default [
   name: 'Minecraft',
   icon: 'minecraft',
   type: 'app',
-  action: 'MINECRAFT',
+  action: gene_name(),
   pwa: true,
   data: {
     type: 'IFrame',
@@ -319,7 +325,7 @@ export default [
   name: 'Krunker',
   icon: 'https://krunker.io/img/newp.png',
   type: 'app',
-  action: 'KRUNKER',
+  action: gene_name(),
   pwa: true,
   data: {
     type: 'IFrame',
@@ -330,10 +336,17 @@ export default [
   name: 'Smash karts',
   icon: 'https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg',
   type: 'app',
-  action: 'SMASHKART',
+  action: gene_name(),
   pwa: true,
   data: {
     type: 'IFrame',
     url: 'https://smashkarts.io'
   }
-}];
+}]
+
+for (var i = 0; i < installed.length; i++) {
+  installed[i].action = gene_name()
+  apps.push(installed[i])
+}
+
+export default apps

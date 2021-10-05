@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
 
+import axios from 'axios';
+
 export const MicroStore = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.store);
@@ -46,6 +48,7 @@ export const MicroStore = ()=>{
           <Icon fafa="faThLarge" onClick={action} click="apprib" width={18} payload={tab=="apprib"}/>
           <Icon fafa="faGamepad" onClick={action} click="gamerib" width={20} payload={tab=="gamerib"}/>
           <Icon fafa="faFilm" onClick={action} click="movrib" width={20} payload={tab=="movrib"}/>
+          <Icon fafa="faDownload" onClick={action} click="movrib" width={20} payload={tab=="movrib"}/>
         </div>
         <div className="restWindow msfull thinScroll">
           <div className="storeSection w-full absolute top-0">

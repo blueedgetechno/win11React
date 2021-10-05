@@ -366,15 +366,12 @@ export const DesktopApp = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="desktopCont" style={{
-      gridTemplateColumns: `repeat(auto-fit, ${Math.round(deskApps.size*90)}px)`,
-      gridTemplateRows: `repeat(auto-fit, ${Math.round(deskApps.size*98)}px)`
-    }}>
+    <div className="desktopCont">
       {!deskApps.hide && deskApps.apps.map((app,i)=>{
         return (
           <div key={i} className="dskApp">
-            <Icon click={app.action} width={Math.round(deskApps.size*36)}
-              className="dskIcon" src={app.icon} payload={app.payload || "full"}/>
+            <Icon click={app.action} className="dskIcon" src={app.icon}
+              width={Math.round(deskApps.size*36)} payload={app.payload || "full"}/>
             <div className="appName">{app.name}</div>
           </div>
         )
@@ -405,12 +402,12 @@ export const SidePane = () => {
     if(e.target.value < 70) aud=2
     if(e.target.value < 30) aud=1
     if(e.target.value == 0) aud=0
-    
+
     dispatch({type: "TASKAUDO", payload: aud})
 
     silderBackground(vSlider, e.target.value);
   }
-  
+
 
   function silderBackground(elem, e) {
     elem.style.setProperty("--track-color", `linear-gradient(90deg, #005fba ${e}%, #888888 ${e}%)`)
@@ -418,7 +415,7 @@ export const SidePane = () => {
 
   const setBrightness = (e)=>{
     document.getElementById('brightoverlay').style.opacity = (100 - e.target.value)/100
-    
+
     silderBackground(bSlider, e.target.value);
   }
 
