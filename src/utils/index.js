@@ -4,13 +4,21 @@ var {taskbar,
   desktop,
   pinned,
   recent} = {
-  taskbar: ["Settings","File Explorer","Edge","Store","Spotify"],
-  desktop: ["Blue","Unescape","Recycle Bin","File Explorer","Store",
+  taskbar: (localStorage.getItem("taskbar") &&
+            JSON.parse(localStorage.getItem("taskbar")) ) ||
+            ["Settings","File Explorer","Edge","Store","Spotify"],
+  desktop: (localStorage.getItem("desktop") &&
+            JSON.parse(localStorage.getItem("desktop")) ) ||
+            ["Blue","Unescape","Recycle Bin","File Explorer","Store",
       "Edge","Github","Spotify","Minecraft","Krunker","Smash karts"],
-  pinned: ["Edge","Word","PowerPoint","OneNote","Mail","To Do","Store",
+  pinned: (localStorage.getItem("pinned") &&
+            JSON.parse(localStorage.getItem("pinned")) ) ||
+            ["Edge","Word","PowerPoint","OneNote","Mail","To Do","Store",
           "Photos","Your Phone","Notepad","White Board","Calculator",
           "Spotify","Twitter","VS Code","Terminal","Github","Discord"],
-  recent: ["Mail","Twitter","Terminal","Github","VS Code","Spotify","Edge"]
+  recent: (localStorage.getItem("recent") &&
+            JSON.parse(localStorage.getItem("recent")) ) ||
+            ["Mail","Twitter","Terminal","Github","VS Code","Spotify","Edge"]
 };
 
 export const taskApps = icons.filter(x=>taskbar.includes(x.name));
