@@ -1,7 +1,7 @@
 import {allApps} from '../utils';
 
-var dev = ""
-// var dev = "store"
+// var dev = ""
+var dev = "store"
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {

@@ -299,7 +299,7 @@ export const StartMenu = () => {
                 <div className="quickSearches pl-4 mt-2">
                   {start.qksrch.map(srch=>{
                     return (
-                      <div className="qksrch flex align-center py-3 handcr prtclk"
+                      <div className="qksrch flex items-center py-3 handcr prtclk"
                         onClick={clickDispatch} data-action="EDGELINK"
                         data-payload={srch[2]}>
                         <Icon fafa={srch[0]} reg={srch[1]}/>

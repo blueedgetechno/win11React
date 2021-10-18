@@ -8,7 +8,8 @@ import paneReducer from './sidepane';
 import widReducer from './widpane';
 import appReducer from './apps';
 import menusReducer from './menu';
-import globalReducer from './globals'
+import globalReducer from './globals';
+import storeReducer from './store';
 
 const allReducers = combineReducers({
   wallpaper: wallReducer,
@@ -19,7 +20,8 @@ const allReducers = combineReducers({
   widpane: widReducer,
   apps: appReducer,
   menus: menusReducer,
-  globals: globalReducer
+  globals: globalReducer,
+  store: storeReducer,
 });
 
 export default allReducers;

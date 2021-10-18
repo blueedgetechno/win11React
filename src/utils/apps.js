@@ -1,4 +1,4 @@
-const gene_name = ()=> Math.random().toString(36).substring(2,10).toUpperCase()
+export const gene_name = ()=> Math.random().toString(36).substring(2,10).toUpperCase()
 
 var installed = localStorage.getItem("installed")
 if(!installed) installed="[]"
@@ -301,37 +301,6 @@ var apps = [{
   icon: 'discord',
   type: 'app',
   action: 'DISCORD',
-}, {
-  name: 'Minecraft',
-  icon: 'minecraft',
-  type: 'app',
-  action: gene_name(),
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://classic.minecraft.net'
-  }
-},{
-  name: 'Krunker',
-  icon: 'https://krunker.io/img/newp.png',
-  type: 'app',
-  action: gene_name(),
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://krunker.io',
-    invert: true
-  }
-},{
-  name: 'Smash karts',
-  icon: 'https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg',
-  type: 'app',
-  action: gene_name(),
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://smashkarts.io'
-  }
 }]
 
 for (var i = 0; i < installed.length; i++) {
