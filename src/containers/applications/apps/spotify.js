@@ -78,7 +78,7 @@ export const Spotify = ()=>{
         tdata: aldata
       })
     }else if (act=="song") {
-      console.log(payload);
+      // console.log(payload);
       if(payload.includes(",")){
         var pos = JSON.parse(payload),
             songid = data.home[pos[0]].cards[pos[1]].data;

@@ -1,0 +1,66 @@
+[{
+    "name": "Minecraft",
+    "icon": "https://raw.githubusercontent.com/andrewstech/windows11-1/master/public/img/icon/minecraft.png",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://classic.minecraft.net",
+      "gallery": [
+        "https://www.minecraft.net/content/dam/games/minecraft/key-art/CavesandCliffsPt1-dotNET-HomepagePromo-600x360.png",
+        "https://variety.com/wp-content/uploads/2019/02/minecraft-best-year-yet.png?w=600",
+        "https://www.minecraft.net/content/dam/games/minecraft/screenshots/RayTracing-MineCraft-PMP-Always-Something-New.jpg"
+      ],
+      "desc": "Minecraft is a sandbox construction video game developed by Mojang Studios where players interact with a fully modifiable three-dimensional environment made of blocks and entities.\nIts diverse gameplay lets players choose the way they play, allowing for countless possibilities. There are three actively maintained editions of Minecraft: Java Edition, Bedrock Edition, and Education Edition.",
+      "feat": "1.1 Combat changes.\n1.2 Fletching table functionality.\n1.3 Voted updates.\n1.4 Super Fancy graphics.\n1.5 Phasing out of NBT-based crafting recipes.\n1.6 Full split of liquids from blocks.\n1.7 Shaders.\n1.8 Archaeology."
+    }
+  },{
+    "name": "Smash karts",
+    "icon": "https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://smashkarts.io",
+      "gallery": [
+        "https://static.gogy.com/ogimages/smashkarts-io.jpg",
+        "https://yt3.ggpht.com/f4e3X0TDQ6edrwk29w6pBgxLdTnNUvZdBkDGDO0zqlWXY6NGVjdDvlTKhyg4apwjykBu-hSGuw=s900-c-k-c0x00ffffff-no-rj",
+        "https://c.tenor.com/OOAB3Zw9lWsAAAAd/smash-karts-you-win.gif",
+        "https://cdn.titotu.io/images/games/smash-karts-631x355.jpg"
+      ],
+      "desc": "Smash Karts is a free io Multiplayer Kart Battle Arena game.\nIt is a three-dimensional multiplayer kart racing game. To win, you must drive your go-kart, pick up weaponry, and blow up other karts.",
+      "feat": "Drive fast\nFire rockets\nMake big explosions"
+    }
+  },{
+    "name": "Krunker",
+    "icon": "https://krunker.io/img/newp.png",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://krunker.io",
+      "invert": true,
+      "gallery": [
+        "https://cdn.akamai.steamstatic.com/steam/apps/1408720/capsule_616x353.jpg",
+        "https://i.redd.it/1oylfyu4giw21.png",
+        "https://d326lupd521z61.cloudfront.net/uploads/webp/images/krunker-.io.webp",
+        "https://www.mejoress.com/en/wp-content/uploads/Krunker-Aimbot-Hacks.jpg.webp"
+      ],
+      "desc": "Krunker.io is a fast-paced pixelated first-person shooter.\nIn this browser game, players drop into a pixelated world and fight against other players from around the world",
+      "feat": "Shooter Video Game\nBrowser game\nCasual game\nFree to Play"
+    }
+  },
+  {
+    "name": "Paint",
+    "icon": "https://raw.githubusercontent.com/1j01/jspaint/master/images/icons/96x96.png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://jspaint.app",
+      "gallery": [
+        "https://raw.githubusercontent.com/1j01/jspaint/master/images/meta/main-screenshot.png",
+        "https://repository-images.githubusercontent.com/16602433/6d236580-dcad-11e9-8e28-516524888463",
+        "https://ourcodeworld.com/public-media/articles/articleocw-5a6788d6906b2.png"
+      ],
+      "desc": "JS Paint is a web-based remake of MS Paint by Isaiah Odhner.\nThe goal is to remake MS Paint (including its little-known features), improve on it, and to extend the types of images it can edit. So far, it does this pretty well.",
+      "feat": "Texture painting.\nDrag n drop.\nDigital Painting.\nKid friendly.\nBrowser based.\nWeb-Based."
+    }
+  }
+]
