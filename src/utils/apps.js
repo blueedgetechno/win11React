@@ -35,7 +35,7 @@ var apps = [{
   action: 'EXPLORER'
 },
 {
-  name: 'Edge',
+  name: 'Browser',
   icon: 'edge',
   type: 'app',
   action: 'MSEDGE'
@@ -74,7 +74,8 @@ var apps = [{
 {
   name: 'Camera',
   icon: 'camera',
-  type: 'app'
+  type: 'app',
+  action: 'CAMERA'
 },
 {
   name: 'VS Code',
@@ -135,7 +136,7 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'MsOffice',
+  name: 'Office',
   icon: 'msoffice',
   type: 'app'
 },

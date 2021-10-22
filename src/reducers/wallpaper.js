@@ -26,7 +26,7 @@ const defState = {
   wps: wps,
   src: walls[wps],
   locked: !(locked=='false'),
-  booted: !false,
+  booted: false,
   act: '',
   dir: 0
 }

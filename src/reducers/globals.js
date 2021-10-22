@@ -114,7 +114,6 @@ const defState = {
   ribbon: [
     "luca",
     "unescape",
-    "microsoft 365",
     "essential apps",
     "xbox gamepass",
     "spotify",
