@@ -27,7 +27,7 @@
 
 .frontPage {
   position: relative;
-  height: 80vh;
+  max-height: calc(100vh - 150px);
   overflow-y: hidden;
 
   &:after {

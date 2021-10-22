@@ -308,10 +308,9 @@ a {
 
   body[data-force="false"] #warningmsg {
     display: block;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: #fefefe;
     font-family: sans-serif;
-    font-weight: 800;
     letter-spacing: 2px;
     text-align: left;
     word-spacing: 4px;

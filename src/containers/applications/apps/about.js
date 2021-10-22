@@ -4,13 +4,8 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 export const AboutWin = ()=>{
   const {abOpen} = useSelector(state=> state.desktop);
-  const [open, setOpen] = useState(()=>{
-    if(localStorage.getItem('closeAbout')=="true"){
-      return false;
-    }else{
-      return true;
-    }
-  });
+  const [open, setOpen] = useState(true);
+  const [timer, setTimer] = useState(6);
   const dispatch = useDispatch();
 
   const action = ()=>{
@@ -19,31 +14,41 @@ export const AboutWin = ()=>{
     dispatch({type: "DESKABOUT", payload: false});
   }
 
+  useEffect(()=>{
+    if(timer>0){
+      setTimeout(()=>{
+        setTimer(timer-1)
+      }, 1000)
+    }
+  }, [timer])
+
   return open || abOpen?(
     <div className="aboutApp floatTab dpShad">
       <div className="py-1 px-2 bg-gray-100 text-xss">
-        <div className="">About Windows</div>
+        <div className="">About</div>
       </div>
-      <div className="windowScreen flex flex-col" data-dock="true">
-        <div className="restWindow h-full flex-grow flex flex-col items-center p-4">
-          <Image src="windows11" free/>
-          <div className="w-88 h-px bg-gray-400 my-4">
-          </div>
+      <div className="windowScreen" data-dock="true">
+        <div className="restWindow h-full flex flex-col items-center p-4">
+          {/* <Image src="windows11" free/> */}
+          {/* <div className="w-full h-px bg-gray-400 my-4"></div> */}
           <div className="abCont">
-            <div>Microsoft Windows (in React)</div>
-            <div>Version 21H2 (OS Build 22000.51)</div>
-            <div>&copy; Blue Edge. All rights reserved.</div>
+            <div>OS (In ReactJs)</div>
+            <div>Version 11</div>
+            {/* <div>&copy; Blue Edge. All rights reserved.</div> */}
             <br/>
             <div>
-              The Windows 11 Home Single Language Operating System and its user
-              interface are protected by the trademark and other pending or
-              existing intellectual property rights in the United States and other
-              countries/regions.
+              This open source project is made in the hope to <mark>replicate the Windows 11 </mark>
+              desktop experience on web, using standard web technologies like
+              <mark> React, CSS, and JavaScript.</mark>
+              <br/><br/>
+              This <rediv>project is not in anyway affiliated with Microsoft</rediv> and
+              should <rediv>not be confused with Microsoft’s Operating System</rediv> or Products.
+              <br/><br/>
+              This is also not <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">Windows 365 cloud PC</a>.
             </div>
             <br/>
-            <br/>
             <div>
-              This product is licensed with <a target="_blank" href="https://github.com/blueedgetechno/windows11/blob/master/LICENSE">Creative Commons</a>.
+              This project is licensed under <a target="_blank" href="https://github.com/blueedgetechno/windows11/blob/master/LICENSE">Creative Commons</a>.
             </div>
             <div className="mt-1">
               &nbsp;&nbsp;
@@ -53,22 +58,21 @@ export const AboutWin = ()=>{
             <br/>
             <br/>
             <div>
-              <span> The current working apps are
-                <mark> Calculator</mark>,
-                <mark> Edge</mark>,
-                <mark> Notepad</mark>,
-                <mark> Store</mark>,
-                <mark> Terminal</mark>,
-                <mark> Vscode</mark>,
-                <mark> Whiteboard and many more</mark>
+              <span>
+                Microsoft, Windows and Other demostrated Products in this project
+                are trademarks of the Microsoft group of companies.
               </span>
             </div>
             <br/>
             <br/>
             <br/>
-            <br/>
             <div className="okbtn">
-              <div className="bg-gray-100" onClick={action}>Ok</div>
+              <div className="bg-gray-100" data-allow={timer==0}
+                onClick={timer==0 && action}>
+                Ok, I understand {timer>0?(
+                  <span>{"("+timer+")"}</span>
+                ):null}
+              </div>
             </div>
           </div>
         </div>

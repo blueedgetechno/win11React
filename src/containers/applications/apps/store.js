@@ -34,7 +34,7 @@ export const MicroStore = ()=>{
   const apps = useSelector(state => state.apps)
   const wnapp = useSelector(state => state.apps.store)
   const [tab, setTab] = useState("sthome")
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(0)
   const [opapp, setOpapp] = useState(storedata[0])
   const dispatch = useDispatch()
 
@@ -88,7 +88,7 @@ export const MicroStore = ()=>{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
-        name="Microsoft Store"/>
+        name="Store"/>
       <div className="windowScreen flex">
         <div className="storeNav h-full w-16 flex flex-col">
           <Icon fafa="faHome" onClick={totab} click="sthome"
@@ -297,8 +297,8 @@ const FrontPage = (props)=>{
       <div id="apprib" className="frontCont amzApps my-8 py-20 w-auto mx-8 \
         flex justify-between noscroll overflow-x-scroll overflow-y-hidden">
         <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-          <div className="text-xl">Windows Apps</div>
-          <div className="text-xs mt-2">Take your windows experience to new heights with these must-have apps</div>
+          <div className="text-xl">Featured Apps</div>
+          <div className="text-xs mt-2">Take your experience to new heights with these must-have apps</div>
         </div>
         <div className="flex w-max pr-8">
           {apprib && apprib.map(x=>{

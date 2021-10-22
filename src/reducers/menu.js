@@ -59,7 +59,7 @@ const defState = {
         name: "Next desktop background",
         action: "WALLNEXT"
       }, {
-        name: "Open in Windows Terminal",
+        name: "Open in Terminal",
         icon: 'terminal',
         action: "OPENTERM",
         payload: "C:\\Users\\Blue\\Desktop"

@@ -111,7 +111,7 @@ export const EdgeMenu = ()=>{
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
-        name="Microsoft Edge" float/>
+        name="Browser" float/>
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">
           <Icon src={wnapp.icon} width={14} margin="0 6px"/>
