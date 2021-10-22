@@ -1,14 +1,15 @@
 .desktopCont {
   width: 0;
   height: 100%;
-  display: grid;
-  grid-auto-flow: column;
-  align-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .dskApp {
   margin: 4px;
   padding: 12px;
+  height: 66px;
   display: flex;
   flex-direction: column;
   align-items: center;

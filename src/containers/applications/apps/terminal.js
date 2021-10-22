@@ -8,8 +8,7 @@ export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.terminal);
   const [stack, setStack] = useState([
-    "Microsoft Windows [Version 10.0.22000.51]",
-    "(c) Microsoft Corporation. All rights reserved.",
+    "OS [Version 10.0.22000.51]",
     ""
   ]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
@@ -136,8 +135,7 @@ export const WnTerminal = ()=>{
               Math.floor(Math.random()*100));
     }else if (type=="exit") {
       tmpStack = [
-        "Microsoft Windows [Version 10.0.22000.51]",
-        "(c) Microsoft Corporation. All rights reserved.",
+        "OS [Version 10.0.22000.51]",
         ""
       ];
       dispatch({type: wnapp.action, payload: "close"})
@@ -146,13 +144,13 @@ export const WnTerminal = ()=>{
     }else if (type=="hostname") {
       tmpStack.push("Blue");
     }else if (type=="ver") {
-      tmpStack.push("Microsoft Windows [Version 10.0.22000.51]");
+      tmpStack.push("OS [Version 10.0.22000.51]");
     }else if (type=="systeminfo") {
       var dvInfo = [
         "Host Name:                 BLUE",
-        "OS Name:                   Microsoft Windows 11 Home Single Language",
+        "OS Name:                   ",
         "OS Version:                10.0.22000 N/A Build 22000.51",
-        "OS Manufacturer:           Microsoft Corporation",
+        "OS Manufacturer:           ",
         "OS Configuration:          Standalone Workstation",
         "OS Build Type:             Multiprocessor Free",
         "Registered Owner:          Blue",

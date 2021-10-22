@@ -1,5 +1,11 @@
-export default [
-{
+export const gene_name = ()=> Math.random().toString(36).substring(2,10).toUpperCase()
+
+var installed = localStorage.getItem("installed")
+if(!installed) installed="[]"
+
+installed = JSON.parse(installed)
+
+var apps = [{
   name: 'Start',
   icon: 'home',
   type: 'action',
@@ -29,7 +35,7 @@ export default [
   action: 'EXPLORER'
 },
 {
-  name: 'Edge',
+  name: 'Browser',
   icon: 'edge',
   type: 'app',
   action: 'MSEDGE'
@@ -68,7 +74,8 @@ export default [
 {
   name: 'Camera',
   icon: 'camera',
-  type: 'app'
+  type: 'app',
+  action: 'CAMERA'
 },
 {
   name: 'VS Code',
@@ -129,7 +136,7 @@ export default [
   type: 'app'
 },
 {
-  name: 'MsOffice',
+  name: 'Office',
   icon: 'msoffice',
   type: 'app'
 },
@@ -295,65 +302,11 @@ export default [
   icon: 'discord',
   type: 'app',
   action: 'DISCORD',
-}, {
-  name: 'Minecraft',
-  icon: 'minecraft',
-  type: 'app',
-  action: 'MINECRAFT',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://classic.minecraft.net'
-  }
-},{
-  name: 'Krunker',
-  icon: 'https://krunker.io/img/newp.png',
-  type: 'app',
-  action: 'KRUNKER',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://krunker.io',
-    invert: true
-  }
-},{
-  name: 'Smash karts',
-  icon: 'https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg',
-  type: 'app',
-  action: 'SMASHKART',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://smashkarts.io'
-  }
-},{
-  name: 'Paint',
-  icon: 'paint',
-  type: 'app',
-  action: 'PAINT',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://jspaint.app/'
-  }
-},{
-  name: 'Soltaire',
-  icon: 'soltaire',
-  type: 'app',
-  action: 'SOLTAIRE',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://www.squidbyte.com/games/spidersolitairewindowsxp/'
-  }
-},{
-  name: 'Wikipedia',
-  icon: 'https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2@1.5x.png',
-  type: 'app',
-  action: 'Wikipedia',
-  pwa: true,
-  data: {
-    type: 'IFrame',
-    url: 'https://www.wikipedia.org/'
-  }   
-}];
+}]
+
+for (var i = 0; i < installed.length; i++) {
+  installed[i].action = gene_name()
+  apps.push(installed[i])
+}
+
+export default apps

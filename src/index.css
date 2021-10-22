@@ -119,6 +119,11 @@ i[data-flip="true"] {
   transition: 100ms ease-in-out;
 }
 
+.uicon[data-pr="true"]:active img{
+  transform: scale(0.7);
+  transition: 100ms ease-in-out;
+}
+
 .desktop {
   position: absolute;
   width: 100vw;
@@ -188,7 +193,14 @@ input {
   background-color: transparent;
 }
 
-.thinScroll:hover::-webkit-scrollbar-thumb {
+.medScroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+.thinScroll:hover::-webkit-scrollbar-thumb,
+.medScroll:hover::-webkit-scrollbar-thumb{
   background: rgba(32, 24, 148, 0.4);
 }
 
@@ -199,6 +211,13 @@ input {
 .thinScroll::-webkit-scrollbar-thumb {
   width: 2px;
   height: 2px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.medScroll::-webkit-scrollbar-thumb {
+  width: 4px;
+  height: 4px;
   border-radius: 10px;
   background-color: transparent;
 }
@@ -294,10 +313,9 @@ a {
 
   body[data-force="false"] #warningmsg {
     display: block;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: #fefefe;
     font-family: sans-serif;
-    font-weight: 800;
     letter-spacing: 2px;
     text-align: left;
     word-spacing: 4px;

@@ -62,10 +62,12 @@ function App() {
     var data = {
       top: e.clientY,
       left: e.clientX
-    };
+    }
 
     if (e.target.dataset.menu != null) {
-      data.menu = e.target.dataset.menu;
+      data.menu = e.target.dataset.menu
+      data.attr = e.target.attributes
+      data.dataset = e.target.dataset
       dispatch({
         type: 'MENUSHOW',
         payload: data

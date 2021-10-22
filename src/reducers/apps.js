@@ -1,6 +1,6 @@
 import {allApps} from '../utils';
 
-var dev = "";
+var dev = process.env.REACT_APP_ENV=="development"?"store":""
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {
