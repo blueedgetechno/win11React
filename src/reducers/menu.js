@@ -3,6 +3,8 @@ const defState = {
   top: 272,
   left: 430,
   opts: "desk",
+  attr: null,
+  dataset: null,
   menus: {
     desk: [
       {
@@ -74,16 +76,14 @@ const defState = {
         name: "Personalize",
         icon: 'win/themes',
         dsb: true
-      },
-      {
+      },{
         name: "About",
         action: "DESKABOUT",
         icon: 'win/info',
         payload: true
       }
     ],
-    task: [
-      {
+    task: [{
         name: "Align icons",
         opts: [{
           name: "Left",
@@ -125,6 +125,42 @@ const defState = {
         name: "Show Desktop",
         action: "SHOWDSK"
       }
+    ],
+    app: [{
+        name: "Open",
+        action: "performApp",
+        payload: "open"
+      },{
+        type: "hr"
+      },{
+        name: "Open file location",
+        dsb: true
+      },{
+        name: "Run as Administration",
+        action: "performApp",
+        payload: "open",
+        icon: "win/shield"
+      },{
+        type: "hr"
+      },{
+        name: "Unpin from start",
+        dsb: true
+      },{
+        name: "Pin to taskbar",
+        dsb: true
+      },{
+        name: "Delete shortcut",
+        action: "performApp",
+        payload: "delshort"
+      },{
+        name: "Delete"
+      },{
+        name: "Rename",
+        dsb: true
+      },{
+        name: "Properties",
+        dsb: true
+      }
     ]
   }
 };
@@ -140,6 +176,8 @@ const menusReducer = (state = defState, action) => {
     tmpState.top = (action.payload && action.payload.top) || 272;
     tmpState.left = (action.payload && action.payload.left) || 430;
     tmpState.opts = (action.payload && action.payload.menu) || "desk";
+    tmpState.attr = action.payload && action.payload.attr
+    tmpState.dataset = action.payload && action.payload.dataset
   } else if (action.type == "MENUCHNG") {
     tmpState = {
       ...action.payload

@@ -26,7 +26,6 @@ export const ActMenu = ()=>{
       tmpos.left = null;
     }
 
-
     if(wnheight - tmpos.top < eheight){
       tmpos.bottom = wnheight - tmpos.top;
       tmpos.top = null;
@@ -49,7 +48,7 @@ export const ActMenu = ()=>{
 
     if(action.type){
       if(action.type!=action.type.toUpperCase()){
-        Actions[action.type](dispatch,action.payload,menu);
+        Actions[action.type](action.payload,menu);
       }else{
         dispatch(action);
       }

@@ -119,6 +119,11 @@ i[data-flip="true"] {
   transition: 100ms ease-in-out;
 }
 
+.uicon[data-pr="true"]:active img{
+  transform: scale(0.7);
+  transition: 100ms ease-in-out;
+}
+
 .desktop {
   position: absolute;
   width: 100vw;

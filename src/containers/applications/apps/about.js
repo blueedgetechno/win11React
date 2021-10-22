@@ -4,7 +4,8 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 export const AboutWin = ()=>{
   const {abOpen} = useSelector(state=> state.desktop);
-  const [open, setOpen] = useState(true);
+  const {locked, booted} = useSelector(state => state.wallpaper);
+  const [open, setOpen] = useState(true && process.env.REACT_APP_ENV!="development");
   const [timer, setTimer] = useState(6);
   const dispatch = useDispatch();
 
@@ -15,12 +16,12 @@ export const AboutWin = ()=>{
   }
 
   useEffect(()=>{
-    if(timer>0){
+    if(timer>0 && !locked && booted){
       setTimeout(()=>{
         setTimer(timer-1)
       }, 1000)
     }
-  }, [timer])
+  }, [timer, locked, booted])
 
   return open || abOpen?(
     <div className="aboutApp floatTab dpShad">
