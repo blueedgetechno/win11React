@@ -220,17 +220,19 @@ const DetailPage = ({app})=>{
         </div>
       </div>
       <div className="growcont flex flex-col">
-        <div className="briefcont py-2 pb-3">
-          <div className="text-xs font-semibold">Screenshots</div>
-          <div className="overflow-x-scroll medScroll mt-4">
-            <div className="w-max flex">
-              {app.data.gallery && app.data.gallery.map(x=>
-                <Image className="mr-2 rounded" h={250} src={x}
-                  ext err="img/asset/mixdef.jpg"/>
-              )}
+        {app.data.gallery && app.data.gallery.length?(
+          <div className="briefcont py-2 pb-3">
+            <div className="text-xs font-semibold">Screenshots</div>
+            <div className="overflow-x-scroll medScroll mt-4">
+              <div className="w-max flex">
+                {app.data.gallery && app.data.gallery.map(x=>
+                  <Image className="mr-2 rounded" h={250} src={x}
+                    ext err="img/asset/mixdef.jpg"/>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        ):null}
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">Description</div>
           <div className="text-xs mt-4"><pre>{app.data.desc}</pre></div>

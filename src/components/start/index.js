@@ -370,8 +370,9 @@ export const DesktopApp = () => {
       {!deskApps.hide && deskApps.apps.map((app,i)=>{
         return (
           <div key={i} className="dskApp">
-            <Icon click={app.action} className="dskIcon" src={app.icon}
-              width={Math.round(deskApps.size*36)} payload={app.payload || "full"}/>
+            <Icon click={app.action} className="dskIcon prtclk"
+              src={app.icon} payload={app.payload || "full"} pr
+              width={Math.round(deskApps.size*36)} menu="app"/>
             <div className="appName">{app.name}</div>
           </div>
         )

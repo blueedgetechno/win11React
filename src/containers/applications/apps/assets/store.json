@@ -62,5 +62,38 @@
       "desc": "JS Paint is a web-based remake of MS Paint by Isaiah Odhner.\nThe goal is to remake MS Paint (including its little-known features), improve on it, and to extend the types of images it can edit. So far, it does this pretty well.",
       "feat": "Texture painting.\nDrag n drop.\nDigital Painting.\nKid friendly.\nBrowser based.\nWeb-Based."
     }
+  },
+  {
+    "name": "Soltaire",
+    "icon": "https://images.all-free-download.com/images/graphiclarge/spider_solitaire_37215.jpg",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://www.squidbyte.com/games/spidersolitairewindowsxp",
+      "gallery": [
+        "https://www.freecell.io/uploads/games/icons/freecellio/spider-solitaire-windows-xp.jpg",
+        "https://i.pinimg.com/originals/da/fb/51/dafb514c4185b9349a1ec3de54e2ae33.png",
+        "https://upload.wikimedia.org/wikipedia/en/7/77/Spider_Solitaire_7.png"
+      ],
+      "desc": "Spider Solitaire is a solitaire card game. As of 2005, it was the most played game on Windows PCs, surpassing the shorter and less challenging Klondike-based Windows Solitaire.",
+      "feat": "Play and win"
+    }
+  },
+  {
+    "name": "Wikipedia",
+    "icon": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://www.wikipedia.org",
+      "gallery": [
+        "https://wikipediaproject.yale.edu/sites/default/files/images/wikipedia-logo-.jpg",
+        "https://upload.wikimedia.org/wikipedia/en/8/8e/EnglishWikipedia_29June2017.png",
+        "https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/wikipedia-swastha-1588853853.jpg",
+        "https://edtimes.in/wp-content/uploads/2020/08/wikipedia-india-money-min-768x511.jpg"
+      ],
+      "desc": "Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation",
+      "feat": "free information\nadd information\nedit information"
+    }
   }
 ]
