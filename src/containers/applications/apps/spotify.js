@@ -5,6 +5,8 @@ import ReactPlayer from 'react-player'
 import jiosaavn from './assets/jiosaavn';
 import data from './assets/songs.json';
 
+import './assets/spotify.scss';
+
 const {round,floor,max,min,random,ceil,abs} = Math;
 String.prototype.to150 = function(){
   return this.replace("500x500","150x150").replace("50x50","150x150");
@@ -78,7 +80,7 @@ export const Spotify = ()=>{
         tdata: aldata
       })
     }else if (act=="song") {
-      console.log(payload);
+      // console.log(payload);
       if(payload.includes(",")){
         var pos = JSON.parse(payload),
             songid = data.home[pos[0]].cards[pos[1]].data;

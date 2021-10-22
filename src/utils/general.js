@@ -36,7 +36,8 @@ export const Icon = (props)=>{
     return (
       <div className={`uicon prtclk ${props.className||""}`}
         onClick={props.onClick || (props.click && clickDispatch) || null}
-        data-action={props.click} data-payload={props.payload}>
+        data-action={props.click} data-payload={props.payload}
+        data-menu={props.menu}>
         <FontAwesomeIcon
           data-flip={props.flip!=null}
           data-invert={props.invert!=null?'true':'false'}
@@ -55,7 +56,8 @@ export const Icon = (props)=>{
     return(
       <div className={`uicon prtclk ${props.className||""}`}
         onClick={props.onClick || (props.click && clickDispatch) || null}
-        data-action={props.click} data-payload={props.payload}>
+        data-action={props.click} data-payload={props.payload}
+        data-menu={props.menu}>
         <CustomIcon
           data-flip={props.flip!=null}
           data-invert={props.invert!=null?'true':'false'}
@@ -72,7 +74,8 @@ export const Icon = (props)=>{
     return (
       <div className={`uicon prtclk ${props.className||""}`}
         onClick={props.onClick || (props.click && clickDispatch) || null}
-        data-action={props.click} data-payload={props.payload}>
+        data-action={props.click} data-payload={props.payload}
+        data-menu={props.menu}>
           <i class={"ms-Icon ms-Icon--"+props.msi} style={{
             fontSize: props.width || '16px',
             margin: props.margin || null
@@ -86,22 +89,20 @@ export const Icon = (props)=>{
       <div className={`uicon ${props.className||""} ${prtclk}`}
         data-open={props.open!=null} data-action={props.click}
         data-active={props.active} data-payload={props.payload}
-        onClick={props.onClick || (props.pr && clickDispatch) || null}>
+        onClick={props.onClick || (props.pr && clickDispatch) || null}
+        data-menu={props.menu} data-pr={props.pr!=null}>
           <img
-            width={props.width}
+            width={props.width} height={props.height}
             data-action={props.click}
             data-payload={props.payload}
             data-click={props.click!=null}
             onClick={props.click!=null?clickDispatch:null}
             data-flip={props.flip!=null}
-            height={props.height}
             data-invert={props.invert!=null?'true':'false'}
             data-rounded={props.rounded!=null?'true':'false'}
-            src={src}
-            style={{
+            src={src} style={{
               margin: props.margin || null
-            }}
-            alt=""/>
+            }} alt=""/>
       </div>
     );
   }
