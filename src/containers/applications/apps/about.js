@@ -49,7 +49,7 @@ export const AboutWin = ()=>{
             </div>
             <br/>
             <div>
-              This project is licensed under <a target="_blank" href="https://github.com/blueedgetechno/windows11/blob/master/LICENSE">Creative Commons</a>.
+              This project is licensed under <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">Creative Commons</a>.
             </div>
             <div className="mt-1">
               &nbsp;&nbsp;

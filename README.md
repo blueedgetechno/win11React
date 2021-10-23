@@ -4,10 +4,12 @@
 [![Follow Twitter](https://img.shields.io/twitter/follow/blueedgetechno?label=Follow%20me&style=social)](https://twitter.com/blueedgetechno)
 [![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qmEZwUhb4b)
 [![Build](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml)
+
+
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
 
 ## Notice
->#### This project is <b>not in anyway affiliated with Microsoft</b> and <b>should not be confused with Microsoft’s Operating System</b> or Products.
+>#### This project is **not in anyway affiliated with Microsoft** and **should not be confused with Microsoft’s Operating System** or Products.
 >#### This is also not Windows 365 cloud PC.
 
 
@@ -33,10 +35,10 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 - [x] Snap windows in different layouts
 - [x] Browser, Store, Terminal, Calculator
 - [x] Notepad, Vscode, Whiteboard
-- [ ] File Explorer + other apps
+- [ ] File Explorer + (~other apps~ mostly)
 - [ ] Drag and Resize windows
 - [x] Startup and Lock screen
-- [ ] Themes and Background
+- [ ] Themes and (~Background~ done)
 
 📑 [suggest more](https://github.com/blueedgetechno/windows11/issues/new/choose)
 
@@ -48,6 +50,9 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 - Icons - fontawesome
 
 ## FAQ
+
+- Is this the full operating system?
+  - No, This is not a full operating system and It is also not affiliated by Microsoft in anyway.
 
 - How long it took?
   - Honestly It took 2-3 days collecting assets, 2-3 planning and about 6 days programming it.
@@ -79,7 +84,7 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Funofficial-skills%2Faddons)
 
-# Windows
+# Compiled
 
 You can find a compiled exe in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/windows11/releases)
 
