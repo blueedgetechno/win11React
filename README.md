@@ -6,6 +6,11 @@
 [![Build](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml)
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
 
+## Notice
+>#### This project is <b>not in anyway affiliated with Microsoft</b> and <b>should not be confused with Microsoft’s Operating System</b> or Products.
+>#### This is also not Windows 365 cloud PC.
+
+
  #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
 ![home](./public/img/home.jpg)
