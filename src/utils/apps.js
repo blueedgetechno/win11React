@@ -288,7 +288,7 @@ var apps = [{
   icon: 'github',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://github.com/blueedgetechno/windows11'
+  payload: 'https://github.com/blueedgetechno/win11React'
 },
 {
   name: 'Unescape',
