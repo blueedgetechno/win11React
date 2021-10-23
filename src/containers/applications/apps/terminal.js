@@ -13,7 +13,7 @@ export const WnTerminal = ()=>{
   ]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
   const [lastCmd, setLsc] = useState(0);
-  const [wntitle, setWntitle] = useState("Windows Terminal");
+  const [wntitle, setWntitle] = useState("Terminal");
 
   const dispatch = useDispatch();
 
@@ -140,7 +140,7 @@ export const WnTerminal = ()=>{
       ];
       dispatch({type: wnapp.action, payload: "close"})
     }else if (type=="title") {
-      setWntitle(arg.length?arg:"Windows Terminal");
+      setWntitle(arg.length?arg:"Terminal");
     }else if (type=="hostname") {
       tmpStack.push("Blue");
     }else if (type=="ver") {

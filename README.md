@@ -3,7 +3,7 @@
 [![Follow me](https://img.shields.io/github/followers/blueedgetechno?label=follow%20me&style=social)](https://github.com/blueedgetechno)
 [![Follow Twitter](https://img.shields.io/twitter/follow/blueedgetechno?label=Follow%20me&style=social)](https://twitter.com/blueedgetechno)
 [![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qmEZwUhb4b)
-[![Build](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/windows11/actions/workflows/deploy.yml)
+[![Build](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml)
 
 
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
@@ -40,7 +40,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 - [x] Startup and Lock screen
 - [ ] Themes and (~Background~ done)
 
-📑 [suggest more](https://github.com/blueedgetechno/windows11/issues/new/choose)
+📑 [suggest more](https://github.com/blueedgetechno/win11React/issues/new/choose)
 
 # Stack
 
@@ -63,7 +63,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 
 - Can I contribute?
-  - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/windows11/discussions) or join the [discord](https://discord.gg/qmEZwUhb4b).
+  - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/win11React/discussions) or join the [discord](https://discord.gg/qmEZwUhb4b).
 
 
 - Where did you get the inspiration from, if you have?
@@ -78,7 +78,7 @@ WHY NOT? Why not just waste a week of your life creating a react project just to
 
 # Docker
 
-To use docker use the following command ``` docker run -d  --restart unless-stopped --name windows11 -p 3000:3000 ghcr.io/blueedgetechno/windows11:master ```
+To use docker use the following command ``` docker run -d  --restart unless-stopped --name windows11 -p 3000:3000 ghcr.io/blueedgetechno/win11React:master ```
 
 # Homeassistant
 
@@ -86,7 +86,7 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 # Compiled
 
-You can find a compiled exe in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/windows11/releases)
+You can find a compiled exe in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/win11React/releases)
 
 ## Online Deployment
 
@@ -94,13 +94,13 @@ You can find a compiled exe in the **Releases** section or via clicking [HERE](h
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11&referralCode=andrewstech)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/blueedgetechno/windows11)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/blueedgetechno/win11React)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11%2F&project-name=windows11&repo-name=windows11-react&demo-title=Windows%2011%20Demo&demo-description=Static&demo-url=https%3A%2F%2Fwin11.blueedge.me%2F)
 
 ## Contributors
-<a href="https://github.com/blueedgetechno/windows11/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=blueedgetechno/windows11" />
+<a href="https://github.com/blueedgetechno/win11React/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=blueedgetechno/win11React" />
 </a>
 
 ### Known Issues

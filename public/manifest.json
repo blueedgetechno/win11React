@@ -1,6 +1,6 @@
 {
-  "short_name": "Windows 11",
-  "name": "Windows 11 in React",
+  "short_name": "Win11",
+  "name": "Win11 in React",
   "icons": [
     {
       "src": "favicon.ico",
