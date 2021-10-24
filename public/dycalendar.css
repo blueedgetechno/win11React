@@ -30,7 +30,6 @@
 .dycalendar-day-container {
   padding: 10px;
   text-align: center;
-  font-family: Arial;
 }
 
 .dycalendar-day-container div {
@@ -58,7 +57,6 @@
 .dycalendar-month-container {
   padding: 10px;
   text-align: center;
-  font-family: Arial;
 }
 
 .dycalendar-month-container div {
