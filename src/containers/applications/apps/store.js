@@ -4,8 +4,7 @@ import {Icon, Image, ToolBar} from '../../../utils/general'
 import './assets/store.scss'
 import axios from 'axios'
 import storedata from './assets/store.json'
-
-import {installApp} from '../../../actions';
+import {installApp} from '../../../actions'
 
 const geneStar = (item, rv=0)=>{
   var url = item.data.url,
@@ -56,12 +55,11 @@ export const MicroStore = ()=>{
     var act = e.target.dataset.action,
         payload = e.target.dataset.payload;
 
-    console.log(act, payload);
+    // console.log(act, payload);
     if(act=="page1") setPage(act[4])
     else if (act=="page2"){
       for (var i = 0; i < storeapps.length; i++) {
         if(storeapps[i].data.url == payload){
-          console.log(storeapps[i])
           setOpapp(storeapps[i])
           setPage(2)
           break
@@ -89,7 +87,6 @@ export const MicroStore = ()=>{
 
   useEffect(()=>{
     if(!wnapp.hide && fetchState==0){
-      console.log("Nice and sweet");
       var url = process.env.REACT_APP_STOREURL;
       if(!url) url = "https://win11bot.github.io/win11bot/store/index.json"
 

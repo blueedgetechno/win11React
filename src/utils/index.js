@@ -13,7 +13,7 @@ var {
     "Browser", "Github", "Spotify", "Minecraft", "Krunker", "Smash karts"
   ],
   pinned: (localStorage.getItem("pinned") &&
-    JSON.parse(localStorage.getItem("pinned"))) || ["Edge", "Word", "PowerPoint", "OneNote", "Mail", "To Do", "Store",
+    JSON.parse(localStorage.getItem("pinned"))) || ["Browser", "Word", "PowerPoint", "OneNote", "Mail", "To Do", "Store",
     "Photos", "Your Phone", "Notepad", "White Board", "Calculator",
     "Spotify", "Twitter", "VS Code", "Terminal", "Github", "Discord"
   ],
