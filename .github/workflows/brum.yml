@@ -34,8 +34,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.BOT }}
       with:
-        tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "App v__VERSION__"
+        tagName: win11inreact-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+        releaseName: "Win11inReact v__VERSION__"
         releaseBody: "See the assets to download this version and install."
-        releaseDraft: true
+        releaseDraft: false
         prerelease: false
