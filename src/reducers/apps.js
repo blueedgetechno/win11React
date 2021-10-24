@@ -1,6 +1,9 @@
 import {allApps} from '../utils';
 
-var dev = process.env.REACT_APP_ENV=="development"?"store":""
+var dev = ""
+if(process.env.REACT_APP_ENV=="development"){
+  dev=""
+}
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {
@@ -117,6 +120,15 @@ const appReducer = (state = defState, action) => {
     tmpState.hz+=1;
     obj.z = tmpState.hz;
     tmpState["terminal"] = obj;
+    return tmpState;
+  }else if (action.type=="ADDAPP") {
+    var tmpState = {...state};
+    tmpState[action.payload.icon] = action.payload;
+    tmpState[action.payload.icon].size = "full";
+    tmpState[action.payload.icon].hide = true;
+    tmpState[action.payload.icon].max = null;
+    tmpState[action.payload.icon].z = 0;
+
     return tmpState;
   }else{
     var keys = Object.keys(state);

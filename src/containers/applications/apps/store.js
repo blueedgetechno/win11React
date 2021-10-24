@@ -5,6 +5,8 @@ import './assets/store.scss'
 import axios from 'axios'
 import storedata from './assets/store.json'
 
+import {installApp} from '../../../actions';
+
 const geneStar = (item, rv=0)=>{
   var url = item.data.url,
       stars = 0
@@ -33,9 +35,12 @@ const emap = (v)=>{
 export const MicroStore = ()=>{
   const apps = useSelector(state => state.apps)
   const wnapp = useSelector(state => state.apps.store)
+  const hide = useSelector(state => state.apps.store.hide)
   const [tab, setTab] = useState("sthome")
   const [page, setPage] = useState(0)
   const [opapp, setOpapp] = useState(storedata[0])
+  const [storeapps, setApps] = useState([])
+  const [fetchState, setFetch] = useState(0)
   const dispatch = useDispatch()
 
   const clickDispatch = (event)=>{
@@ -81,6 +86,22 @@ export const MicroStore = ()=>{
     }
   }, [tab])
 
+  useEffect(()=>{
+    if(!wnapp.hide && fetchState==0){
+      console.log("Nice and sweet");
+      var url = process.env.REACT_APP_STOREURL;
+      if(!url) url = "https://raw.githubusercontent.com/win11bot/win11bot/main/store/index.json"
+
+      axios.get(url).then(res=> res.data).then(data=>{
+        if(data) setApps(data)
+      }).catch(err=> {
+        console.log(err)
+      })
+
+      setFetch(1)
+    }
+  }, [hide])
+
   return (
     <div
       className="wnstore floatTab dpShad" data-size={wnapp.size}
@@ -104,7 +125,9 @@ export const MicroStore = ()=>{
         </div>
         <div className="restWindow msfull thinScroll">
           {page==0?<FrontPage/>:null}
-          {page==1?<DownPage action={action}/>:null}
+          {page==1?<DownPage action={action} apps={
+            (storeapps.length && storeapps) || storedata
+          }/>:null}
           {page==2?<DetailPage app={opapp}/>:null}
         </div>
       </div>
@@ -112,7 +135,7 @@ export const MicroStore = ()=>{
   );
 }
 
-const DownPage = ({action})=>{
+const DownPage = ({action, apps=storedata})=>{
   const [catg, setCatg] = useState("all")
 
   return (
@@ -126,7 +149,7 @@ const DownPage = ({action})=>{
           onClick={()=>setCatg("game")}>Games</div>
       </div>
       <div className="appscont mt-8">
-        {storedata.map(item=>{
+        {apps.map(item=>{
           if(item.type!=catg && catg!="all") return
 
           var stars = geneStar(item)
@@ -166,13 +189,8 @@ const DetailPage = ({app})=>{
   const download = ()=>{
     setDown(1)
     setTimeout(()=>{
-      dispatch({type: "APPINST", payload: {
-        ...app,
-        type: "app",
-        pwa: true
-      }})
-      // dispatch({type: "WNSTORE", payload: "mnmz"})
-      setDown(2)
+      installApp(app)
+      setDown(3)
     },3000)
   }
 

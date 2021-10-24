@@ -126,17 +126,19 @@ const Taskbar = ()=>{
         </div>
         <div className="taskright">
           <Icon className="taskIcon" fafa='faChevronUp' width={10}/>
-          <Icon className="taskIcon" src="wifi" ui width={16}/>
 
-          <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
+          <div className="prtclk handcr my-1 px-1 hvdark flex rounded"
+            onClick={clickDispatch} data-action="PANETOGG">
+            <Icon className="taskIcon" src="wifi" ui width={16}/>
+            <Icon className="taskIcon" src={'audio'+tasks.audio} ui width={16}/>
+            <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
+          </div>
 
-          <Icon className="taskIcon" src={'audio'+tasks.audio} ui width={16}/>
           <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
             data-action="CALNTOGG">
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
             <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
           </div>
-          <Icon className="taskIcon mr-2 hvdark" ui src='sidepane' width={16} invert click='PANETOGG'/>
           <Icon className="graybd" ui width={6} click='SHOWDSK' pr/>
         </div>
       </div>
