@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../utils/general';
-import appdata from './../../utils/apps.js';
 
 export const IFrame = (props)=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps[props.icon]);
   const dispatch = useDispatch();
-  const data = appdata.filter(x=> x.icon == wnapp.icon)[0].data || {};
+  var data = wnapp.data;
 
   return wnapp.hide?null:(
     <div data-size={wnapp.size} className={"floatTab dpShad " +
