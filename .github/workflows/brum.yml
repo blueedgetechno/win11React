@@ -32,7 +32,7 @@ jobs:
       run: npm ci && npm run build
     - uses: tauri-apps/tauri-action@v0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.BOT }}
       with:
         tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
         releaseName: "App v__VERSION__"
