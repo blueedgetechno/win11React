@@ -208,6 +208,13 @@
   color: #eee;
 }
 
+.instbtn:hover {
+  background: #0157a2;
+}
+.instbtn:active ,  .instbtn:focus-visible{
+  background: #03549b;
+}
+
 .descnt{
   display: grid;
   place-items: center;
