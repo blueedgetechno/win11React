@@ -79,6 +79,25 @@
       "feat": "Play and win"
     }
   },
+ 
+ {
+    "name": "Photopea",
+    "icon": "https://raw.githubusercontent.com/cupofcoffebruh/Binbows11-copy/main/Icons/photopea%20(1).png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://www.photopea.com/",
+      "gallery": [
+        "https://lh3.googleusercontent.com/5WaMV4oSbcLQxOLsBKymdaprEij5t38HabZbqHFe2lLMatTjn3Av-Ewf3wv9NynaU2hahYh6FHNRkAMcjF29l2kWz9Y=w640-h400-e365-rj-sc0x00ffffff",
+        "https://imag.malavida.com/mvimgbig/download-fs/photopea-27203-2.jpg",
+        "https://user-images.githubusercontent.com/79121360/112741096-3d56bd00-8f37-11eb-982d-1866764e642c.png"
+      ],
+      "desc": "Photopea is a  Photo Editor lets you edit photos, apply effects, filters, add text, crop or resize pictures, it can used for complex projects or just some photos",
+      "feat": "online foto editor\ easy to use\ great for anything you want"
+     "invert": true,
+    }
+  },
+ 
   {
     "name": "Wikipedia",
     "icon": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png",
@@ -94,6 +113,7 @@
       ],
       "desc": "Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation",
       "feat": "free information\nadd information\nedit information"
+      
     }
   }
 ]
