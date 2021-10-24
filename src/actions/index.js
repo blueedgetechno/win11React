@@ -1,4 +1,5 @@
 import store from '../reducers'
+import {gene_name} from '../utils/apps'
 
 export const refresh = (pl, menu) =>{
   if(menu.menus.desk[0].opts[4].check){
@@ -88,4 +89,14 @@ export const performApp = (act, menu)=>{
       payload: data
     })
   }
+}
+
+export const installApp = (data)=>{
+  var app = { ...data, type: "app", pwa: true}
+  store.dispatch({type: "APPINST", payload: app})
+  app.action = gene_name()
+
+  store.dispatch({type: "ADDAPP", payload: app})
+  store.dispatch({type: "DESKADD", payload: app})
+  store.dispatch({type: "WNSTORE", payload: "mnmz"})
 }
