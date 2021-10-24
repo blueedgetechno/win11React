@@ -39,7 +39,7 @@ export const MicroStore = ()=>{
   const [tab, setTab] = useState("sthome")
   const [page, setPage] = useState(0)
   const [opapp, setOpapp] = useState(storedata[0])
-  const [storeapps, setApps] = useState([])
+  const [storeapps, setApps] = useState(storedata)
   const [fetchState, setFetch] = useState(0)
   const dispatch = useDispatch()
 
@@ -61,8 +61,8 @@ export const MicroStore = ()=>{
     else if (act=="page2"){
       setPage(2)
       for (var i = 0; i < storedata.length; i++) {
-        if(storedata[i].data.url == payload){
-          setOpapp(storedata[i])
+        if(storeapps[i].data.url == payload){
+          setOpapp(storeapps[i])
           break
         }
       }
@@ -135,7 +135,7 @@ export const MicroStore = ()=>{
   );
 }
 
-const DownPage = ({action, apps=storedata})=>{
+const DownPage = ({action, apps})=>{
   const [catg, setCatg] = useState("all")
 
   return (

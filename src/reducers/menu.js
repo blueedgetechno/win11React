@@ -153,7 +153,9 @@ const defState = {
         action: "performApp",
         payload: "delshort"
       },{
-        name: "Delete"
+        name: "Delete",
+        action: "delApp",
+        payload: "delete"
       },{
         name: "Rename",
         dsb: true
