@@ -130,6 +130,10 @@ const appReducer = (state = defState, action) => {
     tmpState[action.payload.icon].z = 0;
 
     return tmpState;
+  }else if (action.type=="DELAPP") {
+    var tmpState = {...state};
+    delete tmpState[action.payload];
+    return tmpState;
   }else{
     var keys = Object.keys(state);
     for (var i = 0; i < keys.length; i++) {
