@@ -21,7 +21,6 @@ import {
   CalnWid
 } from './components/start';
 
-import appdata from './utils/apps.js';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft.js';
 
@@ -105,11 +104,12 @@ function App() {
             var WinApp = Applications[key]
             return <WinApp/>
           })}
-          {appdata.map(app=>{
-            if(app.pwa){
-              var WinApp = Drafts[app.data.type]
-              return <WinApp icon={app.icon} {...app.data}/>
-            }
+          {Object.keys(apps).filter(x=> x!="hz")
+            .map(key=> apps[key]).map(app=>{
+              if(app.pwa){
+                var WinApp = Drafts[app.data.type]
+                return <WinApp icon={app.icon} {...app.data}/>
+              }
           })}
           <StartMenu/>
           <SidePane/>

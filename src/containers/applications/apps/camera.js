@@ -24,7 +24,6 @@ export const Camera = ()=>{
   }
 
   useEffect(()=>{
-    console.log("Noice")
     if(!wnapp.hide){
       var video = document.querySelector('video')
       var canvas = document.querySelector('canvas')

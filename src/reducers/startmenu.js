@@ -1,13 +1,11 @@
 import {
   pinnedApps,
-  recentApps,
-  allApps
+  recentApps
 } from '../utils';
 
 const defState = {
   pnApps: pinnedApps,
   rcApps: recentApps,
-  allApps: allApps,
   hide: true,
   menu: false,
   showAll: false,

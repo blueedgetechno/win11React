@@ -31,8 +31,11 @@ export const StartMenu = () => {
       }
     }
 
-    var tmpApps = [...arr.allApps],
-      allApps = [];
+    var allApps = [],
+      tmpApps = Object.keys(state.apps).filter(x=> x!="hz").map(key => {
+      return state.apps[key]
+    })
+    
     tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
     for (i = 0; i < 27; i++) {
