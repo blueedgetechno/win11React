@@ -90,7 +90,7 @@ export const MicroStore = ()=>{
     if(!wnapp.hide && fetchState==0){
       console.log("Nice and sweet");
       var url = process.env.REACT_APP_STOREURL;
-      if(!url) url = "https://raw.githubusercontent.com/win11bot/win11bot/main/store/index.json"
+      if(!url) url = "https://win11bot.github.io/win11bot/store/index.json"
 
       axios.get(url).then(res=> res.data).then(data=>{
         if(data) setApps(data)
