@@ -1,10 +1,11 @@
 import store from '../reducers'
 import {gene_name} from '../utils/apps'
+import {dfApps} from '../utils'
 
 export const refresh = (pl, menu) =>{
   if(menu.menus.desk[0].opts[4].check){
-    store.dispatch({type: 'DESKHIDE'});
-    setTimeout(()=>store.dispatch({type: 'DESKSHOW'}), 100);
+    store.dispatch({type: 'DESKHIDE'})
+    setTimeout(()=>store.dispatch({type: 'DESKSHOW'}), 100)
   }
 }
 
@@ -31,11 +32,11 @@ export const changeIconSize = (size, menu) =>{
 }
 
 export const deskHide = (payload, menu) =>{
-  var tmpMenu = {...menu};
-  tmpMenu.menus.desk[0].opts[4].check ^= 1;
+  var tmpMenu = {...menu}
+  tmpMenu.menus.desk[0].opts[4].check ^= 1
 
-  store.dispatch({type: "DESKTOGG"});
-  store.dispatch({type: "MENUCHNG", payload: tmpMenu});
+  store.dispatch({type: "DESKTOGG"})
+  store.dispatch({type: "MENUCHNG", payload: tmpMenu})
 }
 
 export const changeSort = (sort, menu) =>{
@@ -84,18 +85,69 @@ export const performApp = (act, menu)=>{
   if(act=="open"){
     if(data.type) store.dispatch(data)
   }else if (act=="delshort") {
-    if(data.type) store.dispatch({
-      type: "DESKREM",
-      payload: data
-    })
+    if(data.type){
+      var apps = store.getState().apps
+      var app = Object.keys(apps).filter(x =>
+        apps[x].action==data.type ||
+        (apps[x].payload==data.payload && apps[x].payload!=null)
+      )
+
+      app = apps[app]
+      if(app){
+        store.dispatch({type: "DESKREM", payload: app.name})
+      }
+    }
+  }
+}
+
+export const delApp = (act, menu)=>{
+  var data = {
+    type: menu.dataset.action,
+    payload: menu.dataset.payload
+  }
+
+  if(act=="delete"){
+    if(data.type){
+      var apps = store.getState().apps
+      var app = Object.keys(apps).filter(x=> apps[x].action==data.type)
+      if(app){
+        app = apps[app]
+        if(app.pwa==true){
+          store.dispatch({type: app.action, payload: "close"})
+          store.dispatch({type: "DELAPP", payload: app.icon})
+
+          var installed = localStorage.getItem("installed")
+          if(!installed) installed="[]"
+
+          installed = JSON.parse(installed)
+          installed = installed.filter(x=> x.icon!=app.icon)
+          localStorage.setItem("installed",JSON.stringify(installed))
+
+          store.dispatch({type:"DESKREM", payload: app.name})
+        }
+      }
+    }
   }
 }
 
 export const installApp = (data)=>{
   var app = { ...data, type: "app", pwa: true}
-  store.dispatch({type: "APPINST", payload: app})
-  app.action = gene_name()
 
+  var installed = localStorage.getItem("installed")
+  if(!installed) installed="[]"
+
+  installed = JSON.parse(installed)
+  installed.push(app)
+  localStorage.setItem("installed",JSON.stringify(installed))
+
+  var desk = localStorage.getItem("desktop")
+  if(!desk) desk = dfApps.desktop
+  else desk = JSON.parse(desk)
+
+  desk.push(app.name)
+  localStorage.setItem("desktop",JSON.stringify(desk))
+
+  app.action = gene_name()
   store.dispatch({type: "ADDAPP", payload: app})
   store.dispatch({type: "DESKADD", payload: app})
   store.dispatch({type: "WNSTORE", payload: "mnmz"})
