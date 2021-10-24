@@ -1,6 +1,6 @@
 name: "publish"
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   publish-tauri:
