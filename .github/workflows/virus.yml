@@ -12,8 +12,9 @@ jobs:
         name: VirusTotal Scan
         uses: crazy-max/ghaction-virustotal@v2
         with:
+          update_release_body: true
           vt_api_key: ${{ secrets.VIRUSTOTAL }}
           files: |
-            .exe$
+            .exe
             .deb
             .dmg
