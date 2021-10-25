@@ -33,9 +33,9 @@ export const StartMenu = () => {
 
     var allApps = [],
       tmpApps = Object.keys(state.apps).filter(x=> x!="hz").map(key => {
-      return state.apps[key]
-    })
-    
+        return state.apps[key]
+      })
+
     tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
     for (i = 0; i < 27; i++) {
@@ -51,8 +51,9 @@ export const StartMenu = () => {
       }
     }
 
-    arr.contApps = allApps;
-    return arr;
+    arr.contApps = allApps
+    arr.allApps = tmpApps
+    return arr
   });
 
   const [query, setQuery] = useState("");
