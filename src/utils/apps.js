@@ -26,7 +26,9 @@ var apps = [{
 {
   name: 'Settings',
   icon: 'settings',
-  type: 'app'
+  type: 'app',
+  action: 'EXTERNAL',
+  payload: 'ms-settings:'
 },
 {
   name: 'File Explorer',
