@@ -60,7 +60,42 @@ const defState = {
       },
       {
         name: "Refresh",
+        icon: "ui/refresh",
         action: "refresh",
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "New",
+        icon: "ui/new",
+        // dsb: true,
+        opts: [
+          {
+            name: "Folder",
+          },
+          {
+            name: "Shortcut",
+          },
+          {
+            name: "Text Document",
+          },
+          {
+            name: "Compressed (zipped) Folder",
+          },
+        ],
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "Display settings",
+        icon: "ui/display",
+      },
+      {
+        name: "Personalize",
+        icon: "ui/personalize",
+        // dsb: true,
       },
       {
         type: "hr",
@@ -76,26 +111,17 @@ const defState = {
         payload: "C:\\Users\\Blue\\Desktop",
       },
       {
-        type: "hr",
-      },
-      {
-        name: "New",
-        icon: "ui/new",
-        dsb: true,
-      },
-      {
-        type: "hr",
-      },
-      {
-        name: "Personalize",
-        icon: "win/themes",
-        dsb: true,
-      },
-      {
         name: "About",
         action: "DESKABOUT",
         icon: "win/info",
         payload: true,
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "Show more options",
+        icon: "ui/more",
       },
     ],
     task: [
