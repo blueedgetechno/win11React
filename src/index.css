@@ -119,7 +119,7 @@ i[data-flip="true"] {
   transition: 100ms ease-in-out;
 }
 
-.uicon[data-pr="true"]:active img{
+.uicon[data-pr="true"]:active img {
   transform: scale(0.7);
   transition: 100ms ease-in-out;
 }
@@ -200,7 +200,7 @@ input {
 }
 
 .thinScroll:hover::-webkit-scrollbar-thumb,
-.medScroll:hover::-webkit-scrollbar-thumb{
+.medScroll:hover::-webkit-scrollbar-thumb {
   background: rgba(32, 24, 148, 0.4);
 }
 
@@ -254,6 +254,11 @@ input {
   100% {
     width: 0;
   }
+}
+
+.hvlight:hover {
+  background: rgba(255, 255, 255, 0.88);
+  transition: all 200ms ease-in-out;
 }
 
 .hvdark:hover {
