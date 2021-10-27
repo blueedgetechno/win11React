@@ -34,8 +34,6 @@
   bottom: 10px;
   width: 520px;
   left: 0;
-  // left: calc(50% - 260px);
-  // height: 200px;
   &[data-align="center"] {
     margin-left: auto;
     margin-right: auto;
@@ -52,12 +50,11 @@
   backdrop-filter: blur(20px);
   border-radius: var(--roundRad);
   overflow: hidden;
-  transition: all ease-in-out 200ms;
+  transition: all .2s cubic-bezier(.79,.14,.15,.86);
   z-index: 9999;
 
   &[data-hide='true'] {
-    // bottom: -300px;
-    transform: translateY(300px);
+    transform: translateY(100px);
     opacity: 0;
     pointer-events: none;
   }
