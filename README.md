@@ -26,7 +26,7 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
 # Why
 
-WHY NOT? Why not just waste a week of your life creating a React project, just to cover up your insecurities of how incompetent you are and then waste another couple weeks to try and get the repoistory back from GitHub... Just why not! 11/10 would do again!
+WHY NOT? Why not just waste a week of your life creating a React project, just to cover up your insecurities of how incompetent you are. Just why not!
 
 # Features
 - [x] Start Menu, Search Menu and Widgets
