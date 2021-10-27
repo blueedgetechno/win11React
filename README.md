@@ -6,7 +6,7 @@
 [![Build](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml)
 
 
-This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and Js.
+This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and JS.
 
 ## Notice
 >#### This project is **not in anyway affiliated with Microsoft** and **should not be confused with Microsoft’s Operating System** or Products.
@@ -26,7 +26,7 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
 # Why
 
-WHY NOT? Why not just waste a week of your life creating a react project just to coverup your insecurities of how incompetent you are. Just Why not!
+WHY NOT? Why not just waste a week of your life creating a React project, just to cover up your insecurities of how incompetent you are. Just why not!
 
 # Features
 - [x] Start Menu, Search Menu and Widgets
@@ -86,7 +86,7 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 # Compiled
 
-You can find a compiled exe in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/win11React/releases)
+You can find a compiled `.exe` in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/win11React/releases)
 
 ## Online Deployment
 
