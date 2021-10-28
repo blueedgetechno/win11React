@@ -8,7 +8,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production
 
 # install http server
-RUN npm install serve
+RUN npm install -g serve
 
 # add app (add .dockerignore to remove useless files from the image)
 COPY . .
