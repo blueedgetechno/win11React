@@ -2,7 +2,6 @@ name: released
 
 on:
   release:
-    types: [edited]
 
 jobs:
   virustotal:
