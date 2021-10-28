@@ -15,7 +15,4 @@ jobs:
           update_release_body: true
           vt_api_key: ${{ secrets.VIRUSTOTAL }}
           files: |
-            .exe$
-            .deb$
-            .dmg$
             .msi$
