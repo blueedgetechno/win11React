@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # start app
-ENTRYPOINT ["serve", "/usr/src/windows11/build"]
+ENTRYPOINT ["serve", "/usr/src/windows11/build", "-l", "3000"]
