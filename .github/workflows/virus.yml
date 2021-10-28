@@ -16,3 +16,5 @@ jobs:
           vt_api_key: ${{ secrets.VIRUSTOTAL }}
           files: |
             .msi$
+            .deb$
+            .dmg$
