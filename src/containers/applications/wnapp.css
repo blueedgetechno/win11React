@@ -1,13 +1,10 @@
 /*
       www.OnlineWebFonts.Com
 */
-@font-face {font-family: "Spotify";
-    src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot"); /* IE9*/
-    src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff2") format("woff2"), /* chrome firefox */
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff") format("woff"), /* chrome firefox */
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.svg#Spotify") format("svg"); /* iOS 4.1- */
+@font-face {
+  font-family: "Spotify";
+  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot"); /* IE9*/
+  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff2") format("woff2"), /* chrome firefox */ url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff") format("woff"), /* chrome firefox */ url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/ url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.svg#Spotify") format("svg"); /* iOS 4.1- */
 }
 
 .edgeBrowser {
@@ -31,10 +28,13 @@
 }
 
 .calcApp {
-  background: #eee;
+  background: hsla(0, 0%, 100%, 0.9);
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
 }
 
-.msfiles, .whiteBoard {
+.msfiles,
+.whiteBoard {
   background: #fefefe;
 }
 
@@ -44,7 +44,7 @@
   /* background: linear-gradient(0deg, #1d1d1f 75%, #2d2d2d 100%); */
 }
 
-.discordWn{
+.discordWn {
   background: #36393f;
 }
 
@@ -56,6 +56,6 @@
   background: rgb(25, 22, 20);
 }
 
-.wnCam{
+.wnCam {
   background: #060606;
 }

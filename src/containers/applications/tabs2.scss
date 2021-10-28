@@ -73,7 +73,7 @@ rediv {
   div {
     margin: 0 24px;
 
-    &:nth-child(n+3) {
+    &:nth-child(n + 3) {
       color: #111;
       font-weight: 600;
     }
@@ -86,8 +86,10 @@ rediv {
   flex-grow: 1;
   position: relative;
   box-sizing: border-box;
-  grid-template-rows: repeat(6,minmax(0,1fr));
-  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 4px;
+  gap: 2px;
 
   &[data-err="true"] {
     .oper {
@@ -111,31 +113,36 @@ rediv {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: solid 2px #eee;
+  border: solid 1px rgb(0, 0, 0, 0.1);
   background: #f9f9f9;
   font-size: 1.128em;
-  font-weight: 600;
   cursor: pointer;
+  border-radius: 4px;
 
   * {
     pointer-events: none;
   }
 
-  &:nth-child(-n + 8),
-  &:nth-child(4n) {
-    background: rgba(255, 255, 255, 0.3);
-    color: #444;
+  &:active {
+    background: rgba(255, 255, 255, 0.5);
   }
 
-  &:hover {
-    background: rgba(136, 136, 136, 0.12);
+  &:nth-child(-n + 8),
+  &:nth-child(4n) {
+    background: rgba(255, 255, 255, 0.5);
+    color: #444;
+
+    &:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
   }
 
   &:last-child {
-    background: rgba(0, 100, 255, 0.48);
+    background: #0067c0;
+    color: white;
 
     &:hover {
-      background: rgba(0, 101, 255, 0.72);
+      background: #1975c5;
     }
   }
 
@@ -337,7 +344,7 @@ rediv {
       }
 
       &:nth-child(1) {
-        background: #5865F2;
+        background: #5865f2;
       }
     }
 
@@ -379,28 +386,28 @@ rediv {
   display: flex;
   flex-direction: row-reverse;
 
-  .camctrl{
+  .camctrl {
     width: 100px;
     display: grid;
     place-items: center;
 
-    .cmicon{
+    .cmicon {
       background: #fefefe;
       margin: 10px;
       border-radius: 50%;
       border: 4px solid #aaa;
 
-      &:active{
+      &:active {
         background: #888;
         border-width: 3px;
 
-        .uicon{
+        .uicon {
           border: none;
           transform: scale(0.9);
         }
       }
 
-      .uicon{
+      .uicon {
         width: 64px;
         height: 64px;
         border: 3px solid #000;
@@ -408,7 +415,7 @@ rediv {
       }
     }
 
-    canvas{
+    canvas {
       position: absolute;
       bottom: 16px;
       background: #444;
