@@ -8,14 +8,13 @@
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   overflow: hidden;
-  transition: all ease-in-out 200ms;
+  transition: all ease-in 0.2s;
   z-index: 9999;
   transform: translateX(0);
 
   &[data-hide="true"] {
     bottom: 0.9rem;
-    transform: translateX(110%);
-    animation: overflow-hider 0s ease-in-out 0.2s forwards;
+    transform: translateX(100%);
   }
 }
 
