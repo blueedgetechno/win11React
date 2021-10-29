@@ -56,12 +56,12 @@ export const BootScreen = (props) => {
       <div className={blackout?"hidden":""}>
         <Image src="asset/bootlogo" w={180}/>
         <div className="mt-48" id="loader">
-          <div class="circledots">
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
+          <div clasName="circledots">
+            <div className='circle'></div>
+            <div className='circle'></div>
+            <div className='circle'></div>
+            <div className='circle'></div>
+            <div className='circle'></div>
           </div>
         </div>
       </div>
