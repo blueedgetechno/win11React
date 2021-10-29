@@ -71,8 +71,8 @@ const isOverlaped = (tmpState, key)=>{
 }
 
 const appReducer = (state = defState, action) => {
+  var tmpState = { ...state };
   if(action.type=="EDGELINK"){
-    var tmpState = {...state};
     var obj = {...tmpState["edge"]};
     if(action.payload && action.payload.startsWith("http")){
       obj.url = action.payload;
@@ -90,7 +90,6 @@ const appReducer = (state = defState, action) => {
     tmpState["edge"] = obj;
     return tmpState;
   }else if(action.type=="SHOWDSK"){
-    var tmpState = {...state};
     var keys = Object.keys(tmpState);
 
     for (var i = 0; i < keys.length; i++) {
@@ -110,7 +109,6 @@ const appReducer = (state = defState, action) => {
   }else if (action.type=="EXTERNAL") {
     window.open(action.payload, '_blank');
   }else if (action.type=="OPENTERM") {
-    var tmpState = {...state};
     var obj = {...tmpState["terminal"]};
     obj.dir = action.payload;
 
@@ -122,7 +120,6 @@ const appReducer = (state = defState, action) => {
     tmpState["terminal"] = obj;
     return tmpState;
   }else if (action.type=="ADDAPP") {
-    var tmpState = {...state};
     tmpState[action.payload.icon] = action.payload;
     tmpState[action.payload.icon].size = "full";
     tmpState[action.payload.icon].hide = true;
@@ -131,7 +128,6 @@ const appReducer = (state = defState, action) => {
 
     return tmpState;
   }else if (action.type=="DELAPP") {
-    var tmpState = {...state};
     delete tmpState[action.payload];
     return tmpState;
   }else{
@@ -139,7 +135,7 @@ const appReducer = (state = defState, action) => {
     for (var i = 0; i < keys.length; i++) {
       var obj = state[keys[i]];
       if(obj.action == action.type){
-        var tmpState = {...state};
+        tmpState = {...state};
 
         if(action.payload=="full"){
           obj.size = "full";

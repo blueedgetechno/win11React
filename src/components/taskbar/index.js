@@ -13,7 +13,7 @@ const Taskbar = ()=>{
     }
     return tmpApps;
   });
-  const [batterylevel, setbatterylevel] = useState(0);
+  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
   const showPrev = (event)=>{
@@ -63,7 +63,7 @@ const Taskbar = ()=>{
 
   useEffect(() => {
     async function getBatteryDetails(){
-      let bt=await navigator.getBattery();
+      let bt = await navigator.getBattery();
       changebatterystatus(bt);
 
       bt.onlevelchange=()=>{

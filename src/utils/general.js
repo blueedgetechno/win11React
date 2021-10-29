@@ -76,7 +76,7 @@ export const Icon = (props)=>{
         onClick={props.onClick || (props.click && clickDispatch) || null}
         data-action={props.click} data-payload={props.payload}
         data-menu={props.menu}>
-          <i class={"ms-Icon ms-Icon--"+props.msi} style={{
+          <i className={"ms-Icon ms-Icon--"+props.msi} style={{
             fontSize: props.width || '16px',
             margin: props.margin || null
           }} aria-hidden="true"
