@@ -12,7 +12,18 @@
 .battery{
   display: inline-block;
   position:relative;
-  color:black;
+  margin-top: 2px;
+
+  i{
+    color: #222;
+  }
+
+  .uicon{
+    position: absolute;
+    margin-top: 24%;
+    margin-left: -12%;
+    filter: drop-shadow(1px 1px #fefefe) invert(0.1);
+  }
 }
 
 .battery .fa{
@@ -20,12 +31,11 @@
 }
 
 .battery .animate{
-  width:88%; 
+  width:88%;
   position:absolute;
-  left:0; 
-  top:0; 
+  left:0;
+  top:0;
   overflow: hidden;
-  color:black;
   z-index: -1;
   -webkit-transition:all 0.5s ease;
   -moz-transition:all 0.5s ease;
