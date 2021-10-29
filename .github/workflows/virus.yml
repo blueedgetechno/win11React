@@ -1,0 +1,19 @@
+name: released
+
+on:
+  release:
+
+jobs:
+  virustotal:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: VirusTotal Scan
+        uses: crazy-max/ghaction-virustotal@v2
+        with:
+          update_release_body: true
+          vt_api_key: ${{ secrets.VIRUSTOTAL }}
+          files: |
+            .msi$
+            .deb$
+            .dmg$

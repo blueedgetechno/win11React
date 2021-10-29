@@ -1,4 +1,4 @@
-.taskbar{
+.taskbar {
   position: absolute;
   width: 100vw;
   height: 39px;
@@ -9,7 +9,7 @@
   z-index: 10000;
 }
 
-.battery{
+.battery {
   display: inline-block;
   position:relative;
   margin-top: 2px;
@@ -26,8 +26,8 @@
   }
 }
 
-.battery .fa{
-  font:normal normal normal 14px/2 FontAwesome;
+.battery .fa {
+  font: normal normal normal 14px/2 FontAwesome;
 }
 
 .battery .animate{
@@ -37,18 +37,18 @@
   top:0;
   overflow: hidden;
   z-index: -1;
-  -webkit-transition:all 0.5s ease;
-  -moz-transition:all 0.5s ease;
-  transition:all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-.taskcont{
+.taskcont {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.taskright{
+.taskright {
   position: absolute;
   top: 0;
   right: 0;
@@ -58,45 +58,45 @@
   display: flex;
 }
 
-.taskIcon{
+.taskIcon {
   width: 24px;
 
-  svg{
+  svg {
     color: #303030;
   }
 }
 
-.taskDate{
+.taskDate {
   width: 44px;
-  height: 100%;
+  // height: 100%;
   display: flex;
-  padding: 6px 8px 6px 6px;
+  padding: 1px 4px 4px 4px;
   font-size: 0.64em;
   flex-direction: column;
 
-  div{
+  div {
     width: 100%;
     text-align: center;
     font-weight: 400;
   }
 }
 
-.tasksCont{
+.tasksCont {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 
-  &[data-side="center"]{
+  &[data-side="center"] {
     align-items: center;
   }
 
-  &[data-side="left"]{
+  &[data-side="left"] {
     align-items: flex-start;
   }
 }
 
-.tsbar{
+.tsbar {
   width: auto;
   height: 100%;
   display: flex;
@@ -104,7 +104,7 @@
   transition: all ease-in-out 200ms;
 }
 
-.tsIcon{
+.tsIcon {
   position: relative;
   width: 33px;
   height: 33px;
@@ -115,13 +115,13 @@
   transform-origin: center;
   animation: popintro 800ms ease-in-out;
 
-  &:hover{
+  &:hover {
     background: rgba(#fefefe, 0.64);
     border-radius: 4px;
     transition: all ease-in-out 200ms;
   }
 
-  &[data-open='true']:after{
+  &[data-open="true"]:after {
     content: "";
     position: absolute;
     display: block;
@@ -132,28 +132,32 @@
     background: #858585;
   }
 
-  &[data-active='true']:after{
+  &[data-active="true"]:after {
     width: 12px;
     background: #1f4dcd;
   }
 }
 
-.graybd{
-  border: solid 1px #c3c3c3;
+.graybd {
+  border: solid 1px transparent;
+  height: 33%;
+}
+.graybd:hover {
+  border: solid 1px #a1a1a1;
   border-width: 0 0 0 2px;
 }
 
 @keyframes popintro {
-  0%{
+  0% {
     transform: scale(0);
   }
-  40%{
+  40% {
     transform: scale(1.125);
   }
-  70%{
+  70% {
     transform: scale(0.725);
   }
-  100%{
+  100% {
     transform: scale(1);
   }
 }
