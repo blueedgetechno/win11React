@@ -6,6 +6,8 @@ WORKDIR /usr/src/windows11/
 # setup env vars
 ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production
+LABEL org.opencontainers.image.description A recreation of windows 11 in react
+LABEL org.opencontainers.image.authors blueedge
 
 # install http server
 RUN npm install -g serve
