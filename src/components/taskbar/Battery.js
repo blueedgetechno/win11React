@@ -5,17 +5,21 @@ const Battery=({charging,level})=>{
   const batteryref = useRef(null)
 
   useEffect(() => {
-    if(batteryref.current && !charging){
+    if(batteryref.current){
       batteryref.current.style.width=`${level}%`
+    }else{
+      batteryref.current.style.width=`100%`
     }
+
     return () => {}
   }, [level,charging])
 
-  return charging? <Icon className="taskIcon" src={`battery`} ui width={19}/>:(
-    <div class="uicon taskIcon" >
-      <span class="battery" >
-        <i class="fa fa-battery-empty"></i>
-        <i class="fa fa-battery-4 animate" ref={batteryref}></i>
+  return (
+    <div className="uicon taskIcon">
+      <span className="battery">
+        {charging?<Icon src='plug' ui width={6}/>:null}
+        <i className="fa fa-battery-empty"></i>
+        <i className="fa fa-battery-4 animate" ref={batteryref}></i>
       </span>
     </div>
   )
