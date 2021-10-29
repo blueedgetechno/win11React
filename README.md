@@ -88,6 +88,12 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 You can find a compiled `.exe` in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/win11React/releases)
 
+**WINGET - WINDOWS PACKAGE MANAGER**
+
+If you have one of the latest windows builds then you can enter the command bellow in **CMD**
+
+``` winget install blueedge.win11react ```
+
 ## Online Deployment
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
