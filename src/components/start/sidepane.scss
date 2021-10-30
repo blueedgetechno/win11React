@@ -15,6 +15,7 @@
   &[data-hide="true"] {
     bottom: 0.9rem;
     transform: translateX(110%);
+    animation: overflow-hider 0s ease-in-out 0.2s forwards;
   }
 }
 
