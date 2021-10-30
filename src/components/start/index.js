@@ -35,7 +35,7 @@ export const StartMenu = () => {
       tmpApps = Object.keys(state.apps).filter(x=> x!="hz").map(key => {
       return state.apps[key]
     })
-    
+
     tmpApps.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
     for (i = 0; i < 27; i++) {
@@ -690,7 +690,7 @@ const fetchApi = async (widget) => {
   await axios.get(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${date.getMonth()}/${date.getDay()}`)
     .then(res => res.data).then(data => {
       console.log("Fetched");
-      var event = data.events. [Math.floor(Math.random() * data.events.length)];
+      var event = data.events[Math.floor(Math.random() * data.events.length)];
       date.setYear(event.year);
 
       tmpWdgt.data.date = date.toLocaleDateString("en-US", {
