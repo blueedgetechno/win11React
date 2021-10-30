@@ -139,7 +139,7 @@ const defState = {
     "battle field v",
     "far cry 5",
     "hitman 3",
-    "residental evil"
+    "resident evil"
   ],
   movrib: [
     "antman",
