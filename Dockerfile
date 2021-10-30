@@ -6,10 +6,11 @@ WORKDIR /usr/src/windows11/
 # setup env vars
 ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production
+LABEL org.opencontainers.image.description A recreation of windows 11 in react
+LABEL org.opencontainers.image.authors blueedge
 
-# install app dependencies
-COPY package*.json ./
-RUN npm install --production --frozen-lockfile # install only production deps with exact lockfile versions
+# install http server
+RUN npm install -g serve
 
 # add app (add .dockerignore to remove useless files from the image)
 COPY . .
@@ -18,4 +19,4 @@ COPY . .
 EXPOSE 3000
 
 # start app
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["serve", "/usr/src/windows11/build", "-l", "3000"]

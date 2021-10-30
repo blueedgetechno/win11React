@@ -2,7 +2,7 @@
   "name": "win11React",
   "description": "Win11 made in React",
   "repository": "https://github.com/blueedgetechno/win11React",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",

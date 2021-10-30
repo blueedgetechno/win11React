@@ -1,5 +1,5 @@
 body {
-  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+  font-family: Segoe UI;
   background: #3973aa;
   color: #fefeff;
   height: 100vh;
@@ -33,22 +33,23 @@ h5 {
 }
 
 h1 {
-  font-size: 6.5em;
+  font-size: 6rem;
   margin-bottom: 10px;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 21px;
 }
 
 h4 {
-  font-size: 1.4em;
+  font-size: 18px;
   line-height: 1.5em;
 }
 
 h5 {
-  line-height: 1.1em;
-  font-size: 1.3em;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 #details {
@@ -83,4 +84,8 @@ h5 {
     font-size: 140%;
     width: 800px;
   }
+}
+
+a {
+  color: #e1f0ff;
 }

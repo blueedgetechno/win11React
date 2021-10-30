@@ -1,85 +1,90 @@
-.actmenu{
+.actmenu {
   position: absolute;
-  width: 200px;
+  width: 310px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(21px);
   z-index: 10000;
   animation: fadein 200ms ease-in-out;
-  padding: 4px 0;
   border: solid 1px #ccc9;
   border-radius: 8px;
 
-
-  &[data-hide="true"]{
+  &[data-hide="true"] {
     display: none;
   }
 
-  &[data-left="false"] .minimenu{
+  &[data-left="false"] .minimenu {
     left: unset;
     right: 98%;
   }
 }
 
-.minimenu{
+.minimenu {
   position: absolute;
   display: none;
   top: 0;
-  left: 101%;
-  min-width: 160px;
-  // min-height: 280px;
-  background: rgba(255,255,255,0.9);
+  left: 99%;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.9);
   z-index: 9999;
   padding: 4px 0;
   border: solid 1px #ccc9;
   animation: fadein 600ms ease-in-out;
-  border-radius:8px;
+  border-radius: 8px;
 }
 
-.menuopt{
+.menuopt {
+  height: 28px;
   box-sizing: border-box;
   position: relative;
-  width: 100%;
-  padding: 3px 24px;
-  font-weight: 500;
-  font-size: 9.6px;
+  width: calc(100% - 8px);
+  padding: 4px 32px;
+  font-size: 12px;
   cursor: default;
+  margin: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.1s ease;
 
-  &:hover{
+  &:hover {
     background: rgba(0, 0, 0, 0.08);
 
-    .minimenu{
+    .minimenu {
       display: block;
     }
   }
 
-  &[data-dsb="true"]{
+  &[data-dsb="true"] {
     color: #aaa;
     font-weight: 400;
   }
 
-  .uicon{
+  .uicon {
     position: absolute;
-    top: 3px;
-    left: 4px;
+    top: 8px;
+    left: 8px;
   }
 
-  .prtclk{
+  .prtclk {
     left: unset;
-    right: 4px;
+    right: 8px;
   }
 
-  .dotIcon, .checkIcon{
+  .dotIcon,
+  .checkIcon {
     top: 8px;
     left: 8px;
     right: unset;
   }
 
-  .checkIcon{
+  .checkIcon {
     top: 6px;
   }
 }
 
-.menuhr{
+.menuhr {
   position: relative;
   left: 0;
   width: 100%;
