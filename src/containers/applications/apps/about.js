@@ -60,7 +60,7 @@ export const AboutWin = ()=>{
             <br/>
             <div>
               <span>
-                Microsoft, Windows and Other demonstrated Products in this project
+                Microsoft, Windows and Other demostrated Products in this project
                 are trademarks of the Microsoft group of companies.
               </span>
             </div>
