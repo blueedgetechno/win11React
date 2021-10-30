@@ -90,7 +90,7 @@ You can find a compiled `.exe` in the **Releases** section or via clicking [HERE
 
 **WINGET - WINDOWS PACKAGE MANAGER**
 
-If you have one of the latest windows builds then you can enter the command bellow in **CMD**
+If you have one of the latest windows builds then you can enter the command below in **CMD**
 
 ``` winget install blueedge.win11react ```
 
