@@ -17,10 +17,10 @@ export const ActMenu = ()=>{
     var wnwidth = window.innerWidth,
         wnheight = window.innerHeight;
 
-    var ewidth = 200,
-        eheight = acount*18.8;
+    var ewidth = 312,
+        eheight = acount*28;
 
-    tmpleft = (wnwidth - tmpos.left) > 360;
+    tmpleft = (wnwidth - tmpos.left) > 504;
     if(wnwidth - tmpos.left < ewidth){
       tmpos.right = wnwidth - tmpos.left;
       tmpos.left = null;
