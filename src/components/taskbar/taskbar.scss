@@ -121,15 +121,20 @@
     transition: all ease-in-out 200ms;
   }
 
-  &[data-open="true"]:after {
+  &:after {
     content: "";
     position: absolute;
     display: block;
     bottom: 0;
-    width: 6px;
+    width: 0px;
     height: 3px;
     border-radius: 4px;
     background: #858585;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  &[data-open="true"]:after {
+    width: 6px;
   }
 
   &[data-active="true"]:after {

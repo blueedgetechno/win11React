@@ -2,14 +2,17 @@
   position: absolute;
   width: 310px;
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(21px);
+  backdrop-filter: blur(20px);
   z-index: 10000;
-  animation: fadein 200ms ease-in-out;
+  opacity:1;
+  pointer-events:all;
   border: solid 1px #ccc9;
   border-radius: 8px;
+  transition: opacity 0.1s ease;
 
   &[data-hide="true"] {
-    display: none;
+    opacity:0;
+    pointer-events:none;
   }
 
   &[data-left="false"] .minimenu {
