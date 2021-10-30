@@ -13,7 +13,7 @@ const Taskbar = ()=>{
     }
     return tmpApps;
   });
-  const [batterylevel, setbatterylevel] = useState(0);
+  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
   const showPrev = (event)=>{
@@ -63,7 +63,7 @@ const Taskbar = ()=>{
 
   useEffect(() => {
     async function getBatteryDetails(){
-      let bt=await navigator.getBattery();
+      let bt = await navigator.getBattery();
       changebatterystatus(bt);
 
       bt.onlevelchange=()=>{
@@ -125,19 +125,19 @@ const Taskbar = ()=>{
         <div className="taskright">
           <Icon className="taskIcon" fafa='faChevronUp' width={10}/>
 
-          <div className="prtclk handcr my-1 px-1 hvdark flex rounded"
+          <div className="prtclk handcr my-1 px-1 hvlight flex rounded"
             onClick={clickDispatch} data-action="PANETOGG">
             <Icon className="taskIcon" src="wifi" ui width={16}/>
             <Icon className="taskIcon" src={'audio'+tasks.audio} ui width={16}/>
             <Battery level={batterylevel} charging={batterylevel==='*'?true:false}/>
           </div>
 
-          <div className="taskDate handcr prtclk hvdark" onClick={clickDispatch}
+          <div className="taskDate m-1 handcr prtclk rounded hvlight" onClick={clickDispatch}
             data-action="CALNTOGG">
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
             <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
           </div>
-          <Icon className="graybd" ui width={6} click='SHOWDSK' pr/>
+          <Icon className="graybd my-3" ui width={6} click='SHOWDSK' pr/>
         </div>
       </div>
     </div>

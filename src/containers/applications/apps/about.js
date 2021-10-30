@@ -6,7 +6,7 @@ export const AboutWin = ()=>{
   const {abOpen} = useSelector(state=> state.desktop);
   const {locked, booted} = useSelector(state => state.wallpaper);
   const [open, setOpen] = useState(true && process.env.REACT_APP_ENV!="development");
-  const [timer, setTimer] = useState(6);
+  const [timer, setTimer] = useState(localStorage.getItem('closeAbout')=="true"?0:6);
   const dispatch = useDispatch();
 
   const action = ()=>{
@@ -60,7 +60,7 @@ export const AboutWin = ()=>{
             <br/>
             <div>
               <span>
-                Microsoft, Windows and Other demostrated Products in this project
+                Microsoft, Windows and Other demonstrated Products in this project
                 are trademarks of the Microsoft group of companies.
               </span>
             </div>
