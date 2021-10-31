@@ -691,7 +691,7 @@ const fetchApi = async (widget) => {
   await axios.get(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${date.getMonth()}/${date.getDay()}`)
     .then(res => res.data).then(data => {
       console.log("Fetched");
-      var event = data.events. [Math.floor(Math.random() * data.events.length)];
+      var event = data.events[Math.floor(Math.random() * data.events.length)];
       date.setYear(event.year);
 
       tmpWdgt.data.date = date.toLocaleDateString("en-US", {

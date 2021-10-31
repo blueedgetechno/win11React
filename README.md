@@ -78,7 +78,7 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 
 # Docker
 
-To use docker use the following command ``` docker run -d  --restart unless-stopped --name windows11 -p 3000:3000 ghcr.io/blueedgetechno/win11React:master ```
+To use docker use the following command ``` docker run -d  --restart unless-stopped --name win11react -p 3000:3000 ghcr.io/blueedgetechno/win11React:master ```
 
 # Homeassistant
 
@@ -87,6 +87,12 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 # Compiled
 
 You can find a compiled `.exe` in the **Releases** section or via clicking [HERE](https://github.com/blueedgetechno/win11React/releases)
+
+**WINGET - WINDOWS PACKAGE MANAGER**
+
+If you have one of the latest windows builds then you can enter the command below in **CMD**
+
+``` winget install blueedge.win11react ```
 
 ## Online Deployment
 
