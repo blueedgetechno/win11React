@@ -33,6 +33,13 @@
   backdrop-filter: blur(21px);
 }
 
+@media (prefers-color-scheme: dark) {
+  .calcApp {
+    background: #202020;
+    color: white;
+  }
+}
+
 .msfiles,
 .whiteBoard {
   background: #fefefe;
