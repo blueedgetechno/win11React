@@ -11,14 +11,14 @@
 
 .battery {
   display: inline-block;
-  position:relative;
+  position: relative;
   margin-top: 2px;
 
-  i{
+  i {
     color: #222;
   }
 
-  .uicon{
+  .uicon {
     position: absolute;
     margin-top: 24%;
     margin-left: -12%;
@@ -30,13 +30,12 @@
   font: normal normal normal 14px/2 FontAwesome;
 }
 
-.battery .animate{
-  width:88%;
-  position:absolute;
-  left:0;
-  top:0;
+.battery .animate {
+  width: 88%;
+  position: absolute;
+  left: 0;
+  top: 0;
   overflow: hidden;
-  z-index: -1;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -132,7 +131,7 @@
     background: #858585;
     transition: all 0.2s ease-in-out;
   }
-  
+
   &[data-open="true"]:after {
     width: 6px;
   }
