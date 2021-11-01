@@ -1,18 +1,18 @@
 .actmenu {
   position: absolute;
   width: 310px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
+  background: var(--bg);
+  backdrop-filter: saturate(2) blur(20px);
   z-index: 10000;
-  opacity:1;
-  pointer-events:all;
+  opacity: 1;
+  pointer-events: all;
   border: solid 1px #ccc9;
   border-radius: 8px;
   transition: opacity 0.1s ease;
 
   &[data-hide="true"] {
-    opacity:0;
-    pointer-events:none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &[data-left="false"] .minimenu {
@@ -27,7 +27,7 @@
   top: 0;
   left: 99%;
   min-width: 200px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg);
   z-index: 9999;
   padding: 4px 0;
   border: solid 1px #ccc9;
@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #333;
+  color: var(--clr);
   transition: all 0.1s ease;
 
   &:hover {
@@ -57,11 +57,6 @@
     .minimenu {
       display: block;
     }
-  }
-
-  &[data-dsb="true"] {
-    color: #aaa;
-    font-weight: 400;
   }
 
   .uicon {
@@ -94,4 +89,18 @@
   height: 1px;
   background-color: #ccc5;
   margin: 4px 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .actmenu {
+    --bg: rgba(249, 249, 249, 0.9);
+    --clr: #333333;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .actmenu {
+    --bg: rgba(44, 44, 44, 0.8);
+    --clr: #cccccc;
+  }
 }
