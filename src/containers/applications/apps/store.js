@@ -166,7 +166,7 @@ const DownPage = ({action, apps})=>{
                 <Icon className={stars>2.5?"bluestar":""} fafa="faStar" width={6}/>
                 <Icon className={stars>3.5?"bluestar":""} fafa="faStar" width={6}/>
                 <Icon className={stars>4.5?"bluestar":""} fafa="faStar" width={6}/>
-                <div className="text-xss text-gray-800">{reviews}k</div>
+                <div className="text-xss">{reviews}k</div>
               </div>
               <div className="text-xss mt-8">{"Free"}</div>
             </div>
@@ -208,7 +208,7 @@ const DetailPage = ({app})=>{
           src={app.icon} err="img/asset/mixdef.jpg"/>
         <div className="flex flex-col items-center text-center relative">
           <div className="text-2xl font-semibold mt-6">{app.name}</div>
-          <div className="text-xs text-blue-800">Community</div>
+          <div className="text-xs text-blue-500">Community</div>
           {dstate==0?<div className="instbtn mt-12 mb-8 handcr"
                           onClick={download}>Get</div>:null}
           {dstate==1?<div className="downbar mt-12 mb-8"></div>:null}
@@ -257,7 +257,7 @@ const DetailPage = ({app})=>{
           <div className="text-xs font-semibold">Ratings and reviews</div>
           <div className="flex mt-4 items-center">
             <div className="flex flex-col items-center">
-              <div className="text-5xl text-gray-900 font-bold">{stars}</div>
+              <div className="text-5xl reviewtxt font-bold">{stars}</div>
               <div className="text-xss">{Math.round(reviews/100)/10}K RATINGS</div>
             </div>
             <div className="text-xss ml-6">
@@ -332,7 +332,7 @@ const FrontPage = (props)=>{
                   <Icon className="bluestar" fafa="faStar" width={6}/>
                   <Icon className={stars>3?"bluestar":""} fafa="faStar" width={6}/>
                   <Icon className={stars>4?"bluestar":""} fafa="faStar" width={6}/>
-                  <div className="text-xss text-gray-800">{1+x.charCodeAt(3)%5}k</div>
+                  <div className="text-xss">{1+x.charCodeAt(3)%5}k</div>
                 </div>
                 <div className="text-xss mt-8">{x.charCodeAt(4)%2?"Free":"Owned"}</div>
               </div>
@@ -361,7 +361,7 @@ const FrontPage = (props)=>{
                   <Icon className="bluestar" fafa="faStar" width={6}/>
                   <Icon className={stars>3?"bluestar":""} fafa="faStar" width={6}/>
                   <Icon className={stars>4?"bluestar":""} fafa="faStar" width={6}/>
-                  <div className="text-xss text-gray-800">{1+x.charCodeAt(3)%5}k</div>
+                  <div className="text-xss">{1+x.charCodeAt(3)%5}k</div>
                 </div>
                 <div className="text-xss mt-8">{x.charCodeAt(4)%2?"Free":"Owned"}</div>
               </div>
@@ -390,7 +390,7 @@ const FrontPage = (props)=>{
                   <Icon className="bluestar" fafa="faStar" width={6}/>
                   <Icon className={stars>3?"bluestar":""} fafa="faStar" width={6}/>
                   <Icon className={stars>4?"bluestar":""} fafa="faStar" width={6}/>
-                  <div className="text-xss text-gray-800">{1+x.charCodeAt(3)%5}k</div>
+                  <div className="text-xss">{1+x.charCodeAt(3)%5}k</div>
                 </div>
                 <div className="text-xss mt-8">{x.charCodeAt(4)%2?"Rent":"Owned"}</div>
               </div>

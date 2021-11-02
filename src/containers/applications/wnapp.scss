@@ -1,0 +1,104 @@
+/*
+      www.OnlineWebFonts.Com
+*/
+@font-face {
+  font-family: "Spotify";
+  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot");
+  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot?#iefix") format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff2") format("woff2"),
+        url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff") format("woff"),
+        url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.ttf") format("truetype"),
+        url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.svg#Spotify") format("svg");
+}
+
+body{
+  --dark-txt: #000;
+  --txt-col: #222;
+  --med-txt: #3c3c3c;
+  --comp-txt: #ddd;
+  --gray-txt: #555;
+  --sat-txt: #777;
+}
+
+body[data-theme="dark"]{
+  --dark-txt: #fff;
+  --txt-col: #ddd;
+  --med-txt: #c3c3c3;
+  --comp-txt: #222;
+  --gray-txt: #aaa;
+  --sat-txt: #999;
+}
+
+.edgeBrowser {
+  background: rgb(231, 234, 236);
+}
+
+.vscodeWn {
+  background: rgb(37, 37, 38);
+}
+
+.wnstore {
+  --bg-color: #f3f3f3;
+  --nav-btn-hov: #ffffff;
+  --nav-blue: #2570ff;
+  --page-bg: #f4f4f4;
+  --page-bd-col: #e2e2e2;
+  --rib-bg: #ffffffb8;
+  --rib2-bg: #fdfdfd;
+  --det-bg: #f9f9f9;
+  background: var(--bg-color);
+}
+
+body[data-theme="dark"] .wnstore {
+  --bg-color: #1c2126;
+  --nav-btn-hov: #454545;
+  --nav-blue: #4cc2ff;
+  --page-bg: #24292C;
+  --page-bd-col: #292828;
+  --rib-bg: #2f2e30b8;
+  --rib2-bg: #2C2F32;
+  --det-bg: #282C32;
+
+  background: var(--bg-color);
+}
+
+.wnterm {
+  background: rgb(16, 16, 16);
+}
+
+.notepad {
+  background: #fefefe;
+}
+
+.calcApp {
+  background: hsla(0, 0%, 100%, 0.9);
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.msfiles,
+.whiteBoard {
+  background: #fefefe;
+}
+
+.spotify {
+  background: rgb(24, 24, 24);
+  /* background: linear-gradient(0deg, #1d1d1f 75%, #1e1e1f 100%); */
+  /* background: linear-gradient(0deg, #1d1d1f 75%, #2d2d2d 100%); */
+}
+
+.discordWn {
+  background: #36393f;
+}
+
+.lightWindow {
+  background: #e7eaec;
+}
+
+.darkWindow {
+  background: #1a1614;
+}
+
+.wnCam {
+  background: #060606;
+}
