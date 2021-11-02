@@ -24,7 +24,7 @@ export const WnTerminal = ()=>{
 
     if(pwd!="C:\\"){
       for (var i = 0; i < curr.length; i++) {
-        console.log(tdir);
+        // console.log(tdir);
         tdir = tdir[curr[i]];
       }
     }

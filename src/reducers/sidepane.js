@@ -1,68 +1,66 @@
 const defState = {
-  quicks: [
-    {
+  quicks: [{
       ui: true,
       src: "wifi",
       name: "WiFi",
-      state: true,
-    },
-    {
+      state: "network.wifi.state",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "bluetooth",
       name: "Bluetooth",
-      state: false,
-    },
-    {
+      state: "devices.bluetooth",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "airplane",
       name: "Airplane Mode",
-      state: false,
-    },
-    {
+      state: "network.airplane",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "saver",
       name: "Battery Saver",
-      state: false,
-    },
-    {
+      state: "system.power.saver.state",
+      action: "STNGTOGG"
+    },{
       ui: true,
-      src: "moon",
-      name: "Focus assist",
-      state: false,
-    },
-    {
+      src: "sun",
+      name: "Theme",
+      state: "person.theme",
+      action: "changeTheme"
+    },{
       ui: true,
       src: "location",
       name: "Location",
-      state: false,
-    },
-    {
+      state: "privacy.location.state",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "nightlight",
       name: "Night Light",
-      state: false,
-    },
-    {
+      state: "system.display.nightlight.state",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "connect",
       name: "Connect",
-      state: false,
-    },
-    {
+      state: "system.display.connect",
+      action: "STNGTOGG"
+    },{
       ui: true,
       src: "project",
-      name: "Project",
-      state: false,
-    },
+      name: "Project"
+    }
   ],
   hide: true,
   calhide: true,
 };
 
 const paneReducer = (state = defState, action) => {
-  if (action.type == "PANEQBTN") {
+  if (action.type == "PANETHEM") {
     var tmpState = { ...state };
-    tmpState.quicks[action.payload].state = !tmpState.quicks[action.payload].state;
+    tmpState.quicks[4].src = action.payload;
     return tmpState;
   } else if (action.type == "PANETOGG") {
     return { ...state, hide: !state.hide };

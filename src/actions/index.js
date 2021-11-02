@@ -152,3 +152,25 @@ export const installApp = (data)=>{
   store.dispatch({type: "DESKADD", payload: app})
   store.dispatch({type: "WNSTORE", payload: "mnmz"})
 }
+
+export const getTreeValue = (obj, path)=>{
+  if(path==null) return false
+
+  var tdir = {...obj}
+  path = path.split(".")
+  for (var i = 0; i < path.length; i++) {
+    tdir = tdir[path[i]];
+  }
+
+  return tdir
+}
+
+export const changeTheme = ()=>{
+  var thm = store.getState().setting.person.theme,
+  thm = thm=="light"?"dark":"light"
+  var icon = thm=="light"?"sun":"moon"
+
+  document.body.dataset.theme = thm
+  store.dispatch({type: "STNGTHEME", payload: thm})
+  store.dispatch({type: "PANETHEM", payload: icon})
+}

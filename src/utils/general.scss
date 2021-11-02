@@ -199,3 +199,28 @@
 .imageCont.rounded{
   overflow: hidden;
 }
+
+body[data-theme="dark"]{
+
+  .snapcont{
+    background: #222;
+
+    .snapper{
+      background: #444;
+      border: solid 1px #333;
+      &:hover{
+        background: #0066ff;
+      }
+    }
+  }
+
+  .appFullName{
+    color: #fefefe;
+  }
+
+  .actbtns{
+    .uicon img{
+      filter: invert(1);
+    }
+  }
+}

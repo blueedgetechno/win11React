@@ -15,14 +15,15 @@
   margin-top: 2px;
 
   i{
-    color: #222;
+    color: #232323;
   }
 
   .uicon{
     position: absolute;
     margin-top: 24%;
     margin-left: -12%;
-    filter: drop-shadow(1px 1px #fefefe) invert(0.1);
+    z-index: 1;
+    filter: drop-shadow(1px 1px #fefefe) invert(0.14);
   }
 }
 
@@ -36,7 +37,7 @@
   left:0;
   top:0;
   overflow: hidden;
-  z-index: -1;
+  z-index: 0;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -132,7 +133,7 @@
     background: #858585;
     transition: all 0.2s ease-in-out;
   }
-  
+
   &[data-open="true"]:after {
     width: 6px;
   }
