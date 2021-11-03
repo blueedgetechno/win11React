@@ -54,27 +54,26 @@ rediv {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  // justify-content: flex-end;
   padding: 0 32px;
-  color: #333;
+  color: var(--dark-txt);
 }
 
 .eqCont {
   font-size: 0.22em;
-  color: #888;
+  color: var(--sat-txt);
 }
 
 .msrVal {
   display: flex;
   padding: 16px 0;
   font-size: 0.64em;
-  color: #888;
+  color: var(--sat-txt);
 
   div {
     margin: 0 24px;
 
     &:nth-child(n + 3) {
-      color: #111;
+      color: var(--txt-col);
       font-weight: 600;
     }
   }
@@ -93,16 +92,19 @@ rediv {
 
   &[data-err="true"] {
     .oper {
-      color: #aaa;
-      pointer-events: none;
-
-      &:nth-child(3) {
-        pointer-events: auto;
-        color: #444;
-      }
-
-      &:last-child {
-        color: #ccc;
+      &:nth-child(1),
+      &:nth-child(5),
+      &:nth-child(6),
+      &:nth-child(7),
+      &:nth-child(8),
+      &:nth-child(12),
+      &:nth-child(16),
+      &:nth-child(20),
+      &:nth-child(21),
+      &:nth-child(23) {
+        background: var(--err-bg);
+        color: var(--err-txt);
+        pointer-events: none;
       }
     }
   }
@@ -114,7 +116,8 @@ rediv {
   align-items: center;
   box-sizing: border-box;
   border: solid 1px rgb(0, 0, 0, 0.1);
-  background: #f9f9f9;
+  background: var(--bg2);
+  color: var(--dark-txt);
   font-size: 1.128em;
   cursor: pointer;
   border-radius: 4px;
@@ -123,26 +126,27 @@ rediv {
     pointer-events: none;
   }
 
-  &:active {
-    background: rgba(255, 255, 255, 0.5);
+  &:hover {
+    background: var(--bg3);
   }
 
   &:nth-child(-n + 8),
   &:nth-child(4n) {
-    background: rgba(255, 255, 255, 0.5);
-    color: #444;
+    background: var(--bg3);
+    color: var(--dark-txt);
 
-    &:active {
-      background: rgba(255, 255, 255, 0.2);
+    &:hover {
+      background: var(--bg2);
     }
   }
 
   &:last-child {
-    background: #0067c0;
-    color: white;
+    background: var(--clrPrm);
+    color: var(--bg1);
 
     &:hover {
-      background: #1975c5;
+      background: var(--clrPrm);
+      filter: brightness(0.9);
     }
   }
 
@@ -152,7 +156,7 @@ rediv {
 
   &:nth-child(4) {
     font-size: 1em;
-    color: #333;
+    color: var(--dark-txt);
   }
 
   &:nth-child(8) {
@@ -430,8 +434,6 @@ rediv {
     flex-grow: 1;
     height: 100%;
     overflow: hidden;
-    // border: solid 4px red;
-    // box-sizing: border-box;
   }
 
   .vidwrap {
