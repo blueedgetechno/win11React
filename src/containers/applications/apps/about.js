@@ -45,7 +45,7 @@ export const AboutWin = ()=>{
               This <rediv>project is not in anyway affiliated with Microsoft</rediv> and
               should <rediv>not be confused with Microsoft’s Operating System</rediv> or Products.
               <br/><br/>
-              This is also not to be confused with the <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">Windows 365 virtual desktop service.</a>.
+              This is also not <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">Windows 365 cloud PC</a>.
             </div>
             <br/>
             <div>
