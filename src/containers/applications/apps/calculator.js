@@ -152,7 +152,7 @@ export const Calculator = ()=>{
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex pt-2">
           <div className="flex pl-2 items-center">
-            <Icon fafa="faBars" color="#222" width={14}/>
+            <Icon className="menuBars" fafa="faBars" color="#222" width={14}/>
             <div className="mx-4 font-semibold pb-1">Standard</div>
           </div>
         </div>
