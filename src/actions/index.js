@@ -173,4 +173,5 @@ export const changeTheme = ()=>{
   document.body.dataset.theme = thm
   store.dispatch({type: "STNGTHEME", payload: thm})
   store.dispatch({type: "PANETHEM", payload: icon})
+  store.dispatch({type: "WALLSET", payload: thm=="light"?0:1})
 }

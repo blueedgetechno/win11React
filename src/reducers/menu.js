@@ -1,7 +1,7 @@
 const defState = {
   hide: true,
-  top: 272,
-  left: 430,
+  top: 80,
+  left: 360,
   opts: "desk",
   attr: null,
   dataset: null,
@@ -60,7 +60,6 @@ const defState = {
       },
       {
         name: "Refresh",
-        icon: "ui/refresh",
         action: "refresh",
       },
       {
@@ -115,14 +114,7 @@ const defState = {
         action: "DESKABOUT",
         icon: "win/info",
         payload: true,
-      },
-      {
-        type: "hr",
-      },
-      {
-        name: "Show more options",
-        icon: "ui/more",
-      },
+      }
     ],
     task: [
       {
