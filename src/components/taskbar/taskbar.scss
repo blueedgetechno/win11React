@@ -1,24 +1,36 @@
 .taskbar {
+  --bg1: rgba(243, 243, 243, 0.85);
+
   position: absolute;
   width: 100vw;
   height: 39px;
-  background: rgb(243 243 243 / 85%);
+  color: var(--dark-txt);
+  background: var(--bg1);
   -webkit-backdrop-filter: saturate(3) blur(20px);
   backdrop-filter: saturate(3) blur(20px);
   bottom: 0;
   z-index: 10000;
 }
 
+body[data-theme="dark"] .taskbar {
+  --bg1: rgba(32, 32, 32, 0.75);
+
+  .taskIcon,
+  .searchIcon img {
+    filter: invert(1);
+  }
+}
+
 .battery {
   display: inline-block;
-  position:relative;
+  position: relative;
   margin-top: 2px;
 
-  i{
+  i {
     color: #232323;
   }
 
-  .uicon{
+  .uicon {
     position: absolute;
     margin-top: 24%;
     margin-left: -12%;
@@ -31,11 +43,11 @@
   font: normal normal normal 14px/2 FontAwesome;
 }
 
-.battery .animate{
-  width:88%;
-  position:absolute;
-  left:0;
-  top:0;
+.battery .animate {
+  width: 88%;
+  position: absolute;
+  left: 0;
+  top: 0;
   overflow: hidden;
   z-index: 0;
   -webkit-transition: all 0.5s ease;
@@ -116,11 +128,6 @@
   transform-origin: center;
   animation: popintro 800ms ease-in-out;
 
-  &:hover {
-    background: rgba(#fefefe, 0.64);
-    border-radius: 4px;
-    transition: all ease-in-out 200ms;
-  }
 
   &:after {
     content: "";
@@ -140,7 +147,7 @@
 
   &[data-active="true"]:after {
     width: 12px;
-    background: #1f4dcd;
+    background: var(--clrPrm);
   }
 }
 

@@ -104,8 +104,8 @@
 }
 
 .dycalendar-today-date {
-  background-color: #246ff2;
-  color: #fff;
+  background: var(--clrPrm);
+  color: var(--dark-txt);
   border-radius: 24px;
 }
 
