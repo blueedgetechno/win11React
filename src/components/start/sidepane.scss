@@ -1,10 +1,15 @@
 .sidePane {
+  --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: #fbfbfb;
+  --bg3: #f5f5f5;
+
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   width: 360px;
   border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.88);
+  color: var(--dark-txt);
+  background: var(--bg1);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   overflow: hidden;
@@ -16,6 +21,16 @@
     bottom: 0.9rem;
     transform: translateX(110%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
+  }
+}
+
+body[data-theme="dark"] .sidePane {
+  --bg1: rgba(36, 36, 36, 0.8);
+  --bg2: rgba(255, 255, 255, 0.08);
+  --bg3: rgba(255, 255, 255, 0.12);
+
+  .uicon {
+    filter: invert(1);
   }
 }
 
@@ -52,12 +67,16 @@
   align-items: center;
   justify-content: center;
   border-bottom-color: rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg2);
   border: solid 0.1px rgba(17, 17, 17, 0.1);
   transition: all 0.1s ease;
 
+  &:hover {
+    background: var(--bg3);
+  }
+
   &[data-state="true"] {
-    background: rgb(0, 90, 255);
+    background: var(--clrPrm);
 
     .qktext {
       color: #ececec;
@@ -83,7 +102,7 @@
 }
 
 .sliders[type="range"] {
-  --track-color: linear-gradient(90deg, #005fba 100%, #888888 100%);
+  --track-color: linear-gradient(90deg, var(--clrPrm) 100%, #888888 100%);
   -webkit-appearance: none;
   background-color: transparent;
 }
@@ -95,11 +114,11 @@
   border: 0;
 }
 .sliders[type="range"]::-webkit-slider-thumb {
-  border: 4px solid white;
+  border: 4px solid var(--bg1);
   height: 20px;
   width: 20px;
   border-radius: 10px;
-  background: #005fba;
+  background: var(--clrPrm);
   -webkit-appearance: none;
   margin-top: -9px;
 }
@@ -114,11 +133,11 @@
   border: 0;
 }
 .sliders[type="range"]::-moz-range-thumb {
-  border: 4px solid white;
+  border: 4px solid var(--bg1);
   height: 20px;
   width: 20px;
   border-radius: 10px;
-  background: #005fba;
+  background: var(--clrPrm);
 }
 .sliders[type="range"]::-ms-track {
   width: 100%;
@@ -139,7 +158,7 @@
 }
 .sliders[type="range"]::-ms-thumb {
   margin-top: 1px;
-  border: 4px solid white;
+  border: 4px solid var(--bg1);
   height: 20px;
   width: 20px;
   border-radius: 10px;
@@ -152,20 +171,7 @@
   background: var(--track-color);
 }
 
-.managentf {
-  text-align: right;
-  padding: 13px 14px;
-}
-
-.nonewnotif {
-  position: absolute;
-  top: 48%;
-  left: 32%;
-  font-size: 0.72em;
-  font-weight: 500;
-  color: #464646;
-}
-
+// Widgets
 .widPaneCont {
   position: absolute;
   top: 0;
