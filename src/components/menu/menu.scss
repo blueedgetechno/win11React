@@ -9,7 +9,7 @@
   z-index: 10000;
   opacity: 1;
   pointer-events: all;
-  border: solid 1px var(--comp-txt);
+  // border: solid 1px var(--comp-txt);
   border-radius: 8px;
   transition: opacity 0.1s ease;
 
@@ -25,7 +25,7 @@
 }
 
 body[data-theme="dark"] .actmenu {
-  --bg1: rgba(44, 44, 44, 0.8);
+  --bg1: rgba(34, 36, 47, 0.8);
   --bg2: rgba(255, 255, 255, 0.08);
 }
 
@@ -38,8 +38,9 @@ body[data-theme="dark"] .actmenu {
   background: var(--bg1);
   z-index: 9999;
   padding: 4px 0;
-  border: solid 1px var(--comp-txt);
+  // border: solid 1px var(--comp-txt);
   animation: fadein 600ms ease-in-out;
+  // backdrop-filter: contrast(1) saturate(2) blur(20px);
   border-radius: 8px;
 }
 
@@ -48,7 +49,7 @@ body[data-theme="dark"] .actmenu {
   box-sizing: border-box;
   position: relative;
   width: calc(100% - 8px);
-  padding: 4px 32px;
+  padding: 4px 6px;
   font-size: 12px;
   cursor: default;
   margin: 6px;
@@ -67,26 +68,23 @@ body[data-theme="dark"] .actmenu {
     }
   }
 
-  .uicon {
-    position: absolute;
-    top: 8px;
-    left: 8px;
+  .spcont{
+    width: 16px;
+    margin-right: 12px;
   }
 
-  .prtclk {
-    left: unset;
+  .micon{
+    position: absolute;
+  }
+
+  .rightIcon {
     right: 8px;
   }
 
   .dotIcon,
   .checkIcon {
-    top: 8px;
     left: 8px;
-    right: unset;
-  }
-
-  .checkIcon {
-    top: 6px;
+    color: var(--med-txt);
   }
 }
 

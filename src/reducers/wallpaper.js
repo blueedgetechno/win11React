@@ -25,8 +25,8 @@ const walls = [
 const defState = {
   wps: wps,
   src: walls[wps],
-  locked: !(locked=='false'),
-  booted: false || process.env.REACT_APP_ENV=="development",
+  locked: !(locked == 'false'),
+  booted: false || process.env.REACT_APP_ENV == "development",
   act: '',
   dir: 0
 }
@@ -62,6 +62,11 @@ const wallReducer = (state = defState, action) => {
       return {
         ...state, booted: false, dir: -1,
           locked: true, act: 'shutdn'
+      };
+    case 'WALLSET':
+      return {
+        ...state, wps: action.payload,
+        src: walls[action.payload]
       };
     default:
       return state
