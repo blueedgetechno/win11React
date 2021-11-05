@@ -127,7 +127,7 @@ body[data-theme="dark"] .taskbar {
   background: rgba(254, 254, 254, 0);
   transform-origin: center;
   animation: popintro 800ms ease-in-out;
-
+  border-radius: 4px;
 
   &:after {
     content: "";
