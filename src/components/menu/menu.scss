@@ -1,23 +1,40 @@
 .actmenu {
+  --bg1: rgba(249, 249, 249, 0.9);
+  --bg2: rgba(0, 0, 0, 0.08);
+
   position: absolute;
   width: 310px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
+  background: var(--bg1);
+  backdrop-filter: contrast(2) saturate(2) blur(20px);
   z-index: 10000;
-  opacity:1;
-  pointer-events:all;
+  opacity: 1;
+  pointer-events: all;
   border: solid 1px #ccc9;
   border-radius: 8px;
   transition: opacity 0.1s ease;
 
   &[data-hide="true"] {
-    opacity:0;
-    pointer-events:none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &[data-left="false"] .minimenu {
     left: unset;
     right: 98%;
+  }
+}
+
+body[data-theme="dark"] .actmenu {
+  --bg1: rgba(44, 44, 44, 0.8);
+  --bg2: rgba(255, 255, 255, 0.08);
+
+  .menuopt img {
+    filter: invert(1);
+  }
+
+  .menuopt:nth-child(11) img,
+  .menuopt:nth-child(12) img {
+    filter: none;
   }
 }
 
@@ -27,7 +44,7 @@
   top: 0;
   left: 99%;
   min-width: 200px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg1);
   z-index: 9999;
   padding: 4px 0;
   border: solid 1px #ccc9;
@@ -48,20 +65,15 @@
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #333;
+  color: var(--txt-col);
   transition: all 0.1s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: var(--bg2);
 
     .minimenu {
       display: block;
     }
-  }
-
-  &[data-dsb="true"] {
-    color: #aaa;
-    font-weight: 400;
   }
 
   .uicon {
