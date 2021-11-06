@@ -6,9 +6,9 @@
 
 .searchBar {
   height: 30px;
-  border: solid 2px #0e60e4;
+  border-bottom: solid 2px var(--clrPrm);
   border-radius: 6px;
-  background: #fefefe;
+  background: var(--bg1);
   display: flex;
   padding: 0 10px;
 
@@ -19,16 +19,30 @@
 
   input {
     width: 400px;
-    color: #222;
+    background: var(--bg1);
+    color: var(--txt-col);
   }
 }
 
-.opts div {
-  border: solid 0 #1f4aff;
-  cursor: pointer;
+.topApp {
+  background: var(--bg2);
+}
 
-  &[value="true"] {
-    border-bottom-width: 2px;
+.smatch {
+  background: var(--bg2);
+}
+
+.opts {
+  color: var(--med-txt);
+
+  div {
+    border: solid 0 var(--clrPrm);
+    cursor: pointer;
+
+    &[value="true"] {
+      border-bottom-width: 2px;
+      color: var(--dark-txt);
+    }
   }
 }
 
@@ -43,7 +57,7 @@
 .rightSide {
   margin: 8px;
   height: 400px;
-  background: #fafafa;
+  background: var(--bg2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +66,7 @@
     width: 90%;
     height: 1px;
     border-radius: 10px;
-    background: #dfdfdf;
+    background: var(--bg2);
   }
 }
 
@@ -65,11 +79,15 @@
 }
 
 .qksrch {
-  color: #111;
+  color: var(--txt-col);
+
+  &:hover {
+    background: var(--bg2);
+  }
 }
 
 .qksrch svg {
-  color: #333;
+  color: var(--med-txt);
 }
 
 .calnpane {
@@ -104,7 +122,7 @@ body[data-theme="dark"] .calnpane {
   left: -68px;
   width: 96px;
   font-size: 12px;
-  background: #fefefe;
+  background: var(--bg2);
   padding: 4px 6px;
   border-radius: 6px;
   box-shadow: 2px 2px 12px rgba(46, 40, 40, 0.25);
@@ -124,7 +142,7 @@ body[data-theme="dark"] .calnpane {
     border-radius: 4px;
 
     &:hover {
-      background: #ededed;
+      background: var(--bg2);
     }
   }
 
