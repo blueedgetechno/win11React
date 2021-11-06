@@ -12,8 +12,10 @@
   z-index: 10000;
 }
 
-body[data-theme="dark"] .taskbar {
-  --bg1: rgba(32, 32, 32, 0.75);
+body[data-theme="dark"] {
+  .taskbar {
+    --bg1: rgba(32, 32, 32, 0.75);
+  }
 
   .taskIcon,
   .searchIcon img {
