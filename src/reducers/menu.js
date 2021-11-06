@@ -9,7 +9,7 @@ const defState = {
     desk: [
       {
         name: "View",
-        icon: "ui/view",
+        icon: "view",
         opts: [
           {
             name: "Large icons",
@@ -39,7 +39,7 @@ const defState = {
       },
       {
         name: "Sort by",
-        icon: "ui/sort",
+        icon: "sort",
         opts: [
           {
             name: "Name",
@@ -61,13 +61,14 @@ const defState = {
       {
         name: "Refresh",
         action: "refresh",
+        icon: "refresh",
       },
       {
         type: "hr",
       },
       {
         name: "New",
-        icon: "ui/new",
+        icon: "New",
         // dsb: true,
         opts: [
           {
@@ -89,12 +90,11 @@ const defState = {
       },
       {
         name: "Display settings",
-        icon: "ui/display",
+        icon: "display",
       },
       {
         name: "Personalize",
-        icon: "ui/personalize",
-        // dsb: true,
+        icon: "personalize",
       },
       {
         type: "hr",
@@ -112,9 +112,9 @@ const defState = {
       {
         name: "About",
         action: "DESKABOUT",
-        icon: "win/info",
+        icon: "info",
         payload: true,
-      }
+      },
     ],
     task: [
       {

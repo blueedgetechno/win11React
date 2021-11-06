@@ -1,98 +1,98 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {Icon} from '../../utils/general';
-import './menu.scss';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Icon } from "../../utils/general";
+import "./menu.scss";
 
-import * as Actions from '../../actions';
+import * as Actions from "../../actions";
 
-export const ActMenu = ()=>{
-  const menu = useSelector(state=>state.menus);
-  const {abpos, isLeft} = useSelector(state=>{
+export const ActMenu = () => {
+  const menu = useSelector((state) => state.menus);
+  const { abpos, isLeft } = useSelector((state) => {
     var acount = state.menus.menus[state.menus.opts].length;
     var tmpos = {
-      'top': state.menus.top,
-      'left': state.menus.left
-    }, tmpleft = false;
+        top: state.menus.top,
+        left: state.menus.left,
+      },
+      tmpleft = false;
 
     var wnwidth = window.innerWidth,
-        wnheight = window.innerHeight;
+      wnheight = window.innerHeight;
 
     var ewidth = 312,
-        eheight = acount*28;
+      eheight = acount * 28;
 
-    tmpleft = (wnwidth - tmpos.left) > 504;
-    if(wnwidth - tmpos.left < ewidth){
+    tmpleft = wnwidth - tmpos.left > 504;
+    if (wnwidth - tmpos.left < ewidth) {
       tmpos.right = wnwidth - tmpos.left;
       tmpos.left = null;
     }
 
-    if(wnheight - tmpos.top < eheight){
+    if (wnheight - tmpos.top < eheight) {
       tmpos.bottom = wnheight - tmpos.top;
       tmpos.top = null;
     }
 
     return {
       abpos: tmpos,
-      isLeft: tmpleft
+      isLeft: tmpleft,
     };
-  })
+  });
 
   const dispatch = useDispatch();
 
-  const clickDispatch = (event)=>{
+  const clickDispatch = (event) => {
     event.stopPropagation();
     var action = {
       type: event.target.dataset.action,
-      payload: event.target.dataset.payload
+      payload: event.target.dataset.payload,
     };
 
-    if(action.type){
-      if(action.type!=action.type.toUpperCase()){
-        Actions[action.type](action.payload,menu);
-      }else{
+    if (action.type) {
+      if (action.type != action.type.toUpperCase()) {
+        Actions[action.type](action.payload, menu);
+      } else {
         dispatch(action);
       }
-      dispatch({type: "MENUHIDE"});
+      dispatch({ type: "MENUHIDE" });
     }
-  }
+  };
 
-  const menuobj = (data)=>{
+  const menuobj = (data) => {
     var mnode = [];
-    data.map(opt=>{
-      if(opt.type=="hr"){
+    data.map((opt) => {
+      if (opt.type == "hr") {
         mnode.push(<div className="menuhr"></div>);
-      }else{
-        mnode.push(<div className="menuopt" data-dsb={opt.dsb}
-          onClick={clickDispatch} data-action={opt.action}
-          data-payload={opt.payload}>
-          <div className="spcont">
-            {opt.icon?<Icon src={opt.icon} width={16}/>:null}
+      } else {
+        mnode.push(
+          <div className="menuopt" data-dsb={opt.dsb} onClick={clickDispatch} data-action={opt.action} data-payload={opt.payload}>
+            <div className="spcont">{opt.icon ? <Icon icon={opt.icon} width={16} /> : null}</div>
+            <div className="nopt">{opt.name}</div>
+            {opt.opts ? <Icon className="micon rightIcon" fafa="faChevronRight" width={10} color="#999" /> : null}
+            {opt.dot ? <Icon className="micon dotIcon" fafa="faCircle" width={4} height={4} /> : null}
+            {opt.check ? <Icon className="micon checkIcon" fafa="faCheck" width={8} height={8} /> : null}
+            {opt.opts ? <div className="minimenu">{menuobj(opt.opts)}</div> : null}
           </div>
-          <div className="nopt">{opt.name}</div>
-          {opt.opts?<Icon className="micon rightIcon" fafa="faChevronRight" width={10} color="#999"/>:null}
-          {opt.dot?<Icon className="micon dotIcon" fafa="faCircle" width={4}
-            height={4}/>:null}
-          {opt.check?<Icon className="micon checkIcon" fafa="faCheck" width={8}
-            height={8}/>:null}
-          {opt.opts?(
-            <div className="minimenu">
-              {menuobj(opt.opts)}
-            </div>
-          ):null}
-        </div>)
+        );
       }
     });
 
     return mnode;
-  }
+  };
 
   return (
-    <div className="actmenu" id="actmenu" style={{
-      ...abpos,
-      '--prefix':'MENU'}} data-hide={menu.hide} data-left={isLeft}>
+    <div
+      className="actmenu"
+      id="actmenu"
+      style={{
+        ...abpos,
+        "--prefix": "MENU",
+      }}
+      data-hide={menu.hide}
+      data-left={isLeft}
+    >
       {menuobj(menu.menus[menu.opts])}
     </div>
   );
-}
+};
 
 export default ActMenu;
