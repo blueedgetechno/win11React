@@ -23,8 +23,7 @@ export const ActMenu = () => {
 
     tmpleft = wnwidth - tmpos.left > 504;
     if (wnwidth - tmpos.left < ewidth) {
-      tmpos.right = wnwidth - tmpos.left;
-      tmpos.left = null;
+      tmpos.left = wnwidth - ewidth;
     }
 
     if (wnheight - tmpos.top < eheight) {
@@ -65,7 +64,11 @@ export const ActMenu = () => {
       } else {
         mnode.push(
           <div className="menuopt" data-dsb={opt.dsb} onClick={clickDispatch} data-action={opt.action} data-payload={opt.payload}>
-            <div className="spcont">{opt.icon ? <Icon icon={opt.icon} width={16} /> : null}</div>
+            <div className="spcont">
+              {opt.icon && opt.type=="svg" ? <Icon icon={opt.icon} width={16} /> : null}
+              {opt.icon && opt.type=="fa" ? <Icon fafa={opt.icon} width={16} /> : null}
+              {opt.icon && opt.type==null ? <Icon src={opt.icon} width={16} /> : null}
+            </div>
             <div className="nopt">{opt.name}</div>
             {opt.opts ? <Icon className="micon rightIcon" fafa="faChevronRight" width={10} color="#999" /> : null}
             {opt.dot ? <Icon className="micon dotIcon" fafa="faCircle" width={4} height={4} /> : null}
