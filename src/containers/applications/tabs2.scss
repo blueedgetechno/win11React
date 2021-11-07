@@ -6,13 +6,26 @@
 }
 
 .aboutApp {
+  --bg1: #eee;
+  --bg2: #f9f9f9;
+
   top: 12%;
   left: 30%;
   width: auto;
   height: auto;
   border-radius: 4px;
-  background: #eee;
+  color: var(--dark-txt);
+  background: var(--bg1);
   z-index: 0;
+}
+
+body[data-theme="dark"] .aboutApp {
+  --bg1: #202020;
+  --bg2: #111;
+}
+
+.aboutTop {
+  background: var(--bg2);
 }
 
 rediv {
@@ -262,7 +275,7 @@ rediv {
 .abCont {
   font-size: 12px;
   width: 24rem;
-  color: #222;
+  color: var(--txt-col);
   font-weight: 500;
 
   mark {
@@ -272,7 +285,7 @@ rediv {
   }
 
   a {
-    color: #0068ff;
+    color: var(--clrPrm);
     text-decoration: underline;
     font-weight: 500;
   }
@@ -285,15 +298,16 @@ rediv {
   align-items: flex-end;
 
   div {
-    border: solid 1px #007efb;
+    border: solid 1px var(--clrPrm);
     padding: 2px 24px;
     border-radius: 4px;
     cursor: pointer;
+    background: var(--bg2);
 
     &[data-allow="false"] {
-      color: #888;
+      color: var(--sat-txt);
       cursor: not-allowed;
-      background: #ddd;
+      background: var(--comp-txt);
     }
   }
 }
