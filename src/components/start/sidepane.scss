@@ -173,6 +173,12 @@ body[data-theme="dark"] .sidePane {
 
 // Widgets
 .widPaneCont {
+  --bg1: rgba(234, 234, 234, 0.25);
+  --bg2: rgba(255, 255, 255, 0.5);
+  --clr1: #fefefe;
+  --clrWeather: #fff3be;
+  --topStoriesClr: #c6a0ff;
+
   position: absolute;
   top: 0;
   left: 0;
@@ -181,8 +187,8 @@ body[data-theme="dark"] .sidePane {
   margin: 6px;
   overflow: hidden;
   transform: translateX(0);
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
   z-index: 9999;
 
@@ -192,11 +198,20 @@ body[data-theme="dark"] .sidePane {
   }
 }
 
+body[data-theme="dark"] .widPaneCont {
+  --bg1: rgba(31, 31, 31, 0.25);
+  --bg2: rgba(255, 255, 255, 0.1);
+  --clr1: #2e2e2e;
+  --clrWeather: #413d2b;
+  --topStoriesClr: #35264c;
+}
+
 .WidPane {
   width: 100%;
   border-radius: 8px;
   height: calc(100% - 12px);
-  background: rgba(255, 255, 255, 0.25);
+  color: var(--dark-txt);
+  background: var(--bg1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -208,14 +223,14 @@ body[data-theme="dark"] .sidePane {
     display: flex;
     padding: 18px 28px 0 0;
     justify-content: flex-end;
-    color: #222;
+    color: var(--txt-col);
   }
 
   .widTime {
     display: flex;
     justify-content: center;
     font-size: 1.5em;
-    color: #222;
+    color: var(--txt-col);
   }
 
   .widgetCont {
@@ -234,10 +249,10 @@ body[data-theme="dark"] .sidePane {
       padding: 12px 14px;
       border-radius: 6px;
       box-sizing: border-box;
-      background: rgb(255, 255, 255);
-      background: -webkit-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
-      background: -o-linear-gradient(top left, #fefefe 0%, #fff3be 80%);
-      background: linear-gradient(to bottom right, #fefefe 0%, #fff3be 80%);
+      background: var(--clr1);
+      background: -webkit-linear-gradient(top left, var(--clr1) 0%, var(--clrWeather) 80%);
+      background: -o-linear-gradient(top left, var(--clr1) 0%, var(--clrWeather) 80%);
+      background: linear-gradient(to bottom right, var(--clr1) 0%, var(--clrWeather) 80%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -285,7 +300,7 @@ body[data-theme="dark"] .sidePane {
       .wthunit {
         margin: 0 2px;
         font-size: 0.72em;
-        color: rgba(5, 5, 5, 0.4);
+        color: var(--sat-txt);
         padding-bottom: 6px;
       }
     }
@@ -312,7 +327,7 @@ body[data-theme="dark"] .sidePane {
 
         .uicon {
           margin-right: 2px;
-          color: rgba(0, 0, 0, 0.8);
+          color: var(--med-txt);
         }
       }
     }
@@ -327,7 +342,7 @@ body[data-theme="dark"] .sidePane {
         width: 23%;
         border-radius: 4px;
         padding: 4px 0;
-        background: rgba(255, 255, 255, 0.4);
+        background: var(--bg2);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -341,7 +356,7 @@ body[data-theme="dark"] .sidePane {
 
         .tempCont {
           font-size: 1.36em;
-          color: #3b3b3b;
+          color: var(--med-txt);
         }
       }
     }
@@ -358,7 +373,7 @@ body[data-theme="dark"] .sidePane {
         width: 100%;
         height: 100%;
         margin: 4px 4px 6px;
-        background: #fefefe;
+        background: var(--clr1);
         border-radius: 6px;
         padding: 8px 12px 0;
         overflow: hidden;
@@ -367,7 +382,7 @@ body[data-theme="dark"] .sidePane {
           width: 100%;
           font-size: 0.6em;
           letter-spacing: 1px;
-          color: #666;
+          color: var(--gray-txt);
           margin-bottom: 16px;
           display: flex;
           justify-content: space-between;
@@ -388,7 +403,7 @@ body[data-theme="dark"] .sidePane {
             }
 
             .stName {
-              color: #4a4a4a;
+              color: var(--med-txt);
               padding-top: 1px;
             }
           }
@@ -407,7 +422,7 @@ body[data-theme="dark"] .sidePane {
             margin-left: 8px;
             font-size: 0.8em;
             background: #eb3535;
-            color: #fefefe;
+            color: var(--clr1);
 
             &[data-pos="true"] {
               background: #09d031;
@@ -418,7 +433,7 @@ body[data-theme="dark"] .sidePane {
 
       .short1 {
         position: relative;
-        background-color: #fefefe00;
+        background-color: transparent;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -454,11 +469,11 @@ body[data-theme="dark"] .sidePane {
 
         .shName {
           margin-bottom: 4px;
-          color: #fefefe;
+          color: var(--clr1);
 
           div:nth-child(2) {
             font-weight: 600;
-            color: #fefefe;
+            color: var(--clr1);
           }
         }
 
@@ -473,7 +488,7 @@ body[data-theme="dark"] .sidePane {
         .dayInfo {
           max-height: 64px;
           font-size: 0.72em;
-          color: #fefefe;
+          color: var(--clr1);
           margin-top: auto;
           line-height: 14px;
           overflow: hidden;
@@ -487,7 +502,7 @@ body[data-theme="dark"] .sidePane {
         a {
           text-decoration: none;
           font-size: 0.64em;
-          color: #c1e2ff;
+          color: var(--comp-txt);
           text-align: right;
         }
       }
@@ -509,10 +524,10 @@ body[data-theme="dark"] .sidePane {
   position: relative;
   border-radius: 4px;
   padding: 12px;
-  background: rgb(209, 209, 209);
-  background: -webkit-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
-  background: -o-linear-gradient(top left, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
-  background: linear-gradient(to bottom right, rgba(230, 230, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  background: var(--comp-txt);
+  background: -webkit-linear-gradient(top left, var(--topStoriesClr) 0%, var(--comp-txt) 100%);
+  background: -o-linear-gradient(top left, var(--topStoriesClr) 0%, var(--comp-txt) 100%);
+  background: linear-gradient(to bottom right, var(--topStoriesClr) 0%, var(--comp-txt) 100%);
 
   &::after {
     content: "source: saurav.tech/NewsAPI";
@@ -521,11 +536,12 @@ body[data-theme="dark"] .sidePane {
     right: 0;
     font-size: 0.64em;
     padding: 6px;
-    color: #0e2d67;
+    color: var(--clrPrm);
+    opacity: 0.67;
   }
 
   .topNewsText {
-    color: #1f202e;
+    color: var(--txt-col);
     font-size: 0.72em;
     font-weight: 600;
   }
@@ -541,7 +557,7 @@ body[data-theme="dark"] .sidePane {
       padding: 16px 12px 0 0;
 
       .tpSource {
-        color: #666;
+        color: var(--gray-txt);
         font-size: 0.6em;
       }
 
@@ -549,7 +565,7 @@ body[data-theme="dark"] .sidePane {
         margin: 4px 0;
         font-size: 0.76em;
         font-weight: 600;
-        color: #1d1d25;
+        color: var(--txt-col);
         height: 48px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -576,7 +592,7 @@ body[data-theme="dark"] .sidePane {
   padding: 0 12px;
   border-radius: 6px;
   overflow: hidden;
-  background-color: #e6e6e6;
+  background-color: var(--comp-txt);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -589,10 +605,10 @@ body[data-theme="dark"] .sidePane {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgb(255, 255, 255);
-    background: -webkit-linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
-    background: -o-linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
-    background: linear-gradient(hsl(0deg 12% 90% / 0%) 50%, var(--backgrad) 90%);
+    background: var(--dark-txt);
+    background: -webkit-linear-gradient(transparent 50%, var(--backgrad) 90%);
+    background: -o-linear-gradient(transparent 50%, var(--backgrad) 90%);
+    background: linear-gradient(transparent 50%, var(--backgrad) 90%);
     z-index: 0;
   }
 
@@ -602,17 +618,17 @@ body[data-theme="dark"] .sidePane {
     padding: 0 12px 12px 0;
 
     .tpSource {
-      color: #222;
+      color: var(--txt-col);
       font-size: 0.6em;
       font-weight: 500;
-      text-shadow: 0 0 4px white;
+      text-shadow: 0 0 4px var(--comp-txt);
     }
 
     .tpArticle {
       margin-top: 4px;
       font-size: 0.8em;
       font-weight: 600;
-      color: #111;
+      color: var(--txt-col);
       max-height: 56px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -636,10 +652,10 @@ body[data-theme="dark"] .sidePane {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgb(255, 255, 255);
-      background: -webkit-linear-gradient(right, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
-      background: -o-linear-gradient(right, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
-      background: linear-gradient(to left, hsl(0deg 12% 90% / 0%) 0%, var(--backgrad) 60%);
+      background: var(--dark-txt);
+      background: -webkit-linear-gradient(right, transparent 0%, var(--backgrad) 60%);
+      background: -o-linear-gradient(right, transparent 0%, var(--backgrad) 60%);
+      background: linear-gradient(to left, transparent 0%, var(--backgrad) 60%);
       z-index: 0;
     }
 
@@ -659,7 +675,7 @@ body[data-theme="dark"] .sidePane {
       .tpdesc {
         font-size: 0.72em;
         font-weight: 400;
-        color: #4d4d4d;
+        color: var(--med-txt);
         max-height: 90px;
         overflow: hidden;
         text-overflow: ellipsis;
