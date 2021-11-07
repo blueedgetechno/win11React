@@ -201,8 +201,8 @@ body[data-theme="dark"] .sidePane {
 body[data-theme="dark"] .widPaneCont {
   --bg1: rgba(31, 31, 31, 0.25);
   --bg2: rgba(255, 255, 255, 0.1);
-  --clr1: #2e2e2e;
-  --clrWeather: #413d2b;
+  --clr1: #534f88;
+  --clrWeather: #1b2257;
   --topStoriesClr: #35264c;
 }
 
@@ -373,7 +373,7 @@ body[data-theme="dark"] .widPaneCont {
         width: 100%;
         height: 100%;
         margin: 4px 4px 6px;
-        background: var(--clr1);
+        background: var(--clrWeather);
         border-radius: 6px;
         padding: 8px 12px 0;
         overflow: hidden;
@@ -469,11 +469,10 @@ body[data-theme="dark"] .widPaneCont {
 
         .shName {
           margin-bottom: 4px;
-          color: var(--clr1);
+          color: #eee;
 
           div:nth-child(2) {
             font-weight: 600;
-            color: var(--clr1);
           }
         }
 
@@ -488,7 +487,7 @@ body[data-theme="dark"] .widPaneCont {
         .dayInfo {
           max-height: 64px;
           font-size: 0.72em;
-          color: var(--clr1);
+          color: #ddd;
           margin-top: auto;
           line-height: 14px;
           overflow: hidden;
@@ -502,7 +501,7 @@ body[data-theme="dark"] .widPaneCont {
         a {
           text-decoration: none;
           font-size: 0.64em;
-          color: var(--comp-txt);
+          color: #c3c3c3;
           text-align: right;
         }
       }
