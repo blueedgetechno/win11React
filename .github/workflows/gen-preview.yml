@@ -31,7 +31,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        repository: win11bot/win11bot
+        repository: win11bot/temp
         path: ./build
      
     - name: Deploy to gh-pages
