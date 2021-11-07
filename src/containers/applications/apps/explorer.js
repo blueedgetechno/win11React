@@ -18,7 +18,7 @@ export const Explorer = ()=>{
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
-        name="File Explorer" bg="#f0f0f0"/>
+        name="File Explorer"/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow grid place-items-center text-4xl font-semibold text-gray-600">

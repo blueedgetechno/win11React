@@ -175,3 +175,14 @@ export const changeTheme = ()=>{
   store.dispatch({type: "PANETHEM", payload: icon})
   store.dispatch({type: "WALLSET", payload: thm=="light"?0:1})
 }
+
+export const loadSettings = ()=>{
+  var sett = localStorage.getItem("setting") || "{}"
+  sett = JSON.parse(sett)
+
+  if(sett.person==null) sett = store.getState().setting
+
+  if(sett.person.theme!="light") changeTheme()
+
+  store.dispatch({type: "SETTLOAD", payload: sett})
+}

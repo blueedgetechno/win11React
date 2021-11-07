@@ -9,13 +9,11 @@ export const WidPane = () => {
   const widget = useSelector((state) => state.widpane);
   const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
-    {
-      if (theme == "light") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
-      if (theme == "dark") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
-    }
-  };
+    if (theme=="light") return `hsl(${Math.floor(Math.random()*360)}deg 36% 84%)`;
+    if (theme=="dark") return `hsl(${Math.floor(Math.random()*360)}deg 36% 16%)`;
+  }
+
   useEffect(async () => {
-    // console.log(process.env.REACT_APP_DEVELOPEMENT);
     if (process.env.REACT_APP_DEVELOPEMENT != "development") {
       if (!widget.updated && !widget.hide) {
         var tmpWdgt = await fetchApi(widget);
