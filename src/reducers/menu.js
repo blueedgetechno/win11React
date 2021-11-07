@@ -10,6 +10,7 @@ const defState = {
       {
         name: "View",
         icon: "view",
+        type: "svg",
         opts: [
           {
             name: "Large icons",
@@ -40,6 +41,7 @@ const defState = {
       {
         name: "Sort by",
         icon: "sort",
+        type: "svg",
         opts: [
           {
             name: "Name",
@@ -61,6 +63,7 @@ const defState = {
       {
         name: "Refresh",
         action: "refresh",
+        type: "svg",
         icon: "refresh",
       },
       {
@@ -69,7 +72,7 @@ const defState = {
       {
         name: "New",
         icon: "New",
-        // dsb: true,
+        type: "svg",
         opts: [
           {
             name: "Folder",
@@ -91,10 +94,12 @@ const defState = {
       {
         name: "Display settings",
         icon: "display",
+        type: "svg",
       },
       {
         name: "Personalize",
         icon: "personalize",
+        type: "svg",
       },
       {
         type: "hr",
@@ -112,7 +117,7 @@ const defState = {
       {
         name: "About",
         action: "DESKABOUT",
-        icon: "info",
+        icon: "win/info",
         payload: true,
       },
     ],
