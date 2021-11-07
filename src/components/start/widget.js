@@ -6,12 +6,14 @@ import axios from 'axios';
 
 export const WidPane = () => {
   const dispatch = useDispatch();
-  const widget = useSelector(state => state.widpane);
-
+  const widget = useSelector((state) => state.widpane);
+  const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
-    return `hsl(${Math.floor(Math.random()*360)}deg 36% 84%)`;
-  }
-
+    {
+      if (theme == "light") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
+      if (theme == "dark") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
+    }
+  };
   useEffect(async () => {
     // console.log(process.env.REACT_APP_DEVELOPEMENT);
     if (process.env.REACT_APP_DEVELOPEMENT != "development") {
