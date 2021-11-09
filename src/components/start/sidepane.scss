@@ -187,8 +187,6 @@ body[data-theme="dark"] .sidePane {
   margin: 6px;
   overflow: hidden;
   transform: translateX(0);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
   transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
   z-index: 9999;
 
@@ -212,6 +210,8 @@ body[data-theme="dark"] .widPaneCont {
   height: calc(100% - 12px);
   color: var(--dark-txt);
   background: var(--bg1);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
