@@ -2,7 +2,7 @@ name: Generate Preview2
 
 on:
   pull_request_target:
-    types: [synchronize, reopened, edited]
+    types: [synchronize, reopened]
 
   
   

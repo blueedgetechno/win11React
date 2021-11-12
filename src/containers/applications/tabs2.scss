@@ -3,6 +3,8 @@
   left: 8%;
   width: 18%;
   height: 50%;
+  min-width: 320px;
+  min-height: 500px;
 }
 
 .aboutApp {
@@ -190,10 +192,6 @@ rediv {
 }
 
 .calcApp[data-size="mini"] {
-  .msrVal {
-    display: none;
-  }
-
   .valCont {
     font-size: 3em;
   }
