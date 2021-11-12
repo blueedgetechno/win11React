@@ -116,8 +116,10 @@
     width: 176px;
     height: 100%;
     margin: 0 4px;
+    background: var(--bg1);
+    color: var(--txt-col);
     border-radius: 4px 4px 0 0;
-    box-shadow: 2px 0 2px rgba(80, 80, 80, 0.2);
+    box-shadow: 2px 0 2px var(--shd);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,7 +127,7 @@
     font-size: 0.72em;
 
     .uicon {
-      color: #505050;
+      color: var(--gray-txt);
     }
   }
 }
@@ -138,12 +140,29 @@
   scroll-behavior: smooth;
 }
 
+.addressBar{
+  background: var(--bg1);
+
+  .uicon{
+    color: var(--med-txt);
+  }
+}
+
 .addCont {
   width: 80%;
 
   input {
     box-sizing: border-box;
+    background: var(--ipbar);
+    color: var(--txt-col);
+    border-radius: 4px;
+    border: solid 1px var(--comp-txt);
   }
+}
+
+.bookbar{
+  background: var(--bg1);
+  color: var(--txt-col);
 }
 
 .cmdcont{
