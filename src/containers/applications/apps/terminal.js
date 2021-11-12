@@ -142,7 +142,11 @@ export const WnTerminal = ()=>{
     }else if (type=="title") {
       setWntitle(arg.length?arg:"Terminal");
     }else if (type=="hostname") {
-      tmpStack.push("Blue");
+      tmpStack.push("blue");
+    }else if (type=="blue") {
+      tmpStack.push("blueedgetechno");
+    }else if (type=="dev") {
+      tmpStack.push("https://dev.blueedge.me/");  
     }else if (type=="ver") {
       tmpStack.push("OS [Version 10.0.22000.51]");
     }else if (type=="systeminfo") {
