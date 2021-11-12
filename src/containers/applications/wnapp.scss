@@ -3,8 +3,7 @@
 */
 @font-face {
   font-family: "Spotify";
-  src: url('./apps/assets/spotify.woff2') format("woff2"),
-      url('./apps/assets/spotify.ttf') format("truetype");
+  src: url("./apps/assets/spotify.woff2") format("woff2"), url("./apps/assets/spotify.ttf") format("truetype");
 }
 
 body {
@@ -28,7 +27,22 @@ body[data-theme="dark"] {
 }
 
 .edgeBrowser {
-  background: rgb(231, 234, 236);
+  --bg0: #e7eaec;
+  --bg1: #f7fafc;
+  --ipbar: #fefefe;
+  --shd: rgba(80, 80, 80, 0.2);
+  background: var(--bg0);
+}
+
+body[data-theme="dark"] .edgeBrowser {
+  --bg0: #222228;
+  --ipbar: #222228;
+  --bg1: rgb(45, 45, 51);
+  --shd: rgba(0, 0, 0, 0.3);
+
+  .edgenavicon{
+    filter: invert(1);
+  }
 }
 
 .vscodeWn {
@@ -56,7 +70,6 @@ body[data-theme="dark"] .wnstore {
   --rib-bg: #2f2e30b8;
   --rib2-bg: #2c2f32;
   --det-bg: #282c32;
-
   background: var(--bg-color);
 }
 
@@ -74,7 +87,6 @@ body[data-theme="dark"] .wnstore {
   --bg3: #f9f9f9;
   --err-bg: rgb(255, 255, 255, 0.1);
   --err-txt: #999;
-
   background: var(--bg1);
   color: var(--dark-txt);
   -webkit-backdrop-filter: blur(21px);
