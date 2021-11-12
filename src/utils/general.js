@@ -218,7 +218,7 @@ export const ToolBar = (props)=>{
   return (
     <div className="toolbar" style={{
       background: props.bg
-    }} data-float={props.float!=null}>
+    }} data-float={props.float!=null} data-noinvert={props.noinvert!=null}>
       <div className="topInfo flex flex-grow items-center"
         data-float={props.float!=null} onClick={toolClick}>
         <Icon src={props.icon} width={14}/>

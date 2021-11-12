@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import './tabs.scss';
 import './tabs2.scss';
-import './wnapp.css';
+import './wnapp.scss';
 
 export * from './apps/whiteboard';
 export * from './apps/edge';

@@ -29,7 +29,10 @@
 }
 
 .startMenu {
+  --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: rgba(255, 255, 255, 0.9);
   --roundRad: 6px;
+
   position: absolute;
   bottom: 10px;
   width: 520px;
@@ -45,19 +48,25 @@
     left: 8px;
   }
 
-  background: rgba(255, 255, 255, 0.88);
+  color: var(--dark-txt);
+  background: var(--bg1);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-radius: var(--roundRad);
   overflow: hidden;
-  transition: all .2s cubic-bezier(.79,.14,.15,.86);
+  transition: all 0.2s cubic-bezier(0.79, 0.14, 0.15, 0.86);
   z-index: 9999;
 
-  &[data-hide='true'] {
+  &[data-hide="true"] {
     transform: translateY(100px);
     opacity: 0;
     pointer-events: none;
   }
+}
+
+body[data-theme="dark"] .startMenu {
+  --bg1: rgba(36, 36, 36, 0.8);
+  --bg2: rgba(255, 255, 255, 0.1);
 }
 
 .allCont,
@@ -66,11 +75,11 @@
   width: 520px;
   height: 480px;
 
-  &[data-allapps='false'] {
+  &[data-allapps="false"] {
     transition: ease-in-out 200ms;
   }
 
-  &[data-allapps='true'] {
+  &[data-allapps="true"] {
     // margin-left: -520px;
     transform: translateX(-520px);
     transition: ease-in-out 200ms;
@@ -92,7 +101,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: rgba(175, 175, 175, 0.1);
+  background: rgba(0, 0, 0, 0.1); // fine in dark mode too :)
 }
 
 .profile {
@@ -104,13 +113,12 @@
     margin-left: 12px;
     font-size: 0.7em;
     font-weight: 400;
-    color: #111;
+    color: var(--txt-col);
   }
 }
 
 .menuUp {
   padding: 36px 48px;
-  // background: rgba(255, 255, 255, 0.84);
 }
 
 .stAcbar {
@@ -120,11 +128,11 @@
   .gpname {
     font-weight: 600;
     font-size: 0.74em;
-    color: #111;
+    color: var(--dark-col);
   }
 
   .gpbtn {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg2);
     padding: 0 8px 2px;
     font-size: 0.64em;
     font-weight: 400;
@@ -137,7 +145,7 @@
     svg {
       margin-left: 4px;
       padding-top: 2px;
-      color: #414141;
+      color: var(--med-txt);
     }
 
     .chevLeft svg {
@@ -169,11 +177,10 @@
       position: absolute;
       top: -2px;
       right: -2px;
-      width: 3px;
-      height: 3px;
-      border: solid 1px #88b7ee;
+      width: 4px;
+      height: 4px;
       border-radius: 6px;
-      background: #1372e3;
+      background: var(--clrPrm);
     }
 
     .pnIcon::after {
@@ -183,7 +190,7 @@
       height: 0;
       top: -12px;
       padding: 0 42px 60px;
-      background: rgba(255, 255, 255, 0);
+      background: transparent;
       z-index: -1;
       transition: all ease-in-out 100ms;
       border-radius: 4px;
@@ -192,7 +199,7 @@
     .appName {
       width: 24px;
       display: flex;
-      color: #2f2f2f;
+      color: var(--txt-col);
       margin-top: 4px;
       font-weight: 500;
       font-size: 0.64em;
@@ -202,7 +209,7 @@
       cursor: default;
     }
 
-    &:nth-child(6n+1) {
+    &:nth-child(6n + 1) {
       width: 10%;
       align-items: flex-start;
     }
@@ -214,7 +221,7 @@
   }
 
   .pnApp:hover .pnIcon::after {
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--bg2);
   }
 }
 
@@ -233,7 +240,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 240px 184px;
-  grid-template-rows: repeat(3,minmax(0,1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
 
   .rnApp {
     display: flex;
@@ -245,13 +252,13 @@
       margin: 0 12px;
 
       .appName {
-        color: #2f2f2f;
+        color: var(--txt-col);
         font-size: 0.7em;
         font-weight: 700;
       }
 
       .timeUsed {
-        color: #535353;
+        color: var(--gray-txt);
         font-size: 0.6em;
         font-weight: 500;
       }
@@ -279,7 +286,7 @@
   transition: all ease-in-out 200ms;
   transform-origin: center;
 
-  &[data-alpha='true'] {
+  &[data-alpha="true"] {
     transform: scale(0);
     opacity: 0;
     pointer-events: none;
@@ -288,7 +295,7 @@
   &::-webkit-scrollbar {
     display: none;
     width: 1.6px;
-    background-color: transparent;
+    background: transparent;
   }
 
   &:hover::-webkit-scrollbar {
@@ -298,7 +305,7 @@
   &::-webkit-scrollbar-thumb {
     width: 1.6px;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background: var(--sat-txt);
   }
 
   .allApp {
@@ -318,7 +325,7 @@
       left: 0;
       z-index: -1;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--bg2);
     }
 
     .ltName {
@@ -332,7 +339,7 @@
       text-align: left;
       width: 20%;
       padding-left: 4px;
-      color: #2f2f2f;
+      color: var(--txt-col);
       font-weight: 500;
       font-size: 0.6em;
       margin: 0 12px;
@@ -351,7 +358,7 @@
   transform-origin: center;
   transition: all ease-in-out 200ms;
 
-  &[data-alpha='false'] {
+  &[data-alpha="false"] {
     opacity: 0;
     transform: scale(2);
     pointer-events: none;
@@ -363,9 +370,9 @@
   width: 160px;
   height: 280px;
   display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  grid-template-rows: repeat(7,minmax(0,1fr));
-  color: #010101;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  color: var(--txt-col);
   cursor: pointer;
 
   .allApp {
@@ -375,6 +382,6 @@
 
   .dullApp {
     cursor: default;
-    color: rgba(0, 0, 0, 0.36);
+    color: var(--sat-txt);
   }
 }

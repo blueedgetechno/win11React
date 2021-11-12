@@ -115,21 +115,22 @@ export const EdgeMenu = ()=>{
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">
           <Icon src={wnapp.icon} width={14} margin="0 6px"/>
-          <div className="btab bg-gray-100">
+          <div className="btab">
             <div>New Tab</div>
             <Icon fafa="faTimes" click={wnapp.action} payload="close" width={10}/>
           </div>
         </div>
         <div className="restWindow flex-grow flex flex-col">
-          <div
-            className="addressBar w-full bg-gray-100 h-10 flex items-center">
-            <Icon src="left" onClick={action} payload={4} width={14} ui margin="0 8px"/>
-            <Icon src="right" onClick={action} payload={5} width={14} ui margin="0 8px"/>
-            <Icon fafa="faRedo" onClick={action} payload={0} width={14} color="#343434" margin="0 8px"/>
-            <Icon fafa="faHome" onClick={action} payload={1} width={18} color="#343434" margin="0 16px"/>
+          <div className="addressBar w-full h-10 flex items-center">
+            <Icon className="edgenavicon" src="left" onClick={action}
+              payload={4} width={14} ui margin="0 8px"/>
+            <Icon className="edgenavicon" src="right" onClick={action}
+              payload={5} width={14} ui margin="0 8px"/>
+            <Icon fafa="faRedo" onClick={action} payload={0} width={14} margin="0 8px"/>
+            <Icon fafa="faHome" onClick={action} payload={1} width={18} margin="0 16px"/>
             <div className="addCont relative flex items-center">
               <input
-                className="ltShad w-full bg-gray-0 h-6 px-4 text-gray-900"
+                className="w-full h-6 px-4"
                 onKeyDown={action}
                 onChange={typing}
                 data-payload={3}
@@ -141,7 +142,7 @@ export const EdgeMenu = ()=>{
                   payload={2} width={14} margin="0 10px"/>
             </div>
           </div>
-          <div className="w-full bg-gray-100 py-2">
+          <div className="w-full bookbar py-2">
             <div className="flex">
               {Object.keys(iframes).map(mark=>{
                 return(

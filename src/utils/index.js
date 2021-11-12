@@ -33,7 +33,7 @@ export const pinnedApps = icons.filter(x => pinned.includes(x.name)).sort((a, b)
 
 export const recentApps = icons.filter(x => recent.includes(x.name)).sort((a, b) => {
   return recent.indexOf(a.name) > recent.indexOf(b.name) ? 1 : -1;
-});;
+});
 
 export const allApps = icons.filter(app => {
   return app.type == 'app'

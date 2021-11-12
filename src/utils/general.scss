@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  // background: inherit;
 
   &[data-float="false"]{
     z-index: 10;
@@ -198,4 +199,29 @@
 
 .imageCont.rounded{
   overflow: hidden;
+}
+
+body[data-theme="dark"] .toolbar[data-noinvert="false"]{
+
+  .snapcont{
+    background: #222;
+
+    .snapper{
+      background: #444;
+      border: solid 1px #333;
+      &:hover{
+        background: #0066ff;
+      }
+    }
+  }
+
+  .appFullName{
+    color: #fefefe;
+  }
+
+  .actbtns{
+    .uicon img{
+      filter: invert(1);
+    }
+  }
 }

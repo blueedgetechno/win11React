@@ -87,12 +87,12 @@ const Taskbar = ()=>{
       <div className="taskcont">
         <div className="tasksCont" data-menu="task" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
-            <Icon className="tsIcon" src='home' width={22} click='STARTOGG'/>
+            <Icon className="tsIcon hvlight" src='home' width={22} click='STARTOGG'/>
             {tasks.search?(
-              <Icon className="tsIcon" src='search' width={22} click='STARTSRC'/>
+              <Icon className="tsIcon hvlight searchIcon" src='search' width={22} click='STARTSRC'/>
             ):null}
             {tasks.widgets?(
-              <Icon className="tsIcon" src='widget' width={22} click='WIDGTOGG'/>
+              <Icon className="tsIcon hvlight" src='widget' width={22} click='WIDGTOGG'/>
             ):null}
             {tasks.apps.map((task,i)=>{
               var isHidden = apps[task.icon].hide;
@@ -100,7 +100,7 @@ const Taskbar = ()=>{
               return (
                 <div onMouseOver={(!isActive && !isHidden && showPrev) || null}
                   value={task.icon}>
-                  <Icon key={i} className="tsIcon" width={22}
+                  <Icon key={i} className="tsIcon hvlight" width={22}
                     open={isHidden?null:true} click={task.action}
                     active={isActive} payload="togg" src={task.icon} />
                 </div>
@@ -114,7 +114,7 @@ const Taskbar = ()=>{
               return key!="hz" && !apps[key].task && !apps[key].hide?(
                 <div onMouseOver={(!isActive && showPrev) || null}
                   value={apps[key].icon}>
-                  <Icon key={i} className="tsIcon" width={22}
+                  <Icon key={i} className="tsIcon hvlight" width={22}
                       active={isActive} click={apps[key].action}
                       payload="togg" open="true" src={apps[key].icon}/>
                 </div>
