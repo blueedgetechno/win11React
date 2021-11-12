@@ -1,7 +1,7 @@
 const defState = {
   hide: true,
-  top: 272,
-  left: 430,
+  top: 80,
+  left: 360,
   opts: "desk",
   attr: null,
   dataset: null,
@@ -9,7 +9,8 @@ const defState = {
     desk: [
       {
         name: "View",
-        icon: "ui/view",
+        icon: "view",
+        type: "svg",
         opts: [
           {
             name: "Large icons",
@@ -39,7 +40,8 @@ const defState = {
       },
       {
         name: "Sort by",
-        icon: "ui/sort",
+        icon: "sort",
+        type: "svg",
         opts: [
           {
             name: "Name",
@@ -60,16 +62,17 @@ const defState = {
       },
       {
         name: "Refresh",
-        icon: "ui/refresh",
         action: "refresh",
+        type: "svg",
+        icon: "refresh",
       },
       {
         type: "hr",
       },
       {
         name: "New",
-        icon: "ui/new",
-        // dsb: true,
+        icon: "New",
+        type: "svg",
         opts: [
           {
             name: "Folder",
@@ -90,12 +93,13 @@ const defState = {
       },
       {
         name: "Display settings",
-        icon: "ui/display",
+        icon: "display",
+        type: "svg",
       },
       {
         name: "Personalize",
-        icon: "ui/personalize",
-        // dsb: true,
+        icon: "personalize",
+        type: "svg",
       },
       {
         type: "hr",
@@ -115,13 +119,6 @@ const defState = {
         action: "DESKABOUT",
         icon: "win/info",
         payload: true,
-      },
-      {
-        type: "hr",
-      },
-      {
-        name: "Show more options",
-        icon: "ui/more",
       },
     ],
     task: [

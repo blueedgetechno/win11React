@@ -21,6 +21,7 @@ import {
   CalnWid
 } from './components/start';
 
+import {loadSettings} from './actions';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft.js';
 
@@ -85,6 +86,7 @@ function App() {
 
   useEffect(()=>{
     if(!window.onstart){
+      loadSettings()
       window.onstart = setTimeout(()=>{
         console.log("prematurely loading ( ﾉ ﾟｰﾟ)ﾉ");
         dispatch({type: "WALLBOOTED"})

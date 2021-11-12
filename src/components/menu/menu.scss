@@ -1,18 +1,21 @@
 .actmenu {
+  --bg1: rgba(249, 249, 249, 0.9);
+  --bg2: rgba(0, 0, 0, 0.08);
+
   position: absolute;
   width: 310px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
+  background: var(--bg1);
+  backdrop-filter: contrast(2) saturate(2) blur(20px);
   z-index: 10000;
-  opacity:1;
-  pointer-events:all;
-  border: solid 1px #ccc9;
+  opacity: 1;
+  pointer-events: all;
+  // border: solid 1px var(--comp-txt);
   border-radius: 8px;
   transition: opacity 0.1s ease;
 
   &[data-hide="true"] {
-    opacity:0;
-    pointer-events:none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &[data-left="false"] .minimenu {
@@ -21,17 +24,23 @@
   }
 }
 
+body[data-theme="dark"] .actmenu {
+  --bg1: rgba(34, 36, 47, 0.8);
+  --bg2: rgba(255, 255, 255, 0.08);
+}
+
 .minimenu {
   position: absolute;
   display: none;
   top: 0;
   left: 99%;
   min-width: 200px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg1);
   z-index: 9999;
   padding: 4px 0;
-  border: solid 1px #ccc9;
+  // border: solid 1px var(--comp-txt);
   animation: fadein 600ms ease-in-out;
+  // backdrop-filter: contrast(1) saturate(2) blur(20px);
   border-radius: 8px;
 }
 
@@ -40,7 +49,7 @@
   box-sizing: border-box;
   position: relative;
   width: calc(100% - 8px);
-  padding: 4px 32px;
+  padding: 4px 6px;
   font-size: 12px;
   cursor: default;
   margin: 6px;
@@ -48,42 +57,34 @@
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #333;
+  color: var(--txt-col);
   transition: all 0.1s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: var(--bg2);
 
     .minimenu {
       display: block;
     }
   }
 
-  &[data-dsb="true"] {
-    color: #aaa;
-    font-weight: 400;
+  .spcont{
+    width: 16px;
+    margin-right: 12px;
   }
 
-  .uicon {
+  .micon{
     position: absolute;
-    top: 8px;
-    left: 8px;
   }
 
-  .prtclk {
-    left: unset;
+  .rightIcon {
     right: 8px;
   }
 
   .dotIcon,
   .checkIcon {
-    top: 8px;
     left: 8px;
-    right: unset;
-  }
-
-  .checkIcon {
-    top: 6px;
+    color: var(--med-txt);
   }
 }
 
