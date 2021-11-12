@@ -26,7 +26,7 @@ body[data-theme="dark"] {
 .battery {
   display: inline-block;
   position: relative;
-  margin-top: 2px;
+  display: flex;
 
   i {
     color: #232323;
@@ -34,7 +34,7 @@ body[data-theme="dark"] {
 
   .uicon {
     position: absolute;
-    margin-top: 24%;
+    margin-top: -24%;
     margin-left: -12%;
     z-index: 1;
     filter: drop-shadow(1px 1px #fefefe) invert(0.14);
@@ -42,14 +42,12 @@ body[data-theme="dark"] {
 }
 
 .battery .fa {
-  font: normal normal normal 14px/2 FontAwesome;
+  font: normal normal normal FontAwesome;
+  font-size: 13px;
 }
 
 .battery .animate {
-  width: 88%;
   position: absolute;
-  left: 0;
-  top: 0;
   overflow: hidden;
   z-index: 0;
   -webkit-transition: all 0.5s ease;
