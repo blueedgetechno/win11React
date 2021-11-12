@@ -15,7 +15,7 @@ export const Notepad = ()=>{
        zIndex: wnapp.z
        }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
-        name="Untitled - Notepad"/>
+        name="Untitled - Notepad" noinvert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex text-xss pb-1 border-gray-200 border-0 border-b-2 border-solid">
           <div className="mx-2">File</div>

@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background: inherit;
+  // background: inherit;
 
   &[data-float="false"]{
     z-index: 10;
@@ -201,7 +201,7 @@
   overflow: hidden;
 }
 
-body[data-theme="dark"]{
+body[data-theme="dark"] .toolbar[data-noinvert="false"]{
 
   .snapcont{
     background: #222;
