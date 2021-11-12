@@ -180,7 +180,13 @@ export const loadSettings = ()=>{
   var sett = localStorage.getItem("setting") || "{}"
   sett = JSON.parse(sett)
 
-  if(sett.person==null) sett = store.getState().setting
+  if(sett.person==null){
+    sett = JSON.parse(JSON.stringify(store.getState().setting))
+    if (window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        sett.person.theme = "dark"
+    }
+  }
 
   if(sett.person.theme!="light") changeTheme()
 

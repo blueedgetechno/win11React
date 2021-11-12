@@ -3,17 +3,8 @@
 */
 @font-face {
   font-family: "Spotify";
-  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot");
-  src: url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.woff")
-      format("woff"),
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.ttf")
-      format("truetype"),
-    url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.svg#Spotify")
-      format("svg");
+  src: url('./apps/assets/spotify.woff2') format("woff2"),
+      url('./apps/assets/spotify.ttf') format("truetype");
 }
 
 body {
