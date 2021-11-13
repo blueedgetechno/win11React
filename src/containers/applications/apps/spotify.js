@@ -223,9 +223,8 @@ export const Spotify = ()=>{
   })
 
   return (
-    <div
-      className="spotify floatTab dpShad" data-size={wnapp.size}
-      data-max={wnapp.max} style={{
+    <div className="spotify floatTab dpShad"
+      data-size={wnapp.size} data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>

@@ -146,7 +146,7 @@ export const WnTerminal = ()=>{
     }else if (type=="blue") {
       tmpStack.push("blueedgetechno");
     }else if (type=="dev") {
-      tmpStack.push("https://dev.blueedge.me/");  
+      tmpStack.push("https://dev.blueedge.me/");
     }else if (type=="ver") {
       tmpStack.push("OS [Version 10.0.22000.51]");
     }else if (type=="systeminfo") {
@@ -262,9 +262,8 @@ export const WnTerminal = ()=>{
   })
 
   return (
-    <div
-      className="wnterm floatTab dpShad" data-size={wnapp.size}
-      data-max={wnapp.max} style={{
+    <div className="wnterm floatTab dpShad"
+      data-size={wnapp.size} data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
        }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>

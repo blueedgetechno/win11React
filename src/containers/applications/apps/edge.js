@@ -104,9 +104,8 @@ export const EdgeMenu = ()=>{
   })
 
   return (
-    <div
-      className="edgeBrowser floatTab dpShad" data-size={wnapp.size}
-      data-max={wnapp.max} style={{
+    <div className="edgeBrowser floatTab dpShad"
+      data-size={wnapp.size} data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
