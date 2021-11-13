@@ -235,7 +235,7 @@ export const StartMenu = () => {
               }}
               defaultValue={query}
               placeholder="Type here to search"
-            />
+              autoFocus/>
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 flex justify-between">
