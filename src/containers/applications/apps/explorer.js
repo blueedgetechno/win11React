@@ -11,8 +11,7 @@ export const Explorer = ()=>{
   const dispatch = useDispatch();
 
   return (
-    <div
-      className="msfiles floatTab dpShad" data-size={wnapp.size}
+    <div className="msfiles floatTab dpShad" data-size={wnapp.size}
       data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z

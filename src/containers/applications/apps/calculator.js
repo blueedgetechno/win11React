@@ -141,12 +141,10 @@ export const Calculator = ()=>{
   }
 
   return (
-    <div
-      className="calcApp floatTab dpShad" data-size={wnapp.size}
-      data-max={wnapp.max} style={{
-       ...(wnapp.size=="cstm"?wnapp.dim:null),
-       zIndex: wnapp.z
-       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
+    <div className="calcApp floatTab dpShad" data-size={wnapp.size}
+      id={wnapp.icon+"App"} data-max={wnapp.max} style={{
+       ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
+       }} data-hide={wnapp.hide}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Calculator"/>
       <div className="windowScreen flex flex-col" data-dock="true">
