@@ -50,8 +50,7 @@
       "endpoints": [
         "https://win.asylum-os.com/builds/api/"
     ],
-    "dialog": true,
-    "pubkey": ""
+    "dialog": true
     },
     "allowlist": {
       "all": true
