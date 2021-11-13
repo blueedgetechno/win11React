@@ -8,11 +8,9 @@ export const Notepad = ()=>{
   const dispatch = useDispatch();
 
   return (
-    <div
-      className="notepad floatTab dpShad" data-size={wnapp.size}
+    <div className="notepad floatTab dpShad" data-size={wnapp.size}
       data-max={wnapp.max} style={{
-       ...(wnapp.size=="cstm"?wnapp.dim:null),
-       zIndex: wnapp.z
+       ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
        }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Untitled - Notepad" noinvert/>

@@ -129,6 +129,7 @@ i[data-flip="true"] {
   width: 100vw;
   height: calc(100vh - 39px);
   top: 0;
+  overflow: hidden;
 }
 
 .dpShad {

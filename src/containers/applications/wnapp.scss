@@ -14,6 +14,7 @@ body {
   --gray-txt: #555;
   --sat-txt: #777;
   --clrPrm: #0067c0;
+  --wintheme: #eee;
 }
 
 body[data-theme="dark"] {
@@ -24,6 +25,7 @@ body[data-theme="dark"] {
   --gray-txt: #aaa;
   --sat-txt: #999;
   --clrPrm: #4cc2ff;
+  --wintheme: #1e1e26;
 }
 
 .edgeBrowser {

@@ -137,7 +137,8 @@ export const WidPane = () => {
                     {widget.data.event.text}
                   </div>
                   <a href={widget.data.event.pages[0].content_urls.desktop.page}
-                    target="_blank" noopener className="wikiref">more on wiki</a>
+                    rel="noopener noreferrer" target="_blank"
+                    className="wikiref">more on wiki</a>
                 </div>
               </div>
             </div>
@@ -159,10 +160,10 @@ export const WidPane = () => {
             <div className="allNewsCont">
               {[...widget.data.news].splice(4, widget.data.news.length).map((article, i)=>{
                 return (
-                  <a className="articleCont ltShad" key={i} style={{
+                  <a className="articleCont ltShad" target="_blank" style={{
                     '--backgrad': getRandom(2),
                     backgroundImage: `url(${article.urlToImage})`
-                  }} href={article.url} target="_blank" noopener>
+                  }} href={article.url} rel="noopener noreferrer" key={i}>
                     <div className="tpNews">
                       <div className="tpSource">{article.source.name}</div>
                       <div className="tpArticle">{article.title}</div>
