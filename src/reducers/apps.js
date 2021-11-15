@@ -23,54 +23,6 @@ for (var i = 0; i < allApps.length; i++) {
 
 defState.hz = 1;
 
-const isOverlaped = (tmpState, key)=>{
-  var obj = tmpState[key];
-  var arr = [];
-  for (var i = 0; i < 100; i++) {
-    arr.push([]);
-    for (var j = 0; j < 100; j++) arr[i].push(-1);
-  }
-
-  var pbf = [];
-  Object.keys(tmpState).forEach(k => {
-    if(!tmpState[k].max) return;
-
-    var bf = [0,0,100,100];
-    if(tmpState[k].size=="cstm" && tmpState[k].dim){
-      if(tmpState[k].dim.top){
-        bf[0] = Number(tmpState[k].dim.top.replace("%",""));
-      }
-      if(tmpState[k].dim.left){
-        bf[1] = Number(tmpState[k].dim.left.replace("%",""));
-      }
-      if(tmpState[k].dim.height){
-        bf[2] = Number(tmpState[k].dim.height.replace("%",""));
-      }
-      if(tmpState[k].dim.width){
-        bf[3] = Number(tmpState[k].dim.width.replace("%",""));
-      }
-    }
-
-    if(k==obj.icon){
-      pbf = [...bf];
-    }
-
-    for (var dx = bf[0]; dx < bf[0]+bf[2]; dx++) {
-      for (var dy = bf[1]; dy < bf[1]+bf[3]; dy++) {
-        arr[dx][dy] = Math.max(arr[dx][dy],tmpState[k].z);
-      }
-    }
-  });
-
-  for (var dx = pbf[0]; dx < pbf[0]+pbf[2]; dx++) {
-    for (var dy = pbf[1]; dy < pbf[1]+pbf[3]; dy++) {
-      if(arr[dx][dy]!=obj.z) return true;
-    }
-  }
-
-  return false;
-}
-
 const appReducer = (state = defState, action) => {
   var tmpState = { ...state };
   if(action.type=="EDGELINK"){
@@ -158,7 +110,7 @@ const appReducer = (state = defState, action) => {
         }else if(action.payload=="togg"){
           if(obj.z != tmpState.hz){
             obj.hide = false;
-            if(!obj.max || isOverlaped(tmpState, obj.icon)){
+            if(!obj.max){
               tmpState.hz+=1;
               obj.z = tmpState.hz;
               obj.max = true;
@@ -188,7 +140,7 @@ const appReducer = (state = defState, action) => {
           obj.size = "cstm";
           obj.hide = false;
           obj.max = true;
-          tmpState.hz+=1;
+          if(obj.z != tmpState.hz) tmpState.hz+=1;
           obj.z = tmpState.hz;
           obj.dim = action.dim;
         }else if (action.payload=="front") {

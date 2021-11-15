@@ -21,6 +21,8 @@
 }
 
 .topInfo{
+  height: 100%;
+  
   &[data-float="true"]{
     opacity: 0;
   }
@@ -65,12 +67,12 @@
 
 .snapcont{
   box-sizing: border-box;
-  width: 260px;
+  width: 160px;
   height: 130px;
   position: absolute;
   display: grid;
   right: -24px;
-  grid-template-columns: repeat(3,minmax(0,1fr));
+  grid-template-columns: repeat(2,minmax(0,1fr));
   grid-template-rows: repeat(2,minmax(0,1fr));
   grid-column-gap: 8px;
   grid-row-gap: 8px;
@@ -137,10 +139,6 @@
   }
 
   &:nth-child(3){
-    grid-template-columns: auto auto auto;
-  }
-
-  &:nth-child(4){
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
 
@@ -149,22 +147,10 @@
     }
   }
 
-  &:nth-child(5){
+  &:nth-child(4){
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
     grid-column-gap: 4px;
-  }
-
-  &:nth-child(6){
-    grid-template-columns: auto auto auto auto auto auto auto;
-
-    .snapper{
-      grid-column-end: span 2;
-    }
-
-    .snapper:nth-child(2){
-      grid-column: 3 / span 3;
-    }
   }
 }
 
@@ -224,4 +210,12 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"]{
       filter: invert(1);
     }
   }
+}
+
+.resizecont{
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  box-sizing: border-box;
+  border: solid 5px red;
 }

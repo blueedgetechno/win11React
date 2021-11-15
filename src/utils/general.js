@@ -169,7 +169,7 @@ export const SnapScreen = (props)=>{
     if(delay && props.snap){
       setTimeout(()=>{
         setDelay(false);
-      },800);
+      },500);
     }else if(props.snap){
       setDelay(true);
     }
@@ -215,28 +215,88 @@ export const ToolBar = (props)=>{
     });
   }
 
+  var posP = [0,0], posM = [0,0], wnapp = {}, zid = 0;
+
+  const toolDrag = (e)=>{
+    e = e || window.event;
+    e.preventDefault();
+    posM = [e.clientY, e.clientX];
+
+    wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+    if(wnapp){
+      // zid = wnapp.style.zIndex
+      // wnapp.style.zIndex = 9900
+      wnapp.classList.add("notrans")
+      wnapp.classList.add("z9900")
+      posP = [wnapp.offsetTop,wnapp.offsetLeft]
+    }
+
+    document.onmouseup = closeDrag;
+    document.onmousemove = eleDrag;
+  }
+
+  const eleDrag = (e)=>{
+    e = e || window.event;
+    e.preventDefault();
+    var pos0 = posP[0] + e.clientY - posM[0],
+        pos1 = posP[1] + e.clientX - posM[1]
+
+    // console.log("Dragging");
+    // console.log(pos0, pos1);
+    wnapp.style.top = pos0 + "px"
+    wnapp.style.left = pos1 + "px"
+  }
+
+  const closeDrag = ()=>{
+    document.onmouseup = null;
+    document.onmousemove = null;
+
+    wnapp.classList.remove("notrans")
+    wnapp.classList.remove("z9900")
+    // wnapp.style.zIndex = zid;
+
+    var action = {
+      type: props.app,
+      payload: "resize",
+      dim: {
+        width: getComputedStyle(wnapp).width,
+        height: getComputedStyle(wnapp).height,
+        top: wnapp.style.top,
+        left: wnapp.style.left
+      }
+    }
+
+    dispatch(action);
+  }
+
   return (
-    <div className="toolbar" style={{
-      background: props.bg
-    }} data-float={props.float!=null} data-noinvert={props.noinvert!=null}>
-      <div className="topInfo flex flex-grow items-center"
-        data-float={props.float!=null} onClick={toolClick}>
-        <Icon src={props.icon} width={14}/>
-        <div
-          className="appFullName text-xss"
-          data-white={props.invert!=null}
-          >{props.name}</div>
-      </div>
-      <div className="actbtns flex items-center">
-        <Icon invert={props.invert} click={props.app} payload="mnmz" pr src="minimize" ui width={8}/>
-        <div className="snapbox h-full" data-hv={snap}
-          onMouseOver={openSnap} onMouseLeave={closeSnap}>
-          <Icon invert={props.invert} click={props.app} payload="mxmz" pr src="maximize" ui width={8}/>
-          <SnapScreen invert={props.invert} app={props.app} snap={snap} closeSnap={closeSnap}/>
-          {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+    <>
+      {/* <div className="resizecont"></div> */}
+      <div className="toolbar" data-float={props.float!=null}
+        data-noinvert={props.noinvert!=null} style={{
+        background: props.bg }}>
+        <div className="topInfo flex flex-grow items-center"
+          data-float={props.float!=null} onClick={toolClick}
+          onMouseDown={toolDrag}>
+          <Icon src={props.icon} width={14}/>
+          <div className="appFullName text-xss"
+            data-white={props.invert!=null}>{props.name}</div>
         </div>
-        <Icon invert={props.invert} click={props.app} payload="close" pr src="close" ui width={8}/>
+        <div className="actbtns flex items-center">
+          <Icon invert={props.invert} click={props.app}
+            payload="mnmz" pr src="minimize" ui width={8}/>
+          <div className="snapbox h-full" data-hv={snap}
+            onMouseOver={openSnap} onMouseLeave={closeSnap}>
+            <Icon invert={props.invert} click={props.app}
+              payload="mxmz" pr src="maximize" ui width={8}/>
+            <SnapScreen invert={props.invert} app={props.app}
+              snap={snap} closeSnap={closeSnap}/>
+            {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+          </div>
+          <Icon invert={props.invert} click={props.app}
+            payload="close" pr src="close" ui width={8}/>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

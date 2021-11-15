@@ -11,7 +11,7 @@ export const Notepad = ()=>{
     <div className="notepad floatTab dpShad"
       data-size={wnapp.size} data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
-       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
+     }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Untitled - Notepad" noinvert/>
       <div className="windowScreen flex flex-col" data-dock="true">

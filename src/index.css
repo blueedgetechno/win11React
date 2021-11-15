@@ -63,6 +63,14 @@ code {
   scroll-behavior: smooth;
 }
 
+.notrans{
+  transition: none !important;
+}
+
+.z9900{
+  z-index: 9900 !important;
+}
+
 input {
   border: none;
   outline: none;
