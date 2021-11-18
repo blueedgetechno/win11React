@@ -1,7 +1,7 @@
-export const gene_name = ()=> Math.random().toString(36).substring(2,10).toUpperCase()
+export const gene_name = () => Math.random().toString(36).substring(2, 10).toUpperCase()
 
 var installed = localStorage.getItem("installed")
-if(!installed) installed="[]"
+if (!installed) installed = "[]"
 
 installed = JSON.parse(installed)
 
@@ -39,6 +39,13 @@ var apps = [{
   icon: 'edge',
   type: 'app',
   action: 'MSEDGE'
+},
+{
+  name: 'Buy me a coffee',
+  icon: 'buyme',
+  type: 'app',
+  action: 'EXTERNAL',
+  payload: 'https://www.buymeacoffee.com/blueedgetechno'
 },
 {
   name: 'Store',

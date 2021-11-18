@@ -10,16 +10,20 @@ var {
     JSON.parse(localStorage.getItem("taskbar"))) || ["Settings", "File Explorer", "Edge", "Store", "Spotify"],
   desktop: (localStorage.getItem("desktop") &&
     JSON.parse(localStorage.getItem("desktop"))) || ["Blue", "Unescape", "Recycle Bin", "File Explorer", "Store",
-    "Browser", "Github", "Spotify", "Minecraft", "Krunker", "Smash karts"
+    "Browser", "Github", "Spotify", "Buy me a coffee"
   ],
   pinned: (localStorage.getItem("pinned") &&
     JSON.parse(localStorage.getItem("pinned"))) || ["Browser", "Word", "PowerPoint", "OneNote", "Mail", "To Do", "Store",
-    "Photos", "Your Phone", "Notepad", "White Board", "Calculator",
+    "Photos", "Buy me a coffee", "Notepad", "White Board", "Calculator",
     "Spotify", "Twitter", "VS Code", "Terminal", "Github", "Discord"
   ],
   recent: (localStorage.getItem("recent") &&
     JSON.parse(localStorage.getItem("recent"))) || ["Mail", "Twitter", "Terminal", "Github", "VS Code", "Spotify", "Edge"]
 };
+
+if(desktop.includes("Buy me a coffee")==false){
+  desktop.push("Buy me a coffee")
+}
 
 export const taskApps = icons.filter(x => taskbar.includes(x.name));
 
