@@ -9287,6 +9287,22 @@
 	cursor: not-allowed
 }
 
+.cursor-nw{
+	cursor: nw-resize;
+}
+
+.cursor-ne{
+	cursor: ne-resize;
+}
+
+.cursor-n{
+	cursor: n-resize;
+}
+
+.cursor-w{
+	cursor: w-resize;
+}
+
 .block {
 	display: block
 }

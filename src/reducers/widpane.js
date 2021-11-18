@@ -46,7 +46,7 @@ const defState = {
       temp: 30+getRandom(20),
       rain: 10+getRandom(80),
       wind: 4+getRandom(5),
-      days: [0,1,2,4].map(i => {
+      days: [0,1,2,3].map(i => {
         return {
           day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
             (new Date().getDay() + i)%7

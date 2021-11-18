@@ -95,7 +95,7 @@ export const SidePane = () => {
 
 
   function silderBackground(elem, e) {
-    elem.style.setProperty("--track-color", `linear-gradient(90deg, #005fba ${e-3}%, #888888 ${e}%)`)
+    elem.style.setProperty("--track-color", `linear-gradient(90deg, var(--clrPrm) ${e-3}%, #888888 ${e}%)`)
   }
 
   const setBrightness = (e)=>{

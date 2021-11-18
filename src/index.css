@@ -331,14 +331,14 @@ a {
 
   body[data-force="false"] #warningmsg {
     display: block;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #fefefe;
     font-family: sans-serif;
     letter-spacing: 2px;
     text-align: left;
     word-spacing: 4px;
-    line-height: 48px;
-    inset: 50px;
+    line-height: 36px;
+    inset: 36px;
     position: absolute;
     pointer-events: none;
   }

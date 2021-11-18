@@ -13,7 +13,7 @@
       "desc": "Minecraft is a sandbox construction video game developed by Mojang Studios where players interact with a fully modifiable three-dimensional environment made of blocks and entities.\nIts diverse gameplay lets players choose the way they play, allowing for countless possibilities. There are three actively maintained editions of Minecraft: Java Edition, Bedrock Edition, and Education Edition.",
       "feat": "1.1 Combat changes.\n1.2 Fletching table functionality.\n1.3 Voted updates.\n1.4 Super Fancy graphics.\n1.5 Phasing out of NBT-based crafting recipes.\n1.6 Full split of liquids from blocks.\n1.7 Shaders.\n1.8 Archaeology."
     }
-  },{
+  }, {
     "name": "Smash karts",
     "icon": "https://trefoilkingdom.com/uploads/games/42122/Smash-Karts.jpg",
     "type": "game",
@@ -29,7 +29,7 @@
       "desc": "Smash Karts is a free io Multiplayer Kart Battle Arena game.\nIt is a three-dimensional multiplayer kart racing game. To win, you must drive your go-kart, pick up weaponry, and blow up other karts.",
       "feat": "Drive fast\nFire rockets\nMake big explosions"
     }
-  },{
+  }, {
     "name": "Krunker",
     "icon": "https://krunker.io/img/newp.png",
     "type": "game",

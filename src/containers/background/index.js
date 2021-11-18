@@ -137,7 +137,7 @@ export const LockScreen = (props) => {
             color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
         </div>
         <div className="text-xs text-gray-400 mt-4 handcr"
-          onClick={action} data-action="forgot">
+          onClick={proceed}>
           {!forgot?`I forgot my ${passType?"password":"pin"}`:"Not my problem"}
         </div>
         <div className="text-xs text-gray-400 mt-6">
