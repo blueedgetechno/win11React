@@ -36,6 +36,31 @@ const defState = {
     }],
     [{
       dim: {
+        width: "33%",
+        height: "100%",
+        top: 0,
+        left: 0
+      },
+      br: 14
+    }, {
+      dim: {
+        width: "34%",
+        height: "100%",
+        top: 0,
+        left: "33%"
+      },
+      br: 1
+    }, {
+      dim: {
+        width: "33%",
+        height: "100%",
+        top: 0,
+        left: "67%"
+      },
+      br: 15
+    }],
+    [{
+      dim: {
         width: "50%",
         height: "100%",
         top: 0,
@@ -91,6 +116,31 @@ const defState = {
         left: "50%"
       },
       br: 5
+    }],
+    [{
+      dim: {
+        width: "25%",
+        height: "100%",
+        top: 0,
+        left: 0
+      },
+      br: 14
+    }, {
+      dim: {
+        width: "50%",
+        height: "100%",
+        top: 0,
+        left: "25%"
+      },
+      br: 1
+    }, {
+      dim: {
+        width: "25%",
+        height: "100%",
+        top: 0,
+        left: "75%"
+      },
+      br: 15
     }]
   ],
   ribbon: [

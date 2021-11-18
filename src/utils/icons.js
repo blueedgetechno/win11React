@@ -85,6 +85,7 @@ export const view = (props) => {
     </svg>
   );
 };
+
 export const sort = (props) => {
   return (
     <svg viewBox="0 0 416 330" {...props}>
@@ -93,6 +94,7 @@ export const sort = (props) => {
     </svg>
   );
 };
+
 export const refresh = (props) => {
   return (
     <svg viewBox="0 0 64 64" {...props}>
@@ -100,6 +102,7 @@ export const refresh = (props) => {
     </svg>
   );
 };
+
 export const New = (props) => {
   return (
     <svg viewBox="0 0 500 500" {...props}>
@@ -108,6 +111,7 @@ export const New = (props) => {
     </svg>
   );
 };
+
 export const display = (props) => {
   return (
     <svg viewBox="0 0 500 500" {...props}>
@@ -116,6 +120,7 @@ export const display = (props) => {
     </svg>
   );
 };
+
 export const personalize = (props) => {
   return (
     <svg viewBox="0 0 500 500" {...props}>
@@ -124,6 +129,7 @@ export const personalize = (props) => {
     </svg>
   );
 };
+
 export const terminal = (props) => {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -217,6 +223,7 @@ export const terminal = (props) => {
     </svg>
   );
 };
+
 export const info = (props) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
