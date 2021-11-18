@@ -215,36 +215,74 @@ export const ToolBar = (props)=>{
     });
   }
 
-  var posP = [0,0], posM = [0,0], wnapp = {}, zid = 0;
+  var posP = [0,0], dimP = [0,0], posM = [0,0],
+      wnapp = {}, op=0, vec = [-1,-1];
 
   const toolDrag = (e)=>{
     e = e || window.event;
     e.preventDefault();
     posM = [e.clientY, e.clientX];
+    op = e.target.dataset.op;
 
-    wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+    if(op==0){
+      wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+    }else{
+      wnapp = e.target.parentElement &&
+              e.target.parentElement.parentElement &&
+              e.target.parentElement.parentElement.parentElement;
+    }
+
     if(wnapp){
-      // zid = wnapp.style.zIndex
-      // wnapp.style.zIndex = 9900
       wnapp.classList.add("notrans")
       wnapp.classList.add("z9900")
       posP = [wnapp.offsetTop,wnapp.offsetLeft]
+      dimP = [
+        getComputedStyle(wnapp).height.replaceAll('px',''),
+        getComputedStyle(wnapp).width.replaceAll('px','')
+      ]
+
+      // console.log(dimP);
     }
 
     document.onmouseup = closeDrag;
     document.onmousemove = eleDrag;
   }
 
+  const setPos = (pos0, pos1)=>{
+    wnapp.style.top = pos0 + "px"
+    wnapp.style.left = pos1 + "px"
+  }
+
+  const setDim = (dim0, dim1)=>{
+    wnapp.style.height = dim0 + "px"
+    wnapp.style.width = dim1 + "px"
+  }
+
   const eleDrag = (e)=>{
     e = e || window.event;
     e.preventDefault();
-    var pos0 = posP[0] + e.clientY - posM[0],
-        pos1 = posP[1] + e.clientX - posM[1]
 
-    // console.log("Dragging");
-    // console.log(pos0, pos1);
-    wnapp.style.top = pos0 + "px"
-    wnapp.style.left = pos1 + "px"
+    var pos0 = posP[0] + e.clientY - posM[0],
+        pos1 = posP[1] + e.clientX - posM[1],
+        dim0 = dimP[0] - (e.clientY - posM[0]),
+        dim01 = e.clientY - posM[0],
+        dim1 = dimP[1] - (e.clientX - posM[1])
+
+    // dim0 = Math.round(dim0*10)/10
+    dim01 *= vec[0]
+    dim01 += dimP[0]
+
+      // console.log("Dragging");
+    console.log(dim0, dim01);
+    if(op==0) setPos(pos0, pos1)
+    else{
+      if(dim0 > 360 && dim1>360){
+        // pos0 = posP[0] + vec[0]*(dim0 - dimP[0])
+        // pos1 = posP[1] + vec[1]*(dim1 - dimP[1])
+        setPos(pos0, pos1)
+        setDim(dim0, dim1)
+      }
+    }
   }
 
   const closeDrag = ()=>{
@@ -253,7 +291,6 @@ export const ToolBar = (props)=>{
 
     wnapp.classList.remove("notrans")
     wnapp.classList.remove("z9900")
-    // wnapp.style.zIndex = zid;
 
     var action = {
       type: props.app,
@@ -261,8 +298,8 @@ export const ToolBar = (props)=>{
       dim: {
         width: getComputedStyle(wnapp).width,
         height: getComputedStyle(wnapp).height,
-        top: wnapp.style.top,
-        left: wnapp.style.left
+        top: getComputedStyle(wnapp).top,
+        left: getComputedStyle(wnapp).left
       }
     }
 
@@ -271,13 +308,12 @@ export const ToolBar = (props)=>{
 
   return (
     <>
-      {/* <div className="resizecont"></div> */}
       <div className="toolbar" data-float={props.float!=null}
         data-noinvert={props.noinvert!=null} style={{
         background: props.bg }}>
         <div className="topInfo flex flex-grow items-center"
           data-float={props.float!=null} onClick={toolClick}
-          onMouseDown={toolDrag}>
+          onMouseDown={toolDrag} data-op="0">
           <Icon src={props.icon} width={14}/>
           <div className="appFullName text-xss"
             data-white={props.invert!=null}>{props.name}</div>
@@ -295,6 +331,13 @@ export const ToolBar = (props)=>{
           </div>
           <Icon invert={props.invert} click={props.app}
             payload="close" pr src="close" ui width={8}/>
+        </div>
+      </div>
+      <div className="resizecont topone">
+        <div className="flex">
+          <div className="conrsz cursor-nw" data-op="1"
+            onMouseDown={toolDrag}></div>
+          <div className="edgrsz cursor-n wdws"></div>
         </div>
       </div>
     </>

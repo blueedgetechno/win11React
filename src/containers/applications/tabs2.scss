@@ -65,7 +65,6 @@ rediv {
 .valCont {
   box-sizing: border-box;
   height: 25%;
-  font-size: 4.8em;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -73,8 +72,13 @@ rediv {
   color: var(--dark-txt);
 }
 
+.vlcCont{
+  white-space: nowrap;
+  font-size: 360%;
+}
+
 .eqCont {
-  font-size: 0.22em;
+  font-size: 0.8em;
   color: var(--sat-txt);
 }
 
@@ -107,19 +111,14 @@ rediv {
 
   &[data-err="true"] {
     .oper {
-      &:nth-child(1),
-      &:nth-child(5),
-      &:nth-child(6),
-      &:nth-child(7),
-      &:nth-child(8),
-      &:nth-child(12),
-      &:nth-child(16),
-      &:nth-child(20),
-      &:nth-child(21),
-      &:nth-child(23) {
-        background: var(--err-bg);
-        color: var(--err-txt);
-        pointer-events: none;
+      background: var(--err-bg);
+      color: var(--err-txt);
+      pointer-events: none;
+
+      &:nth-child(3){
+        background: var(--bg3);
+        color: var(--dark-txt);
+        pointer-events: auto;
       }
     }
   }
@@ -133,7 +132,7 @@ rediv {
   border: solid 1px rgb(0, 0, 0, 0.1);
   background: var(--bg2);
   color: var(--dark-txt);
-  font-size: 1.128em;
+  font-size: 90%;
   cursor: pointer;
   border-radius: 4px;
 
@@ -189,20 +188,6 @@ rediv {
 
 .crossOp {
   font-family: monospace;
-}
-
-.calcApp[data-size="mini"] {
-  .valCont {
-    font-size: 3em;
-  }
-
-  .vlcCont {
-    font-size: 0.8em;
-  }
-
-  .oper {
-    font-size: 0.88em;
-  }
 }
 
 .canvaCont {

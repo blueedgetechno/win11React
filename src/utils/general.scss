@@ -22,7 +22,7 @@
 
 .topInfo{
   height: 100%;
-  
+
   &[data-float="true"]{
     opacity: 0;
   }
@@ -213,9 +213,31 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"]{
 }
 
 .resizecont{
-  width: 100%;
+  // height: 100%;
   position: absolute;
-  height: 100%;
-  box-sizing: border-box;
-  border: solid 5px red;
+  z-index: 12;
+  // box-sizing: border-box;
+  // border: solid 5px red;
+}
+
+.topone{
+  top: -8px;
+  left: -8px;
+  width: 100%;
+}
+
+.conrsz{
+  width: 8px;
+  height: 8px;
+  background: #ee1515;
+}
+
+.edgrsz{
+  min-width: 8px;
+  min-height: 8px;
+  background: #1536ee;
+}
+
+.wdws{
+  width: 100%;
 }

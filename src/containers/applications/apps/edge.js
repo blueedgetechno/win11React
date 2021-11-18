@@ -142,19 +142,21 @@ export const EdgeMenu = ()=>{
             </div>
           </div>
           <div className="w-full bookbar py-2">
-            <div className="flex">
-              {Object.keys(iframes).map(mark=>{
-                return(
-                  <div className="flex handcr items-center ml-2 mr-1 prtclk"
-                    onClick={action} data-payload={6} data-url={mark}>
-                    <Icon className="mr-1" ext width={16}
-                      src={iframes[mark][0]!="\n"?
-                        new URL(mark).origin + '/favicon.ico': favicons[mark]}/>
-                    <div className="text-xs">{iframes[mark].trim()}</div>
-                  </div>
-                )
-              })}
-            </div>
+            {wnapp.hide?null:(
+              <div className="flex">
+                {Object.keys(iframes).map(mark=>{
+                  return(
+                    <div className="flex handcr items-center ml-2 mr-1 prtclk"
+                      onClick={action} data-payload={6} data-url={mark}>
+                      <Icon className="mr-1" ext width={16}
+                        src={iframes[mark][0]!="\n"?
+                          new URL(mark).origin + '/favicon.ico': favicons[mark]}/>
+                      <div className="text-xs">{iframes[mark].trim()}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
             {wnapp.hide?null:(

@@ -65,7 +65,7 @@ export const WnTerminal = ()=>{
           var tdir = dirFolders();
 
           for (var i = 0; i < tdir.length; i++) {
-            if(arg==tdir[i] && errp){
+            if(arg.toLowerCase()==tdir[i].toLowerCase() && errp){
               curr.push(tdir[i]);
               errp = false;
               setPwd("C:\\"+curr.join("\\"));
@@ -106,7 +106,7 @@ export const WnTerminal = ()=>{
         var tdir = dirFolders();
 
         for (var i = 0; i < tdir.length; i++) {
-          if(arg==tdir[i] && errp){
+          if(arg.toLowerCase()==tdir[i].toLowerCase() && errp){
             errp = false;
             var file = dirFolders(tdir[i]);
             var content = file.content || "";
