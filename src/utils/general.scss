@@ -226,18 +226,38 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"]{
   width: 100%;
 }
 
+.leftone{
+  left: -8px;
+  height: 100%;
+}
+
+.rightone{
+  right: -8px;
+  height: 100%;
+}
+
+.bottomone{
+  bottom: 0;
+  left: -8px;
+  width: calc(100% + 16px);
+}
+
 .conrsz{
   width: 8px;
   height: 8px;
-  background: #ee1515;
+  // background: #ee1515;
 }
 
 .edgrsz{
   min-width: 8px;
   min-height: 8px;
-  background: #1536ee;
+  // background: #1536ee;
 }
 
 .wdws{
   width: 100%;
+}
+
+.hdws{
+  height: 100%;
 }

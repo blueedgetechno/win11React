@@ -216,7 +216,7 @@ export const ToolBar = (props)=>{
   }
 
   var posP = [0,0], dimP = [0,0], posM = [0,0],
-      wnapp = {}, op=0, vec = [-1,-1];
+      wnapp = {}, op=0, vec = [0,0];
 
   const toolDrag = (e)=>{
     e = e || window.event;
@@ -227,6 +227,7 @@ export const ToolBar = (props)=>{
     if(op==0){
       wnapp = e.target.parentElement && e.target.parentElement.parentElement;
     }else{
+      vec = e.target.dataset.vec.split(",")
       wnapp = e.target.parentElement &&
               e.target.parentElement.parentElement &&
               e.target.parentElement.parentElement.parentElement;
@@ -237,11 +238,9 @@ export const ToolBar = (props)=>{
       wnapp.classList.add("z9900")
       posP = [wnapp.offsetTop,wnapp.offsetLeft]
       dimP = [
-        getComputedStyle(wnapp).height.replaceAll('px',''),
-        getComputedStyle(wnapp).width.replaceAll('px','')
+        parseFloat(getComputedStyle(wnapp).height.replaceAll('px','')),
+        parseFloat(getComputedStyle(wnapp).width.replaceAll('px',''))
       ]
-
-      // console.log(dimP);
     }
 
     document.onmouseup = closeDrag;
@@ -264,24 +263,19 @@ export const ToolBar = (props)=>{
 
     var pos0 = posP[0] + e.clientY - posM[0],
         pos1 = posP[1] + e.clientX - posM[1],
-        dim0 = dimP[0] - (e.clientY - posM[0]),
-        dim01 = e.clientY - posM[0],
-        dim1 = dimP[1] - (e.clientX - posM[1])
+        dim0 = dimP[0] + vec[0]*(e.clientY - posM[0]),
+        dim1 = dimP[1] + vec[1]*(e.clientX - posM[1])
 
-    // dim0 = Math.round(dim0*10)/10
-    dim01 *= vec[0]
-    dim01 += dimP[0]
-
-      // console.log("Dragging");
-    console.log(dim0, dim01);
+    // console.log("Dragging");
+    // console.log(dim0, dim01);
     if(op==0) setPos(pos0, pos1)
     else{
-      if(dim0 > 360 && dim1>360){
-        // pos0 = posP[0] + vec[0]*(dim0 - dimP[0])
-        // pos1 = posP[1] + vec[1]*(dim1 - dimP[1])
-        setPos(pos0, pos1)
-        setDim(dim0, dim1)
-      }
+      dim0 = Math.max(dim0, 360)
+      dim1 = Math.max(dim1, 360)
+      pos0 = posP[0] + Math.min(vec[0],0)*(dim0 - dimP[0])
+      pos1 = posP[1] + Math.min(vec[1],0)*(dim1 - dimP[1])
+      setPos(pos0, pos1)
+      setDim(dim0, dim1)
     }
   }
 
@@ -336,8 +330,31 @@ export const ToolBar = (props)=>{
       <div className="resizecont topone">
         <div className="flex">
           <div className="conrsz cursor-nw" data-op="1"
-            onMouseDown={toolDrag}></div>
-          <div className="edgrsz cursor-n wdws"></div>
+            onMouseDown={toolDrag} data-vec="-1,-1"></div>
+          <div className="edgrsz cursor-n wdws" data-op="1"
+            onMouseDown={toolDrag} data-vec="-1,0"></div>
+        </div>
+      </div>
+      <div className="resizecont leftone">
+        <div className="h-full">
+          <div className="edgrsz cursor-w hdws" data-op="1"
+            onMouseDown={toolDrag} data-vec="0,-1"></div>
+        </div>
+      </div>
+      <div className="resizecont rightone">
+        <div className="h-full">
+          <div className="edgrsz cursor-w hdws" data-op="1"
+            onMouseDown={toolDrag} data-vec="0,1"></div>
+        </div>
+      </div>
+      <div className="resizecont bottomone">
+        <div className="flex">
+          <div className="conrsz cursor-ne" data-op="1"
+            onMouseDown={toolDrag} data-vec="1,-1"></div>
+          <div className="edgrsz cursor-n wdws" data-op="1"
+            onMouseDown={toolDrag} data-vec="1,0"></div>
+          <div className="conrsz cursor-nw" data-op="1"
+            onMouseDown={toolDrag} data-vec="1,1"></div>
         </div>
       </div>
     </>

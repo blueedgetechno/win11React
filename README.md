@@ -36,10 +36,10 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 - [x] Snap windows in different layouts
 - [x] Browser, Store, Terminal, Calculator
 - [x] Notepad, Vscode, Whiteboard
-- [ ] File Explorer + (~other apps~ mostly)
-- [ ] Drag and Resize windows
+- [ ] File Explorer + Setting
+- [x] Drag and Resize windows
 - [x] Startup and Lock screen
-- [ ] Themes and (~Background~ done)
+- [x] Themes and Background
 
 📑 [suggest more](https://github.com/blueedgetechno/win11React/issues/new/choose)
 
