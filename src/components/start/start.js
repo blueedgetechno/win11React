@@ -269,7 +269,7 @@ export const StartMenu = () => {
                     </div>
                   </div>
                   <div className="smatch flex my-2 p-3 rounded handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={query}>
-                    <Icon src="search" ui width={20} />
+                    <Icon className="blueicon" src="search" ui width={20} />
                     <div className="matchInfo flex-col px-2">
                       <div className="font-semibold text-xs">Search online</div>
                       <div className="text-xss">Web</div>
@@ -309,7 +309,7 @@ export const StartMenu = () => {
                 <div className="text-xss mt-2">App</div>
                 <div className="hline mt-8"></div>
                 <div className="openlink w-4/5 flex prtclk handcr pt-3" onClick={clickDispatch} data-action={match.action} data-payload={match.payload ? match.payload : "full"}>
-                  <Icon src="link" ui width={16} />
+                  <Icon className="blueicon" src="link" ui width={16} />
                   <div className="text-xss ml-3">Open</div>
                 </div>
               </div>

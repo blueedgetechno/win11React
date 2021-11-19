@@ -56,7 +56,7 @@ export const Camera = ()=>{
       id={wnapp.icon+"App"} data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
       }} data-hide={wnapp.hide}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Camera" invert bg="#060606"/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">

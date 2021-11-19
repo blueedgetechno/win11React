@@ -68,6 +68,10 @@
 body[data-theme="dark"] .startMenu {
   --bg1: rgba(36, 36, 36, 0.8);
   --bg2: rgba(255, 255, 255, 0.1);
+
+  .blueicon{
+    filter: brightness(4);
+  }
 }
 
 .allCont,

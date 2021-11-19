@@ -495,6 +495,13 @@ body[data-theme="dark"] .widPaneCont {
           -webkit-line-clamp: 4;
           -webkit-box-orient: vertical;
           text-align: justify;
+          transition: all 200ms ease-in-out;
+          padding: 4px;
+
+          &:hover{
+            cursor: none;
+            background: rgb(34 34 34 / 65%);
+          }
         }
 
         a {

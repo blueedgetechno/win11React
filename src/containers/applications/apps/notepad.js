@@ -12,7 +12,7 @@ export const Notepad = ()=>{
       data-size={wnapp.size} data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Untitled - Notepad" noinvert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex text-xss pb-1 border-gray-200 border-0 border-b-2 border-solid">

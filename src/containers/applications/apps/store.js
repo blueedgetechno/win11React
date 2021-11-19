@@ -72,18 +72,40 @@ export const MicroStore = ()=>{
     var x = e.target && e.target.dataset.action
     if(x){
       setPage(0)
-      setTab(x)
+
+      var target = document.getElementById(x)
+      if(target){
+        var tsof = target.parentNode.parentNode.scrollTop,
+            trof = target.offsetTop
+
+        if(Math.abs(tsof - trof) > window.innerHeight * 0.1){
+          target.parentNode.parentNode.scrollTop = target.offsetTop
+        }
+      }
     }
   }
 
-  useEffect(()=>{
+  const frontScroll = (e) => {
     if(page==0){
-      var target = document.getElementById(tab)
-      if(target){
-        target.parentNode.parentNode.scrollTop = target.offsetTop
-      }
+      var tabs = ["sthome","apprib","gamerib","movrib"],
+          mntab = "sthome", mndis = window.innerHeight
+
+      tabs.forEach(x => {
+        var target = document.getElementById(x)
+        if(target){
+          var tsof = target.parentNode.parentNode.scrollTop,
+              trof = target.offsetTop
+
+          if(Math.abs(tsof - trof) < mndis){
+            mntab = x
+            mndis = Math.abs(tsof - trof)
+          }
+        }
+      });
+
+      setTab(mntab)
     }
-  }, [tab])
+  }
 
   useEffect(()=>{
     if(!wnapp.hide && fetchState==0){
@@ -105,7 +127,7 @@ export const MicroStore = ()=>{
       data-size={wnapp.size} data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Store"/>
       <div className="windowScreen flex">
         <div className="storeNav h-full w-16 flex flex-col">
@@ -120,7 +142,7 @@ export const MicroStore = ()=>{
           <Icon fafa="faDownload" onClick={action} click="page1"
             width={20} payload={page==1}/>
         </div>
-        <div className="restWindow msfull thinScroll">
+        <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
           {page==0?<FrontPage/>:null}
           {page==1?<DownPage action={action} apps={
             (storeapps.length && storeapps) || storedata

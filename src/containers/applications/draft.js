@@ -15,8 +15,8 @@ export const IFrame = (props)=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon} noinvert
-        name={wnapp.name} invert={data.invert==true?true:null}/>
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
+        name={wnapp.name} invert={data.invert==true?true:null} noinvert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
