@@ -317,8 +317,8 @@ export const ToolBar = (props)=>{
             payload="mnmz" pr src="minimize" ui width={8}/>
           <div className="snapbox h-full" data-hv={snap}
             onMouseOver={openSnap} onMouseLeave={closeSnap}>
-            <Icon invert={props.invert} click={props.app}
-              payload="mxmz" pr src="maximize" ui width={8}/>
+            <Icon invert={props.invert} click={props.app} ui pr width={8}
+              payload="mxmz" src={props.size=="full"?"maximize":"maxmin"}/>
             <SnapScreen invert={props.invert} app={props.app}
               snap={snap} closeSnap={closeSnap}/>
             {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}

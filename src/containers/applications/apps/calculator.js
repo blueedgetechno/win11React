@@ -145,7 +145,7 @@ export const Calculator = ()=>{
       id={wnapp.icon+"App"} data-max={wnapp.max} style={{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
        }} data-hide={wnapp.hide}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Calculator"/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex pt-2">

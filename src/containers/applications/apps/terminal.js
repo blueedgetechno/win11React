@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
 
-import dirs from './dir.json';
+import dirs from './assets/dir.json';
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -267,7 +267,7 @@ export const WnTerminal = ()=>{
        ...(wnapp.size=="cstm"?wnapp.dim:null),
        zIndex: wnapp.z
        }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name={wntitle} invert bg="#060606"/>
       <div className="windowScreen flex" data-dock="true">
         <div className="restWindow h-full flex-grow text-gray-100">

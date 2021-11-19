@@ -47,7 +47,7 @@ export const WhiteBoard = ()=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Whiteboard" bg="#f9f9f9" noinvert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">

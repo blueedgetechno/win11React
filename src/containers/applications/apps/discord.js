@@ -38,20 +38,26 @@ export const DScord = ()=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Discord" bg="#282a2f" invert/>
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex">
           <div className="dsbar w-18">
             <div className="servCont noscroll">
-              <Icon className="dsIcon" src="./img/asset/discord.png" ext width={26}/>
+              <Icon className="dsIcon" src="./img/asset/discord.png" ext width={26}
+                    click="EXTERNAL" payload="https://discord.gg/qmEZwUhb4b"/>
               <hr/>
-              <Icon className="wnServer svIcon" src="./img/asset/server.gif" click="EXTERNAL"
-                    payload="https://discord.gg/qmEZwUhb4b" ext width={48}/>
+              <Icon className="wnServer svIcon" src="./img/asset/server.gif" width={48}
+                click="EXTERNAL" payload="https://discord.gg/qmEZwUhb4b" ext/>
               {servers.map(server=>(
                 <Icon className="svIcon" src={"./img/asset/"+server.src}
                   click="EXTERNAL" payload={server.link} ext width={48}/>
               ))}
+            </div>
+            <div className="joincont">
+              <a href="https://discord.gg/qmEZwUhb4b" target="_blank">
+                Join
+              </a>
             </div>
           </div>
           <div className="flex-grow overflow-hidden">

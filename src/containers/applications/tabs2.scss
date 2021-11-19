@@ -366,6 +366,27 @@ rediv {
   }
 }
 
+.joincont{
+  position: absolute;
+  bottom: 0;
+  // width: 100%;
+  padding: 4px 12px;
+  padding-bottom: 6px;
+  margin: 8px;
+  text-align: center;
+  background: #36393f;
+  border-radius: 24px;
+  transition: all 200ms ease-in-out;
+
+  &:hover{
+    transform: scale(1.1);
+  }
+
+  a{
+    color: #ede4e4;
+  }
+}
+
 .wnServer {
   &::before {
     content: "";
