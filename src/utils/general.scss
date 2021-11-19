@@ -237,37 +237,38 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"]{
 }
 
 .topone{
-  top: -8px;
-  left: -8px;
-  width: 100%;
+  top: 0px;
+  left: 0;
+  width: 80%;
+  z-index: 22;
 }
 
 .leftone{
-  left: -8px;
+  left: 0;
   height: 100%;
 }
 
 .rightone{
-  right: -8px;
+  right: 0;
   height: 100%;
 }
 
 .bottomone{
   bottom: 0;
-  left: -8px;
-  width: calc(100% + 16px);
+  left: 0;
+  width: 100%;
 }
 
 .conrsz{
   width: 8px;
   height: 8px;
-  // background: #ee1515;
+  // background: rgba(238, 21, 21, 0.4);
 }
 
 .edgrsz{
   min-width: 8px;
   min-height: 8px;
-  // background: #1536ee;
+  // background: rgba(21, 54, 238, 0.4);
 }
 
 .wdws{
