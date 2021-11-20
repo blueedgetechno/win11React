@@ -1,11 +1,11 @@
 .actmenu {
   --bg1: rgba(249, 249, 249, 0.9);
+  --bg1a: rgba(248, 248, 248, 0.96);
   --bg2: rgba(0, 0, 0, 0.08);
 
   position: absolute;
-  width: 310px;
   background: var(--bg1);
-  backdrop-filter: contrast(2) saturate(2) blur(20px);
+  backdrop-filter: saturate(2) blur(20px);
   z-index: 10000;
   opacity: 1;
   pointer-events: all;
@@ -26,6 +26,7 @@
 
 body[data-theme="dark"] .actmenu {
   --bg1: rgba(34, 36, 47, 0.8);
+  --bg1a: rgba(30, 32, 47, 0.9);
   --bg2: rgba(255, 255, 255, 0.08);
 }
 
@@ -34,13 +35,12 @@ body[data-theme="dark"] .actmenu {
   display: none;
   top: 0;
   left: 99%;
-  min-width: 200px;
-  background: var(--bg1);
+  background: var(--bg1a);
   z-index: 9999;
   padding: 4px 0;
   // border: solid 1px var(--comp-txt);
   animation: fadein 600ms ease-in-out;
-  // backdrop-filter: contrast(1) saturate(2) blur(20px);
+  // backdrop-filter: saturate(2) blur(20px);
   border-radius: 8px;
 }
 
@@ -58,7 +58,7 @@ body[data-theme="dark"] .actmenu {
   align-items: center;
   font-weight: 500;
   color: var(--txt-col);
-  transition: all 0.1s ease;
+  // transition: all 0.1s ease;
 
   &:hover {
     background: var(--bg2);

@@ -5,6 +5,21 @@ const defState = {
   opts: "desk",
   attr: null,
   dataset: null,
+  data: {
+    desk: {
+      width: "310px",
+      secwid: "200px"
+    },
+    task: {
+      width: "220px",
+      secwid: "120px",
+      ispace: false // show the space for icons in menu
+    },
+    app: {
+      width: "310px",
+      secwid: "200px"
+    }
+  },
   menus: {
     desk: [
       {
