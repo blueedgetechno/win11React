@@ -18,24 +18,17 @@ jobs:
       packages: write
 
     steps:
+      - name: Sleep for 120 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '350s'
+# Allows other actions to build project before its added to docker
+   
       - name: Checkout repository
         uses: actions/checkout@v2
-        
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.6.1'
-
-      - name: Install NPM packages
-        run: npm ci
-
-      - name: Build project
-        run: CI=false npm run build  
-      
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-      
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
