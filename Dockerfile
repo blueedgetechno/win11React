@@ -8,7 +8,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production
 LABEL org.opencontainers.image.description A recreation of windows 11 in react
 LABEL org.opencontainers.image.authors blueedge
-ARG PORT=3000
+
 # install http server
 RUN npm install -g serve
 
