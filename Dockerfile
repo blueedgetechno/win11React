@@ -13,10 +13,11 @@ LABEL org.opencontainers.image.authors blueedge
 RUN npm install -g serve
 
 # add app (add .dockerignore to remove useless files from the image)
-COPY . .
+RUN wget https://github.com/blueedgetechno/win11React/archive/refs/heads/gh-pages.zip
+RUN unzip gh-pages.zip
 
 # expose port
 EXPOSE 3000
 
 # start app
-ENTRYPOINT ["serve", "/usr/src/windows11/build", "-p", "3000", "-d", "--cors"]
+ENTRYPOINT ["serve", "/usr/src/windows11/win11React-gh-pages", "-p", "3000", "-d", "--cors"]
