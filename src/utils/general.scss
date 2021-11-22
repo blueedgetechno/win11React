@@ -237,25 +237,25 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"]{
 }
 
 .topone{
-  top: 0px;
+  top: -8px;
   left: 0;
   width: 80%;
   z-index: 22;
 }
 
 .leftone{
-  left: 0;
+  left: -8px;
   height: 100%;
 }
 
 .rightone{
-  right: 0;
+  right: -8px;
   bottom: 0;
   height: 90%;
 }
 
 .bottomone{
-  bottom: 0;
+  bottom: -8px;
   left: 0;
   width: 100%;
 }
