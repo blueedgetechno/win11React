@@ -48,7 +48,6 @@
   height: 100%;
   // -webkit-backdrop-filter: blur(5px);
   // backdrop-filter: blur(5px);
-  overflow: hidden;
   border-radius: 6px;
   transition: all ease-in-out 200ms;
   transform-origin: center;
@@ -100,6 +99,7 @@
 .windowScreen {
   width: 100%;
   flex-grow: 1;
+  overflow: hidden;
 
   &[data-dock="true"]{
     // height: calc(100% - 26px);
