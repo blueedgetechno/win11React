@@ -94,6 +94,7 @@
       ],
       "desc": " Italian plumber Mario and his twin brother Luigi exterminate creatures emerging from the sewers by knocking them upside-down and kicking them away",
       "feat": "Mario Bros. is a 1983 platform game developed and published for arcades by Nintendo"
+       "invert": true, 
     }
   },
   {
