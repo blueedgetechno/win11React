@@ -79,6 +79,23 @@
       "feat": "Play and win"
     }
   },
+ {
+    "name": "Super Mario Bros.",
+    "icon": "https://iconarchive.com/download/i27092/ph03nyx/super-mario/Retro-Mario.ico",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://supermario-game.com/",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Mario_Series_Logo.svg/1200px-Mario_Series_Logo.svg.png",
+        "https://cdn.vox-cdn.com/thumbor/q86cfIgaaRxt7n5UG2iQEGx4Gls=/0x84:1024x767/1400x1050/filters:focal(0x84:1024x767):format(png)/cdn.vox-cdn.com/uploads/chorus_image/image/47185140/OZJlR3q.0.0.png",
+        "https://i.ytimg.com/vi/cWOkHQXw0JQ/maxresdefault.jpg",
+        "https://cdn.wionews.com/sites/default/files/styles/story_page/public/2020/10/02/162864-mario.jpg"
+      ],
+      "desc": " Italian plumber Mario and his twin brother Luigi exterminate creatures emerging from the sewers by knocking them upside-down and kicking them away",
+      "feat": "Mario Bros. is a 1983 platform game developed and published for arcades by Nintendo"
+    }
+  },
   {
     "name": "Wikipedia",
     "icon": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png",
