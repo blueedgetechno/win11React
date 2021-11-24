@@ -370,7 +370,7 @@ const FrontPage = (props)=>{
         flex justify-between noscroll overflow-x-scroll overflow-y-hidden">
         <div className="flex w-64 flex-col text-gray-100 h-full px-8">
           <div className="text-xl">Featured Games</div>
-          <div className="text-xs mt-2">Explore fun to play xbox games and find a new favorite</div>
+          <div className="text-xs mt-2">Explore fun to play Xbox games and find a new favorite</div>
         </div>
         <div className="flex w-max pr-8">
           {gamerib && gamerib.map(x=>{
