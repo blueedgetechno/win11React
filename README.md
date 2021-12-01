@@ -13,6 +13,9 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 >#### This project is **not in anyway affiliated with Microsoft** and **should not be confused with Microsoft’s Operating System** or Products.
 >#### This is also not Windows 365 cloud PC.
 
+**THIS IS NOT THE APP STORE REPO**
+
+[App Store}(https://github.com/win11bot/win11bot)
 
  #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
@@ -100,6 +103,18 @@ You can find a compiled `.exe` in the **Releases** section or via clicking [HERE
 If you have one of the latest windows builds then you can enter the command below in **CMD**
 
 ``` winget install blueedge.win11react ```
+
+**APT**
+
+AMD64 ONLY
+
+``` curl -s --compressed "https://projects.asylum-os.com/apt/KEY.gpg" | sudo apt-key add - ```
+
+``` sudo curl -s --compressed -o /etc/apt/sources.list.d/asylum.list "https://projects.asylum-os.com/apt/apt.list" ```
+
+``` sudo apt install win11in-react ```
+
+
 
 ## Online Deployment
 
