@@ -114,6 +114,8 @@ AMD64 ONLY
 
 ``` sudo curl -s --compressed -o /etc/apt/sources.list.d/asylum.list "https://projects.asylum-os.com/apt/apt.list" ```
 
+``` sudo apt update ```
+
 ``` sudo apt install win11in-react ```
 
 
