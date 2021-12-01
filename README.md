@@ -92,7 +92,7 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 [![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/blueedgetechno/win11React)
 
-
+--------------------------------------------------------------------------------------------------------
 
 # Compiled
 
