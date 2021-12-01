@@ -106,7 +106,7 @@ If you have one of the latest windows builds then you can enter the command belo
 
 -----------------------------------------
 
-**APT**
+**APT/DEBIAN/UBUNTU**
 
 AMD64 ONLY
 
