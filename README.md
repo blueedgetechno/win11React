@@ -104,6 +104,8 @@ If you have one of the latest windows builds then you can enter the command belo
 
 ``` winget install blueedge.win11react ```
 
+-----------------------------------------
+
 **APT**
 
 AMD64 ONLY
