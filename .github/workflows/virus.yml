@@ -7,6 +7,10 @@ jobs:
   virustotal:
     runs-on: ubuntu-latest
     steps:
+      - name: Sleep for 120 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '600s'
       -
         name: VirusTotal Scan
         uses: crazy-max/ghaction-virustotal@v2
@@ -17,3 +21,4 @@ jobs:
             .msi$
             .deb$
             .dmg$
+            .zip$
