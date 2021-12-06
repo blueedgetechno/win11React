@@ -24,6 +24,17 @@
 <body data-force="false">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <!-- PWA Script -->
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker
+						.register('./serviceWorker.js')
+						.then((reg) => console.log('Success: ', reg.scope))
+						.catch((err) => console.log('Failure: ', err));
+				});
+			}
+		</script>
   <div id="brightoverlay"></div>
   <script type="text/javascript" src="dycalendar.js"></script>
   <script type="text/javascript" src="console.js"></script>
