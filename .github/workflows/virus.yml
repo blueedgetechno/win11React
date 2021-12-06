@@ -8,7 +8,7 @@ jobs:
   virustotal:
     runs-on: ubuntu-latest
     steps:
-      - name: Sleep for 120 seconds
+      - name: Sleep for 10 minutes
         uses: jakejarvis/wait-action@master
         with:
           time: '600s'
