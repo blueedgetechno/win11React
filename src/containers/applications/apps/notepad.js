@@ -13,16 +13,14 @@ export const Notepad = ()=>{
        ...(wnapp.size=="cstm"?wnapp.dim:null), zIndex: wnapp.z
      }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
-        name="Untitled - Notepad" noinvert/>
+        name="Untitled - Notepad"/>
       <div className="windowScreen flex flex-col" data-dock="true">
-        <div className="flex text-xss pb-1 border-gray-200 border-0 border-b-2 border-solid">
+        <div className="flex text-xs py-2 topBar">
           <div className="mx-2">File</div>
-          <div className="mx-2">Edit</div>
-          <div className="mx-2">Format</div>
-          <div className="mx-2">View</div>
-          <div className="mx-2">Help</div>
+          <div className="mx-4">Edit</div>
+          <div className="mx-4">View</div>
         </div>
-        <div className="restWindow h-full flex-grow text-gray-100">
+        <div className="restWindow h-full flex-grow">
           <div className="w-full h-full overflow-hidden">
             <textarea className="noteText thinScroll" id="textpad"/>
           </div>

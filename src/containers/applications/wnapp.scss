@@ -42,7 +42,7 @@ body[data-theme="dark"] .edgeBrowser {
   --bg1: rgb(45, 45, 51);
   --shd: rgba(0, 0, 0, 0.3);
 
-  .edgenavicon{
+  .edgenavicon {
     filter: invert(1);
   }
 }
@@ -78,7 +78,21 @@ body[data-theme="dark"] .wnstore {
 }
 
 .notepad {
-  background: #fefefe;
+  --bg1: #f9f9f9;
+  --bg2: rgba(240, 240, 240, 0.9);
+
+  background: var(--bg2);
+  color: var(--dark-txt);
+  backdrop-filter: blur(20px);
+
+  .restWindow {
+    background: var(--bg1);
+  }
+}
+
+body[data-theme="dark"] .notepad {
+  --bg1: #282828;
+  --bg2: rgba(32, 32, 32, 0.9);
 }
 
 .calcApp {
