@@ -123,7 +123,7 @@ export const StartMenu = () => {
                       <div key={i} className="prtclk pnApp" value={app.action != null}
                         onClick={clickDispatch} data-action={app.action}
                         data-payload={app.payload || "full"}>
-                        <Icon className="pnIcon" src={app.icon} width={24}/>
+                        <Icon className="pnIcon" src={app.icon} width={32}/>
                         <div className="appName">{app.name}</div>
                       </div>
                     );
@@ -142,7 +142,7 @@ export const StartMenu = () => {
                   {start.rcApps.slice(0, 6).map((app, i) => {
                     return app.name ? (
                       <div key={i} className="rnApp">
-                        <Icon className="pnIcon" src={app.icon} width={22} />
+                        <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="acInfo">
                           <div className="appName">{app.name}</div>
                           <div className="timeUsed">{app.lastUsed}</div>
@@ -177,7 +177,7 @@ export const StartMenu = () => {
                   ldx.forEach((app, j) => {
                     tpApps.push(
                       <div key={j} className="allApp prtclk" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
-                        <Icon className="pnIcon" src={app.icon} width={20} />
+                        <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
                       </div>
                     );
@@ -207,7 +207,7 @@ export const StartMenu = () => {
               <Icon src="blueProf" ui rounded width={26} click="EXTERNAL" payload="https://blueedge.me" />
               <div className="usName">Blue Edge</div>
             </div>
-            <div className="relative">
+            <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>
                 <div className="flex prtclk" onClick={clickDispatch} data-action="WALLSHUTDN">
                   <Icon msi="PowerButton" width={12} />
