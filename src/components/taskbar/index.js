@@ -137,7 +137,7 @@ const Taskbar = ()=>{
             <div>{new Date().toLocaleTimeString("en-US",{hour: 'numeric', minute: 'numeric'})}</div>
             <div>{new Date().toLocaleDateString("en-US",{year:"2-digit", month:"2-digit",day: "numeric" })}</div>
           </div>
-          <Icon className="graybd my-3" ui width={6} click='SHOWDSK' pr/>
+          <Icon className="graybd my-4" ui width={6} click='SHOWDSK' pr/>
         </div>
       </div>
     </div>
