@@ -106,9 +106,15 @@
   border-radius: 6px;
 
   &[data-hide="true"] {
-    bottom: 10px;
     transform: translateX(120%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
+  }
+
+  .topBar {
+    height: 45px;
+    background: rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
   }
 }
 

@@ -14,7 +14,7 @@ const defState = {
     },{
       ui: true,
       src: "airplane",
-      name: "Airplane Mode",
+      name: "Flight Mode",
       state: "network.airplane",
       action: "STNGTOGG"
     },{
@@ -31,26 +31,10 @@ const defState = {
       action: "changeTheme"
     },{
       ui: true,
-      src: "location",
-      name: "Location",
-      state: "privacy.location.state",
-      action: "STNGTOGG"
-    },{
-      ui: true,
       src: "nightlight",
       name: "Night Light",
       state: "system.display.nightlight.state",
       action: "STNGTOGG"
-    },{
-      ui: true,
-      src: "connect",
-      name: "Connect",
-      state: "system.display.connect",
-      action: "STNGTOGG"
-    },{
-      ui: true,
-      src: "project",
-      name: "Project"
     }
   ],
   hide: true,
