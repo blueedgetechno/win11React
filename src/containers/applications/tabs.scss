@@ -1,4 +1,4 @@
-.prevCont{
+.prevCont {
   position: absolute;
   bottom: 0;
   width: 0;
@@ -6,7 +6,7 @@
   z-index: 9999;
 }
 
-.prevScreen{
+.prevScreen {
   position: absolute;
   bottom: 6px;
   margin-left: auto;
@@ -17,14 +17,14 @@
   transition: all ease-in-out 200ms;
   pointer-events: none;
 
-  &[data-show="true"]{
+  &[data-show="true"] {
     display: block;
     // transform: scale(0.5);
     transform: scale(0.12, 0.12) translate(-44%, 0);
     animation: fadein 1s ease-in-out;
   }
 
-  &:after{
+  &:after {
     content: "";
     position: absolute;
     top: -80px;
@@ -35,7 +35,7 @@
     z-index: 0;
   }
 
-  .dpShad{
+  .dpShad {
     filter: none;
   }
 }
@@ -88,7 +88,7 @@
   }
 }
 
-.absolute{
+.absolute {
   position: absolute;
 }
 
@@ -100,8 +100,9 @@
   width: 100%;
   flex-grow: 1;
   overflow: hidden;
+  border-radius: 0 0 6px 6px;
 
-  &[data-dock="true"]{
+  &[data-dock="true"] {
     // height: calc(100% - 26px);
   }
 }
@@ -140,10 +141,10 @@
   scroll-behavior: smooth;
 }
 
-.addressBar{
+.addressBar {
   background: var(--bg1);
 
-  .uicon{
+  .uicon {
     color: var(--med-txt);
   }
 }
@@ -160,12 +161,12 @@
   }
 }
 
-.bookbar{
+.bookbar {
   background: var(--bg1);
   color: var(--txt-col);
 }
 
-.cmdcont{
+.cmdcont {
   height: calc(100% - 24px);
 }
 
@@ -195,7 +196,7 @@
   caret-color: transparent;
   margin: 0;
 
-  &::after{
+  &::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -211,7 +212,7 @@
     border: none;
     caret-color: #ccc;
 
-    &::after{
+    &::after {
       display: none;
     }
   }
@@ -227,9 +228,9 @@
   }
 }
 
-.noteText{
+.noteText {
   background: inherit;
-  color: #111;
+  color: var(--txt-col);
   font-family: inherit;
   font-size: 0.88em;
   resize: none;
@@ -240,9 +241,9 @@
   border: none;
   padding: 4px 8px;
 
-  &::selection{
-    background: #0074ff;
-    color: #fefefe;
+  &::selection {
+    background: var(--clrPrm);
+    color: var(--wintheme);
   }
 
   &:active,

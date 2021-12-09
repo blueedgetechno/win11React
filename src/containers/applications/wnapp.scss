@@ -42,7 +42,7 @@ body[data-theme="dark"] .edgeBrowser {
   --bg1: rgb(45, 45, 51);
   --shd: rgba(0, 0, 0, 0.3);
 
-  .edgenavicon{
+  .edgenavicon {
     filter: invert(1);
   }
 }
@@ -54,7 +54,6 @@ body[data-theme="dark"] .edgeBrowser {
 .wnstore {
   --bg-color: #f3f3f3;
   --nav-btn-hov: #ffffff;
-  --nav-blue: #2570ff;
   --page-bg: #f4f4f4;
   --page-bd-col: #e2e2e2;
   --rib-bg: #ffffffb8;
@@ -66,7 +65,6 @@ body[data-theme="dark"] .edgeBrowser {
 body[data-theme="dark"] .wnstore {
   --bg-color: #1c2126;
   --nav-btn-hov: #454545;
-  --nav-blue: #4cc2ff;
   --page-bg: #24292c;
   --page-bd-col: #292828;
   --rib-bg: #2f2e30b8;
@@ -80,7 +78,21 @@ body[data-theme="dark"] .wnstore {
 }
 
 .notepad {
-  background: #fefefe;
+  --bg1: #f9f9f9;
+  --bg2: rgba(240, 240, 240, 0.9);
+
+  background: var(--bg2);
+  color: var(--dark-txt);
+  backdrop-filter: blur(20px);
+
+  .restWindow {
+    background: var(--bg1);
+  }
+}
+
+body[data-theme="dark"] .notepad {
+  --bg1: #282828;
+  --bg2: rgba(32, 32, 32, 0.9);
 }
 
 .calcApp {
