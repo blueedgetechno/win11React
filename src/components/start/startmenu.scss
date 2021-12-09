@@ -32,11 +32,14 @@
 .startMenu {
   --bg1: rgba(242, 242, 242, 0.9);
   --bg2: rgba(255, 255, 255, 0.9);
-  --roundRad: 6px;
+  --bg3: rgba(0, 0, 0, 0.033);
+  --bg4: #aaa;
+  --roundRad: 8px;
 
   position: absolute;
-  bottom: 10px;
-  width: 520px;
+  bottom: 12px;
+  width: 640px;
+  height: min(100% - 24px, 720px);
   left: 0;
   &[data-align="center"] {
     margin-left: auto;
@@ -57,6 +60,7 @@
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.79, 0.14, 0.15, 0.86);
   z-index: 9999;
+  box-sizing: border-box;
 
   &[data-hide="true"] {
     transform: translateY(100px);
@@ -68,8 +72,10 @@
 body[data-theme="dark"] .startMenu {
   --bg1: rgba(36, 36, 36, 0.8);
   --bg2: rgba(255, 255, 255, 0.1);
+  --bg3: rgba(0, 0, 0, 0.15);
+  --bg4: #444;
 
-  .blueicon{
+  .blueicon {
     filter: brightness(4);
   }
 }
@@ -77,16 +83,14 @@ body[data-theme="dark"] .startMenu {
 .allCont,
 .stmenu {
   position: relative;
-  width: 520px;
-  height: 480px;
+  height: calc(100% - 64px);
 
   &[data-allapps="false"] {
     transition: ease-in-out 200ms;
   }
 
   &[data-allapps="true"] {
-    // margin-left: -520px;
-    transform: translateX(-520px);
+    transform: translateX(-640px);
     transition: ease-in-out 200ms;
   }
 }
@@ -96,43 +100,67 @@ body[data-theme="dark"] .startMenu {
   position: absolute;
   left: 100%;
   overflow: hidden;
+  width: 100%;
 }
 
 .menuBar {
-  max-width: 100%;
-  height: 54px;
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 64px;
   padding: 0 48px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.1); // fine in dark mode too :)
+  background: var(--bg3);
+  border-top: 1px solid var(--bg4);
 }
 
 .profile {
-  height: 100%;
+  height: 2.5rem;
   display: flex;
   align-items: center;
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--bg2);
+  }
 
   .usName {
     margin-left: 12px;
     font-size: 0.7em;
-    font-weight: 400;
     color: var(--txt-col);
   }
 }
 
+.powerMenu {
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--bg2);
+  }
+}
+
 .menuUp {
-  padding: 36px 48px;
+  padding: 32px;
+  box-sizing: border-box;
 }
 
 .stAcbar {
   display: flex;
   justify-content: space-between;
+  padding: 0 32px;
 
   .gpname {
-    font-weight: 600;
-    font-size: 0.74em;
+    font-weight: 500;
+    font-size: 14px;
     color: var(--dark-col);
   }
 
@@ -140,7 +168,6 @@ body[data-theme="dark"] .startMenu {
     background: var(--bg2);
     padding: 0 8px 2px;
     font-size: 0.64em;
-    font-weight: 400;
     display: flex;
     align-items: center;
     border-radius: 3px;
@@ -166,16 +193,21 @@ body[data-theme="dark"] .startMenu {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: space-between;
-  justify-content: space-between;
 
   .pnApp {
-    width: 20%;
+    width: 96px;
+    height: 84px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 0;
+    justify-content: center;
     position: relative;
+    border-radius: 4px;
+    transition: all ease-in-out 100ms;
+
+    &:hover {
+      background: var(--bg2);
+    }
 
     &[value="true"] .pnIcon::before {
       content: "";
@@ -188,45 +220,17 @@ body[data-theme="dark"] .startMenu {
       background: var(--clrPrm);
     }
 
-    .pnIcon::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 0;
-      top: -12px;
-      padding: 0 42px 60px;
-      background: transparent;
-      z-index: -1;
-      transition: all ease-in-out 100ms;
-      border-radius: 4px;
-    }
-
     .appName {
       width: 24px;
       display: flex;
-      color: var(--txt-col);
+      color: var(--dark-txt);
       margin-top: 4px;
-      font-weight: 500;
-      font-size: 0.64em;
+      font-size: 12px;
       text-align: center;
       white-space: nowrap;
       justify-content: center;
       cursor: default;
     }
-
-    &:nth-child(6n + 1) {
-      width: 10%;
-      align-items: flex-start;
-    }
-
-    &:nth-child(6n) {
-      width: 10%;
-      align-items: flex-end;
-    }
-  }
-
-  .pnApp:hover .pnIcon::after {
-    background: var(--bg2);
   }
 }
 
@@ -235,31 +239,44 @@ body[data-theme="dark"] .startMenu {
 }
 
 .recApps {
+  position: absolute;
+  bottom: 0;
   margin-top: 12px;
+  overflow: auto;
+  max-height: calc(100% - 332px);
 }
 
 .reApps {
+  margin: 12px 0 24px 0;
   width: 100%;
-  height: 150px;
-  padding: 10px 0;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 240px 184px;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   .rnApp {
+    width: calc(50% - 10px);
+    height: 56px;
     display: flex;
     align-items: center;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--bg2);
+    }
+
+    .pnIcon {
+      margin: 0 12px;
+    }
 
     .acInfo {
       width: 100px;
       text-align: left;
-      margin: 0 12px;
 
       .appName {
-        color: var(--txt-col);
-        font-size: 0.7em;
-        font-weight: 700;
+        color: var(--dark-txt);
+        font-size: 0.8em;
       }
 
       .timeUsed {
@@ -273,21 +290,17 @@ body[data-theme="dark"] .startMenu {
 
 .appCont {
   position: relative;
-  padding: 36px 4px 36px 36px;
-
-  .stAcbar {
-    padding-left: 12px;
-    padding-right: 44px;
-  }
+  padding: 32px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .allApps {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-  overflow-x: visible;
-  overflow-y: scroll;
+  margin-top: 14px;
+  padding: 0 16px;
+  height: 100%;
+  overflow: auto;
   transition: all ease-in-out 200ms;
   transform-origin: center;
 
@@ -317,37 +330,29 @@ body[data-theme="dark"] .startMenu {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 8px 0 8px 12px;
+    width: 536px;
+    height: 42px;
+    box-sizing: border-box;
+    padding-left: 12px;
     z-index: 1;
+    border-radius: 4px;
     cursor: pointer;
 
-    &:hover::after {
-      content: "";
-      position: absolute;
-      width: 94%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      border-radius: 4px;
+    &:hover {
       background: var(--bg2);
     }
 
     .ltName {
-      width: 18px;
+      width: 22px;
       text-align: center;
-      font-size: 0.76em;
-      font-weight: 400;
+      font-size: 14px;
     }
 
     .appName {
       text-align: left;
-      width: 20%;
-      padding-left: 4px;
-      color: var(--txt-col);
-      font-weight: 500;
-      font-size: 0.6em;
-      margin: 0 12px;
+      padding-left: 16px;
+      color: var(--dark-txt);
+      font-size: 12px;
     }
   }
 }
