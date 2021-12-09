@@ -14,13 +14,17 @@
       left: 0;
       height: 50%;
       border-radius: 10px;
-      background: var(--nav-blue);
+      background: var(--clrPrm);
     }
 
-    &:hover,
+    &:hover {
+      background: var(--nav-btn-hov);
+      color: var(--dark-txt);
+    }
+
     &[data-payload="true"] {
       background: var(--nav-btn-hov);
-      color: var(--nav-blue);
+      color: var(--clrPrm);
     }
   }
 }
@@ -31,16 +35,16 @@
   overflow-y: hidden;
 
   &:after {
-      content: "";
-      width: 100%;
-      height: 100px;
-      position: absolute;
-      bottom: 0;
-      background: var(--bg-color);
-      background: -webkit-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, #00000000 100%);
-      background: -o-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, #00000000 100%);
-      background: linear-gradient(to top, var(--page-bg) 10%, #87888766 50%, #00000000 100%);
-    }
+    content: "";
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    background: var(--bg-color);
+    background: -webkit-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, transparent 100%);
+    background: -o-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, transparent 100%);
+    background: linear-gradient(to top, var(--page-bg) 10%, #87888766 50%, transparent 100%);
+  }
 }
 
 .panelName {
@@ -89,7 +93,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
 
-  .pagecont{
+  .pagecont {
     border-radius: 6px;
     background: var(--page-bg);
     border: 1px solid var(--page-bd-col);
@@ -133,7 +137,7 @@
   transition: all ease-in-out 200ms;
   color: var(--dark-txt);
 
-  &:hover{
+  &:hover {
     transform: scale(1.06);
   }
 
@@ -147,7 +151,7 @@
   }
 }
 
-.catbtn{
+.catbtn {
   font-size: 0.8em;
   padding: 1px 20px;
   padding-bottom: 3px;
@@ -156,20 +160,18 @@
   margin-right: 16px;
   color: var(--txt-col);
 
-  &[value="true"]{
-    // color: #0047ff;
-    // border-color: #0047ff;
-    color: var(--nav-blue);
-    border-color: var(--nav-blue);
+  &[value="true"] {
+    color: var(--clrPrm);
+    border-color: var(--clrPrm);
   }
 }
 
-.appscont{
+.appscont {
   display: flex;
   flex-wrap: wrap;
 }
 
-.appscont .ribcont{
+.appscont .ribcont {
   background: var(--rib2-bg);
   margin-right: 1em;
   margin-bottom: 2em;
@@ -178,12 +180,12 @@
   border-radius: 6px;
 }
 
-.detailpage{
+.detailpage {
   display: flex;
   min-height: 100%;
 }
 
-.detailcont{
+.detailcont {
   width: 320px;
   margin-right: 8px;
   padding-top: 4em;
@@ -192,20 +194,21 @@
   align-items: center;
 }
 
-.growcont{
+.growcont {
   width: auto;
   width: calc(100% - 300px);
   margin-right: 8px;
 }
 
-.detailcont, .briefcont{
+.detailcont,
+.briefcont {
   border-radius: 6px;
   background: var(--det-bg);
   border: 1px solid var(--page-bd-col);
   color: var(--txt-col);
 }
 
-.instbtn{
+.instbtn {
   font-size: 0.8em;
   padding: 4px 36px;
   padding-bottom: 6px;
@@ -218,11 +221,12 @@
   background: #0157a2;
 }
 
-.instbtn:active , .instbtn:focus-visible{
+.instbtn:active,
+.instbtn:focus-visible {
   background: #03549b;
 }
 
-.descnt{
+.descnt {
   display: grid;
   place-items: center;
   width: 80%;
@@ -236,36 +240,36 @@
   -webkit-box-orient: vertical;
 }
 
-.briefcont{
+.briefcont {
   width: 100%;
   margin-bottom: 8px;
 
-  pre{
+  pre {
     font-family: inherit;
     width: 100%;
     white-space: pre-wrap;
   }
 
-  & > div{
+  & > div {
     padding: 0 16px;
     padding-bottom: 6px;
   }
 
-  & > div:nth-child(1){
+  & > div:nth-child(1) {
     border: 0 solid var(--comp-txt);
     border-bottom-width: 1px;
   }
 
-  .bg-orange-200{
+  .bg-orange-200 {
     --bg-opacity: 0.8;
   }
 }
 
-.reviewtxt{
+.reviewtxt {
   color: var(--med-txt);
 }
 
-.downbar{
+.downbar {
   width: 120px;
   border-radius: 8px;
   background: #bfcef2;
@@ -274,7 +278,7 @@
   padding: 4px 0;
 }
 
-.downbar::after{
+.downbar::after {
   content: "";
   position: absolute;
   top: 0;
@@ -286,12 +290,12 @@
   animation: downanim 1s linear infinite;
 }
 
-@keyframes downanim{
-  from{
+@keyframes downanim {
+  from {
     left: -40%;
   }
 
-  to{
+  to {
     left: 100%;
   }
 }
