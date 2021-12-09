@@ -58,7 +58,7 @@
 }
 
 #dotcont .circle:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 4px;
   height: 4px;
@@ -205,18 +205,20 @@
     opacity: 0;
   }
 
-  input {
-    width: 200px;
-    background: rgba(28, 28, 40, 0.6);
-    font-size: 12px;
-    padding: 8px 12px;
-    font-weight: 500;
-    color: #cfcfcf;
-    border: 1px solid rgba(117, 117, 164, 0.6);
+  .signInBtn {
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 13px;
+    padding: 4px 36px 6px;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 4px;
 
-    &::-webkit-input-placeholder {
-      font-weight: 400;
-      color: rgba(207, 207, 207, 0.6);
+    &:hover {
+      border: 2px solid rgba(255, 255, 255, 0.33);
+    }
+    &:active {
+      border: 2px solid transparent;
+      background: rgba(255, 255, 255, 0.33);
     }
   }
 }
