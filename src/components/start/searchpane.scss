@@ -92,6 +92,7 @@
 
 .calnpane {
   --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: rgba(0, 0, 0, 0.05);
 
   position: absolute;
   bottom: 12px;
@@ -106,14 +107,21 @@
   border-radius: 6px;
 
   &[data-hide="true"] {
-    bottom: 10px;
     transform: translateX(120%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
+  }
+
+  .topBar {
+    height: 45px;
+    background: var(--bg2);
+    display: flex;
+    align-items: center;
   }
 }
 
 body[data-theme="dark"] .calnpane {
   --bg1: rgba(36, 36, 36, 0.8);
+  --bg2: rgba(0, 0, 0, 0.2);
 }
 
 .powerCont {
