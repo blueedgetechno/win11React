@@ -13,7 +13,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
@@ -42,7 +44,8 @@ body[data-sepia="true"]:before {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, "Consolas", Courier New, monospace;
+  font-family: source-code-pro, Menlo, Monaco, "Consolas", Courier New,
+    monospace;
 }
 
 .App {
@@ -63,11 +66,11 @@ code {
   scroll-behavior: smooth;
 }
 
-.notrans{
+.notrans {
   transition: none !important;
 }
 
-.z9900{
+.z9900 {
   z-index: 9900 !important;
 }
 
@@ -135,7 +138,7 @@ i[data-flip="true"] {
 .desktop {
   position: absolute;
   width: 100vw;
-  height: calc(100vh - 39px);
+  height: calc(100vh - 48px);
   top: 0;
   overflow: hidden;
 }
@@ -161,7 +164,8 @@ i[data-flip="true"] {
 }
 
 input {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
 }
 
 .ltShad0 {

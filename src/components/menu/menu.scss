@@ -48,7 +48,6 @@ body[data-theme="dark"] .actmenu {
   height: 28px;
   box-sizing: border-box;
   position: relative;
-  width: calc(100% - 8px);
   padding: 4px 6px;
   font-size: 12px;
   cursor: default;
@@ -68,12 +67,12 @@ body[data-theme="dark"] .actmenu {
     }
   }
 
-  .spcont{
+  .spcont {
     width: 16px;
     margin-right: 12px;
   }
 
-  .micon{
+  .micon {
     position: absolute;
   }
 

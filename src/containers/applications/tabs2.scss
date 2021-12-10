@@ -3,10 +3,10 @@
   min-height: 500px;
 
   &[data-size="mini"] {
-  top: 4%;
-  left: 8%;
-  width: 320px;
-  height: 500px;
+    top: 4%;
+    left: 8%;
+    width: 320px;
+    height: 500px;
   }
 }
 
@@ -31,6 +31,7 @@ body[data-theme="dark"] .aboutApp {
 
 .aboutTop {
   background: var(--bg2);
+  border-radius: 4px 4px 0 0;
 }
 
 rediv {
@@ -75,7 +76,7 @@ rediv {
   color: var(--dark-txt);
 }
 
-.vlcCont{
+.vlcCont {
   white-space: nowrap;
   font-size: 360%;
 }
@@ -118,7 +119,7 @@ rediv {
       color: var(--err-txt);
       pointer-events: none;
 
-      &:nth-child(3){
+      &:nth-child(3) {
         background: var(--bg3);
         color: var(--dark-txt);
         pointer-events: auto;
@@ -366,7 +367,7 @@ rediv {
   }
 }
 
-.joincont{
+.joincont {
   position: absolute;
   bottom: 0;
   // width: 100%;
@@ -378,11 +379,11 @@ rediv {
   border-radius: 24px;
   transition: all 200ms ease-in-out;
 
-  &:hover{
+  &:hover {
     transform: scale(1.1);
   }
 
-  a{
+  a {
     color: #ede4e4;
   }
 }
