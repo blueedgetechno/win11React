@@ -190,8 +190,8 @@ export const SidePane = () => {
           <input className="sliders vSlider" onChange={setVolume} type="range" min="0" max="100" defaultValue="100" />
         </div>
       </div>
-      <div className="bottomBar">
-        <div className="mx-2 p-2 bettery">
+      <div className="mt-4 p-1 bottomBar">
+        <div className="px-2 bettery">
           <Battery level={batterylevel} charging={batterylevel === "*" ? true : false} />
           <div className="text-xs">{`${batterylevel}%`}</div>
         </div>
