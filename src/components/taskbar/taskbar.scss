@@ -1,5 +1,6 @@
 .taskbar {
   --bg1: rgba(243, 243, 243, 0.85);
+  --bg2: rgba(255, 255, 255, 0.67);
 
   position: absolute;
   width: 100vw;
@@ -15,6 +16,7 @@
 body[data-theme="dark"] {
   .taskbar {
     --bg1: rgba(32, 32, 32, 0.75);
+    --bg2: rgba(255, 255, 255, 0.1);
   }
 
   .taskIcon,
@@ -119,8 +121,8 @@ body[data-theme="dark"] {
 
 .tsIcon {
   position: relative;
-  width: 33px;
-  height: 33px;
+  width: 38px;
+  height: 38px;
   margin: auto 3px;
   box-sizing: border-box;
   border-radius: 0;
@@ -148,6 +150,12 @@ body[data-theme="dark"] {
   &[data-active="true"]:after {
     width: 12px;
     background: var(--clrPrm);
+  }
+
+  &:hover,
+  &[data-active="true"] {
+    background: var(--bg2);
+    transition: all 0.2s ease-in-out;
   }
 }
 
