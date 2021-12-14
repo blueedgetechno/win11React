@@ -85,12 +85,6 @@ var apps = [{
   action: 'CAMERA'
 },
 {
-  name: 'VS Code',
-  icon: 'code',
-  type: 'app',
-  action: 'VSCODE'
-},
-{
   name: 'Excel',
   icon: 'excel',
   type: 'app'
