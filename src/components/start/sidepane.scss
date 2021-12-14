@@ -167,6 +167,7 @@ body[data-theme="dark"] .sidePane {
 .bottomBar {
   box-sizing: border-box;
   background: var(--bg4);
+  border-top: 1px solid var(--bg4);
   height: 3rem;
   display: flex;
   align-items: center;
