@@ -1,0 +1,17 @@
+name: close Preview
+
+on:
+  pull_request_target:
+    types: [closed]
+    
+jobs:
+  repo:
+    name: close
+    runs-on: ubuntu-latest
+    
+    steps:    
+    
+    - name: delete repo
+      run: gh repo delete win11bot/pr-${{ github.event.pull_request.number }} --confirm
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT }}

@@ -85,11 +85,6 @@ var apps = [{
   action: 'CAMERA'
 },
 {
-  name: 'Excel',
-  icon: 'excel',
-  type: 'app'
-},
-{
   name: 'Your Phone',
   icon: 'yphone',
   type: 'app'
