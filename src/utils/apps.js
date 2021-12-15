@@ -91,11 +91,6 @@ var apps = [{
   action: 'VSCODE'
 },
 {
-  name: 'Excel',
-  icon: 'excel',
-  type: 'app'
-},
-{
   name: 'Your Phone',
   icon: 'yphone',
   type: 'app'
