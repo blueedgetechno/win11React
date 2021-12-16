@@ -6,9 +6,10 @@ export const EdgeMenu = ()=>{
   const apps = useSelector(state => state.apps)
   const wnapp = useSelector(state => state.apps.edge)
   const [url, setUrl] = useState("https://bing.com")
+  const [ierror, setErr] = useState(true)
   const [isTyping, setTyping] = useState(false)
-  const [hist, setHist] = useState(["https://bing.com","https://bing.com"]);
-  const dispatch = useDispatch();
+  const [hist, setHist] = useState(["https://bing.com","https://bing.com"])
+  const dispatch = useDispatch()
 
   const iframes = {
     "https://www.google.com/webhp?igu=1": "Google",
@@ -18,7 +19,6 @@ export const EdgeMenu = ()=>{
     "https://andrewstech.me": "\nandrewstech",
     "https://blueedge.me/unescape": "Unescape",
     "https://win11.blueedge.me": "Inception",
-    "https://jiosaavn.com/embed/playlist/85481065": "JioSaavn",
     "https://open.spotify.com/embed/user/jhfivkgdtg4s97pwbo1rbvr9v/playlist/6IdR78TOog83PV4XhLDvWN": "Spotify",
     "https://bluelab.blueedge.me": "BlueLab",
     "https://othello.blueedge.me": "Othello",
@@ -95,6 +95,10 @@ export const EdgeMenu = ()=>{
     setUrl(e.target.value)
   }
 
+  const handleFailed = (e)=>{
+    setErr(false)
+  }
+
   useEffect(()=>{
     if(wnapp.url){
       setTyping(false)
@@ -109,7 +113,7 @@ export const EdgeMenu = ()=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
+      <ToolBar app={wnapp.action} icon={wnapp.icon}
         name="Browser" float/>
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">
@@ -142,28 +146,36 @@ export const EdgeMenu = ()=>{
             </div>
           </div>
           <div className="w-full bookbar py-2">
-            {wnapp.hide?null:(
-              <div className="flex">
-                {Object.keys(iframes).map(mark=>{
-                  return(
-                    <div className="flex handcr items-center ml-2 mr-1 prtclk"
-                      onClick={action} data-payload={6} data-url={mark}>
-                      <Icon className="mr-1" ext width={16}
-                        src={iframes[mark][0]!="\n"?
-                          new URL(mark).origin + '/favicon.ico': favicons[mark]}/>
-                      <div className="text-xs">{iframes[mark].trim()}</div>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+            <div className="flex">
+              {Object.keys(iframes).map(mark=>{
+                return(
+                  <div className="flex handcr items-center ml-2 mr-1 prtclk"
+                    onClick={action} data-payload={6} data-url={mark}>
+                    <Icon className="mr-1" ext width={16}
+                      src={iframes[mark][0]!="\n"?
+                        new URL(mark).origin + '/favicon.ico': favicons[mark]}/>
+                    <div className="text-xs">{iframes[mark].trim()}</div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
             {wnapp.hide?null:(
-              <iframe src={!isTyping? url: hist[0]} id="isite"
-                className="w-full h-full" frameborder="0">
+              <iframe src={!isTyping? url: hist[0]} id="isite" frameborder="0"
+                className="w-full h-full">
               </iframe>
             )}
+            {ierror?(
+              <div className="bg-blue-200 w-48 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12">
+                <div className="absolute bg-red-400 m-1 text-red-800 text-xs px-1 font-bold handcr top-0 right-0"
+                  onClick={handleFailed}>x</div>
+                <div className="text-gray-800 text-xs font-medium">
+                  If it shows <b>"Refused to connect"</b>, then <b>that website doesn't allow </b>
+                  other websites to show their content. <b>I cannot fix it</b>.
+                </div>
+              </div>
+            ):null}
           </div>
         </div>
       </div>

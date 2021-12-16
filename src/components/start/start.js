@@ -291,10 +291,10 @@ export const StartMenu = () => {
                     })}
                   </div>
                   <div className="text-xss font-semibold mt-8">Quick Searches</div>
-                  <div className="quickSearches pl-4 mt-2">
+                  <div className="quickSearches mt-2">
                     {start.qksrch.map((srch) => {
                       return (
-                        <div className="qksrch flex items-center py-3 handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={srch[2]}>
+                        <div className="qksrch flex items-center p-3 handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={srch[2]}>
                           <Icon fafa={srch[0]} reg={srch[1]} />
                           <div className="ml-4 text-xs">{srch[2]}</div>
                         </div>
