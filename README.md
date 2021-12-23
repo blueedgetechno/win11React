@@ -58,7 +58,7 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 - Is this the full operating system?
   - No, This is not a full operating system and It is also not affiliated by Microsoft in anyway.
 
-- How long it took?
+- How long did it take? 
   - Honestly It took 2-3 days collecting assets, 2-3 planning and about 6 days programming it.
 
 
