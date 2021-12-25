@@ -18,4 +18,5 @@ jobs:
           days-before-pr-stale: 45
           days-before-issue-close: 5
           days-before-pr-close: 10
+          exempt-pr-labels: not-stale
           repo-token: ${{ secrets.BOT }}
