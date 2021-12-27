@@ -25,8 +25,9 @@ export const Camera = ()=>{
 
   useEffect(()=>{
     if(!wnapp.hide){
-      var video = document.querySelector('video')
-      var canvas = document.querySelector('canvas')
+      var video = document.getElementById('camvideo')
+      var canvas = document.getElementById('camcanvas')
+
       video.setAttribute('playsinline', '')
       video.setAttribute('autoplay', '')
       video.setAttribute('muted', '')
@@ -34,15 +35,13 @@ export const Camera = ()=>{
       var facingMode = "user"
       var constraints = {
         audio: false,
-        video: {
-          width: 2048,
-          height: 1024
-        }
+        video: true
       }
 
       navigator.mediaDevices.getUserMedia(constraints)
         .then(dstream => {
           setStream(dstream)
+          console.log(dstream);
           video.srcObject = dstream
         })
     }else{
@@ -66,11 +65,11 @@ export const Camera = ()=>{
                 onClick={capture}>
                 <Icon icon="camera"/>
               </div>
-              <canvas id="canvas"></canvas>
+              <canvas id="camcanvas"></canvas>
             </div>
             <div className="vidcont">
               <div className="vidwrap">
-                <video id="video"></video>
+                <video id="camvideo"></video>
               </div>
             </div>
           </div>

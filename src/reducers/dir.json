@@ -1,0 +1,116 @@
+{
+  "C:": {
+    "type": "folder",
+    "name": "C:",
+    "info": {
+      "size": "104000000000",
+      "used": "90000000000",
+      "spid": "%cdrive%"
+    },
+    "data": {
+      "backup": {
+        "type": "folder",
+        "name": "backup",
+        "data": {
+          "config": {
+            "type": "folder",
+            "name": "config"
+          }
+        }
+      },
+      "Users": {
+        "type": "folder",
+        "name": "Users",
+        "data": {
+          "Public": {},
+          "Blue": {
+            "type": "folder",
+            "name": "Blue",
+            "info": {
+              "spid": "%user%"
+            },
+            "data": {
+              "Desktop": {
+                "info": {
+                  "spid": "%desktop%",
+                  "icon": "desk"
+                }
+              },
+              "Documents": {
+                "info": {
+                  "spid": "%documents%",
+                  "icon": "docs"
+                }
+              },
+              "Downloads": {
+                "info": {
+                  "spid": "%downloads%",
+                  "icon": "down"
+                },
+                "data": {
+                  "Hitman 3": {},
+                  "Atomforces": {},
+                  "Compressed": {},
+                  "textures": {},
+                  "Not A Virus": {}
+                }
+              },
+              "Music": {
+                "info": {
+                  "spid": "%music%",
+                  "icon": "music"
+                }
+              },
+              "Pictures": {
+                "info": {
+                  "spid": "%pictures%",
+                  "icon": "pics"
+                }
+              },
+              "Videos": {
+                "info": {
+                  "spid": "%videos%",
+                  "icon": "vid"
+                }
+              },
+              "Github": {
+                "info": {
+                  "spid": "%github%"
+                }
+              },
+              "OneDrive": {
+                "type": "folder",
+                "name": "OneDrive",
+                "info": {
+                  "spid": "%onedrive%",
+                  "icon": "onedrive"
+                },
+                "data": {
+                  "Atom": {
+                    "data": {
+                      "Codeforces": {},
+                      "JavaScript": {},
+                      "Github": {}
+                    }
+                  },
+                  "Attachments": {},
+                  "october": {},
+                  "Office": {},
+                  "party": {},
+                  "New Folder": {}
+                }
+              },
+              "Programs": {},
+              "Postman": {},
+              "gif": {},
+              "Contacts": {},
+              "Favorites": {},
+              "AppData": {},
+              ".config": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

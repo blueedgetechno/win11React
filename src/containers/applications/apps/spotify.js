@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Icon, Image, ToolBar} from '../../../utils/general';
+import {Icon, Image, ToolBar, LazyComponent} from '../../../utils/general';
 import ReactPlayer from 'react-player'
 import jiosaavn from './assets/jiosaavn';
 import data from './assets/songs.json';
@@ -230,127 +230,129 @@ export const Spotify = ()=>{
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
       <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Spotify Music" invert/>
-      <div className="windowScreen flex flex-col">
-        <div className="restWindow flex-grow flex">
-          <div className="w-50 spnav">
-            <div className="mx-6">
-              <div className="mt-16"></div>
-              <div className="snav my-4 handcr font-semibold" data-act={tab==0}
-                onClick={action} data-action="discv" data-payload="0">
-                <Icon icon="home" width={24}/>
-                <div className="ml-4 text-sm">Home</div>
-              </div>
-              <div className="snav my-4 handcr font-semibold" data-act={tab==1} onClick={action}
-                data-action="discv" data-payload="1">
-                <Icon fafa="faCompactDisc" width={24}/>
-                <div className="ml-4 text-sm">Browse</div>
-              </div>
-              <div className="text-gray-500 text-xs font-semibold tracking-widest mt-10 mb-4">
-                YOUR LIBRARY
-              </div>
-              <div className="navcont overflow-y-scroll thinScroll lightScroll">
-                <div className="w-full h-max">
-                  {libr.map((lib, i)=>(
-                    <div className="snav mb-4 handcr text-sm font-semibold" key={i}
-                      data-act={tab==(i+2)} onClick={action} data-action="discv"
-                      data-payload={i+2}>{lib}</div>
-                  ))}
-                  <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
-                    PLAYLISTS
+      <div className="windowScreen overflow-visible flex flex-col">
+        <LazyComponent show={!wnapp.hide}>
+          <div className="restWindow flex-grow flex">
+            <div className="w-50 spnav">
+              <div className="mx-6">
+                <div className="mt-16"></div>
+                <div className="snav my-4 handcr font-semibold" data-act={tab==0}
+                  onClick={action} data-action="discv" data-payload="0">
+                  <Icon icon="home" width={24}/>
+                  <div className="ml-4 text-sm">Home</div>
+                </div>
+                <div className="snav my-4 handcr font-semibold" data-act={tab==1} onClick={action}
+                  data-action="discv" data-payload="1">
+                  <Icon fafa="faCompactDisc" width={24}/>
+                  <div className="ml-4 text-sm">Browse</div>
+                </div>
+                <div className="text-gray-500 text-xs font-semibold tracking-widest mt-10 mb-4">
+                  YOUR LIBRARY
+                </div>
+                <div className="navcont overflow-y-scroll thinScroll lightScroll">
+                  <div className="w-full h-max">
+                    {libr.map((lib, i)=>(
+                      <div className="snav mb-4 handcr text-sm font-semibold" key={i}
+                        data-act={tab==(i+2)} onClick={action} data-action="discv"
+                        data-payload={i+2}>{lib}</div>
+                    ))}
+                    <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
+                      PLAYLISTS
+                    </div>
+                    {data.playlist.map((play, i)=>(
+                      <div className="snav mb-4 handcr text-sm font-semibold" key={i}
+                        data-act={tab==(i+2+libr.length)} onClick={action}
+                        data-action="playlist" data-payload={i}>{play.name}</div>
+                    ))}
                   </div>
-                  {data.playlist.map((play, i)=>(
-                    <div className="snav mb-4 handcr text-sm font-semibold" key={i}
-                      data-act={tab==(i+2+libr.length)} onClick={action}
-                      data-action="playlist" data-payload={i}>{play.name}</div>
-                  ))}
                 </div>
               </div>
             </div>
-          </div>
-          <div className="spscreen thinScroll lightScroll"
-            id="sphome">
-            <div className="h-max relative">
-              <div className="absolute w-full pb-8">
-                {tab==41?<Queue {...{queue,curr,paused,action,action2}}/>:null}
-                {tab==0?<Home tab={tab} action={action} paused={paused}
-                  sid={queue[curr] && queue[curr].id}/>:null}
-                {tab>1 && tab<2+libr.length?
-                  <Home tab={tab} action={action} paused={paused}
+            <div className="spscreen thinScroll lightScroll"
+              id="sphome">
+              <div className="h-max relative">
+                <div className="absolute w-full pb-8">
+                  {tab==41?<Queue {...{queue,curr,paused,action,action2}}/>:null}
+                  {tab==0?<Home tab={tab} action={action} paused={paused}
                     sid={queue[curr] && queue[curr].id}/>:null}
-                {tab==39 || (tab>6 && tab<10)?<Playlist {...{action,paused,action2}}
-                  sid={queue[curr] && queue[curr].id} {...playd}/>:null}
-                <div className={tab==1?null:"hidden prtclk"}>
-                  <Search {...{action,paused,action2}}
-                    sid={queue[curr] && queue[curr].id}/>
+                  {tab>1 && tab<2+libr.length?
+                    <Home tab={tab} action={action} paused={paused}
+                      sid={queue[curr] && queue[curr].id}/>:null}
+                  {tab==39 || (tab>6 && tab<10)?<Playlist {...{action,paused,action2}}
+                    sid={queue[curr] && queue[curr].id} {...playd}/>:null}
+                  <div className={tab==1?null:"hidden prtclk"}>
+                    <Search {...{action,paused,action2}}
+                      sid={queue[curr] && queue[curr].id}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="splayer">
+              <div className="snfo flex items-center">
+                {queue[curr].albumArt?
+                  <Image src={queue[curr].albumArt.to150()} w={56} ext lazy/>:
+                    <Icon src="./img/asset/album.png" ext width={56}/>}
+                <div className="sname ml-3">
+                  <div className="text-sm mb-2 text-gray-100 font-semibold"
+                    dangerouslySetInnerHTML={{__html: queue[curr].name || "Album"}}>
+                  </div>
+                  <div className="text-xs tracking-wider text-gray-400"
+                    dangerouslySetInnerHTML={{__html: queue[curr].artist || "Artist"}}>
+                  </div>
+                </div>
+              </div>
+              <div className="songAct" data-prtclk={!queue[curr].name}>
+                <div className="flex items-center">
+                  <Icon className="cticon sficon" icon="shuffle" onClick={action}
+                    click="shuffle" payload={shfle!=0 | 0}/>
+                  <Icon className="cticon" icon="previous" onClick={action} click="prev"/>
+                  <div className="cborder handcr">
+                    {paused?(
+                      <Icon className="play" icon="play" onClick={action}
+                        click="play" width={18} height={28} invert/>
+                    ): <Icon className="pause" icon="pause" onClick={action}
+                      click="pause" width={18} height={28} invert/>}
+                  </div>
+                  <Icon className="cticon" icon="next" onClick={action} click="next"/>
+                  <Icon className="cticon rpicon" icon="repeat" onClick={action}
+                    click="repeat" payload={repeat}/>
+                </div>
+                <div className="w-full flex items-center mt-2 justify-center">
+                  <div className="progTime">{jiosaavn.formatTime(prog)}</div>
+                  <div className="sdivider">
+                    <ReactPlayer className="playbody" url={queue[curr].src} config={{
+                        file: {
+                          forceAudio: true,
+                          attributes: {id: "audiosrc"}
+                        }
+                      }} loop={repeat==2} playing={!paused} volume={volume/100} onPlay={handlePlay}
+                      onProgress={handleProg} onEnded={handleFinish} onPause={handlePause}/>
+                    <input className="cleanInput" type="range" min={0} max={queue[curr].duration}
+                      value={prog} onChange={handleChange}/>
+                    <div className="songprog" style={{width: (perProg*100)+"%"}}></div>
+                  </div>
+                  <div className="progTime">{jiosaavn.formatTime(queue[curr].duration)}</div>
+                </div>
+              </div>
+              <div className="sctrl flex items-center justify-between">
+                <div className="prtclk handcr mr-6" onClick={action} data-action="discv"
+                  data-payload="41">
+                  <Icon className="sficon" fafa="faListUl" width={14} payload={tab==41?1:0}/>
+                </div>
+                <div className="rctrl flex items-center">
+                  <Icon className="sficon mr-2" width={16} fafa={[
+                    "faVolumeMute","faVolumeDown","faVolumeUp"][ceil(volume/50)]}
+                    onClick={action} click="mute"></Icon>
+                  <div className="relative flex items-center">
+                    <input className="cleanInput volInp" type="range" min={0} max={100}
+                      value={volume} onChange={action} data-action="volume"/>
+                    <div className="songprog" style={{width: floor(0.8*volume)}}></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="splayer">
-            <div className="snfo flex items-center">
-              {queue[curr].albumArt?
-                <Image src={queue[curr].albumArt.to150()} w={56} ext/>:
-                  <Icon src="./img/asset/album.png" ext width={56}/>}
-              <div className="sname ml-3">
-                <div className="text-sm mb-2 text-gray-100 font-semibold"
-                  dangerouslySetInnerHTML={{__html: queue[curr].name || "Album"}}>
-                </div>
-                <div className="text-xs tracking-wider text-gray-400"
-                  dangerouslySetInnerHTML={{__html: queue[curr].artist || "Artist"}}>
-                </div>
-              </div>
-            </div>
-            <div className="songAct" data-prtclk={!queue[curr].name}>
-              <div className="flex items-center">
-                <Icon className="cticon sficon" icon="shuffle" onClick={action}
-                  click="shuffle" payload={shfle!=0 | 0}/>
-                <Icon className="cticon" icon="previous" onClick={action} click="prev"/>
-                <div className="cborder handcr">
-                  {paused?(
-                    <Icon className="play" icon="play" onClick={action}
-                      click="play" width={18} height={28} invert/>
-                  ): <Icon className="pause" icon="pause" onClick={action}
-                    click="pause" width={18} height={28} invert/>}
-                </div>
-                <Icon className="cticon" icon="next" onClick={action} click="next"/>
-                <Icon className="cticon rpicon" icon="repeat" onClick={action}
-                  click="repeat" payload={repeat}/>
-              </div>
-              <div className="w-full flex items-center mt-2 justify-center">
-                <div className="progTime">{jiosaavn.formatTime(prog)}</div>
-                <div className="sdivider">
-                  <ReactPlayer className="playbody" url={queue[curr].src} config={{
-                      file: {
-                        forceAudio: true,
-                        attributes: {id: "audiosrc"}
-                      }
-                    }} loop={repeat==2} playing={!paused} volume={volume/100} onPlay={handlePlay}
-                    onProgress={handleProg} onEnded={handleFinish} onPause={handlePause}/>
-                  <input className="cleanInput" type="range" min={0} max={queue[curr].duration}
-                    value={prog} onChange={handleChange}/>
-                  <div className="songprog" style={{width: (perProg*100)+"%"}}></div>
-                </div>
-                <div className="progTime">{jiosaavn.formatTime(queue[curr].duration)}</div>
-              </div>
-            </div>
-            <div className="sctrl flex items-center justify-between">
-              <div className="prtclk handcr mr-6" onClick={action} data-action="discv"
-                data-payload="41">
-                <Icon className="sficon" fafa="faListUl" width={14} payload={tab==41?1:0}/>
-              </div>
-              <div className="rctrl flex items-center">
-                <Icon className="sficon mr-2" width={16} fafa={[
-                  "faVolumeMute","faVolumeDown","faVolumeUp"][ceil(volume/50)]}
-                  onClick={action} click="mute"></Icon>
-                <div className="relative flex items-center">
-                  <input className="cleanInput volInp" type="range" min={0} max={100}
-                    value={volume} onChange={action} data-action="volume"/>
-                  <div className="songprog" style={{width: floor(0.8*volume)}}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </LazyComponent>
       </div>
     </div>
   );
@@ -421,8 +423,7 @@ const Search = ({sid, paused, action,action2})=>{
             <div className="topcard mt-4 p-5" onClick={action}
               data-action="song" data-payload={`"`+songResults[0].id+`"`}>
               <Image src={songResults[0].image.to150()} ext w={92}
-                err='/img/asset/mixdef.jpg'
-              />
+                err='/img/asset/mixdef.jpg' lazy/>
               <div className="fplay">
                 <div className="tria"></div>
               </div>
@@ -445,7 +446,7 @@ const Search = ({sid, paused, action,action2})=>{
               {[...songResults].splice(1,4).map((song, i)=>(
                 <div className="srCont flex p-2 items-center prtclk" onClick={action}
                   data-action="song" data-payload={`"`+song.id+`"`} key={i}>
-                  <Image src={song.image.to150()} w={40} ext/>
+                  <Image src={song.image.to150()} w={40} ext lazy/>
                   <div className="acol ml-4 flex-grow">
                     <div className={"capitalize text-gray-100 dotdot font-semibold"+
                       (sid==song.id?" gcol":"")}
@@ -475,7 +476,7 @@ const Search = ({sid, paused, action,action2})=>{
               {albumResults.map((card,idx)=>(
                 <div className="scard pt-3 px-3 acol">
                   <Image src={card.image.to250()} ext w={200} err='/img/asset/mixdef.jpg'
-                  onClick={action} click="album" payload={card.id}/>
+                  onClick={action} click="album" payload={card.id} lazy/>
                   <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold"
                     dangerouslySetInnerHTML={{__html: card.title}}></div>
                   <div className="my-1 leading-5 text-xs font-semibold tracking-wider"
@@ -530,7 +531,7 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
     <div className="relative">
       <div className="playinfo">
         <Image className="dpShad" src={data.album_image || "/img/asset/mixdef.jpg"}
-          ext w={232} h={232}/>
+          ext w={232} h={232} lazy/>
         <div className="playdet ml-6 text-gray-100 flex flex-col justify-end">
           <div className="text-xs font-bold uppercase">{type}</div>
           <div className="playtitle"
@@ -570,7 +571,7 @@ const Playlist = ({type, tdata, action, action2, sid, paused})=>{
 
             <div className="scol1">
               {ptype?<Image src={song.song_image.to150()}
-                w={40} h={40} ext err='/img/asset/mixdef.jpg'/>:null}
+                w={40} h={40} ext err='/img/asset/mixdef.jpg' lazy/>:null}
               <div className="scolsong flex flex-col" data-play={ptype}>
                 <div className={"font-semibold capitalize text-gray-100"+
                   (sid==song.song_id?" gcol":"")
@@ -659,7 +660,7 @@ const Home = ({tab, action, sid, paused})=>{
                   (card.type=="artist"?" text-center":"")} style={{
                   "--rot1": randomHue(idx)+'deg'
                 }}>
-                  <Image className={
+                  <Image lazy className={
                     (card.type=="mix"?"coverImg":" ")+
                     (card.type=="artist"?"artImg":" ")
                   } src={card.img} ext w={200} err='/img/asset/mixdef.jpg'
@@ -704,7 +705,7 @@ const Queue = ({queue, curr, action, action2, paused})=>{
         <div className="w-10 text-center gcol">
           {paused?"1":<Icon src="./img/asset/equaliser.gif" ext width={16}/>}
         </div>
-        <Image src={queue[curr].albumArt.to150()} w={40} ext/>
+        <Image src={queue[curr].albumArt.to150()} w={40} ext lazy/>
         <div className="flex flex-col">
           <div className="capitalize dotdot font-semibold gcol"
             dangerouslySetInnerHTML={{__html: queue[curr].name}}></div>
@@ -721,7 +722,7 @@ const Queue = ({queue, curr, action, action2, paused})=>{
           <div className="songCont handcr prtclk acol pr-12 py-2"
             onClick={()=> action2("clickq",(curr+i+1)%queue.length)}>
             <div className="w-10 text-center font-semibold">{i+2}</div>
-            <Image src={qs.albumArt.to150()} w={40} ext/>
+            <Image src={qs.albumArt.to150()} w={40} ext lazy/>
             <div className="flex flex-col">
               <div className="capitalize dotdot font-semibold text-gray-100"
                 dangerouslySetInnerHTML={{__html: qs.name}}></div>

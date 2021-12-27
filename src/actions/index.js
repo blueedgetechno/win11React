@@ -2,6 +2,17 @@ import store from '../reducers'
 import {gene_name} from '../utils/apps'
 import {dfApps} from '../utils'
 
+export const dispatchAction = (event)=>{
+  var action = {
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload
+  };
+
+  if(action.type){
+    store.dispatch(action);
+  }
+}
+
 export const refresh = (pl, menu) =>{
   if(menu.menus.desk[0].opts[4].check){
     store.dispatch({type: 'DESKHIDE'})
@@ -191,4 +202,14 @@ export const loadSettings = ()=>{
   if(sett.person.theme!="light") changeTheme()
 
   store.dispatch({type: "SETTLOAD", payload: sett})
+}
+
+// mostly file explorer
+export const handleFileOpen = (id)=>{ // handle double click open
+  const item = store.getState().files.data.getId(id);
+  if(item!=null){
+    if(item.type=="folder"){
+      store.dispatch({type: "FILEDIR", payload: item.id})
+    }
+  }
 }
