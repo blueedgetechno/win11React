@@ -55,7 +55,7 @@ function App() {
     });
   }
 
-  window.addEventListener("contextmenu", e => {
+  window.oncontextmenu = (e) => {
     afterMath(e);
     e.preventDefault();
     // dispatch({ type: 'GARBAGE'});
@@ -74,15 +74,13 @@ function App() {
       });
     }
 
-  });
+  };
 
-  window.addEventListener("click", e => {
-    afterMath(e);
-  });
+  window.onclick = afterMath
 
-  window.addEventListener("load", e => {
+  window.onload = (e) => {
     dispatch({type: "WALLBOOTED"})
-  });
+  };
 
   useEffect(()=>{
     if(!window.onstart){
