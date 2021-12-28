@@ -1,0 +1,771 @@
+{
+  "navList": [
+    {
+      "name": "system",
+      "fullName": "System"
+    },
+    {
+      "name": "bluetooth",
+      "fullName": "Bluetooth & devices"
+    },
+    {
+      "name": "network",
+      "fullName": "Network & internet"
+    },
+    {
+      "name": "personalisation",
+      "fullName": "Personalisation"
+    },
+    {
+      "name": "apps",
+      "fullName": "Apps"
+    },
+    {
+      "name": "accounts",
+      "fullName": "Accounts"
+    },
+    {
+      "name": "time",
+      "fullName": "Time & language"
+    },
+    {
+      "name": "gaming",
+      "fullName": "Gaming"
+    },
+    {
+      "name": "accessibility",
+      "fullName": "Accessibility"
+    },
+    {
+      "name": "privacy",
+      "fullName": "Privacy & security"
+    },
+    {
+      "name": "update",
+      "fullName": "Windows Update"
+    }
+  ],
+  "system": [
+    {
+      "type": "tile",
+      "name": "Display",
+      "desc": "Monitor, brightness, night light, display profile",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Sound",
+      "desc": "Volume levels, output, input, sound devices",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Notifications",
+      "desc": "Alert from apps and system",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Focus Assist",
+      "desc": "Notifications, automatic rules",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Power & battery",
+      "desc": "Sleep, battery usage, battery saver",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Storage",
+      "desc": "Storage space, drives, configuration rules",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Nearby sharing",
+      "desc": "Discoverability, received files location",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Multi-tasking",
+      "desc": "Snap windows, desktops, task switching",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Activation",
+      "desc": "Activation state, subcription, product key",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Troubleshoot",
+      "desc": "Recommended troubleshooters, preferences, history",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Recovery",
+      "desc": "Reset, advanced start-up, go back",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Projecting to this PC",
+      "desc": "Permissions, pairing PIN, discoverability",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Remote Desktop",
+      "desc": "Remote Desktop users, connection permissions",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Clipboard",
+      "desc": "Cut and copy history, sync, clear",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "About",
+      "desc": "Device specifications, rename PC, Windows specifications",
+      "icon": ""
+    }
+  ],
+  "bluetooth": [
+    {
+      "type": "tile square",
+      "name": "Add device",
+      "icon": ""
+    },
+    {
+      "type": "tile thin-blue",
+      "name": "View more devices"
+    },
+    {
+      "type": "tile",
+      "name": "Bluetooth",
+      "desc": "Bluetooth is turned off",
+      "icon": ""
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "tile",
+      "name": "Devices",
+      "desc": "Mouse, keyboard, pen, audio, displays and docks, other devices",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Printers & scanners",
+      "desc": "Preferences, troubleshoot",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Your Phone",
+      "desc": "Instantly access your Android device's photos, texts and more",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Cameras",
+      "desc": "Connected cameras, default image settings",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Mouse",
+      "desc": "Buttons, mouse pointer speed, scrolling",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Touchpad",
+      "desc": "Taps, gestures, scrolling, zooming",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Pen & Windows Ink",
+      "desc": "Right-handed or left-handed, pen button shortcuts, handwriting",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "AutoPlay",
+      "desc": "Defaults for removable drives and memory cards",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "USB",
+      "desc": "Notifications, USB battery saver, mobile device preferences",
+      "icon": ""
+    }
+  ],
+  "network": [
+    {
+      "type": "tile",
+      "name": "WiFi",
+      "desc": "Connect, manage known networks, metered network",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "VPN",
+      "desc": "Add, connect, manage",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Mobile hotspot",
+      "desc": "Share your internet connection",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Flight mode",
+      "desc": "Stop all wireless communication",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Proxy",
+      "desc": "Proxy server for WiFi and Ethernet connections",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Dial-up",
+      "desc": "Set up a dial-up internet connection",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Advanced network settings",
+      "desc": "View all network adapters, network reset",
+      "icon": ""
+    }
+  ],
+  "personalisation": [
+    {
+      "type": "subHeading",
+      "name": "Select a theme to apply"
+    },
+    {
+      "type": "tile",
+      "name": "Background",
+      "desc": "Background image, colour, slideshow",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Colours",
+      "desc": "Accent colours, transparency effects, colour theme",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Themes",
+      "desc": "Install, create, manage",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Lock screen",
+      "desc": "Lock screen images, apps, animations",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Touch keyboard",
+      "desc": "Theme, size",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Start",
+      "desc": "Recent apps and items, folders",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Taskbar",
+      "desc": "Taskbar behaviours, system pins",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Fonts",
+      "desc": "Install, manage",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Device usage",
+      "desc": "Select all the ways you plan to use your device to get personalised tips, ads and recommendations within Microsoft experiences",
+      "icon": ""
+    }
+  ],
+  "apps": [
+    {
+      "type": "tile",
+      "name": "Apps & features",
+      "desc": "Installed apps, app execution aliases",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Default apps",
+      "desc": "Defaults for file and link types, other defaults",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Offline maps",
+      "desc": "Downloads, storage location, map updates",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Optional features",
+      "desc": "Extra functionality for your device",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Apps for wesites",
+      "desc": "Websites that can open in an app instead of a browser",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Video playback",
+      "desc": "Video adjustments, HDR streaming, battery options",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Startup",
+      "desc": "Apps that start automatically when you sign in",
+      "icon": ""
+    }
+  ],
+  "accounts": [
+    {
+      "type": "tile",
+      "name": "Your info",
+      "desc": "Accounts used by email, calendar, and contacts",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Email & accounts",
+      "desc": "Accounts used by email, calendar, and contacts",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Sign-in options",
+      "desc": "Windows Hello, security key, password, dynamic lock",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Family & other users",
+      "desc": "Device access, work or school users, kiosk assighned access",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Windows backup",
+      "desc": "Back up your files, apps, preferences to restore them across devices",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Access work or school",
+      "desc": "Organisation resources like email, apps, and network",
+      "icon": ""
+    }
+  ],
+  "time": [
+    {
+      "type": "tile",
+      "name": "Date & time",
+      "desc": "Time zones, automatic clock settings, calendar display",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Language & region",
+      "desc": "Windows and some apps format dates and times based on your region",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Typing",
+      "desc": "Touch keyboard, text suggestions, preferences",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Speech",
+      "desc": "Speech language, speech recognition microphone setup, voices",
+      "icon": ""
+    }
+  ],
+  "gaming": [
+    {
+      "type": "tile",
+      "name": "Xbox Game Bar",
+      "desc": "Controller and keyboard shortcuts",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Captures",
+      "desc": "Save location, recording preferences",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Game Mode",
+      "desc": "Optimize your PC for play",
+      "icon": ""
+    }
+  ],
+  "accessibility": [
+    {
+      "type": "subHeading",
+      "name": "Vision"
+    },
+    {
+      "type": "tile",
+      "name": "Text size",
+      "desc": "Text size that appears throughout Windows and your apps",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Visual effects",
+      "desc": "Scroll bars, transparency, animations, notification timeout",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Mouse pointer and touch",
+      "desc": "Mouse pointer colour, size",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Text cursor",
+      "desc": "Appearance and thickness, text cursor indicator",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Magnifier",
+      "desc": "Magnifier reading, zoom increment",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Colour filters",
+      "desc": "Colour-blindness filters, grey scale, inverted",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Contrast themes",
+      "desc": "Colours theme for low vision, light sensitivity",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Narrator",
+      "desc": "Voice, verbosity, keyboard, braille",
+      "icon": ""
+    },
+    {
+      "type": "subHeading",
+      "name": "Hearing"
+    },
+    {
+      "type": "tile",
+      "name": "Audio",
+      "desc": "Mono audio, audio notifications",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Captions",
+      "desc": "Styles",
+      "icon": ""
+    },
+    {
+      "type": "subHeading",
+      "name": "Interaction"
+    },
+    {
+      "type": "tile",
+      "name": "Speech",
+      "desc": "Windows Speech Recognition, voice typing",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Keyboard",
+      "desc": "Sticky, Filter, and Toggle keys, on-screen keyboard",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Mouse",
+      "desc": "Mouse keys, speed, acceleration",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Eye control",
+      "desc": "Eye tracker, text-to-speech",
+      "icon": ""
+    }
+  ],
+  "privacy": [
+    {
+      "type": "subHeading",
+      "name": "Security"
+    },
+    {
+      "type": "tile",
+      "name": "Windows Security",
+      "desc": "Antivirus, browser, firewall, and network protection for your device",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Find my device",
+      "desc": "Track your device if you think you've lost it",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "For developers",
+      "desc": "These settings are intended for development use only",
+      "icon": ""
+    },
+    {
+      "type": "subHeading",
+      "name": "Windows permissions"
+    },
+    {
+      "type": "tile",
+      "name": "General",
+      "desc": "Advertising ID, local content, app launches, settings suggestions, productivity tools",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Speech",
+      "desc": "Online speech recognition for dictation and other voice-based interactions",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Inking & typing personalisation",
+      "desc": "Personal dictionary, words in your dictionary",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Diagnostic &amp; feedback",
+      "desc": "Diagnostic data, inking and typing data, tailored experiences, feedback frequency",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Activity history",
+      "desc": "Options for getting more from your activity history across devices and accounts",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Search permissions",
+      "desc": "SafeSearch, cloud content search, search history",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Searching Windows",
+      "desc": "Search indexing for faster results, Find My Files, folders excluded from search",
+      "icon": ""
+    },
+    {
+      "type": "subHeading",
+      "name": "App permissions"
+    },
+    {
+      "type": "tile",
+      "name": "Location",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Camera",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Microphone",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Voice activation",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Notification",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Account info",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Contact",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Calendar",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Phone calls",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Call history",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Email",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Tasks",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Messaging",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Radios",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Other devices",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "App diagnostics",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Automatic file downloads",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Documents",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Downloads folder",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Music library",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Pictures",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Videos",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "File system",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Screenshot borders",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Screenshot and apps",
+      "icon": ""
+    }
+  ],
+  "update": [
+    {
+      "type": "subHeading",
+      "name": "More options"
+    },
+    {
+      "type": "tile",
+      "name": "Pause updates",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Update history",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Advanced options",
+      "desc": "Delivery optimisations, optional updates, active hours, other update settings",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Windows Insider Programme",
+      "desc": "Get preview builds of Windows to share feedback to new features and updates",
+      "icon": ""
+    }
+  ]
+}
