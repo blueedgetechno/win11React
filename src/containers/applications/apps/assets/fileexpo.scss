@@ -105,8 +105,9 @@
     border: 1px solid var(--gray1);
 
     .path-field {
+      font-size: inherit;
       background: inherit;
-      color: var(--dark-txt);
+      color: var(--light-txt);
       letter-spacing: 1px;
       width: 100%;
     }
@@ -114,10 +115,22 @@
 
   .srchbar {
     width: 20%;
-    padding: 0.6em 0.8em;
+    padding: 0.6em 0.2em;
     font-size: 0.8em;
     color: var(--txt-col);
     border: 1px solid var(--gray1);
+    display: flex;
+
+    .searchIcon{
+      margin-right: 1em;
+    }
+
+    input{
+      width: 100%;
+      font-size: inherit;
+      background: inherit;
+      color: var(--light-txt);
+    }
   }
 }
 
@@ -159,11 +172,29 @@
   display: flex;
   flex-direction: column;
 
+  &:focus {
+    outline: none;
+  }
+
   .contentwrap {
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .conticon {
+    &:hover {
+      background: var(--hover-bg);
+    }
+
+    &[data-focus="true"] {
+      background: var(--focus-bg);
+      color: var(--dark-txt);
+    }
   }
 
   .gridshow {
@@ -181,7 +212,7 @@
       --cwidth: 8.6em;
       grid-column-gap: 1em;
 
-      .gridele {
+      .conticon {
         padding: 0.2em;
         margin: 0.6em 0;
       }
@@ -189,13 +220,31 @@
     grid-template-columns: repeat(auto-fill, var(--cwidth));
     justify-content: space-between;
     align-items: flex-end;
+  }
+}
 
-    .gridele {
+.sec3 {
+  background: var(--bg2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px 2px 8px;
+
+  .item-count {
+    box-sizing: border-box;
+    padding: 0 8px;
+    height: 60%;
+    border: 0 solid var(--med-txt);
+    border-right-width: 1px;
+  }
+
+  .view-opts {
+    .viewicon {
       &:hover {
         background: var(--hover-bg);
       }
 
-      &[data-focus="true"] {
+      &[data-open="true"] {
         background: var(--focus-bg);
       }
     }
