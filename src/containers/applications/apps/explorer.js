@@ -22,7 +22,7 @@ const FolderDrop = ({dir})=>{
 
   return (
     <>
-      {folder.data && folder.data.map(item=>{
+      {folder.data && folder.data.map(item => {
         if(item.type=="folder"){
           return <Dropdown icon={item.info && item.info.icon}
             title={item.name} notoggle={item.data.length==0} dir={item.id}/>
@@ -68,6 +68,7 @@ export const Explorer = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.explorer);
   const files = useSelector(state => state.files);
+  const fdata = files.data.getId(files.cdir);
   const [cpath, setPath] = useState(files.cpath);
   const dispatch = useDispatch();
 
@@ -97,20 +98,30 @@ export const Explorer = ()=>{
         <Ribbon/>
         <div className="restWindow flex-grow flex flex-col">
           <div className="sec1">
-            <Icon fafa="faArrowLeft" width={14}/>
-            <Icon fafa="faArrowRight" width={14}/>
-            <Icon fafa="faArrowUp" width={14}/>
+            <Icon fafa="faArrowLeft" width={14} click="FILEPREV" pr/>
+            <Icon fafa="faArrowRight" width={14} click="FILENEXT" pr/>
+            <Icon fafa="faArrowUp" width={14} click="FILEBACK" pr/>
             <div className="path-bar">
               <input className="path-field" type="text" value={cpath}
                   onChange={handleChange} onKeyDown={handleEnter}/>
             </div>
             <div className="srchbar">
-              Search
+              <Icon className="searchIcon" src="search" width={12}/>
+              <input type="text" placeholder='Search'/>
             </div>
           </div>
           <div className="sec2">
             <NavPane/>
             <ContentArea/>
+          </div>
+          <div className="sec3">
+            <div className="item-count text-xs">{fdata.data.length} items</div>
+            <div className="view-opts flex">
+              <Icon className="viewicon p-1" click="FILEVIEW" payload="5" open={files.view==5}
+                src="win/viewinfo" width={16}/>
+              <Icon className="viewicon p-1" click="FILEVIEW" payload="1" open={files.view==1}
+                src="win/viewlarge" width={16}/>
+            </div>
           </div>
         </div>
       </div>
@@ -123,23 +134,36 @@ const ContentArea = ({})=>{
   const special = useSelector(state => state.files.data.special);
   const [selected, setSelect] = useState(null);
   const fdata = files.data.getId(files.cdir);
+  const dispatch = useDispatch();
 
   const handleClick = (e)=>{
+    e.stopPropagation();
     setSelect(e.target.dataset.id);
   }
 
   const handleDouble = (e)=>{
+    e.stopPropagation();
     handleFileOpen(e.target.dataset.id);
   }
 
+  const emptyClick = (e)=>{
+    setSelect(null);
+  }
+
+  const handleKey = (e)=>{
+    if(e.key == "Backspace"){
+      dispatch({type: "FILEPREV"})
+    }
+  }
+
   return(
-    <div className="contentarea">
+    <div className="contentarea" onClick={emptyClick} onKeyDown={handleKey} tabIndex="-1">
       <div className="contentwrap medScroll">
         <div className="gridshow" data-size="lg">
           {fdata.data.map(item=>{
             var icon = (item.info && item.info.icon) || item.type
             return (
-              <div className="gridele flex flex-col items-center prtclk"
+              <div className="conticon flex flex-col items-center prtclk"
                 data-id={item.id} data-focus={selected==item.id}
                 onClick={handleClick} onDoubleClick={handleDouble}>
                 <Image src={`icon/win/${icon}`}/>
@@ -148,6 +172,9 @@ const ContentArea = ({})=>{
             )
           })}
         </div>
+        {fdata.data.length==0?(
+          <span className="text-xs mx-auto">This folder is empty.</span>
+        ):null}
       </div>
     </div>
   )
