@@ -140,7 +140,7 @@ export const Explorer = ()=>{
             <Icon className={"navIcon hvtheme" + ((files.hid+1)==files.hist.length?" disableIt":"")}
               fafa="faArrowRight" width={14} click="FILENEXT" pr/>
             <Icon className="navIcon hvtheme" fafa="faArrowUp" width={14} click="FILEBACK" pr/>
-            <div className="path-bar" tabIndex="-1">
+            <div className="path-bar noscroll" tabIndex="-1">
               <input className="path-field" type="text" value={cpath}
                 onChange={handleChange} onKeyDown={handleEnter}/>
               <DirCont/>
@@ -206,7 +206,7 @@ const ContentArea = ({searchtxt})=>{
                 data-id={item.id} data-focus={selected==item.id}
                 onClick={handleClick} onDoubleClick={handleDouble}>
                 <Image src={`icon/win/${item.info.icon}`}/>
-                <span className="h-4">{item.name}</span>
+                <span>{item.name}</span>
               </div>
             )
           })}
