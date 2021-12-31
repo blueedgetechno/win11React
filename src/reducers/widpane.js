@@ -77,8 +77,7 @@ const defState = {
     event: event,
     news: newsList
   },
-  hide: true,
-  updated: false
+  hide: true
 };
 
 const widReducer = (state = defState, action) => {

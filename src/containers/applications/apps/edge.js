@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Icon, Image, ToolBar} from '../../../utils/general';
+import {Icon, Image, ToolBar, LazyComponent} from '../../../utils/general';
 
 export const EdgeMenu = ()=>{
   const apps = useSelector(state => state.apps)
@@ -161,11 +161,11 @@ export const EdgeMenu = ()=>{
             </div>
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
-            {wnapp.hide?null:(
+            <LazyComponent show={!wnapp.hide}>
               <iframe src={!isTyping? url: hist[0]} id="isite" frameborder="0"
                 className="w-full h-full">
               </iframe>
-            )}
+            </LazyComponent>
             {ierror?(
               <div className="bg-blue-200 w-48 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12">
                 <div className="absolute bg-red-400 m-1 text-red-800 text-xs px-1 font-bold handcr top-0 right-0"
