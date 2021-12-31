@@ -2,7 +2,7 @@ import {Bin} from '../utils/bin';
 import fdata from './dir.json';
 
 const defState = {
-  cdir: "%onedrive%",
+  cdir: "%user%",
   hist: [],
   hid: 0,
   view: 1

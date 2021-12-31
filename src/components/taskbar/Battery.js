@@ -3,14 +3,10 @@ import { Icon } from '../../utils/general';
 
 const Battery=({charging,level})=>{
   const batteryref = useRef(null)
+  var divtitle = "Battery status: "+level+"% "+(charging?"available (plugged in)":"remaining")
 
   useEffect(() => {
-    if(batteryref.current){
-      batteryref.current.style.width=`${level}%`
-    }else{
-      batteryref.current.style.width=`100%`
-    }
-
+    batteryref.current.style.width=`${level}%`
     return () => {}
   }, [level,charging])
 
