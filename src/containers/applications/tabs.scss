@@ -56,6 +56,10 @@
 
   &[data-size="full"] {
     border-radius: 0;
+
+    .windowScreen, .toolbar,.closeBtn{
+      border-radius: 0;
+    }
   }
 
   &[data-size="cstm"] {
@@ -107,11 +111,14 @@
   }
 }
 
+.windowScreen.overflow-visible{
+  overflow: visible;
+}
+
 .overTool {
   position: absolute;
   top: 0;
   width: auto;
-  height: 26px;
 
   .btab {
     width: 176px;
@@ -139,6 +146,10 @@
   width: 100%;
   flex-grow: 1;
   scroll-behavior: smooth;
+}
+
+.edgeBrowser .overTool{
+  height: 26px;
 }
 
 .addressBar {

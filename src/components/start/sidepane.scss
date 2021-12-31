@@ -272,8 +272,18 @@ body[data-theme="dark"] .widPaneCont {
 
     .wthtop {
       width: 100%;
-      font-size: 0.6em;
-      font-weight: 400;
+      display: flex;
+      align-items: center;
+      font-size: 0.8em;
+      // font-weight: 400;
+
+      .uicon{
+        margin-right: 0.5em;
+      }
+
+      span{
+        padding-bottom: 2px;
+      }
     }
 
     .wthcity {

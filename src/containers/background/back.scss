@@ -26,6 +26,7 @@
   cursor: progress;
 }
 /* Loader css */
+
 #loader {
   position: relative;
   top: 0;
@@ -126,6 +127,7 @@
     &:hover {
       border: 2px solid rgba(255, 255, 255, 0.33);
     }
+
     &:active {
       border: 2px solid transparent;
       background: rgba(255, 255, 255, 0.33);
@@ -150,4 +152,29 @@
 .slowfadein {
   opacity: 1;
   animation: slowfadein 1s ease-in-out;
+}
+
+.loader-svg {
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke: #fefefe;
+  stroke-dasharray: 242;
+  animation: fill-animation 1s linear infinite;
+}
+
+@keyframes fill-animation {
+  0% {
+    stroke-dasharray: 40 242;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+  }
+
+  100% {
+    stroke-dasharray: 40 242;
+    stroke-dashoffset: 282;
+  }
 }

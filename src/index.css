@@ -214,7 +214,7 @@ input {
 
 .thinScroll:hover::-webkit-scrollbar-thumb,
 .medScroll:hover::-webkit-scrollbar-thumb {
-  background: rgba(32, 24, 148, 0.4);
+  background: var(--scroll);
 }
 
 .lightScroll:hover::-webkit-scrollbar-thumb {
