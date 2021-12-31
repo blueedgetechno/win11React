@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {Icon, Image, ToolBar} from '../../../utils/general'
+import {Icon, Image, ToolBar, LazyComponent} from '../../../utils/general'
 import './assets/store.scss'
 import axios from 'axios'
 import storedata from './assets/store.json'
@@ -130,25 +130,27 @@ export const MicroStore = ()=>{
       <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Store"/>
       <div className="windowScreen flex">
-        <div className="storeNav h-full w-16 flex flex-col">
-          <Icon fafa="faHome" onClick={totab} click="sthome"
-            width={20} payload={page==0 && tab=="sthome"}/>
-          <Icon fafa="faThLarge" onClick={totab} click="apprib"
-            width={18} payload={page==0 && tab=="apprib"}/>
-          <Icon fafa="faGamepad" onClick={totab} click="gamerib"
-            width={20} payload={page==0 && tab=="gamerib"}/>
-          <Icon fafa="faFilm" onClick={totab} click="movrib"
-            width={20} payload={page==0 && tab=="movrib"}/>
-          <Icon fafa="faDownload" onClick={action} click="page1"
-            width={20} payload={page==1}/>
-        </div>
-        <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
-          {page==0?<FrontPage/>:null}
-          {page==1?<DownPage action={action} apps={
-            (storeapps.length && storeapps) || storedata
-          }/>:null}
-          {page==2?<DetailPage app={opapp}/>:null}
-        </div>
+        <LazyComponent show={!wnapp.hide}>
+          <div className="storeNav h-full w-16 flex flex-col">
+            <Icon fafa="faHome" onClick={totab} click="sthome"
+              width={20} payload={page==0 && tab=="sthome"}/>
+            <Icon fafa="faThLarge" onClick={totab} click="apprib"
+              width={18} payload={page==0 && tab=="apprib"}/>
+            <Icon fafa="faGamepad" onClick={totab} click="gamerib"
+              width={20} payload={page==0 && tab=="gamerib"}/>
+            <Icon fafa="faFilm" onClick={totab} click="movrib"
+              width={20} payload={page==0 && tab=="movrib"}/>
+            <Icon fafa="faDownload" onClick={action} click="page1"
+              width={20} payload={page==1}/>
+          </div>
+          <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
+            {page==0?<FrontPage/>:null}
+            {page==1?<DownPage action={action} apps={
+              (storeapps.length && storeapps) || storedata
+            }/>:null}
+            {page==2?<DetailPage app={opapp}/>:null}
+          </div>
+        </LazyComponent>
       </div>
     </div>
   );

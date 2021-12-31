@@ -8,7 +8,7 @@
   height: 30px;
   border-bottom: solid 2px var(--clrPrm);
   border-radius: 6px;
-  background: var(--bg1);
+  background: var(--comp-clr);
   display: flex;
   padding: 0 10px;
 
@@ -19,7 +19,7 @@
 
   input {
     width: 400px;
-    background: var(--bg1);
+    background: inherit;
     color: var(--txt-col);
   }
 }

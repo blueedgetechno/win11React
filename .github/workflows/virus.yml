@@ -1,8 +1,7 @@
 name: released
 
 on:
-  release:
-     created:
+   workflow_dispatch:
 
 jobs:
   virustotal:
