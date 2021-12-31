@@ -64,15 +64,14 @@ export const SidePane = () => {
   const setting = useSelector((state) => state.setting);
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
+  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
-  const [batterylevel, setbatterylevel] = useState(100);
-
   const changebatterystatus = (bt) => {
-    let level = bt.level * 100;
+    let level = bt.level * 100 || 100;
 
     if (bt.charging) {
-      setbatterylevel("*");
+      setbatterylevel(-level);
     } else {
       if (level <= 10) level += 10;
       else if (level >= 80) level -= 10;
@@ -192,8 +191,8 @@ export const SidePane = () => {
       </div>
       <div className="mt-4 p-1 bottomBar">
         <div className="px-2 bettery">
-          <Battery level={batterylevel} charging={batterylevel === "*" ? true : false} />
-          <div className="text-xs">{`${batterylevel}%`}</div>
+          <Battery level={Math.abs(batterylevel)} charging={batterylevel<0} />
+          <div className="text-xs">{`${Math.abs(batterylevel)}%`}</div>
         </div>
       </div>
     </div>

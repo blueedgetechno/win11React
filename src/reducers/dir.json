@@ -1,0 +1,210 @@
+{
+  "C:": {
+    "type": "folder",
+    "name": "C:",
+    "info": {
+      "size": "104000000000",
+      "used": "90000000000",
+      "spid": "%cdrive%"
+    },
+    "data": {
+      "backup": {
+        "type": "folder",
+        "name": "backup",
+        "data": {
+          "config": {
+            "type": "folder",
+            "name": "config"
+          }
+        }
+      },
+      "Microsoft": {},
+      "Program Files": {
+        "data": {
+          "7-Zip": {},
+          "Adobe": {},
+          "AMD": {},
+          "BraveSoftware": {},
+          "Common Files": {},
+          "Dell": {},
+          "dotnet": {},
+          "Git": {},
+          "Goodix": {},
+          "heroku": {},
+          "Intel": {},
+          "Internet Explorer": {},
+          "mcafee": {},
+          "Microsoft Office 15": {},
+          "Microsoft OneDrive": {},
+          "Microsoft Update Health Tools": {},
+          "ModifiableWindowsApps": {},
+          "MongoDB": {},
+          "MSBuild": {},
+          "MySQL": {},
+          "nodejs": {},
+          "OpenVPN": {},
+          "PCHealthCheck": {},
+          "PowerShell": {},
+          "PowerToys": {},
+          "Realtek": {},
+          "Reference Assemblies": {},
+          "Riot Vanguard": {},
+          "Rivet Networks": {},
+          "Waves": {},
+          "Windows Defender": {},
+          "Windows Mail": {},
+          "Windows Media Player": {},
+          "Windows NT": {},
+          "Windows Photo Viewer": {},
+          "WindowsPowerShell": {},
+          "WinRAR": {}
+        }
+      },
+      "temp": {},
+      "Users": {
+        "type": "folder",
+        "name": "Users",
+        "data": {
+          "Public": {
+            "data": {
+              "Public Documents": {},
+              "Public Downloads": {},
+              "Public Music": {},
+              "Public Pictures": {},
+              "Public Videos": {}
+            }
+          },
+          "Blue": {
+            "type": "folder",
+            "name": "Blue",
+            "info": {
+              "spid": "%user%"
+            },
+            "data": {
+              ".config": {},
+              "AppData": {},
+              "Desktop": {
+                "info": {
+                  "spid": "%desktop%",
+                  "icon": "desk"
+                }
+              },
+              "Documents": {
+                "info": {
+                  "spid": "%documents%",
+                  "icon": "docs"
+                }
+              },
+              "Downloads": {
+                "info": {
+                  "spid": "%downloads%",
+                  "icon": "down"
+                },
+                "data": {
+                  "Hitman 3": {},
+                  "Atomforces": {},
+                  "Compressed": {},
+                  "textures": {},
+                  "Not A Virus": {}
+                }
+              },
+              "Music": {
+                "info": {
+                  "spid": "%music%",
+                  "icon": "music"
+                }
+              },
+              "Pictures": {
+                "info": {
+                  "spid": "%pictures%",
+                  "icon": "pics"
+                },
+                "data": {
+                  "DCIM": {},
+                  "2007": {},
+                  "High School": {
+                    "data": {
+                      "Did you really expected that": {}
+                    }
+                  }
+                }
+              },
+              "Videos": {
+                "info": {
+                  "spid": "%videos%",
+                  "icon": "vid"
+                }
+              },
+              "Github": {
+                "info": {
+                  "spid": "%github%"
+                },
+                "data": {
+                  "atomforces": {},
+                  "blueapi": {},
+                  "BlueBlog": {},
+                  "BlueBlogs---A-social-platform": {},
+                  "blueedgetechno": {},
+                  "blueedgetechno.github.io": {},
+                  "blueimage": {},
+                  "bluelab": {},
+                  "blueothello": {},
+                  "blueweb": {},
+                  "codeblue": {},
+                  "handwritten-digit-recognition": {},
+                  "jiosaavn": {},
+                  "jiosaavn-api": {},
+                  "minesweeper": {},
+                  "othello": {},
+                  "Saavn-Downloader": {},
+                  "Sanfoundary": {}
+                }
+              },
+              "OneDrive": {
+                "type": "folder",
+                "name": "OneDrive",
+                "info": {
+                  "spid": "%onedrive%",
+                  "icon": "onedrive"
+                },
+                "data": {
+                  "Atom": {
+                    "data": {
+                      "Codeforces": {},
+                      "JavaScript": {},
+                      "Github": {}
+                    }
+                  },
+                  "Attachments": {},
+                  "october": {},
+                  "Office": {},
+                  "party": {},
+                  "New Folder": {}
+                }
+              },
+              "Contacts": {},
+              "Favorites": {},
+              "gif": {},
+              "Programs": {},
+              "Postman": {}
+            }
+          }
+        }
+      },
+      "Windows": {}
+    }
+  },
+  "D:":{
+    "name": "D:",
+    "info":{
+      "spid": "%ddrive%"
+    },
+    "data": {
+      "Adobe": {},
+      "Programs": {},
+      "Unity": {},
+      "WindowsApp": {},
+      "Temp": {}
+    }
+  }
+}

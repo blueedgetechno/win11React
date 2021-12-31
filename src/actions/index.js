@@ -1,6 +1,18 @@
 import store from '../reducers'
 import {gene_name} from '../utils/apps'
 import {dfApps} from '../utils'
+import axios from 'axios';
+
+export const dispatchAction = (event)=>{
+  var action = {
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload
+  };
+
+  if(action.type){
+    store.dispatch(action);
+  }
+}
 
 export const refresh = (pl, menu) =>{
   if(menu.menus.desk[0].opts[4].check){
@@ -176,6 +188,49 @@ export const changeTheme = ()=>{
   store.dispatch({type: "WALLSET", payload: thm=="light"?0:1})
 }
 
+const loadWidget = async () => {
+  var tmpWdgt = {
+    ...store.getState().widpane
+  }, date = new Date();
+
+  // console.log('fetching ON THIS DAY');
+  var wikiurl = 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/events';
+  await axios.get(`${wikiurl}/${date.getMonth()}/${date.getDay()}`)
+    .then(res => res.data).then(data => {
+      var event = data.events[Math.floor(Math.random() * data.events.length)];
+      date.setYear(event.year);
+
+      tmpWdgt.data.date = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
+
+      tmpWdgt.data.event = event;
+    }).catch((error) => {});
+
+  // console.log('fetching NEWS');
+  var newsurl = 'https://saurav.tech/NewsAPI';
+  await axios.get(`${newsurl}/top-headlines/category/general/in.json`)
+    .then(res => res.data).then(data => {
+      var newsList = [];
+      for (var i = 0; i < data.totalResults; i++) {
+        var item = {
+          ...data.articles[i]
+        };
+        item.title = item.title.split("-").reverse().splice(1).reverse().join("-").trim();
+        newsList.push(item);
+      }
+
+      tmpWdgt.data.news = newsList;
+    }).catch((error) => {});
+
+    store.dispatch({
+      type: "WIDGREST",
+      payload: tmpWdgt
+    })
+}
+
 export const loadSettings = ()=>{
   var sett = localStorage.getItem("setting") || "{}"
   sett = JSON.parse(sett)
@@ -191,4 +246,17 @@ export const loadSettings = ()=>{
   if(sett.person.theme!="light") changeTheme()
 
   store.dispatch({type: "SETTLOAD", payload: sett})
+  if(process.env.REACT_APP_ENV!="development"){
+    loadWidget();
+  }
+}
+
+// mostly file explorer
+export const handleFileOpen = (id)=>{ // handle double click open
+  const item = store.getState().files.data.getId(id);
+  if(item!=null){
+    if(item.type=="folder"){
+      store.dispatch({type: "FILEDIR", payload: item.id})
+    }
+  }
 }

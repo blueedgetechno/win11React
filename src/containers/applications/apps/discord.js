@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Icon, Image, ToolBar} from '../../../utils/general';
+import {Icon, Image, ToolBar, LazyComponent} from '../../../utils/general';
 
 import WidgetBot from '@widgetbot/react-embed';
 
@@ -61,12 +61,12 @@ export const DScord = ()=>{
             </div>
           </div>
           <div className="flex-grow overflow-hidden">
-            {wnapp.hide?null:(
+            <LazyComponent show={!wnapp.hide}>
               <WidgetBot
                 className="w-full h-full"
                 shard={url || ""}
               />
-            )}
+            </LazyComponent>
           </div>
         </div>
       </div>
