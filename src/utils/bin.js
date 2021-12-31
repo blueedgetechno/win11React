@@ -8,7 +8,8 @@ export class Item {
   }) {
     this.type = type || "folder"
     this.name = name
-    this.info = info
+    this.info = info || {}
+    this.info.icon = this.info.icon || this.type
     this.data = data
     this.host = host
     this.id = this.gene()
@@ -63,6 +64,10 @@ export class Bin {
   }
 
   parsePath(cpath){
+    if(cpath.includes("%")){
+      return this.special[cpath.trim()]
+    }
+
     cpath = cpath.split("\\").filter(x => x!="").map(x => x.trim().toLowerCase())
     if(cpath.length==0) return null
 

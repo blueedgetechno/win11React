@@ -18,11 +18,62 @@
           }
         }
       },
+      "Microsoft": {},
+      "Program Files": {
+        "data": {
+          "7-Zip": {},
+          "Adobe": {},
+          "AMD": {},
+          "BraveSoftware": {},
+          "Common Files": {},
+          "Dell": {},
+          "dotnet": {},
+          "Git": {},
+          "Goodix": {},
+          "heroku": {},
+          "Intel": {},
+          "Internet Explorer": {},
+          "mcafee": {},
+          "Microsoft Office 15": {},
+          "Microsoft OneDrive": {},
+          "Microsoft Update Health Tools": {},
+          "ModifiableWindowsApps": {},
+          "MongoDB": {},
+          "MSBuild": {},
+          "MySQL": {},
+          "nodejs": {},
+          "OpenVPN": {},
+          "PCHealthCheck": {},
+          "PowerShell": {},
+          "PowerToys": {},
+          "Realtek": {},
+          "Reference Assemblies": {},
+          "Riot Vanguard": {},
+          "Rivet Networks": {},
+          "Waves": {},
+          "Windows Defender": {},
+          "Windows Mail": {},
+          "Windows Media Player": {},
+          "Windows NT": {},
+          "Windows Photo Viewer": {},
+          "WindowsPowerShell": {},
+          "WinRAR": {}
+        }
+      },
+      "temp": {},
       "Users": {
         "type": "folder",
         "name": "Users",
         "data": {
-          "Public": {},
+          "Public": {
+            "data": {
+              "Public Documents": {},
+              "Public Downloads": {},
+              "Public Music": {},
+              "Public Pictures": {},
+              "Public Videos": {}
+            }
+          },
           "Blue": {
             "type": "folder",
             "name": "Blue",
@@ -30,6 +81,8 @@
               "spid": "%user%"
             },
             "data": {
+              ".config": {},
+              "AppData": {},
               "Desktop": {
                 "info": {
                   "spid": "%desktop%",
@@ -65,6 +118,15 @@
                 "info": {
                   "spid": "%pictures%",
                   "icon": "pics"
+                },
+                "data": {
+                  "DCIM": {},
+                  "2007": {},
+                  "High School": {
+                    "data": {
+                      "Did you really expected that": {}
+                    }
+                  }
                 }
               },
               "Videos": {
@@ -76,6 +138,26 @@
               "Github": {
                 "info": {
                   "spid": "%github%"
+                },
+                "data": {
+                  "atomforces": {},
+                  "blueapi": {},
+                  "BlueBlog": {},
+                  "BlueBlogs---A-social-platform": {},
+                  "blueedgetechno": {},
+                  "blueedgetechno.github.io": {},
+                  "blueimage": {},
+                  "bluelab": {},
+                  "blueothello": {},
+                  "blueweb": {},
+                  "codeblue": {},
+                  "handwritten-digit-recognition": {},
+                  "jiosaavn": {},
+                  "jiosaavn-api": {},
+                  "minesweeper": {},
+                  "othello": {},
+                  "Saavn-Downloader": {},
+                  "Sanfoundary": {}
                 }
               },
               "OneDrive": {
@@ -100,17 +182,29 @@
                   "New Folder": {}
                 }
               },
-              "Programs": {},
-              "Postman": {},
-              "gif": {},
               "Contacts": {},
               "Favorites": {},
-              "AppData": {},
-              ".config": {}
+              "gif": {},
+              "Programs": {},
+              "Postman": {}
             }
           }
         }
-      }
+      },
+      "Windows": {}
+    }
+  },
+  "D:":{
+    "name": "D:",
+    "info":{
+      "spid": "%ddrive%"
+    },
+    "data": {
+      "Adobe": {},
+      "Programs": {},
+      "Unity": {},
+      "WindowsApp": {},
+      "Temp": {}
     }
   }
 }

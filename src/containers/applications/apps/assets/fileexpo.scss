@@ -53,7 +53,7 @@
         width: 100%;
         height: 1.4em;
         border-radius: 2px;
-        background: rgba(136, 136, 136, 0.5);
+        background: rgba(136, 136, 136, 0.24);
       }
 
       .arrUi svg {
@@ -69,6 +69,10 @@
       color: var(--dsb-col);
     }
   }
+}
+
+.disableIt{
+  color: var(--dsb-col) !important;
 }
 
 .dropcontent {
@@ -91,25 +95,72 @@
   display: flex;
   padding: 0.5em 0.5em 0.5em 0;
 
-  .uicon {
-    color: var(--med-txt);
-    margin: 0 0.5em 0 1em;
+  .navIcon {
+    color: var(--gray-txt);
+    padding: 0 0.5em;
+    margin-left: 0.5em;
+    border-radius: 4px;
+    transition: all 200ms ease-in-out;
   }
 
   .path-bar {
     flex-grow: 1;
     margin: 0 0.6em;
-    padding: 0.6em;
+    padding: 0 0.6em;
     font-size: 0.8em;
     color: var(--med-txt);
     border: 1px solid var(--gray1);
 
+    .dirfbox{
+      .dirCont:hover{
+        .dncont, .dirchev{
+          background: rgba(136, 136, 136, 0.3);
+        }
+      }
+
+      .dncont{
+        padding: 0 0.25em;
+        color: var(--med-dark);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding-bottom: 2px;
+      }
+
+      .dirchev{
+        padding: 0 2px;
+        margin-left: 1px;
+        height: 100%;
+      }
+    }
+
     .path-field {
       font-size: inherit;
       background: inherit;
-      color: var(--light-txt);
+      color: var(--med-dark);
       letter-spacing: 1px;
       width: 100%;
+      height: 100%;
+      display: none;
+
+      &:focus, &:active{
+        display: block;
+
+        & + .dirfbox{
+          display: none;
+        }
+      }
+    }
+
+    &:focus{
+      .dirfbox{
+        display: none;
+      }
+
+      .path-field{
+        display: block;
+      }
     }
   }
 
@@ -122,14 +173,14 @@
     display: flex;
 
     .searchIcon{
-      margin-right: 1em;
+      margin: 0 1em;
     }
 
     input{
       width: 100%;
       font-size: inherit;
       background: inherit;
-      color: var(--light-txt);
+      color: var(--med-dark);
     }
   }
 }
@@ -187,13 +238,15 @@
   }
 
   .conticon {
-    &:hover {
-      background: var(--hover-bg);
-    }
-
     &[data-focus="true"] {
       background: var(--focus-bg);
       color: var(--dark-txt);
+    }
+
+    span{
+      width: 100%;
+      text-align: center;
+      word-wrap: break-word;
     }
   }
 
@@ -240,13 +293,13 @@
 
   .view-opts {
     .viewicon {
-      &:hover {
-        background: var(--hover-bg);
-      }
-
       &[data-open="true"] {
         background: var(--focus-bg);
       }
     }
   }
+}
+
+.hvtheme:hover {
+  background: var(--hover-bg);
 }
