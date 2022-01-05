@@ -85,12 +85,6 @@ var apps = [{
   action: 'CAMERA'
 },
 {
-  name: 'VS Code',
-  icon: 'code',
-  type: 'app',
-  action: 'VSCODE'
-},
-{
   name: 'Your Phone',
   icon: 'yphone',
   type: 'app'
