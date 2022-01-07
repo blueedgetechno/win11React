@@ -15,10 +15,10 @@ var {
   pinned: (localStorage.getItem("pinned") &&
     JSON.parse(localStorage.getItem("pinned"))) || ["Browser", "Word", "PowerPoint", "OneNote", "Mail", "To Do", "Store",
     "Photos", "Buy me a coffee", "Notepad", "White Board", "Calculator",
-    "Spotify", "Twitter", "VS Code", "Terminal", "Github", "Discord"
+    "Spotify", "Twitter", "File Explorer", "Terminal", "Github", "Discord"
   ],
   recent: (localStorage.getItem("recent") &&
-    JSON.parse(localStorage.getItem("recent"))) || ["Mail", "Twitter", "Terminal", "Github", "VS Code", "Spotify", "Edge"]
+    JSON.parse(localStorage.getItem("recent"))) || ["Mail", "Twitter", "Terminal", "Github", "File Explorer", "Spotify", "Edge"]
 };
 
 if(desktop.includes("Buy me a coffee")==false){
