@@ -52,7 +52,7 @@ export const BootScreen = (props) => {
       <div className={blackout ? "hidden" : ""}>
         <Image src="asset/bootlogo" w={180} />
         <div className="mt-48" id="loader">
-          <svg class="svg-container" height="60" width="60" viewBox="0 0 100 100">
+          <svg class="svg-container" height="48" width="48" viewBox="0 0 100 100">
             <circle class="loader-svg" cx="50" cy="50" r="45"></circle>
           </svg>
         </div>

@@ -155,7 +155,7 @@
 }
 
 .loader-svg {
-  stroke-width: 6px;
+  stroke-width: 8px;
   stroke-linecap: round;
   stroke: #fefefe;
   stroke-dasharray: 242;
@@ -165,7 +165,7 @@
 @keyframes fill-animation {
   0% {
     stroke-dasharray: 40 242;
-    stroke-dashoffset: 0;
+    stroke-dashoffset: 282;
   }
 
   50% {
@@ -175,6 +175,6 @@
 
   100% {
     stroke-dasharray: 40 242;
-    stroke-dashoffset: 282;
+    stroke-dashoffset: 0;
   }
 }
