@@ -142,7 +142,7 @@ body[data-theme="dark"] .calcApp {
   background: #060606;
 }
 
-.msfiles{
+.msfiles {
   --bg0: #edf2fe;
   --bg1: #ffffff;
   --bg2: #f5f5f5;
@@ -153,7 +153,7 @@ body[data-theme="dark"] .calcApp {
   --focus-bg: rgba(0, 183, 255, 0.25);
 }
 
-body[data-theme="dark"] .msfiles{
+body[data-theme="dark"] .msfiles {
   --bg0: #19212e;
   --bg1: #191919;
   --bg2: #1c1c1c;
@@ -162,4 +162,15 @@ body[data-theme="dark"] .msfiles{
   --gray2: #222;
   --hover-bg: rgba(136, 136, 136, 0.5);
   --focus-bg: rgba(228, 228, 228, 0.5);
+}
+
+.settingsApp {
+  --bg0: #eff4f9;
+
+  background: var(--bg0);
+  color: var(--dark-txt);
+}
+
+body[data-theme="dark"] .settingsApp {
+  --bg0: #202020;
 }

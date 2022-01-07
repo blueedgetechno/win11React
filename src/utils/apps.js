@@ -26,7 +26,8 @@ var apps = [{
 {
   name: 'Settings',
   icon: 'settings',
-  type: 'app'
+  type: 'app',
+  action: 'SETTINGS'
 },
 {
   name: 'File Explorer',

@@ -141,7 +141,9 @@ export const StartMenu = () => {
                 <div className="reApps">
                   {start.rcApps.slice(0, 6).map((app, i) => {
                     return app.name ? (
-                      <div key={i} className="rnApp">
+                      <div key={i} className="rnApp"  value={app.action != null}
+                      onClick={clickDispatch} data-action={app.action}
+                      data-payload={app.payload || "full"} >
                         <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="acInfo">
                           <div className="appName">{app.name}</div>

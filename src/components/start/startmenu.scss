@@ -241,9 +241,8 @@ body[data-theme="dark"] .startMenu {
 .recApps {
   position: absolute;
   bottom: 0;
-  // margin-top: 12px;
   overflow: auto;
-  // max-height: calc(100% - 332px);
+  max-height: calc(100% - 332px);
 }
 
 .reApps {
