@@ -78,7 +78,8 @@
             "type": "folder",
             "name": "Blue",
             "info": {
-              "spid": "%user%"
+              "spid": "%user%",
+              "icon": "user"
             },
             "data": {
               ".config": {},
@@ -93,6 +94,30 @@
                 "info": {
                   "spid": "%documents%",
                   "icon": "docs"
+                },
+                "data": {
+                  "2020": {
+                    "data": {
+                      "Covid": {},
+                      "Lockdown": {},
+                      "Windows 11 Release": {},
+                      "Vaccination": {}
+                    }
+                  },
+                  "Adobe": {},
+                  "Attachments": {},
+                  "Battle Royal": {},
+                  "BioWare": {},
+                  "Custom": {},
+                  "Downloadable": {},
+                  "Fax": {},
+                  "FeedbackHub": {},
+                  "Freelancing": {},
+                  "My Games": {},
+                  "OneNote notebooks": {},
+                  "OnScreen Control": {},
+                  "Outlook Files": {},
+                  "Visual Studio": {}
                 }
               },
               "Downloads": {
@@ -112,6 +137,11 @@
                 "info": {
                   "spid": "%music%",
                   "icon": "music"
+                },
+                "data": {
+                  "Hip Hop": {},
+                  "Old School": {},
+                  "60s Songs": {}
                 }
               },
               "Pictures": {

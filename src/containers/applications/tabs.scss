@@ -105,6 +105,7 @@
   flex-grow: 1;
   overflow: hidden;
   border-radius: 0 0 6px 6px;
+  // overflow: hidden;
 
   &[data-dock="true"] {
     // height: calc(100% - 26px);
