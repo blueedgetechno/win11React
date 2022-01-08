@@ -61,7 +61,7 @@ var apps = [{
 },
 {
   name: 'Blue',
-  icon: 'win/userDir',
+  icon: 'win/user',
   type: 'short'
 }, {
   name: 'Alarms',
