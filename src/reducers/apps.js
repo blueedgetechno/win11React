@@ -2,7 +2,7 @@ import {allApps} from '../utils';
 
 var dev = ""
 if(process.env.REACT_APP_ENV=="development"){
-  dev=""
+  dev="explorer"
 }
 
 const defState = {};

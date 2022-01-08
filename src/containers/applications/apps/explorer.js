@@ -228,6 +228,7 @@ const NavPane = ({})=>{
       <div className="extcont">
         <Dropdown icon="star" title="Quick access" action="" isDropped>
           <Dropdown icon="down" title="Downloads" spid="%downloads%" notoggle pinned/>
+          <Dropdown icon="user" title="Blue" spid="%user%" notoggle pinned/>
           <Dropdown icon="docs" title="Documents" spid="%documents%" notoggle pinned/>
           <Dropdown title="Github" spid="%github%" notoggle/>
           <Dropdown icon="pics" title="Pictures" spid="%pictures%" notoggle/>

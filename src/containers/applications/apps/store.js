@@ -72,16 +72,17 @@ export const MicroStore = ()=>{
     var x = e.target && e.target.dataset.action
     if(x){
       setPage(0)
+      setTimeout(()=> {
+        var target = document.getElementById(x)
+        if(target){
+          var tsof = target.parentNode.parentNode.scrollTop,
+              trof = target.offsetTop
 
-      var target = document.getElementById(x)
-      if(target){
-        var tsof = target.parentNode.parentNode.scrollTop,
-            trof = target.offsetTop
-
-        if(Math.abs(tsof - trof) > window.innerHeight * 0.1){
-          target.parentNode.parentNode.scrollTop = target.offsetTop
+          if(Math.abs(tsof - trof) > window.innerHeight * 0.1){
+            target.parentNode.parentNode.scrollTop = target.offsetTop
+          }
         }
-      }
+      }, 200)
     }
   }
 

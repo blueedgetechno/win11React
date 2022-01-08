@@ -228,9 +228,10 @@ export const Spotify = ()=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
+      <div className="navcover w-50 h-16 absolute"></div>
       <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Spotify Music" invert/>
-      <div className="windowScreen overflow-visible flex flex-col">
+      <div className="windowScreen flex flex-col">
         <LazyComponent show={!wnapp.hide}>
           <div className="restWindow flex-grow flex">
             <div className="w-50 spnav">
