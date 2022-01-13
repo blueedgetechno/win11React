@@ -144,7 +144,7 @@ export const MicroStore = ()=>{
             <Icon fafa="faDownload" onClick={action} click="page1"
               width={20} payload={page==1}/>
           </div>
-          <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
+          <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page==0?<FrontPage/>:null}
             {page==1?<DownPage action={action} apps={
               (storeapps.length && storeapps) || storedata
@@ -267,7 +267,7 @@ const DetailPage = ({app})=>{
         {app.data.gallery && app.data.gallery.length?(
           <div className="briefcont py-2 pb-3">
             <div className="text-xs font-semibold">Screenshots</div>
-            <div className="overflow-x-scroll medScroll mt-4">
+            <div className="overflow-x-scroll win11Scroll mt-4">
               <div className="w-max flex">
                 {app.data.gallery && app.data.gallery.map(x=>
                   <Image className="mr-2 rounded" h={250} src={x}
@@ -325,7 +325,7 @@ const FrontPage = (props)=>{
     <div className="pagecont w-full absolute top-0">
       <Image id="sthome" className="frontPage w-full" src="img/store/lucacover.jpg" ext/>
       <div className="panelName absolute m-6 text-xl top-0">Home</div>
-      <div className="w-full overflow-x-scroll thinScroll overflow-y-hidden -mt-16">
+      <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
           {ribbon && ribbon.map(x=>{
             return x=="unescape"?(

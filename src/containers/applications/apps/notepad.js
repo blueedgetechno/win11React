@@ -28,7 +28,7 @@ export const Notepad = () => {
         </div>
         <div className="restWindow h-full flex-grow">
           <div className="w-full h-full overflow-hidden">
-            <textarea className="noteText thinScroll" id="textpad" />
+            <textarea className="noteText win11Scroll" id="textpad" />
           </div>
         </div>
       </div>

@@ -165,7 +165,7 @@ export const StartMenu = () => {
                   <div>Back</div>
                 </div>
               </div>
-              <div className="allApps" data-alpha={start.alpha}>
+              <div className="allApps win11Scroll" data-alpha={start.alpha}>
                 {start.contApps.map((ldx, i) => {
                   if (ldx.length == 0) return null;
 

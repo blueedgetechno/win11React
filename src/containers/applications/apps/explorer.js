@@ -198,7 +198,7 @@ const ContentArea = ({searchtxt})=>{
 
   return(
     <div className="contentarea" onClick={emptyClick} onKeyDown={handleKey} tabIndex="-1">
-      <div className="contentwrap medScroll">
+      <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
           {fdata.data.map(item=>{
             return item.name.includes(searchtxt) && (
@@ -224,7 +224,7 @@ const NavPane = ({})=>{
   const special = useSelector(state => state.files.data.special);
 
   return (
-    <div className="navpane medScroll">
+    <div className="navpane win11Scroll">
       <div className="extcont">
         <Dropdown icon="star" title="Quick access" action="" isDropped>
           <Dropdown icon="down" title="Downloads" spid="%downloads%" notoggle pinned/>
