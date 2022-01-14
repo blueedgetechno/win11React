@@ -271,7 +271,7 @@ export const WnTerminal = ()=>{
         name={wntitle} invert bg="#060606"/>
       <div className="windowScreen flex" data-dock="true">
         <div className="restWindow h-full flex-grow text-gray-100">
-          <div className="cmdcont w-full box-border overflow-y-scroll thinScroll prtclk"
+          <div className="cmdcont w-full box-border overflow-y-scroll win11Scroll prtclk"
             id="cmdcont" onMouseOver={action} onClick={action} data-action="hover">
             <div className="w-full h-max pb-12">
               {stack.map(x=> <div className="cmdLine">{x}</div>)}

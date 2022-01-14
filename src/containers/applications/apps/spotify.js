@@ -250,7 +250,7 @@ export const Spotify = ()=>{
                 <div className="text-gray-500 text-xs font-semibold tracking-widest mt-10 mb-4">
                   YOUR LIBRARY
                 </div>
-                <div className="navcont overflow-y-scroll thinScroll lightScroll">
+                <div className="navcont overflow-y-scroll win11Scroll">
                   <div className="w-full h-max">
                     {libr.map((lib, i)=>(
                       <div className="snav mb-4 handcr text-sm font-semibold" key={i}
@@ -269,7 +269,7 @@ export const Spotify = ()=>{
                 </div>
               </div>
             </div>
-            <div className="spscreen thinScroll lightScroll"
+            <div className="spscreen win11Scroll"
               id="sphome">
               <div className="h-max relative">
                 <div className="absolute w-full pb-8">
