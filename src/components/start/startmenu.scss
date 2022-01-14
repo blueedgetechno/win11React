@@ -311,22 +311,6 @@ body[data-theme="dark"] .startMenu {
     pointer-events: none;
   }
 
-  &::-webkit-scrollbar {
-    display: none;
-    width: 1.6px;
-    background: transparent;
-  }
-
-  &:hover::-webkit-scrollbar {
-    display: block;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    width: 1.6px;
-    border-radius: 10px;
-    background: var(--sat-txt);
-  }
-
   .allApp {
     position: relative;
     display: flex;

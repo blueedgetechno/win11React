@@ -196,45 +196,6 @@ input {
   font-size: 0.64em;
 }
 
-.noscroll::-webkit-scrollbar {
-  display: none;
-}
-
-.thinScroll::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
-  background-color: transparent;
-}
-
-.medScroll::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-  background-color: transparent;
-}
-
-.thinScroll:hover::-webkit-scrollbar-thumb,
-.medScroll:hover::-webkit-scrollbar-thumb {
-  background: var(--scroll);
-}
-
-.lightScroll:hover::-webkit-scrollbar-thumb {
-  background: rgba(162, 159, 209, 0.4);
-}
-
-.thinScroll::-webkit-scrollbar-thumb {
-  width: 2px;
-  height: 2px;
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-.medScroll::-webkit-scrollbar-thumb {
-  width: 4px;
-  height: 4px;
-  border-radius: 10px;
-  background-color: transparent;
-}
-
 @keyframes fadein {
   0% {
     opacity: 0;
