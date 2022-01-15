@@ -2,7 +2,7 @@ import {allApps} from '../utils';
 
 var dev = ""
 if(process.env.REACT_APP_ENV=="development"){
-  dev="explorer"
+  dev=""
 }
 
 const defState = {};
@@ -14,7 +14,7 @@ for (var i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   if(allApps[i].icon==dev){
-    defState[allApps[i].icon].size = "full";
+    defState[allApps[i].icon].size = "mini";
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;

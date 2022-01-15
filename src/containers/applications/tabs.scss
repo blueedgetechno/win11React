@@ -57,7 +57,9 @@
   &[data-size="full"] {
     border-radius: 0;
 
-    .windowScreen, .toolbar,.closeBtn{
+    .closeBtn,
+    .toolbar,
+    .windowScreen {
       border-radius: 0;
     }
   }
@@ -106,13 +108,12 @@
   overflow: hidden;
   border-radius: 0 0 6px 6px;
   // overflow: hidden;
-
   &[data-dock="true"] {
     // height: calc(100% - 26px);
   }
 }
 
-.windowScreen.overflow-visible{
+.windowScreen.overflow-visible {
   overflow: visible;
 }
 
@@ -149,7 +150,7 @@
   scroll-behavior: smooth;
 }
 
-.edgeBrowser .overTool{
+.edgeBrowser .overTool {
   height: 26px;
 }
 
@@ -179,7 +180,8 @@
 }
 
 .cmdcont {
-  height: calc(100% - 24px);
+  position: absolute;
+  height: 100%;
 }
 
 .cmdLine {
@@ -229,12 +231,12 @@
     }
   }
 }
-
 @keyframes blink {
   from,
   to {
     background: transparent;
   }
+
   50% {
     background: #ccc;
   }

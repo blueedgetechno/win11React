@@ -130,7 +130,7 @@ export const StartMenu = () => {
                   })}
                 </div>
               </div>
-              <div className="recApps">
+              <div className="recApps win11Scroll">
                 <div className="stAcbar">
                   <div className="gpname">Recommended</div>
                   <div className="gpbtn none">
