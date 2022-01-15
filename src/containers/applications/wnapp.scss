@@ -31,7 +31,7 @@ body[data-theme="dark"] {
   --sat-txt: #999;
   --clrPrm: #4cc2ff;
   --wintheme: #1e1e26;
-  --scroll: rgb(44 44 44 / 80%);
+  --scroll: rgb(44 44 44 / 25%);
 }
 
 .edgeBrowser {
@@ -136,7 +136,7 @@ body[data-theme="dark"] .calcApp {
 
       &:hover {
         background: var(--scrollbar-bottom-btn) 0% calc(100% - 3px) / contain no-repeat, var(--scrollbar-top-btn) 0% calc(0% + 3px) / contain no-repeat, rgb(44 44 44 / 80%);
-      }  
+      }
 
       &-thumb {
         background: rgb(255 255 255 / 50%);

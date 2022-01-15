@@ -189,6 +189,10 @@ body[data-theme="dark"] .startMenu {
   }
 }
 
+.appCont .stAcbar{
+  padding-right: 64px; 
+}
+
 .pnApps {
   min-height: 150px;
   padding: 20px 0;
@@ -292,13 +296,14 @@ body[data-theme="dark"] .startMenu {
 .appCont {
   position: relative;
   padding: 32px;
+  padding-right: 0;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
 }
 
 .allApps {
-  margin-top: 14px;
+  margin-top: 16px;
   padding: 0 16px;
   height: 100%;
   overflow: auto;
