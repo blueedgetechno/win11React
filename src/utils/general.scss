@@ -1,5 +1,6 @@
 .toolbar {
   display: flex;
+  flex-shrink: 0;
   width: 100%;
   height: 26px;
   justify-content: space-between;
