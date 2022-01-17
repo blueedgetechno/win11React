@@ -46,7 +46,7 @@
 }
 
 .dycalendar-day-container .dycalendar-span-month-year {
-  font-size: 90%
+  font-size: 90%;
 }
 
 /*================================== DAY CALENDAR ENDS HERE ===============*/
@@ -61,52 +61,65 @@
 
 .dycalendar-month-container div {
   padding: 0;
-  margin-bottom: 10px;
 }
 
 .dycalendar-month-container .dycalendar-header {
   position: relative;
+  padding: 8px 0;
+}
+
+.dycalendar-month-container .dycalendar-header {
+  text-align: left;
 }
 
 .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn {
   position: absolute;
   top: 0;
   cursor: pointer;
+  color: var(--sat-txt);
+  padding: 10px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+.dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn:hover {
+  background: var(--bgHvr);
 }
 
 .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.prev-btn {
-  left: 0;
+  right: 40px;
 }
 
 .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.next-btn {
   right: 0;
 }
 
-.dycalendar-month-container .dycalendar-span-month-year {
-  margin: 5px;
-  cursor: pointer;
+.dycalendar-month-container table {
+  width: 100%;
 }
 
 .dycalendar-month-container .dycalendar-body table tr td {
-  padding: 12px;
-  font-size: 0.64em;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 14px;
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  border-radius: 50%;
 }
 
-.dycalendar-month-container .dycalendar-body table tr td:hover {
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.1);
+.dycalendar-month-container .dycalendar-body table tr:not(:first-child) td:not(.dycalendar-today-date):hover {
+  background: var(--bgHvr);
 }
 
 .dycalendar-month-container .dycalendar-body table tr:first-child td {
   font-weight: 600;
+  font-size: 13px;
 }
 
 .dycalendar-today-date {
   background: var(--clrPrm);
-  color: var(--dark-txt);
-  border-radius: 24px;
+  color: var(--alt-txt);
 }
 
 /*================================== MONTH CALENDAR ENS HERE ===============*/
@@ -339,8 +352,9 @@
 }
 
 .dycalendar-span-month-year {
-  font-size: 0.8em;
+  font-size: 14px;
   font-weight: 600;
+  margin: 5px;
 }
 
 .dycalendar-prev-next-btn {
