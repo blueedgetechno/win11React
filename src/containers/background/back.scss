@@ -25,17 +25,6 @@
   place-items: center;
   cursor: progress;
 }
-/* Loader css */
-
-#loader {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: grid;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-}
 
 .lockscreen {
   position: absolute;
@@ -154,27 +143,39 @@
   animation: slowfadein 1s ease-in-out;
 }
 
-.loader-svg {
-  stroke-width: 8px;
+// Loader css
+#loader {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+// https://docs.microsoft.com/en-us/fluent-ui/web-components/components/progress-ring
+
+.progressRing circle {
+  stroke: white;
+  fill: none;
+  stroke-width: 2px;
   stroke-linecap: round;
-  stroke: #fefefe;
-  stroke-dasharray: 242;
-  animation: fill-animation 1s linear infinite;
+  transform-origin: 50% 50%;
+  transition: all 0.2s ease-in-out 0s;
+  animation: 2s linear 0s infinite normal none running spin-infinite;
 }
 
-@keyframes fill-animation {
+@keyframes spin-infinite {
   0% {
-    stroke-dasharray: 40 242;
-    stroke-dashoffset: 282;
+    stroke-dasharray: 0.01px, 43.97px;
+    transform: rotate(0deg);
   }
-
   50% {
-    stroke-dasharray: 140;
-    stroke-dashoffset: 140;
+    stroke-dasharray: 21.99px, 21.99px;
+    transform: rotate(450deg);
   }
-
   100% {
-    stroke-dasharray: 40 242;
-    stroke-dashoffset: 0;
+    stroke-dasharray: 0.01px, 43.97px;
+    transform: rotate(1080deg);
   }
 }

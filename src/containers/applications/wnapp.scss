@@ -77,6 +77,10 @@ body[data-theme="dark"] .wnstore {
   --rib2-bg: #2c2f32;
   --det-bg: #282c32;
   background: var(--bg-color);
+
+  .win11Scroll {
+    --scroll: rgb(44 44 44 / 80%);
+  }
 }
 
 .wnterm {
