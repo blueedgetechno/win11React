@@ -93,10 +93,12 @@
 .calnpane {
   --bg1: rgba(242, 242, 242, 0.9);
   --bg2: rgba(0, 0, 0, 0.05);
+  --bgHvr: rgba(0, 0, 0, 0.05);
 
   position: absolute;
   bottom: 12px;
   right: 12px;
+  width: 21rem;
   background: var(--bg1);
   color: var(--dark-txt);
   -webkit-backdrop-filter: blur(20px);
@@ -123,6 +125,7 @@
 body[data-theme="dark"] .calnpane {
   --bg1: rgba(36, 36, 36, 0.8);
   --bg2: rgba(0, 0, 0, 0.2);
+  --bgHvr: rgba(255, 255, 255, 0.08);
 }
 
 .powerCont {

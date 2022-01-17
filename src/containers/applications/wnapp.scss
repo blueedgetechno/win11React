@@ -8,6 +8,7 @@
 
 body {
   --dark-txt: #000;
+  --alt-txt: #fff;
   --med-dark: #111;
   --txt-col: #222;
   --med-txt: #3c3c3c;
@@ -22,6 +23,7 @@ body {
 
 body[data-theme="dark"] {
   --dark-txt: #fff;
+  --alt-txt: #000;
   --med-dark: #eee;
   --txt-col: #ddd;
   --med-txt: #c3c3c3;
