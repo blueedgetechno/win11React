@@ -284,8 +284,8 @@ export const ToolBar = (props)=>{
 
     if(op==0) setPos(pos0, pos1)
     else{
-      dim0 = Math.max(dim0, 360)
-      dim1 = Math.max(dim1, 360)
+      dim0 = Math.max(dim0, 320)
+      dim1 = Math.max(dim1, 320)
       pos0 = posP[0] + Math.min(vec[0],0)*(dim0 - dimP[0])
       pos1 = posP[1] + Math.min(vec[1],0)*(dim1 - dimP[1])
       setPos(pos0, pos1)
