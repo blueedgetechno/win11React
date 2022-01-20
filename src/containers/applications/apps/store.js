@@ -267,7 +267,7 @@ const DetailPage = ({app})=>{
         {app.data.gallery && app.data.gallery.length?(
           <div className="briefcont py-2 pb-3">
             <div className="text-xs font-semibold">Screenshots</div>
-            <div className="overflow-x-scroll win11Scroll mt-4">
+            <div className="overflow-x-scroll win11Scroll noscroll mt-4">
               <div className="w-max flex">
                 {app.data.gallery && app.data.gallery.map(x=>
                   <Image className="mr-2 rounded" h={250} src={x}
