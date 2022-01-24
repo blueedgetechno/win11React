@@ -40,3 +40,18 @@ jobs:
         releaseBody: "See the assets to download this version and install."
         releaseDraft: false
         prerelease: false
+        
+  virus:
+    needs: publish-tauri
+    runs-on: ubuntu-latest
+    steps:
+     - name: VirusTotal Scan
+       uses: crazy-max/ghaction-virustotal@v2
+       with:
+          update_release_body: true
+          vt_api_key: ${{ secrets.VIRUSTOTAL }}
+          files: |
+            .msi$
+            .deb$
+            .dmg$
+            .zip$
