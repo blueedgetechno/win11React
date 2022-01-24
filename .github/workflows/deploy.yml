@@ -18,14 +18,22 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '16.6.1'
-        cache: 'npm'
 
-    - name: Install NPM packages
-      run: npm ci
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+
+    - name: Install dependencies
+      run: CI=false npm install
 
     - name: Build project
       run: CI=false npm run build
