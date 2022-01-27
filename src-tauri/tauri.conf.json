@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "Win11React",
-    "version": "0.1.8"
+    "version": "0.2.0"
   },
   "build": {
     "distDir": "../build",
@@ -57,7 +57,7 @@
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": true
       }
     ],
     "security": {
