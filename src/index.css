@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  scrollbar-width: none;
-}
-
 *::selection {
   background: initial;
 }

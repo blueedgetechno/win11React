@@ -3,7 +3,8 @@
 */
 @font-face {
   font-family: "Spotify";
-  src: url("./apps/assets/spotify.woff2") format("woff2"), url("./apps/assets/spotify.ttf") format("truetype");
+  src: url("./apps/assets/spotify.woff2") format("woff2"),
+    url("./apps/assets/spotify.ttf") format("truetype");
 }
 
 body {
@@ -18,7 +19,6 @@ body {
   --sat-txt: #777;
   --clrPrm: #0067c0;
   --wintheme: #eee;
-  --scroll: rgb(255 255 255 / 80%);
 }
 
 body[data-theme="dark"] {
@@ -33,7 +33,6 @@ body[data-theme="dark"] {
   --sat-txt: #999;
   --clrPrm: #4cc2ff;
   --wintheme: #1e1e26;
-  --scroll: rgb(44 44 44 / 25%);
 }
 
 .edgeBrowser {
@@ -80,7 +79,7 @@ body[data-theme="dark"] .wnstore {
   --det-bg: #282c32;
   background: var(--bg-color);
 
-  .win11Scroll {
+  .win11Scroll::-webkit-scrollbar {
     --scroll: rgb(44 44 44 / 80%);
   }
 }
@@ -134,22 +133,6 @@ body[data-theme="dark"] .calcApp {
 
 .spotify {
   background: rgb(24, 24, 24);
-
-  .win11Scroll {
-    &::-webkit-scrollbar {
-      --scrollbar-top-btn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.102 16.981c-1.074 0-1.648-1.265-.941-2.073l5.522-6.311a1.75 1.75 0 0 1 2.634 0l5.522 6.311c.707.808.133 2.073-.941 2.073H6.102z' fill='rgb(255 255 255 / 50%)'/%3E%3C/svg%3E");
-      --scrollbar-bottom-btn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6.102 8c-1.074 0-1.648 1.265-.941 2.073l5.522 6.311a1.75 1.75 0 0 0 2.634 0l5.522-6.311c.707-.808.133-2.073-.941-2.073H6.102z' fill='rgb(255 255 255 / 50%)'/%3E%3C/svg%3E");
-
-      &:hover {
-        background: var(--scrollbar-bottom-btn) 0% calc(100% - 3px) / contain no-repeat, var(--scrollbar-top-btn) 0% calc(0% + 3px) / contain no-repeat, rgb(44 44 44 / 80%);
-      }
-
-      &-thumb {
-        background: rgb(255 255 255 / 50%);
-        background-clip: padding-box;
-      }
-    }
-  }
 }
 
 .discordWn {
