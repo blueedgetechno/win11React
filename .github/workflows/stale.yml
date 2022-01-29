@@ -2,7 +2,9 @@ name: 'Close stale issues and PRs'
 on:
   schedule:
     - cron: '30 1 * * *'
-  workflow_dispatch:  
+  workflow_dispatch:
+  issue_comment:
+    types: [created]  
 
 jobs:
   stale:
@@ -19,4 +21,5 @@ jobs:
           days-before-issue-close: 5
           days-before-pr-close: 10
           exempt-pr-labels: not-stale
+          exempt-issue-labels: not-stale
           repo-token: ${{ secrets.BOT }}
