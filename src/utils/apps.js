@@ -269,11 +269,6 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'Word',
-  icon: 'winWord',
-  type: 'app'
-},
-{
   name: 'White Board',
   icon: 'board',
   type: 'app',
