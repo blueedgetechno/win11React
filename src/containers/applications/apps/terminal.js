@@ -55,7 +55,6 @@ export const WnTerminal = ()=>{
       if(arg.length) {
         tmpStack.push(eval(arg).toString());
       }
-    }
     }else if(type=="cd"){
       if(arg.length){
         var errp = true;
