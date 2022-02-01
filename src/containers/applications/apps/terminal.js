@@ -28,7 +28,6 @@ const runner = new BrythonRunner({
         write(content) {
             // Show output messages here.
             console.log('StdOut: ' + content);
-            alert('StdOut: ' + content);
         },
         flush() {},
     },
@@ -36,7 +35,6 @@ const runner = new BrythonRunner({
         write(content) {
             // Show error messages here.
             console.error('StdErr: ' + content);
-            alert('StdErr: ' + content);
         },
         flush() {},
     },
@@ -48,6 +46,7 @@ const runner = new BrythonRunner({
         },
     }
 });
+await runner.runCode();
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
