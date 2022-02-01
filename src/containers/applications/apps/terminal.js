@@ -184,7 +184,8 @@ export const WnTerminal = ()=>{
         "TIME           Displays or sets the system time.",
         "TITLE          Sets the window title for a CMD.EXE session.",
         "TYPE           Displays the contents of a text file.",
-        "VER            Displays the Windows version."
+        "VER            Displays the Windows version.",
+        "EVAL           RUNS JavaScript statements."
       ];
 
       for (var i = 0; i < helpArr.length; i++) {
