@@ -6,15 +6,25 @@ import dirs from './assets/dir.json';
 
 
 
-useEffect(() => {
-  const script = document.createElement('script');
-  script.src = "https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js";
-  script.async = true;
-  document.body.appendChild(script);
-return () => {
-    document.body.removeChild(script);
+componentDidMount() {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js";
+    script.onload = () => this.scriptLoaded();
+
+
+
+    //For head
+    document.head.appendChild(script);
+
+    // For body
+    document.body.appendChild(script);
+
+    // For component
+    this.div.appendChild(script);
+
   }
-}, []);
+
 
 const runner = new BrythonRunner({
     stdout: {
