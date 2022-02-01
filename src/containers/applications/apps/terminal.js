@@ -4,8 +4,14 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 import dirs from './assets/dir.json';
 
-import * as BrythonRunner from 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
 
+
+BrythonRunner () {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js";
+    script.async = true;
+    document.body.appendChild(script);
+}
 
 const runner = new BrythonRunner({
     stdout: {
