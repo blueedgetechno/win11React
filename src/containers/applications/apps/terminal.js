@@ -24,27 +24,31 @@ const useScript = url => {
 export default useScript;
 
 const runner = new BrythonRunner({
-    stdout: {
-        write(content) {
-            // Show output messages here.
-            console.log('StdOut: ' + content);
-        },
-        flush() {},
+  debug: 10,
+  stdout: {
+    write(content) {
+      // Show output messages here.
+      alert('StdOut: ' + content);
+      console.log('StdOut: ' + content);
     },
-    stderr: {
-        write(content) {
-            // Show error messages here.
-            console.error('StdErr: ' + content);
-        },
-        flush() {},
+    flush() {},
+  },
+  stderr: {
+    write(content) {
+      // Show error messages here.
+      alert('StdErr: ' + content);
+      console.error('StdErr: ' + content);
     },
-    stdin: {
-        async readline() {
-            var userInput = prompt();
-            console.log('Received StdIn: ' + userInput);
-            return userInput;
-        },
-    }
+    flush() {},
+  },
+  stdin: {
+    async readline() {
+      var userInput = prompt();
+      alert('Received StdIn: ' + userInput);
+      console.log('Received StdIn: ' + userInput);
+      return userInput;
+    },
+  }
 });
 
 export const WnTerminal = ()=>{
