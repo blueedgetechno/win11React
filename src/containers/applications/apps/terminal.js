@@ -4,15 +4,11 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 import dirs from './assets/dir.json';
 
-
-
-import { useEffect } from 'react';
-
 const useScript = url => {
   useEffect(() => {
     const script = document.createElement('script');
 
-    script.src = https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js;
+    script.src = 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
     script.async = true;
 
     document.body.appendChild(script);
