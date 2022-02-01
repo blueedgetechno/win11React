@@ -4,6 +4,32 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 import dirs from './assets/dir.json';
 
+import * from 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
+
+
+const runner = new BrythonRunner({
+    stdout: {
+        write(content) {
+            // Show output messages here.
+            console.log('StdOut: ' + content);
+        },
+        flush() {},
+    },
+    stderr: {
+        write(content) {
+            // Show error messages here.
+            console.error('StdErr: ' + content);
+        },
+        flush() {},
+    },
+    stdin: {
+        async readline() {
+            var userInput = prompt();
+            console.log('Received StdIn: ' + userInput);
+            return userInput;
+        },
+    }
+});
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -189,7 +215,8 @@ export const WnTerminal = ()=>{
         "TIME           Displays or sets the system time.",
         "TITLE          Sets the window title for a CMD.EXE session.",
         "TYPE           Displays the contents of a text file.",
-        "VER            Displays the Windows version."
+        "VER            Displays the Windows version.",
+        "PYTHON         EXECUTE PYTHON CODE."
       ];
 
       for (var i = 0; i < helpArr.length; i++) {
