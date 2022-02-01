@@ -46,7 +46,6 @@ const runner = new BrythonRunner({
         },
     }
 });
-await runner.runCode();
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -330,7 +329,7 @@ export const WnTerminal = ()=>{
             <div className="w-full h-max pb-12">
               {stack.map(x=> <div className="cmdLine">{x}</div>)}
               <div className="cmdLine actmd">
-                {pwd}>
+                {pwd}
                 <div className="ipcmd" id="curcmd" contentEditable
                   data-action="enter" onKeyDown={action} spellCheck="false"></div>
                 {/* <input id="curcmd" className="ipcmd" type="text" defaultValue="tyler"/> */}
