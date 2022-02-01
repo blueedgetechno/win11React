@@ -4,7 +4,7 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 import dirs from './assets/dir.json';
 
-import * from 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
+import * as BrythonRunner from 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
 
 
 const runner = new BrythonRunner({
