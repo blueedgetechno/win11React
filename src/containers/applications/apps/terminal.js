@@ -4,7 +4,6 @@ import {Icon, Image, ToolBar} from '../../../utils/general';
 
 import dirs from './assets/dir.json';
 
-import python from 'https://raw.githubusercontent.com/blueedgetechno/win11React/andrews-python-attempt/public/brython.js';
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -57,9 +56,9 @@ export const WnTerminal = ()=>{
       if(arg.length) {
         tmpStack.push(eval(arg).toString());
       }
-    else if(type=="python"){
+    }else if(type=="python"){
       if(arg.length) {
-        tmpStack.push(python(arg).toString());
+        tmpStack.push(runner.runCode(arg));
       }  
     }else if(type=="cd"){
       if(arg.length){
