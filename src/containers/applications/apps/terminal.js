@@ -6,7 +6,7 @@ import dirs from './assets/dir.json';
 
 
 
-BrythonRunner () {
+BrythonRunner (); {
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js";
     script.async = true;
