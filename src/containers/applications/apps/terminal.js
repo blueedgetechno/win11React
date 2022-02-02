@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Icon, Image, ToolBar} from '../../../utils/general';
 
+import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
 
 export const WnTerminal = ()=>{
@@ -36,7 +36,7 @@ export const WnTerminal = ()=>{
     }
   }
 
-  const cmdTool = (cmd)=>{
+  const cmdTool = async (cmd)=>{
     var tmpStack = [...stack];
     tmpStack.push(pwd+">"+cmd);
     var arr = cmd.split(" "),
@@ -54,6 +54,17 @@ export const WnTerminal = ()=>{
     else if(type=="eval"){
       if(arg.length) {
         tmpStack.push(eval(arg).toString());
+      }
+    }else if(type=="python"){
+      if(arg.length) {
+        if(window.pythonRunner){
+          var content = await window.pythonRunner.runCode(arg);
+          if(window.pythonResult){
+            window.pythonResult.split("\n").forEach(x => {
+              if(x.trim().length) tmpStack.push(x)
+            });
+          }
+        }
       }
     }else if(type=="cd"){
       if(arg.length){
@@ -185,6 +196,7 @@ export const WnTerminal = ()=>{
         "TITLE          Sets the window title for a CMD.EXE session.",
         "TYPE           Displays the contents of a text file.",
         "VER            Displays the Windows version.",
+        "PYTHON         EXECUTE PYTHON CODE.",
         "EVAL           RUNS JavaScript statements."
       ];
 
@@ -280,7 +292,7 @@ export const WnTerminal = ()=>{
           <div className="cmdcont w-full box-border overflow-y-scroll win11Scroll prtclk"
             id="cmdcont" onMouseOver={action} onClick={action} data-action="hover">
             <div className="w-full h-max pb-12">
-              {stack.map(x=> <div className="cmdLine">{x}</div>)}
+              {stack.map(x=> <pre className="cmdLine">{x}</pre>)}
               <div className="cmdLine actmd">
                 {pwd}>
                 <div className="ipcmd" id="curcmd" contentEditable
