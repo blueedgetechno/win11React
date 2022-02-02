@@ -1,51 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import BrythonRunner from 'brython-runner/lib/brython-runner.js';
-
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
-
-const useScript = url => {
-  useEffect(() => {
-    const script = document.createElement('script');
-
-    script.src = 'https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js';
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    }
-  }, [url]);
-};
-
-export default useScript;
-
-const runner = new BrythonRunner({
-    stdout: {
-        write(content) {
-            // Show output messages here.
-            console.log('StdOut: ' + content);
-        },
-        flush() {},
-    },
-    stderr: {
-        write(content) {
-            // Show error messages here.
-            console.error('StdErr: ' + content);
-        },
-        flush() {},
-    },
-    stdin: {
-        async readline() {
-            var userInput = prompt();
-            console.log('Received StdIn: ' + userInput);
-            return userInput;
-        },
-    }
-});
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -79,7 +36,7 @@ export const WnTerminal = ()=>{
     }
   }
 
-  const cmdTool = (cmd)=>{
+  const cmdTool = async (cmd)=>{
     var tmpStack = [...stack];
     tmpStack.push(pwd+">"+cmd);
     var arr = cmd.split(" "),
@@ -100,8 +57,16 @@ export const WnTerminal = ()=>{
       }
     }else if(type=="python"){
       if(arg.length) {
-        tmpStack.push(runner.runCode(arg));
-      }  
+        if(window.pythonRunner){
+          var content = await window.pythonRunner.runCode(arg);
+          console.log(window.pythonResult);
+          if(window.pythonResult){
+            window.pythonResult.split("\n").forEach(x => {
+              if(x.trim().length) tmpStack.push(x)
+            });
+          }
+        }
+      }
     }else if(type=="cd"){
       if(arg.length){
         var errp = true;
@@ -327,9 +292,9 @@ export const WnTerminal = ()=>{
           <div className="cmdcont w-full box-border overflow-y-scroll win11Scroll prtclk"
             id="cmdcont" onMouseOver={action} onClick={action} data-action="hover">
             <div className="w-full h-max pb-12">
-              {stack.map(x=> <div className="cmdLine">{x}</div>)}
+              {stack.map(x=> <pre className="cmdLine">{x}</pre>)}
               <div className="cmdLine actmd">
-                {pwd}
+                {pwd}>
                 <div className="ipcmd" id="curcmd" contentEditable
                   data-action="enter" onKeyDown={action} spellCheck="false"></div>
                 {/* <input id="curcmd" className="ipcmd" type="text" defaultValue="tyler"/> */}

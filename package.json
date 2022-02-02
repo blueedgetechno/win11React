@@ -15,7 +15,6 @@
     "@testing-library/user-event": "^12.1.10",
     "@widgetbot/react-embed": "^1.4.0",
     "axios": "^0.21.1",
-    "brython-runner": "^1.0.10",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-canvas-draw": "^1.1.1",
