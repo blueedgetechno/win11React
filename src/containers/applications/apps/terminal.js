@@ -59,7 +59,6 @@ export const WnTerminal = ()=>{
       if(arg.length) {
         if(window.pythonRunner){
           var content = await window.pythonRunner.runCode(arg);
-          console.log(window.pythonResult);
           if(window.pythonResult){
             window.pythonResult.split("\n").forEach(x => {
               if(x.trim().length) tmpStack.push(x)
