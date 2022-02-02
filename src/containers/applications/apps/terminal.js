@@ -196,7 +196,8 @@ export const WnTerminal = ()=>{
         "TITLE          Sets the window title for a CMD.EXE session.",
         "TYPE           Displays the contents of a text file.",
         "VER            Displays the Windows version.",
-        "PYTHON         EXECUTE PYTHON CODE."
+        "PYTHON         EXECUTE PYTHON CODE.",
+        "EVAL           RUNS JavaScript statements."
       ];
 
       for (var i = 0; i < helpArr.length; i++) {
