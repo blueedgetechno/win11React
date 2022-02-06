@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
-import Battery from "./Battery";
+import Battery from "../Battery";
 import "./taskbar.scss";
 
 const Taskbar = () => {
@@ -57,8 +57,6 @@ const Taskbar = () => {
     if (bt.charging) {
       setbatterylevel(-level);
     } else {
-      if (level <= 10) level += 10;
-      else if (level >= 80) level -= 10;
       setbatterylevel(level);
     }
   };
@@ -120,7 +118,7 @@ const Taskbar = () => {
           <div className="prtclk handcr my-1 px-1 hvlight flex rounded" onClick={clickDispatch} data-action="PANETOGG">
             <Icon className="taskIcon" src="wifi" ui width={16} />
             <Icon className="taskIcon" src={"audio" + tasks.audio} ui width={16} />
-            <Battery level={Math.abs(batterylevel)} charging={batterylevel<0} />
+            <Battery level={Math.abs(batterylevel)} charging={batterylevel < 0} />
           </div>
 
           <div className="taskDate m-1 handcr prtclk rounded hvlight" onClick={clickDispatch} data-action="CALNTOGG">
