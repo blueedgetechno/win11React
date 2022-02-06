@@ -58,7 +58,7 @@ const Taskbar = () => {
       setbatterylevel(-level);
     } else {
       if (level <= 10) level += 10;
-      else if (level >= 80 && level <= 89) level -= 10;
+      else if (level >= 80) level -= 10;
       else if (level >= 90) level = 100;
       setbatterylevel(level);
     }
