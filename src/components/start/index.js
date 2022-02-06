@@ -4,7 +4,7 @@ import { Icon } from "../../utils/general";
 import "./startmenu.scss";
 import "./sidepane.scss";
 import "./searchpane.scss";
-import Battery from "../taskbar/Battery";
+import Battery from "../Battery";
 
 import axios from "axios";
 
@@ -73,8 +73,6 @@ export const SidePane = () => {
     if (bt.charging) {
       setbatterylevel(-level);
     } else {
-      if (level <= 10) level += 10;
-      else if (level >= 80) level -= 10;
       setbatterylevel(level);
     }
   };
@@ -113,8 +111,8 @@ export const SidePane = () => {
     }
   };
 
-  let vSlider = document.querySelector(".vSlider");
-  let bSlider = document.querySelector(".bSlider");
+  const vSlider = document.querySelector(".vSlider");
+  const bSlider = document.querySelector(".bSlider");
 
   const setVolume = (e) => {
     var aud = 3;
@@ -191,7 +189,7 @@ export const SidePane = () => {
       </div>
       <div className="mt-4 p-1 bottomBar">
         <div className="px-2 bettery">
-          <Battery level={Math.abs(batterylevel)} charging={batterylevel<0} />
+          <Battery level={Math.abs(batterylevel)} charging={batterylevel < 0} />
           <div className="text-xs">{`${Math.abs(batterylevel)}%`}</div>
         </div>
       </div>
