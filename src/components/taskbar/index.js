@@ -52,7 +52,7 @@ const Taskbar = () => {
   };
 
   const changebatterystatus = (bt) => {
-    let level = bt.level * 100;
+    let level = bt.level * 100 || 100;
 
     if (bt.charging) {
       setbatterylevel(-level);
