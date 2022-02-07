@@ -9,13 +9,11 @@
   color: var(--dark-txt);
   background: var(--bg1);
   overflow: hidden;
+  font-size: 14px;
 
-  .abCont {
-    font-size: 14px;
-    a {
-      color: var(--clrPrm);
-      font-weight: 500;
-    }
+  a {
+    color: var(--clrPrm);
+    font-weight: 500;
   }
 
   .content {
@@ -31,7 +29,8 @@
     div {
       background: var(--clrPrm);
       color: var(--alt-txt);
-      font-weight: 600;
+      border: 1px solid transparent;
+      font-weight: 500;
       padding: 6px 24px;
       border-radius: 4px;
       cursor: pointer;
@@ -39,6 +38,7 @@
       &[data-allow="false"] {
         background: var(--bg2);
         color: var(--sat-txt);
+        border: 1px solid;
         cursor: not-allowed;
       }
     }
@@ -47,11 +47,6 @@
 body[data-theme="dark"] .aboutApp {
   --bg1: #202020;
   --bg2: #2b2b2b;
-}
-
-rediv {
-  color: #eb4141;
-  font-weight: 700;
 }
 
 .calcApp {
