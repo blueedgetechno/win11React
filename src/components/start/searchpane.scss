@@ -1,6 +1,6 @@
 .searchMenu {
   min-height: 500px;
-  padding: 12px;
+  padding: 32px;
   text-align: left;
 }
 
@@ -20,12 +20,11 @@
   input {
     width: 400px;
     background: inherit;
-    color: var(--txt-col);
-  }
-}
 
-.topApp {
-  background: var(--bg2);
+    &::placeholder {
+      color: var(--txt-col);
+    }
+  }
 }
 
 .smatch {
@@ -71,6 +70,7 @@
 }
 
 .topApp {
+  background: var(--bg2);
   width: 19%;
   display: flex;
   flex-direction: column;
@@ -79,15 +79,15 @@
 }
 
 .qksrch {
-  color: var(--txt-col);
+  border-radius: 4px;
+
+  .uicon {
+    font-size: 20px;
+  }
 
   &:hover {
     background: var(--bg2);
   }
-}
-
-.qksrch svg {
-  color: var(--med-txt);
 }
 
 .powerCont {
