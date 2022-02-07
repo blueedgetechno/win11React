@@ -14,9 +14,9 @@ const defState = {
   curAlpha: 'A',
   qksrch: [
     ["faClock", 1, "Today in history"],
+    ["faChartLine", null, "Markets today"],
     ["faFilm", null, "New movies"],
-    ["faNewspaper", 1, "Top news"],
-    ["faChartLine", null, "Markets today"]
+    ["faNewspaper", 1, "Top news"]
   ]
 };
 

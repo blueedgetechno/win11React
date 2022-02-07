@@ -100,7 +100,7 @@ var apps = [{
   icon: 'getstarted',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://projects.asylum-os.com/win11react-docs/'
+  payload: 'https://win11docs.asylum-os.com/'
 },
 {
   name: 'Groove Music',
@@ -112,7 +112,7 @@ var apps = [{
   icon: 'help',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://projects.asylum-os.com/win11react-docs/'
+  payload: 'https://win11docs.asylum-os.com/'
 },
 {
   name: 'Yammer',
