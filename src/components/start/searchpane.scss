@@ -18,8 +18,9 @@
   }
 
   input {
-    width: 400px;
+    width: 100%;
     background: inherit;
+    color: var(--dark-txt);
 
     &::placeholder {
       color: var(--txt-col);
@@ -55,7 +56,7 @@
 
 .rightSide {
   margin: 8px;
-  height: 400px;
+  height: 560px;
   background: var(--bg2);
   display: flex;
   flex-direction: column;
