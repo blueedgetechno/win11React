@@ -192,7 +192,7 @@ var apps = [{
   icon: 'pinterest',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://pinterest.com/blue_edge'
+  payload: 'https://www.pinterest.com/blueedgetechno/'
 },
 {
   name: 'PowerPoint',
