@@ -1,48 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" property="description" content="Win11 made in React" />
+    <meta name="og:title" property="og:title" content="Win11 made in React" />
+    <meta name="og:description" property="og:description" content="Win11 made in React" />
+    <meta name="og:color" content="#303030" />
+    <meta name="robots" content="noodp,noydir" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Win11 in React</title>
+    <link rel="stylesheet" href="dycalendar.css" />
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" property="description" content="Win11 made in React" />
-  <meta name="og:title" property="og:title" content="Win11 made in React">
-  <meta name="og:description" property="og:description" content="Win11 made in React" />
-  <meta name="og:color" content="#303030" />
-  <meta name="robots" content="noodp,noydir" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <title>Win11 in React</title>
-  <link rel="stylesheet" href="dycalendar.css">
-  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js"></script>
-</head>
-
-<body data-force="false">
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <!-- PWA Script -->
-  <script src="https://expo.asylum-os.com/react-pwa.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('./serviceWorker.js')
-          .then((reg) => console.log('Success: ', reg.scope))
-          .catch((err) => console.log('Failure: ', err));
-      });
-    }
-  </script>
-  <div id="brightoverlay"></div>
-  <script type="text/javascript" src="dycalendar.js"></script>
-  <script type="text/javascript" src="console.js"></script>
-  <div id="warningmsg">
-    This project is &nbsp;<rediv>not in anyway affiliated with Microsoft</rediv>&nbsp;and
-    should not be confused with Microsoft’s Operating System or Products.
-  </div>
-  <button id="probtn" onclick="removeWarning()">Proceed anyway</button>
-</body>
-
+  <body data-force="false">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <span id="root"></span>
+    <!-- PWA Script -->
+    <script src="https://expo.asylum-os.com/react-pwa.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./serviceWorker.js")
+            .then((reg) => console.log("Success: ", reg.scope))
+            .catch((err) => console.log("Failure: ", err));
+        });
+      }
+    </script>
+    <span id="brightoverlay"></span>
+    <script type="text/javascript" src="dycalendar.js"></script>
+    <script type="text/javascript" src="console.js"></script>
+    <span id="warningmsg"> This project is <span class="text-red-600 font-bold">not in anyway affiliated with Microsoft</span> and should not be confused with Microsoft's Operating System or Products.</span>
+    <button id="probtn" onclick="removeWarning()">Proceed anyway</button>
+  </body>
 </html>
