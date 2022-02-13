@@ -3,8 +3,12 @@
 */
 @font-face {
   font-family: "Spotify";
-  src: url("./apps/assets/spotify.woff2") format("woff2"),
-    url("./apps/assets/spotify.ttf") format("truetype");
+  src: url("./apps/assets/spotify.woff2") format("woff2"), url("./apps/assets/spotify.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: SettingsIcons;
+  src: url("./apps/assets/SettingsIcons.woff2") format("woff2");
 }
 
 body {
