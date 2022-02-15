@@ -69,8 +69,8 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       npm ci
-       npm run build
+       ci=false npm ci
+       ci=false npm run build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
