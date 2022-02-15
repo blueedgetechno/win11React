@@ -55,7 +55,7 @@ export const DScord = ()=>{
               ))}
             </div>
             <div className="joincont">
-              <a href="https://discord.gg/qmEZwUhb4b" target="_blank">
+              <a href="https://discord.gg/mT3MTpeZ" target="_blank">
                 Join
               </a>
             </div>
