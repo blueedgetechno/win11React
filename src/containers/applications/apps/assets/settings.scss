@@ -1,14 +1,14 @@
-.settingsApp {
+.settingsApp .restWindow {
+  --bg: #eff4f9;
+  --txt_clr-rgb: 0 0 0;
+  --clr_prm: #0067c0;
+  --scroll: rgb(255 255 255 / 80%);
+
+  container: inline-size / appWrapper;
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  :root {
-    --bg: #eff4f9;
-    --txt_clr-rgb: 0 0 0;
-    --clr_prm: #0067c0;
-    --scroll: rgb(255 255 255 / 80%);
   }
   body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -20,7 +20,7 @@
   nav {
     position: absolute;
     left: 0;
-    height: 100%;
+    overflow: auto;
     width: 300px;
 
     .nav_top {
@@ -75,7 +75,7 @@
     .nav_bottom {
       display: flex;
       flex-direction: column;
-      height: 400px;
+      height: 300px;
       overflow: overlay;
       position: relative;
 
@@ -108,11 +108,7 @@
         border-radius: 3px;
         top: 12px;
         left: 16px;
-        transition: top 300ms cubic-bezier(1, 0, 0, 1), height 75ms;
-
-        &.active {
-          height: 32px;
-        }
+        transition: top 300ms cubic-bezier(1, 0, 0, 1);
       }
 
       @for $i from 1 to 12 {
@@ -279,14 +275,13 @@
     display: none;
   }
 
-  @media (max-width: 800px) {
+  @container appWrapper size(max-width: 800px) {
     .navMenuBtn {
       display: flex;
       position: absolute;
       top: 8px;
       right: 8px;
       padding: 12px;
-      // z-index: 99;
       border-radius: 6px;
 
       &:hover {
@@ -305,6 +300,8 @@
       margin-left: 0;
     }
     nav {
+      background: var(--bg);
+      z-index: 999;
       transform: translateX(-100%);
       transition: all 0.2s cubic-bezier(0, 0, 0, 1);
 
@@ -323,13 +320,11 @@
     }
   }
 }
-body[data-theme="dark"] .settingsApp {
-  :root {
-    --bg: #202020;
-    --txt_clr-rgb: 255 255 255;
-    --clr_prm: #4cc2ff;
-    --scroll: rgb(44 44 44 / 80%);
-  }
+body[data-theme="dark"] .settingsApp .restWindow {
+  --bg: #202020;
+  --txt_clr-rgb: 255 255 255;
+  --clr_prm: #4cc2ff;
+  --scroll: rgb(44 44 44 / 80%);
 
   nav .nav_top .search {
     background: rgb(255 255 255 / 3.33%);

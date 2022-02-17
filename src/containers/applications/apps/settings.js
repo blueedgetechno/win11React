@@ -5,6 +5,11 @@ import "./assets/settings.scss";
 
 import data from "./assets/settingsData.json";
 
+const supportsContainerQueries = "container" in document.documentElement.style;
+if (!supportsContainerQueries) {
+  import("container-query-polyfill");
+}
+
 export const Settings = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.settings);
@@ -30,7 +35,7 @@ export const Settings = () => {
           <nav>
             <div className="nav_top">
               <div className="account" onClick={() => setPage("Accounts")}>
-                <img src="img/nav/defAccount.webp" alt="" height={60} width={60} />
+                <img src="img/icon/settings/defAccount.webp" alt="" height={60} width={60} />
                 <div>
                   <p>Yashash</p>
                   <p>Local Account</p>
@@ -47,14 +52,9 @@ export const Settings = () => {
                     onClick={() => {
                       setPage(e);
                       document.querySelector("nav").classList.remove("open");
-                      const marker = document.querySelector(".marker");
-                      marker.classList.add("active");
-                      setTimeout(() => {
-                        marker.classList.remove("active");
-                      }, 150);
                     }}
                   >
-                    <img src={`img/nav/${e}.webp`} alt="" height={16} width={16} />
+                    <img src={`img/icon/settings/${e}.webp`} alt="" height={16} width={16} />
                     {e}
                   </div>
                 );
@@ -92,7 +92,7 @@ export const Settings = () => {
                                   </p>
                                 </div>
                                 <div className="column" onClick={() => setPage("Windows Update")}>
-                                  <img src="img/nav/Windows Update.webp" alt="" height={20} />
+                                  <img src="img/icon/settings/Windows Update.webp" alt="" height={20} />
                                   <p>
                                     Windows Update
                                     <br />
