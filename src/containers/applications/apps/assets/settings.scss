@@ -1,0 +1,342 @@
+.settingsApp .restWindow {
+  --bg: #eff4f9;
+  --txt_clr-rgb: 0 0 0;
+  --clr_prm: #0067c0;
+  --scroll: rgb(255 255 255 / 80%);
+
+  container: inline-size / appWrapper;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: rgb(var(--txt_clr-rgb));
+    font-size: 14px;
+  }
+
+  nav {
+    position: absolute;
+    left: 0;
+    width: 300px;
+    height: 100%;
+
+    .nav_top {
+      .account {
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 8px;
+        margin: 8px;
+
+        &:hover {
+          background: rgb(var(--txt_clr-rgb) / 3.33%);
+        }
+
+        div p {
+          &:first-child {
+            font-weight: 500;
+          }
+          &:last-child {
+            font-size: smaller;
+          }
+        }
+      }
+
+      .search {
+        background: white;
+        height: 32px;
+        width: calc(300px - 32px);
+        border: 0;
+        border-bottom: 1px solid var(--clr_prm);
+        border-radius: 4px;
+        padding: 8px;
+        margin: 8px 16px 20px;
+
+        &:hover {
+          background: rgb(255 255 255 / 33%);
+        }
+        &:focus {
+          border-bottom: 2px solid var(--clr_prm);
+        }
+        &:focus-visible {
+          outline: none;
+        }
+
+        &::placeholder {
+          color: rgb(var(--txt_clr-rgb) / 66%);
+        }
+      }
+    }
+
+    .nav_bottom {
+      display: flex;
+      flex-direction: column;
+      overflow: overlay;
+      position: relative;
+
+      .navLink {
+        position: relative;
+        overflow: hidden;
+        height: 36px;
+        padding-left: 7px;
+        margin: 2px 16px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        &:hover,
+        &.active {
+          background: rgb(var(--txt_clr-rgb) / 3.33%);
+        }
+
+        img {
+          margin: 0 10.5px 0 7px;
+        }
+      }
+
+      .marker {
+        position: absolute;
+        background: var(--clr_prm);
+        height: 16px;
+        width: 3px;
+        border-radius: 3px;
+        top: 12px;
+        left: 16px;
+        transition: top 300ms cubic-bezier(1, 0, 0, 1);
+      }
+
+      @for $i from 1 to 12 {
+        .navLink:nth-child(#{$i}).active ~ .marker {
+          top: ((40 * ($i - 1)) + 12) + px;
+        }
+      }
+    }
+  }
+
+  main {
+    margin-left: 300px;
+    overflow: hidden;
+
+    .sysTop {
+      width: min(100%, 1000px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 8px 0 14px;
+      gap: 8px;
+
+      .left {
+        display: flex;
+        align-items: center;
+
+        .device_img {
+          height: 70px;
+          border: 5px solid black;
+          border-radius: 4px;
+        }
+        .column_device {
+          margin-left: 16px;
+
+          .device_name {
+            font-size: 18px;
+            font-weight: 500;
+          }
+          .device_model {
+            color: rgb(var(--txt_clr-rgb) / 90%);
+          }
+          .device_rename {
+            color: var(--clr_prm);
+          }
+        }
+      }
+
+      .right {
+        display: flex;
+
+        .column {
+          display: flex;
+          align-items: center;
+          border-radius: 4px;
+          padding: 8px;
+          &:hover {
+            background: rgb(var(--txt_clr-rgb) / 5%);
+          }
+
+          p {
+            font-weight: 500;
+            padding: 0 12px;
+
+            .column_lower {
+              color: rgb(var(--txt_clr-rgb) / 60%);
+              font-size: 13px;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+    }
+
+    h1 {
+      padding: 14px 24px;
+      font-weight: 500;
+      font-size: 28px;
+    }
+
+    .tilesCont {
+      padding: 0 24px 44px;
+      overflow-y: overlay;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      animation: slideUp 0.2s;
+
+      .tile {
+        width: min(100%, 1000px);
+        min-height: 67px;
+        display: flex;
+        align-items: center;
+        background: rgb(255 255 255 / 67%);
+        border-radius: 4px;
+        padding: 7px 42px 7px 0;
+        border: 1px solid rgb(0 0 0 / 10%);
+        position: relative;
+
+        &:hover {
+          background: rgb(255 255 255 / 33%);
+        }
+        &::after {
+          content: ">";
+          transform: scaleY(2);
+          position: absolute;
+          right: 16px;
+        }
+        span {
+          font-size: 20px;
+          margin: 0 21px 0 17.5px;
+          font-family: SettingsIcons;
+        }
+        .tile_desc {
+          color: rgb(var(--txt_clr-rgb) / 66%);
+          font-size: 12.33px;
+        }
+
+        &.square {
+          width: 220px;
+          height: 220px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          padding: 0;
+          font-weight: 500;
+
+          span {
+            font-size: 48px;
+          }
+        }
+
+        &.thin-blue {
+          min-height: unset;
+          height: unset;
+          color: var(--clr_prm);
+          justify-content: center;
+          margin: 4px 0;
+        }
+
+        &.thin-blue::after,
+        &.square::after {
+          display: none;
+        }
+      }
+
+      .subHeading {
+        font-weight: 500;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .spacer {
+        padding: 8px;
+      }
+    }
+  }
+
+  .navMenuBtn {
+    display: none;
+  }
+
+  @container appWrapper size(max-width: 800px) {
+    .navMenuBtn {
+      display: flex;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 12px;
+      border-radius: 6px;
+
+      &:hover {
+        background: rgb(var(--txt_clr-rgb) / 5%);
+      }
+
+      svg {
+        transition: all 0.1s;
+      }
+      &:active svg {
+        transform: scaleX(0.67);
+      }
+    }
+
+    main {
+      margin-left: 0;
+    }
+    nav {
+      background: var(--bg);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: all 0.2s cubic-bezier(0, 0, 0, 1);
+
+      &.open {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(70px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+body[data-theme="dark"] .settingsApp .restWindow {
+  --bg: #202020;
+  --txt_clr-rgb: 255 255 255;
+  --clr_prm: #4cc2ff;
+  --scroll: rgb(44 44 44 / 80%);
+
+  nav .nav_top .search {
+    background: rgb(255 255 255 / 3.33%);
+
+    &:hover {
+      background: rgb(255 255 255 / 5%);
+    }
+  }
+
+  main .tilesCont .tile {
+    background: rgb(255 255 255 / 5%);
+
+    &:hover {
+      background: rgb(255 255 255 / 10%);
+    }
+  }
+}
