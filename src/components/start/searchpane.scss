@@ -1,6 +1,6 @@
 .searchMenu {
   min-height: 500px;
-  padding: 12px;
+  padding: 32px;
   text-align: left;
 }
 
@@ -18,14 +18,14 @@
   }
 
   input {
-    width: 400px;
+    width: 100%;
     background: inherit;
-    color: var(--txt-col);
-  }
-}
+    color: var(--dark-txt);
 
-.topApp {
-  background: var(--bg2);
+    &::placeholder {
+      color: var(--txt-col);
+    }
+  }
 }
 
 .smatch {
@@ -56,7 +56,7 @@
 
 .rightSide {
   margin: 8px;
-  height: 400px;
+  height: 560px;
   background: var(--bg2);
   display: flex;
   flex-direction: column;
@@ -71,6 +71,7 @@
 }
 
 .topApp {
+  background: var(--bg2);
   width: 19%;
   display: flex;
   flex-direction: column;
@@ -79,53 +80,15 @@
 }
 
 .qksrch {
-  color: var(--txt-col);
+  border-radius: 4px;
+
+  .uicon {
+    font-size: 20px;
+  }
 
   &:hover {
     background: var(--bg2);
   }
-}
-
-.qksrch svg {
-  color: var(--med-txt);
-}
-
-.calnpane {
-  --bg1: rgba(242, 242, 242, 0.9);
-  --bg2: rgba(0, 0, 0, 0.05);
-  --bgHvr: rgba(0, 0, 0, 0.05);
-
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  width: 21rem;
-  background: var(--bg1);
-  color: var(--dark-txt);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  transition: all ease-in-out 200ms;
-  z-index: 9999;
-  border-radius: 6px;
-
-  &[data-hide="true"] {
-    transform: translateX(120%);
-    animation: overflow-hider 0s ease-in-out 0.2s forwards;
-  }
-
-  .topBar {
-    height: 45px;
-    border-bottom: 1px solid var(--bg2);
-    background: var(--bg2);
-    display: flex;
-    align-items: center;
-  }
-}
-
-body[data-theme="dark"] .calnpane {
-  --bg1: rgba(36, 36, 36, 0.8);
-  --bg2: rgba(0, 0, 0, 0.2);
-  --bgHvr: rgba(255, 255, 255, 0.08);
 }
 
 .powerCont {

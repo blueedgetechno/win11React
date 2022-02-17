@@ -189,8 +189,8 @@ body[data-theme="dark"] .startMenu {
   }
 }
 
-.appCont .stAcbar{
-  padding-right: 64px; 
+.appCont .stAcbar {
+  padding-right: 64px;
 }
 
 .pnApps {
@@ -213,17 +213,6 @@ body[data-theme="dark"] .startMenu {
 
     &:hover {
       background: var(--bg2);
-    }
-
-    &[value="true"] .pnIcon::before {
-      content: "";
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      width: 4px;
-      height: 4px;
-      border-radius: 6px;
-      background: var(--clrPrm);
     }
 
     .appName {

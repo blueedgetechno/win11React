@@ -1,51 +1,5 @@
 {
-  "navList": [
-    {
-      "name": "system",
-      "fullName": "System"
-    },
-    {
-      "name": "bluetooth",
-      "fullName": "Bluetooth & devices"
-    },
-    {
-      "name": "network",
-      "fullName": "Network & internet"
-    },
-    {
-      "name": "personalisation",
-      "fullName": "Personalisation"
-    },
-    {
-      "name": "apps",
-      "fullName": "Apps"
-    },
-    {
-      "name": "accounts",
-      "fullName": "Accounts"
-    },
-    {
-      "name": "time",
-      "fullName": "Time & language"
-    },
-    {
-      "name": "gaming",
-      "fullName": "Gaming"
-    },
-    {
-      "name": "accessibility",
-      "fullName": "Accessibility"
-    },
-    {
-      "name": "privacy",
-      "fullName": "Privacy & security"
-    },
-    {
-      "name": "update",
-      "fullName": "Windows Update"
-    }
-  ],
-  "system": [
+  "System": [
     {
       "type": "tile",
       "name": "Display",
@@ -137,7 +91,7 @@
       "icon": ""
     }
   ],
-  "bluetooth": [
+  "Bluetooth & devices": [
     {
       "type": "tile square",
       "name": "Add device",
@@ -160,7 +114,7 @@
       "type": "tile",
       "name": "Devices",
       "desc": "Mouse, keyboard, pen, audio, displays and docks, other devices",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -211,7 +165,7 @@
       "icon": ""
     }
   ],
-  "network": [
+  "Network & internet": [
     {
       "type": "tile",
       "name": "WiFi",
@@ -255,7 +209,7 @@
       "icon": ""
     }
   ],
-  "personalisation": [
+  "Personalisation": [
     {
       "type": "subHeading",
       "name": "Select a theme to apply"
@@ -315,7 +269,7 @@
       "icon": ""
     }
   ],
-  "apps": [
+  "Apps": [
     {
       "type": "tile",
       "name": "Apps & features",
@@ -359,7 +313,13 @@
       "icon": ""
     }
   ],
-  "accounts": [
+  "Accounts": [
+    {
+      "type": "tile",
+      "name": "Your Microsoft account",
+      "desc": "Subscriptions, rewards and more",
+      "icon": ""
+    },
     {
       "type": "tile",
       "name": "Your info",
@@ -397,7 +357,7 @@
       "icon": ""
     }
   ],
-  "time": [
+  "Time & language": [
     {
       "type": "tile",
       "name": "Date & time",
@@ -423,7 +383,7 @@
       "icon": ""
     }
   ],
-  "gaming": [
+  "Gaming": [
     {
       "type": "tile",
       "name": "Xbox Game Bar",
@@ -443,7 +403,7 @@
       "icon": ""
     }
   ],
-  "accessibility": [
+  "Accessibility": [
     {
       "type": "subHeading",
       "name": "Vision"
@@ -541,7 +501,7 @@
       "icon": ""
     }
   ],
-  "privacy": [
+  "Privacy & security": [
     {
       "type": "subHeading",
       "name": "Security"
@@ -740,7 +700,7 @@
       "icon": ""
     }
   ],
-  "update": [
+  "Windows Update": [
     {
       "type": "subHeading",
       "name": "More options"
