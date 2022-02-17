@@ -20,8 +20,8 @@
   nav {
     position: absolute;
     left: 0;
-    overflow: auto;
     width: 300px;
+    height: 100%;
 
     .nav_top {
       .account {
@@ -75,7 +75,6 @@
     .nav_bottom {
       display: flex;
       flex-direction: column;
-      height: 300px;
       overflow: overlay;
       position: relative;
 
@@ -190,7 +189,6 @@
     }
 
     .tilesCont {
-      height: 500px;
       padding: 0 24px 44px;
       overflow-y: overlay;
       display: flex;
