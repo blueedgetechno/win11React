@@ -1,6 +1,5 @@
 {
   "System": [
-    { "type": "sysTop" },
     {
       "type": "tile",
       "name": "Display",
@@ -167,7 +166,6 @@
     }
   ],
   "Network & internet": [
-    { "type": "netTop" },
     {
       "type": "tile",
       "name": "WiFi",
@@ -212,7 +210,10 @@
     }
   ],
   "Personalisation": [
-    { "type": "personaliseTop" },
+    {
+      "type": "subHeading",
+      "name": "Select a theme to apply"
+    },
     {
       "type": "tile",
       "name": "Background",
@@ -313,7 +314,6 @@
     }
   ],
   "Accounts": [
-    { "type": "accountsTop" },
     {
       "type": "tile",
       "name": "Your Microsoft account",
@@ -701,7 +701,10 @@
     }
   ],
   "Windows Update": [
-    { "type": "updateTop" },
+    {
+      "type": "subHeading",
+      "name": "More options"
+    },
     {
       "type": "tile",
       "name": "Pause updates",
