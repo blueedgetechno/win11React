@@ -113,7 +113,7 @@ export const EdgeMenu = ()=>{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
       }} data-hide={wnapp.hide} id={wnapp.icon+"App"}>
-      <ToolBar app={wnapp.action} icon={wnapp.icon}
+      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size}
         name="Browser" float/>
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">

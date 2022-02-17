@@ -24,7 +24,7 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.BOT }}
          
     - name: create repo
-      run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public -y
+      run: gh repo create win11bot/pr-${{ github.event.pull_request.number }} --public
       env:
         GITHUB_TOKEN: ${{ secrets.BOT }}
         

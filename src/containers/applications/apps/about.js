@@ -6,7 +6,7 @@ export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
   const { locked, booted } = useSelector((state) => state.wallpaper);
   const [open, setOpen] = useState(true && process.env.REACT_APP_ENV != "development");
-  const [timer, setTimer] = useState(localStorage.getItem("closeAbout") == "true" ? 0 : 6);
+  const [timer, setTimer] = useState(localStorage.getItem("closeAbout") == "true" ? 0 : 5);
   const dispatch = useDispatch();
 
   const action = () => {
@@ -25,58 +25,36 @@ export const AboutWin = () => {
 
   return open || abOpen ? (
     <div className="aboutApp floatTab dpShad">
-      <div className="py-1 aboutTop px-2 text-xss">
-        <div className="">About</div>
+      <div className="content p-6">
+        <div className="text-xl font-semibold">About</div>
+        <p>win11React is an open source project made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS, and JavaScript.</p>
+        <p>
+          This project is licensed under&nbsp;
+          <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">
+            Creative Commons
+          </a>
+          .
+        </p>
+        <p className="pl-4">
+          contact :&nbsp;
+          <a target="_blank" href="mailto:blueedgetechno@gmail.com">
+            blueedgetechno@gmail.com
+          </a>
+        </p>
+
+        <p>This project is not in anyway affiliated with Microsoft and should not be confused with Microsoft's Operating System or Products.</p>
+        <p>
+          This is also not&nbsp;
+          <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
+            Windows 365 cloud PC
+          </a>
+          .
+        </p>
+        <p>Microsoft, Windows and Other demonstrated Products in this project are trademarks of the Microsoft group of companies.</p>
       </div>
-      <div className="windowScreen" data-dock="true">
-        <div className="restWindow h-full flex flex-col items-center p-4">
-          <div className="abCont">
-            <div>OS (In ReactJs)</div>
-            <div>Version 11</div>
-            <br />
-            <div>
-              This open source project is made in the hope to <mark>replicate the Windows 11 </mark>
-              desktop experience on web, using standard web technologies like
-              <mark> React, CSS, and JavaScript.</mark>
-              <br />
-              <br />
-              This <rediv>project is not in anyway affiliated with Microsoft</rediv> and should <rediv>not be confused with Microsoft’s Operating System</rediv> or Products.
-              <br />
-              <br />
-              This is also not{" "}
-              <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
-                Windows 365 cloud PC
-              </a>
-              .
-            </div>
-            <br />
-            <div>
-              This project is licensed under{" "}
-              <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">
-                Creative Commons
-              </a>
-              .
-            </div>
-            <div className="mt-1">
-              &nbsp;&nbsp; &nbsp;&nbsp; contact:{" "}
-              <a target="_blank" href="mailto:blueedgetechno@gmail.com">
-                blueedgetechno@gmail.com
-              </a>
-            </div>
-            <br />
-            <br />
-            <div>
-              <span>Microsoft, Windows and Other demonstrated Products in this project are trademarks of the Microsoft group of companies.</span>
-            </div>
-            <br />
-            <br />
-            <br />
-            <div className="okbtn">
-              <div data-allow={timer == 0} onClick={timer == 0 && action}>
-                Ok, I understand {timer > 0 ? <span>{"(" + timer + ")"}</span> : null}
-              </div>
-            </div>
-          </div>
+      <div className="okbtn px-6 py-4">
+        <div data-allow={timer == 0} onClick={timer == 0 && action}>
+          Ok, I understand {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
         </div>
       </div>
     </div>
