@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {ErrorBoundary} from 'react-error-boundary'
 import {
   useSelector,
   useDispatch
@@ -24,6 +25,16 @@ import {
 import {loadSettings} from './actions';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft.js';
+
+function ErrorFallback({error, resetErrorBoundary}) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{color: 'red'}}>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
 
 function App() {
   const apps = useSelector(state => state.apps);
@@ -94,6 +105,7 @@ function App() {
 
   return (
     <div className="App">
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
       {!wall.booted?<BootScreen dir={wall.dir}/>:null}
       {wall.locked?<LockScreen dir={wall.dir}/>:null}
       <div className="appwrap">
@@ -119,6 +131,7 @@ function App() {
         <Taskbar/>
         <ActMenu/>
       </div>
+     </ErrorBoundary>
     </div>
   );
 }
