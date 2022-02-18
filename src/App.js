@@ -100,36 +100,38 @@ function App() {
       },5000)
     }
   })
-
-  return (
-    <div className="App">
-      {!wall.booted?<BootScreen dir={wall.dir}/>:null}
-      {wall.locked?<LockScreen dir={wall.dir}/>:null}
-      <div className="appwrap">
-        <Background/>
-        <div className="desktop" data-menu="desk">
-          <DesktopApp/>
-          {Object.keys(Applications).map((key,idx)=>{
-            var WinApp = Applications[key]
-            return <WinApp/>
-          })}
-          {Object.keys(apps).filter(x=> x!="hz")
-            .map(key=> apps[key]).map(app=>{
-              if(app.pwa){
-                var WinApp = Drafts[app.data.type]
-                return <WinApp icon={app.icon} {...app.data}/>
-              }
-          })}
-          <StartMenu/>
-          <SidePane/>
-          <WidPane/>
-          <CalnWid/>
+   try {
+    return (
+      <div className="App">
+        {!wall.booted?<BootScreen dir={wall.dir}/>:null}
+        {wall.locked?<LockScreen dir={wall.dir}/>:null}
+        <div className="appwrap">
+          <Background/>
+          <div className="desktop" data-menu="desk">
+            <DesktopApp/>
+            {Object.keys(Applications).map((key,idx)=>{
+              var WinApp = Applications[key]
+              return <WinApp/>
+            })}
+            {Object.keys(apps).filter(x=> x!="hz")
+              .map(key=> apps[key]).map(app=>{
+                if(app.pwa){
+                  var WinApp = Drafts[app.data.type]
+                  return <WinApp icon={app.icon} {...app.data}/>
+                }
+            })}
+            <StartMenu/>
+            <SidePane/>
+            <WidPane/>
+            <CalnWid/>
+          </div>
+          <Taskbar/>
+          <ActMenu/>
         </div>
-        <Taskbar/>
-        <ActMenu/>
       </div>
-    </div>
-  );
-}
+    )catch (error) {
+    return <ErrorFallback error={error} />
+  }
+ }
 
 export default App;
