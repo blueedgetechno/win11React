@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {ErrorBoundary} from 'react-error-boundary'
 import {
   useSelector,
   useDispatch
@@ -25,13 +26,14 @@ import {loadSettings} from './actions';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft.js';
 
-function ErrorFallback({error}) {
+function ErrorFallback({error, resetErrorBoundary}) {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
       <pre style={{color: 'red'}}>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
     </div>
-   )
+  )
 }
 
 function App() {
@@ -100,38 +102,38 @@ function App() {
       },5000)
     }
   })
-   try {
-    return (
-      <div className="App">
-        {!wall.booted?<BootScreen dir={wall.dir}/>:null}
-        {wall.locked?<LockScreen dir={wall.dir}/>:null}
-        <div className="appwrap">
-          <Background/>
-          <div className="desktop" data-menu="desk">
-            <DesktopApp/>
-            {Object.keys(Applications).map((key,idx)=>{
-              var WinApp = Applications[key]
-              return <WinApp/>
-            })}
-            {Object.keys(apps).filter(x=> x!="hz")
-              .map(key=> apps[key]).map(app=>{
-                if(app.pwa){
-                  var WinApp = Drafts[app.data.type]
-                  return <WinApp icon={app.icon} {...app.data}/>
-                }
-            })}
-            <StartMenu/>
-            <SidePane/>
-            <WidPane/>
-            <CalnWid/>
-          </div>
-          <Taskbar/>
-          <ActMenu/>
+
+  return (
+    <div className="App">
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      {!wall.booted?<BootScreen dir={wall.dir}/>:null}
+      {wall.locked?<LockScreen dir={wall.dir}/>:null}
+      <div className="appwrap">
+        <Background/>
+        <div className="desktop" data-menu="desk">
+          <DesktopApp/>
+          {Object.keys(Applications).map((key,idx)=>{
+            var WinApp = Applications[key]
+            return <WinApp/>
+          })}
+          {Object.keys(apps).filter(x=> x!="hz")
+            .map(key=> apps[key]).map(app=>{
+              if(app.pwa){
+                var WinApp = Drafts[app.data.type]
+                return <WinApp icon={app.icon} {...app.data}/>
+              }
+          })}
+          <StartMenu/>
+          <SidePane/>
+          <WidPane/>
+          <CalnWid/>
         </div>
+        <Taskbar/>
+        <ActMenu/>
       </div>
-    )catch (error) {
-    return <ErrorFallback error={error} />
-  };
- }
+     </ErrorBoundary>
+    </div>
+  );
+}
 
 export default App;
