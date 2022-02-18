@@ -131,7 +131,7 @@ function App() {
       </div>
     )catch (error) {
     return <ErrorFallback error={error} />
-  }
+  };
  }
 
 export default App;
