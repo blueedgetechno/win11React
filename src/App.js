@@ -25,6 +25,15 @@ import {loadSettings} from './actions';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft.js';
 
+function ErrorFallback({error}) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{color: 'red'}}>{error.message}</pre>
+    </div>
+   )
+}
+
 function App() {
   const apps = useSelector(state => state.apps);
   const wall = useSelector(state => state.wallpaper);
