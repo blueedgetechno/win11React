@@ -37,23 +37,9 @@ jobs:
         TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
       with:
-        tagName: win11inreact-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+        tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
         releaseName: "Win11inReact v__VERSION__"
         releaseBody: "See the assets to download this version and install."
         releaseDraft: false
         prerelease: false
         
-  virus:
-    needs: publish-tauri
-    runs-on: ubuntu-latest
-    steps:
-     - name: VirusTotal Scan
-       uses: crazy-max/ghaction-virustotal@v2
-       with:
-          update_release_body: true
-          vt_api_key: ${{ secrets.VIRUSTOTAL }}
-          files: |
-            .msi$
-            .deb$
-            .dmg$
-            .zip$
