@@ -5,10 +5,10 @@ import "./assets/settings.scss";
 
 import data from "./assets/settingsData.json";
 
-const supportsContainerQueries = "container" in document.documentElement.style;
-if (!supportsContainerQueries) {
-  import("container-query-polyfill");
-}
+// const supportsContainerQueries = "container" in document.documentElement.style;
+// if (!supportsContainerQueries) {
+//   import("container-query-polyfill");
+// }
 
 export const Settings = () => {
   const apps = useSelector((state) => state.apps);
@@ -16,6 +16,7 @@ export const Settings = () => {
   const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
   const [page, setPage] = useState("System");
+  const [nav, setNav] = useState("");
 
   return (
     <div
@@ -32,9 +33,15 @@ export const Settings = () => {
       <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size} name="Settings" />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
-          <nav>
+          <nav className={nav}>
             <div className="nav_top">
-              <div className="account" onClick={() => setPage("Accounts")}>
+              <div
+                className="account"
+                onClick={() => {
+                  setPage("Accounts");
+                  setNav("");
+                }}
+              >
                 <img src="img/icon/settings/defAccount.webp" alt="" height={60} width={60} />
                 <div>
                   <p>Yashash</p>
@@ -51,7 +58,7 @@ export const Settings = () => {
                     className={`navLink ${e === page ? "active" : ""}`}
                     onClick={() => {
                       setPage(e);
-                      document.querySelector("nav").classList.remove("open");
+                      setNav("");
                     }}
                   >
                     <img src={`img/icon/settings/${e}.webp`} alt="" height={16} width={16} />

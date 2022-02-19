@@ -1,20 +1,24 @@
+.settingsApp {
+  min-width: 720px;
+}
+
 .settingsApp .restWindow {
   --bg: #eff4f9;
   --txt_clr-rgb: 0 0 0;
   --clr_prm: #0067c0;
   --scroll: rgb(255 255 255 / 80%);
 
-  container: inline-size / appWrapper;
+  background: var(--bg);
+  color: rgb(var(--txt_clr-rgb));
+  font-size: 14px;
+  height: 100%;
+
+  // container: inline-size / appWrapper;
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg);
-    color: rgb(var(--txt_clr-rgb));
-    font-size: 14px;
   }
 
   nav {
@@ -22,6 +26,8 @@
     left: 0;
     width: 300px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .nav_top {
       .account {
@@ -121,6 +127,8 @@
   main {
     margin-left: 300px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     .sysTop {
       width: min(100%, 1000px);
@@ -273,50 +281,41 @@
     display: none;
   }
 
-  @container appWrapper size(max-width: 800px) {
-    .navMenuBtn {
-      display: flex;
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 12px;
-      border-radius: 6px;
+  // @container appWrapper size(max-width: 800px) {
+  //   .navMenuBtn {
+  //     display: flex;
+  //     position: absolute;
+  //     top: 8px;
+  //     right: 8px;
+  //     padding: 12px;
+  //     border-radius: 6px;
 
-      &:hover {
-        background: rgb(var(--txt_clr-rgb) / 5%);
-      }
+  //     &:hover {
+  //       background: rgb(var(--txt_clr-rgb) / 5%);
+  //     }
 
-      svg {
-        transition: all 0.1s;
-      }
-      &:active svg {
-        transform: scaleX(0.67);
-      }
-    }
+  //     svg {
+  //       transition: all 0.1s;
+  //     }
+  //     &:active svg {
+  //       transform: scaleX(0.67);
+  //     }
+  //   }
 
-    main {
-      margin-left: 0;
-    }
-    nav {
-      background: var(--bg);
-      z-index: 999;
-      transform: translateX(-100%);
-      transition: all 0.2s cubic-bezier(0, 0, 0, 1);
+  //   main {
+  //     margin-left: 0;
+  //   }
+  //   nav {
+  //     background: var(--bg);
+  //     z-index: 999;
+  //     transform: translateX(-100%);
+  //     transition: all 0.2s cubic-bezier(0, 0, 0, 1);
 
-      &.open {
-        transform: translateX(0);
-      }
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(70px);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
+  //     &.open {
+  //       transform: translateX(0);
+  //     }
+  //   }
+  // }
 }
 body[data-theme="dark"] .settingsApp .restWindow {
   --bg: #202020;
@@ -338,5 +337,14 @@ body[data-theme="dark"] .settingsApp .restWindow {
     &:hover {
       background: rgb(255 255 255 / 10%);
     }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(70px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
