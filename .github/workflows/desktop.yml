@@ -31,7 +31,7 @@ jobs:
         
     - name: install app dependencies and build it
       run: npm ci && npm run build
-    - uses: tauri-apps/tauri-action@v0
+    - uses: jdukewich/tauri-action@fix-windows-bundling
       env:
         GITHUB_TOKEN: ${{ secrets.BOT }}
         TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
