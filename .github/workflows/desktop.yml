@@ -34,6 +34,8 @@ jobs:
     - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.BOT }}
+        TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
       with:
         tagName: win11inreact-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
         releaseName: "Win11inReact v__VERSION__"
