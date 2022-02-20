@@ -80,33 +80,28 @@ body[data-theme="dark"] .startMenu {
   }
 }
 
-.allCont{
-  position: relative;
-  height: calc(100% - 64px);
-
-  &[data-allapps="false"]{
-    opacity: 0;
-    transition: cubic-bezier(0, .58, .42, 1) 300ms;
-  }
-
-  &[data-allapps="true"] {
-    transform: translateX(-640px);
-    transition: cubic-bezier(0, .58, .42, 1) 300ms;
-  }
-}
-
-.stmenu{
+.allCont,
+.stmenu {
   position: relative;
   height: calc(100% - 64px);
 
   &[data-allapps="false"] {
-    transition: cubic-bezier(0, .58, .42, 1) 300ms;
+    opacity: 0;
+    transition: cubic-bezier(0, 0.58, 0.42, 1) 300ms;
   }
 
-  &[data-allapps="true"]{
-    opacity: 0;
+  &[data-allapps="true"] {
     transform: translateX(-640px);
-    transition: cubic-bezier(0, .58, .42, 1) 300ms;
+    transition: cubic-bezier(0, 0.58, 0.42, 1) 300ms;
+  }
+}
+
+.stmenu {
+  &[data-allapps="false"] {
+    opacity: 1;
+  }
+  &[data-allapps="true"] {
+    opacity: 0;
   }
 }
 
