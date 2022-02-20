@@ -86,12 +86,22 @@ body[data-theme="dark"] .startMenu {
   height: calc(100% - 64px);
 
   &[data-allapps="false"] {
-    transition: ease-in-out 200ms;
+    opacity: 0;
+    transition: cubic-bezier(0, 0.58, 0.42, 1) 300ms;
   }
 
   &[data-allapps="true"] {
     transform: translateX(-640px);
-    transition: ease-in-out 200ms;
+    transition: cubic-bezier(0, 0.58, 0.42, 1) 300ms;
+  }
+}
+
+.stmenu {
+  &[data-allapps="false"] {
+    opacity: 1;
+  }
+  &[data-allapps="true"] {
+    opacity: 0;
   }
 }
 
