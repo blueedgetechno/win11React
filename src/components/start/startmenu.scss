@@ -86,13 +86,23 @@ body[data-theme="dark"] .startMenu {
   height: calc(100% - 64px);
 
   &[data-allapps="false"] {
-    transition: ease-in-out 200ms;
+    transition: cubic-bezier(0, .58, .42, 1) 600ms;
   }
 
   &[data-allapps="true"] {
     transform: translateX(-640px);
-    transition: ease-in-out 200ms;
+    transition: cubic-bezier(0, .58, .42, 1) 600ms;
   }
+}
+
+.allCont[data-allapps="false"]{
+  opacity: 0;
+  transition: cubic-bezier(0, .58, .42, 1) 600ms;
+}
+
+.stmenu[data-allapps="true"]{
+  opacity: 0;
+  transition: cubic-bezier(0, .58, .42, 1) 600ms;
 }
 
 .allCont {
