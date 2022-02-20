@@ -13,7 +13,7 @@
   color: var(--dark-txt);
   background: var(--bg1);
   overflow: hidden;
-  transition: all cubic-bezier(0, .62, .39, 1) 0.2s;
+  transition: cubic-bezier(0.56, 0, 1, 0.41) 0.2s;
   z-index: 9999;
   transform: translateX(0);
 
@@ -26,7 +26,7 @@
   &[data-hide="true"] {
     transform: translateX(110%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
-    transition: cubic-bezier(.56, 0, 1, .41) 0.2s;
+    transition: all cubic-bezier(0, 0.62, 0.39, 1) 0.2s;
   }
 
   .quickSettings {
@@ -194,14 +194,14 @@ body[data-theme="dark"] .sidePane {
   background: var(--bg1);
   color: var(--dark-txt);
   overflow: hidden;
-  transition: all cubic-bezier(0, .62, .39, 1) 200ms;
+  transition: cubic-bezier(0.56, 0, 1, 0.41) 0.2s;
   z-index: 9999;
   border-radius: 8px;
 
   &[data-hide="true"] {
     transform: translateX(120%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
-    transition: cubic-bezier(.56, 0, 1, .41) .2s;
+    transition: all cubic-bezier(0, 0.62, 0.39, 1) 0.2s;
   }
 
   #dycalendar {
