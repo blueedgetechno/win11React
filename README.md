@@ -23,11 +23,12 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 ![home](./public/img/home.jpg)
 
 # Gallery
-![pic1](./public/img/gallery1.jpg)
+
+![image](https://user-images.githubusercontent.com/89068816/154832868-6ec81a0b-0bc3-4e77-a4bf-3391b852fe9c.png)
 
 ![pic1](./public/img/gallery2.jpg)
 
-![pic1](./public/img/gallery3.jpg)
+![image](https://user-images.githubusercontent.com/89068816/154832942-b3e435dd-5fe4-4bc1-a9be-34262698625d.png)
 
 # Why
 
@@ -40,7 +41,7 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 - [x] Snap windows in different layouts
 - [x] Browser, Store, Terminal, Calculator
 - [x] Notepad, Vscode, Whiteboard
-- [ ] File Explorer + Setting
+- [x] File Explorer + Setting
 - [x] Drag and Resize windows
 - [x] Startup and Lock screen
 - [x] Themes and Background
