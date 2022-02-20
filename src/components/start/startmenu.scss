@@ -86,23 +86,23 @@ body[data-theme="dark"] .startMenu {
   height: calc(100% - 64px);
 
   &[data-allapps="false"] {
-    transition: cubic-bezier(0, .58, .42, 1) 600ms;
+    transition: cubic-bezier(0, .58, .42, 1) 300ms;
   }
 
   &[data-allapps="true"] {
     transform: translateX(-640px);
-    transition: cubic-bezier(0, .58, .42, 1) 600ms;
+    transition: cubic-bezier(0, .58, .42, 1) 300ms;
   }
 }
 
 .allCont[data-allapps="false"]{
   opacity: 0;
-  transition: cubic-bezier(0, .58, .42, 1) 600ms;
+  transition: cubic-bezier(0, .58, .42, 1) 300ms;
 }
 
 .stmenu[data-allapps="true"]{
   opacity: 0;
-  transition: cubic-bezier(0, .58, .42, 1) 600ms;
+  transition: cubic-bezier(0, .58, .42, 1) 300ms;
 }
 
 .allCont {
