@@ -112,10 +112,10 @@ export const Settings = () => {
                                   <div className="bgBox">
                                     <img className="selected" src="img/wallpaper/default/img0.jpg" alt="" />
                                     <img src="img/wallpaper/default/img1.jpg" alt="" />
-                                    <img src="img/wallpaper/themeD/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/themeC/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/themeA/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/themeB/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/ThemeD/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/ThemeC/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/ThemeA/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/ThemeB/img0.jpg" alt="" />
                                   </div>
                                 </div>
                               </div>
