@@ -167,11 +167,8 @@ body[data-theme="dark"] .sidePane {
     --bg2: rgb(255 255 255 / 3.33%);
   }
 
-  .uicon {
+  .uicon:not(.btPlug) {
     filter: invert(1);
-  }
-  .btPlug img {
-    filter: drop-shadow(1px 1px #fefefe) invert(0.86);
   }
 }
 
