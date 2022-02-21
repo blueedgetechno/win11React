@@ -104,6 +104,11 @@ body[data-theme="dark"] {
 
   &[data-side="center"] {
     align-items: center;
+
+    .widget {
+      position: absolute;
+      left: 0;
+    }
   }
 
   &[data-side="left"] {
