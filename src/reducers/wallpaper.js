@@ -3,7 +3,7 @@ var locked = localStorage.getItem("locked");
 
 const walls = [
   "default/img0.jpg",
-  "defaultDark/img0.jpg",
+  "dark/img0.jpg",
   "ThemeA/img0.jpg",
   "ThemeA/img1.jpg",
   "ThemeA/img2.jpg",
@@ -23,12 +23,12 @@ const walls = [
 ]
 
 const themes = [
-  "default/img0.jpg",
-  "defaultDark/img0.jpg",
-  "ThemeA/img0.jpg",
-  "ThemeB/img0.jpg",
-  "ThemeD/img0.jpg",
-  "ThemeC/img0.jpg",
+  "default",
+  "dark",
+  "ThemeA",
+  "ThemeB",
+  "ThemeD",
+  "ThemeC",
 ]
 
 const defState = {

@@ -113,7 +113,7 @@ export const Settings = () => {
                                 <h2>Select a theme to apply</h2>
                                 <div className="bgBox">
                                   {wall.themes.map((e) => {
-                                    return <img className={e === wall.src ? "selected" : ""} src={`img/wallpaper/${e}`} alt="" />;
+                                    return <img className={wall.src.includes(e) ? "selected" : ""} src={`img/wallpaper/${e}/img0.jpg`} alt="" />;
                                   })}
                                 </div>
                               </div>
