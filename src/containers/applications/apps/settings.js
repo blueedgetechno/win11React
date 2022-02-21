@@ -96,7 +96,7 @@ export const Settings = () => {
                                   <p>
                                     Windows Update
                                     <br />
-                                    <span className="column_lower">Last checked: {Math.ceil(Math.random() * 12)} hours ago</span>
+                                    <span className="column_lower">You're up to date</span>
                                   </p>
                                 </div>
                               </div>
@@ -104,22 +104,31 @@ export const Settings = () => {
                           );
                         case "personaliseTop":
                           return (
-                            <>
-                              <div className="personaliseTop">
-                                <img className="mainImg" src="img/wallpaper/default/img0.jpg" alt="" />
-                                <div>
-                                  <h2>Select a theme to apply</h2>
-                                  <div className="bgBox">
-                                    <img className="selected" src="img/wallpaper/default/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/default/img1.jpg" alt="" />
-                                    <img src="img/wallpaper/ThemeD/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/ThemeC/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/ThemeA/img0.jpg" alt="" />
-                                    <img src="img/wallpaper/ThemeB/img0.jpg" alt="" />
-                                  </div>
+                            <div className="personaliseTop">
+                              <img className="mainImg" src="img/wallpaper/default/img0.jpg" alt="" />
+                              <div>
+                                <h2>Select a theme to apply</h2>
+                                <div className="bgBox">
+                                  <img className="selected" src="img/wallpaper/default/img0.jpg" alt="" />
+                                  <img src="img/wallpaper/default/img1.jpg" alt="" />
+                                  <img src="img/wallpaper/ThemeD/img0.jpg" alt="" />
+                                  <img src="img/wallpaper/ThemeC/img0.jpg" alt="" />
+                                  <img src="img/wallpaper/ThemeA/img0.jpg" alt="" />
+                                  <img src="img/wallpaper/ThemeB/img0.jpg" alt="" />
                                 </div>
                               </div>
-                            </>
+                            </div>
+                          );
+                        case "accountsTop":
+                          return (
+                            <div className="accountsTop ">
+                              <img src="img/settings/defAccount.webp" alt="" width={90} />
+                              <div>
+                                <p>YASHASH</p>
+                                <p>Local Account</p>
+                                <p>Administrator</p>
+                              </div>
+                            </div>
                           );
                         case "subHeading":
                         case "spacer":
