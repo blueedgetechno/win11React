@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import wallReducer from "../../../reducers/wallpaper";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import "./assets/settings.scss";
 
@@ -111,12 +112,9 @@ export const Settings = () => {
                               <div>
                                 <h2>Select a theme to apply</h2>
                                 <div className="bgBox">
-                                  <img className="selected" src={`img/wallpaper/${wall.src}`} alt="" />
-                                  <img src="img/wallpaper/default/img0.jpg" alt="" />
-                                  <img src="img/wallpaper/ThemeD/img0.jpg" alt="" />
-                                  <img src="img/wallpaper/ThemeC/img0.jpg" alt="" />
-                                  <img src="img/wallpaper/ThemeA/img0.jpg" alt="" />
-                                  <img src="img/wallpaper/ThemeB/img0.jpg" alt="" />
+                                  {wall.themes.map((e) => {
+                                    return <img className={e === wall.src ? "selected" : ""} src={`img/wallpaper/${e}`} alt="" />;
+                                  })}
                                 </div>
                               </div>
                             </div>
