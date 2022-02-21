@@ -36,12 +36,14 @@ body[data-theme="dark"] {
 
   .uicon {
     position: absolute;
-    margin-top: -24%;
+    margin-top: -12%;
     margin-left: -12%;
     z-index: 1;
-    filter: drop-shadow(1px 1px #fefefe) invert(0.14);
-    transform: scale(0.8, 0.72);
   }
+}
+
+.btPlug {
+  filter: drop-shadow(1px 1px var(--txt-col));
 }
 
 .battery .fa {
@@ -53,8 +55,6 @@ body[data-theme="dark"] {
   position: absolute;
   overflow: hidden;
   z-index: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 
