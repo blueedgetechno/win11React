@@ -25,7 +25,7 @@ export const EdgeMenu = ()=>{
   }
 
   const favicons = {
-    "https://andrewstech.me":"https://andrewstech.me/images/%5BOriginal%20size%5D%20AT.png"
+    "https://andrewstech.me":"https://avatars.githubusercontent.com/u/45342431"
   }
 
   const clickDispatch = (event)=>{
