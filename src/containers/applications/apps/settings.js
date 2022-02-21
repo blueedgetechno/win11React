@@ -15,6 +15,7 @@ export const Settings = () => {
   const wnapp = useSelector((state) => state.apps.settings);
   const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
+
   const [page, setPage] = useState("System");
   const [nav, setNav] = useState("");
 
@@ -74,7 +75,7 @@ export const Settings = () => {
                           return (
                             <div className={e.type}>
                               <div className="left">
-                                <img src="https://win11.blueedge.me/img/wallpaper/default/img0.jpg" alt="" className="device_img" />
+                                <img src="img/wallpaper/default/img0.jpg" alt="" className="device_img" />
                                 <div className="column_device">
                                   <p className="device_name">Liber-V</p>
                                   <p className="device_model">NS14A8</p>
@@ -100,6 +101,25 @@ export const Settings = () => {
                                 </div>
                               </div>
                             </div>
+                          );
+                        case "personaliseTop":
+                          return (
+                            <>
+                              <div className="personaliseTop">
+                                <img className="mainImg" src="img/wallpaper/default/img0.jpg" alt="" />
+                                <div>
+                                  <h2>Select a theme to apply</h2>
+                                  <div className="bgBox">
+                                    <img className="selected" src="img/wallpaper/default/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/default/img1.jpg" alt="" />
+                                    <img src="img/wallpaper/themeD/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/themeC/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/themeA/img0.jpg" alt="" />
+                                    <img src="img/wallpaper/themeB/img0.jpg" alt="" />
+                                  </div>
+                                </div>
+                              </div>
+                            </>
                           );
                         case "subHeading":
                         case "spacer":

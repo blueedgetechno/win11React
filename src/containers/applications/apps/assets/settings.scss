@@ -193,6 +193,42 @@
       }
     }
 
+    .personaliseTop {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 12px;
+
+      .mainImg {
+        height: 200px;
+        border: 8px solid black;
+        border-radius: 1rem;
+        margin-right: 32px;
+      }
+      div {
+        h2 {
+          font-size: 14px;
+          font-weight: 500;
+          padding-bottom: 8px;
+        }
+        .bgBox {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          gap: 8px;
+
+          .selected {
+            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--clr_prm);
+          }
+
+          img {
+            width: 120px;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+
     h1 {
       padding: 14px 24px;
       font-weight: 500;
