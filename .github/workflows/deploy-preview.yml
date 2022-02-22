@@ -61,10 +61,6 @@ jobs:
         cname: ${{ github.event.pull_request.number }}.pr.blueedge.me
         external_repository: win11bot/pr-${{ github.event.pull_request.number }}
     
-    - name: Sleep for 120 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '120s'
         
     - name: pr
       uses: mshick/add-pr-comment@v1
