@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import wallReducer from "../../../reducers/wallpaper";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import "./assets/settings.scss";
 
@@ -15,6 +16,9 @@ export const Settings = () => {
   const wnapp = useSelector((state) => state.apps.settings);
   const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
+
+  const wall = useSelector((state) => state.wallpaper);
+
   const [page, setPage] = useState("System");
   const [nav, setNav] = useState("");
 
@@ -74,7 +78,7 @@ export const Settings = () => {
                           return (
                             <div className={e.type}>
                               <div className="left">
-                                <img src="https://win11.blueedge.me/img/wallpaper/default/img0.jpg" alt="" className="device_img" />
+                                <img src={`img/wallpaper/${wall.src}`} alt="" className="device_img" />
                                 <div className="column_device">
                                   <p className="device_name">Liber-V</p>
                                   <p className="device_model">NS14A8</p>
@@ -95,12 +99,80 @@ export const Settings = () => {
                                   <p>
                                     Windows Update
                                     <br />
-                                    <span className="column_lower">Last checked: {Math.ceil(Math.random() * 12)} hours ago</span>
+                                    <span className="column_lower">You're up to date</span>
                                   </p>
                                 </div>
                               </div>
                             </div>
                           );
+                        case "netTop":
+                          return (
+                            <div className="netTop">
+                              <div>
+                                <img src="img/settings/wifi.png" alt="" height={100} />
+                                <div>
+                                  <h2 className="font-medium text-lg">WiFi</h2>
+                                  <p>Connected, secured</p>
+                                </div>
+                              </div>
+                              <div className="box">
+                                <span className="settingsIcon"></span>
+                                <div>
+                                  <h3>Properties</h3>
+                                  <p>Public network 5 Ghz</p>
+                                </div>
+                              </div>
+                              <div className="box">
+                                <span className="settingsIcon"></span>
+                                <div>
+                                  <h3>Data Usage</h3>
+                                  <p>{Math.round(Math.random() * 100)}GB, last 30 days</p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        case "personaliseTop":
+                          return (
+                            <div className="personaliseTop">
+                              <img className="mainImg" src={`img/wallpaper/${wall.src}`} alt="" />
+                              <div>
+                                <h3>Select a theme to apply</h3>
+                                <div className="bgBox">
+                                  {wall.themes.map((e) => {
+                                    return <img className={wall.src.includes(e) ? "selected" : ""} src={`img/wallpaper/${e}/img0.jpg`} alt="" />;
+                                  })}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        case "accountsTop":
+                          return (
+                            <div className="accountsTop ">
+                              <img src="img/settings/defAccount.webp" alt="" width={90} />
+                              <div>
+                                <p>YASHASH</p>
+                                <p>Local Account</p>
+                                <p>Administrator</p>
+                              </div>
+                            </div>
+                          );
+
+                        case "updateTop":
+                          return (
+                            <div className="updateTop">
+                              <div className="left">
+                                <img src="img/settings/update.png" width={90} alt="" />
+                                <div>
+                                  <h2>You're up to date</h2>
+                                  <p>Last checked: Today</p>
+                                </div>
+                              </div>
+                              <div className="right">
+                                <div className="btn">Check for updates</div>
+                              </div>
+                            </div>
+                          );
+
                         case "subHeading":
                         case "spacer":
                           return <div className={e.type}>{e.name}</div>;
@@ -109,7 +181,7 @@ export const Settings = () => {
                         case "tile thin-blue":
                           return (
                             <div key={e.name} className={e.type}>
-                              <span>{e.icon}</span>
+                              <span className="settingsIcon">{e.icon}</span>
                               <div>
                                 <p>{e.name}</p>
                                 <p className="tile_desc">{e.desc}</p>
