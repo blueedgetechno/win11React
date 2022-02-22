@@ -703,6 +703,10 @@
   "Windows Update": [
     { "type": "updateTop" },
     {
+      "type": "subHeading",
+      "name": "More options"
+    },
+    {
       "type": "tile",
       "name": "Pause updates",
       "icon": ""

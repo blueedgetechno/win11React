@@ -288,6 +288,41 @@
       }
     }
 
+    .updateTop {
+      display: flex;
+      width: min(100%, 1000px);
+      align-items: center;
+      gap: 1rem;
+
+      .btn {
+        background: var(--clrPrm);
+        color: var(--alt-txt);
+        padding: 6px 12px;
+        border-radius: 4px;
+      }
+
+      .left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        div {
+          h2 {
+            font-size: 18px;
+            font-weight: 600;
+          }
+          p {
+            font-size: 14px;
+            color: rgb(var(--txt_clr-rgb) / 67%);
+          }
+        }
+      }
+      .right {
+        // justify-self: flex-end;
+        margin-left: auto;
+      }
+    }
+
     h1 {
       padding: 14px 24px;
       font-weight: 500;

@@ -156,6 +156,23 @@ export const Settings = () => {
                               </div>
                             </div>
                           );
+
+                        case "updateTop":
+                          return (
+                            <div className="updateTop">
+                              <div className="left">
+                                <img src="img/settings/update.png" width={90} alt="" />
+                                <div>
+                                  <h2>You're up to date</h2>
+                                  <p>Last checked: Today</p>
+                                </div>
+                              </div>
+                              <div className="right">
+                                <div className="btn">Check for updates</div>
+                              </div>
+                            </div>
+                          );
+
                         case "subHeading":
                         case "spacer":
                           return <div className={e.type}>{e.name}</div>;
