@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: CI=false npm run build  
+        run: CI=false  REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
       
       
       - name: Set up QEMU
