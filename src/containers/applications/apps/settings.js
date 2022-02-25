@@ -6,6 +6,8 @@ import "./assets/settings.scss";
 
 import data from "./assets/settingsData.json";
 
+import {changeTheme} from "../../../actions";
+
 // const supportsContainerQueries = "container" in document.documentElement.style;
 // if (!supportsContainerQueries) {
 //   import("container-query-polyfill");
@@ -14,13 +16,38 @@ import data from "./assets/settingsData.json";
 export const Settings = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.settings);
+  const theme = useSelector((state) => state.setting.person.theme);
   const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
 
   const wall = useSelector((state) => state.wallpaper);
 
-  const [page, setPage] = useState("System");
+  const [page, setPage] = useState("System"); // default System
   const [nav, setNav] = useState("");
+
+  const themechecker = {
+    "default": "light",
+    "dark": "dark",
+    "ThemeA": "dark",
+    "ThemeB": "dark",
+    "ThemeD": "light",
+    "ThemeC": "light"
+  }
+
+  const handleWallAndTheme = (e)=>{
+    var payload = e.target.dataset.payload;
+    var theme_nxt = themechecker[ payload.split("/")[0] ],
+        src = payload;
+
+    dispatch({
+      type: "WALLSET",
+      payload: src
+    })
+
+    if(theme_nxt != theme){
+      changeTheme()
+    }
+  }
 
   return (
     <div
@@ -54,7 +81,7 @@ export const Settings = () => {
                   <div
                     key={e}
                     className={`navLink ${e === page ? "selected" : ""}`}
-                    onClick={() => {
+                    onClick={() => { // avoid inline functions
                       setPage(e);
                     }}
                   >
@@ -139,7 +166,14 @@ export const Settings = () => {
                                 <h3>Select a theme to apply</h3>
                                 <div className="bgBox">
                                   {wall.themes.map((e) => {
-                                    return <img className={wall.src.includes(e) ? "selected" : ""} src={`img/wallpaper/${e}/img0.jpg`} alt="" />;
+                                    return (
+                                      <Image
+                                        className={wall.src.includes(e) ? "selected" : ""}
+                                        src={`img/wallpaper/${e}/img0.jpg`} ext
+                                        onClick={handleWallAndTheme} click="WALLSET"
+                                        payload={`${e}/img0.jpg`}
+                                      />
+                                    )
                                   })}
                                 </div>
                               </div>

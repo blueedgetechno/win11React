@@ -74,9 +74,20 @@ const wallReducer = (state = defState, action) => {
           locked: true, act: 'shutdn'
       };
     case 'WALLSET':
+      var isIndex = !Number.isNaN(parseInt(action.payload)),
+          wps = 0, src = "";
+
+      if(isIndex){
+        wps = action.payload
+        src = walls[action.payload]
+      }else{
+        src = action.payload
+        wps = walls.indexOf(action.payload)
+      }
+
       return {
-        ...state, wps: action.payload,
-        src: walls[action.payload]
+        ...state, wps: wps,
+        src: src
       };
     default:
       return state

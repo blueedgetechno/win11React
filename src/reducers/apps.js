@@ -2,7 +2,7 @@ import {allApps} from '../utils';
 
 var dev = ""
 if(process.env.REACT_APP_ENV=="development"){
-  dev="" // set the name of the app you are developing so that it will be opened on refresh
+  dev = "settings" // set the name (lowercase) of the app you are developing so that it will be opened on refresh
 }
 
 const defState = {};
