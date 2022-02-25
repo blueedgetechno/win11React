@@ -26,28 +26,28 @@ export const Settings = () => {
   const [nav, setNav] = useState("");
 
   const themechecker = {
-    "default": "light",
-    "dark": "dark",
-    "ThemeA": "dark",
-    "ThemeB": "dark",
-    "ThemeD": "light",
-    "ThemeC": "light"
-  }
+    default: "light",
+    dark: "dark",
+    ThemeA: "dark",
+    ThemeB: "dark",
+    ThemeD: "light",
+    ThemeC: "light",
+  };
 
-  const handleWallAndTheme = (e)=>{
+  const handleWallAndTheme = (e) => {
     var payload = e.target.dataset.payload;
-    var theme_nxt = themechecker[ payload.split("/")[0] ],
-        src = payload;
+    var theme_nxt = themechecker[payload.split("/")[0]],
+      src = payload;
+
+    if (theme_nxt != theme) {
+      changeTheme();
+    }
 
     dispatch({
       type: "WALLSET",
-      payload: src
-    })
-
-    if(theme_nxt != theme){
-      changeTheme()
-    }
-  }
+      payload: src,
+    });
+  };
 
   return (
     <div
