@@ -80,7 +80,7 @@ export const camera = (props) => {
 
 export const view = (props) => {
   return (
-    <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24" {...props}>
+    <svg fill="none" strokeWidth="1.5" viewBox="0 0 24 24" {...props}>
       <path stroke="currentColor" d="M14 20.4v-5.8c0-.3.3-.6.6-.6h5.8c.3 0 .6.3.6.6v5.8c0 .3-.3.6-.6.6h-5.8a.6.6 0 01-.6-.6zM3 20.4v-5.8c0-.3.3-.6.6-.6h5.8c.3 0 .6.3.6.6v5.8c0 .3-.3.6-.6.6H3.6a.6.6 0 01-.6-.6zM14 9.4V3.6c0-.3.3-.6.6-.6h5.8c.3 0 .6.3.6.6v5.8c0 .3-.3.6-.6.6h-5.8a.6.6 0 01-.6-.6zM3 9.4V3.6c0-.3.3-.6.6-.6h5.8c.3 0 .6.3.6.6v5.8c0 .3-.3.6-.6.6H3.6a.6.6 0 01-.6-.6z" />
     </svg>
   );
