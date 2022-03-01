@@ -195,11 +195,6 @@ var apps = [{
   payload: 'https://www.pinterest.com/blueedgetechno/'
 },
 {
-  name: 'PowerPoint',
-  icon: 'powerpoint',
-  type: 'app'
-},
-{
   name: 'Security',
   icon: 'security',
   type: 'app'
