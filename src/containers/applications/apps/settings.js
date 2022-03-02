@@ -107,8 +107,8 @@ export const Settings = () => {
                               <div className="left">
                                 <img src={`img/wallpaper/${wall.src}`} alt="" className="device_img" />
                                 <div className="column_device">
-                                  <p className="device_name">Liber-V</p>
-                                  <p className="device_model">NS14A8</p>
+                                  <p className="device_name">merna-pc</p>
+                                  <p className="device_model">dell xps</p>
                                   <p className="device_rename">Rename</p>
                                 </div>
                               </div>

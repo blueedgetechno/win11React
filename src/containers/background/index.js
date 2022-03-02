@@ -130,7 +130,7 @@ export const LockScreen = (props) => {
       </div>
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
         <Image className="rounded-full overflow-hidden" src="/img/asset/prof.jpg" w={200} ext />
-        <div className="mt-2 text-2xl font-medium text-gray-200">Blue Edge</div>
+        <div className="mt-2 text-2xl font-medium text-gray-200">Merna chechman</div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
           Sign in
         </div>
