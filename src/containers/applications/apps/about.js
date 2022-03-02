@@ -27,7 +27,7 @@ export const AboutWin = () => {
     <div className="aboutApp floatTab dpShad">
       <div className="content p-6">
         <div className="text-xl font-semibold">About</div>
-        <p>win11React is an open source project made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS, and JavaScript.</p>
+        <p>win11React is an open source project que j'ai un peu modifié oui ma phrase est en francais et anglais tu vas faire quoi?. je rigole hein faut pas envoyer de tueur à gage sur moi</p>
         <p>
           This project is licensed under&nbsp;
           <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">

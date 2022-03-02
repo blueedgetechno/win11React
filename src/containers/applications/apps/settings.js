@@ -69,7 +69,7 @@ export const Settings = () => {
               <div className="account" onClick={() => setPage("Accounts")}>
                 <img src="img/settings/defAccount.webp" alt="" height={60} width={60} />
                 <div>
-                  <p>Yashash</p>
+                  <p>merna</p>
                   <p>Local Account</p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export const Settings = () => {
                             <div className="accountsTop ">
                               <img src="img/settings/defAccount.webp" alt="" width={90} />
                               <div>
-                                <p>YASHASH</p>
+                                <p>MERNA</p>
                                 <p>Local Account</p>
                                 <p>Administrator</p>
                               </div>

@@ -60,7 +60,7 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'Blue',
+  name: 'Merna-PC',
   icon: 'win/user',
   type: 'short'
 }, {

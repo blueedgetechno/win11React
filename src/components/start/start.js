@@ -203,7 +203,7 @@ export const StartMenu = () => {
           <div className="menuBar">
             <div className="profile handcr">
               <Icon src="blueProf" ui rounded width={26} click="EXTERNAL" payload="https://blueedge.me" />
-              <div className="usName">Blue Edge</div>
+              <div className="usName">merna chechman</div>
             </div>
             <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>
