@@ -329,7 +329,7 @@ const FrontPage = (props)=>{
         <div className="storeRibbon">
           {ribbon && ribbon.map(x=>{
             return x=="unescape"?(
-              <a href="https://blueedge.me/unescape" target="_blank">
+              <a href="https://mernahanna.ca" target="_blank">
               <Image className="mx-1 dpShad rounded"
                 var={x} h={100} dir="store/float" src={x}/>
               </a>

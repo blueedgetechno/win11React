@@ -17,7 +17,7 @@ export const EdgeMenu = ()=>{
     "https://www.youtube.com/embed/m0EHSoZzHEA": "Youtube",
     "https://blueedge.me": "blueedge",
     "https://andrewstech.me": "\nandrewstech",
-    "https://blueedge.me/unescape": "Unescape",
+    "https://mernahanna.ca": "Unescape",
     "https://win11.blueedge.me": "Inception",
     "https://open.spotify.com/embed/artist/4xSuBagzLpC8UKiXtWBBRe": "Spotify",
     "https://bluelab.blueedge.me": "BlueLab",
