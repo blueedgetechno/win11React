@@ -282,11 +282,11 @@ var apps = [{
   payload: 'https://github.com/blueedgetechno/win11React'
 },
 {
-  name: 'Unescape',
+  name: 'quitter',
   icon: 'unescape',
   type: 'action',
   action: 'EXTERNAL',
-  payload: 'https://blueedge.me/unescape'
+  payload: 'https://mernahanna.ca'
 },
 {
   name: 'Discord',
