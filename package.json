@@ -23,7 +23,7 @@
     "react-error-boundary": "^3.1.4",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "redux": "^4.1.0",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
