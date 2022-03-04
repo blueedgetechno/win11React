@@ -4,6 +4,10 @@ function removeWarning() {
   document.body.dataset.force = true;
 }
 
+window.onload = function() {
+  document.getElementById("startup_audio").play();
+} 
+
 window.pythonRunner = new BrythonRunner({
   stdout: {
     write(content) {
