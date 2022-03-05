@@ -49,8 +49,8 @@ export const DScord = ()=>{
               <hr/>
               <Icon className="wnServer svIcon" src="./img/asset/server.gif" width={48}
                 click="EXTERNAL" payload="https://discord.gg/qmEZwUhb4b" ext/>
-              {servers.map(server=>(
-                <Icon className="svIcon" src={"./img/asset/"+server.src}
+              {servers.map((server,i)=>(
+                <Icon key={i} className="svIcon" src={"./img/asset/"+server.src}
                   click="EXTERNAL" payload={server.link} ext width={48}/>
               ))}
             </div>

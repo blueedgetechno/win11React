@@ -22,9 +22,9 @@ const FolderDrop = ({dir})=>{
 
   return (
     <>
-      {folder.data && folder.data.map(item => {
+      {folder.data && folder.data.map((item,i) => {
         if(item.type=="folder"){
-          return <Dropdown icon={item.info && item.info.icon}
+          return <Dropdown key={i} icon={item.info && item.info.icon}
             title={item.name} notoggle={item.data.length==0} dir={item.id}/>
         }
       })}
@@ -83,11 +83,11 @@ export const Explorer = ()=>{
   }
 
   const DirCont = ()=>{
-    var arr = [], curr = fdata;
-
+    var arr = [], curr = fdata,index=0;
+    
     while(curr){
       arr.push(
-        <div className="dirCont flex items-center">
+        <div key={index++} className="dirCont flex items-center">
           <div className="dncont" onClick={dispatchAction} tabIndex="-1"
             data-action="FILEDIR" data-payload={curr.id}>{curr.name}</div>
           <Icon className="dirchev" fafa="faChevronRight" width={8}/>
@@ -98,21 +98,21 @@ export const Explorer = ()=>{
     }
 
     arr.push(
-      <div className="dirCont flex items-center">
+      <div key={index++} className="dirCont flex items-center">
         <div className="dncont" tabIndex="-1">This PC</div>
         <Icon className="dirchev" fafa="faChevronRight" width={8}/>
       </div>
     )
 
     arr.push(
-      <div className="dirCont flex items-center">
+      <div key={index++} className="dirCont flex items-center">
         <Icon className="pr-1 pb-px" src={"win/" + fdata.info.icon + "-sm"} width={16}/>
         <Icon className="dirchev" fafa="faChevronRight" width={8}/>
       </div>
     )
 
     return (
-      <div className="dirfbox h-full flex">
+      <div key={index++} className="dirfbox h-full flex">
         {arr.reverse()}
       </div>
     )
@@ -200,9 +200,9 @@ const ContentArea = ({searchtxt})=>{
     <div className="contentarea" onClick={emptyClick} onKeyDown={handleKey} tabIndex="-1">
       <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
-          {fdata.data.map(item=>{
+          {fdata.data.map((item,i)=>{
             return item.name.includes(searchtxt) && (
-              <div className="conticon hvtheme flex flex-col items-center prtclk"
+              <div key={i} className="conticon hvtheme flex flex-col items-center prtclk"
                 data-id={item.id} data-focus={selected==item.id}
                 onClick={handleClick} onDoubleClick={handleDouble}>
                 <Image src={`icon/win/${item.info.icon}`}/>

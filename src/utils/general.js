@@ -193,11 +193,11 @@ export const SnapScreen = (props)=>{
 
   return props.snap || delay?(
     <div className="snapcont mdShad" data-dark={props.invert!=null}>
-      {lays.map(x=>{
+      {lays.map((x,i)=>{
         return (
-          <div className="snapLay">
-            {x.map(y=>(
-              <div className="snapper" style={{
+          <div key={i} className="snapLay">
+            {x.map((y,j)=>(
+              <div key={j} className="snapper" style={{
                 borderTopLeftRadius: (y.br%2==0)*4,
                 borderTopRightRadius: (y.br%3==0)*4,
                 borderBottomRightRadius: (y.br%5==0)*4,

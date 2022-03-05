@@ -53,23 +53,23 @@ export const WhiteBoard = ()=>{
         <div className="restWindow flex-grow flex flex-col">
           <div className="clickCont">
             <div className="paintTool">
-              {tools.map(tool=>{
+              {tools.map((tool,ind)=>{
                 if(tool=="erazer"){
                   return (
-                    <div className="ptool prtclk" onClick={action}
+                    <div className="ptool prtclk" key={ind} onClick={action}
                       value="erz" data-active={eraze}>
                       <Image src="icon/ui/marker"/>
                     </div>
                   )
                 }else if(tool=="reset"){
                   return (
-                    <div className="ptool prtclk" onClick={action} value="rst">
+                    <div className="ptool prtclk" key={ind} onClick={action} value="rst">
                       <Image src="icon/ui/dustbin"/>
                     </div>
                   )
                 }else{
                   return (
-                    <div className="ptool prtclk" onClick={action}
+                    <div className="ptool prtclk" key={ind} onClick={action}
                       data-active={color==tool && !eraze} value={tool}>
                       <Mark color={tool}/>
                     </div>
