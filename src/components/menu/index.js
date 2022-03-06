@@ -59,12 +59,12 @@ export const ActMenu = () => {
 
   const menuobj = (data) => {
     var mnode = [];
-    data.map((opt) => {
+    data.map((opt,i) => {
       if (opt.type == "hr") {
-        mnode.push(<div className="menuhr"></div>);
+        mnode.push(<div key={i} className="menuhr"></div>);
       } else {
         mnode.push(
-          <div className="menuopt" data-dsb={opt.dsb} onClick={clickDispatch} data-action={opt.action} data-payload={opt.payload}>
+          <div key={i} className="menuopt" data-dsb={opt.dsb} onClick={clickDispatch} data-action={opt.action} data-payload={opt.payload}>
             {menudata.ispace!=false?(
               <div className="spcont">
                 {opt.icon && opt.type=="svg" ? <Icon icon={opt.icon} width={16} /> : null}

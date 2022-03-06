@@ -147,9 +147,9 @@ export const EdgeMenu = ()=>{
           </div>
           <div className="w-full bookbar py-2">
             <div className="flex">
-              {Object.keys(iframes).map(mark=>{
+              {Object.keys(iframes).map((mark,i)=>{
                 return(
-                  <div className="flex handcr items-center ml-2 mr-1 prtclk"
+                  <div key={i} className="flex handcr items-center ml-2 mr-1 prtclk"
                     onClick={action} data-payload={6} data-url={mark}>
                     <Icon className="mr-1" ext width={16}
                       src={iframes[mark][0]!="\n"?

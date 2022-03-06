@@ -292,7 +292,7 @@ export const WnTerminal = ()=>{
           <div className="cmdcont w-full box-border overflow-y-scroll win11Scroll prtclk"
             id="cmdcont" onMouseOver={action} onClick={action} data-action="hover">
             <div className="w-full h-max pb-12">
-              {stack.map(x=> <pre className="cmdLine">{x}</pre>)}
+              {stack.map((x,i)=> <pre key={i} className="cmdLine">{x}</pre>)}
               <div className="cmdLine actmd">
                 {pwd}>
                 <div className="ipcmd" id="curcmd" contentEditable

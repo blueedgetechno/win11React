@@ -99,11 +99,11 @@ export const Settings = () => {
                 <main key={e}>
                   <h1>{e}</h1>
                   <div className="tilesCont win11Scroll">
-                    {data[e].map((e) => {
+                    {data[e].map((e,i) => {
                       switch (e.type) {
                         case "sysTop":
                           return (
-                            <div className={e.type}>
+                            <div key={i} className={e.type}>
                               <div className="left">
                                 <img src={`img/wallpaper/${wall.src}`} alt="" className="device_img" />
                                 <div className="column_device">
@@ -134,7 +134,7 @@ export const Settings = () => {
                           );
                         case "netTop":
                           return (
-                            <div className="netTop">
+                            <div key={i} className="netTop">
                               <div>
                                 <img src="img/settings/wifi.png" alt="" height={100} />
                                 <div>
@@ -160,14 +160,15 @@ export const Settings = () => {
                           );
                         case "personaliseTop":
                           return (
-                            <div className="personaliseTop">
+                            <div key={i} className="personaliseTop">
                               <img className="mainImg" src={`img/wallpaper/${wall.src}`} alt="" />
                               <div>
                                 <h3>Select a theme to apply</h3>
                                 <div className="bgBox">
-                                  {wall.themes.map((e) => {
+                                  {wall.themes.map((e,i) => {
                                     return (
                                       <Image
+                                        key={i}
                                         className={wall.src.includes(e) ? "selected" : ""}
                                         src={`img/wallpaper/${e}/img0.jpg`} ext
                                         onClick={handleWallAndTheme} click="WALLSET"
@@ -181,7 +182,7 @@ export const Settings = () => {
                           );
                         case "accountsTop":
                           return (
-                            <div className="accountsTop ">
+                            <div key={i} className="accountsTop ">
                               <img src="img/settings/defAccount.webp" alt="" width={90} />
                               <div>
                                 <p>YASHASH</p>
@@ -193,7 +194,7 @@ export const Settings = () => {
 
                         case "updateTop":
                           return (
-                            <div className="updateTop">
+                            <div key={i} className="updateTop">
                               <div className="left">
                                 <img src="img/settings/update.png" width={90} alt="" />
                                 <div>
@@ -209,7 +210,7 @@ export const Settings = () => {
 
                         case "subHeading":
                         case "spacer":
-                          return <div className={e.type}>{e.name}</div>;
+                          return <div key={i} className={e.type}>{e.name}</div>;
                         case "tile":
                         case "tile square":
                         case "tile thin-blue":

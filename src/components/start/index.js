@@ -169,7 +169,7 @@ export const SidePane = () => {
         <div className="qkCont">
           {sidepane.quicks.map((qk, idx) => {
             return (
-              <div className="qkGrp">
+              <div key={idx} className="qkGrp">
                 <div className="qkbtn handcr prtclk" onClick={clickDispatch} data-action={qk.action} data-payload={qk.payload || qk.state} data-state={pnstates[idx]}>
                   <Icon className="quickIcon" ui={qk.ui} src={qk.src} width={14} invert={pnstates[idx] ? true : null} />
                 </div>

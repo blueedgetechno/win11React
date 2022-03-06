@@ -175,14 +175,14 @@ const DownPage = ({action, apps})=>{
         </div>
       </div>
       <div className="appscont mt-8">
-        {apps.map(item=>{
+        {apps.map((item,i)=>{
           if(item.type!=catg && catg!="all") return
 
           var stars = geneStar(item)
           var reviews = Math.round(geneStar(item,1)/100)/10
 
           return (
-            <div className="ribcont p-4 pt-8 ltShad prtclk"
+            <div key={i} className="ribcont p-4 pt-8 ltShad prtclk"
               onClick={action} data-action="page2" data-payload={item.data.url}>
               <Image className="mx-4 mb-6 rounded"
                 w={100} h={100} src={item.icon} ext/>
@@ -269,8 +269,8 @@ const DetailPage = ({app})=>{
             <div className="text-xs font-semibold">Screenshots</div>
             <div className="overflow-x-scroll win11Scroll mt-4">
               <div className="w-max flex">
-                {app.data.gallery && app.data.gallery.map(x=>
-                  <Image className="mr-2 rounded" h={250} src={x}
+                {app.data.gallery && app.data.gallery.map((x,i)=>
+                  <Image key={i} className="mr-2 rounded" h={250} src={x}
                     ext err="img/asset/mixdef.jpg"/>
                 )}
               </div>
@@ -289,9 +289,9 @@ const DetailPage = ({app})=>{
               <div className="text-xss">{Math.round(reviews/100)/10}K RATINGS</div>
             </div>
             <div className="text-xss ml-6">
-              {"54321".split("").map(x=> {
+              {"54321".split("").map((x,i)=> {
                 return (
-                  <div className="flex items-center">
+                  <div key={i} className="flex items-center">
                     <div className="h-4">{x}</div>
                     <Icon className="text-orange-500 ml-1" fafa="faStar" width={8}/>
                     <div className="w-48 ml-2 bg-orange-200 rounded-full">
@@ -327,14 +327,14 @@ const FrontPage = (props)=>{
       <div className="panelName absolute m-6 text-xl top-0">Home</div>
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
-          {ribbon && ribbon.map(x=>{
+          {ribbon && ribbon.map((x,i)=>{
             return x=="unescape"?(
-              <a href="https://blueedge.me/unescape" target="_blank">
+              <a key={i} href="https://blueedge.me/unescape" target="_blank">
               <Image className="mx-1 dpShad rounded"
                 var={x} h={100} dir="store/float" src={x}/>
               </a>
             ):(
-              <Image className="mx-1 dpShad rounded"
+              <Image key={i} className="mx-1 dpShad rounded"
                 var={x} h={100} dir="store/float" src={x}/>
             )
           })}
@@ -347,10 +347,10 @@ const FrontPage = (props)=>{
           <div className="text-xs mt-2">Take your experience to new heights with these must-have apps</div>
         </div>
         <div className="flex w-max pr-8">
-          {apprib && apprib.map(x=>{
+          {apprib && apprib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
             return (
-              <div className="ribcont rounded my-auto p-2 pb-2">
+              <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
                   w={120} dir="store/apps" src={x}/>
                 <div className="capitalize text-xs font-semibold">{x}</div>
@@ -376,10 +376,10 @@ const FrontPage = (props)=>{
           <div className="text-xs mt-2">Explore fun to play xbox games and find a new favorite</div>
         </div>
         <div className="flex w-max pr-8">
-          {gamerib && gamerib.map(x=>{
+          {gamerib && gamerib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
             return (
-              <div className="ribcont rounded my-auto p-2 pb-2">
+              <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
                   w={120} dir="store/games" src={x}/>
                 <div className="capitalize text-xs font-semibold">{x}</div>
@@ -405,10 +405,10 @@ const FrontPage = (props)=>{
           <div className="text-xs mt-2">Rent or buy the latest hit films and watch them at home or on the go</div>
         </div>
         <div className="flex w-max pr-8">
-          {movrib && movrib.map(x=>{
+          {movrib && movrib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
             return (
-              <div className="ribcont rounded my-auto p-2 pb-2">
+              <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
                   w={120} dir="store/movies" src={x}/>
                 <div className="capitalize text-xs font-semibold">{x}</div>

@@ -415,8 +415,8 @@ const Search = ({sid, paused, action,action2})=>{
           }</span>
           {songResults.length==0?(
             <div className="mt-2">
-              {recentSearches.map(srch=>
-                <div className="acol p-2">{srch}</div>
+              {recentSearches.map((srch,i)=>
+                <div key={i} className="acol p-2">{srch}</div>
               )}
             </div>
           ):null}
@@ -475,7 +475,7 @@ const Search = ({sid, paused, action,action2})=>{
           <div className="w-full overflow-x-scroll smoothsc noscroll -ml-3">
             <div className="w-max flex">
               {albumResults.map((card,idx)=>(
-                <div className="scard pt-3 px-3 acol">
+                <div key={idx} className="scard pt-3 px-3 acol">
                   <Image src={card.image.to250()} ext w={200} err='/img/asset/mixdef.jpg'
                   onClick={action} click="album" payload={card.id} lazy/>
                   <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold"
@@ -644,7 +644,7 @@ const Home = ({tab, action, sid, paused})=>{
         </a>
       </div>
       {data.home.map((bar,ix)=>(
-        <div className="sitem w-full mb-8" id={"tab"+(ix+2)}>
+        <div key={ix} className="sitem w-full mb-8" id={"tab"+(ix+2)}>
           <div className="scbCont" data-var={!bar.desc}>
             <div className="mx-2" onClick={scaction}>{"<"}</div>
             <div className="mx-2" onClick={scaction}>{">"}</div>
@@ -657,7 +657,7 @@ const Home = ({tab, action, sid, paused})=>{
           <div className="w-full pt-1 overflow-x-scroll smoothsc noscroll -ml-3">
             <div className="w-max flex">
               {bar.cards.map((card,idx)=>(
-                <div className={"scard pt-3 px-3" +
+                <div key={idx} className={"scard pt-3 px-3" +
                   (card.type=="artist"?" text-center":"")} style={{
                   "--rot1": randomHue(idx)+'deg'
                 }}>
@@ -720,7 +720,7 @@ const Queue = ({queue, curr, action, action2, paused})=>{
       <div className="text-gray-400 font-semibold mt-12 mb-6">Next up</div>
       {jiosaavn.sliceArr(queue, curr).map((qs,i)=>{
         return (
-          <div className="songCont handcr prtclk acol pr-12 py-2"
+          <div key={i} className="songCont handcr prtclk acol pr-12 py-2"
             onClick={()=> action2("clickq",(curr+i+1)%queue.length)}>
             <div className="w-10 text-center font-semibold">{i+2}</div>
             <Image src={qs.albumArt.to150()} w={40} ext lazy/>

@@ -5,7 +5,10 @@ import Battery from "../Battery";
 import "./taskbar.scss";
 
 const Taskbar = () => {
-  const tasks = useSelector((state) => state.taskbar);
+  const tasks = useSelector((state) =>{
+    //console.log(state)
+    return state.taskbar
+  });
   const apps = useSelector((state) => {
     var tmpApps = { ...state.apps };
     for (var i = 0; i < state.taskbar.apps.length; i++) {
@@ -94,8 +97,8 @@ const Taskbar = () => {
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z == apps.hz;
               return (
-                <div onMouseOver={(!isActive && !isHidden && showPrev) || null} value={task.icon}>
-                  <Icon key={i} className="tsIcon" width={24} open={isHidden ? null : true} click={task.action} active={isActive} payload="togg" src={task.icon} />
+                <div key={i} onMouseOver={(!isActive && !isHidden && showPrev) || null} value={task.icon}>
+                  <Icon  className="tsIcon" width={24} open={isHidden ? null : true} click={task.action} active={isActive} payload="togg" src={task.icon} />
                 </div>
               );
             })}
@@ -105,8 +108,8 @@ const Taskbar = () => {
               }
 
               return key != "hz" && !apps[key].task && !apps[key].hide ? (
-                <div onMouseOver={(!isActive && showPrev) || null} value={apps[key].icon}>
-                  <Icon key={i} className="tsIcon" width={24} active={isActive} click={apps[key].action} payload="togg" open="true" src={apps[key].icon} />
+                <div key={i} onMouseOver={(!isActive && showPrev) || null} value={apps[key].icon}>
+                  <Icon className="tsIcon" width={24} active={isActive} click={apps[key].action} payload="togg" open="true" src={apps[key].icon} />
                 </div>
               ) : null;
             })}

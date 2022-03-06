@@ -167,14 +167,14 @@ export const StartMenu = () => {
 
                   var tpApps = [];
                   tpApps.push(
-                    <div className="allApp prtclk" data-action="STARTALPHA" onClick={clickDispatch} id={`char${i == 0 ? "#" : String.fromCharCode(i + 64)}`}>
+                    <div key={i} className="allApp prtclk" data-action="STARTALPHA" onClick={clickDispatch} id={`char${i == 0 ? "#" : String.fromCharCode(i + 64)}`}>
                       <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
                     </div>
                   );
 
                   ldx.forEach((app, j) => {
                     tpApps.push(
-                      <div key={j} className="allApp prtclk" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div key={app.name} className="allApp prtclk" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
                         <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
                       </div>
@@ -191,7 +191,7 @@ export const StartMenu = () => {
                   </div>
                   {start.contApps.map((ldx, i) => {
                     return (
-                      <div className={ldx.length == 0 ? "dullApp allApp" : "allApp prtclk"} data-action="STARTALPHA" onClick={ldx.length == 0 ? null : clickDispatch} data-payload={i == 0 ? "#" : String.fromCharCode(i + 64)}>
+                      <div key={i} className={ldx.length == 0 ? "dullApp allApp" : "allApp prtclk"} data-action="STARTALPHA" onClick={ldx.length == 0 ? null : clickDispatch} data-payload={i == 0 ? "#" : String.fromCharCode(i + 64)}>
                         <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
                       </div>
                     );
@@ -282,7 +282,7 @@ export const StartMenu = () => {
                   <div className="topApps flex w-full justify-between">
                     {start.rcApps.slice(1, 7).map((app, i) => {
                       return (
-                        <div className="topApp pt-6 py-4 ltShad">
+                        <div key={i} className="topApp pt-6 py-4 ltShad">
                           <Icon onClick={clickDispatch} click={app.action} payload={app.payload || "full"} src={app.icon} width={30} />
                           <div className="text-xs mt-2">{app.name}</div>
                         </div>
@@ -291,9 +291,9 @@ export const StartMenu = () => {
                   </div>
                   <div className="text-sm font-semibold mt-8">Quick Searches</div>
                   <div className="quickSearches mt-2">
-                    {start.qksrch.map((srch) => {
+                    {start.qksrch.map((srch,i) => {
                       return (
-                        <div className="qksrch flex items-center p-3 my-1 handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={srch[2]}>
+                        <div key={i} className="qksrch flex items-center p-3 my-1 handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={srch[2]}>
                           <Icon fafa={srch[0]} reg={srch[1]} />
                           <div className="ml-4 text-sm">{srch[2]}</div>
                         </div>
