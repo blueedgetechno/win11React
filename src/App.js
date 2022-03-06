@@ -141,13 +141,13 @@ function App() {
           <DesktopApp/>
           {Object.keys(Applications).map((key,idx)=>{
             var WinApp = Applications[key]
-            return <WinApp/>
+            return <WinApp key={idx}/>
           })}
           {Object.keys(apps).filter(x=> x!="hz")
-            .map(key=> apps[key]).map(app=>{
+            .map(key=> apps[key]).map((app,i)=>{
               if(app.pwa){
                 var WinApp = Drafts[app.data.type]
-                return <WinApp icon={app.icon} {...app.data}/>
+                return <WinApp key={i} icon={app.icon} {...app.data}/>
               }
           })}
           <StartMenu/>
@@ -156,7 +156,7 @@ function App() {
           <CalnWid/>
         </div>
         <Taskbar/>
-        <ActMenu/>
+        <ActMenu/>  
       </div>
      </ErrorBoundary>
     </div>

@@ -58,7 +58,7 @@ export const WidPane = () => {
                 <div className="weekWthCont">
                   {widget.data.weather.days.map((item, i) => {
                     return (
-                      <div className="weekDay">
+                      <div key={i} className="weekDay">
                         <div>{i == 0 ? "Today" : item.day}</div>
                         <Icon src={`https://www.metaweather.com/static/img/weather/png/64/${item.icon}.png`} ext width={24} />
 
