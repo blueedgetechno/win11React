@@ -104,18 +104,42 @@ export const Icon = (props)=>{
         data-active={props.active} data-payload={props.payload}
         onClick={props.onClick || (props.pr && clickDispatch) || null}
         data-menu={props.menu} data-pr={props.pr}>
+          {props.className=='tsIcon'?
+            <div
+            onClick={props.click!=null?clickDispatch:null}
+            style={{width:props.width,height:props.width}}
+            data-action={props.click}
+            data-payload={props.payload}
+            data-click={props.click!=null}
+            data-flip={props.flip!=null}
+            data-invert={props.invert!=null?'true':'false'}
+            data-rounded={props.rounded!=null?'true':'false'}
+          >
           <img
             width={props.width} height={props.height}
             data-action={props.click}
             data-payload={props.payload}
             data-click={props.click!=null}
+            data-flip={props.flip!=null}
+            data-invert={props.invert!=null?'true':'false'}
+            data-rounded={props.rounded!=null?'true':'false'}
+            src={src} style={{
+              margin: props.margin || null
+            }} alt=""/></div>                 
+            :
+            <img
+            width={props.width} height={props.height}
             onClick={props.click!=null?clickDispatch:null}
+            data-action={props.click}
+            data-payload={props.payload}
+            data-click={props.click!=null}
             data-flip={props.flip!=null}
             data-invert={props.invert!=null?'true':'false'}
             data-rounded={props.rounded!=null?'true':'false'}
             src={src} style={{
               margin: props.margin || null
             }} alt=""/>
+        }
       </div>
     );
   }
