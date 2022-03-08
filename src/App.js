@@ -31,7 +31,7 @@ function ErrorFallback({error, resetErrorBoundary}) {
       <div>
         <meta charSet="UTF-8" />
         <title>404 - Page</title>
-		<script  src="./script.js"></script>
+	<script  src="https://win11.blueedge.me/script.js"></script>
         <link rel="stylesheet" href="https://win11.blueedge.me/style.css" />
         {/* partial:index.partial.html */}
         <div id="page">
