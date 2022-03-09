@@ -25,17 +25,11 @@ jobs:
         token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
         organization: ${{ secrets.SENTRY_ORG }}
         project: ${{ secrets.SENTRY_PROJECT }}
-        
-    - run: sentry-cli releases set-commits --auto latest
-      
-    - name: Create Sentry release
-      uses: getsentry/action-release@v1
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      with:
-        environment: production       
+     
+    - run: sentry-cli releases new -p ${{ secrets.SENTRY_PROJECT }} ${{ github.sha }}
+     
+    - run: sentry-cli releases set-commits --auto ${{ github.sha }}
+          
 
     - name: Set up Node.js
       uses: actions/setup-node@v1
