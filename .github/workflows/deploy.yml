@@ -18,6 +18,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Setup Sentry CLI
+      uses: mathieu-bour/setup-sentry-cli@1.2.0
+      with:
+        version: latest # optional if 'latest'
+        token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
+        organization: ${{ secrets.SENTRY_ORG }}
+        project: ${{ secrets.SENTRY_PROJECT }}
+        
+    - run: sentry-cli releases set-commits --auto latest
+      
     - name: Create Sentry release
       uses: getsentry/action-release@v1
       env:
