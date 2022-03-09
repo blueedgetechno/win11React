@@ -38,4 +38,6 @@ body:
         - Safari
         - Microsoft Edge
         - Other Browser
-      
+    validations:
+      required: true
+        
