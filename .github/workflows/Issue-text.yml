@@ -13,3 +13,11 @@ jobs:
       with:
         message: "Hey, thank you for creating an issue. We will normally respond within 24 hours."
         GITHUB_TOKEN: ${{ secrets.BOT }}
+        
+    - uses: stefanbuck/github-issue-parser@v2
+      id: issue-parser
+      with:
+        template-path: .github/ISSUE_TEMPLATE/bug_report.yml
+        
+    - run: echo '${{ steps.issue-parser.outputs.jsonString }}    
+        
