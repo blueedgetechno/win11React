@@ -36,5 +36,6 @@ body:
         - Firefox
         - Chrome
         - Safari
-        - Microsoft Edge    
+        - Microsoft Edge
+        - Other Browser
       
