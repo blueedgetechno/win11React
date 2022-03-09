@@ -30,8 +30,8 @@ body:
   - type: dropdown
     id: browsers
     attributes:
-      label: What browsers are you seeing the problem on?
-      multiple: true
+      label: What browser are you seeing the problem on?
+      multiple: false
       options:
         - Firefox
         - Chrome
