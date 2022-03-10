@@ -106,8 +106,7 @@ const Taskbar = () => {
               if (key != "hz") {
                 var isActive = apps[key].z == apps.hz;
               }
-
-              return key != "hz" && !apps[key].task && !apps[key].hide ? (
+              return key != "hz"&& key != "undefined"&& !apps[key].task && !apps[key].hide ? (
                 <div key={i} onMouseOver={(!isActive && showPrev) || null} value={apps[key].icon}>
                   <Icon className="tsIcon" width={24} active={isActive} click={apps[key].action} payload="togg" open="true" src={apps[key].icon} />
                 </div>
