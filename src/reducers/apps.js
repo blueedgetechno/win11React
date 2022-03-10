@@ -64,7 +64,7 @@ const appReducer = (state = defState, action) => {
   }else if (action.type=="OPENTERM") {
     var obj = {...tmpState["terminal"]};
     obj.dir = action.payload;
-
+    
     obj.size = "full";
     obj.hide = false;
     obj.max = true;
@@ -89,73 +89,81 @@ const appReducer = (state = defState, action) => {
       var obj = state[keys[i]];
       if(obj.action == action.type){
         tmpState = {...state};
-
-        if(action.payload=="full"){
-          obj.size = "full";
-          obj.hide = false;
-          obj.max = true;
-          tmpState.hz+=1;
-          obj.z = tmpState.hz;
-        }else if(action.payload=="close"){
-          obj.hide = true;
-          obj.max = null;
-          obj.z = -1;
-          tmpState.hz-=1;
-        }else if(action.payload=="mxmz"){
-          obj.size = ["mini","full"][obj.size!="full"?1:0];
-          obj.hide = false;
-          obj.max = true;
-          tmpState.hz+=1;
-          obj.z = tmpState.hz;
-        }else if(action.payload=="togg"){
-          if(obj.z != tmpState.hz){
+        var topIcon = findMax(tmpState);
+        switch(action.payload){
+          case 'full':{
             obj.hide = false;
-            if(!obj.max){
-              tmpState.hz+=1;
-              obj.z = tmpState.hz;
-              obj.max = true;
-            }else{
-              obj.z = -1;
-              obj.max = false;
-            }
-          }else{
-            obj.max = !obj.max;
-            obj.hide = false;
-            if(obj.max){
-              tmpState.hz+=1;
-              obj.z = tmpState.hz;
-            }else{
-              obj.z = -1;
-              tmpState.hz-=1;
-            }
+            obj.size = 'full'
+            toTop(obj);
+            break;
           }
-        }else if(action.payload=="mnmz"){
-          obj.max = false;
-          obj.hide = false;
-          if(obj.z==tmpState.hz){
-            tmpState.hz-=1;
+          case 'close':{
+            obj.hide = true;
+            fold(obj)
+            break;
           }
-          obj.z = -1;
-        }else if (action.payload=="resize"){
-          obj.size = "cstm";
-          obj.hide = false;
-          obj.max = true;
-          if(obj.z != tmpState.hz) tmpState.hz+=1;
-          obj.z = tmpState.hz;
-          obj.dim = action.dim;
-        }else if (action.payload=="front") {
-          obj.hide = false;
-          obj.max = true;
-          if(obj.z!=tmpState.hz){
-            tmpState.hz+=1;
-            obj.z = tmpState.hz;
+          case 'mnmz':{
+            fold(obj)
+            break;
+          }
+          case 'mxmz':{
+            obj.size = ["mini","full"][obj.size!="full"?1:0];
+            toTop(obj);
+            break;
+          }
+          case 'togg':{
+            if(topIcon===obj.name){
+              fold(obj);
+            }
+            else if(topIcon==null){
+                obj.size = 'full'
+                toTop(obj);
+            }
+            else{
+              toTop(obj);
+            }
+            break;
+          }
+          case 'resize':{
+            obj.size = "cstm";
+            toTop(obj)
+            obj.dim = action.dim;
+            break;
+          }
+          case 'front':{
+            toTop(obj)
+            break;
           }
         }
-
         tmpState[keys[i]] = obj;
         return tmpState;
       }
     }
+  }
+  function findMax(state){
+    let tempMax=1;
+    let topIcon='';
+    for(i in state){
+      if(state[i].z>tempMax){
+        tempMax=state[i].z;
+        topIcon=state[i].name
+      }
+    }
+    state.hz = tempMax
+    return topIcon;
+  }
+  function fold(obj){
+    obj.max = false
+    obj.size = "full";
+    obj.z = -1;
+    if(obj.name===topIcon) topIcon=findMax(tmpState);
+  }
+  function toTop(obj){
+    obj.max = true
+    obj.hide = false;
+    tmpState.hz+=1;
+    obj.z = tmpState.hz;
+    topIcon = obj.name;
   }
 
   return state;
