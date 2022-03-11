@@ -1,3 +1,20 @@
 {
-   "signedContributors": []
+  "signedContributors": [
+    {
+      "name": "andrewstech",
+      "id": 45342431,
+      "comment_id": 1065344048,
+      "created_at": "2022-03-11T17:50:24Z",
+      "repoId": 385332374,
+      "pullRequestNo": 346
+    },
+    {
+      "name": "andrewstech",
+      "id": 45342431,
+      "comment_id": 1065348018,
+      "created_at": "2022-03-11T17:55:25Z",
+      "repoId": 385332374,
+      "pullRequestNo": 346
+    }
+  ]
 }
