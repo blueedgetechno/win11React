@@ -106,21 +106,6 @@ If you have one of the latest windows builds then you can enter the command belo
 
 ``` winget install blueedge.win11react ```
 
------------------------------------------
-
-**APT/DEBIAN/UBUNTU**
-
-AMD64 ONLY
-
-``` curl -s --compressed "https://projects.asylum-os.com/apt/KEY.gpg" | sudo apt-key add - ```
-
-``` sudo curl -s --compressed -o /etc/apt/sources.list.d/asylum.list "https://projects.asylum-os.com/apt/apt.list" ```
-
-``` sudo apt update ```
-
-``` sudo apt install win11in-react ```
-
-
 
 ## Online Deployment
 
