@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../Battery";
+import WiFi from "../WiFi";
 import "./taskbar.scss";
 
 const Taskbar = () => {
