@@ -1715,9 +1715,9 @@
   "resolved" "https://registry.npmjs.org/@tauri-apps/api/-/api-1.0.0-beta.8.tgz"
   "version" "1.0.0-beta.8"
 
-"@tauri-apps/cli-win32-x64-msvc@1.0.0-rc.2":
-  "integrity" "sha512-CWEe3x63DZwyipiYi5TsHFkjRsasuE/4dQgHSKGpURztQLQ3Ap6tcVaT74s9HRKuMUDO67d6d6ieFMNFjae6HQ=="
-  "resolved" "https://registry.npmjs.org/@tauri-apps/cli-win32-x64-msvc/-/cli-win32-x64-msvc-1.0.0-rc.2.tgz"
+"@tauri-apps/cli-darwin-x64@1.0.0-rc.2":
+  "integrity" "sha512-hlhFE10uKz8OSXmdNKlKr8aEvp395BKgdjVJCQOHqvPqDkNyx52oDytANrzyKfXFFkGiNSPpnN1HYz3KViccrg=="
+  "resolved" "https://registry.npmjs.org/@tauri-apps/cli-darwin-x64/-/cli-darwin-x64-1.0.0-rc.2.tgz"
   "version" "1.0.0-rc.2"
 
 "@tauri-apps/cli@1.0.0-rc.2":
@@ -4123,10 +4123,10 @@
   dependencies:
     "iconv-lite" "^0.6.2"
 
-"enhanced-resolve@^5.9.0":
-  "integrity" "sha512-weDYmzbBygL7HzGGS26M3hGQx68vehdEg6VUmqSOaFzXExFqlnKuSvsEJCVGQHScS8CQMbrAqftT+AzzHNt/YA=="
-  "resolved" "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.9.0.tgz"
-  "version" "5.9.0"
+"enhanced-resolve@^5.9.2":
+  "integrity" "sha512-GIm3fQfwLJ8YZx2smuHpBKkXC1yOk+OBEmKckVyL0i/ea8mqDEykK3ld5dgH1QYPNyT/lIllxV2LULnxCHaHkA=="
+  "resolved" "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.9.2.tgz"
+  "version" "5.9.2"
   dependencies:
     "graceful-fs" "^4.2.4"
     "tapable" "^2.2.0"
@@ -4200,9 +4200,9 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
-"esbuild-windows-64@0.13.15":
-  "integrity" "sha512-9aMsPRGDWCd3bGjUIKG/ZOJPKsiztlxl/Q3C1XDswO6eNX/Jtwu4M+jb6YDH9hRSUflQWX0XKAfWzgy5Wk54JQ=="
-  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.13.15.tgz"
+"esbuild-darwin-64@0.13.15":
+  "integrity" "sha512-ihOQRGs2yyp7t5bArCwnvn2Atr6X4axqPpEdCFPVp7iUj4cVSdisgvEKdNR7yH3JDjW6aQDw40iQFoTqejqxvQ=="
+  "resolved" "https://registry.npmjs.org/esbuild-darwin-64/-/esbuild-darwin-64-0.13.15.tgz"
   "version" "0.13.15"
 
 "esbuild@^0.13.13":
@@ -4876,6 +4876,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fsevents@^2.3.2", "fsevents@~2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -5379,6 +5384,11 @@
   "integrity" "sha512-lk7UNmSbAukB5B6dh9fnh5D0bJTOFKxVg2cyJWTYrWRfhLrLMBquONcUs3aFq507hNoIZEDDh8lb8UtOizSMhA=="
   "resolved" "https://registry.npmjs.org/immer/-/immer-9.0.12.tgz"
   "version" "9.0.12"
+
+"immutable@^4.0.0":
+  "integrity" "sha512-zIE9hX70qew5qTUjSS7wi1iwj/l7+m54KWU247nhM3v806UdGj1yDndXj+IOYxxtW9zyLI+xqFNZjTuDaLUqFw=="
+  "resolved" "https://registry.npmjs.org/immutable/-/immutable-4.0.0.tgz"
+  "version" "4.0.0"
 
 "import-fresh@^3.0.0", "import-fresh@^3.1.0", "import-fresh@^3.2.1":
   "integrity" "sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw=="
@@ -8544,11 +8554,13 @@
     "neo-async" "^2.6.2"
 
 "sass@^1.3.0", "sass@^1.35.1":
-  "integrity" "sha512-jhO5KAR+AMxCEwIH3v+4zbB2WB0z67V1X0jbapfVwQQdjHZUGUyukpnoM6+iCMfsIUC016w9OPKQ5jrNOS9uXw=="
-  "resolved" "https://registry.npmjs.org/sass/-/sass-1.35.2.tgz"
-  "version" "1.35.2"
+  "integrity" "sha512-YlYWkkHP9fbwaFRZQRXgDi3mXZShslVmmo+FVK3kHLUELHHEYrCmL1x6IUjC7wLS6VuJSAFXRQS/DxdsC4xL1A=="
+  "resolved" "https://registry.npmjs.org/sass/-/sass-1.49.9.tgz"
+  "version" "1.49.9"
   dependencies:
     "chokidar" ">=3.0.0 <4.0.0"
+    "immutable" "^4.0.0"
+    "source-map-js" ">=0.6.2 <2.0.0"
 
 "sax@~1.2.4":
   "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="
@@ -8817,7 +8829,7 @@
   "resolved" "https://registry.npmjs.org/source-list-map/-/source-list-map-2.0.1.tgz"
   "version" "2.0.1"
 
-"source-map-js@^1.0.1", "source-map-js@^1.0.2":
+"source-map-js@^1.0.1", "source-map-js@^1.0.2", "source-map-js@>=0.6.2 <2.0.0":
   "integrity" "sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw=="
   "resolved" "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz"
   "version" "1.0.2"
@@ -9834,9 +9846,9 @@
   "version" "3.2.3"
 
 "webpack@^4.0.0 || ^5.0.0", "webpack@^4.37.0 || ^5.0.0", "webpack@^4.4.0 || ^5.9.0", "webpack@^4.44.2 || ^5.47.0", "webpack@^5.0.0", "webpack@^5.1.0", "webpack@^5.20.0", "webpack@^5.64.4", "webpack@>= 4", "webpack@>=2", "webpack@>=4.43.0 <6.0.0":
-  "integrity" "sha512-E5Fqu89Gu8fR6vejRqu26h8ld/k6/dCVbeGUcuZjc+goQHDfCPU9rER71JmdtBYGmci7Ec2aFEATQ2IVXKy2wg=="
-  "resolved" "https://registry.npmjs.org/webpack/-/webpack-5.69.0.tgz"
-  "version" "5.69.0"
+  "integrity" "sha512-ZMWWy8CeuTTjCxbeaQI21xSswseF2oNOwc70QSKNePvmxE7XW36i7vpBMYZFAUHPwQiEbNGCEYIOOlyRbdGmxw=="
+  "resolved" "https://registry.npmjs.org/webpack/-/webpack-5.70.0.tgz"
+  "version" "5.70.0"
   dependencies:
     "@types/eslint-scope" "^3.7.3"
     "@types/estree" "^0.0.51"
@@ -9847,7 +9859,7 @@
     "acorn-import-assertions" "^1.7.6"
     "browserslist" "^4.14.5"
     "chrome-trace-event" "^1.0.2"
-    "enhanced-resolve" "^5.9.0"
+    "enhanced-resolve" "^5.9.2"
     "es-module-lexer" "^0.9.0"
     "eslint-scope" "5.1.1"
     "events" "^3.2.0"
