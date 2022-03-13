@@ -1,18 +1,18 @@
 import Button from 'neo.mjs/src/button/Base.mjs';
-import MainContainerController from './MainContainerController.mjs';
+import mainContainerController from './mainContainerController.mjs';
 import Toolbar from 'neo.mjs/src/container/Toolbar.mjs';
 import Viewport from 'neo.mjs/src/container/Viewport.mjs';
 
 /**
- * @class SharedDialog2.view.MainContainer
+ * @class win11React.src.containers.background.MainContainer
  * @extends Neo.container.Viewport
  */
-class MainContainer extends Viewport {
+class mainContainer extends Viewport {
   static getConfig() {
     return {
-      className: 'SharedDialog2.view.MainContainer',
+      className: 'win11React.src.containers.background.mainContainer',
       autoMount: true,
-      controller: MainContainerController,
+      controller: mainContainerController,
       layout: { ntype: 'vbox', align: 'stretch' },
       style: { padding: '20px' },
 
@@ -45,6 +45,6 @@ class MainContainer extends Viewport {
   }
 }
 
-Neo.applyClassConfig(MainContainer);
+Neo.applyClassConfig(mainContainer);
 
-export { MainContainer as default };
+export { mainContainer as default };

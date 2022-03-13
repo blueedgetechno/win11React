@@ -1,18 +1,17 @@
 import ComponentController from 'neo.mjs/src/controller/Component.mjs';
-import { Component } from 'react';
 
 /**
- * @class SharedDialog2.view.MainContainerController
+ * @class win11React.src.containers.background.mainContainerController
  * @extends Neo.controller.Component
  */
-class MainContainerController extends ComponentController {
+class mainContainerController extends ComponentController {
   static getConfig() {
     return {
       /**
-       * @member { String } className='SharedDialog2.view.MainContainerController'
+       * @member { String } className='win11React.src.containers.background.mainContainerController'
        * @protected
        */
-      className: 'SharedDialog2.view.MainContainerController'
+      className: 'win11React.src.containers.background.mainContainerController'
     }
   }
 
@@ -234,6 +233,6 @@ class MainContainerController extends ComponentController {
   }
 }
 
-Neo.applyClassConfig(MainContainerController);
+Neo.applyClassConfig(mainContainerController);
 
-export { MainContainerController as default };
+export { mainContainerController as default };
