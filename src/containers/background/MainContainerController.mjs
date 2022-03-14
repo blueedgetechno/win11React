@@ -1,17 +1,17 @@
 import ComponentController from 'neo.mjs/src/controller/Component.mjs';
 
 /**
- * @class win11React.src.containers.background.mainContainerController
+ * @class win11React.src.containers.background.MainContainerController
  * @extends Neo.controller.Component
  */
 class mainContainerController extends ComponentController {
   static getConfig() {
     return {
       /**
-       * @member { String } className='win11React.src.containers.background.mainContainerController'
+       * @member { String } className='win11React.src.containers.background.MainContainerController'
        * @protected
        */
-      className: 'win11React.src.containers.background.mainContainerController'
+      className: 'win11React.src.containers.background.MainContainerController'
     }
   }
 

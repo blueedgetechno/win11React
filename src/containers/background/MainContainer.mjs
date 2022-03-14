@@ -1,5 +1,5 @@
 import Button from 'neo.mjs/src/button/Base.mjs';
-import mainContainerController from './mainContainerController.mjs';
+import MainContainerController from './MainContainerController.mjs';
 import Toolbar from 'neo.mjs/src/container/Toolbar.mjs';
 import Viewport from 'neo.mjs/src/container/Viewport.mjs';
 
@@ -10,7 +10,7 @@ import Viewport from 'neo.mjs/src/container/Viewport.mjs';
 class mainContainer extends Viewport {
   static getConfig() {
     return {
-      className: 'win11React.src.containers.background.mainContainer',
+      className: 'win11React.src.containers.background.MainContainer',
       autoMount: true,
       controller: mainContainerController,
       layout: { ntype: 'vbox', align: 'stretch' },
