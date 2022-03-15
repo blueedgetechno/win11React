@@ -5,7 +5,7 @@ import {Icon, Image, ToolBar, LazyComponent} from '../../../utils/general';
 export const EdgeMenu = ()=>{
   const apps = useSelector(state => state.apps)
   const wnapp = useSelector(state => state.apps.edge)
-  const [url, setUrl] = useState("https://bing.com")
+  const [url, setUrl] = useState("https://www.google.com/?igu=1")
   const [ierror, setErr] = useState(true)
   const [isTyping, setTyping] = useState(false)
   const [hist, setHist] = useState(["https://bing.com","https://bing.com"])
