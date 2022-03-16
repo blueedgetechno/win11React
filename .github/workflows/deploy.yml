@@ -55,6 +55,6 @@ jobs:
       with:
         github_token: ${{ secrets.BOT }}
         cname: win11.blueedge.me
-        publish_dir: ./
+        publish_dir: ./build
         
 
