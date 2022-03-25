@@ -323,7 +323,7 @@ const FrontPage = (props)=>{
 
   return (
     <div className="pagecont w-full absolute top-0">
-      <Image id="sthome" className="frontPage w-full" src="img/store/lucacover.jpg" ext/>
+      <Image id="sthome" className="frontPage w-full" src="img/store/nowayhome.jpg" ext/>
       <div className="panelName absolute m-6 text-xl top-0">Home</div>
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
