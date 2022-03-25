@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../Battery";
+import WiFi from "../WiFi";
 import "./taskbar.scss";
 
 const Taskbar = () => {
@@ -17,6 +18,8 @@ const Taskbar = () => {
     return tmpApps;
   });
   const [batterylevel, setbatterylevel] = useState(100);
+  const [wifilevel, setwifilevel] = useState(3);
+
   const dispatch = useDispatch();
 
   const showPrev = (event) => {
@@ -80,6 +83,37 @@ const Taskbar = () => {
 
     if (window.BatteryManager) {
       getBatteryDetails();
+    }
+
+    return () => {};
+  }, []);
+
+  const changewifistatus = (wifi) => {
+    let level = wifi.level * 3 || 3;
+
+    if (!wifi.connection) {
+      setwifilevel(-level);
+    } else {
+      setwifilevel(level);
+    }
+  }
+
+  useEffect(() => {
+    async function getWiFiDetails() {
+      let wifi = await NetworkInformation();
+      changewifistatus(wifi);
+
+      wifi.onlevelchange = () => {
+        changewifistatus(wifi);
+      }
+
+      wifi.onconnectionchange = () => {
+        changewifistatus (wifi);
+      }
+    }
+
+    if (window.NetworkInformation) {
+      getWiFiDetails();
     }
 
     return () => {};
