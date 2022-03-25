@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { i18nextPlugin } from 'translation-check';
+import { showTranslations } from 'translation-check';
 
 const fallbackLng = ['en'];
 const availableLanguages = ['en', 'fr'];
@@ -20,6 +22,8 @@ i18n
     debug: false,
 
     whitelist: availableLanguages,
+    
+    showTranslations(i18next),
 
     interpolation: {
       escapeValue: false, // no need for react. it escapes by default
