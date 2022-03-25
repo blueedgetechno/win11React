@@ -36,6 +36,7 @@
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
     "save": "^2.4.0",
+    "translation-check": "^1.0.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
