@@ -33,7 +33,7 @@ jobs:
       run: npm ci
     
     - name: Build project
-      run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} npm run build
+      run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} npm run build
 
     - name: Upload production-ready build files
       uses: actions/upload-artifact@v2
@@ -81,7 +81,7 @@ jobs:
         message: |
             ✔️ Deploy Preview Updated! 
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
-            😎 Browse the preview: https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} !
+            😎 Browse the preview: https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} !
             🔨 If you experience an SSL issue then wait 2 minutes and try again.
                Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
         allow-repeats: true
