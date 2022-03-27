@@ -12,7 +12,7 @@ export const Background = () => {
     <div
       className="background"
       style={{
-        backgroundImage: `url(/img/wallpaper/${wall.src})`,
+        backgroundImage: `url(%PUBLIC_URL%/img/wallpaper/${wall.src})`,
       }}
     ></div>
   );
@@ -50,7 +50,7 @@ export const BootScreen = (props) => {
   return (
     <div className="bootscreen">
       <div className={blackout ? "hidden" : ""}>
-        <Image src="asset/bootlogo" w={180} />
+        <Image src="%PUBLIC_URL%/asset/bootlogo" w={180} />
         <div className="mt-48" id="loader">
           <svg className="progressRing" height={48} width={48} viewBox="0 0 16 16">
             <circle cx="8px" cy="8px" r="7px"></circle>
@@ -106,7 +106,7 @@ export const LockScreen = (props) => {
       className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
-        backgroundImage: `url(${`/img/wallpaper/lock.jpg`})`,
+        backgroundImage: `url(${`/%PUBLIC_URL%/img/wallpaper/lock.jpg`})`,
       }}
       onClick={action}
       data-action="splash"
