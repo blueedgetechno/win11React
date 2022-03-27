@@ -22,7 +22,7 @@ String.prototype.count = function(c) {
 
 export const Icon = (props)=>{
   const dispatch = useDispatch();
-  var src = `/img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
+  var src = `img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
   if(props.ext!=null || (props.src && props.src.includes("http"))){
     src = props.src
   }
@@ -147,7 +147,7 @@ export const Icon = (props)=>{
 
 export const Image = (props)=>{
   const dispatch = useDispatch();
-  var src = `/img/${(props.dir?props.dir+"/":"")+props.src}.png`;
+  var src = `img/${(props.dir?props.dir+"/":"")+props.src}.png`;
   if(props.ext!=null){
     src = props.src
   }
