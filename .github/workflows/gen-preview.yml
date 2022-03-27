@@ -2,7 +2,7 @@ name: Generate Preview
 
 on:
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened]
 
  
 jobs:
