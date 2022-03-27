@@ -12,7 +12,7 @@ export const Background = () => {
     <div
       className="background"
       style={{
-        backgroundImage: `url(/img/wallpaper/${wall.src})`,
+        backgroundImage: `url(img/wallpaper/${wall.src})`,
       }}
     ></div>
   );
@@ -106,7 +106,7 @@ export const LockScreen = (props) => {
       className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
-        backgroundImage: `url(${`/img/wallpaper/lock.jpg`})`,
+        backgroundImage: `url(${`/%PUBLIC_URL%/img/wallpaper/lock.jpg`})`,
       }}
       onClick={action}
       data-action="splash"
