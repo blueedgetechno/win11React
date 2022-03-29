@@ -51,6 +51,8 @@ jobs:
       run: |
         npm run crowdin upload
         npm run crowdin download
+      env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}  
 
     - name: Build project
       run: CI=false npm run build
