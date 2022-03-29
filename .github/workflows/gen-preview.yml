@@ -72,6 +72,8 @@ jobs:
     - name: Get translations
       run: |
         npm run crowdin download  
+      env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     
     - name: Build project
       run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} npm run build
