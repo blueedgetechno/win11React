@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
+import './i18nextConf';
 import {
   useSelector,
   useDispatch
