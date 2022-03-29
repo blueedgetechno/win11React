@@ -32,6 +32,10 @@ jobs:
     - name: Install NPM packages
       run: npm ci
     
+    - name: Get translations
+      run: |
+        npm run crowdin download
+    
     - name: Build project
       run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} npm run build
 

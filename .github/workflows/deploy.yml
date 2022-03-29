@@ -46,6 +46,11 @@ jobs:
 
     - name: Install dependencies
       run: CI=false npm install
+      
+    - name: Get translations
+      run: |
+        npm run crowdin upload
+        npm run crowdin download
 
     - name: Build project
       run: CI=false npm run build
