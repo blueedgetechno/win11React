@@ -42,7 +42,7 @@ export const MicroStore = ()=>{
   const [storeapps, setApps] = useState(storedata)
   const [fetchState, setFetch] = useState(0)
   const dispatch = useDispatch()
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
   const clickDispatch = (event)=>{
     var action = {
@@ -213,6 +213,7 @@ const DetailPage = ({app})=>{
   const stars = geneStar(app)
   const reviews = geneStar(app,1)
   const dispatch = useDispatch()
+  const { t, i18n } = useTranslation()
 
   const download = ()=>{
     setDown(1)
@@ -322,6 +323,7 @@ const FrontPage = (props)=>{
   const apprib = useSelector(state => state.globals.apprib)
   const gamerib = useSelector(state => state.globals.gamerib)
   const movrib = useSelector(state => state.globals.movrib)
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="pagecont w-full absolute top-0">
