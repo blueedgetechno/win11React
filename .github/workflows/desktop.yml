@@ -33,7 +33,9 @@ jobs:
       run: |
         npm ci
         npm run crowdin download
-        
+      env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      
     - name: install app dependencies and build it
       run: npm run build
     - uses: tauri-apps/tauri-action@v0
