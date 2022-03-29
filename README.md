@@ -5,6 +5,7 @@
 [![Join](https://img.shields.io/discord/868499076432408627.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/9jtcVZ3tWm)
 [![Build](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/blueedgetechno/win11React/actions/workflows/deploy.yml)
 ![Uptime](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/win11react/status/master/api/win11-react/uptime.json)
+[![translate](https://badges.crowdin.net/win11react/localized.svg)](https://translate.andrewstech.me/)
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/blueedgetechno)
 

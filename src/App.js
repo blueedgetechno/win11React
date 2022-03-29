@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Suspense} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
+import './i18nextConf';
 import {
   useSelector,
   useDispatch
@@ -132,6 +133,7 @@ function App() {
 
   return (
     <div className="App">
+    <Suspense fallback={<h1>Loading...</h1>}>  
       <ErrorBoundary FallbackComponent={ErrorFallback}>
       {!wall.booted?<BootScreen dir={wall.dir}/>:null}
       {wall.locked?<LockScreen dir={wall.dir}/>:null}
@@ -159,6 +161,7 @@ function App() {
         <ActMenu/>  
       </div>
      </ErrorBoundary>
+    </Suspense>
     </div>
   );
 }

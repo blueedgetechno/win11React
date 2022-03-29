@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
+import { useTranslation } from 'react-i18next';
+
 
 export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
@@ -8,6 +10,7 @@ export const AboutWin = () => {
   const [open, setOpen] = useState(true && process.env.REACT_APP_ENV != "development");
   const [timer, setTimer] = useState(localStorage.getItem("closeAbout") == "true" ? 0 : 5);
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   const action = () => {
     setOpen(false);
@@ -27,7 +30,7 @@ export const AboutWin = () => {
     <div className="aboutApp floatTab dpShad">
       <div className="content p-6">
         <div className="text-xl font-semibold">About</div>
-        <p>win11React is an open source project made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS, and JavaScript.</p>
+        <p>{t('about.opensource')}</p>
         <p>
           This project is licensed under&nbsp;
           <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">
@@ -42,7 +45,7 @@ export const AboutWin = () => {
           </a>
         </p>
 
-        <p>This project is not in anyway affiliated with Microsoft and should not be confused with Microsoft's Operating System or Products.</p>
+        <p>{t('about.notmicrosoft')}</p>
         <p>
           This is also not&nbsp;
           <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
