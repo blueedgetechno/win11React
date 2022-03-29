@@ -29,6 +29,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y webkit2gtk-4.0
         
+    - name: Get translations
+      run: |
+        npm run crowdin download
+        
     - name: install app dependencies and build it
       run: npm ci && npm run build
     - uses: tauri-apps/tauri-action@v0
