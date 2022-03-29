@@ -29,12 +29,12 @@ export const AboutWin = () => {
   return open || abOpen ? (
     <div className="aboutApp floatTab dpShad">
       <div className="content p-6">
-        <div className="text-xl font-semibold">About</div>
+        <div className="text-xl font-semibold">{t('about.title')}</div>
         <p>{t('about.opensource')}</p>
         <p>
-          This project is licensed under&nbsp;
+          {t('about.licensed')}&nbsp;
           <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">
-            Creative Commons
+            {t('about.Creative-Commons')}
           </a>
           .
         </p>
@@ -47,17 +47,17 @@ export const AboutWin = () => {
 
         <p>{t('about.notmicrosoft')}</p>
         <p>
-          This is also not&nbsp;
+          {t('about.alsonot')}&nbsp;
           <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
             Windows 365 cloud PC
           </a>
           .
         </p>
-        <p>Microsoft, Windows and Other demonstrated Products in this project are trademarks of the Microsoft group of companies.</p>
+        <p>{t('about.microsoftcopywrite')}.</p>
       </div>
       <div className="okbtn px-6 py-4">
         <div data-allow={timer == 0} onClick={timer == 0 && action}>
-          Ok, I understand {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
+          {t('about.understand')} {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
         </div>
       </div>
     </div>
