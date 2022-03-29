@@ -14,7 +14,10 @@ i18n
   .use(i18nextPlugin)
   .init({
     fallbackLng, // fallback language is english.
-
+    
+    backend: {
+        loadPath: "public/assets/locals/{{ns}}/{{lng}}.json",
+    },  
     detection: {
       checkWhitelist: true, // options for language detection
     },
