@@ -16,7 +16,7 @@ i18n
     fallbackLng, // fallback language is english.
     
     backend: {
-        loadPath: "public/assets/locals/{{ns}}/{{lng}}.json",
+        loadPath: "locales/{{lng}}.json",
     },  
     detection: {
       checkWhitelist: true, // options for language detection
