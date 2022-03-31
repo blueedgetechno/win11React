@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
@@ -17,9 +17,7 @@ Sentry.init({
 });
 
 ReactDOM.render(
-  <Suspense fallback={<h1>Loading...</h1>}>
   <Provider store={store}>
     <App />
   </Provider>,
-  </Suspense>,
   document.getElementById('root'));
