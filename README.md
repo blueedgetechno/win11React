@@ -46,6 +46,7 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 - [x] Drag and Resize windows
 - [x] Startup and Lock screen
 - [x] Themes and Background
+- [x] Multilang Support
 
 📑 [suggest more](https://github.com/blueedgetechno/win11React/issues/new/choose)
 
