@@ -27,19 +27,22 @@ var apps = [{
   name: 'Settings',
   icon: 'settings',
   type: 'app',
-  action: 'SETTINGS'
+  action: 'EXTERNAL',
+  payload: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 },
 {
   name: 'File Explorer',
   icon: 'explorer',
   type: 'app',
-  action: 'EXPLORER'
+  action: 'EXTERNAL',
+  payload: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 },
 {
   name: 'Browser',
   icon: 'edge',
   type: 'app',
-  action: 'MSEDGE'
+  action: 'EXTERNAL',
+  payload: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 },
 {
   name: 'Buy me a coffee',
@@ -52,7 +55,8 @@ var apps = [{
   name: 'Store',
   icon: 'store',
   type: 'app',
-  action: 'WNSTORE'
+  action: 'EXTERNAL',
+  payload: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 },
 {
   name: 'Recycle Bin',
