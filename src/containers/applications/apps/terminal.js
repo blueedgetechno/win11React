@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
@@ -159,6 +160,9 @@ export const WnTerminal = ()=>{
       setWntitle(arg.length?arg:"Terminal");
     }else if (type=="hostname") {
       tmpStack.push("blue");
+    }else if (type=="lang-test") {
+      i18next.changeLanguage("fr-FR");
+      tmpStack.push("French");  
     }else if (type=="blue") {
       tmpStack.push("blueedgetechno");
     }else if (type=="dev") {
