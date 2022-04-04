@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import * from 'react-i18next';
+import 'react-i18next';
 
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
