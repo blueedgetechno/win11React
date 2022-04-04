@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import 'react-i18next';
+import i18next from 'i18next';
 
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
@@ -8,7 +8,6 @@ import dirs from './assets/dir.json';
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.terminal);
-  const { t, i18n } = useTranslation();
   const [stack, setStack] = useState([
     "OS [Version 10.0.22000.51]",
     ""
