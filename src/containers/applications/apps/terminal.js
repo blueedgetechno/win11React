@@ -8,6 +8,7 @@ import dirs from './assets/dir.json';
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.terminal);
+  const { t, i18n } = useTranslation();
   const [stack, setStack] = useState([
     "OS [Version 10.0.22000.51]",
     ""
