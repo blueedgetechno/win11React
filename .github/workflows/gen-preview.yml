@@ -124,7 +124,6 @@ jobs:
         message: |
             ✔️ Deploy Preview for win11blue ready! 
             😎 Browse the preview: https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} !
-            🔨 If you experience an SSL issue then wait 2 minutes and try again.
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
                Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
         allow-repeats: true
