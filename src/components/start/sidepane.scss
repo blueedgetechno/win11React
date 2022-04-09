@@ -197,7 +197,6 @@ body[data-theme="dark"] .sidePane {
   max-height: 500px;
 
   &.collapse {
-    transform: translateY(calc(100% - 50px));
     max-height: 50px;
   }
 
