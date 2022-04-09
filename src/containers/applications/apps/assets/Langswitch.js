@@ -1,14 +1,14 @@
 import React from "react";
 import i18next from 'i18next';
 
-function langswitch() {
+function LangSwitch() {
 
   return (
     <div className="langSwitcher">
       <select
         value={i18n.language}
         onChange={(e) =>
-          i18n.changeLanguage(e.target.value)
+          i18next.changeLanguage(e.target.value)
         }
       >
         <option value="en">English</option>
@@ -18,4 +18,4 @@ function langswitch() {
   );
 }
 
-export default langswitch;
+export default LangSwitch;
