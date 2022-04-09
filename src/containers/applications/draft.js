@@ -4,7 +4,10 @@ import {ToolBar} from '../../utils/general';
 
 export const IFrame = (props)=>{
   const wnapp = useSelector(state => state.apps[props.icon]);
-  if (!wnapp) return null;
+  if (!wnapp) {
+    console.warn("wnapp was undefined");
+    return null;
+  }
   var data = wnapp.data;
 
   return wnapp.hide?null:(
@@ -30,7 +33,10 @@ export const IFrame = (props)=>{
 
 export const IFramePLUS = (props)=>{
   const wnapp = useSelector(state => state.apps[props.icon]);
-  if (!wnapp) return null;
+  if (!wnapp) {
+    console.warn("wnapp was undefined");
+    return null;
+  }
   var data = wnapp.data;
 
   return wnapp.hide?null:(
