@@ -4,4 +4,4 @@ preserve_hierarchy: true
 files:
   # JSON translation files
   - source: /public/locales/en/translate.json
-    translation: /public/locales/%locale%/%original_file_name%
+    translation: /public/locales/%two_letters_code%/%original_file_name%
