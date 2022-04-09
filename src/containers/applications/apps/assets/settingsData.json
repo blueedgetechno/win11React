@@ -1,5 +1,6 @@
 {
-  "System": [{
+  "System": [
+    {
       "type": "sysTop"
     },
     {
@@ -93,7 +94,8 @@
       "icon": ""
     }
   ],
-  "Bluetooth & devices": [{
+  "Bluetooth & devices": [
+    {
       "type": "tile square",
       "name": "Add device",
       "icon": ""
@@ -166,7 +168,8 @@
       "icon": ""
     }
   ],
-  "Network & internet": [{
+  "Network & internet": [
+    {
       "type": "netTop"
     },
     {
@@ -212,7 +215,8 @@
       "icon": ""
     }
   ],
-  "Personalisation": [{
+  "Personalisation": [
+    {
       "type": "personaliseTop"
     },
     {
@@ -270,7 +274,8 @@
       "icon": ""
     }
   ],
-  "Apps": [{
+  "Apps": [
+    {
       "type": "tile",
       "name": "Apps & features",
       "desc": "Installed apps, app execution aliases",
@@ -313,7 +318,8 @@
       "icon": ""
     }
   ],
-  "Accounts": [{
+  "Accounts": [
+    {
       "type": "accountsTop"
     },
     {
@@ -359,7 +365,8 @@
       "icon": ""
     }
   ],
-  "Time & language": [{
+  "Time & language": [
+    {
       "type": "tile",
       "name": "Date & time",
       "desc": "Time zones, automatic clock settings, calendar display",
@@ -382,9 +389,13 @@
       "name": "Speech",
       "desc": "Speech language, speech recognition microphone setup, voices",
       "icon": ""
+    },
+    {
+      "type": "langSwitcher"
     }
   ],
-  "Gaming": [{
+  "Gaming": [
+    {
       "type": "tile",
       "name": "Xbox Game Bar",
       "desc": "Controller and keyboard shortcuts",
@@ -403,7 +414,8 @@
       "icon": ""
     }
   ],
-  "Accessibility": [{
+  "Accessibility": [
+    {
       "type": "subHeading",
       "name": "Vision"
     },
@@ -500,7 +512,8 @@
       "icon": ""
     }
   ],
-  "Privacy & security": [{
+  "Privacy & security": [
+    {
       "type": "subHeading",
       "name": "Security"
     },
@@ -698,7 +711,8 @@
       "icon": ""
     }
   ],
-  "Windows Update": [{
+  "Windows Update": [
+    {
       "type": "updateTop"
     },
     {

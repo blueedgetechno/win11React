@@ -288,6 +288,22 @@
       }
     }
 
+    .langSwitcherTile {
+      &::after {
+        display: none;
+      }
+
+      select {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgb(238, 236, 235);
+        border-bottom: 1px solid rgb(212, 211, 210);
+        color: rgb(var(--txt_clr-rgb));
+        height: 32px;
+        padding-left: 8px;
+        border-radius: 6px;
+      }
+    }
+
     .updateTop {
       display: flex;
       width: min(100%, 1000px);
@@ -362,6 +378,10 @@
           transform: scaleY(2);
           position: absolute;
           right: 16px;
+        }
+
+        .tile_content {
+          flex-grow: 1;
         }
         .tile_desc {
           color: rgb(var(--txt_clr-rgb) / 66%);
@@ -470,6 +490,15 @@ body[data-theme="dark"] .settingsApp .restWindow {
 
     &:hover {
       background: rgb(255 255 255 / 10%);
+    }
+    select {
+      background: rgb(255 255 255 / 7%);
+      border: 1px solid rgba(238, 236, 235, 0.071);
+      border-bottom: 1px solid rgba(212, 211, 210, 0.051);
+
+      option {
+        background: var(--bg);
+      }
     }
   }
 }
