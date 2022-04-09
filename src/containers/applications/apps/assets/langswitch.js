@@ -1,8 +1,7 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import i18next from 'i18next';
 
 function langswitch() {
-  const { i18n } = useTranslation();
 
   return (
     <div className="langSwitcher">
