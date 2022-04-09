@@ -195,6 +195,11 @@ body[data-theme="dark"] .sidePane {
   z-index: 9999;
   border-radius: 8px;
 
+  &.collapse {
+    transform: translateY(calc(100% - 50px));
+    height: 50px;
+  }
+
   &[data-hide="true"] {
     transform: translateX(120%);
     animation: overflow-hider 0s ease-in-out 0.2s forwards;
@@ -206,10 +211,15 @@ body[data-theme="dark"] .sidePane {
   }
 
   .topBar {
-    height: 45px;
+    height: 50px;
     border-bottom: 1px solid var(--comp-txt);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    .collapser {
+      background: var(--bg2);
+    }
   }
 }
 body[data-theme="dark"] .calnpane {
