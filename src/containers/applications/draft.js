@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Icon, Image, ToolBar} from '../../utils/general';
+import {ToolBar} from '../../utils/general';
 
 export const IFrame = (props)=>{
-  const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps[props.icon]);
-  const dispatch = useDispatch();
+  if (!wnapp) return null;
   var data = wnapp.data;
 
   return wnapp.hide?null:(
@@ -21,7 +20,7 @@ export const IFrame = (props)=>{
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
             <iframe src={data.url} className="w-full h-full"
-              frameborder="0"></iframe>
+              frameborder="0" title='.'></iframe>
           </div>
         </div>
       </div>
@@ -30,14 +29,13 @@ export const IFrame = (props)=>{
 }
 
 export const IFramePLUS = (props)=>{
-  const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps[props.icon]);
-  const dispatch = useDispatch();
+  if (!wnapp) return null;
   var data = wnapp.data;
 
   return wnapp.hide?null:(
     <div data-size={wnapp.size} className={"floatTab dpShad " +
-      (data.invert!=true?"lightWindow":"darkWindow")
+      (data.invert!==true?"lightWindow":"darkWindow")
     } data-max={wnapp.max} style={{
         ...(wnapp.size=="cstm"?wnapp.dim:null),
         zIndex: wnapp.z
@@ -48,7 +46,7 @@ export const IFramePLUS = (props)=>{
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
             <iframe src={data.url} allow="camera;microphone" className="w-full h-full"
-              frameborder="0"></iframe>
+              frameborder="0" title='.'></iframe>
           </div>
         </div>
       </div>
