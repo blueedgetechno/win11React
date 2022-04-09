@@ -5,7 +5,7 @@ function langswitch() {
   const { i18n } = useTranslation();
 
   return (
-    <div className="select">
+    <div className="langSwitcher">
       <select
         value={i18n.language}
         onChange={(e) =>
