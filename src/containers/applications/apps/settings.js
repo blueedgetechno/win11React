@@ -262,7 +262,7 @@ export const Settings = () => {
                                   Explorer will appear in this language
                                 </p>
                               </div>
-                              <LanguageSwitcher />
+                              <langswitch />
                             </div>
                           );
                         case "updateTop":
