@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import wallReducer from "../../../reducers/wallpaper";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import "./assets/settings.scss";
+import langswitch from "./assets/langswitch";
 
 import data from "./assets/settingsData.json";
 
@@ -261,11 +262,7 @@ export const Settings = () => {
                                   Explorer will appear in this language
                                 </p>
                               </div>
-                              <select className="langSwitcher">
-                                <option>Hindi</option>
-                                <option>English</option>
-                                <option>French</option>
-                              </select>
+                              <LanguageSwitcher />
                             </div>
                           );
                         case "updateTop":
