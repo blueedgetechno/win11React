@@ -194,10 +194,11 @@ body[data-theme="dark"] .sidePane {
   transition: cubic-bezier(0.62, 0, 0.32, 1) 250ms;
   z-index: 9999;
   border-radius: 8px;
+  max-height: 500px;
 
   &.collapse {
     transform: translateY(calc(100% - 50px));
-    height: 50px;
+    max-height: 50px;
   }
 
   &[data-hide="true"] {
