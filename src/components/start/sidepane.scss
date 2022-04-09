@@ -194,6 +194,11 @@ body[data-theme="dark"] .sidePane {
   transition: cubic-bezier(0.62, 0, 0.32, 1) 250ms;
   z-index: 9999;
   border-radius: 8px;
+  max-height: 500px;
+
+  &.collapse {
+    max-height: 50px;
+  }
 
   &[data-hide="true"] {
     transform: translateX(120%);
@@ -206,10 +211,15 @@ body[data-theme="dark"] .sidePane {
   }
 
   .topBar {
-    height: 45px;
+    height: 50px;
     border-bottom: 1px solid var(--comp-txt);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    .collapser {
+      background: var(--bg2);
+    }
   }
 }
 body[data-theme="dark"] .calnpane {
