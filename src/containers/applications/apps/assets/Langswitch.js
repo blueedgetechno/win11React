@@ -6,7 +6,7 @@ function LangSwitch() {
   return (
     <div className="langSwitcher">
       <select
-        value={i18n.language}
+        value={i18next.language}
         onChange={(e) =>
           i18next.changeLanguage(e.target.value)
         }
