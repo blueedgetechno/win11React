@@ -111,6 +111,7 @@ export const Settings = () => {
                   </div>
                 );
               })}
+              <div className="marker"></div>
             </div>
           </nav>
 
