@@ -366,7 +366,7 @@ const FrontPage = (props)=>{
                   <Icon className={stars>4?"bluestar":""} fafa="faStar" width={6}/>
                   <div className="text-xss">{1+x.charCodeAt(3)%5}k</div>
                 </div>
-                <div className="text-xss mt-8">{x.charCodeAt(4)%2?"{t('store.free')}":"{t('store.owned')}"}</div>
+                <div className="text-xss mt-8">{x.charCodeAt(4)%2?{t('store.free')}:{t('store.owned')}}</div>
               </div>
             )
           })}
