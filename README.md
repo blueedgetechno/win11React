@@ -19,6 +19,13 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
 [App Store](https://github.com/win11react/store)
 
+**Docs SITE**
+
+https://win11react-docs.andrewstech.me/
+
+work in progress 
+
+------------
  #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
 ![home](./public/img/home.jpg)
