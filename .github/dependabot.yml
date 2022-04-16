@@ -11,6 +11,7 @@ updates:
       interval: "daily"
     assignees:
       - "andrewstech"
+    open-pull-requests-limit: 10   
      
 
 # Dummy commit needed to enable Dependabot
