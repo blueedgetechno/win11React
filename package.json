@@ -12,7 +12,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@sentry/react": "^6.18.2",
-    "@sentry/tracing": "^6.18.2",
+    "@sentry/tracing": "^6.19.6",
     "@tauri-apps/api": "^1.0.0-beta.8",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -25,20 +25,20 @@
     "i18next-http-backend": "^1.4.0",
     "i18next-xhr-backend": "^3.2.2",
     "node-sass": "^7.0.0",
-    "react": "^17.0.2",
+    "react": "^18.0.0",
     "react-canvas-draw": "^1.1.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.0.0",
     "react-error-boundary": "^3.1.4",
     "react-i18next": "^11.16.2",
     "react-player": "^2.9.0",
-    "react-redux": "^7.2.4",
+    "react-redux": "^8.0.0",
     "react-scripts": "^5.0.0",
     "redux": "^4.1.0",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
     "save": "^2.4.0",
     "translation-check": "^1.0.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -67,6 +67,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0-rc.2"
+    "@tauri-apps/cli": "1.0.0-rc.8"
   }
 }
