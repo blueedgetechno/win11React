@@ -29,7 +29,7 @@
     "react-canvas-draw": "^1.1.1",
     "react-dom": "^18.0.0",
     "react-error-boundary": "^3.1.4",
-    "react-i18next": "^11.16.2",
+    "react-i18next": "^11.16.6",
     "react-player": "^2.9.0",
     "react-redux": "^8.0.0",
     "react-scripts": "^5.0.0",
