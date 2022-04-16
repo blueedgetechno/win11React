@@ -67,6 +67,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0-rc.2"
+    "@tauri-apps/cli": "1.0.0-rc.8"
   }
 }
