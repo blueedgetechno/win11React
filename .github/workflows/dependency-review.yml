@@ -5,7 +5,7 @@
 # Source repository: https://github.com/actions/dependency-review-action
 # Public documentation: https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement
 name: 'Dependency Review'
-on: [pull_request_target]
+on: [pull_request]
 
 permissions:
   contents: read
@@ -18,5 +18,3 @@ jobs:
         uses: actions/checkout@v3
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v1
-        with:
-          repo-token: ${{ secrets.BOT }}
