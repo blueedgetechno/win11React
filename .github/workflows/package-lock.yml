@@ -22,5 +22,5 @@ jobs:
     - name: build new one
       run: CI=false npm install
       
-    - naem: git add
+    - name: git add
       run: git add * && git commit -m "Updating package-lock file" && git push
