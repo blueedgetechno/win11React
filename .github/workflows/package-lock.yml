@@ -24,5 +24,10 @@ jobs:
       env:
           CI: false
       
-    - name: git add
-      run: git add * && git commit -m "Updating package-lock file" && git push
+    - name: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.BOT }}
+        commit-message: Update package-lock
+        title: Update package-lock
+        body: Update package-lock  
