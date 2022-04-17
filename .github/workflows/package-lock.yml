@@ -1,0 +1,26 @@
+name: "Re generate the package-lock file"
+on:
+  workflow_dispatch:
+  
+jobs:
+  rebuild:
+    name: reBuild
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '16.6.1'
+        
+    - name: remove old one
+      run: rm package-lock.json
+      
+    - name: build new one
+      run: CI=false npm install
+      
+    - naem: git add
+      run: git add * && git commit -m "Updating package-lock file" && git push
