@@ -20,7 +20,9 @@ jobs:
       run: rm package-lock.json
       
     - name: build new one
-      run: CI=false npm install
+      run:  npm install
+      env:
+          CI: false
       
     - name: git add
       run: git add * && git commit -m "Updating package-lock file" && git push
