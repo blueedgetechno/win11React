@@ -30,7 +30,7 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} npm run build
+        run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} npm run build
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
@@ -53,7 +53,7 @@ jobs:
         with:
           message: |
             ✔️ Deploy Preview for Ready!
-            😎 Browse the preview: https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} !
+            😎 Browse the preview: https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} !
             🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
                 Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
           allow-repeats: true
