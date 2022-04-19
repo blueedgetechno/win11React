@@ -44,7 +44,7 @@ jobs:
         run: sleep 60s
         shell: bash
 
-      - name: pr
+      - name: comment Preview Ready
         uses: mshick/add-pr-comment@v1
         env:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
