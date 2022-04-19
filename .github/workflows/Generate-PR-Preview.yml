@@ -41,9 +41,8 @@ jobs:
           external_repository: win11bot/preview
 
       - name: Sleep for 60 seconds to make sure page updated
-        uses: jakejarvis/wait-action@master
-        with:
-          time: "60s"
+        run: sleep 60s
+        shell: bash
 
       - name: pr
         uses: mshick/add-pr-comment@v1
