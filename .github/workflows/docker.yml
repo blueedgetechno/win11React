@@ -19,9 +19,8 @@ jobs:
 
     steps:
       - name: Sleep for 120 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '350s'
+        run: sleep 120s
+        shell: bash
 # Allows other actions to build project before its added to docker
    
       - name: Checkout repository
