@@ -57,13 +57,8 @@ jobs:
                 Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
           allow-repeats: true
 
-  run-if-fail:
-    if: ${{ always() && (needs.Build.result=='failure') }}
-    needs: [Build]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: mshick/add-pr-comment@v1
+      - if: ${{ failure() }}
+        uses: mshick/add-pr-comment@v1
         with:
           message: ❌ DEPLOY PREVIEW HAS FAILED
           repo-token: ${{ secrets.BOT }}
