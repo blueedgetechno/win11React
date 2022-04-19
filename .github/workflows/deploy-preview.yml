@@ -1,26 +1,15 @@
-name: Generate Preview2
+name: Generate PR Preview
 
 on:
   pull_request_target:
-    types: [synchronize, reopened]
+    types: [opened, reopened, synchronize]
 
- 
 jobs:
-  build:
-    name: Build
+  Build:
     runs-on: ubuntu-latest
-    
-    steps:
-    
-        
-    - uses: actions/checkout@v1
-      # Find the PR associated with this push, if there is one.
-      # This will echo "Your PR is 7", or be skipped if there is no current PR.
-    - run: echo "Your PR is ${PR_NUMBER}"
-      env:
-       PR_NUMBER: ${{ github.event.pull_request.number }}
-    
-    - uses: actions/checkout@v2
+
+    steps:        
+    - uses: actions/checkout@v3
       with:
         ref: "refs/pull/${{ github.event.pull_request.number }}/merge"
     
@@ -36,7 +25,7 @@ jobs:
       run: |
         npm run crowdin download
       env:
-          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}  
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     
     - name: Build project
       run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} npm run build
@@ -85,10 +74,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT }}
       with:
         message: |
-            ✔️ Deploy Preview Updated! 
-            🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
+            ✔️ Deploy Preview for Ready!
             😎 Browse the preview: https://preview.pr.blueedge.me/pr-${{ github.event.pull_request.number }} !
-               Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
+            🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
+                Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
         allow-repeats: true
 
   run-if-fail:
