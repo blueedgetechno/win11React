@@ -11,7 +11,9 @@ updates:
       interval: "daily"
     assignees:
       - "andrewstech"
-    open-pull-requests-limit: 10   
-     
+    open-pull-requests-limit: 10
 
-# Dummy commit needed to enable Dependabot
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
