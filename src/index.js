@@ -9,13 +9,6 @@ import {Provider} from 'react-redux';
 Sentry.init({
   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",
   integrations: [new BrowserTracing()],
-  beforeSend(event, hint) {
-     // Check if it is an exception, and if so, show the report dialog
-     if (event.exception) {
-       Sentry.showReportDialog({ eventId: event.event_id });
-     }
-     return event;
-  },
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
