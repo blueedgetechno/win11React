@@ -11,10 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: win11bot/preview
-
-      - uses: actions/checkout@v3
-        with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
       - uses: actions/setup-node@v3
@@ -45,21 +41,17 @@ jobs:
         shell: bash
 
       - name: comment Preview Ready
-        uses: mshick/add-pr-comment@v1
-        env:
-          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          GITHUB_TOKEN: ${{ secrets.BOT }}
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          message: |
+          body: |
             ✔️ Deploy Preview for Ready!
             😎 Browse the preview: https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} !
-            🔍 Inspect the deploy log: ${{ env.BUILD_URL }}
+            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
                 Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
-          allow-repeats: true
+          issue-number: ${{ github.event.pull_request.number }}
 
       - if: ${{ failure() }}
-        uses: mshick/add-pr-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          message: ❌ DEPLOY PREVIEW HAS FAILED
-          repo-token: ${{ secrets.BOT }}
-          allow-repeats: true
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ❌ Deploy Preview failed
