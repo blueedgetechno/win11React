@@ -3,9 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../utils/general';
 
 export const IFrame = (props)=>{
-  const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps[props.icon]);
-  const dispatch = useDispatch();
+  if (!wnapp) return null;
   var data = wnapp.data;
 
   return wnapp.hide?null:(
