@@ -9,6 +9,8 @@ import {Provider} from 'react-redux';
 Sentry.init({
   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",
   integrations: [new BrowserTracing()],
+  release: process.env.REACT_APP_release,
+  dist: process.env.REACT_APP_Dist,
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
