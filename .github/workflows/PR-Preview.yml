@@ -27,6 +27,9 @@ jobs:
 
       - name: Build project
         run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} npm run build
+        env:
+          REACT_APP_release: win11@12.2
+          REACT_APP_Dist: 43
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
