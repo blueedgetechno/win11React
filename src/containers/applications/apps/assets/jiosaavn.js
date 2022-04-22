@@ -52,7 +52,7 @@ class JioSaavn {
   }
 
   fetchSong(pids) {
-    if (typeof(pids) != "object") pids = [pids];
+    if (typeof(pids) !== "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
         resolve(res[0]);
@@ -61,7 +61,7 @@ class JioSaavn {
   }
 
   fetchSongs(pids) {
-    if (typeof(pids) != "object") pids = [pids];
+    if (typeof(pids) !== "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
         resolve(res);

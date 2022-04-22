@@ -40,7 +40,7 @@ export const Settings = () => {
     var theme_nxt = themechecker[payload.split("/")[0]],
       src = payload;
 
-    if (theme_nxt != theme) {
+    if (theme_nxt !== theme) {
       changeTheme();
     }
 
@@ -56,7 +56,7 @@ export const Settings = () => {
       data-size={wnapp.size}
       data-max={wnapp.max}
       style={{
-        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        ...(wnapp.size === "cstm" ? wnapp.dim : null),
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
