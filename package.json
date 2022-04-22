@@ -15,7 +15,7 @@
     "@sentry/tracing": "^6.19.6",
     "@tauri-apps/api": "^1.0.0-beta.8",
     "@widgetbot/react-embed": "^1.4.1",
-    "axios": "^0.21.4",
+    "axios": "^0.26.1",
     "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.6.16",
     "i18next-browser-languagedetector": "^6.1.4",
