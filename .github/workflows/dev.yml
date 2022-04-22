@@ -30,7 +30,7 @@ jobs:
       run: CI=false REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
 
     - name: Upload production-ready build files
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: production-files
         path: ./build
@@ -43,7 +43,7 @@ jobs:
     
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: production-files
         path: ./build
