@@ -1,10 +1,10 @@
-import React, {Suspense} from 'react';
-import ReactDOM from 'react-dom';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
-import App from './App';
-import store from './reducers';
-import {Provider} from 'react-redux';
+import App from "./App";
+import store from "./reducers";
+import { Provider } from "react-redux";
 
 Sentry.init({
   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",
@@ -16,10 +16,11 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <Suspense fallback={<h1>Loading...</h1>}>
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  </Suspense>,
-  document.getElementById('root'));
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Suspense>
+);
