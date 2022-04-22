@@ -1,9 +1,11 @@
 name: "publish"
 on:
-  workflow_dispatch:
-
+  issues:
+    types:
+      - labeled
 jobs:
   publish-tauri:
+    if: github.event.label.name == 'desktop-release'
     strategy:
       fail-fast: false
       matrix:
@@ -52,7 +54,7 @@ jobs:
       with:
         tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
         releaseName: "Win11inReact v__VERSION__"
-        releaseBody: "See the assets to download this version and install."
+        releaseBody: ${{ github.event.issue.body }}
         releaseDraft: false
         prerelease: false
         
