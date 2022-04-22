@@ -6,8 +6,6 @@ import "./searchpane.scss";
 import "./sidepane.scss";
 import Battery from "../Battery";
 
-import axios from "axios";
-
 import { getTreeValue } from "../../actions";
 import * as Actions from "../../actions";
 
