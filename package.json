@@ -27,7 +27,7 @@
     "react-error-boundary": "^3.1.4",
     "react-i18next": "^11.16.7",
     "react-player": "^2.10.0",
-    "react-redux": "^7.2.8",
+    "react-redux": "^8.0.1",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "sass": "^1.50.1",
