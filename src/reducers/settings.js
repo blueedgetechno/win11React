@@ -71,7 +71,7 @@ const settReducer = (state = defState, action) => {
       tmpState = changeVal(tmpState,action.payload.path,action.payload.value)
       break
     case 'SETTLOAD':
-      tmpState = {... action.payload}
+      tmpState = {...action.payload}
   }
 
   if(changed) localStorage.setItem("setting", JSON.stringify(tmpState))

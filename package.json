@@ -14,17 +14,13 @@
     "@sentry/react": "^6.19.6",
     "@sentry/tracing": "^6.19.6",
     "@tauri-apps/api": "^1.0.0-beta.8",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@widgetbot/react-embed": "^1.4.0",
+    "@widgetbot/react-embed": "^1.4.1",
     "axios": "^0.21.4",
-    "container-query-polyfill": "^0.1.2",
+    "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.6.16",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
     "i18next-xhr-backend": "^3.2.2",
-    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-canvas-draw": "github:win11react/react-canvas-draw",
     "react-dom": "^17.0.2",
@@ -35,10 +31,7 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "sass": "^1.50.1",
-    "sass-loader": "^12.6.0",
-    "save": "^2.5.0",
-    "translation-check": "^1.0.2",
-    "web-vitals": "^1.1.2"
+    "translation-check": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -67,6 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0-rc.2"
+    "@tauri-apps/cli": "1.0.0-rc.8"
   }
 }

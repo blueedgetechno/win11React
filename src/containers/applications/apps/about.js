@@ -33,14 +33,14 @@ export const AboutWin = () => {
         <p>{t('about.opensource')}</p>
         <p>
           {t('about.licensed')}&nbsp;
-          <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE">
+          <a target="_blank" href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE" rel="noreferrer">
             {t('about.Creative-Commons')}
           </a>
           .
         </p>
         <p className="pl-4">
           {t('about.contact')} :&nbsp;
-          <a target="_blank" href="mailto:blueedgetechno@gmail.com">
+          <a target="_blank" href="mailto:blueedgetechno@gmail.com" rel="noreferrer">
             blueedgetechno@gmail.com
           </a>
         </p>
@@ -48,7 +48,7 @@ export const AboutWin = () => {
         <p>{t('about.notmicrosoft')}</p>
         <p>
           {t('about.alsonot')}&nbsp;
-          <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
+          <a target="_blank" href="https://www.microsoft.com/en-in/windows-365" rel="noreferrer">
             Windows 365 cloud PC
           </a>
           .

@@ -173,7 +173,7 @@ const DownPage = ({action, apps})=>{
           onClick={()=>setCatg("game")}>Games</div>
         <div className="absolute right-0 mr-4 text-sm">
           <a href="https://github.com/win11react/store"
-            className="catbtn" target="_blank">Add your own app</a>
+            className="catbtn" target="_blank" rel="noreferrer">Add your own app</a>
         </div>
       </div>
       <div className="appscont mt-8">
@@ -333,7 +333,7 @@ const FrontPage = (props)=>{
         <div className="storeRibbon">
           {ribbon && ribbon.map((x,i)=>{
             return x=="unescape"?(
-              <a key={i} href="https://blueedge.me/unescape" target="_blank">
+              <a key={i} href="https://blueedge.me/unescape" target="_blank" rel="noreferrer">
               <Image className="mx-1 dpShad rounded"
                 var={x} h={100} dir="store/float" src={x}/>
               </a>

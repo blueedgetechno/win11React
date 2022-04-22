@@ -639,7 +639,7 @@ const Home = ({tab, action, sid, paused})=>{
       <div className="absolute right-0 -mt-8 text-xs font-medium acol">
         Powered by {" "}
         <a href="https://github.com/sumitkolhe/jiosaavn-api"
-          className="text-gray-400 underline" target="_blank">
+          className="text-gray-400 underline" target="_blank" rel="noreferrer">
           sumitkolhe/jiosaavn-api
         </a>
       </div>
