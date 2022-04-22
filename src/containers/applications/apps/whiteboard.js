@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
 
-import CanvasDraw from "react-canvas-draw";
+import CanvasDraw from "@win11react/react-canvas-draw";
 import {Mark} from './assets';
 
 export const WhiteBoard = ()=>{
