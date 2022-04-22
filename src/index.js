@@ -22,7 +22,5 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
-    ,
-  </Suspense>,
-  document.getElementById("root")
+  </Suspense>
 );
