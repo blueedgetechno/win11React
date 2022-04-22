@@ -28,7 +28,7 @@ export const StartMenu = () => {
 
     var allApps = [],
       tmpApps = Object.keys(state.apps)
-        .filter((x) => x != "hz")
+        .filter((x) => x !== "hz")
         .map((key) => {
           return state.apps[key];
         });
@@ -73,13 +73,13 @@ export const StartMenu = () => {
       dispatch(action);
     }
 
-    if (action.type && (action.payload == "full" || action.type == "EDGELINK")) {
+    if (action.type && (action.payload === "full" || action.type === "EDGELINK")) {
       dispatch({
         type: "STARTHID",
       });
     }
 
-    if (action.type == "STARTALPHA") {
+    if (action.type === "STARTALPHA") {
       var target = document.getElementById("char" + action.payload);
       if (target) {
         target.parentNode.scrollTop = target.offsetTop;
@@ -120,7 +120,7 @@ export const StartMenu = () => {
                     return app.empty ? (
                       <div key={i} className="pnApp pnEmpty"></div>
                     ) : (
-                      <div key={i} className="prtclk pnApp" value={app.action != null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div key={i} className="prtclk pnApp" value={app.action !== null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
                         <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="appName">{app.name}</div>
                       </div>
@@ -139,7 +139,7 @@ export const StartMenu = () => {
                 <div className="reApps">
                   {start.rcApps.slice(0, 6).map((app, i) => {
                     return app.name ? (
-                      <div key={i} className="rnApp" value={app.action != null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div key={i} className="rnApp" value={app.action !== null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
                         <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="acInfo">
                           <div className="appName">{app.name}</div>
@@ -163,12 +163,12 @@ export const StartMenu = () => {
               </div>
               <div className="allApps win11Scroll" data-alpha={start.alpha}>
                 {start.contApps.map((ldx, i) => {
-                  if (ldx.length == 0) return null;
+                  if (ldx.length === 0) return null;
 
                   var tpApps = [];
                   tpApps.push(
-                    <div key={i} className="allApp prtclk" data-action="STARTALPHA" onClick={clickDispatch} id={`char${i == 0 ? "#" : String.fromCharCode(i + 64)}`}>
-                      <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
+                    <div key={i} className="allApp prtclk" data-action="STARTALPHA" onClick={clickDispatch} id={`char${i === 0 ? "#" : String.fromCharCode(i + 64)}`}>
+                      <div className="ltName">{i === 0 ? "#" : String.fromCharCode(i + 64)}</div>
                     </div>
                   );
 
@@ -191,8 +191,8 @@ export const StartMenu = () => {
                   </div>
                   {start.contApps.map((ldx, i) => {
                     return (
-                      <div key={i} className={ldx.length == 0 ? "dullApp allApp" : "allApp prtclk"} data-action="STARTALPHA" onClick={ldx.length == 0 ? null : clickDispatch} data-payload={i == 0 ? "#" : String.fromCharCode(i + 64)}>
-                        <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
+                      <div key={i} className={ldx.length === 0 ? "dullApp allApp" : "allApp prtclk"} data-action="STARTALPHA" onClick={ldx.length === 0 ? null : clickDispatch} data-payload={i === 0 ? "#" : String.fromCharCode(i + 64)}>
+                        <div className="ltName">{i === 0 ? "#" : String.fromCharCode(i + 64)}</div>
                       </div>
                     );
                   })}
@@ -240,25 +240,25 @@ export const StartMenu = () => {
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 flex justify-between">
-              <div value={atab == "All"} onClick={tabSw}>
+              <div value={atab === "All"} onClick={tabSw}>
                 All
               </div>
-              <div value={atab == "Apps"} onClick={tabSw}>
+              <div value={atab === "Apps"} onClick={tabSw}>
                 Apps
               </div>
-              <div value={atab == "Documents"} onClick={tabSw}>
+              <div value={atab === "Documents"} onClick={tabSw}>
                 Documents
               </div>
-              <div value={atab == "Web"} onClick={tabSw}>
+              <div value={atab === "Web"} onClick={tabSw}>
                 Web
               </div>
-              <div value={atab == "More"} onClick={tabSw}>
+              <div value={atab === "More"} onClick={tabSw}>
                 More
               </div>
             </div>
           </div>
           <div className="shResult w-full flex justify-between">
-            <div className="leftSide flex-col px-1" data-width={query.length != 0}>
+            <div className="leftSide flex-col px-1" data-width={query.length !== 0}>
               <div className="text-sm font-semibold mb-4">{query.length ? "Best match" : "Top apps"}</div>
               {query.length ? (
                 <div className="textResult h-16">

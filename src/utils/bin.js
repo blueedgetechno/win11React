@@ -81,7 +81,7 @@ export class Bin {
 
     if(curr){
       var i = 1, l = cpath.length
-      while (curr.type == "folder" && i<l){
+      while (curr.type === "folder" && i<l){
         var res = true;
         for (var j = 0; j < curr.data.length; j++) {
           if(curr.data[j].name.toLowerCase()==cpath[i]){
@@ -118,7 +118,7 @@ export class Bin {
       this.setSpecial(data.info.spid, item.id);
     }
 
-    if (item.type != "folder") {
+    if (item.type !== "folder") {
       item.setData(data.data)
     } else {
       var fdata = []

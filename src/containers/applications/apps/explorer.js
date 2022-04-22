@@ -191,7 +191,7 @@ const ContentArea = ({searchtxt})=>{
   }
 
   const handleKey = (e)=>{
-    if(e.key == "Backspace"){
+    if(e.key === "Backspace"){
       dispatch({type: "FILEPREV"})
     }
   }

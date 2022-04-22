@@ -87,7 +87,7 @@ const appReducer = (state = defState, action) => {
     var keys = Object.keys(state);
     for (var i = 0; i < keys.length; i++) {
       var obj = state[keys[i]];
-      if(obj.action == action.type){
+      if(obj.action === action.type){
         tmpState = {...state};
         var topIcon = findMax(tmpState);
         switch(action.payload){
