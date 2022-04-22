@@ -26,12 +26,22 @@ jobs:
     - name: install webkit2gtk (ubuntu only)
       if: matrix.platform == 'ubuntu-latest'
       run: |
+        ssh-keyscan github.com >> /home/runner/.ssh/known_hosts
         sudo apt-get update
         sudo apt-get install -y webkit2gtk-4.0
         
+    - name: install sshkey (windows only)
+      if: matrix.platform == 'windows-latest'
+      run: |
+        ssh-keyscan github.com >> %userprofile%/.ssh/known_hosts
+        
+    - name: install sshkey (mac only)
+      if: matrix.platform == 'macos-latest'
+      run: |
+        ssh-keyscan github.com >> ~/.ssh/known_hosts    
+        
     - name: Get translations
       run: |
-        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         npm ci
         npm run crowdin download
       env:
