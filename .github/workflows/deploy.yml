@@ -36,7 +36,7 @@ jobs:
         node-version: '16.6.1'
 
     - name: Cache Node.js modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.npm
         key: ${{ runner.OS }}-noder-${{ hashFiles('**/package-lock.json') }}
