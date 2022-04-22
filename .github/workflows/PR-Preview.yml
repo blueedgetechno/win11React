@@ -49,9 +49,11 @@ jobs:
             🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
                 Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
           issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.BOT }}
 
       - if: ${{ failure() }}
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: ❌ Deploy Preview failed
+          token: ${{ secrets.BOT }}
