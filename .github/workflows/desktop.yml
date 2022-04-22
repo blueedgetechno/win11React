@@ -31,6 +31,7 @@ jobs:
         
     - name: Get translations
       run: |
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         npm ci
         npm run crowdin download
       env:
