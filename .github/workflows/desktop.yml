@@ -19,6 +19,12 @@ jobs:
       with:
         node-version: 12
         cache: 'npm'
+    
+    - name: git http
+      run: |
+        git config --global url."https://github.com/".insteadOf git@github.com:
+        git config --global url."https://".insteadOf git://
+     
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
@@ -26,19 +32,8 @@ jobs:
     - name: install webkit2gtk (ubuntu only)
       if: matrix.platform == 'ubuntu-latest'
       run: |
-        ssh-keyscan github.com >> /home/runner/.ssh/known_hosts
         sudo apt-get update
         sudo apt-get install -y webkit2gtk-4.0
-        
-    - name: install sshkey (windows only)
-      if: matrix.platform == 'windows-latest'
-      run: |
-        ssh-keyscan github.com >> %userprofile%/.ssh/known_hosts
-        
-    - name: install sshkey (mac only)
-      if: matrix.platform == 'macos-latest'
-      run: |
-        ssh-keyscan github.com >> ~/.ssh/known_hosts    
         
     - name: Get translations
       run: |
