@@ -70,7 +70,7 @@ jobs:
           
   Close:
     name: Close
-    if: ${{ github.event.action }}=='closed'
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
