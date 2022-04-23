@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: peter-evans/create-or-update-comment@v2
+        id: couc
+        with:
+          body: ⌛ Deploy Preview - Build in Progress
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.BOT }}
+
       - uses: actions/checkout@v3
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
@@ -46,14 +53,17 @@ jobs:
           body: |
             ✔️ Deploy Preview for Ready!
             😎 Browse the preview: https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} !
-            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
                 Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
-          issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.couc.outputs.comment-id }}
+          edit-mode: replace
           token: ${{ secrets.BOT }}
 
       - if: ${{ failure() }}
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: ❌ Deploy Preview failed
+          body: |
+            ❌ Deploy Preview failed
+            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          comment-id: ${{ steps.couc.outputs.comment-id }}
+          edit-mode: replace
           token: ${{ secrets.BOT }}
