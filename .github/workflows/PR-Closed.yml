@@ -1,0 +1,25 @@
+name: Close PR Preview
+
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  Close:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: win11bot/preview
+
+      - name: Remove Preview folder
+        run: rm -r ${{ github.event.pull_request.number }}
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.BOT }}
+          publish_dir: ./
+          cname: preview.pr.blueedge.me
+          external_repository: win11bot/preview
