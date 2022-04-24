@@ -388,7 +388,7 @@
       "type": "tile",
       "name": "Speech",
       "desc": "Speech language, speech recognition microphone setup, voices",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "langSwitcher"
