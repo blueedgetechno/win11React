@@ -2,7 +2,7 @@ name: Generate PR Preview
 
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize, closed]
+    types: [opened, reopened, synchronize]
 
 jobs:
   Build:
@@ -67,5 +67,3 @@ jobs:
           comment-id: ${{ steps.couc.outputs.comment-id }}
           edit-mode: replace
           token: ${{ secrets.BOT }}
-          
- 
