@@ -43,8 +43,8 @@ jobs:
           cname: preview.pr.blueedge.me
           external_repository: win11bot/preview
 
-      - name: Sleep for 3 min to make sure page updated
-        run: sleep 180s
+      - name: Sleep to make sure page gets updated
+        run: sleep 1m
         shell: bash
 
       - name: comment Preview Ready
