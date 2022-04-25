@@ -134,7 +134,7 @@ export const MicroStore = ()=>{
         name="Store"/>
       <div className="windowScreen flex">
         <LazyComponent show={!wnapp.hide}>
-          <div className="storeNav h-full w-16 flex flex-col">
+          <div className="storeNav h-full w-20 flex flex-col">
             <Icon fafa="faHome" onClick={totab} click="sthome"
               width={20} payload={page==0 && tab=="sthome"}/>
             <Icon fafa="faThLarge" onClick={totab} click="apprib"

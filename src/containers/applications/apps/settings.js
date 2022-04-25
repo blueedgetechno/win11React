@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import wallReducer from "../../../reducers/wallpaper";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import "./assets/settings.scss";
 import LangSwitch from "./assets/Langswitch";
@@ -18,7 +17,6 @@ export const Settings = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.settings);
   const theme = useSelector((state) => state.setting.person.theme);
-  const [dpath, setPath] = useState("");
   const dispatch = useDispatch();
 
   const wall = useSelector((state) => state.wallpaper);

@@ -1,7 +1,7 @@
 .storeNav {
   .uicon {
-    padding: 12px 0;
-    margin: 0 4px 2px;
+    padding: 18px 0;
+    margin: 0 4px 4px;
     color: #888888;
     position: relative;
     transition: all ease-in-out 100ms;
@@ -12,7 +12,7 @@
       position: absolute;
       width: 3px;
       left: 0;
-      height: 50%;
+      height: 24px;
       border-radius: 10px;
       background: var(--clrPrm);
     }
@@ -40,9 +40,6 @@
     height: 100px;
     position: absolute;
     bottom: 0;
-    background: var(--bg-color);
-    background: -webkit-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, transparent 100%);
-    background: -o-linear-gradient(bottom, var(--page-bg) 10%, #87888766 50%, transparent 100%);
     background: linear-gradient(to top, var(--page-bg) 10%, #87888766 50%, transparent 100%);
   }
 }

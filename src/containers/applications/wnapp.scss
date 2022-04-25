@@ -3,7 +3,8 @@
 */
 @font-face {
   font-family: "Spotify";
-  src: url("./apps/assets/spotify.woff2") format("woff2"), url("./apps/assets/spotify.ttf") format("truetype");
+  src: url("./apps/assets/spotify.woff2") format("woff2"),
+    url("./apps/assets/spotify.ttf") format("truetype");
 }
 
 @font-face {
@@ -23,6 +24,8 @@ body {
   --sat-txt: #777;
   --clrPrm: #0067c0;
   --wintheme: #eee;
+
+  --fakeMica: #f3f3f3 radial-gradient(#eff4f9 75%, #f3f3f3 100%) no-repeat fixed;
 }
 
 body[data-theme="dark"] {
@@ -37,6 +40,8 @@ body[data-theme="dark"] {
   --sat-txt: #999;
   --clrPrm: #4cc2ff;
   --wintheme: #1e1e26;
+
+  --fakeMica: #202020 radial-gradient(#1a1f35 25%, #202020 100%) no-repeat fixed;
 }
 
 .edgeBrowser {
@@ -59,14 +64,14 @@ body[data-theme="dark"] .edgeBrowser {
 }
 
 .wnstore {
-  --bg-color: #f3f3f3;
   --nav-btn-hov: #ffffff;
   --page-bg: #f4f4f4;
   --page-bd-col: #e2e2e2;
   --rib-bg: #ffffffb8;
   --rib2-bg: #fdfdfd;
   --det-bg: #f9f9f9;
-  background: var(--bg-color);
+
+  background: var(--fakeMica);
 
   .win11Scroll {
     overflow-y: overlay;
@@ -74,14 +79,12 @@ body[data-theme="dark"] .edgeBrowser {
 }
 
 body[data-theme="dark"] .wnstore {
-  --bg-color: #1c2126;
   --nav-btn-hov: #454545;
   --page-bg: #24292c;
   --page-bd-col: #292828;
   --rib-bg: #2f2e30b8;
   --rib2-bg: #2c2f32;
   --det-bg: #282c32;
-  background: var(--bg-color);
 
   .win11Scroll::-webkit-scrollbar {
     --scroll: rgb(44 44 44 / 80%);
@@ -94,9 +97,8 @@ body[data-theme="dark"] .wnstore {
 
 .notepad {
   --bg1: #f9f9f9;
-  --bg2: rgba(240, 240, 240, 0.99);
 
-  background: var(--bg2);
+  background: var(--fakeMica);
   color: var(--dark-txt);
 
   .restWindow {
@@ -106,7 +108,6 @@ body[data-theme="dark"] .wnstore {
 
 body[data-theme="dark"] .notepad {
   --bg1: #282828;
-  --bg2: rgba(32, 32, 32, 0.99);
 }
 
 .calcApp {
@@ -115,7 +116,8 @@ body[data-theme="dark"] .notepad {
   --bg3: #f9f9f9;
   --err-bg: rgb(255, 255, 255, 0.1);
   --err-txt: #999;
-  background: var(--bg1);
+
+  background: var(--fakeMica);
   color: var(--dark-txt);
 }
 
@@ -156,7 +158,6 @@ body[data-theme="dark"] .calcApp {
 }
 
 .msfiles {
-  --bg0: #edf2fe;
   --bg1: #ffffff;
   --bg2: #f5f5f5;
   --dsb-col: #aaa;
@@ -167,7 +168,6 @@ body[data-theme="dark"] .calcApp {
 }
 
 body[data-theme="dark"] .msfiles {
-  --bg0: #19212e;
   --bg1: #191919;
   --bg2: #1c1c1c;
   --dsb-col: #555;
@@ -175,15 +175,4 @@ body[data-theme="dark"] .msfiles {
   --gray2: #222;
   --hover-bg: rgba(136, 136, 136, 0.5);
   --focus-bg: rgba(228, 228, 228, 0.5);
-}
-
-.settingsApp {
-  --bg0: #eff4f9;
-
-  background: var(--bg0);
-  color: var(--dark-txt);
-}
-
-body[data-theme="dark"] .settingsApp {
-  --bg0: #202020;
 }

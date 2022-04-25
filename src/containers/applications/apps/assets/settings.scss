@@ -1,15 +1,13 @@
 .settingsApp {
+  --bg: #f3f3f3;
+  --txt_clr-rgb: 0 0 0;
+
+  background: var(--fakeMica);
+  color: rgb(var(--txt_clr-rgb));
   min-width: 720px;
 }
 
 .settingsApp .restWindow {
-  --bg: #eff4f9;
-  --txt_clr-rgb: 0 0 0;
-  --clr_prm: #0067c0;
-  --scroll: rgb(255 255 255 / 80%);
-
-  background: var(--bg);
-  color: rgb(var(--txt_clr-rgb));
   font-size: 14px;
   height: 100%;
 
@@ -57,7 +55,7 @@
         height: 32px;
         width: calc(300px - 32px);
         border: 0;
-        border-bottom: 1px solid var(--clr_prm);
+        border-bottom: 1px solid var(--clrPrm);
         border-radius: 4px;
         padding: 8px;
         margin: 8px 16px 20px;
@@ -66,7 +64,7 @@
           background: rgb(255 255 255 / 33%);
         }
         &:focus {
-          border-bottom: 2px solid var(--clr_prm);
+          border-bottom: 2px solid var(--clrPrm);
         }
         &:focus-visible {
           outline: none;
@@ -107,7 +105,7 @@
 
       .marker {
         position: absolute;
-        background: var(--clr_prm);
+        background: var(--clrPrm);
         height: 16px;
         width: 3px;
         border-radius: 3px;
@@ -160,7 +158,7 @@
             color: rgb(var(--txt_clr-rgb) / 90%);
           }
           .device_rename {
-            color: var(--clr_prm);
+            color: var(--clrPrm);
           }
         }
       }
@@ -257,13 +255,14 @@
           grid-template-rows: repeat(2, 1fr);
           gap: 8px;
 
-          .selected {
-            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--clr_prm);
-          }
-
           img {
             width: 120px;
             border-radius: 4px;
+          }
+
+          .selected {
+            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--clrPrm);
+            border-radius: 2px;
           }
         }
       }
@@ -332,7 +331,7 @@
         }
       }
       .right {
-        // justify-self: flex-end;
+        flex-shrink: 0;
         margin-left: auto;
       }
     }
@@ -404,7 +403,7 @@
         &.thin-blue {
           min-height: unset;
           height: unset;
-          color: var(--clr_prm);
+          color: var(--clrPrm);
           justify-content: center;
           margin: 4px 0;
         }
@@ -469,33 +468,33 @@
   //   }
   // }
 }
-body[data-theme="dark"] .settingsApp .restWindow {
+body[data-theme="dark"] .settingsApp {
   --bg: #202020;
   --txt_clr-rgb: 255 255 255;
-  --clr_prm: #4cc2ff;
-  --scroll: rgb(44 44 44 / 80%);
 
-  nav .nav_top .search {
-    background: rgb(255 255 255 / 3.33%);
+  .restWindow {
+    nav .nav_top .search {
+      background: rgb(255 255 255 / 3.33%);
 
-    &:hover {
+      &:hover {
+        background: rgb(255 255 255 / 5%);
+      }
+    }
+
+    main .tilesCont .tile {
       background: rgb(255 255 255 / 5%);
-    }
-  }
 
-  main .tilesCont .tile {
-    background: rgb(255 255 255 / 5%);
+      &:hover {
+        background: rgb(255 255 255 / 10%);
+      }
+      select {
+        background: rgb(255 255 255 / 7%);
+        border: 1px solid rgba(238, 236, 235, 0.071);
+        border-bottom: 1px solid rgba(212, 211, 210, 0.051);
 
-    &:hover {
-      background: rgb(255 255 255 / 10%);
-    }
-    select {
-      background: rgb(255 255 255 / 7%);
-      border: 1px solid rgba(238, 236, 235, 0.071);
-      border-bottom: 1px solid rgba(212, 211, 210, 0.051);
-
-      option {
-        background: var(--bg);
+        option {
+          background: var(--bg);
+        }
       }
     }
   }
