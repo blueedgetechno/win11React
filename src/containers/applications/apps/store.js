@@ -353,7 +353,6 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {apprib && apprib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
-            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
@@ -383,7 +382,6 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {gamerib && gamerib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
-            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
@@ -413,7 +411,6 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {movrib && movrib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
-            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
@@ -427,7 +424,7 @@ const FrontPage = (props)=>{
                   <Icon className={stars>4?"bluestar":""} fafa="faStar" width={6}/>
                   <div className="text-xss">{1+x.charCodeAt(3)%5}k</div>
                 </div>
-                <div className="text-xss mt-8">{x.charCodeAt(4)%2?"{t('store.rent')}":"{t('store.owned')}"}</div>
+                <div className="text-xss mt-8">{x.charCodeAt(4)%2?{t('store.rent')}:{t('store.owned')}}</div>
               </div>
             )
           })}
