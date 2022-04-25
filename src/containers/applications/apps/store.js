@@ -353,6 +353,7 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {apprib && apprib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
+            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
@@ -382,6 +383,7 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {gamerib && gamerib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
+            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
@@ -411,6 +413,7 @@ const FrontPage = (props)=>{
         <div className="flex w-max pr-8">
           {movrib && movrib.map((x,i)=>{
             var stars = 3 + (x.charCodeAt(0)+x.charCodeAt(1))%3;
+            const { t, i18n } = useTranslation()
             return (
               <div key={i} className="ribcont rounded my-auto p-2 pb-2">
                 <Image className="mx-1 py-1 mb-2 rounded"
