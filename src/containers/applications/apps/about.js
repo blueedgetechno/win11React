@@ -40,8 +40,8 @@ export const AboutWin = () => {
         </p>
         <p className="pl-4">
           {t('about.contact')} :&nbsp;
-          <a target="_blank" href="mailto:blueedgetechno@gmail.com" rel="noreferrer">
-            blueedgetechno@gmail.com
+          <a target="_blank" href="mailto:blue@win11react.com" rel="noreferrer">
+            blue@win11react.com
           </a>
         </p>
 
