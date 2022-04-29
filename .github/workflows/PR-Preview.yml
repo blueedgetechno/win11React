@@ -33,14 +33,14 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: CI=false PUBLIC_URL=https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} npm run build
+        run: CI=false PUBLIC_URL=https://preview.win11react.com/${{ github.event.pull_request.number }} npm run build
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.BOT }}
           publish_dir: ./build
           destination_dir: ./${{ github.event.pull_request.number }}
-          cname: preview.pr.blueedge.me
+          cname: preview.win11react.com
           external_repository: win11bot/preview
 
       - name: Sleep to make sure page gets updated
@@ -52,8 +52,7 @@ jobs:
         with:
           body: |
             ✔️ Deploy Preview for Ready!
-            😎 Browse the preview: https://preview.pr.blueedge.me/${{ github.event.pull_request.number }} !
-                Feel free to join our github org. Click [here](https://github.com/win11react/members/issues/new?assignees=&labels=join&template=join.md&title=I+want+to+join+the+org)
+            😎 Browse the preview: https://preview.win11react.com/${{ github.event.pull_request.number }} !
           comment-id: ${{ steps.couc.outputs.comment-id }}
           edit-mode: replace
           token: ${{ secrets.BOT }}
