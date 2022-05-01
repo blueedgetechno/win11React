@@ -19,5 +19,6 @@
   "store.rent": "Rent",
   "store.features": "Features",
   "store.ratings": "Ratings and reviews",
-  "store.description": "Description"
+  "store.description": "Description",
+  "camera.take-photo": "Take photo"
 }
