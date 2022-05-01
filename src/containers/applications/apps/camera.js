@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../../utils/general';
+import { useTranslation } from 'react-i18next';
 
 export const Camera = ()=>{
   const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps.camera);
   const hide = useSelector(state => state.apps.camera.hide);
   const [stream, setStream] = useState(null);
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const capture = ()=>{
@@ -61,7 +63,7 @@ export const Camera = ()=>{
         <div className="restWindow flex-grow flex flex-col">
           <div className="camcont">
             <div className="camctrl">
-              <div className="cmicon" title="Take photo"
+              <div className="cmicon" title={t('camera.take-photo')}
                 onClick={capture}>
                 <Icon icon="camera"/>
               </div>
