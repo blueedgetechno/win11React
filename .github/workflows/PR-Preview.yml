@@ -53,6 +53,7 @@ jobs:
           body: |
             ✔️ Deploy Preview for Ready!
             😎 Browse the preview: https://preview.win11react.com/${{ github.event.pull_request.number }} !
+            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           comment-id: ${{ steps.couc.outputs.comment-id }}
           edit-mode: replace
           token: ${{ secrets.BOT }}
