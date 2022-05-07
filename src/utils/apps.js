@@ -30,6 +30,12 @@ var apps = [{
   action: 'SETTINGS'
 },
 {
+  name: 'Task Manager',
+  icon: 'taskmanager',
+  type: 'app',
+  action: 'TASKMANAGER'
+},
+{
   name: 'File Explorer',
   icon: 'explorer',
   type: 'app',

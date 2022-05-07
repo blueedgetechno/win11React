@@ -17,6 +17,7 @@ export * from './apps/about';
 export * from './apps/spotify';
 export * from './apps/discord';
 export * from './apps/camera';
+export * from './apps/taskmanager';
 
 export const ScreenPreview = ()=>{
   const tasks = useSelector(state=>state.taskbar);

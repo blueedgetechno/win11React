@@ -24,7 +24,7 @@
   }
 
   &[data-hide="true"] {
-    transform: translateX(110%);
+    transform: translateY(110%);
     animation: overflow-hider 0s ease-in-out 150ms forwards;
     transition: all cubic-bezier(0.62, 0, 0.32, 1) 150ms;
   }
