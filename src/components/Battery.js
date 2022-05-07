@@ -13,7 +13,7 @@ const Battery = ({ charging, level }) => {
   return (
     <div className="uicon taskIcon">
       <span className="battery">
-        {charging ? <Icon className="btPlug" fafa="faBoltLightning" width={10} /> : null}
+        {charging ? <Icon className="btPlug" fafa="faBoltLightning" width={8} /> : null}
         <i className="fa fa-battery-empty"></i>
         <i className="fa fa-battery-4 animate" ref={batteryref}></i>
       </span>

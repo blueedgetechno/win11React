@@ -250,6 +250,18 @@ export const Settings = () => {
                               </div>
                             </div>
                           );
+                        case "timeTop":
+                          return (
+                            <div className="timeTop">
+                              <h1>
+                                {new Date().toLocaleTimeString("en-US", {
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  hour12: true,
+                                })}
+                              </h1>
+                            </div>
+                          );
                         case "langSwitcher":
                           return (
                             <div key={i} className="tile langSwitcherTile">

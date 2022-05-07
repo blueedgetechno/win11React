@@ -40,7 +40,12 @@
     height: 100px;
     position: absolute;
     bottom: 0;
-    background: linear-gradient(to top, var(--page-bg) 10%, #87888766 50%, transparent 100%);
+    background: linear-gradient(
+      to top,
+      var(--page-bg) 10%,
+      #87888766 50%,
+      transparent 100%
+    );
   }
 }
 
@@ -106,7 +111,11 @@
 
 .amzApps {
   background: #670cd7;
-  background: -webkit-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
+  background: -webkit-linear-gradient(
+    48deg,
+    #522f8b 0%,
+    rgba(113, 35, 133, 1) 100%
+  );
   background: -o-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
   background: linear-gradient(138deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
 }
@@ -136,6 +145,7 @@
 
   &:hover {
     transform: scale(1.06);
+    transform: translateY(-4px);
   }
 
   .uicon {
@@ -200,7 +210,7 @@
 .detailcont,
 .briefcont {
   border-radius: 6px;
-  background: var(--det-bg);
+  background: var(--rib2-bg);
   border: 1px solid var(--page-bd-col);
   color: var(--txt-col);
 }

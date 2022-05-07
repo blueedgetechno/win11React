@@ -207,6 +207,10 @@ export const StartMenu = () => {
             </div>
             <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>
+                <div className="flex prtclk" onClick={clickDispatch} data-action="WALLALOCK">
+                  <Icon msi="Lock" width={12} />
+                  <span>Lock</span>
+                </div>
                 <div className="flex prtclk" onClick={clickDispatch} data-action="WALLSHUTDN">
                   <Icon msi="PowerButton" width={12} />
                   <span>Shut down</span>
@@ -214,10 +218,6 @@ export const StartMenu = () => {
                 <div className="flex prtclk" onClick={clickDispatch} data-action="WALLRESTART">
                   <Icon msi="Refresh" width={12} flip />
                   <span>Restart</span>
-                </div>
-                <div className="flex prtclk" onClick={clickDispatch} data-action="WALLALOCK">
-                  <Icon msi="Lock" width={12} />
-                  <span>Lock</span>
                 </div>
               </div>
               <Icon msi="PowerButton" width={14} click="STARTPWC" />

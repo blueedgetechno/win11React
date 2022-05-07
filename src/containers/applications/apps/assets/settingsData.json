@@ -336,20 +336,20 @@
     },
     {
       "type": "tile",
-      "name": "Email & accounts",
-      "desc": "Accounts used by email, calendar, and contacts",
-      "icon": ""
-    },
-    {
-      "type": "tile",
       "name": "Sign-in options",
       "desc": "Windows Hello, security key, password, dynamic lock",
       "icon": ""
     },
     {
       "type": "tile",
-      "name": "Family & other users",
-      "desc": "Device access, work or school users, kiosk assighned access",
+      "name": "Email & accounts",
+      "desc": "Accounts used by email, calendar, and contacts",
+      "icon": ""
+    },
+    {
+      "type": "tile",
+      "name": "Family",
+      "desc": "Manage your family group, edit account types and device permissions",
       "icon": ""
     },
     {
@@ -360,12 +360,21 @@
     },
     {
       "type": "tile",
+      "name": "Other users",
+      "desc": "Device access, work or school user, kiosk assigned access",
+      "icon": ""
+    },
+    {
+      "type": "tile",
       "name": "Access work or school",
       "desc": "Organisation resources like email, apps, and network",
       "icon": ""
     }
   ],
   "Time & language": [
+    {
+      "type": "timeTop"
+    },
     {
       "type": "tile",
       "name": "Date & time",
