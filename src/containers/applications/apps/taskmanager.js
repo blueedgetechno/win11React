@@ -69,6 +69,9 @@ export const Taskmanager = () => {
                 )
               );
             })}
+            <div className="flex-grow grid place-items-center text-3xl">
+              Coming soon? maybe
+            </div>
           </main>
           <div className="navMenuBtn" onClick={() => setNav(nav ? "" : "open")}>
             <svg
