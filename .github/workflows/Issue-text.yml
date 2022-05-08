@@ -12,7 +12,7 @@ jobs:
       - uses: peter-evans/create-or-update-comment@v2
         with:
           body: Hey, thank you for creating an issue. We will normally respond within 24 hours.
-          issue-number: ${{ github.event.number }}
+          issue-number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - uses: stefanbuck/github-issue-parser@v2
