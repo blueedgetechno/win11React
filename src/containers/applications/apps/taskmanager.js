@@ -8,10 +8,10 @@ export const Taskmanager = () => {
   const wnapp = useSelector((state) => state.apps.taskmanager);
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState("Processes");
+  const [tab, setTab] = useState("Processes");
   const [nav, setNav] = useState("");
 
-  const pages = [
+  const tabNames = [
     "Processes",
     "Performance",
     "App history",
@@ -43,23 +43,33 @@ export const Taskmanager = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <nav className={nav}>
-            {pages.map((e) => {
+            {tabNames.map((e) => {
               return (
                 <div
                   key={e}
-                  className={`navLink ${e === page ? "selected" : ""}`}
+                  className={`navLink ${e === tab ? "selected" : ""}`}
                   onClick={() => {
-                    setPage(e);
+                    setTab(e);
                   }}
                 >
                   <span className="someIcon">-</span>
-                  <span className="pageName">{e}</span>
+                  <span className="tabName">{e}</span>
                 </div>
               );
             })}
             <div className="marker"></div>
           </nav>
-          <main>some nonsense graphs here </main>
+          <main className="flex-grow">
+            {tabNames.map((e) => {
+              return (
+                tab === e && (
+                  <>
+                    <h3>{tab}</h3>
+                  </>
+                )
+              );
+            })}
+          </main>
           <div className="navMenuBtn" onClick={() => setNav(nav ? "" : "open")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
