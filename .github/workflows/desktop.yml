@@ -1,4 +1,4 @@
-name: "publish"
+name: publish
 on:
   issues:
     types:
@@ -15,46 +15,45 @@ jobs:
     env:
       CI: false
     steps:
-    - uses: actions/checkout@v2
-    - name: setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-        cache: 'npm'
-    
-    - name: git http
-      run: |
-        git config --global url."https://github.com/".insteadOf git@github.com:
-        git config --global url."https://".insteadOf git://
-     
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - name: install webkit2gtk (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y webkit2gtk-4.0
-        
-    - name: Get translations
-      run: |
-        npm ci
-        npm run crowdin download
-      env:
+      - uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12
+          cache: npm
+
+      - name: git http
+        run: |
+          git config --global url."https://github.com/".insteadOf git@github.com:
+          git config --global url."https://".insteadOf git://
+
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: install webkit2gtk (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0
+
+      - name: Get translations
+        run: |
+          npm ci
+          npm run crowdin download
+        env:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-      
-    - name: install app dependencies and build it
-      run: npm run build
-    - uses: tauri-apps/tauri-action@v0
-      env:
-        GITHUB_TOKEN: ${{ secrets.BOT }}
-        TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
-        TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-      with:
-        tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "Win11inReact v__VERSION__"
-        releaseBody: ${{ github.event.issue.body }}
-        releaseDraft: false
-        prerelease: false
-        
+
+      - name: install app dependencies and build it
+        run: npm run build
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+        with:
+          tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: "Win11inReact v__VERSION__"
+          releaseBody: ${{ github.event.issue.body }}
+          releaseDraft: false
+          prerelease: false

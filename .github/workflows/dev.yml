@@ -4,54 +4,32 @@ on:
   push:
     branches:
       - test
-  pull_request:
-    branches:
-      - test
-  workflow_dispatch:     
+  workflow_dispatch:
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16.6.1'
-    
-    - name: Install NPM packages
-      run: npm ci
-    
-    - name: Build project
-      run: CI=false REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
 
-    - name: Upload production-ready build files
-      uses: actions/upload-artifact@v3
-      with:
-        name: production-files
-        path: ./build
-  
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/test'
-    
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: production-files
-        path: ./build
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        personal_token: ${{ secrets.BOT }}
-        cname: dev.blueedge.me
-        external_repository: win11bot/dev-build
-        publish_dir: ./build
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+
+    - name: Build
+      run: |
+        npm ci
+        CI=false REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.BOT }}
+          cname: dev.blueedge.me
+          external_repository: win11bot/dev-build
+          publish_dir: ./build

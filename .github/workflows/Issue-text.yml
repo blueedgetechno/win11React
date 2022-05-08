@@ -9,22 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ben-z/actions-comment-on-issue@1.0.2
-      with:
-        message: "Hey, thank you for creating an issue. We will normally respond within 24 hours."
-        GITHUB_TOKEN: ${{ secrets.BOT }}
-        
-    - uses: stefanbuck/github-issue-parser@v2
-      id: issue-parser
-      with:
-        template-path: .github/ISSUE_TEMPLATE/bug_report.yml
-        
-    - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-    
-    - run: echo ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
-    
-    - uses: actions-ecosystem/action-add-labels@v1
-      with:
-        labels: ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
-        github_token: ${{ secrets.BOT }}
-        
+      - uses: peter-evans/create-or-update-comment@v2
+        with:
+          body: Hey, thank you for creating an issue. We will normally respond within 24 hours.
+          issue-number: ${{ github.event.issue.number }}
+          token: ${{ secrets.BOT }}
+
+      - uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/bug_report.yml
+
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
+
+      - run: echo ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
+          github_token: ${{ secrets.BOT }}

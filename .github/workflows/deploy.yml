@@ -1,67 +1,52 @@
-name: Build JO Mama
+name: Build & Deploy
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:     
+  workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  Build-Deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-      
-    - name: Setup Sentry CLI
-      uses: mathieu-bour/setup-sentry-cli@1.2.0
-      with:
-        version: latest # optional if 'latest'
-        token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
-        organization: ${{ secrets.SENTRY_ORG }}
-        project: ${{ secrets.SENTRY_PROJECT }}
-     
-  #  - run: sentry-cli releases new -p ${{ secrets.SENTRY_PROJECT }} ${{ github.sha }}
-     
-   # - run: sentry-cli releases set-commits --auto ${{ github.sha }}
-          
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16.6.1'
+      - name: Setup Sentry CLI
+        uses: mathieu-bour/setup-sentry-cli@1.2.0
+        with:
+          version: latest # optional if latest
+          token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
+          organization: ${{ secrets.SENTRY_ORG }}
+          project: ${{ secrets.SENTRY_PROJECT }}
 
-    - name: Cache Node.js modules
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.OS }}-noder-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
+      #  - run: sentry-cli releases new -p ${{ secrets.SENTRY_PROJECT }} ${{ github.sha }}
+      # - run: sentry-cli releases set-commits --auto ${{ github.sha }}
 
-    - name: Install dependencies
-      run: CI=false npm install
-      
-    - name: Get translations
-      run: |
-        npm run crowdin upload
-        npm run crowdin download
-      env:
-          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}  
+      - name: Set up Node.js
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
 
-    - name: Build project
-      run: CI=false npm run build
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.BOT }}
-        cname: win11.blueedge.me
-        publish_dir: ./build
-        
+      - name: Get translations
+        run: |
+          npm run crowdin upload
+          npm run crowdin download
+        env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
+      - name: Build project
+        run: CI=false npm run build
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.BOT }}
+          cname: win11.blueedge.me
+          publish_dir: ./build
