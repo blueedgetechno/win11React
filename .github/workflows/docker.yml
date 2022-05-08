@@ -24,7 +24,7 @@ jobs:
 # Allows other actions to build project before its added to docker
    
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
