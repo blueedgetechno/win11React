@@ -13,7 +13,7 @@ jobs:
         with:
           body: Hey, thank you for creating an issue. We will normally respond within 24 hours.
           issue-number: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.BOT }}
+          token: ${{ secrets.BOT }}
 
       - uses: stefanbuck/github-issue-parser@v2
         id: issue-parser
