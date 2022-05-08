@@ -3,7 +3,7 @@ name: Build & deploy to dev
 on:
   push:
     branches:
-      - test
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -13,12 +13,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: dev
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
 
       - name: Build
         run: |
