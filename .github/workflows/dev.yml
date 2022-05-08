@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  Deploy-Dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +20,10 @@ jobs:
           node-version: 16
 
 
-    - name: Build
-      run: |
-        npm ci
-        CI=false REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
+      - name: Build
+        run: |
+          npm ci
+          CI=false REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
