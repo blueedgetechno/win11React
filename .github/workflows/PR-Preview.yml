@@ -1,4 +1,4 @@
-name: Generate PR Preview
+name: PR Preview
 
 on:
   pull_request_target:
@@ -33,15 +33,18 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: CI=false PUBLIC_URL=https://preview.win11react.com/${{ github.event.pull_request.number }} npm run build
+        run: CI=false PUBLIC_URL=https://pr-preview.win11react.com/${{ github.event.pull_request.number }} npm run build
+
+      - name: create repo
+        run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.BOT }}
           publish_dir: ./build
-          destination_dir: ./${{ github.event.pull_request.number }}
-          cname: preview.win11react.com
-          external_repository: win11bot/preview
+          external_repository: win11bot/${{ github.event.pull_request.number }}
 
       - name: Sleep to make sure page gets updated
         run: sleep 1m
@@ -52,7 +55,7 @@ jobs:
         with:
           body: |
             ✔️ Deploy Preview for Ready!
-            😎 Browse the preview: https://preview.win11react.com/${{ github.event.pull_request.number }} !
+            😎 Browse the preview: https://pr-preview.win11react.com/${{ github.event.pull_request.number }} !
             🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           comment-id: ${{ steps.couc.outputs.comment-id }}
           edit-mode: replace
