@@ -2,7 +2,7 @@ name: PR Preview
 
 on:
   pull_request_target:
-    types: [reopened, synchronize]
+    types: [opened, reopened, synchronize]
 
 jobs:
   Build:
