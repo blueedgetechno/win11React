@@ -2,17 +2,9 @@ name: PR Preview
 
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize]
+    types: [reopened, synchronize]
 
 jobs:
-  Create-repo:
-    if: github.event.pull_request.opened == true
-    runs-on: ubuntu-latest
-    steps:
-      - run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT }}
-
   Build:
     runs-on: ubuntu-latest
 
@@ -42,6 +34,11 @@ jobs:
 
       - name: Build project
         run: CI=false PUBLIC_URL=https://pr-preview.win11react.com/${{ github.event.pull_request.number }} npm run build
+
+      - if: ${{ github.event.action == 'opened'}}
+        run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
