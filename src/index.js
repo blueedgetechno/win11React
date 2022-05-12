@@ -24,3 +24,5 @@ root.render(
     </Provider>
   </Suspense>
 );
+
+serviceWorkerRegistration.register();
