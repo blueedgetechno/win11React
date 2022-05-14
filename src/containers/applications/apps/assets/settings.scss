@@ -1,6 +1,5 @@
 .settingsApp {
   --bg: #f3f3f3;
-  --txt_clr-rgb: 0 0 0;
 
   background: var(--fakeMica);
   color: rgb(var(--txt_clr-rgb));
@@ -470,7 +469,6 @@
 }
 body[data-theme="dark"] .settingsApp {
   --bg: #202020;
-  --txt_clr-rgb: 255 255 255;
 
   .restWindow {
     nav .nav_top .search {

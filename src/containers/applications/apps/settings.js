@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
-import "./assets/settings.scss";
-import LangSwitch from "./assets/Langswitch";
-
-import data from "./assets/settingsData.json";
-
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../../../actions";
-
-// const supportsContainerQueries = "container" in document.documentElement.style;
-// if (!supportsContainerQueries) {
-//   import("container-query-polyfill");
-// }
+import { Image, ToolBar } from "../../../utils/general";
+import LangSwitch from "./assets/Langswitch";
+import "./assets/settings.scss";
+import data from "./assets/settingsData.json";
 
 export const Settings = () => {
   const apps = useSelector((state) => state.apps);
