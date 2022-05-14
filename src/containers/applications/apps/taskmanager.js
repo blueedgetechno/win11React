@@ -10,7 +10,7 @@ export const Taskmanager = () => {
   const dispatch = useDispatch();
 
   const [tab, setTab] = useState("Processes");
-  const [nav, setNav] = useState("");
+  const [nav, setNav] = useState("open");
 
   const tabNames = [
     { title: "Processes", icon: "faTableCellsLarge" },
@@ -68,9 +68,6 @@ export const Taskmanager = () => {
                 )
               );
             })}
-            <div className="flex-grow grid place-items-center text-3xl">
-              Coming soon? maybe
-            </div>
           </main>
           <div className="navMenuBtn" onClick={() => setNav(nav ? "" : "open")}>
             <svg
