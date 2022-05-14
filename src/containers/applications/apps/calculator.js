@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon, ToolBar } from "../../../utils/general";
 
 export const Calculator = () => {

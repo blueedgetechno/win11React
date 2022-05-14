@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Image, ToolBar } from "../../../utils/general";
 
 import CanvasDraw from "@win11react/react-canvas-draw";

@@ -76,7 +76,7 @@ export const LockScreen = (props) => {
   const dispatch = useDispatch();
 
   const action = (e) => {
-    var act = e.target.dataset.action
+    var act = e.target.dataset.action;
     // ,payload = e.target.dataset.payload;
 
     if (act === "splash") setLock(true);

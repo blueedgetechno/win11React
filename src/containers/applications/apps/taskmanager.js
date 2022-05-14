@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
 import { Icon } from "../../../utils/general";
 import "./assets/taskmanager.scss";

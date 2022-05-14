@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon, LazyComponent } from "../../utils/general";
 import "./widget.scss";
 

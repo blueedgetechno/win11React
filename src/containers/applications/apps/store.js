@@ -41,8 +41,8 @@ export const MicroStore = () => {
   const [opapp, setOpapp] = useState(storedata[0]);
   const [storeapps, setApps] = useState(storedata);
   const [fetchState, setFetch] = useState(0);
-  const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  // const dispatch = useDispatch();
+  // const { t, i18n } = useTranslation();
 
   // const clickDispatch = (event) => {
   //   var action = {
