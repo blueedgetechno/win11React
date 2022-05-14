@@ -9,7 +9,6 @@
     position: absolute;
     left: 0;
     width: 44px;
-    height: 100%;
     display: flex;
     flex-direction: column;
 
@@ -76,8 +75,12 @@
 
     th,
     td {
-      border: 1px solid;
-      padding: 4px;
+      border: 1px solid rgb(var(--txt_clr-rgb) / 10%);
+      padding: 4px 8px;
+    }
+
+    td:not(.name) {
+      background: rgb(0 0 255 / 5%);
     }
   }
 

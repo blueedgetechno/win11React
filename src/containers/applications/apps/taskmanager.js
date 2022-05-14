@@ -4,6 +4,14 @@ import { ToolBar } from "../../../utils/general";
 import { Icon } from "../../../utils/general";
 import "./assets/taskmanager.scss";
 
+import apps from "../../../utils/apps";
+
+let appList = [];
+
+apps.map((e) => {
+  appList.push(e.name);
+});
+
 export const Taskmanager = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.taskmanager);
@@ -23,12 +31,11 @@ export const Taskmanager = () => {
     { title: "Settings", icon: "faGear" },
   ];
 
-  let arr = Array.apply(null, { length: 100 }).map(Number.call, Number);
-  const randomPercent = () => `${(Math.random() * 100).toFixed(2)}%`;
+  const powerUsage = ["Very low", "Low", "Moderate", "High", "Very High"];
 
   return (
     <div
-      className="taskmanagerApp floatTab dpShad"
+      className="taskmanagerApp floatTab dpShad win11Scroll"
       data-size={wnapp.size}
       data-max={wnapp.max}
       style={{
@@ -60,7 +67,7 @@ export const Taskmanager = () => {
             })}
             <div className="marker"></div>
           </nav>
-          <main className="flex-grow">
+          <main>
             <h3>{tab}</h3>
             {(() => {
               switch (tab) {
@@ -70,6 +77,7 @@ export const Taskmanager = () => {
                       <table>
                         <thead>
                           <tr>
+                            <th>Name</th>
                             <th>CPU</th>
                             <th>Memory</th>
                             <th>Disk</th>
@@ -79,15 +87,24 @@ export const Taskmanager = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {arr.map((item) => {
+                          {appList.map((e) => {
                             return (
                               <tr>
-                                <td>{randomPercent()}</td>
-                                <td>{randomPercent()}</td>
-                                <td>{randomPercent()}</td>
-                                <td>{randomPercent()}</td>
-                                <td>{randomPercent()}</td>
-                                <td>{randomPercent()}</td>
+                                <td className="name">{e}</td>
+                                <td>{(Math.random() * 10).toFixed(2)}%</td>
+                                <td>{(Math.random() * 100).toFixed(2)} MB</td>
+                                <td>{(Math.random() * 50).toFixed(2)} MB/s</td>
+                                <td>{(Math.random() * 50).toFixed(2)} MBps</td>
+                                <td>{(Math.random() * 10).toFixed(2)}%</td>
+                                <td>
+                                  {
+                                    powerUsage[
+                                      Math.floor(
+                                        Math.random() * powerUsage.length
+                                      )
+                                    ]
+                                  }
+                                </td>
                               </tr>
                             );
                           })}
