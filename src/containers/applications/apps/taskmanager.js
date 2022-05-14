@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
+import { Icon } from "../../../utils/general";
 import "./assets/taskmanager.scss";
 
 export const Taskmanager = () => {
@@ -12,14 +13,14 @@ export const Taskmanager = () => {
   const [nav, setNav] = useState("");
 
   const tabNames = [
-    "Processes",
-    "Performance",
-    "App history",
-    "Startup apps",
-    "Users",
-    "Details",
-    "Services",
-    "Settings",
+    { title: "Processes", icon: "faTableCellsLarge" },
+    { title: "Performance", icon: "faWaveSquare" },
+    { title: "App history", icon: "faClockRotateLeft" },
+    { title: "Startup apps", icon: "faGaugeHigh" },
+    { title: "Users", icon: "faUser" },
+    { title: "Details", icon: "faList" },
+    { title: "Services", icon: "faPuzzlePiece" },
+    { title: "Settings", icon: "faGear" },
   ];
 
   return (
@@ -43,28 +44,26 @@ export const Taskmanager = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <nav className={nav}>
-            {tabNames.map((e) => {
+            {tabNames.map((t) => {
               return (
                 <div
-                  key={e}
-                  className={`navLink ${e === tab ? "selected" : ""}`}
-                  onClick={() => {
-                    setTab(e);
-                  }}
+                  className={`navLink ${t.title === tab ? "selected" : ""}`}
+                  onClick={() => setTab(t.title)}
                 >
-                  <span className="someIcon">-</span>
-                  <span className="tabName">{e}</span>
+                  <Icon className="mx-2" fafa={t.icon} />
+                  <span className="tabName">{t.title}</span>
                 </div>
               );
             })}
             <div className="marker"></div>
           </nav>
           <main className="flex-grow">
-            {tabNames.map((e) => {
+            {tabNames.map((t) => {
               return (
-                tab === e && (
+                tab === t.title && (
                   <>
                     <h3>{tab}</h3>
+                    <div className="content"></div>
                   </>
                 )
               );
