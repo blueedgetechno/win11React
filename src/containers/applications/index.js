@@ -21,8 +21,8 @@ export * from "./apps/taskmanager";
 
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);
-  const [boolCh, setCheck] = useState(true);
-  const dispatch = useDispatch();
+  // const [boolCh, setCheck] = useState(true);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     if (tasks.prevApp !== "" && tasks.prev && false) {

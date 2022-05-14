@@ -4,12 +4,12 @@ import axios from "axios";
 const search_url = "/search?query=";
 const song_url = "/song?pids=";
 const album_url = "/album?id=";
-const playlist_url =
-  "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid=";
-const lyrics_url =
-  "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id=";
+// const playlist_url =
+//   "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid=";
+// const lyrics_url =
+//   "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id=";
 
-const { round, floor, max, min, random } = Math;
+const { floor, random } = Math;
 
 class JioSaavn {
   constructor() {

@@ -75,7 +75,7 @@ const Dropdown = (props) => {
           icon={props.icon}
           title={props.title}
           isize={props.isize}
-          action={props.action != "" ? props.action || "FILEDIR" : null}
+          action={props.action !== "" ? props.action || "FILEDIR" : null}
           payload={fid}
         />
         {props.pinned != null ? (
@@ -93,7 +93,7 @@ const Dropdown = (props) => {
 };
 
 export const Explorer = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.explorer);
   const files = useSelector((state) => state.files);
   const fdata = files.data.getId(files.cdir);
@@ -267,7 +267,7 @@ export const Explorer = () => {
 
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  // const special = useSelector((state) => state.files.data.special);
   const [selected, setSelect] = useState(null);
   const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
@@ -328,8 +328,8 @@ const ContentArea = ({ searchtxt }) => {
 };
 
 const NavPane = ({}) => {
-  const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  // const files = useSelector((state) => state.files);
+  // const special = useSelector((state) => state.files.data.special);
 
   return (
     <div className="navpane win11Scroll">

@@ -6,7 +6,7 @@ import "./back.scss";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div
@@ -67,7 +67,7 @@ export const BootScreen = (props) => {
 };
 
 export const LockScreen = (props) => {
-  const wall = useSelector((state) => state.wallpaper);
+  // const wall = useSelector((state) => state.wallpaper);
   const [lock, setLock] = useState(false);
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");
@@ -76,8 +76,8 @@ export const LockScreen = (props) => {
   const dispatch = useDispatch();
 
   const action = (e) => {
-    var act = e.target.dataset.action,
-      payload = e.target.dataset.payload;
+    var act = e.target.dataset.action
+    // ,payload = e.target.dataset.payload;
 
     if (act === "splash") setLock(true);
     else if (act === "inpass") {
@@ -102,9 +102,9 @@ export const LockScreen = (props) => {
     }, 1000);
   };
 
-  const action2 = (e) => {
-    if (e.key === "Enter") proceed();
-  };
+  // const action2 = (e) => {
+  //   if (e.key === "Enter") proceed();
+  // };
 
   return (
     <div

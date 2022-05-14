@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import { ToolBar } from "../../../utils/general";
 
 export const Notepad = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.notepad);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div

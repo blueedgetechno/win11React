@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import { Image, ToolBar } from "../../../utils/general";
 
 import CanvasDraw from "@win11react/react-canvas-draw";
 import { Mark } from "./assets";
 
 export const WhiteBoard = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.board);
   const [color, setColor] = useState("#222222");
   const [radii, setRadii] = useState(4);
@@ -22,7 +22,7 @@ export const WhiteBoard = () => {
     "erazer",
     "reset",
   ]);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const action = (e) => {
     var act = e.target.getAttribute("value");

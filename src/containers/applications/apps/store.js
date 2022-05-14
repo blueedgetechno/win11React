@@ -33,7 +33,7 @@ const emap = (v) => {
 };
 
 export const MicroStore = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.store);
   const hide = useSelector((state) => state.apps.store.hide);
   const [tab, setTab] = useState("sthome");
@@ -44,14 +44,14 @@ export const MicroStore = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
-  const clickDispatch = (event) => {
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
+  // const clickDispatch = (event) => {
+  //   var action = {
+  //     type: event.target.dataset.action,
+  //     payload: event.target.dataset.payload,
+  //   };
 
-    if (action.type) dispatch(action);
-  };
+  //   if (action.type) dispatch(action);
+  // };
 
   const action = (e) => {
     var act = e.target.dataset.action,

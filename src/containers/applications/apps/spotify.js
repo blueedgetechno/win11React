@@ -7,7 +7,7 @@ import data from "./assets/songs.json";
 
 import "./assets/spotify.scss";
 
-const { round, floor, max, min, random, ceil, abs } = Math;
+const { round, floor, max, ceil } = Math;
 String.prototype.to150 = function () {
   return this.replace("500x500", "150x150").replace("50x50", "150x150");
 };
@@ -19,7 +19,7 @@ String.prototype.to250 = function () {
 };
 
 export const Spotify = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.spotify);
   const [tab, setTab] = useState(0);
   const [paused, setPause] = useState(true);
@@ -33,7 +33,7 @@ export const Spotify = () => {
   const [curr, setCurr] = useState(0);
   const [playd, setPlay] = useState({}); //type: "album",tdata: "1794239"});
   const [saved, setSaved] = useState({});
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const libr = [
     "Made For You",
@@ -706,7 +706,7 @@ const Search = ({ sid, paused, action, action2 }) => {
 
 const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
   const [data, setData] = useState({ fake: true });
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
   const [ptype, setPtype] = useState(true);
   const [totTime, setTotime] = useState(0);
 

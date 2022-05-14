@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../utils/general";
 
 export const Calculator = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.calculator);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [equa, setEqua] = useState([]);
   const [cval, setCval] = useState("0");
   const [err, setErr] = useState(null);

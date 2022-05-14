@@ -45,7 +45,7 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div className="desktopCont">

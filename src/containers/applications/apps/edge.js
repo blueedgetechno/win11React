@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
+import { Icon, ToolBar, LazyComponent } from "../../../utils/general";
 
 export const EdgeMenu = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.edge);
   const [url, setUrl] = useState("https://www.google.com/?igu=1");
   const [ierror, setErr] = useState(true);
@@ -30,13 +30,13 @@ export const EdgeMenu = () => {
       "https://avatars.githubusercontent.com/u/45342431",
   };
 
-  const clickDispatch = (event) => {
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
-    if (action.type) dispatch(action);
-  };
+  // const clickDispatch = (event) => {
+  //   var action = {
+  //     type: event.target.dataset.action,
+  //     payload: event.target.dataset.payload,
+  //   };
+  //   if (action.type) dispatch(action);
+  // };
 
   const isValidURL = (string) => {
     var res = string.match(

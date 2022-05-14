@@ -236,7 +236,7 @@ export const SnapScreen = (props) => {
   const [delay, setDelay] = useState(false);
   const lays = useSelector((state) => state.globals.lays);
 
-  const vr = "var(--radii)";
+  // const vr = "var(--radii)";
 
   const clickDispatch = (event) => {
     var action = {

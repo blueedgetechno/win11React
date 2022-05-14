@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import "./i18nextConf";
 import { useSelector, useDispatch } from "react-redux";

@@ -3,11 +3,11 @@ import { Icon } from "../utils/general";
 
 const Battery = ({ charging, level }) => {
   const batteryref = useRef(null);
-  var divtitle =
-    "Battery status: " +
-    level +
-    "% " +
-    (charging ? "available (plugged in)" : "remaining");
+  // var divtitle =
+  //   "Battery status: " +
+  //   level +
+  //   "% " +
+  //   (charging ? "available (plugged in)" : "remaining");
 
   useEffect(() => {
     batteryref.current.style.width = `${level}%`;

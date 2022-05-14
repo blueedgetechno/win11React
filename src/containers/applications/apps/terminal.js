@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
 
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 
 export const WnTerminal = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.terminal);
   const [stack, setStack] = useState(["OS [Version 10.0.22000.51]", ""]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");

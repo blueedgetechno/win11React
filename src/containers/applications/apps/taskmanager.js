@@ -13,9 +13,9 @@ apps.map((e) => {
 });
 
 export const Taskmanager = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.taskmanager);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [tab, setTab] = useState("Processes");
   const [nav, setNav] = useState("open");

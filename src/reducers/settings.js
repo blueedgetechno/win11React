@@ -1,5 +1,3 @@
-import { desktopApps } from "../utils";
-
 const defState = {
   system: {
     power: {

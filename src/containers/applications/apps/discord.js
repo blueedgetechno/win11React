@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
+import { Icon, ToolBar, LazyComponent } from "../../../utils/general";
 
 import WidgetBot from "@widgetbot/react-embed";
 
 export const DScord = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.discord);
   const [url, setUrl] = useState(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const servers = [
     {
       src: "arrtective.png",

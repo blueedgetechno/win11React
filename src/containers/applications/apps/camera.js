@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../utils/general";
 import { useTranslation } from "react-i18next";
 
 export const Camera = () => {
-  const apps = useSelector((state) => state.apps);
+  // const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.camera);
   const hide = useSelector((state) => state.apps.camera.hide);
   const [stream, setStream] = useState(null);
   const { t, i18n } = useTranslation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const capture = () => {
     var video = document.querySelector("video");
@@ -27,13 +27,13 @@ export const Camera = () => {
   useEffect(() => {
     if (!wnapp.hide) {
       var video = document.getElementById("camvideo");
-      var canvas = document.getElementById("camcanvas");
+      // var canvas = document.getElementById("camcanvas");
 
       video.setAttribute("playsinline", "");
       video.setAttribute("autoplay", "");
       video.setAttribute("muted", "");
 
-      var facingMode = "user";
+      // var facingMode = "user";
       var constraints = {
         audio: false,
         video: true,

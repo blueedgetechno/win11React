@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, LazyComponent } from "../../utils/general";
 import "./widget.scss";
 
 export const WidPane = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const widget = useSelector((state) => state.widpane);
   const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
