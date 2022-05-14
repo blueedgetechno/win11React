@@ -1,8 +1,8 @@
 import {allApps} from '../utils';
 
-var dev = "taskmanager"
+var dev = ""
 if(process.env.REACT_APP_ENV=="development"){
-  dev = "" // set the name (lowercase) of the app you are developing so that it will be opened on refresh
+  dev = "taskmanager" // set the name (lowercase) of the app you are developing so that it will be opened on refresh
 }
 
 const defState = {};
