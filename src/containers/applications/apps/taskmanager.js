@@ -10,7 +10,7 @@ export const Taskmanager = () => {
   const dispatch = useDispatch();
 
   const [tab, setTab] = useState("Processes");
-  const [nav, setNav] = useState("open");
+  const [nav, setNav] = useState("");
 
   const tabNames = [
     { title: "Processes", icon: "faTableCellsLarge" },
@@ -22,6 +22,9 @@ export const Taskmanager = () => {
     { title: "Services", icon: "faPuzzlePiece" },
     { title: "Settings", icon: "faGear" },
   ];
+
+  let arr = Array.apply(null, { length: 100 }).map(Number.call, Number);
+  const randomPercent = () => `${(Math.random() * 100).toFixed(2)}%`;
 
   return (
     <div
@@ -58,16 +61,44 @@ export const Taskmanager = () => {
             <div className="marker"></div>
           </nav>
           <main className="flex-grow">
-            {tabNames.map((t) => {
-              return (
-                tab === t.title && (
-                  <>
-                    <h3>{tab}</h3>
-                    <div className="content"></div>
-                  </>
-                )
-              );
-            })}
+            <h3>{tab}</h3>
+            {(() => {
+              switch (tab) {
+                case "Processes":
+                  return (
+                    <div className="Processes">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>CPU</th>
+                            <th>Memory</th>
+                            <th>Disk</th>
+                            <th>Network</th>
+                            <th>GPU</th>
+                            <th>Power Usage</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {arr.map((item) => {
+                            return (
+                              <tr>
+                                <td>{randomPercent()}</td>
+                                <td>{randomPercent()}</td>
+                                <td>{randomPercent()}</td>
+                                <td>{randomPercent()}</td>
+                                <td>{randomPercent()}</td>
+                                <td>{randomPercent()}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                default:
+                  return;
+              }
+            })()}
           </main>
           <div className="navMenuBtn" onClick={() => setNav(nav ? "" : "open")}>
             <svg

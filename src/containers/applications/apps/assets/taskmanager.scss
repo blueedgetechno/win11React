@@ -64,10 +64,21 @@
     border-top-left-radius: 8px;
     padding: 0 1rem;
     background: var(--bg);
+    transition: all 100ms;
   }
 
   nav.open ~ main {
     margin-left: 240px;
+  }
+
+  table {
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid;
+      padding: 4px;
+    }
   }
 
   .navMenuBtn {
