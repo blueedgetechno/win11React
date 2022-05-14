@@ -1,15 +1,12 @@
 import React from "react";
-import i18next from 'i18next';
+import i18next from "i18next";
 
 function LangSwitch() {
-
   return (
     <div className="langSwitcher">
       <select
         value={i18next.language}
-        onChange={(e) =>
-          i18next.changeLanguage(e.target.value)
-        }
+        onChange={(e) => i18next.changeLanguage(e.target.value)}
       >
         <option value="da">Danish</option>
         <option value="de">German</option>

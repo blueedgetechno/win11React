@@ -12,8 +12,10 @@
 This open source project is made in the hope to replicate the Windows 11 desktop experience on web, using standard web technologies like React, CSS (SCSS), and JS.
 
 ## Notice
->#### This project is **not in anyway affiliated with Microsoft** and **should not be confused with Microsoft’s Operating System** or Products.
->#### This is also not Windows 365 cloud PC.
+
+> #### This project is **not in anyway affiliated with Microsoft** and **should not be confused with Microsoft’s Operating System** or Products.
+>
+> #### This is also not Windows 365 cloud PC.
 
 **THIS IS NOT THE APP STORE REPO**
 
@@ -23,10 +25,11 @@ This open source project is made in the hope to replicate the Windows 11 desktop
 
 https://win11react-docs.andrewstech.me/
 
-work in progress 
+work in progress
 
-------------
- #### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
+---
+
+#### Live Experience🌈: [win11.blueedge.me](https://win11.blueedge.me)
 
 ![home](./public/img/home.jpg)
 
@@ -43,6 +46,7 @@ work in progress
 WHY NOT? Why not just waste a week of your life creating a React project, just to cover up your insecurities of how incompetent you are. Just why not!
 
 # Features
+
 - [x] Start Menu, Search Menu and Widgets
 - [x] Desktop and Right Click action
 - [x] Side Navigation and Calendar View
@@ -67,33 +71,36 @@ WHY NOT? Why not just waste a week of your life creating a React project, just t
 ## FAQ
 
 - Is this the full operating system?
+
   - No, This is not a full operating system and It is also not affiliated by Microsoft in anyway.
 
-- How long did it take? 
+- How long did it take?
+
   - Honestly It took 2-3 days collecting assets, 2-3 planning and about 6 days programming it.
 
-
 - Did you use any UI/Library?
+
   - No.
 
-
 - Can I contribute?
+
   - Yes, you can! Open an issue, create a pull request, head over to [discussions](https://github.com/blueedgetechno/win11React/discussions) or join the [discord](https://discord.gg/NcjaNdwtnR).
 
-
 - Where did you get the inspiration from, if you have?
+
   - I got the inspiration from [this youtube video](https://www.youtube.com/watch?v=OtOmxa9UMe8).
 
-
 - What is the answer of Life, the Universe, and Everything?
+
   - 42
 
     ![answer](./public/answer.png)
+
 ## Local Deployment
 
 # Docker
 
-To use docker use the following command ``` docker run -d  --restart unless-stopped --name win11react -p 3000:3000 blueedge/win11react:latest ```
+To use docker use the following command `docker run -d --restart unless-stopped --name win11react -p 3000:3000 blueedge/win11react:latest`
 
 # Homeassistant
 
@@ -103,7 +110,7 @@ To use docker use the following command ``` docker run -d  --restart unless-stop
 
 [![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/blueedgetechno/win11React)
 
---------------------------------------------------------------------------------------------------------
+---
 
 # Compiled
 
@@ -113,8 +120,7 @@ You can find a compiled `.exe` in the **Releases** section or via clicking [HERE
 
 If you have one of the latest windows builds then you can enter the command below in **CMD**
 
-``` winget install blueedge.win11react ```
-
+`winget install blueedge.win11react`
 
 ## Online Deployment
 
@@ -127,6 +133,7 @@ If you have one of the latest windows builds then you can enter the command belo
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fblueedgetechno%2Fwindows11%2F&project-name=windows11&repo-name=windows11-react&demo-title=Windows%2011%20Demo&demo-description=Static&demo-url=https%3A%2F%2Fwin11.blueedge.me%2F)
 
 ## Contributors
+
 <a href="https://github.com/blueedgetechno/win11React/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=blueedgetechno/win11React" />
 </a>

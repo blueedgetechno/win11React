@@ -65,7 +65,11 @@
         border-radius: 6px;
         box-sizing: border-box;
         background: var(--clr1);
-        background: linear-gradient(to bottom right, var(--clr1) 0%, var(--clrWeather) 80%);
+        background: linear-gradient(
+          to bottom right,
+          var(--clr1) 0%,
+          var(--clrWeather) 80%
+        );
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -353,7 +357,11 @@
     border-radius: 4px;
     padding: 12px;
     background: var(--comp-txt);
-    background: linear-gradient(to bottom right, var(--topStoriesClr) 0%, var(--comp-txt) 100%);
+    background: linear-gradient(
+      to bottom right,
+      var(--topStoriesClr) 0%,
+      var(--comp-txt) 100%
+    );
 
     &::after {
       content: "source: saurav.tech/NewsAPI";
@@ -477,7 +485,11 @@
         width: 100%;
         height: 100%;
         background: var(--dark-txt);
-        background: linear-gradient(to left, transparent 0%, var(--backgrad) 60%);
+        background: linear-gradient(
+          to left,
+          transparent 0%,
+          var(--backgrad) 60%
+        );
         z-index: 0;
       }
 

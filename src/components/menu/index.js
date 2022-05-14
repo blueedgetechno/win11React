@@ -59,40 +59,87 @@ export const ActMenu = () => {
 
   const menuobj = (data) => {
     var mnode = [];
-    data.map((opt,i) => {
+    data.map((opt, i) => {
       if (opt.type === "hr") {
         mnode.push(<div key={i} className="menuhr"></div>);
       } else {
         mnode.push(
-          <div key={i} className="menuopt" data-dsb={opt.dsb} onClick={clickDispatch} data-action={opt.action} data-payload={opt.payload}>
-            {menudata.ispace!=false?(
+          <div
+            key={i}
+            className="menuopt"
+            data-dsb={opt.dsb}
+            onClick={clickDispatch}
+            data-action={opt.action}
+            data-payload={opt.payload}
+          >
+            {menudata.ispace != false ? (
               <div className="spcont">
-                {opt.icon && opt.type=="svg" ? <Icon icon={opt.icon} width={16} /> : null}
-                {opt.icon && opt.type=="fa" ? <Icon fafa={opt.icon} width={16} /> : null}
-                {opt.icon && opt.type==null ? <Icon src={opt.icon} width={16} /> : null}
+                {opt.icon && opt.type === "svg" ? (
+                  <Icon icon={opt.icon} width={16} />
+                ) : null}
+                {opt.icon && opt.type === "fa" ? (
+                  <Icon fafa={opt.icon} width={16} />
+                ) : null}
+                {opt.icon && opt.type === null ? (
+                  <Icon src={opt.icon} width={16} />
+                ) : null}
               </div>
-            ):null}
+            ) : null}
             <div className="nopt">{opt.name}</div>
-            {opt.opts ? <Icon className="micon rightIcon" fafa="faChevronRight" width={10} color="#999" /> : null}
-            {opt.dot ? <Icon className="micon dotIcon" fafa="faCircle" width={4} height={4} /> : null}
-            {opt.check ? <Icon className="micon checkIcon" fafa="faCheck" width={8} height={8} /> : null}
-            {opt.opts ? <div className="minimenu" style={{
-              minWidth: menudata.secwid
-            }}>{menuobj(opt.opts)}</div> : null}
+            {opt.opts ? (
+              <Icon
+                className="micon rightIcon"
+                fafa="faChevronRight"
+                width={10}
+                color="#999"
+              />
+            ) : null}
+            {opt.dot ? (
+              <Icon
+                className="micon dotIcon"
+                fafa="faCircle"
+                width={4}
+                height={4}
+              />
+            ) : null}
+            {opt.check ? (
+              <Icon
+                className="micon checkIcon"
+                fafa="faCheck"
+                width={8}
+                height={8}
+              />
+            ) : null}
+            {opt.opts ? (
+              <div
+                className="minimenu"
+                style={{
+                  minWidth: menudata.secwid,
+                }}
+              >
+                {menuobj(opt.opts)}
+              </div>
+            ) : null}
           </div>
         );
       }
-    })
+    });
 
     return mnode;
   };
 
   return (
-    <div className="actmenu" id="actmenu" style={{
+    <div
+      className="actmenu"
+      id="actmenu"
+      style={{
         ...abpos,
         "--prefix": "MENU",
-        width: menudata.width
-      }} data-hide={menu.hide} data-left={isLeft}>
+        width: menudata.width,
+      }}
+      data-hide={menu.hide}
+      data-left={isLeft}
+    >
       {menuobj(menu.menus[menu.opts])}
     </div>
   );

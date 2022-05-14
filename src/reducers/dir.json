@@ -224,9 +224,9 @@
       "Windows": {}
     }
   },
-  "D:":{
+  "D:": {
     "name": "D:",
-    "info":{
+    "info": {
       "spid": "%ddrive%"
     },
     "data": {

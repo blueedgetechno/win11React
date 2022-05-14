@@ -12,35 +12,62 @@
  * Date: 2014-08-17 sunday
  */
 /*! dyCalendarJS | (c) 2016 Yusuf Shakeel | https://github.com/yusufshakeel/dyCalendarJS */
-(function(global) {
-
+(function (global) {
   "use strict";
 
-  var
-    //this will be used by the user.
+  var //this will be used by the user.
     dycalendar = {},
-
     //window document
     document = global.document,
-
     //starting year
     START_YEAR = 1900,
-
     //end year
     END_YEAR = 9999,
-
     //name of the months
     monthName = {
-      full: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      mmm: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      full: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      mmm: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     },
-
     //name of the days
     dayName = {
-      full: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      d: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      dd: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      ddd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      full: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      d: ["S", "M", "T", "W", "T", "F", "S"],
+      dd: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      ddd: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     };
 
   /**
@@ -51,10 +78,7 @@
    * @return html
    */
   function createMonthTable(data, option) {
-
-    var
-      table, tr, td,
-      r, c, count;
+    var table, tr, td, r, c, count;
 
     table = document.createElement("table");
     tr = document.createElement("tr");
@@ -85,11 +109,19 @@
     while (c <= 6) {
       td = document.createElement("td");
       td.innerHTML = count;
-      if (option.date === count && option.month === data.monthIndex && option.highlighttargetdate === true) {
+      if (
+        option.date === count &&
+        option.month === data.monthIndex &&
+        option.highlighttargetdate === true
+      ) {
         td.setAttribute("class", "dycalendar-target-date");
       }
 
-      if (data.today.date === count && data.today.monthIndex === data.monthIndex && option.highlighttoday === true) {
+      if (
+        data.today.date === count &&
+        data.today.monthIndex === data.monthIndex &&
+        option.highlighttoday === true
+      ) {
         td.setAttribute("class", "dycalendar-today-date");
       }
 
@@ -107,13 +139,21 @@
           table.appendChild(tr);
           return table;
         }
-        td = document.createElement('td');
+        td = document.createElement("td");
         td.innerHTML = count;
-        if (option.date === count && option.month === data.monthIndex && option.highlighttargetdate === true) {
+        if (
+          option.date === count &&
+          option.month === data.monthIndex &&
+          option.highlighttargetdate === true
+        ) {
           td.setAttribute("class", "dycalendar-target-date");
         }
 
-        if (data.today.date === count && data.today.monthIndex === data.monthIndex && option.highlighttoday === true) {
+        if (
+          data.today.date === count &&
+          data.today.monthIndex === data.monthIndex &&
+          option.highlighttoday === true
+        ) {
           td.setAttribute("class", "dycalendar-today-date");
         }
 
@@ -134,10 +174,7 @@
    * @return html
    */
   function drawCalendarMonthTable(data, option) {
-
-    var
-      table,
-      div, container, elem;
+    var table, div, container, elem;
 
     //get table
     table = createMonthTable(data, option);
@@ -215,9 +252,7 @@
    * @return html
    */
   function drawCalendarDay(data, option) {
-
-    var
-      div, container, elem;
+    var div, container, elem;
 
     //calendar container
     container = document.createElement("div");
@@ -302,9 +337,7 @@
    * @return boolean|object    if error return false, else calendar detail
    */
   function getCalendar(year, month, date) {
-
-    var
-      dateObj = new Date(),
+    var dateObj = new Date(),
       dateString,
       result = {},
       idx;
@@ -378,34 +411,40 @@
     result.targetedDayFullName = dayName.full[idx];
 
     return result;
-
   }
 
   /**
    * this function will handle the on click event.
    */
   function onClick() {
-
-    document.body.onclick = function(e) {
-
+    document.body.onclick = function (e) {
       //get event object (window.event for IE compatibility)
       e = global.event || e;
 
-      var
-        //get target dom object reference
+      var //get target dom object reference
         targetDomObject = e.target || e.srcElement,
-
         //other variables
-        date, month, year, btn, option, dateObj;
+        date,
+        month,
+        year,
+        btn,
+        option,
+        dateObj;
 
       //prev-next button click
       //extra checks to make sure object exists and contains the class of interest
-      if ((targetDomObject) && (targetDomObject.classList) && (targetDomObject.classList.contains("dycalendar-prev-next-btn"))) {
+      if (
+        targetDomObject &&
+        targetDomObject.classList &&
+        targetDomObject.classList.contains("dycalendar-prev-next-btn")
+      ) {
         date = parseInt(targetDomObject.getAttribute("data-date"));
         month = parseInt(targetDomObject.getAttribute("data-month"));
         year = parseInt(targetDomObject.getAttribute("data-year"));
         btn = targetDomObject.getAttribute("data-btn");
-        option = JSON.parse(targetDomObject.parentElement.getAttribute("data-option"));
+        option = JSON.parse(
+          targetDomObject.parentElement.getAttribute("data-option")
+        );
 
         if (btn === "prev") {
           month = month - 1;
@@ -413,8 +452,7 @@
             year = year - 1;
             month = 11;
           }
-        }
-        else if (btn === "next") {
+        } else if (btn === "next") {
           month = month + 1;
           if (month > 11) {
             year = year + 1;
@@ -431,8 +469,14 @@
 
       //month click
       //extra checks to make sure object exists and contains the class of interest
-      if ((targetDomObject) && (targetDomObject.classList) && (targetDomObject.classList.contains("dycalendar-span-month-year"))) {
-        option = JSON.parse(targetDomObject.parentElement.getAttribute("data-option"));
+      if (
+        targetDomObject &&
+        targetDomObject.classList &&
+        targetDomObject.classList.contains("dycalendar-span-month-year")
+      ) {
+        option = JSON.parse(
+          targetDomObject.parentElement.getAttribute("data-option")
+        );
         dateObj = new Date();
 
         option.date = dateObj.getDate();
@@ -465,19 +509,15 @@
    * @param object option     user preferences
    * @return boolean          true if success, false otherwise
    */
-  dycalendar.draw = function(option) {
-
+  dycalendar.draw = function (option) {
     //check if option is passed or not
     if (typeof option === "undefined") {
       global.console.error("Option missing");
       return false;
     }
 
-    var
-      self = this, //pointing at dycalendar object
-
+    var self = this, //pointing at dycalendar object
       dateObj = new Date(),
-
       //default settings
       defaults = {
         type: "day",
@@ -488,14 +528,13 @@
         dayformat: "full",
         highlighttoday: false,
         highlighttargetdate: false,
-        prevnextbutton: "hide"
+        prevnextbutton: "hide",
       };
 
     //extend user options with predefined options
     option = extendSource(option, defaults);
 
     drawCalendar(option);
-
   };
 
   //------------------------------ dycalendar.draw() ends here ------------
@@ -504,16 +543,15 @@
    * this function will draw the calendar inside the target container.
    */
   function drawCalendar(option) {
-
-    var
-      //variables for creating calendar
+    var //variables for creating calendar
       calendar,
       calendarHTML,
       targetedElementBy = "id",
       targetElem,
-
       //other variables
-      i, len, elemArr;
+      i,
+      len,
+      elemArr;
 
     //find target element by
     if (option.target[0] === "#") {
@@ -546,16 +584,12 @@
 
     //draw calendar
     if (targetedElementBy === "id") {
-
       document.getElementById(targetElem).innerHTML = calendarHTML.outerHTML;
-
     } else if (targetedElementBy === "class") {
-
       elemArr = document.getElementsByClassName(targetElem);
       for (i = 0, len = elemArr.length; i < len; i = i + 1) {
         elemArr[i].innerHTML = calendarHTML.outerHTML;
       }
-
     }
   }
 
@@ -564,5 +598,4 @@
 
   //attach to global window object
   global.dycalendar = dycalendar;
-
-}(typeof window !== "undefined" ? window : this));
+})(typeof window !== "undefined" ? window : this);
