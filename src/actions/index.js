@@ -100,7 +100,7 @@ export const performApp = (act, menu) => {
       var app = Object.keys(apps).filter(
         (x) =>
           apps[x].action === data.type ||
-          (apps[x].payload === data.payload && apps[x].payload != null)
+          (apps[x].payload === data.payload && apps[x].payload !== null)
       );
 
       app = apps[app];
@@ -131,7 +131,7 @@ export const delApp = (act, menu) => {
           if (!installed) installed = "[]";
 
           installed = JSON.parse(installed);
-          installed = installed.filter((x) => x.icon != app.icon);
+          installed = installed.filter((x) => x.icon !== app.icon);
           localStorage.setItem("installed", JSON.stringify(installed));
 
           store.dispatch({ type: "DESKREM", payload: app.name });
@@ -257,10 +257,10 @@ export const loadSettings = () => {
     }
   }
 
-  if (sett.person.theme != "light") changeTheme();
+  if (sett.person.theme !== "light") changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
-  if (process.env.REACT_APP_ENV != "development") {
+  if (process.env.REACT_APP_ENV !== "development") {
     loadWidget();
   }
 };
@@ -269,7 +269,7 @@ export const loadSettings = () => {
 export const handleFileOpen = (id) => {
   // handle double click open
   const item = store.getState().files.data.getId(id);
-  if (item != null) {
+  if (item !== null) {
     if (item.type === "folder") {
       store.dispatch({ type: "FILEDIR", payload: item.id });
     }

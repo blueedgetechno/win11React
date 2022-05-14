@@ -72,7 +72,7 @@ export const ActMenu = () => {
             data-action={opt.action}
             data-payload={opt.payload}
           >
-            {menudata.ispace != false ? (
+            {menudata.ispace !== false ? (
               <div className="spcont">
                 {opt.icon && opt.type === "svg" ? (
                   <Icon icon={opt.icon} width={16} />

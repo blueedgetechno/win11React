@@ -19,7 +19,7 @@ export const WnTerminal = () => {
     var tdir = { ...dirs },
       curr = pwd === "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
 
-    if (pwd != "C:\\") {
+    if (pwd !== "C:\\") {
       for (var i = 0; i < curr.length; i++) {
         // console.log(tdir);
         tdir = tdir[curr[i]];
@@ -279,7 +279,7 @@ export const WnTerminal = () => {
   };
 
   useEffect(() => {
-    if (wnapp.dir && wnapp.dir != pwd) {
+    if (wnapp.dir && wnapp.dir !== pwd) {
       setPwd(wnapp.dir);
       dispatch({ type: "OPENTERM", payload: null });
     }

@@ -41,7 +41,7 @@ export const Calculator = () => {
       if (btn === "inv") {
         var num = parseFloat(val);
 
-        if (num != 0) {
+        if (num !== 0) {
           var inv = 1 / num;
         } else {
           setErr("Cannot divide by zero");
@@ -54,7 +54,7 @@ export const Calculator = () => {
         setCval(sq.toString());
       } else if (btn === "sqrt") {
         var num = parseFloat(val);
-        if (val[0] != "-") {
+        if (val[0] !== "-") {
           var sqrt = Math.sqrt(num);
         } else {
           setErr("Invalid Input");
@@ -62,11 +62,11 @@ export const Calculator = () => {
         }
         setCval(sqrt.toString());
       }
-    } else if (idx > 7 && (idx + 1) % 4 != 0) {
+    } else if (idx > 7 && (idx + 1) % 4 !== 0) {
       if (btn.length === 1) {
         var tpq = [...equa];
 
-        if (tpq[3] != null) {
+        if (tpq[3] !== null) {
           if (btn === ".") {
             val = "0";
           } else {
@@ -77,14 +77,14 @@ export const Calculator = () => {
         }
 
         val += btn;
-        if (cval === "0" && btn != ".") {
+        if (cval === "0" && btn !== ".") {
           val = btn;
         }
 
-        if (val.length < 17 && val.match(/^-?[0-9]+([.][0-9]*)?$/) != null) {
+        if (val.length < 17 && val.match(/^-?[0-9]+([.][0-9]*)?$/) !== null) {
           setCval(val);
         }
-      } else if (cval != "0") {
+      } else if (cval !== "0") {
         if (cval[0] === "-") {
           setCval(cval.substring(1));
         } else {
@@ -93,7 +93,7 @@ export const Calculator = () => {
       }
     } else if (idx > 3 && idx % 4 === 3) {
       var tpq = [...equa];
-      if (btn != "=") {
+      if (btn !== "=") {
         if (tpq[2] === null) {
           if (tpq[0] === null) {
             tpq[0] = parseFloat(cval);
@@ -106,14 +106,14 @@ export const Calculator = () => {
         setCval("0");
         setEqua(tpq);
       } else {
-        if (tpq[1] != null) {
+        if (tpq[1] !== null) {
           if (tpq[2] === null) {
             tpq[2] = parseFloat(cval);
           }
 
           tpq[3] = "=";
           if (tpq[1] === "/") {
-            if (tpq[2] != 0) {
+            if (tpq[2] !== 0) {
               tpq[4] = tpq[0] / tpq[2];
             } else {
               setErr("Cannot divide by zero");
@@ -177,7 +177,7 @@ export const Calculator = () => {
               <div>M-</div>
               <div>MS</div>
             </div>
-            <div className="opcont" data-err={err != null}>
+            <div className="opcont" data-err={err !== null}>
               <div onClick={action} className="oper" data-ch="%">
                 %
               </div>
@@ -255,7 +255,7 @@ export const Calculator = () => {
           </div>
           <div className="calcHis flex flex-col">
             <div className="text-sm font-semibold">History</div>
-            {hist.length != 0 ? null : (
+            {hist.length !== 0 ? null : (
               <div className="text-xs mt-4">There's no history yet</div>
             )}
             <div className="histCont win11Scroll">

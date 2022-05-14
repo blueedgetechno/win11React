@@ -147,7 +147,7 @@ class JioSaavn {
     if (!sec) return "";
     var res = "",
       h = floor(sec / 3600);
-    if (h != 0) res += h + " hr ";
+    if (h !== 0) res += h + " hr ";
     sec = sec % 3600;
     res += floor(sec / 60) + " min ";
     sec %= 60;

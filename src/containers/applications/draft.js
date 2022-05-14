@@ -12,7 +12,7 @@ export const IFrame = (props) => {
       data-size={wnapp.size}
       className={
         "floatTab dpShad " +
-        (data.invert != true ? "lightWindow" : "darkWindow")
+        (data.invert !== true ? "lightWindow" : "darkWindow")
       }
       data-max={wnapp.max}
       style={{
