@@ -5,6 +5,10 @@
   background: var(--fakeMica);
   color: var(--dark-txt);
 
+  .windowScreen .restWindow {
+    height: 100%;
+  }
+
   nav {
     position: absolute;
     left: 0;
@@ -64,6 +68,10 @@
     padding: 0 1rem;
     background: var(--bg);
     transition: all 100ms;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: scroll;
   }
 
   nav.open ~ main {

@@ -35,7 +35,7 @@ export const Taskmanager = () => {
 
   return (
     <div
-      className="taskmanagerApp floatTab dpShad win11Scroll"
+      className="taskmanagerApp floatTab dpShad"
       data-size={wnapp.size}
       data-max={wnapp.max}
       style={{
@@ -67,7 +67,7 @@ export const Taskmanager = () => {
             })}
             <div className="marker"></div>
           </nav>
-          <main>
+          <main className="win11Scroll">
             <h3>{tab}</h3>
             {(() => {
               switch (tab) {
