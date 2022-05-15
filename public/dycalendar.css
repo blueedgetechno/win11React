@@ -86,11 +86,15 @@
   background: var(--bgHvr);
 }
 
-.dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.prev-btn {
+.dycalendar-month-container
+  .dycalendar-header
+  .dycalendar-prev-next-btn.prev-btn {
   right: 40px;
 }
 
-.dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.next-btn {
+.dycalendar-month-container
+  .dycalendar-header
+  .dycalendar-prev-next-btn.next-btn {
   right: 0;
 }
 
@@ -108,7 +112,11 @@
   border-radius: 50%;
 }
 
-.dycalendar-month-container .dycalendar-body table tr:not(:first-child) td:not(.dycalendar-today-date):hover {
+.dycalendar-month-container
+  .dycalendar-body
+  table
+  tr:not(:first-child)
+  td:not(.dycalendar-today-date):hover {
   background: var(--bgHvr);
 }
 

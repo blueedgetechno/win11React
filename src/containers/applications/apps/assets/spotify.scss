@@ -1,9 +1,9 @@
 .spotify .windowScreen {
-  font-family: 'Spotify', sans-serif;
+  font-family: "Spotify", sans-serif;
   cursor: default;
 }
 
-.navcover{
+.navcover {
   background: #121212;
 }
 
@@ -290,7 +290,7 @@
   }
 }
 
-.scard{
+.scard {
   width: 200px;
   position: relative;
   transition: all 50ms ease-in-out;
@@ -330,9 +330,10 @@
   }
 }
 
-
-.scard , .topcard{
-  .fplay, .fpause {
+.scard,
+.topcard {
+  .fplay,
+  .fpause {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -357,13 +358,13 @@
       clip-path: polygon(20% 0, 100% 50%, 20% 100%);
     }
 
-    .fbars{
+    .fbars {
       width: 12px;
       height: 12px;
       position: relative;
       background: #fefefe;
 
-      &::after{
+      &::after {
         content: "";
         position: absolute;
         left: 4px;
@@ -374,7 +375,7 @@
     }
   }
 
-  .fplay{
+  .fplay {
     opacity: 0;
     transform: translateY(12px);
   }
@@ -406,7 +407,7 @@
     background-size: contain;
     background-position: bottom;
     transform-origin: bottom;
-    transform: scale(1,1.8);
+    transform: scale(1, 1.8);
     opacity: 0.5;
     filter: hue-rotate(var(--rot1)) brightness(3);
   }
@@ -423,7 +424,7 @@
     background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTQ0MCAzMjAiPjxwYXRoIGZpbGw9IiMwMDk5ZmYiIGZpbGwtb3BhY2l0eT0iMSIgZD0iTTAsMEw0OCw0OEM5Niw5NiwxOTIsMTkyLDI4OCwyNDBDMzg0LDI4OCw0ODAsMjg4LDU3NiwyNTAuN0M2NzIsMjEzLDc2OCwxMzksODY0LDEzMy4zQzk2MCwxMjgsMTA1NiwxOTIsMTE1MiwyMzQuN0MxMjQ4LDI3NywxMzQ0LDI5OSwxMzkyLDMwOS4zTDE0NDAsMzIwTDE0NDAsMzIwTDEzOTIsMzIwQzEzNDQsMzIwLDEyNDgsMzIwLDExNTIsMzIwQzEwNTYsMzIwLDk2MCwzMjAsODY0LDMyMEM3NjgsMzIwLDY3MiwzMjAsNTc2LDMyMEM0ODAsMzIwLDM4NCwzMjAsMjg4LDMyMEMxOTIsMzIwLDk2LDMyMCw0OCwzMjBMMCwzMjBaIj48L3BhdGg+PC9zdmc+");
     background-size: contain;
     background-position: bottom;
-    transform: scale(1,-1);
+    transform: scale(1, -1);
     opacity: 0.32;
     filter: hue-rotate(var(--rot1)) brightness(3);
   }
@@ -435,7 +436,7 @@
   right: 0;
   font-size: 1.2em;
   color: #444;
-  transform: scale(1,1.8);
+  transform: scale(1, 1.8);
   top: 10px;
   font-weight: 200;
 
@@ -494,7 +495,7 @@
 
 .alsongs {
   box-sizing: border-box;
-  .hr{
+  .hr {
     height: 1px;
     background: #333;
     margin-bottom: 12px;
@@ -507,7 +508,10 @@
   align-items: center;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(20px,1fr);
+  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(
+      20px,
+      1fr
+    );
   padding: 8px;
   letter-spacing: 1px;
   border-radius: 4px;
@@ -515,7 +519,7 @@
   &:nth-child(1) {
     letter-spacing: 2px;
 
-    &:hover{
+    &:hover {
       background: none;
     }
   }
@@ -537,7 +541,7 @@
 
   .scolsong {
     max-width: 100%;
-    &[data-play="true"]{
+    &[data-play="true"] {
       margin-left: 16px;
       max-width: calc(100% - 56px);
     }
@@ -568,7 +572,7 @@
   -webkit-box-orient: vertical;
 }
 
-.dotdot{
+.dotdot {
   max-height: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -577,13 +581,13 @@
   -webkit-box-orient: vertical;
 }
 
-.thiker{
+.thiker {
   -webkit-text-stroke-width: 2px;
   letter-spacing: 2px;
   max-height: 48px;
 }
 
-.topcard{
+.topcard {
   position: relative;
   background: #222;
   border-radius: 4px;
@@ -592,11 +596,12 @@
   flex-direction: column;
   align-items: flex-start;
 
-  *{
+  * {
     pointer-events: none;
   }
 
-  .fplay, .fpause {
+  .fplay,
+  .fpause {
     top: unset;
     bottom: 16px;
     right: 16px;
@@ -604,7 +609,7 @@
     transition: all 200ms ease-in-out;
   }
 
-  .imageCont{
+  .imageCont {
     box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
   }
 }
