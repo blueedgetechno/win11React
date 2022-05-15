@@ -45,7 +45,7 @@ export const Camera = () => {
         video.srcObject = dstream;
       });
     } else {
-      if (stream != null) stream.getTracks().forEach((track) => track.stop());
+      if (stream !== null) stream.getTracks().forEach((track) => track.stop());
       setStream(null);
     }
   }, [hide]);

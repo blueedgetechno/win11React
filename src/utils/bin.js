@@ -64,7 +64,7 @@ export class Bin {
 
     cpath = cpath
       .split("\\")
-      .filter((x) => x != "")
+      .filter((x) => x !== "")
       .map((x) => x.trim().toLowerCase());
     if (cpath.length == 0) return null;
 

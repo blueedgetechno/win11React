@@ -25,7 +25,7 @@ export const ScreenPreview = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (tasks.prevApp != "" && tasks.prev && false) {
+    if (tasks.prevApp !== "" && tasks.prev && false) {
       var wnapp = document.getElementById(tasks.prevApp + "App");
       var clone = wnapp.cloneNode(true);
       clone.id = "prevsc";

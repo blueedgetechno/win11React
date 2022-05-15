@@ -39,7 +39,7 @@ var abbr = ["sn", "sl", "h", "t", "hr", "lr", "s", "hc", "lc", "c"],
 var rem = null;
 
 const getRandom = (x = 10, rm = 0) => {
-  if (rem != null) {
+  if (rem !== null) {
     var tmp = rem;
     rem = null;
     return tmp;

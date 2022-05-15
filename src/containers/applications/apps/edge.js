@@ -214,7 +214,7 @@ export const EdgeMenu = () => {
                       ext
                       width={16}
                       src={
-                        iframes[mark][0] != "\n"
+                        iframes[mark][0] !== "\n"
                           ? new URL(mark).origin + "/favicon.ico"
                           : favicons[mark]
                       }

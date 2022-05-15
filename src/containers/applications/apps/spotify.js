@@ -60,7 +60,7 @@ export const Spotify = () => {
       }
     } else if (act == "repeat") setRepeat((repeat + 1) % 3);
     else if (act == "volume") setVolume(e.target.value);
-    else if (act == "mute") setVolume(volume != 0 ? 0 : 100);
+    else if (act == "mute") setVolume(volume !== 0 ? 0 : 100);
     else if (act == "next") {
       setPause(false);
       setProg(0);
@@ -92,7 +92,7 @@ export const Spotify = () => {
           songid = data.home[pos[0]].cards[pos[1]].data;
       } else var songid = JSON.parse(payload);
 
-      if (songid != queue[curr].id) {
+      if (songid !== queue[curr].id) {
         jiosaavn
           .fetchSong(songid)
           .then((res) => {
@@ -118,7 +118,7 @@ export const Spotify = () => {
           year: 2021,
           album_artist: aldata.desc,
         };
-      if (saved[key] != null) {
+      if (saved[key] !== null) {
         songArr = saved[key];
         setPlay({
           type: act,
@@ -154,7 +154,7 @@ export const Spotify = () => {
           year: 2020 + aldata.name == "Community",
           album_artist: aldata.desc,
         };
-      if (saved[key] != null) {
+      if (saved[key] !== null) {
         songArr = saved[key];
         setPlay({
           type: act,
@@ -386,7 +386,7 @@ export const Spotify = () => {
                     icon="shuffle"
                     onClick={action}
                     click="shuffle"
-                    payload={(shfle != 0) | 0}
+                    payload={(shfle !== 0) | 0}
                   />
                   <Icon
                     className="cticon"
@@ -801,7 +801,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
               data-payload={`"` + song.song_id + `"`}
               onClick={action}
             >
-              {sid != song.song_id ? (
+              {sid !== song.song_id ? (
                 <div className="sidx font-semibold">{i + 1}</div>
               ) : null}
               {sid == song.song_id && paused ? (
@@ -851,7 +851,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
             </div>
           ))}
       </div>
-      {type != "play" ? (
+      {type !== "play" ? (
         <div className="text-xss font-semibold acol mt-6">
           {type == "album" &&
             data.songs &&
@@ -889,7 +889,7 @@ const Home = ({ tab, action, sid, paused }) => {
   useEffect(() => {
     var prt = document.getElementById("sphome");
     if (prt) {
-      var scvalue = (80 + max(0, tab - 2) * 360) * (tab != 0);
+      var scvalue = (80 + max(0, tab - 2) * 360) * (tab !== 0);
       prt.scrollTop = scvalue;
     }
   }, [tabval]);
@@ -954,7 +954,7 @@ const Home = ({ tab, action, sid, paused }) => {
                   <div className="sover p-4 nopt">
                     {card.type == "mix" ? card.name : null}
                   </div>
-                  {card.type == "song" && sid != card.data ? (
+                  {card.type == "song" && sid !== card.data ? (
                     <div className="fplay">
                       <div className="tria"></div>
                     </div>

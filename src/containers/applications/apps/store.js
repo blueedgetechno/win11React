@@ -243,7 +243,7 @@ const DownPage = ({ action, apps }) => {
       </div>
       <div className="appscont mt-8">
         {apps.map((item, i) => {
-          if (item.type != catg && catg != "all") return;
+          if (item.type !== catg && catg !== "all") return;
 
           var stars = geneStar(item);
           var reviews = Math.round(geneStar(item, 1) / 100) / 10;
@@ -328,7 +328,7 @@ const DetailPage = ({ app }) => {
   };
 
   useEffect(() => {
-    if (apps[app.icon] != null) setDown(3);
+    if (apps[app.icon] !== null) setDown(3);
   }, [dstate]);
 
   return (

@@ -29,7 +29,7 @@ const appReducer = (state = defState, action) => {
     var obj = { ...tmpState["edge"] };
     if (action.payload && action.payload.startsWith("http")) {
       obj.url = action.payload;
-    } else if (action.payload && action.payload.length != 0) {
+    } else if (action.payload && action.payload.length !== 0) {
       obj.url = "https://www.bing.com/search?q=" + action.payload;
     } else {
       obj.url = null;
@@ -101,13 +101,13 @@ const appReducer = (state = defState, action) => {
           obj.z = -1;
           tmpState.hz -= 1;
         } else if (action.payload == "mxmz") {
-          obj.size = ["mini", "full"][obj.size != "full" ? 1 : 0];
+          obj.size = ["mini", "full"][obj.size !== "full" ? 1 : 0];
           obj.hide = false;
           obj.max = true;
           tmpState.hz += 1;
           obj.z = tmpState.hz;
         } else if (action.payload == "togg") {
-          if (obj.z != tmpState.hz) {
+          if (obj.z !== tmpState.hz) {
             obj.hide = false;
             if (!obj.max) {
               tmpState.hz += 1;
@@ -139,13 +139,13 @@ const appReducer = (state = defState, action) => {
           obj.size = "cstm";
           obj.hide = false;
           obj.max = true;
-          if (obj.z != tmpState.hz) tmpState.hz += 1;
+          if (obj.z !== tmpState.hz) tmpState.hz += 1;
           obj.z = tmpState.hz;
           obj.dim = action.dim;
         } else if (action.payload == "front") {
           obj.hide = false;
           obj.max = true;
-          if (obj.z != tmpState.hz) {
+          if (obj.z !== tmpState.hz) {
             tmpState.hz += 1;
             obj.z = tmpState.hz;
           }

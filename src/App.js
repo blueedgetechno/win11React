@@ -149,7 +149,7 @@ function App() {
               return <WinApp key={idx} />;
             })}
             {Object.keys(apps)
-              .filter((x) => x != "hz")
+              .filter((x) => x !== "hz")
               .map((key) => apps[key])
               .map((app, i) => {
                 if (app.pwa) {
