@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: npm
     directory: /
     registries:
-    - npm-github
+      - npm-github
     schedule:
       interval: daily
 

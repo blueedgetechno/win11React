@@ -33,7 +33,7 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: npm run build
+        run: CI=false npm run build
 
       - if: ${{ github.event.action == 'opened'}}
         run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
