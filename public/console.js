@@ -1,4 +1,7 @@
-console.log('%cWin11React is a project by blueedgetechno and ascended by andrewstech. If you wish to help out with this project, visit https://github.com/blueedgetechno/win11React', 'color: lightblue; font-size: x-large');
+console.log(
+  "%cWin11React is a project by blueedgetechno and ascended by andrewstech. If you wish to help out with this project, visit https://github.com/blueedgetechno/win11React",
+  "color: lightblue; font-size: x-large"
+);
 
 function removeWarning() {
   document.body.dataset.force = true;
@@ -22,9 +25,9 @@ window.pythonRunner = new BrythonRunner({
   stdin: {
     async readline() {
       var userInput = prompt();
-      console.log('Received StdIn: ' + userInput);
+      console.log("Received StdIn: " + userInput);
       return userInput;
     },
   },
-  onInit() {}
+  onInit() {},
 });

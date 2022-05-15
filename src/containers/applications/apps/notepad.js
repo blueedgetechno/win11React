@@ -19,7 +19,12 @@ export const Notepad = () => {
       data-hide={wnapp.hide}
       id={wnapp.icon + "App"}
     >
-      <ToolBar app={wnapp.action} icon={wnapp.icon} size={wnapp.size} name="Untitled - Notepad" />
+      <ToolBar
+        app={wnapp.action}
+        icon={wnapp.icon}
+        size={wnapp.size}
+        name="Untitled - Notepad"
+      />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex text-xs py-2 topBar">
           <div className="mx-2">File</div>
