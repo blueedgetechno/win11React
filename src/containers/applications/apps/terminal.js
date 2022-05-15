@@ -321,7 +321,7 @@ export const WnTerminal = () => {
                 </pre>
               ))}
               <div className="cmdLine actmd">
-                {pwd}>
+                {pwd}&gt;
                 <div
                   className="ipcmd"
                   id="curcmd"
