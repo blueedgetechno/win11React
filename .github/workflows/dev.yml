@@ -22,7 +22,7 @@ jobs:
           node-version: 16
 
       - name: Build
-        run: npm ci && REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json CI=false npm run build
+        run: npm ci && REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run ghbuild
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3

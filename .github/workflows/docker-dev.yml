@@ -26,7 +26,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies & Build
-        run: npm ci && REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json CI=false npm run build
+        run: npm ci && REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run ghbuild
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1

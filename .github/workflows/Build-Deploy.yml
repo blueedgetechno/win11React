@@ -41,7 +41,7 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: CI=false npm run build
+        run: npm run ghbuild
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
