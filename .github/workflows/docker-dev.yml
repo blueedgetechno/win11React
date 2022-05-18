@@ -29,7 +29,7 @@ jobs:
         run: npm ci && REACT_APP_STOREURL=https://win11react.github.io/experimental/dev-store.json npm run ghbuild
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
