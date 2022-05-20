@@ -131,6 +131,12 @@ If you have one of the latest windows builds then you can enter the command belo
   <img src="https://contrib.rocks/image?repo=blueedgetechno/win11React" />
 </a>
 
+👤 **Hammas Bin Saleem**
+
+- GitHub: [@HAMMAS-SALEEM](https://github.com/HAMMAS-SALEEM)
+- Twitter: [@HammasSaleem4](https://twitter.com/HammasSaleem4)
+- LinkedIn: [HAMMAS SALEEM](https://www.linkedin.com/in/hammas-saleem)
+
 ### Known Issues
 
 - Blur not working in Firefox browser.
