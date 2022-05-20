@@ -1,5 +1,4 @@
 version: 2
-registries:
 
 updates:
   - package-ecosystem: npm
