@@ -13,7 +13,7 @@ export const Calculator = ()=>{
 
   const getIdx = (node)=>{
     var i = 0;
-    while( (node = node.previousSibling) !== null ){
+    while( (node = node.previousSibling) != null ){
       i++;
     }
 

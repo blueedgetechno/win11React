@@ -35,7 +35,7 @@ export const BootScreen = (props) => {
   useEffect(() => {
     if (props.dir < 0) {
       if (blackout) {
-        if (wall.act === "restart") {
+        if (wall.act == "restart") {
           setTimeout(() => {
             setBlackOut(false);
             setTimeout(() => {
@@ -74,8 +74,8 @@ export const LockScreen = (props) => {
     var act = e.target.dataset.action,
       payload = e.target.dataset.payload;
 
-    if (act === "splash") setLock(true);
-    else if (act === "inpass") {
+    if (act == "splash") setLock(true);
+    else if (act == "inpass") {
       var val = e.target.value;
       if (!passType) {
         val = val.substring(0, 4);
@@ -83,11 +83,11 @@ export const LockScreen = (props) => {
       }
 
       setPass(val);
-    } else if (act === "forgot") setForget(true);
-    else if (act === "pinlock") setType(0);
-    else if (act === "passkey") setType(1);
+    } else if (act == "forgot") setForget(true);
+    else if (act == "pinlock") setType(0);
+    else if (act == "passkey") setType(1);
 
-    if (act === "pinlock" || act === "passkey") setPass("");
+    if (act == "pinlock" || act == "passkey") setPass("");
   };
 
   const proceed = () => {
@@ -98,12 +98,12 @@ export const LockScreen = (props) => {
   };
 
   const action2 = (e) => {
-    if (e.key === "Enter") proceed();
+    if (e.key == "Enter") proceed();
   };
 
   return (
     <div
-      className={"lockscreen " + (props.dir === -1 ? "slowfadein" : "")}
+      className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
         backgroundImage: `url(${`img/wallpaper/lock.jpg`})`,

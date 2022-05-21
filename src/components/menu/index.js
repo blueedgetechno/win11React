@@ -48,7 +48,7 @@ export const ActMenu = () => {
     };
 
     if (action.type) {
-      if (action.type !== action.type.toUpperCase()) {
+      if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {
         dispatch(action);
@@ -60,7 +60,7 @@ export const ActMenu = () => {
   const menuobj = (data) => {
     var mnode = [];
     data.map((opt,i) => {
-      if (opt.type === "hr") {
+      if (opt.type == "hr") {
         mnode.push(<div key={i} className="menuhr"></div>);
       } else {
         mnode.push(

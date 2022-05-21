@@ -61,7 +61,7 @@ export const MicroStore = () => {
     if (act == "page1") setPage(act[4]);
     else if (act == "page2") {
       for (var i = 0; i < storeapps.length; i++) {
-        if (storeapps[i].data.url === payload) {
+        if (storeapps[i].data.url == payload) {
           setOpapp(storeapps[i]);
           setPage(2);
           break;
