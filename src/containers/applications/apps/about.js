@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
   const { locked, booted } = useSelector((state) => state.wallpaper);
-  const [open, setOpen] = useState(true && process.env.REACT_APP_ENV !== "development");
-  const [timer, setTimer] = useState(localStorage.getItem("closeAbout") === "true" ? 0 : 5);
+  const [open, setOpen] = useState(true && process.env.REACT_APP_ENV != "development");
+  const [timer, setTimer] = useState(localStorage.getItem("closeAbout") == "true" ? 0 : 5);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
@@ -56,7 +56,7 @@ export const AboutWin = () => {
         <p>{t('about.microsoftcopywrite')}.</p>
       </div>
       <div className="okbtn px-6 py-4">
-        <div data-allow={timer === 0} onClick={timer === 0 && action}>
+        <div data-allow={timer == 0} onClick={timer == 0 && action}>
           {t('about.understand')} {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
         </div>
       </div>

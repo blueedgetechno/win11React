@@ -21,7 +21,7 @@ const Taskbar = () => {
 
   const showPrev = (event) => {
     var ele = event.target;
-    while (ele && ele.getAttribute("value") === null) {
+    while (ele && ele.getAttribute("value") == null) {
       ele = ele.parentElement;
     }
 
@@ -95,7 +95,7 @@ const Taskbar = () => {
             {tasks.widgets ? <Icon className="tsIcon widget" src="widget" width={24} click="WIDGTOGG" /> : null}
             {tasks.apps.map((task, i) => {
               var isHidden = apps[task.icon].hide;
-              var isActive = apps[task.icon].z === apps.hz;
+              var isActive = apps[task.icon].z == apps.hz;
               return (
                 <div key={i} onMouseOver={(!isActive && !isHidden && showPrev) || null} value={task.icon}>
                   <Icon  className="tsIcon" width={24} open={isHidden ? null : true} click={task.action} active={isActive} payload="togg" src={task.icon} />
@@ -103,10 +103,10 @@ const Taskbar = () => {
               );
             })}
             {Object.keys(apps).map((key, i) => {
-              if (key !== "hz") {
-                var isActive = apps[key].z === apps.hz;
+              if (key != "hz") {
+                var isActive = apps[key].z == apps.hz;
               }
-              return key !== "hz"&& key !== "undefined"&& !apps[key].task && !apps[key].hide ? (
+              return key != "hz"&& key != "undefined"&& !apps[key].task && !apps[key].hide ? (
                 <div key={i} onMouseOver={(!isActive && showPrev) || null} value={apps[key].icon}>
                   <Icon className="tsIcon" width={24} active={isActive} click={apps[key].action} payload="togg" open="true" src={apps[key].icon} />
                 </div>

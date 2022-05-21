@@ -8,8 +8,8 @@ export const WidPane = () => {
   const widget = useSelector((state) => state.widpane);
   const theme = useSelector((state) => state.setting.person.theme);
   const getRandom = (x = 0) => {
-    if (theme === "light") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
-    if (theme === "dark") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
+    if (theme == "light") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
+    if (theme == "dark") return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
   };
 
   return (
@@ -59,7 +59,7 @@ export const WidPane = () => {
                   {widget.data.weather.days.map((item, i) => {
                     return (
                       <div key={i} className="weekDay">
-                        <div>{i === 0 ? "Today" : item.day}</div>
+                        <div>{i == 0 ? "Today" : item.day}</div>
                         <Icon src={`https://www.metaweather.com/static/img/weather/png/64/${item.icon}.png`} ext width={24} />
 
                         <div className="tempCont">{item.min}º</div>
@@ -79,7 +79,7 @@ export const WidPane = () => {
                     </div>
                     <div className="stockValue">
                       <div>{widget.data.stock[0][0]}</div>
-                      <div className="stRes" data-pos={widget.data.stock[0][2] === 1}>
+                      <div className="stRes" data-pos={widget.data.stock[0][2] == 1}>
                         {widget.data.stock[0][2] ? "+" : "-"}
                         {widget.data.stock[0][1]}%
                       </div>
@@ -92,7 +92,7 @@ export const WidPane = () => {
                     </div>
                     <div className="stockValue">
                       <div>{widget.data.stock[1][0]}</div>
-                      <div className="stRes" data-pos={widget.data.stock[1][2] === 1}>
+                      <div className="stRes" data-pos={widget.data.stock[1][2] == 1}>
                         {widget.data.stock[1][2] ? "+" : "-"}
                         {widget.data.stock[1][1]}%
                       </div>
@@ -154,7 +154,7 @@ export const WidPane = () => {
                       <div className="tpNews">
                         <div className="tpSource">{article.source.name}</div>
                         <div className="tpArticle">{article.title}</div>
-                        {i % 5 === 4 ? <div className="tpdesc">{article.content}</div> : null}
+                        {i % 5 == 4 ? <div className="tpdesc">{article.content}</div> : null}
                       </div>
                     </a>
                   );

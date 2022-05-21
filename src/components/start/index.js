@@ -17,9 +17,9 @@ export const DesktopApp = () => {
     var arr = { ...state.desktop };
     var tmpApps = [...arr.apps];
 
-    if (arr.sort === "name") {
+    if (arr.sort == "name") {
       tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-    } else if (arr.sort === "size") {
+    } else if (arr.sort == "size") {
       tmpApps.sort((a, b) => {
         var anm = a.name,
           bnm = b.name;
@@ -29,7 +29,7 @@ export const DesktopApp = () => {
           ? 1
           : -1;
       });
-    } else if (arr.sort === "date") {
+    } else if (arr.sort == "date") {
       tmpApps.sort((a, b) => {
         var anm = a.name,
           bnm = b.name;
@@ -116,7 +116,7 @@ export const SidePane = () => {
     };
 
     if (action.type) {
-      if (action.type !== action.type.toUpperCase()) {
+      if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload);
       } else dispatch(action);
     }
@@ -129,7 +129,7 @@ export const SidePane = () => {
     var aud = 3;
     if (e.target.value < 70) aud = 2;
     if (e.target.value < 30) aud = 1;
-    if (e.target.value === 0) aud = 0;
+    if (e.target.value == 0) aud = 0;
 
     dispatch({ type: "TASKAUDO", payload: aud });
 
@@ -158,7 +158,7 @@ export const SidePane = () => {
 
   useEffect(() => {
     sidepane.quicks.map((item, i) => {
-      if (item.src === "nightlight") {
+      if (item.src == "nightlight") {
         if (pnstates[i]) document.body.dataset.sepia = true;
         else document.body.dataset.sepia = false;
       }
@@ -170,7 +170,7 @@ export const SidePane = () => {
     var tmp = [];
     for (var i = 0; i < sidepane.quicks.length; i++) {
       var val = getTreeValue(setting, sidepane.quicks[i].state);
-      if (sidepane.quicks[i].name === "Theme") val = val === "dark";
+      if (sidepane.quicks[i].name == "Theme") val = val == "dark";
       tmp.push(val);
     }
 

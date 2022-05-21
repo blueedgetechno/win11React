@@ -35,8 +35,8 @@ const defState = {
   themes: themes,
   wps: wps,
   src: walls[wps],
-  locked: !(locked === 'false'),
-  booted: false || process.env.REACT_APP_ENV === "development",
+  locked: !(locked == 'false'),
+  booted: false || process.env.REACT_APP_ENV == "development",
   act: '',
   dir: 0
 }
