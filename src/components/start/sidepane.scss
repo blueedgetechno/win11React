@@ -1,3 +1,56 @@
+.bandpane {
+  --bg1: #dae2f2;
+  --bg2: #e6edf8;
+  --bgHvr: rgb(0 0 0 / 5%);
+
+  &.bd-blur {
+    --bg1: rgba(242, 242, 242, 0.9);
+    --bg2: rgba(0, 0, 0, 0.05);
+    --bgHvr: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(20px);
+  }
+
+  position: absolute;
+  bottom: 10px;
+  right: 129px;
+  background: var(--bgHvr);
+  color: var(--dark-txt);
+  overflow: hidden;
+  transition: cubic-bezier(0.62, 0, 0.32, 1) 250ms;
+  z-index: 9999;
+  border-radius: 8px;
+  max-height: fit-content;
+
+  &[data-hide="true"] {
+    opacity: 0;
+    animation: overflow-hider 0s ease-in-out 0.2s forwards;
+    transition: all cubic-bezier(0.62, 0, 0.32, 1) 150ms;
+  }
+
+  .bandContainer {
+    background: var(--bg2);
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 82px;
+
+    div {
+      padding: 12px;
+    }
+  }
+}
+
+body[data-theme="dark"] .bandpane {
+  --bg1: #1c1c1c;
+  --bg2: #242424;
+  --bgHvr: #313131;
+
+  &.bd-blur {
+    --bg1: rgba(36, 36, 36, 0.8);
+    --bg2: rgba(0, 0, 0, 0.2);
+    --bgHvr: rgba(255, 255, 255, 0.08);
+  }
+}
+
 .sidePane {
   --bg1: #dae2f2;
   --bg2: #e6edf8;
