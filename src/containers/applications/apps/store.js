@@ -543,13 +543,11 @@ const FrontPage = (props) => {
                     <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
                   </div>
                   <div className="text-xss mt-8">
-                    {(() => {
-                      if (x.charCodeAt(4) % 2) {
-                        return <>{t("store.free")}</>;
-                      } else {
-                        return <>{t("store.owned")}</>;
-                      }
-                    })()}
+                    {x.charCodeAt(4) % 2 ? (
+                      <>{t("store.free")}</>
+                    ) : (
+                      <>{t("store.owned")}</>
+                    )}
                   </div>
                 </div>
               );
@@ -596,13 +594,11 @@ const FrontPage = (props) => {
                     <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
                   </div>
                   <div className="text-xss mt-8">
-                    {(() => {
-                      if (x.charCodeAt(4) % 2) {
-                        return <>{t("store.free")}</>;
-                      } else {
-                        return <>{t("store.owned")}</>;
-                      }
-                    })()}
+                    {x.charCodeAt(4) % 2 ? (
+                      <>{t("store.free")}</>
+                    ) : (
+                      <>{t("store.owned")}</>
+                    )}
                   </div>
                 </div>
               );
@@ -649,13 +645,11 @@ const FrontPage = (props) => {
                     <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
                   </div>
                   <div className="text-xss mt-8">
-                    {(() => {
-                      if (x.charCodeAt(4) % 2) {
-                        return <>{t("store.rent")}</>;
-                      } else {
-                        return <>{t("store.owned")}</>;
-                      }
-                    })()}
+                    {x.charCodeAt(4) % 2 ? (
+                      <>{t("store.rent")}</>
+                    ) : (
+                      <>{t("store.owned")}</>
+                    )}
                   </div>
                 </div>
               );
