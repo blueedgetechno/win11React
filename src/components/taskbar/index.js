@@ -124,13 +124,10 @@ const Taskbar = () => {
           </div>
         </div>
         <div className="taskright">
-          <Icon className="taskIcon" fafa="faChevronUp" width={10} />
-
-          <div
-            className="prtclk handcr my-1 px-1 hvlight flex rounded"
-            onClick={clickDispatch}
-            data-action="PANETOGG"
-          >
+          <div className="px-2 prtclk handcr hvlight flex" onClick={clickDispatch} data-action="BANDTOGG">
+            <Icon fafa="faChevronUp" width={10} />
+          </div>
+          <div className="prtclk handcr my-1 px-1 hvlight flex rounded" onClick={clickDispatch} data-action="PANETOGG">
             <Icon className="taskIcon" src="wifi" ui width={16} />
             <Icon
               className="taskIcon"

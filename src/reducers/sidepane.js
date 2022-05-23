@@ -38,6 +38,7 @@ const defState = {
     }
   ],
   hide: true,
+  banhide: true,
   calhide: true,
 };
 
@@ -46,6 +47,10 @@ const paneReducer = (state = defState, action) => {
     var tmpState = { ...state };
     tmpState.quicks[4].src = action.payload;
     return tmpState;
+  } else if (action.type == "BANDTOGG") {
+    return { ...state, banhide: !state.banhide };
+  } else if (action.type == "BANDHIDE") {
+    return { ...state, banhide: true };
   } else if (action.type == "PANETOGG") {
     return { ...state, hide: !state.hide };
   } else if (action.type == "PANEHIDE") {

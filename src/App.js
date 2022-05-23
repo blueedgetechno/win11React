@@ -18,6 +18,7 @@ import ActMenu from './components/menu';
 import {
   StartMenu,
   DesktopApp,
+  BandPane,
   SidePane,
   WidPane,
   CalnWid
@@ -72,6 +73,7 @@ function App() {
   const afterMath = (event) => {
     var ess = [
       ["START", "STARTHID"],
+      ["BAND", "BANDHIDE"],
       ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       ["CALN", "CALNHIDE"],
@@ -152,6 +154,7 @@ function App() {
               }
           })}
           <StartMenu/>
+          <BandPane/>
           <SidePane/>
           <WidPane/>
           <CalnWid/>
