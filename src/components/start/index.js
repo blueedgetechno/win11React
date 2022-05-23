@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Actions from "../../actions";
+import { getTreeValue } from "../../actions";
 import { Icon } from "../../utils/general";
-import "./startmenu.scss";
+import Battery from "../Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
-import Battery from "../Battery";
-
-import { getTreeValue } from "../../actions";
-import * as Actions from "../../actions";
+import "./startmenu.scss";
 
 export * from "./start";
 export * from "./widget";
@@ -75,39 +74,10 @@ export const SidePane = () => {
   const setting = useSelector((state) => state.setting);
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
-  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
-  const changebatterystatus = (bt) => {
-    let level = bt.level * 100 || 100;
-
-    if (bt.charging) {
-      setbatterylevel(-level);
-    } else {
-      setbatterylevel(level);
-    }
-  };
-
-  useEffect(() => {
-    async function getBatteryDetails() {
-      let bt = await navigator.getBattery();
-      changebatterystatus(bt);
-
-      bt.onlevelchange = () => {
-        changebatterystatus(bt);
-      };
-
-      bt.onchargingchange = () => {
-        changebatterystatus(bt);
-      };
-    }
-
-    if (window.BatteryManager) {
-      getBatteryDetails();
-    }
-
-    return () => {};
-  }, []);
+  let [btlevel, setBtLevel] = useState("");
+  const childToParent = () => {};
 
   const clickDispatch = (event) => {
     var action = {
@@ -233,10 +203,7 @@ export const SidePane = () => {
       </div>
       <div className="p-1 bottomBar">
         <div className="px-3 bettery">
-          <Battery level={Math.abs(batterylevel)} charging={batterylevel < 0} />
-          <div className="text-xs">{`${Math.round(
-            Math.abs(batterylevel)
-          )}%`}</div>
+          <Battery pct />
         </div>
       </div>
     </div>

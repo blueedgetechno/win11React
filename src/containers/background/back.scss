@@ -62,6 +62,10 @@
     backdrop-filter: blur(25px);
     background: rgba(0, 0, 0, 0.1);
   }
+
+  .battery {
+    filter: invert(1);
+  }
 }
 
 .bottomInfo {
@@ -163,6 +167,12 @@
   transform-origin: 50% 50%;
   transition: all 0.2s ease-in-out 0s;
   animation: 2s linear 0s infinite normal none running spin-infinite;
+}
+
+body[data-theme="dark"] .lockscreen {
+  .battery {
+    filter: invert(0);
+  }
 }
 
 @keyframes spin-infinite {

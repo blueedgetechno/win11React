@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../Battery";
 import "./taskbar.scss";
 
 const Taskbar = () => {
-  const tasks = useSelector((state) =>{
+  const tasks = useSelector((state) => {
     //console.log(state)
-    return state.taskbar
+    return state.taskbar;
   });
   const apps = useSelector((state) => {
     var tmpApps = { ...state.apps };
@@ -16,7 +16,6 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
-  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
   const showPrev = (event) => {
@@ -54,51 +53,46 @@ const Taskbar = () => {
     }
   };
 
-  const changebatterystatus = (bt) => {
-    let level = bt.level * 100 || 100;
-
-    if (bt.charging) {
-      setbatterylevel(-level);
-    } else {
-      setbatterylevel(level);
-    }
-  };
-
-  useEffect(() => {
-    async function getBatteryDetails() {
-      let bt = await navigator.getBattery();
-      changebatterystatus(bt);
-
-      bt.onlevelchange = () => {
-        changebatterystatus(bt);
-      };
-
-      bt.onchargingchange = () => {
-        changebatterystatus(bt);
-      };
-    }
-
-    if (window.BatteryManager) {
-      getBatteryDetails();
-    }
-
-    return () => {};
-  }, []);
-
   return (
     <div className="taskbar">
       <div className="taskcont">
         <div className="tasksCont" data-menu="task" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
-            {tasks.search ? <Icon className="tsIcon searchIcon" src="search" width={24} click="STARTSRC" /> : null}
-            {tasks.widgets ? <Icon className="tsIcon widget" src="widget" width={24} click="WIDGTOGG" /> : null}
+            {tasks.search ? (
+              <Icon
+                className="tsIcon searchIcon"
+                src="search"
+                width={24}
+                click="STARTSRC"
+              />
+            ) : null}
+            {tasks.widgets ? (
+              <Icon
+                className="tsIcon widget"
+                src="widget"
+                width={24}
+                click="WIDGTOGG"
+              />
+            ) : null}
             {tasks.apps.map((task, i) => {
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z == apps.hz;
               return (
-                <div key={i} onMouseOver={(!isActive && !isHidden && showPrev) || null} value={task.icon}>
-                  <Icon  className="tsIcon" width={24} open={isHidden ? null : true} click={task.action} active={isActive} payload="togg" src={task.icon} />
+                <div
+                  key={i}
+                  onMouseOver={(!isActive && !isHidden && showPrev) || null}
+                  value={task.icon}
+                >
+                  <Icon
+                    className="tsIcon"
+                    width={24}
+                    open={isHidden ? null : true}
+                    click={task.action}
+                    active={isActive}
+                    payload="togg"
+                    src={task.icon}
+                  />
                 </div>
               );
             })}
@@ -106,9 +100,24 @@ const Taskbar = () => {
               if (key != "hz") {
                 var isActive = apps[key].z == apps.hz;
               }
-              return key != "hz"&& key != "undefined"&& !apps[key].task && !apps[key].hide ? (
-                <div key={i} onMouseOver={(!isActive && showPrev) || null} value={apps[key].icon}>
-                  <Icon className="tsIcon" width={24} active={isActive} click={apps[key].action} payload="togg" open="true" src={apps[key].icon} />
+              return key != "hz" &&
+                key != "undefined" &&
+                !apps[key].task &&
+                !apps[key].hide ? (
+                <div
+                  key={i}
+                  onMouseOver={(!isActive && showPrev) || null}
+                  value={apps[key].icon}
+                >
+                  <Icon
+                    className="tsIcon"
+                    width={24}
+                    active={isActive}
+                    click={apps[key].action}
+                    payload="togg"
+                    open="true"
+                    src={apps[key].icon}
+                  />
                 </div>
               ) : null;
             })}
@@ -117,15 +126,39 @@ const Taskbar = () => {
         <div className="taskright">
           <Icon className="taskIcon" fafa="faChevronUp" width={10} />
 
-          <div className="prtclk handcr my-1 px-1 hvlight flex rounded" onClick={clickDispatch} data-action="PANETOGG">
+          <div
+            className="prtclk handcr my-1 px-1 hvlight flex rounded"
+            onClick={clickDispatch}
+            data-action="PANETOGG"
+          >
             <Icon className="taskIcon" src="wifi" ui width={16} />
-            <Icon className="taskIcon" src={"audio" + tasks.audio} ui width={16} />
-            <Battery level={Math.abs(batterylevel)} charging={batterylevel < 0} />
+            <Icon
+              className="taskIcon"
+              src={"audio" + tasks.audio}
+              ui
+              width={16}
+            />
+            <Battery />
           </div>
 
-          <div className="taskDate m-1 handcr prtclk rounded hvlight" onClick={clickDispatch} data-action="CALNTOGG">
-            <div>{new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric" })}</div>
-            <div>{new Date().toLocaleDateString("en-US", { year: "2-digit", month: "2-digit", day: "numeric" })}</div>
+          <div
+            className="taskDate m-1 handcr prtclk rounded hvlight"
+            onClick={clickDispatch}
+            data-action="CALNTOGG"
+          >
+            <div>
+              {new Date().toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </div>
+            <div>
+              {new Date().toLocaleDateString("en-US", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "numeric",
+              })}
+            </div>
           </div>
           <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
         </div>
