@@ -71,7 +71,7 @@ export const DesktopApp = () => {
 
 export const BandPane = () => {
   const sidepane = useSelector((state) => state.sidepane);
-  
+
   return (
     <div
       className="bandpane dpShad"
@@ -79,13 +79,13 @@ export const BandPane = () => {
       style={{ "--prefix": "BAND" }}
     >
       <div className="bandContainer">
-        <Icon className="hvlight" src="defender" ui width={17} />
-        <Icon className="hvlight" src="spotify" ui width={17} />
-        <Icon className="hvlight" src="teams" ui width={17} />
+        <Icon className="hvlight" src="defender" width={17} />
+        <Icon className="hvlight" src="spotify" width={17} />
+        <Icon className="hvlight" src="teams" width={17} />
       </div>
     </div>
   );
-}
+};
 
 export const SidePane = () => {
   const sidepane = useSelector((state) => state.sidepane);
