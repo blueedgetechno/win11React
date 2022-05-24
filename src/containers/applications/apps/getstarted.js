@@ -49,7 +49,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_region.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <div className="header">
                           {t("oobe.country")}
                           <div className="header_sml mt-4"></div>
@@ -71,7 +71,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_keyb_layout.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <div className="header">
                           {t("oobe.keyboard")}
                           <div className="header_sml">
@@ -93,7 +93,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_update.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <img
                           id="loader"
                           src="img/oobe/window11_oobe_region.png"
@@ -111,7 +111,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_name.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <div className="header mb-2">Let's name your PC</div>
                         <div className="header_sml">
                           Make it yours with unique name that's easy to
@@ -143,7 +143,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_wifi.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <div className="header">
                           Let's connect you to a network
                           <div className="header_sml">
@@ -186,7 +186,7 @@ export const Getstarted = () => {
                           src="img/oobe/window11_oobe_update.png"
                         />
                       </div>
-                      <div className="right" key={pageNo}>
+                      <div className="right">
                         <div className="header mb-8">
                           The setup has completed.
                         </div>
