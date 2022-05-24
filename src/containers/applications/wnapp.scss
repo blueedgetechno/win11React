@@ -23,7 +23,9 @@ body {
   --sat-txt: #777;
   --clrPrm: #0067c0;
   --wintheme: #eee;
+
   --txt_clr-rgb: 0 0 0;
+  --base_bg-rgb: 243 243 243;
 
   --fakeMica: #f3f3f3 radial-gradient(#eff4f9 75%, #f3f3f3 100%) no-repeat fixed;
 }
@@ -40,7 +42,9 @@ body[data-theme="dark"] {
   --sat-txt: #999;
   --clrPrm: #4cc2ff;
   --wintheme: #1e1e26;
+
   --txt_clr-rgb: 255 255 255;
+  --base_bg-rgb: 32 32 32;
 
   --fakeMica: #202020 radial-gradient(#1a1f35 25%, #202020 100%) no-repeat fixed;
 }

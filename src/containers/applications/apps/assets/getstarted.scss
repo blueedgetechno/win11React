@@ -1,7 +1,7 @@
 .getstarted {
-  background: rgb(255 255 255 / 67%);
-  backdrop-filter: blur(5rem);
-  color: black;
+  background: rgb(var(--base_bg-rgb) / 67%);
+  backdrop-filter: blur(2rem);
+  color: var(--dark-txt);
   min-width: 800px;
   min-height: 680px;
 
@@ -12,8 +12,8 @@
   }
 
   .inner_fill_setup {
+    background: rgb(255 255 255 / 75%);
     position: relative;
-    background: rgb(255 255 255 / 67%);
     width: 720px;
     height: 580px;
     border-radius: 8px;
@@ -67,26 +67,23 @@
     background: rgb(175 175 175 / 12%);
   }
   #selected {
-    background: #0069bd;
-    color: #fff;
+    background: var(--clrPrm);
+    color: var(--alt-txt);
   }
   .yes_button {
     border-radius: 4px;
-    background: #0069bd;
+    background: var(--clrPrm);
+    color: var(--alt-txt);
     height: 36px;
     width: 102px;
     text-align: center;
     line-height: 36px;
-    color: #fff;
     position: absolute;
     font-size: 14px;
     right: 35px;
     cursor: default;
     animation: transition_effect 1.4s;
     bottom: 37px;
-  }
-  .yes_button:hover {
-    background: #003282;
   }
   .setup_settings {
     display: flex;
@@ -120,7 +117,7 @@
   }
 
   .text_sml_black {
-    color: rgb(0, 0, 0);
+    color: var(--dark-txt);
     font-size: 12px;
     width: 325px;
     margin-top: 8px;
@@ -129,7 +126,7 @@
   }
 
   .text_sml_black_wifi {
-    color: rgb(0, 0, 0);
+    color: var(--dark-txt);
     font-size: 12px;
   }
   .align {
@@ -144,7 +141,7 @@
     border: none;
     border-bottom: 3px transparent solid;
     outline: none;
-    background-color: #fff;
+    background: #fff;
     border-radius: 4px;
     transition: 0.2s;
     padding: 10px 23px 5px 12px;
@@ -156,7 +153,7 @@
     margin-top: 145px;
   }
   #OOBE_input:focus {
-    border-bottom: 3px #0069bd solid;
+    border-bottom: 3px var(--clrPrm) solid;
   }
   #cancel_input {
     width: 11.7px;
@@ -167,7 +164,7 @@
   .ethernet_list {
     height: 248px;
     width: 316px;
-    border-bottom: 1px #80808047 solid;
+    border-bottom: 1px rgba(128, 128, 128, 0.278) solid;
   }
   #connection {
     font-size: 47px;
@@ -201,5 +198,20 @@
       opacity: 1;
       transform: translateY(0px) scale(1);
     }
+  }
+}
+
+body[data-theme="dark"] .getstarted {
+  .inner_fill_setup {
+    background: rgb(255 255 255 / 7.5%);
+  }
+
+  #OOBE_input {
+    background: rgb(var(--base_bg-rgb));
+    color: var(--sat-txt);
+  }
+
+  .acsblty {
+    filter: invert(1);
   }
 }
