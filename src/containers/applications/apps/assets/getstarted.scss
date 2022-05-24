@@ -1,24 +1,26 @@
 .getstarted {
-  background: var(--fakeMica);
-  background: rgb(255 255 255 / 80%);
+  background: rgb(255 255 255 / 67%);
   backdrop-filter: blur(5rem);
-  color: var(--dark-txt);
+  color: black;
+  min-width: 55rem;
+  min-height: 45rem;
+
+  .restWindow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2rem, 10vmin, 5rem);
+  }
 
   .inner_fill_setup {
-    width: calc(100% - 185px);
-    height: calc(100% - 177px);
     position: absolute;
-    min-width: 619px;
-    max-height: 591px;
-    overflow: hidden;
-    max-width: 768px;
-    margin: 87px;
-    background: rgba(255, 255, 255, 0.658);
+    background: rgb(255 255 255 / 67%);
+    width: clamp(500px, 80%, 800px);
+    height: clamp(400px, 80%, 600px);
     border-radius: 8px;
     display: grid;
     grid-template-columns: 50% 50%;
     box-shadow: 10px 6px 20px 0px rgb(0 0 0 / 3%);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   .left {
     display: flex;
@@ -71,21 +73,6 @@
   .list_oobe_opt:hover {
     background: rgb(175 175 175 / 12%);
   }
-  ::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(32, 24, 148, 0.4);
-  }
   .yes_button {
     border-radius: 4px;
     background: #0069bd;
@@ -113,11 +100,6 @@
     position: absolute;
     right: 65px;
     bottom: 23px;
-  }
-  #accessibility {
-    width: 18px;
-    height: 18px;
-    margin-right: 33px;
   }
   #volume {
     width: 18px;
