@@ -22,7 +22,8 @@ export const StartMenu = () => {
       } else if (arr.rcApps[i].lastUsed < 60) {
         arr.rcApps[i].lastUsed += "m ago";
       } else if (arr.rcApps[i].lastUsed < 360) {
-        arr.rcApps[i].lastUsed = Math.floor(arr.rcApps[i].lastUsed / 60) + "h ago";
+        arr.rcApps[i].lastUsed =
+          Math.floor(arr.rcApps[i].lastUsed / 60) + "h ago";
       }
     }
 
@@ -73,7 +74,10 @@ export const StartMenu = () => {
       dispatch(action);
     }
 
-    if (action.type && (action.payload == "full" || action.type == "EDGELINK")) {
+    if (
+      action.type &&
+      (action.payload == "full" || action.type == "EDGELINK")
+    ) {
       dispatch({
         type: "STARTHID",
       });
@@ -101,8 +105,15 @@ export const StartMenu = () => {
     }
   }, [query]);
 
+  const userName = useSelector((state) => state.setting.person.name);
+
   return (
-    <div className="startMenu dpShad" data-hide={start.hide} style={{ "--prefix": "START" }} data-align={align}>
+    <div
+      className="startMenu dpShad"
+      data-hide={start.hide}
+      style={{ "--prefix": "START" }}
+      data-align={align}
+    >
       {start.menu ? (
         <>
           <div className="stmenu" data-allapps={start.showAll}>
@@ -110,7 +121,11 @@ export const StartMenu = () => {
               <div className="pinnedApps">
                 <div className="stAcbar">
                   <div className="gpname">Pinned</div>
-                  <div className="gpbtn prtclk" onClick={clickDispatch} data-action="STARTALL">
+                  <div
+                    className="gpbtn prtclk"
+                    onClick={clickDispatch}
+                    data-action="STARTALL"
+                  >
                     <div>All apps</div>
                     <Icon fafa="faChevronRight" width={8} />
                   </div>
@@ -120,7 +135,14 @@ export const StartMenu = () => {
                     return app.empty ? (
                       <div key={i} className="pnApp pnEmpty"></div>
                     ) : (
-                      <div key={i} className="prtclk pnApp" value={app.action != null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div
+                        key={i}
+                        className="prtclk pnApp"
+                        value={app.action != null}
+                        onClick={clickDispatch}
+                        data-action={app.action}
+                        data-payload={app.payload || "full"}
+                      >
                         <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="appName">{app.name}</div>
                       </div>
@@ -139,7 +161,14 @@ export const StartMenu = () => {
                 <div className="reApps">
                   {start.rcApps.slice(0, 6).map((app, i) => {
                     return app.name ? (
-                      <div key={i} className="rnApp" value={app.action != null} onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div
+                        key={i}
+                        className="rnApp"
+                        value={app.action != null}
+                        onClick={clickDispatch}
+                        data-action={app.action}
+                        data-payload={app.payload || "full"}
+                      >
                         <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="acInfo">
                           <div className="appName">{app.name}</div>
@@ -156,7 +185,11 @@ export const StartMenu = () => {
             <div className="appCont">
               <div className="stAcbar">
                 <div className="gpname">All apps</div>
-                <div className="gpbtn prtclk" onClick={clickDispatch} data-action="STARTALL">
+                <div
+                  className="gpbtn prtclk"
+                  onClick={clickDispatch}
+                  data-action="STARTALL"
+                >
                   <Icon className="chevLeft" fafa="faChevronLeft" width={8} />
                   <div>Back</div>
                 </div>
@@ -167,14 +200,28 @@ export const StartMenu = () => {
 
                   var tpApps = [];
                   tpApps.push(
-                    <div key={i} className="allApp prtclk" data-action="STARTALPHA" onClick={clickDispatch} id={`char${i == 0 ? "#" : String.fromCharCode(i + 64)}`}>
-                      <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
+                    <div
+                      key={i}
+                      className="allApp prtclk"
+                      data-action="STARTALPHA"
+                      onClick={clickDispatch}
+                      id={`char${i == 0 ? "#" : String.fromCharCode(i + 64)}`}
+                    >
+                      <div className="ltName">
+                        {i == 0 ? "#" : String.fromCharCode(i + 64)}
+                      </div>
                     </div>
                   );
 
                   ldx.forEach((app, j) => {
                     tpApps.push(
-                      <div key={app.name} className="allApp prtclk" onClick={clickDispatch} data-action={app.action} data-payload={app.payload || "full"}>
+                      <div
+                        key={app.name}
+                        className="allApp prtclk"
+                        onClick={clickDispatch}
+                        data-action={app.action}
+                        data-payload={app.payload || "full"}
+                      >
                         <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
                       </div>
@@ -191,8 +238,20 @@ export const StartMenu = () => {
                   </div>
                   {start.contApps.map((ldx, i) => {
                     return (
-                      <div key={i} className={ldx.length == 0 ? "dullApp allApp" : "allApp prtclk"} data-action="STARTALPHA" onClick={ldx.length == 0 ? null : clickDispatch} data-payload={i == 0 ? "#" : String.fromCharCode(i + 64)}>
-                        <div className="ltName">{i == 0 ? "#" : String.fromCharCode(i + 64)}</div>
+                      <div
+                        key={i}
+                        className={
+                          ldx.length == 0 ? "dullApp allApp" : "allApp prtclk"
+                        }
+                        data-action="STARTALPHA"
+                        onClick={ldx.length == 0 ? null : clickDispatch}
+                        data-payload={
+                          i == 0 ? "#" : String.fromCharCode(i + 64)
+                        }
+                      >
+                        <div className="ltName">
+                          {i == 0 ? "#" : String.fromCharCode(i + 64)}
+                        </div>
                       </div>
                     );
                   })}
@@ -202,20 +261,39 @@ export const StartMenu = () => {
           </div>
           <div className="menuBar">
             <div className="profile handcr">
-              <Icon src="blueProf" ui rounded width={26} click="EXTERNAL" payload="https://blueedge.me" />
-              <div className="usName">Blue Edge</div>
+              <Icon
+                src="blueProf"
+                ui
+                rounded
+                width={26}
+                click="EXTERNAL"
+                payload="https://blueedge.me"
+              />
+              <div className="usName">{userName}</div>
             </div>
             <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>
-                <div className="flex prtclk" onClick={clickDispatch} data-action="WALLALOCK">
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLALOCK"
+                >
                   <Icon msi="Lock" width={12} />
                   <span>Lock</span>
                 </div>
-                <div className="flex prtclk" onClick={clickDispatch} data-action="WALLSHUTDN">
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLSHUTDN"
+                >
                   <Icon msi="PowerButton" width={12} />
                   <span>Shut down</span>
                 </div>
-                <div className="flex prtclk" onClick={clickDispatch} data-action="WALLRESTART">
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLRESTART"
+                >
                   <Icon msi="Refresh" width={12} flip />
                   <span>Restart</span>
                 </div>
@@ -258,8 +336,13 @@ export const StartMenu = () => {
             </div>
           </div>
           <div className="shResult w-full flex justify-between">
-            <div className="leftSide flex-col px-1" data-width={query.length != 0}>
-              <div className="text-sm font-semibold mb-4">{query.length ? "Best match" : "Top apps"}</div>
+            <div
+              className="leftSide flex-col px-1"
+              data-width={query.length != 0}
+            >
+              <div className="text-sm font-semibold mb-4">
+                {query.length ? "Best match" : "Top apps"}
+              </div>
               {query.length ? (
                 <div className="textResult h-16">
                   <div className="smatch flex my-2 p-3 rounded">
@@ -269,7 +352,12 @@ export const StartMenu = () => {
                       <div className="text-xss">App</div>
                     </div>
                   </div>
-                  <div className="smatch flex my-2 p-3 rounded handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={query}>
+                  <div
+                    className="smatch flex my-2 p-3 rounded handcr prtclk"
+                    onClick={clickDispatch}
+                    data-action="EDGELINK"
+                    data-payload={query}
+                  >
                     <Icon className="blueicon" src="search" ui width={20} />
                     <div className="matchInfo flex-col px-2">
                       <div className="font-semibold text-xs">Search online</div>
@@ -283,17 +371,31 @@ export const StartMenu = () => {
                     {start.rcApps.slice(1, 7).map((app, i) => {
                       return (
                         <div key={i} className="topApp pt-6 py-4 ltShad">
-                          <Icon onClick={clickDispatch} click={app.action} payload={app.payload || "full"} src={app.icon} width={30} />
+                          <Icon
+                            onClick={clickDispatch}
+                            click={app.action}
+                            payload={app.payload || "full"}
+                            src={app.icon}
+                            width={30}
+                          />
                           <div className="text-xs mt-2">{app.name}</div>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="text-sm font-semibold mt-8">Quick Searches</div>
+                  <div className="text-sm font-semibold mt-8">
+                    Quick Searches
+                  </div>
                   <div className="quickSearches mt-2">
-                    {start.qksrch.map((srch,i) => {
+                    {start.qksrch.map((srch, i) => {
                       return (
-                        <div key={i} className="qksrch flex items-center p-3 my-1 handcr prtclk" onClick={clickDispatch} data-action="EDGELINK" data-payload={srch[2]}>
+                        <div
+                          key={i}
+                          className="qksrch flex items-center p-3 my-1 handcr prtclk"
+                          onClick={clickDispatch}
+                          data-action="EDGELINK"
+                          data-payload={srch[2]}
+                        >
                           <Icon fafa={srch[0]} reg={srch[1]} />
                           <div className="ml-4 text-sm">{srch[2]}</div>
                         </div>
@@ -309,7 +411,12 @@ export const StartMenu = () => {
                 <div className="">{match.name}</div>
                 <div className="text-xss mt-2">App</div>
                 <div className="hline mt-8"></div>
-                <div className="openlink w-4/5 flex prtclk handcr pt-3" onClick={clickDispatch} data-action={match.action} data-payload={match.payload ? match.payload : "full"}>
+                <div
+                  className="openlink w-4/5 flex prtclk handcr pt-3"
+                  onClick={clickDispatch}
+                  data-action={match.action}
+                  data-payload={match.payload ? match.payload : "full"}
+                >
                   <Icon className="blueicon" src="link" ui width={16} />
                   <div className="text-xss ml-3">Open</div>
                 </div>

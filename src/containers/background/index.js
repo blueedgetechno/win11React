@@ -75,6 +75,8 @@ export const LockScreen = (props) => {
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
 
+  const userName = useSelector((state) => state.setting.person.name);
+
   const action = (e) => {
     var act = e.target.dataset.action,
       payload = e.target.dataset.payload;
@@ -140,7 +142,9 @@ export const LockScreen = (props) => {
           w={200}
           ext
         />
-        <div className="mt-2 text-2xl font-medium text-gray-200">Blue Edge</div>
+        <div className="mt-2 text-2xl font-medium text-gray-200">
+          {userName}
+        </div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
           Sign in
         </div>

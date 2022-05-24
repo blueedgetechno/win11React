@@ -20,6 +20,8 @@ export const Getstarted = () => {
     }
   };
 
+  const userName = useSelector((state) => state.setting.person.name);
+
   return (
     <div
       className="getstarted floatTab dpShad"
@@ -111,7 +113,7 @@ export const Getstarted = () => {
                     <input
                       type="text"
                       spellcheck="false"
-                      placeholder="Name"
+                      placeholder={userName}
                       id="OOBE_input"
                     />
                   </div>

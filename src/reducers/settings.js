@@ -18,6 +18,7 @@ const defState = {
     }
   },
   person: {
+    name: "Blue Edge",
     theme: "light",
     color: "blue"
   },

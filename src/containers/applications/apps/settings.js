@@ -41,6 +41,8 @@ export const Settings = () => {
     });
   };
 
+  const userName = useSelector((state) => state.setting.person.name);
+
   return (
     <div
       className="settingsApp floatTab dpShad"
@@ -71,7 +73,7 @@ export const Settings = () => {
                   width={60}
                 />
                 <div>
-                  <p>Yashash</p>
+                  <p>{userName}</p>
                   <p>Local Account</p>
                 </div>
               </div>
@@ -237,7 +239,7 @@ export const Settings = () => {
                                 width={90}
                               />
                               <div>
-                                <p>YASHASH</p>
+                                <p>{userName.toUpperCase()}</p>
                                 <p>Local Account</p>
                                 <p>Administrator</p>
                               </div>
