@@ -13,10 +13,7 @@ export const Getstarted = () => {
       className="getstarted floatTab dpShad"
       data-size={wnapp.size}
       data-max={wnapp.max}
-      style={{
-        ...(wnapp.size == "full" ? wnapp.dim : null),
-        zIndex: wnapp.z,
-      }}
+      style={{ ...(wnapp.size == "cstm" ? wnapp.dim : null), zIndex: wnapp.z }}
       data-hide={wnapp.hide}
       id={wnapp.icon + "App"}
     >
