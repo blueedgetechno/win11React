@@ -15,10 +15,11 @@ export const Getstarted = () => {
   const [pageNo, setPageNo] = useState(1);
 
   const nextPage = () => {
-    const lastPage = 5;
+    const lastPage = 6;
     if (pageNo !== lastPage) {
       setPageNo(pageNo + 1);
       console.log(pageNo);
+    } else {
     }
   };
 
@@ -158,6 +159,17 @@ export const Getstarted = () => {
                       aka.ms/networksetup
                     </div>
                   </div>
+                </div>
+              </>
+            ) : null}
+            {pageNo === 6 ? (
+              <>
+                <div className="left">
+                  <img id="left_img" src="img/oobe/window11_oobe_update.png" />
+                </div>
+                <div className="right">
+                  <div className="header mb-8">The setup has completed.</div>
+                  <div>You can close this now.</div>
                 </div>
               </>
             ) : null}
