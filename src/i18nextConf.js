@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { i18nextPlugin } from 'translation-check';
 
 const fallbackLng = ['en'];
-const availableLanguages = ['en', 'da', 'de', 'es', 'fr', 'hi', 'hu', 'ja', 'ko', 'nl', 'ru', 'tr', 'zh'];
+const availableLanguages = ['en', 'da', 'de', 'es', 'fr', 'hi', 'hu', 'ja', 'ko', 'nl', 'ru', 'tr', 'zh', 'si'];
 
 i18n
   .use(Backend) // load translations using http (default public/assets/locals/en/translations)
