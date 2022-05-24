@@ -4,6 +4,7 @@ import { Icon, ToolBar } from "../../../utils/general";
 import countries from "./assets/countrylist.json";
 import "./assets/getstarted.scss";
 import { useState } from "react";
+import LangSwitch from "./assets/Langswitch";
 
 export const Getstarted = () => {
   const apps = useSelector((state) => state.apps);
@@ -14,7 +15,8 @@ export const Getstarted = () => {
   const [pageNo, setPageNo] = useState(1);
 
   const nextPage = () => {
-    if (pageNo !== 5) {
+    const lastPage = 5;
+    if (pageNo !== lastPage) {
       setPageNo(pageNo + 1);
       console.log(pageNo);
     }
@@ -79,9 +81,7 @@ export const Getstarted = () => {
                     </div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">
-                    {countries.map((e) => {
-                      return <div className="list_oobe_opt">{e}</div>;
-                    })}
+                    <LangSwitch />
                   </div>
                 </div>
               </>
@@ -113,7 +113,7 @@ export const Getstarted = () => {
                     <input
                       type="text"
                       spellcheck="false"
-                      placeholder={userName}
+                      placeholder="name"
                       id="OOBE_input"
                     />
                   </div>
