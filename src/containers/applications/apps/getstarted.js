@@ -29,7 +29,6 @@ export const Getstarted = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div class="inner_fill_setup">
-            <div class="yes_button base">Yes</div>
             <div class="left">
               <img
                 alt="left image"
@@ -42,19 +41,19 @@ export const Getstarted = () => {
                 Is this the right country or region? <br />
                 <div class="header_sml"></div>
               </div>
-
-              <div class="list_oobe win11Scroll">
+              <div class="list_oobe mt-4 win11Scroll">
                 {countries.map((e) => {
                   return <div class="list_oobe_opt">{e}</div>;
                 })}
               </div>
             </div>
+            <div class="yes_button base">Yes</div>
           </div>
 
           <div class="setup_settings">
             <img
               alt="accessibility"
-              className="mr-8"
+              className="mr-4"
               src="img/oobe/window11_oobe_accessibility.png"
               width={16}
             />

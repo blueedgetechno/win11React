@@ -2,21 +2,20 @@
   background: rgb(255 255 255 / 67%);
   backdrop-filter: blur(5rem);
   color: black;
-  min-width: 55rem;
-  min-height: 45rem;
+  min-width: 800px;
+  min-height: 680px;
 
   .restWindow {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(2rem, 10vmin, 5rem);
   }
 
   .inner_fill_setup {
-    position: absolute;
+    position: relative;
     background: rgb(255 255 255 / 67%);
-    width: clamp(500px, 80%, 800px);
-    height: clamp(400px, 80%, 600px);
+    width: 720px;
+    height: 580px;
     border-radius: 8px;
     display: grid;
     grid-template-columns: 50% 50%;
@@ -31,29 +30,23 @@
     width: 230px;
     height: 230px;
     animation: transition_effect_pop 1s;
-    position: absolute;
   }
   .right {
+    padding: 20px;
     animation: transition_effect 1.4s;
   }
   .header {
     font-size: 20px;
     font-weight: 600;
     padding-top: 36px;
-    position: absolute;
     width: 362px;
-    right: -1px;
     animation: transition_effect 1.4s;
   }
   .list_oobe {
-    height: 376px;
-    width: 311px;
+    height: 380px;
     overflow-x: hidden;
     overflow-y: scroll;
-    position: absolute;
     animation: transition_effect 1.4s;
-    right: 59px;
-    top: 88px;
   }
 
   .list_oobe_opt {
@@ -98,8 +91,8 @@
   .setup_settings {
     display: flex;
     position: absolute;
-    right: 65px;
-    bottom: 23px;
+    right: 2rem;
+    bottom: 1rem;
   }
   #volume {
     width: 18px;
