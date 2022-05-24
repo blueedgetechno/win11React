@@ -66,6 +66,10 @@
   .list_oobe_opt:hover {
     background: rgb(175 175 175 / 12%);
   }
+  #selected {
+    background: #0069bd;
+    color: #fff;
+  }
   .yes_button {
     border-radius: 4px;
     background: #0069bd;
@@ -83,10 +87,6 @@
   }
   .yes_button:hover {
     background: #003282;
-  }
-  #selected {
-    background: #0069bd;
-    color: #fff;
   }
   .setup_settings {
     display: flex;
