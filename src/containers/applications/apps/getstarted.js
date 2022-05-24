@@ -5,12 +5,14 @@ import countries from "./assets/countrylist.json";
 import "./assets/getstarted.scss";
 import { useState } from "react";
 import LangSwitch from "./assets/Langswitch";
+import { useTranslation } from 'react-i18next';
 
 export const Getstarted = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.getstarted);
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.taskbar);
+  const { t, i18n } = useTranslation();
 
   const [pageNo, setPageNo] = useState(1);
 
@@ -54,7 +56,7 @@ export const Getstarted = () => {
                 </div>
                 <div className="right">
                   <div className="header">
-                    Is this the right country or region? <br />
+                    {t('oobe.country')}<br />
                     <div className="header_sml"></div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">
@@ -75,10 +77,9 @@ export const Getstarted = () => {
                 </div>
                 <div className="right">
                   <div className="header">
-                    Is this the right keyboard layout or input method?
+                    {t('oobe.keyboard')}
                     <div className="header_sml">
-                      If you also use another keyboard layout, you can add that
-                      next
+                      {t('oobe.anotherkeyboard')}
                     </div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">

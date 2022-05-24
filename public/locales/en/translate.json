@@ -20,5 +20,8 @@
   "store.features": "Features",
   "store.ratings": "Ratings and reviews",
   "store.description": "Description",
-  "camera.take-photo": "Take photo"
+  "camera.take-photo": "Take photo",
+  "oobe.country": "Is this the right country or region?",
+  "oobe.keyboard": "Is this the right keyboard layout or input method?",
+  "oobe.anotherkeyboard": "If you also use another keyboard layout, you can add that next"
 }
