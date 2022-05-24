@@ -176,7 +176,7 @@ export const Getstarted = () => {
           <div className="setup_settings">
             <img
               alt="accessibility"
-              className="mr-4"
+              className="mr-4 acsblty"
               src="img/oobe/window11_oobe_accessibility.png"
               width={16}
             />

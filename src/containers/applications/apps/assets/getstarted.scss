@@ -87,7 +87,7 @@
   }
   .setup_settings {
     display: flex;
-    position: relative;
+    position: absolute;
     right: 2rem;
     bottom: 1rem;
   }
@@ -205,7 +205,13 @@ body[data-theme="dark"] .getstarted {
   .inner_fill_setup {
     background: rgb(255 255 255 / 7.5%);
   }
+
   #OOBE_input {
     background: rgb(var(--base_bg--rgb));
+    color: var(--sat-txt);
+  }
+
+  .acsblty {
+    filter: invert(1);
   }
 }
