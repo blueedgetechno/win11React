@@ -105,8 +105,7 @@ var apps = [{
   name: 'Get Started',
   icon: 'getstarted',
   type: 'app',
-  action: 'EXTERNAL',
-  payload: 'https://win11react-docs.andrewstech.me/'
+  action: 'OOBE'
 },
 {
   name: 'Groove Music',
