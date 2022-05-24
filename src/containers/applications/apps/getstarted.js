@@ -5,7 +5,7 @@ import countries from "./assets/countrylist.json";
 import "./assets/getstarted.scss";
 import { useState } from "react";
 import LangSwitch from "./assets/Langswitch";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export const Getstarted = () => {
   const apps = useSelector((state) => state.apps);
@@ -15,15 +15,7 @@ export const Getstarted = () => {
   const { t, i18n } = useTranslation();
 
   const [pageNo, setPageNo] = useState(1);
-
-  const nextPage = () => {
-    const lastPage = 6;
-    if (pageNo !== lastPage) {
-      setPageNo(pageNo + 1);
-      console.log(pageNo);
-    } else {
-    }
-  };
+  const nextPage = () => (pageNo !== 6 ? setPageNo(pageNo + 1) : null);
 
   const userName = useSelector((state) => state.setting.person.name);
 
@@ -56,7 +48,8 @@ export const Getstarted = () => {
                 </div>
                 <div className="right">
                   <div className="header">
-                    {t('oobe.country')}<br />
+                    {t("oobe.country")}
+                    <br />
                     <div className="header_sml"></div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">
@@ -77,9 +70,9 @@ export const Getstarted = () => {
                 </div>
                 <div className="right">
                   <div className="header">
-                    {t('oobe.keyboard')}
+                    {t("oobe.keyboard")}
                     <div className="header_sml">
-                      {t('oobe.anotherkeyboard')}
+                      {t("oobe.anotherkeyboard")}
                     </div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">
