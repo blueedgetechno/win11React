@@ -1,5 +1,5 @@
 .getstarted {
-  background: rgb(var(--base_bg--rgb) / 67%);
+  background: rgb(var(--base_bg-rgb) / 67%);
   backdrop-filter: blur(2rem);
   color: var(--dark-txt);
   min-width: 800px;
@@ -207,7 +207,7 @@ body[data-theme="dark"] .getstarted {
   }
 
   #OOBE_input {
-    background: rgb(var(--base_bg--rgb));
+    background: rgb(var(--base_bg-rgb));
     color: var(--sat-txt);
   }
 
