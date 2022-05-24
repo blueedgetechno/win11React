@@ -24,6 +24,7 @@ function LangSwitch() {
         <option value="ru">Russian</option>
         <option value="tr">Turkish</option>
         <option value="zh">Chinese</option>
+        <option value="si">Sinhala</option>
       </select>
     </div>
   );
