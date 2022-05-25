@@ -212,7 +212,7 @@ const defState = {
         dsb: true,
       },
       {
-        name: "Run as Administration",
+        name: "Run as Administrator",
         action: "performApp",
         payload: "open",
         icon: "win/shield",
