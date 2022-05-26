@@ -20,7 +20,7 @@
     "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.8.4",
     "i18next-browser-languagedetector": "^6.1.4",
-    "i18next-http-backend": "^1.4.0",
+    "i18next-http-backend": "^1.4.1",
     "i18next-xhr-backend": "^3.2.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
