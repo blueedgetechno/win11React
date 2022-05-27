@@ -17,6 +17,8 @@
     "@widgetbot/react-embed": "1.4.1",
     "@win11react/react-canvas-draw": "1.2.2",
     "axios": "^0.27.2",
+    "@craco/craco": "6.4.3",
+    "craco-esbuild": "0.5.1",
     "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.8.4",
     "i18next-browser-languagedetector": "^6.1.4",
