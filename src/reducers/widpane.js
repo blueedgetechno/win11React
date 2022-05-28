@@ -1,8 +1,6 @@
 import * as history from './history.json';
 import * as news from './news.json';
 
-import axios from 'axios';
-
 var hisTemp = history.default;
 
 var date = new Date(),

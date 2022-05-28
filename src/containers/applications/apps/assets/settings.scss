@@ -1,15 +1,12 @@
 .settingsApp {
+  --bg: #f3f3f3;
+
+  background: var(--fakeMica);
+  color: rgb(var(--txt_clr-rgb));
   min-width: 720px;
 }
 
 .settingsApp .restWindow {
-  --bg: #eff4f9;
-  --txt_clr-rgb: 0 0 0;
-  --clr_prm: #0067c0;
-  --scroll: rgb(255 255 255 / 80%);
-
-  background: var(--bg);
-  color: rgb(var(--txt_clr-rgb));
   font-size: 14px;
   height: 100%;
 
@@ -57,7 +54,7 @@
         height: 32px;
         width: calc(300px - 32px);
         border: 0;
-        border-bottom: 1px solid var(--clr_prm);
+        border-bottom: 1px solid var(--clrPrm);
         border-radius: 4px;
         padding: 8px;
         margin: 8px 16px 20px;
@@ -66,7 +63,7 @@
           background: rgb(255 255 255 / 33%);
         }
         &:focus {
-          border-bottom: 2px solid var(--clr_prm);
+          border-bottom: 2px solid var(--clrPrm);
         }
         &:focus-visible {
           outline: none;
@@ -95,26 +92,6 @@
         align-items: center;
         flex-shrink: 0;
 
-        &:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          height: 16px;
-          width: 3px;
-          border-radius: 1.5px;
-          background: var(--clr_prm);
-          opacity: 0;
-          transform: scaleY(0);
-        }
-        &.selected::before {
-          opacity: 1;
-          transform: scaleY(1);
-          transition: all 200ms;
-        }
-        &.selected:active::before {
-          transform: scaleY(0.67);
-        }
-
         &:hover,
         &.selected {
           background: rgb(var(--txt_clr-rgb) / 5%);
@@ -122,6 +99,24 @@
 
         img {
           margin: 0 10.5px 0 7px;
+        }
+      }
+
+      .marker {
+        position: absolute;
+        background: var(--clrPrm);
+        height: 16px;
+        width: 3px;
+        border-radius: 3px;
+        top: 0;
+        left: 16px;
+        transform: translateY(12px);
+        transition: transform 250ms cubic-bezier(1, 0, 0, 1);
+      }
+
+      @for $i from 1 to 12 {
+        .navLink:nth-child(#{$i}).selected ~ .marker {
+          transform: translateY(((40 * ($i - 1)) + 12) + px);
         }
       }
     }
@@ -162,7 +157,7 @@
             color: rgb(var(--txt_clr-rgb) / 90%);
           }
           .device_rename {
-            color: var(--clr_prm);
+            color: var(--clrPrm);
           }
         }
       }
@@ -259,13 +254,14 @@
           grid-template-rows: repeat(2, 1fr);
           gap: 8px;
 
-          .selected {
-            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--clr_prm);
-          }
-
           img {
             width: 120px;
             border-radius: 4px;
+          }
+
+          .selected {
+            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--clrPrm);
+            border-radius: 2px;
           }
         }
       }
@@ -285,6 +281,22 @@
         &:last-child {
           color: rgb(var(--txt_clr-rgb) / 67%);
         }
+      }
+    }
+
+    .langSwitcherTile {
+      &::after {
+        display: none;
+      }
+
+      select {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgb(238, 236, 235);
+        border-bottom: 1px solid rgb(212, 211, 210);
+        color: rgb(var(--txt_clr-rgb));
+        height: 32px;
+        padding-left: 8px;
+        border-radius: 6px;
       }
     }
 
@@ -318,7 +330,7 @@
         }
       }
       .right {
-        // justify-self: flex-end;
+        flex-shrink: 0;
         margin-left: auto;
       }
     }
@@ -363,6 +375,10 @@
           position: absolute;
           right: 16px;
         }
+
+        .tile_content {
+          flex-grow: 1;
+        }
         .tile_desc {
           color: rgb(var(--txt_clr-rgb) / 66%);
           font-size: 12.33px;
@@ -386,7 +402,7 @@
         &.thin-blue {
           min-height: unset;
           height: unset;
-          color: var(--clr_prm);
+          color: var(--clrPrm);
           justify-content: center;
           margin: 4px 0;
         }
@@ -451,25 +467,33 @@
   //   }
   // }
 }
-body[data-theme="dark"] .settingsApp .restWindow {
+body[data-theme="dark"] .settingsApp {
   --bg: #202020;
-  --txt_clr-rgb: 255 255 255;
-  --clr_prm: #4cc2ff;
-  --scroll: rgb(44 44 44 / 80%);
 
-  nav .nav_top .search {
-    background: rgb(255 255 255 / 3.33%);
+  .restWindow {
+    nav .nav_top .search {
+      background: rgb(255 255 255 / 3.33%);
 
-    &:hover {
-      background: rgb(255 255 255 / 5%);
+      &:hover {
+        background: rgb(255 255 255 / 5%);
+      }
     }
-  }
 
-  main .tilesCont .tile {
-    background: rgb(255 255 255 / 5%);
+    main .tilesCont .tile {
+      background: rgb(255 255 255 / 5%);
 
-    &:hover {
-      background: rgb(255 255 255 / 10%);
+      &:hover {
+        background: rgb(255 255 255 / 10%);
+      }
+      select {
+        background: rgb(255 255 255 / 7%);
+        border: 1px solid rgba(238, 236, 235, 0.071);
+        border-bottom: 1px solid rgba(212, 211, 210, 0.051);
+
+        option {
+          background: var(--bg);
+        }
+      }
     }
   }
 }

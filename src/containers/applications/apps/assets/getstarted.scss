@@ -1,0 +1,217 @@
+.getstarted {
+  background: rgb(var(--base_bg-rgb) / 67%);
+  backdrop-filter: blur(2rem);
+  color: var(--dark-txt);
+  min-width: 800px;
+  min-height: 680px;
+
+  .restWindow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inner_fill_setup {
+    background: rgb(255 255 255 / 75%);
+    position: relative;
+    width: 720px;
+    height: 580px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    box-shadow: 10px 6px 20px 0px rgb(0 0 0 / 3%);
+  }
+  .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #left_img {
+    width: 230px;
+    height: 230px;
+    animation: transition_effect_pop 1s;
+  }
+  .right {
+    padding: 20px;
+    animation: transition_effect 1.4s;
+  }
+  .header {
+    font-size: 20px;
+    font-weight: 600;
+    padding-top: 36px;
+    width: 362px;
+    animation: transition_effect 1.4s;
+  }
+  .list_oobe {
+    height: 380px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    animation: transition_effect 1.4s;
+  }
+
+  .list_oobe_opt {
+    width: 306px;
+    padding: 12px 12px 12px 12px;
+    display: flex;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .list_oobe_opt_wifi {
+    width: 306px;
+    padding: 12px;
+    display: flex;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .list_oobe_opt:hover {
+    background: rgb(175 175 175 / 12%);
+  }
+  #selected {
+    background: var(--clrPrm);
+    color: var(--alt-txt);
+  }
+  .yes_button {
+    border-radius: 4px;
+    background: var(--clrPrm);
+    color: var(--alt-txt);
+    height: 36px;
+    width: 102px;
+    text-align: center;
+    line-height: 36px;
+    position: absolute;
+    font-size: 14px;
+    right: 35px;
+    cursor: default;
+    animation: transition_effect 1.4s;
+    bottom: 37px;
+  }
+  .setup_settings {
+    display: flex;
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+  }
+  #volume {
+    width: 18px;
+    height: 18px;
+  }
+  #loader {
+    animation: spiner infinite 2s;
+    width: 115px;
+    height: 115px;
+  }
+
+  .header_sml {
+    color: grey;
+    font-size: 12px;
+    width: 325px;
+    margin-top: 8px;
+    animation: transition_effect 1.4s;
+  }
+
+  .header_sml_wifi {
+    color: grey;
+    font-size: 12px;
+    width: 325px;
+    animation: transition_effect 1.4s;
+  }
+
+  .text_sml_black {
+    color: var(--dark-txt);
+    font-size: 12px;
+    width: 325px;
+    margin-top: 8px;
+    animation: transition_effect 1.4s;
+    margin-top: 10px;
+  }
+
+  .text_sml_black_wifi {
+    color: var(--dark-txt);
+    font-size: 12px;
+  }
+  .align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  #OOBE_input {
+    border: none;
+    border-bottom: 3px transparent solid;
+    outline: none;
+    background: #fff;
+    border-radius: 4px;
+    transition: 0.2s;
+    padding: 10px 23px 5px 12px;
+    font-weight: 500;
+    font-size: 13.5px;
+    width: 189px;
+  }
+  .OOBE_input {
+    margin-top: 145px;
+  }
+  #OOBE_input:focus {
+    border-bottom: 3px var(--clrPrm) solid;
+  }
+  #cancel_input {
+    width: 11.7px;
+    height: 12px;
+    opacity: 0;
+    transform: translateX(-28px) translateY(1px);
+  }
+  .ethernet_list {
+    height: 248px;
+    width: 316px;
+    border-bottom: 1px rgba(128, 128, 128, 0.278) solid;
+  }
+  #connection {
+    font-size: 47px;
+  }
+  .ethernet_list_opt_inr {
+    width: max-content;
+    transform: translate(10px, 2px);
+  }
+  @keyframes transition_effect {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes spiner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes transition_effect_pop {
+    0% {
+      opacity: 0;
+      transform: translateY(187px) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+  }
+}
+
+body[data-theme="dark"] .getstarted {
+  .inner_fill_setup {
+    background: rgb(255 255 255 / 7.5%);
+  }
+
+  #OOBE_input {
+    background: rgb(var(--base_bg-rgb));
+    color: var(--sat-txt);
+  }
+
+  .acsblty {
+    filter: invert(1);
+  }
+}

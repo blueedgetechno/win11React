@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Suspense} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
+import './i18nextConf';
 import {
   useSelector,
   useDispatch
@@ -17,6 +18,7 @@ import ActMenu from './components/menu';
 import {
   StartMenu,
   DesktopApp,
+  BandPane,
   SidePane,
   WidPane,
   CalnWid
@@ -71,6 +73,7 @@ function App() {
   const afterMath = (event) => {
     var ess = [
       ["START", "STARTHID"],
+      ["BAND", "BANDHIDE"],
       ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       ["CALN", "CALNHIDE"],
@@ -131,7 +134,7 @@ function App() {
   })
 
   return (
-    <div className="App">
+    <div className="App">  
       <ErrorBoundary FallbackComponent={ErrorFallback}>
       {!wall.booted?<BootScreen dir={wall.dir}/>:null}
       {wall.locked?<LockScreen dir={wall.dir}/>:null}
@@ -151,6 +154,7 @@ function App() {
               }
           })}
           <StartMenu/>
+          <BandPane/>
           <SidePane/>
           <WidPane/>
           <CalnWid/>

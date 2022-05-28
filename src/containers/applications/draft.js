@@ -3,9 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Icon, Image, ToolBar} from '../../utils/general';
 
 export const IFrame = (props)=>{
-  const apps = useSelector(state => state.apps);
   const wnapp = useSelector(state => state.apps[props.icon]);
-  const dispatch = useDispatch();
+  if (!wnapp) return null;
   var data = wnapp.data;
 
   return wnapp.hide?null:(
@@ -20,7 +19,7 @@ export const IFrame = (props)=>{
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
-            <iframe src={data.url} className="w-full h-full"
+            <iframe src={data.url} allow="camera;microphone" className="w-full h-full"
               frameborder="0"></iframe>
           </div>
         </div>

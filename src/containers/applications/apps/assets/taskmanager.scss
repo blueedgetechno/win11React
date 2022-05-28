@@ -1,0 +1,123 @@
+.taskmanagerApp {
+  --txt_clr-rgb: 0 0 0;
+  --bg: white;
+
+  background: var(--fakeMica);
+  color: var(--dark-txt);
+
+  .windowScreen .restWindow {
+    height: 100%;
+  }
+
+  nav {
+    position: absolute;
+    left: 0;
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+
+    .navLink {
+      height: 36px;
+      padding-left: 4px;
+      margin: 2px 4px;
+
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      &:hover,
+      &.selected {
+        background: rgb(var(--txt_clr-rgb) / 5%);
+      }
+    }
+
+    .tabName {
+      display: none;
+    }
+
+    &.open {
+      width: 240px;
+
+      .tabName {
+        display: inline;
+      }
+    }
+
+    .marker {
+      position: absolute;
+      background: var(--clrPrm);
+      height: 16px;
+      width: 3px;
+      border-radius: 3px;
+      top: 0;
+      left: 4px;
+      transition: transform 250ms cubic-bezier(1, 0, 0, 1);
+    }
+
+    @for $i from 1 to 10 {
+      .navLink:nth-child(#{$i}).selected ~ .marker {
+        transform: translateY(((40 * ($i - 1)) + 12) + px);
+      }
+    }
+  }
+
+  main {
+    margin-left: 44px;
+    border-top-left-radius: 8px;
+    padding: 0 1rem;
+    background: var(--bg);
+    transition: all 100ms;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: scroll;
+
+    &::-webkit-scrollbar-corner {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
+  nav.open ~ main {
+    margin-left: 240px;
+  }
+
+  table {
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid rgb(var(--txt_clr-rgb) / 10%);
+      padding: 4px 8px;
+    }
+
+    td:not(.name) {
+      background: rgb(0 0 255 / 5%);
+    }
+  }
+
+  .navMenuBtn {
+    display: flex;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 12px;
+    border-radius: 6px;
+
+    &:hover {
+      background: rgb(var(--txt_clr-rgb) / 5%);
+    }
+
+    svg {
+      transition: all 0.1s;
+    }
+    &:active svg {
+      transform: scaleX(0.67);
+    }
+  }
+}
+
+body[data-theme="dark"] .taskmanagerApp {
+  --txt_clr-rgb: 255 255 255;
+  --bg: #2c2c2c;
+}

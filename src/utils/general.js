@@ -22,7 +22,7 @@ String.prototype.count = function(c) {
 
 export const Icon = (props)=>{
   const dispatch = useDispatch();
-  var src = `/img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
+  var src = `img/icon/${props.ui!=null?'ui/':''}${props.src}.png`;
   if(props.ext!=null || (props.src && props.src.includes("http"))){
     src = props.src
   }
@@ -147,7 +147,7 @@ export const Icon = (props)=>{
 
 export const Image = (props)=>{
   const dispatch = useDispatch();
-  var src = `/img/${(props.dir?props.dir+"/":"")+props.src}.png`;
+  var src = `img/${(props.dir?props.dir+"/":"")+props.src}.png`;
   if(props.ext!=null){
     src = props.src
   }
@@ -352,17 +352,17 @@ export const ToolBar = (props)=>{
         </div>
         <div className="actbtns flex items-center">
           <Icon invert={props.invert} click={props.app}
-            payload="mnmz" pr src="minimize" ui width={8}/>
+            payload="mnmz" pr src="minimize" ui width={12}/>
           <div className="snapbox h-full" data-hv={snap}
             onMouseOver={openSnap} onMouseLeave={closeSnap}>
-            <Icon invert={props.invert} click={props.app} ui pr width={8}
+            <Icon invert={props.invert} click={props.app} ui pr width={12}
               payload="mxmz" src={props.size=="full"?"maximize":"maxmin"}/>
             <SnapScreen invert={props.invert} app={props.app}
               snap={snap} closeSnap={closeSnap}/>
             {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
           </div>
           <Icon className="closeBtn" invert={props.invert} click={props.app}
-            payload="close" pr src="close" ui width={8}/>
+            payload="close" pr src="close" ui width={14}/>
         </div>
       </div>
       <div className="resizecont topone">

@@ -1,0 +1,72 @@
+name: PR Preview
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: peter-evans/create-or-update-comment@v2
+        id: couc
+        with:
+          body: ⌛ Deploy Preview - Build in Progress
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.BOT }}
+
+      - uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Get translations
+        run: npm run crowdin download
+        env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
+      - name: Build project
+        run: npm run ghbuild
+
+      - if: ${{ github.event.action == 'opened'}}
+        run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT }}
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.BOT }}
+          publish_dir: ./build
+          external_repository: win11bot/${{ github.event.pull_request.number }}
+
+      - name: Sleep to make sure page gets updated
+        run: sleep 1m
+        shell: bash
+
+      - name: comment Preview Ready
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          body: |
+            ✔️ Deploy Preview for Ready!
+            😎 Browse the preview: https://pr-preview.win11react.com/${{ github.event.pull_request.number }} !
+            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          comment-id: ${{ steps.couc.outputs.comment-id }}
+          edit-mode: replace
+          token: ${{ secrets.BOT }}
+
+      - if: ${{ failure() }}
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          body: |
+            ❌ Deploy Preview failed
+            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          comment-id: ${{ steps.couc.outputs.comment-id }}
+          edit-mode: replace
+          token: ${{ secrets.BOT }}

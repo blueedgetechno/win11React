@@ -30,6 +30,12 @@ var apps = [{
   action: 'SETTINGS'
 },
 {
+  name: 'Task Manager',
+  icon: 'taskmanager',
+  type: 'app',
+  action: 'TASKMANAGER'
+},
+{
   name: 'File Explorer',
   icon: 'explorer',
   type: 'app',
@@ -99,8 +105,7 @@ var apps = [{
   name: 'Get Started',
   icon: 'getstarted',
   type: 'app',
-  action: 'EXTERNAL',
-  payload: 'https://win11docs.asylum-os.com/'
+  action: 'OOBE'
 },
 {
   name: 'Groove Music',
@@ -112,7 +117,7 @@ var apps = [{
   icon: 'help',
   type: 'app',
   action: 'EXTERNAL',
-  payload: 'https://win11docs.asylum-os.com/'
+  payload: 'https://win11react-docs.andrewstech.me/'
 },
 {
   name: 'Yammer',

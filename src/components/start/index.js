@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Actions from "../../actions";
+import { getTreeValue } from "../../actions";
 import { Icon } from "../../utils/general";
-import "./startmenu.scss";
+import Battery from "../Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
-import Battery from "../Battery";
-
-import axios from "axios";
-
-import { getTreeValue } from "../../actions";
-import * as Actions from "../../actions";
+import "./startmenu.scss";
 
 export * from "./start";
 export * from "./widget";
@@ -26,7 +23,10 @@ export const DesktopApp = () => {
         var anm = a.name,
           bnm = b.name;
 
-        return anm[bnm.charCodeAt(0) % anm.length] > bnm[anm.charCodeAt(0) % bnm.length] ? 1 : -1;
+        return anm[bnm.charCodeAt(0) % anm.length] >
+          bnm[anm.charCodeAt(0) % bnm.length]
+          ? 1
+          : -1;
       });
     } else if (arr.sort == "date") {
       tmpApps.sort((a, b) => {
@@ -35,7 +35,9 @@ export const DesktopApp = () => {
         var anml = anm.length,
           bnml = bnm.length;
 
-        return anm[(bnml * 13) % anm.length] > bnm[(anml * 17) % bnm.length] ? 1 : -1;
+        return anm[(bnml * 13) % anm.length] > bnm[(anml * 17) % bnm.length]
+          ? 1
+          : -1;
       });
     }
 
@@ -50,11 +52,37 @@ export const DesktopApp = () => {
         deskApps.apps.map((app, i) => {
           return (
             <div key={i} className="dskApp">
-              <Icon click={app.action} className="dskIcon prtclk" src={app.icon} payload={app.payload || "full"} pr width={Math.round(deskApps.size * 36)} menu="app" />
+              <Icon
+                click={app.action}
+                className="dskIcon prtclk"
+                src={app.icon}
+                payload={app.payload || "full"}
+                pr
+                width={Math.round(deskApps.size * 36)}
+                menu="app"
+              />
               <div className="appName">{app.name}</div>
             </div>
           );
         })}
+    </div>
+  );
+};
+
+export const BandPane = () => {
+  const sidepane = useSelector((state) => state.sidepane);
+
+  return (
+    <div
+      className="bandpane dpShad"
+      data-hide={sidepane.banhide}
+      style={{ "--prefix": "BAND" }}
+    >
+      <div className="bandContainer">
+        <Icon className="hvlight" src="defender" width={17} />
+        <Icon className="hvlight" src="spotify" width={17} />
+        <Icon className="hvlight" src="teams" width={17} />
+      </div>
     </div>
   );
 };
@@ -64,39 +92,10 @@ export const SidePane = () => {
   const setting = useSelector((state) => state.setting);
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
-  const [batterylevel, setbatterylevel] = useState(100);
   const dispatch = useDispatch();
 
-  const changebatterystatus = (bt) => {
-    let level = bt.level * 100 || 100;
-
-    if (bt.charging) {
-      setbatterylevel(-level);
-    } else {
-      setbatterylevel(level);
-    }
-  };
-
-  useEffect(() => {
-    async function getBatteryDetails() {
-      let bt = await navigator.getBattery();
-      changebatterystatus(bt);
-
-      bt.onlevelchange = () => {
-        changebatterystatus(bt);
-      };
-
-      bt.onchargingchange = () => {
-        changebatterystatus(bt);
-      };
-    }
-
-    if (window.BatteryManager) {
-      getBatteryDetails();
-    }
-
-    return () => {};
-  }, []);
+  let [btlevel, setBtLevel] = useState("");
+  const childToParent = () => {};
 
   const clickDispatch = (event) => {
     var action = {
@@ -126,7 +125,10 @@ export const SidePane = () => {
   };
 
   function silderBackground(elem, e) {
-    elem.style.setProperty("--track-color", `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`);
+    elem.style.setProperty(
+      "--track-color",
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
+    );
   }
 
   const setBrightness = (e) => {
@@ -164,14 +166,30 @@ export const SidePane = () => {
   }, [setting, sidepane]);
 
   return (
-    <div className="sidePane dpShad" data-hide={sidepane.hide} style={{ "--prefix": "PANE" }}>
+    <div
+      className="sidePane dpShad"
+      data-hide={sidepane.hide}
+      style={{ "--prefix": "PANE" }}
+    >
       <div className="quickSettings p-5 pb-8">
         <div className="qkCont">
           {sidepane.quicks.map((qk, idx) => {
             return (
               <div key={idx} className="qkGrp">
-                <div className="qkbtn handcr prtclk" onClick={clickDispatch} data-action={qk.action} data-payload={qk.payload || qk.state} data-state={pnstates[idx]}>
-                  <Icon className="quickIcon" ui={qk.ui} src={qk.src} width={14} invert={pnstates[idx] ? true : null} />
+                <div
+                  className="qkbtn handcr prtclk"
+                  onClick={clickDispatch}
+                  data-action={qk.action}
+                  data-payload={qk.payload || qk.state}
+                  data-state={pnstates[idx]}
+                >
+                  <Icon
+                    className="quickIcon"
+                    ui={qk.ui}
+                    src={qk.src}
+                    width={14}
+                    invert={pnstates[idx] ? true : null}
+                  />
                 </div>
                 <div className="qktext">{qk.name}</div>
               </div>
@@ -180,17 +198,30 @@ export const SidePane = () => {
         </div>
         <div className="sliderCont">
           <Icon className="mx-2" src="brightness" ui width={20} />
-          <input className="sliders bSlider" onChange={setBrightness} type="range" min="10" max="100" defaultValue="100" />
+          <input
+            className="sliders bSlider"
+            onChange={setBrightness}
+            type="range"
+            min="10"
+            max="100"
+            defaultValue="100"
+          />
         </div>
         <div className="sliderCont">
           <Icon className="mx-2" src={"audio" + tasks.audio} ui width={18} />
-          <input className="sliders vSlider" onChange={setVolume} type="range" min="0" max="100" defaultValue="100" />
+          <input
+            className="sliders vSlider"
+            onChange={setVolume}
+            type="range"
+            min="0"
+            max="100"
+            defaultValue="100"
+          />
         </div>
       </div>
       <div className="p-1 bottomBar">
         <div className="px-3 bettery">
-          <Battery level={Math.abs(batterylevel)} charging={batterylevel < 0} />
-          <div className="text-xs">{`${Math.round(Math.abs(batterylevel))}%`}</div>
+          <Battery pct />
         </div>
       </div>
     </div>
@@ -200,6 +231,12 @@ export const SidePane = () => {
 export const CalnWid = () => {
   const sidepane = useSelector((state) => state.sidepane);
   const [loaded, setLoad] = useState(false);
+
+  const [collapse, setCollapse] = useState("");
+
+  const collapseToggler = () => {
+    collapse === "" ? setCollapse("collapse") : setCollapse("");
+  };
 
   useEffect(() => {
     if (!loaded) {
@@ -216,8 +253,27 @@ export const CalnWid = () => {
   });
 
   return (
-    <div className="calnpane dpShad" data-hide={sidepane.calhide} style={{ "--prefix": "CALN" }}>
-      <div className="topBar pl-4 text-sm">{new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}</div>
+    <div
+      className={`calnpane ${collapse} dpShad`}
+      data-hide={sidepane.calhide}
+      style={{ "--prefix": "CALN" }}
+    >
+      <div className="topBar pl-4 text-sm">
+        <div className="date">
+          {new Date().toLocaleDateString(undefined, {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+          })}
+        </div>
+        <div className="collapser p-2 m-4 rounded" onClick={collapseToggler}>
+          {collapse === "" ? (
+            <Icon fafa="faChevronDown" />
+          ) : (
+            <Icon fafa="faChevronUp" />
+          )}
+        </div>
+      </div>
       <div id="dycalendar"></div>
     </div>
   );

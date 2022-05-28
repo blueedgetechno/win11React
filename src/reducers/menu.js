@@ -8,17 +8,17 @@ const defState = {
   data: {
     desk: {
       width: "310px",
-      secwid: "200px"
+      secwid: "200px",
     },
     task: {
       width: "220px",
       secwid: "120px",
-      ispace: false // show the space for icons in menu
+      ispace: false, // show the space for icons in menu
     },
     app: {
       width: "310px",
-      secwid: "200px"
-    }
+      secwid: "200px",
+    },
   },
   menus: {
     desk: [
@@ -110,11 +110,15 @@ const defState = {
         name: "Display settings",
         icon: "display",
         type: "svg",
+        action: "SETTINGS",
+        payload: "full",
       },
       {
         name: "Personalize",
         icon: "personalize",
         type: "svg",
+        action: "SETTINGS",
+        payload: "full",
       },
       {
         type: "hr",
@@ -208,7 +212,7 @@ const defState = {
         dsb: true,
       },
       {
-        name: "Run as Administration",
+        name: "Run as Administrator",
         action: "performApp",
         payload: "open",
         icon: "win/shield",

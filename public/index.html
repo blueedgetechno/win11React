@@ -9,7 +9,6 @@
     <meta name="og:title" property="og:title" content="Win11 made in React" />
     <meta name="og:description" property="og:description" content="Win11 made in React" />
     <meta name="og:color" content="#303030" />
-    <meta name="robots" content="noodp,noydir" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Win11 in React</title>
@@ -24,16 +23,6 @@
     <span id="root"></span>
     <!-- PWA Script -->
     <script src="https://expo.asylum-os.com/react-pwa.js"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("./serviceWorker.js")
-            .then((reg) => console.log("Success: ", reg.scope))
-            .catch((err) => console.log("Failure: ", err));
-        });
-      }
-    </script>
     <span id="brightoverlay"></span>
     <script type="text/javascript" src="dycalendar.js"></script>
     <script type="text/javascript" src="console.js"></script>

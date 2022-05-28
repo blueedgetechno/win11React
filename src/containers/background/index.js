@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Battery from "../../components/Battery";
 import { Icon, Image } from "../../utils/general";
-
 import "./back.scss";
 
 export const Background = () => {
@@ -12,7 +12,7 @@ export const Background = () => {
     <div
       className="background"
       style={{
-        backgroundImage: `url(/img/wallpaper/${wall.src})`,
+        backgroundImage: `url(img/wallpaper/${wall.src})`,
       }}
     ></div>
   );
@@ -52,7 +52,12 @@ export const BootScreen = (props) => {
       <div className={blackout ? "hidden" : ""}>
         <Image src="asset/bootlogo" w={180} />
         <div className="mt-48" id="loader">
-          <svg className="progressRing" height={48} width={48} viewBox="0 0 16 16">
+          <svg
+            className="progressRing"
+            height={48}
+            width={48}
+            viewBox="0 0 16 16"
+          >
             <circle cx="8px" cy="8px" r="7px"></circle>
           </svg>
         </div>
@@ -69,6 +74,8 @@ export const LockScreen = (props) => {
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
+
+  const userName = useSelector((state) => state.setting.person.name);
 
   const action = (e) => {
     var act = e.target.dataset.action,
@@ -106,7 +113,7 @@ export const LockScreen = (props) => {
       className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
-        backgroundImage: `url(${`/img/wallpaper/lock.jpg`})`,
+        backgroundImage: `url(${`img/wallpaper/lock.jpg`})`,
       }}
       onClick={action}
       data-action="splash"
@@ -129,8 +136,15 @@ export const LockScreen = (props) => {
         </div>
       </div>
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
-        <Image className="rounded-full overflow-hidden" src="/img/asset/prof.jpg" w={200} ext />
-        <div className="mt-2 text-2xl font-medium text-gray-200">Blue Edge</div>
+        <Image
+          className="rounded-full overflow-hidden"
+          src="img/asset/prof.jpg"
+          w={200}
+          ext
+        />
+        <div className="mt-2 text-2xl font-medium text-gray-200">
+          {userName}
+        </div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
           Sign in
         </div>
@@ -155,7 +169,7 @@ export const LockScreen = (props) => {
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={16} invert />
-        <Icon className="mx-2" src="battery" ui width={16} invert />
+        <Battery />
       </div>
     </div>
   );

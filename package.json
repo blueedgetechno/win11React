@@ -5,38 +5,44 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-regular-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "@sentry/react": "^6.18.2",
-    "@sentry/tracing": "^6.18.2",
-    "@tauri-apps/api": "^1.0.0-beta.8",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@widgetbot/react-embed": "^1.4.0",
-    "axios": "^0.21.1",
-    "container-query-polyfill": "^0.1.2",
-    "node-sass": "^7.0.0",
-    "react": "^17.0.2",
-    "react-canvas-draw": "^1.1.1",
-    "react-dom": "^17.0.2",
+    "-": "^0.0.1",
+    "@crowdin/cli": "^3.7.8",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@sentry/react": "^6.19.7",
+    "@sentry/tracing": "^6.19.7",
+    "@tauri-apps/api": "^1.0.0-rc.6",
+    "@widgetbot/react-embed": "1.4.1",
+    "@win11react/react-canvas-draw": "1.2.2",
+    "axios": "^0.27.2",
+    "@craco/craco": "6.4.3",
+    "craco-esbuild": "0.5.1",
+    "eslint-config-react-app": "^7.0.1",
+    "i18next": "^21.8.4",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "i18next-http-backend": "^1.4.1",
+    "i18next-xhr-backend": "^3.2.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
-    "react-player": "^2.9.0",
-    "react-redux": "^7.2.4",
-    "react-scripts": "^5.0.0",
-    "redux": "^4.1.0",
-    "sass": "^1.35.1",
-    "sass-loader": "^12.1.0",
-    "web-vitals": "^1.0.1"
+    "react-i18next": "^11.16.9",
+    "react-player": "^2.10.1",
+    "react-redux": "^8.0.2",
+    "react-scripts": "^5.0.1",
+    "redux": "^4.2.0",
+    "sass": "^1.52.1",
+    "translation-check": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "ghbuild": "CI=false craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "crowdin": "crowdin"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +63,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0-rc.2"
+    "@tauri-apps/cli": "1.0.0-rc.12"
   }
 }

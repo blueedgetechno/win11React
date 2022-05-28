@@ -1,0 +1,30 @@
+name: update
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: update
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: update
+        run: npm update
+        env:
+          CI: false
+
+      - name: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.BOT }}
+          commit-message: Update package-lock
+          title: Update package-lock
+          body: Update package-lock

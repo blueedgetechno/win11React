@@ -75,6 +75,9 @@ body[data-theme="dark"] {
 }
 
 .taskIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 24px;
 
   svg {
@@ -107,7 +110,7 @@ body[data-theme="dark"] {
 
     .widget {
       position: absolute;
-      left: 0;
+      left: 8px;
     }
   }
 
