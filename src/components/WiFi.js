@@ -1,23 +1,55 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "../utils/general";
 
-const WiFi = ({ network, connection, level }) => {
-  const wifiref = useRef(null);
-  var divtitle = "Connected to: " + network;
+const WiFi = ({ net }) => {
+  // var divtitle = "Connected to: " + net;
+
+  const [conLevel, setConLevel] = useState(3);
+
+  const changeWifiStatus = (wifi) => {
+    let level = wifi.level * 3 || 3;
+    if (wifi.connecting) {
+      level = -level
+    }
+    setConLevel(level);
+  };
 
   useEffect(() => {
-    wifiref.current.style.width = `${level}`;
+    async function getWiFiDetails() {
+      let wifi = await navigator.connection;
+      changeWifiStatus(wifi);
+
+      wifi.onLevelChange = () => {
+        changeWifiStatus(wifi);
+      };
+
+      wifi.onNetChange = () => {
+        changeWifiStatus(wifi);
+      };
+    }
+
+    if (window.NetworkManager) {
+      getWiFiDetails();
+    }
+
     return () => {};
-  }, [level, connection]);
+  }, []);
+
+  let wifiLevel = Math.round(Math.abs(conLevel));
 
   return (
-    <div className="uicon taskIcon">
-      <span className="wifi">
-        {connection ? <Icon className="connection" fafa="faConnection" width={10} /> : null}
-        <i className="fa fa-connection-none"></i>
-        <i className="fa fa-connection animate" ref={wifiref}></i>
-      </span>
-    </div>
+    <>
+      <div className="uicon taskIcon">
+        <span className="wifi">
+          {conLevel < 0 ? (
+            <Icon className="connection" fafa="faConnection" width={8} />
+          ) : null}
+          <i className="fa fa-connection-none"></i>
+          <i className="fa fa-connection animate" style={{ width: wifiLevel }}></i>
+        </span>
+      </div>
+      {net ? <div className="text-xs">{Math.round(Math.abs(wifiLevel))}</div> : ''}
+    </>
   );
 };
 
