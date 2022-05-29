@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "../utils/general";
 
 const WiFi = ({ net }) => {
@@ -6,7 +6,7 @@ const WiFi = ({ net }) => {
 
   const [conLevel, setConLevel] = useState(3);
 
-  const changeWifiStatus = (wifi) => {
+  const changewifistatus = (wifi) => {
     let level = wifi.level * 3 || 3;
     if (wifi.connecting) {
       level = -level
@@ -16,15 +16,15 @@ const WiFi = ({ net }) => {
 
   useEffect(() => {
     async function getWiFiDetails() {
-      let wifi = await navigator.connection;
-      changeWifiStatus(wifi);
+      let wifi = navigator.getConnection;
+      changewifistatus(wifi);
 
-      wifi.onLevelChange = () => {
-        changeWifiStatus(wifi);
+      wifi.onlevelchange = () => {
+        changewifistatus(wifi);
       };
 
-      wifi.onNetChange = () => {
-        changeWifiStatus(wifi);
+      wifi.onnetchange = () => {
+        changewifistatus(wifi);
       };
     }
 
