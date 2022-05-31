@@ -55,69 +55,7 @@ const Taskbar = () => {
     if (action.type) {
       dispatch(action);
     }
-  };
-
-  const changebatterystatus = (bt) => {
-    let level = bt.level * 100 || 100;
-
-    if (bt.charging) {
-      setbatterylevel(-level);
-    } else {
-      setbatterylevel(level);
-    }
-  };
-
-  useEffect(() => {
-    async function getBatteryDetails() {
-      let bt = await navigator.getBattery();
-      changebatterystatus(bt);
-
-      bt.onlevelchange = () => {
-        changebatterystatus(bt);
-      };
-
-      bt.onchargingchange = () => {
-        changebatterystatus(bt);
-      };
-    }
-
-    if (window.BatteryManager) {
-      getBatteryDetails();
-    }
-
-    return () => {};
-  }, []);
-
-  const changewifistatus = (wifi) => {
-    let level = wifi.level * 3 || 3;
-
-    if (!wifi.connection) {
-      setwifilevel(-level);
-    } else {
-      setwifilevel(level);
-    }
-  }
-
-  useEffect(() => {
-    async function getWiFiDetails() {
-      let wifi = await NetworkInformation();
-      changewifistatus(wifi);
-
-      wifi.onlevelchange = () => {
-        changewifistatus(wifi);
-      }
-
-      wifi.onconnectionchange = () => {
-        changewifistatus (wifi);
-      }
-    }
-
-    if (window.NetworkInformation) {
-      getWiFiDetails();
-    }
-
-    return () => {};
-  }, []);
+  }; 
 
   return (
     <div className="taskbar">
