@@ -7,7 +7,7 @@ const WiFi = ({ net }) => {
   const [conLevel, setconLevel] = useState(3);
 
   const changewifistatus = (wifi) => {
-    let level = wifi.level * 3 || 3;
+    let level = wifi.level * 100 || 100;
     if (wifi.connecting) {
       level = -level
     }
@@ -42,7 +42,7 @@ const WiFi = ({ net }) => {
       <div className="uicon taskIcon">
         <span className="wifi">
           {conLevel < 0 ? (
-            <Icon className="connection" fafa="faConnection" width={8} />
+            <Icon className="connection" fafa="faConnection" width={0} />
           ) : null}
           <i className="fa fa-connection-none"></i>
           <i className="fa fa-connection animate" style={{ width: wifiLevel }}></i>
