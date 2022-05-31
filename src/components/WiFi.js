@@ -4,27 +4,27 @@ import { Icon } from "../utils/general";
 const WiFi = ({ net }) => {
   // var divtitle = "Connected to: " + net;
 
-  const [conLevel, setconLevel] = useState(3);
+  const [conLevel, setConLevel] = useState(3);
 
-  const changewifistatus = (wifi) => {
+  const changeWifiStatus = (wifi) => {
     let level = wifi.level * 100 || 100;
     if (wifi.connecting) {
       level = -level
     }
-    setconLevel(level);
+    setConLevel(level);
   };
 
   useEffect(() => {
     async function getWiFiDetails() {
       let wifi = await navigator.getConnection();
-      changewifistatus(wifi);
+      changeWifiStatus(wifi);
 
-      wifi.onlevelchange = () => {
-        changewifistatus(wifi);
+      wifi.onLevelChange = () => {
+        changeWifiStatus(wifi);
       };
 
-      wifi.onnetchange = () => {
-        changewifistatus(wifi);
+      wifi.onNetChange = () => {
+        changeWifiStatus(wifi);
       };
     }
 

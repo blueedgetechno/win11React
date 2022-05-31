@@ -4,27 +4,27 @@ import { Icon } from "../utils/general";
 const Battery = ({ pct }) => {
   // var divtitle = "Battery status: " + level + "% " + (charging ? "available (plugged in)" : "remaining");
 
-  const [btLevel, setbtLevel] = useState(100);
+  const [btLevel, setBtLevel] = useState(100);
 
-  const changebatterystatus = (bt) => {
+  const changeBatteryStatus = (bt) => {
     let level = bt.level * 100 || 100;
     if (bt.charging) {
       level = -level;
     }
-    setbtLevel(level);
+    setBtLevel(level);
   };
 
   useEffect(() => {
     async function getBatteryDetails() {
       let bt = await navigator.getBattery();
-      changebatterystatus(bt);
+      changeBatteryStatus(bt);
 
-      bt.onlevelchange = () => {
-        changebatterystatus(bt);
+      bt.onLevelChange = () => {
+        changeBatteryStatus(bt);
       };
 
-      bt.onchargingchange = () => {
-        changebatterystatus(bt);
+      bt.onChargingChange = () => {
+        changeBatteryStatus(bt);
       };
     }
 
