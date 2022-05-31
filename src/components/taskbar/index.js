@@ -17,8 +17,6 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
-  const [batterylevel, setbatterylevel] = useState(100);
-  const [wifilevel, setwifilevel] = useState(3);
 
   const dispatch = useDispatch();
 
