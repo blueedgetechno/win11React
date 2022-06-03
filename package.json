@@ -20,7 +20,7 @@
     "@craco/craco": "6.4.3",
     "craco-esbuild": "0.5.1",
     "eslint-config-react-app": "^7.0.1",
-    "i18next": "^21.8.5",
+    "i18next": "^21.8.7",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",
     "i18next-xhr-backend": "^3.2.2",
