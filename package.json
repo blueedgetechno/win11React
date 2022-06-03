@@ -27,7 +27,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
-    "react-i18next": "^11.16.9",
+    "react-i18next": "^11.16.11",
     "react-player": "^2.10.1",
     "react-redux": "^8.0.2",
     "react-scripts": "^5.0.1",
