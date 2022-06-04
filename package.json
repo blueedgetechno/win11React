@@ -32,7 +32,7 @@
     "react-redux": "^8.0.2",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "sass": "^1.52.1",
+    "sass": "^1.52.2",
     "translation-check": "^1.0.2"
   },
   "scripts": {
