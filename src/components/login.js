@@ -15,14 +15,16 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const githubLoginProvider = new firebase.auth.GithubAuthProvider();
+const emailLoginProvider = new firebase.auth.EmailAuthProvider();
 
 async function login() {
-  githubLoginProvider.addScope('repo');  
-      auth.signInWithPopup(githubLoginProvider).then((res)=>{
+  EmailAuthProvider.addScope('repo');  
+      auth.signInWithPopup(EmailAuthProvider).then((res)=>{
        const token = res.credential.accessToken
        const user = res.additionalUserInfo.username;
        const email = res.user.email;
        console.log(res);
       })
 }
+
 export default login;
