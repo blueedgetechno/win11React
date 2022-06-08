@@ -6,22 +6,11 @@ import App from "./App";
 import store from "./reducers";
 import { Provider } from "react-redux";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import 'firebase/compat/auth';
+import firebase from 'firebase/compat/app';
+import {useAuthState} from 'react-firebase-hooks/auth';
+import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-firebase.initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: "auth.win11react.com",
-  projectId: "win11react",
-  storageBucket: "auth.win11react.com",
-  messagingSenderId: "213452110834",
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: "G-N7CJ22ZMSJ"
-});
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 Sentry.init({
   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",

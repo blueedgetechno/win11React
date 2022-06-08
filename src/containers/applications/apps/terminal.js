@@ -1,15 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import i18next from 'i18next';
-import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
+import {useAuthState} from 'react-firebase-hooks/auth';
+import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 import vars from './assets/vars';
 
 
 
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
+
+firebase.initializeApp({
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "auth.win11react.com",
+  projectId: "win11react",
+  storageBucket: "auth.win11react.com",
+  messagingSenderId: "213452110834",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: "G-N7CJ22ZMSJ"
+});
 
 const auth = firebase.auth();
 const githubLoginProvider = new firebase.auth.GithubAuthProvider();
