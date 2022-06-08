@@ -7,6 +7,22 @@ import store from "./reducers";
 import { Provider } from "react-redux";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "auth.win11react.com",
+  projectId: "win11react",
+  storageBucket: "auth.win11react.com",
+  messagingSenderId: "213452110834",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: "G-N7CJ22ZMSJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 Sentry.init({
   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",
   integrations: [new BrowserTracing()],
