@@ -1,7 +1,7 @@
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
+import { GithubAuthProvider, OAuthCredential, EmailAuthProvider } from 'firebase/auth';
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
