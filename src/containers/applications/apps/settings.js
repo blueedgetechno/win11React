@@ -47,13 +47,9 @@ export const Settings = () => {
     });
   };
 
-  if (typeof user !== 'undefined') {
-    // user is defined
-    const userName = user;
-  }
-  else {
-    const userName = useSelector((state) => state.setting.person.name);
-  }  
+  const userName = user;
+  
+
   
 
   return (
