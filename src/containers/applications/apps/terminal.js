@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import firebase from 'firebase/compat/app';
-
+import vars from './assets/vars';
 
 
 
