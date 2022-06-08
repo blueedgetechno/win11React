@@ -1,7 +1,7 @@
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import { GithubAuthProvider, OAuthCredential, EmailAuthProvider, OAuthProvider } from 'firebase/auth';
+import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -15,15 +15,14 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const githubLoginProvider = new firebase.auth.GithubAuthProvider();
-const emailLoginProvider = new firebase.auth.EmailAuthProvider();
-const provider = new OAuthProvider('microsoft.com');
-
 
 async function login() {
-  EmailAuthProvider.addScope('repo');  
-      auth.signInWithPopup(provider).then((res)=>{
+  githubLoginProvider.addScope('repo');  
+      auth.signInWithPopup(githubLoginProvider).then((res)=>{
+       const token = res.credential.accessToken
+       const user = res.additionalUserInfo.username;
+       const email = res.user.email;
        console.log(res);
       })
 }
-
 export default login;
