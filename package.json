@@ -16,6 +16,7 @@
     "@tauri-apps/api": "^1.0.0-rc.6",
     "@widgetbot/react-embed": "1.4.1",
     "@win11react/react-canvas-draw": "1.2.2",
+    "firebase": "9.8.2",
     "axios": "^0.27.2",
     "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.8.8",
