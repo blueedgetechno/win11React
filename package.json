@@ -6,7 +6,6 @@
   "private": true,
   "dependencies": {
     "-": "^0.0.1",
-    "@craco/craco": "6.4.3",
     "@crowdin/cli": "^3.7.8",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
@@ -18,9 +17,7 @@
     "@widgetbot/react-embed": "1.4.1",
     "@win11react/react-canvas-draw": "1.2.2",
     "axios": "^0.27.2",
-    "craco-esbuild": "0.5.1",
     "eslint-config-react-app": "^7.0.1",
-    "firebase": "^9.8.2",
     "i18next": "^21.8.8",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",
@@ -39,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "ghbuild": "CI=false craco build",
+    "ghbuild": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tauri": "tauri",
