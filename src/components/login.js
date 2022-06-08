@@ -16,13 +16,12 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const githubLoginProvider = new firebase.auth.GithubAuthProvider();
 const emailLoginProvider = new firebase.auth.EmailAuthProvider();
+const provider = new OAuthProvider('microsoft.com');
+
 
 async function login() {
   EmailAuthProvider.addScope('repo');  
-      auth.signInWithPopup(EmailAuthProvider).then((res)=>{
-       const token = res.credential.accessToken
-       const user = res.additionalUserInfo.username;
-       const email = res.user.email;
+      auth.signInWithPopup(provider).then((res)=>{
        console.log(res);
       })
 }
