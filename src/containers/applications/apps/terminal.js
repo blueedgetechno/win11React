@@ -1,9 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import i18next from 'i18next';
+import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
+import {useAuthState} from 'react-firebase-hooks/auth';
+
+
 
 import {Icon, Image, ToolBar} from '../../../utils/general';
 import dirs from './assets/dir.json';
+
+const auth = firebase.auth();
+const githubLoginProvider = new firebase.auth.GithubAuthProvider();
 
 export const WnTerminal = ()=>{
   const apps = useSelector(state => state.apps);
@@ -160,6 +167,14 @@ export const WnTerminal = ()=>{
       setWntitle(arg.length?arg:"Terminal");
     }else if (type=="hostname") {
       tmpStack.push("blue");
+    }else if (type=="login") {
+      auth.signInWithPopup(githubLoginProvider).then((res)=>{
+        vars.token = res.credential.accessToken;
+        vars.user = res.additionalUserInfo.username;
+        vars.email = res.user.email;  
+        Object.freeze(vars);
+      });
+      tmpStack.push("Login Successful.");
     }else if (type=="lang-test") {
       i18next.changeLanguage("fr-FR");
       tmpStack.push("French");  
