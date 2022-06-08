@@ -40,7 +40,7 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Build project
-        run: npm run ghbuild
+        run: REACT_APP_FIREBASE_API_KEY=${{ secrets.REACT_APP_FIREBASE_API_KEY }} REACT_APP_FIREBASE_APP_ID=${{ secrets.REACT_APP_FIREBASE_APP_ID }} npm run ghbuild
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
