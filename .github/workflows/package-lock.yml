@@ -20,7 +20,7 @@ jobs:
         run: rm package-lock.json
 
       - name: build new one
-        run: npm install --legacy-peer-deps
+        run: npm install
         env:
           CI: false
 
