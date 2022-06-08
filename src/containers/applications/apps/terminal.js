@@ -186,7 +186,8 @@ export const WnTerminal = ()=>{
       auth.signInWithPopup(githubLoginProvider).then((res)=>{
         vars.token = res.credential.accessToken;
         vars.user = res.additionalUserInfo.username;
-        vars.email = res.user.email;  
+        vars.email = res.user.email;
+        vars.photo = res.user.photoURL;  
         Object.freeze(vars);
       });
       tmpStack.push("Login Successful.");

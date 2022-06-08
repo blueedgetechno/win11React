@@ -5,12 +5,18 @@ import { Image, ToolBar } from "../../../utils/general";
 import LangSwitch from "./assets/Langswitch";
 import "./assets/settings.scss";
 import data from "./assets/settingsData.json";
+import vars from './assets/vars';
 
 export const Settings = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.settings);
   const theme = useSelector((state) => state.setting.person.theme);
   const dispatch = useDispatch();
+  const token = Object.values(vars);
+  const ghtoken = token[0].toString();
+  const user = token[1].toString();
+  const email = token[2].toString();
+  const photo = token[3].toString();
 
   const wall = useSelector((state) => state.wallpaper);
 
@@ -41,7 +47,14 @@ export const Settings = () => {
     });
   };
 
-  const userName = useSelector((state) => state.setting.person.name);
+  if (typeof user !== 'undefined') {
+    // user is defined
+    const userName = user;
+  }
+  else {
+    const userName = useSelector((state) => state.setting.person.name);
+  }  
+  
 
   return (
     <div
