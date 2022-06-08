@@ -34,6 +34,9 @@ jobs:
 
       - name: Build project
         run: npm run ghbuild
+        env:
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+          REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
 
       - if: ${{ github.event.action == 'opened'}}
         run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
