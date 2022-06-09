@@ -4,12 +4,12 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 
 firebase.initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyBdZVIp08RqYKc2s88MfH6B8eiwIeK8mpI",
   authDomain: "auth.win11react.com",
   projectId: "win11react",
   storageBucket: "auth.win11react.com",
   messagingSenderId: "213452110834",
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  appId: "1:213452110834:web:3a7c957763b93cc29e096b",
   measurementId: "G-N7CJ22ZMSJ"
 });
 
