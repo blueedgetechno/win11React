@@ -46,6 +46,10 @@ jobs:
 
       - name: install app dependencies and build it
         run: npm run build
+        env: 
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }} 
+          REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.BOT }}
