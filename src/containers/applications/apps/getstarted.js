@@ -17,7 +17,16 @@ export const Getstarted = () => {
   const [pageNo, setPageNo] = useState(1);
   const nextPage = () => (pageNo !== 6 ? setPageNo(pageNo + 1) : null);
 
-  const userName = useSelector((state) => state.setting.person.name);
+  const changUserName = (e) => {
+    var newName = e.target.value;
+    dispatch({
+      type: "STNGSETV",
+      payload: {
+        path: "system.person.name",
+        value: newName,
+      },
+    });
+  };
 
   return (
     <div
@@ -107,9 +116,9 @@ export const Getstarted = () => {
                   <div className="OOBE_input">
                     <input
                       type="text"
-                      spellcheck="false"
                       placeholder="name"
                       id="OOBE_input"
+                      onChange={changUserName}
                     />
                   </div>
                   <div className="text_sml_black">
