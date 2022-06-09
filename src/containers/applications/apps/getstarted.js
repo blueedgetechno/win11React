@@ -22,7 +22,7 @@ export const Getstarted = () => {
     dispatch({
       type: "STNGSETV",
       payload: {
-        path: "system.person.name",
+        path: "person.name",
         value: newName,
       },
     });
