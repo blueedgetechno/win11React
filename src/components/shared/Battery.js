@@ -9,7 +9,9 @@ const Battery = ({ pct }) => {
 
   const updateBatteryStatus = (bt) => {
     let level = bt.level * 100 || 100;
-    bt.charging ? (level = -level) : null;
+    if (bt.charging) {
+      level = -level;
+    }
     setbtLevel(level);
   };
 
