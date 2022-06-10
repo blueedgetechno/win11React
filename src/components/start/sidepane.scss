@@ -220,7 +220,7 @@ body[data-theme="dark"] .sidePane {
     --bg2: rgb(255 255 255 / 3.33%);
   }
 
-  .uicon:not(.btPlug) {
+  .uicon {
     filter: invert(1);
   }
 }

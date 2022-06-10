@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../actions";
 import { getTreeValue } from "../../actions";
 import { Icon } from "../../utils/general";
-import Battery from "../Battery";
+import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";

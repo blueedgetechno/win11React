@@ -1331,6 +1331,10 @@
 	--border-opacity: 1
 }
 
+.gap-2 {
+	gap: 8px;
+}
+
 .rounded-none {
 	border-radius: 0
 }
