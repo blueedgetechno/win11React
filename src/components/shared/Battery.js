@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Icon } from "../../utils/general";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./battery.scss";
 
 const Battery = ({ pct }) => {
   // var divtitle = "Battery status: " + level + "% " + (charging ? "available (plugged in)" : "remaining");
 
-  const [btLevel, setbtLevel] = useState(100);
+  const dispatch = useDispatch();
+  const btLevel = useSelector((state) => state.setting.system.power.battery);
 
   const updateBatteryStatus = (bt) => {
     let level = bt.level * 100 || 100;
     if (bt.charging) {
       level = -level;
     }
-    setbtLevel(level);
+    dispatch({
+      type: "STNGSETV",
+      payload: {
+        path: "system.power.battery",
+        value: level,
+      },
+    });
   };
 
   useEffect(() => {
