@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Battery from "../../components/Battery";
+import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import "./back.scss";
 
