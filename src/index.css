@@ -1,4 +1,6 @@
-@tailwind base;
+/* causing some problem with images for us */
+/* @tailwind base; */
+
 @tailwind components;
 @tailwind utilities;
 
