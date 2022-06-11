@@ -25,6 +25,39 @@ body[data-theme="dark"] {
   }
 }
 
+.battery {
+  display: inline-block;
+  position: relative;
+  display: flex;
+
+  i {
+    color: #232323;
+  }
+
+  .uicon {
+    position: absolute;
+    margin-top: -12%;
+    margin-left: -12%;
+    z-index: 1;
+  }
+}
+
+.btPlug {
+  filter: drop-shadow(1px 1px rgb(243 243 243));
+}
+
+.battery .fa {
+  font: normal normal normal FontAwesome;
+  font-size: 13px;
+}
+
+.battery .animate {
+  position: absolute;
+  overflow: hidden;
+  z-index: 0;
+  transition: all 0.5s ease;
+}
+
 .taskcont {
   position: relative;
   width: 100%;
