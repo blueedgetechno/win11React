@@ -274,77 +274,31 @@ export const StartMenu = () => {
             <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>
                 <div
-                  className="flex prtclk items-center gap-2"
+                  className="flex prtclk"
                   onClick={clickDispatch}
                   data-action="WALLALOCK"
                 >
-                  <svg
-                    width="18"
-                    height="18"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2a4 4 0 0 1 4 4v2h1.75A2.25 2.25 0 0 1 20 10.25v9.5A2.25 2.25 0 0 1 17.75 22H6.25A2.25 2.25 0 0 1 4 19.75v-9.5A2.25 2.25 0 0 1 6.25 8H8V6a4 4 0 0 1 4-4Zm5.75 7.5H6.25a.75.75 0 0 0-.75.75v9.5c0 .414.336.75.75.75h11.5a.75.75 0 0 0 .75-.75v-9.5a.75.75 0 0 0-.75-.75Zm-5.75 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm0-10A2.5 2.5 0 0 0 9.5 6v2h5V6A2.5 2.5 0 0 0 12 3.5Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <Icon msi="Lock" width={12} />
                   <span>Lock</span>
                 </div>
                 <div
-                  className="flex prtclk items-center gap-2"
+                  className="flex prtclk"
                   onClick={clickDispatch}
                   data-action="WALLSHUTDN"
                 >
-                  <svg
-                    width="18"
-                    height="18"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M8.204 4.82a.75.75 0 0 1 .634 1.36A7.51 7.51 0 0 0 4.5 12.991c0 4.148 3.358 7.51 7.499 7.51s7.499-3.362 7.499-7.51a7.51 7.51 0 0 0-4.323-6.804.75.75 0 1 1 .637-1.358 9.01 9.01 0 0 1 5.186 8.162c0 4.976-4.029 9.01-9 9.01C7.029 22 3 17.966 3 12.99a9.01 9.01 0 0 1 5.204-8.17ZM12 2.496a.75.75 0 0 1 .743.648l.007.102v7.5a.75.75 0 0 1-1.493.102l-.007-.102v-7.5a.75.75 0 0 1 .75-.75Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <Icon msi="PowerButton" width={12} />
                   <span>Shut down</span>
                 </div>
                 <div
-                  className="flex prtclk items-center gap-2"
+                  className="flex prtclk"
                   onClick={clickDispatch}
                   data-action="WALLRESTART"
                 >
-                  <svg
-                    width="18"
-                    height="18"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 4.5a7.5 7.5 0 1 1-7.419 6.392c.067-.454-.265-.892-.724-.892a.749.749 0 0 0-.752.623A9 9 0 1 0 6 5.292V4.25a.75.75 0 0 0-1.5 0v3c0 .414.336.75.75.75h3a.75.75 0 0 0 0-1.5H6.9a7.473 7.473 0 0 1 5.1-2Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <Icon msi="Refresh" width={12} flip />
                   <span>Restart</span>
                 </div>
               </div>
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                onClick={clickDispatch}
-                data-action="STARTPWC"
-              >
-                <path
-                  d="M8.204 4.82a.75.75 0 0 1 .634 1.36A7.51 7.51 0 0 0 4.5 12.991c0 4.148 3.358 7.51 7.499 7.51s7.499-3.362 7.499-7.51a7.51 7.51 0 0 0-4.323-6.804.75.75 0 1 1 .637-1.358 9.01 9.01 0 0 1 5.186 8.162c0 4.976-4.029 9.01-9 9.01C7.029 22 3 17.966 3 12.99a9.01 9.01 0 0 1 5.204-8.17ZM12 2.496a.75.75 0 0 1 .743.648l.007.102v7.5a.75.75 0 0 1-1.493.102l-.007-.102v-7.5a.75.75 0 0 1 .75-.75Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <Icon msi="PowerButton" width={14} click="STARTPWC" />
             </div>
           </div>
         </>

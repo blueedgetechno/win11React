@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
-import Battery from "../shared/Battery";
+import Battery from "../Battery";
 import "./taskbar.scss";
 
 const Taskbar = () => {
@@ -124,18 +124,10 @@ const Taskbar = () => {
           </div>
         </div>
         <div className="taskright">
-          <div
-            className="px-2 prtclk handcr hvlight flex"
-            onClick={clickDispatch}
-            data-action="BANDTOGG"
-          >
+          <div className="px-2 prtclk handcr hvlight flex" onClick={clickDispatch} data-action="BANDTOGG">
             <Icon fafa="faChevronUp" width={10} />
           </div>
-          <div
-            className="prtclk handcr my-1 px-1 hvlight flex rounded"
-            onClick={clickDispatch}
-            data-action="PANETOGG"
-          >
+          <div className="prtclk handcr my-1 px-1 hvlight flex rounded" onClick={clickDispatch} data-action="PANETOGG">
             <Icon className="taskIcon" src="wifi" ui width={16} />
             <Icon
               className="taskIcon"
