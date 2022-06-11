@@ -11,8 +11,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@sentry/react": "^7.0.0",
-    "@sentry/tracing": "^7.0.0",
+    "@sentry/react": "^7.1.1",
+    "@sentry/tracing": "^7.1.1",
     "@tauri-apps/api": "^1.0.0-rc.6",
     "@widgetbot/react-embed": "1.4.1",
     "@win11react/react-canvas-draw": "1.2.2",
@@ -20,7 +20,7 @@
     "eslint-config-react-app": "^7.0.1",
     "firebase": "9.8.2",
     "firebaseui": "^6.0.1",
-    "i18next": "^21.8.8",
+    "i18next": "^21.8.9",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",
     "i18next-xhr-backend": "^3.2.2",
@@ -33,7 +33,7 @@
     "react-redux": "^8.0.2",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "sass": "^1.52.2",
+    "sass": "^1.52.3",
     "translation-check": "^1.0.2"
   },
   "scripts": {

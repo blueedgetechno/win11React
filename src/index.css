@@ -142,19 +142,9 @@ i[data-flip="true"] {
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }
-
-.dpShad0 {
-  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
-}
-
 .mdShad {
   box-shadow: 0 0 8px rgba(41, 41, 41, 0.1);
 }
-
-.mdShad0 {
-  filter: drop-shadow(0 0 8px rgba(41, 41, 41, 0.1));
-}
-
 .ltShad {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
@@ -162,10 +152,6 @@ i[data-flip="true"] {
 input {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
-}
-
-.ltShad0 {
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
 }
 
 .prtclk * {

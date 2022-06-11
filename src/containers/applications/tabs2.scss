@@ -18,6 +18,9 @@
 
   .content {
     background: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .okbtn {
