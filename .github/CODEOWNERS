@@ -1,3 +1,4 @@
 .github/* @andrewstech
 src-tauri/* @andrewstech
 src/* @blueedgetechno
+src/containers/applications/apps/settings.js @yashash1511
