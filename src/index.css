@@ -255,14 +255,6 @@ a {
   color: #aaa;
 }
 
-#probtn {
-  display: none;
-}
-
-#warningmsg {
-  display: none;
-}
-
 #brightoverlay {
   position: absolute;
   top: 0;
@@ -272,48 +264,4 @@ a {
   background: #000;
   opacity: 0;
   pointer-events: none;
-}
-
-@media screen and (max-width: 650px) {
-  body[data-force="false"] #root {
-    display: none;
-  }
-
-  body[data-force="false"] {
-    display: grid;
-    background: #2b2a2f;
-    place-items: center;
-    overflow: hidden;
-  }
-
-  body[data-force="false"]::before {
-    display: none;
-  }
-
-  body[data-force="false"] #warningmsg {
-    display: block;
-    font-size: 1.2rem;
-    color: #fefefe;
-    font-family: sans-serif;
-    letter-spacing: 2px;
-    text-align: left;
-    word-spacing: 4px;
-    line-height: 36px;
-    inset: 36px;
-    position: absolute;
-    pointer-events: none;
-  }
-
-  body[data-force="false"] #probtn {
-    display: block;
-    position: absolute;
-    bottom: 25%;
-    padding: 16px;
-    color: #aaa;
-    font-weight: 600;
-    font-size: 1.2em;
-    background: #16161b;
-    border-radius: 8px;
-    border: none;
-  }
 }

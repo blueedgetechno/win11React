@@ -7,6 +7,11 @@
     <link rel="icon" href="favicon.ico" />
     <meta name="theme-color" content="#000000" />
     <meta name="og:title" property="og:title" content="Win11 made in React" />
+    <meta
+      name="og:description"
+      property="og:description"
+      content="Win11 made in React"
+    />
     <meta name="og:color" content="#303030" />
     <link rel="apple-touch-icon" href="favicon.png" />
     <link rel="manifest" href="manifest.json" />
@@ -14,23 +19,22 @@
     <title>Win11 in React</title>
 
     <link rel="stylesheet" href="dycalendar.css" />
-    <script src="https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/pythonpad/brython-runner/lib/brython-runner.bundle.js"></script> -->
   </head>
-  <body data-force="false">
+  <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <span id="root"></span>
-    <!-- PWA Script -->
-    <script src="https://expo.asylum-os.com/react-pwa.js"></script>
     <span id="brightoverlay"></span>
+
+    <!-- <script type="text/javascript" src="console.js"></script> -->
     <script type="text/javascript" src="dycalendar.js"></script>
-    <script type="text/javascript" src="console.js"></script>
-    <span id="warningmsg">
-      This project is
-      <span class="text-red-600 font-bold">
-        not in anyway affiliated with Microsoft
-      </span>
-      and should not be confused with Microsoft's Operating System or Products.
-    </span>
-    <button id="probtn" onclick="removeWarning()">Proceed anyway</button>
+    <!-- PWA Script -->
+    <script src="react-pwa.js"></script>
+    <script>
+      console.log(
+        "%cWin11React is a project by blueedgetechno and ascended by andrewstech. If you wish to help out with this project, visit https://github.com/blueedgetechno/win11React",
+        "color: lightblue; font-size: x-large"
+      );
+    </script>
   </body>
 </html>
