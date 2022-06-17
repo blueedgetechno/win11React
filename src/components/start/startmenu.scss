@@ -8,17 +8,24 @@
 
 .dskApp {
   margin: 4px;
-  height: 86px;
-  width: 76px;
+  height: 84px;
+  width: 74px;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 0.8em;
   transition: all ease-in-out 200ms;
   justify-content: center;
+  border: 1px solid transparent;
 
+  &:focus {
+    background: rgba(255, 255, 255, 0.24);
+  }
   &:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+  }
+  &:focus {
+    border: 1px dotted white;
   }
 
   .appName {

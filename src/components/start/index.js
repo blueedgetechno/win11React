@@ -51,7 +51,8 @@ export const DesktopApp = () => {
       {!deskApps.hide &&
         deskApps.apps.map((app, i) => {
           return (
-            <div key={i} className="dskApp">
+            // to allow it to be focusable (:focus)
+            <div key={i} className="dskApp" tabIndex={0}>
               <Icon
                 click={app.action}
                 className="dskIcon prtclk"
