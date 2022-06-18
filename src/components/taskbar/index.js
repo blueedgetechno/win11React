@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../shared/Battery";
@@ -61,10 +60,9 @@ const Taskbar = () => {
             <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
             {tasks.search ? (
               <Icon
-                className="tsIcon searchIcon"
-                src="search"
-                width={24}
                 click="STARTSRC"
+                className="tsIcon searchIcon"
+                icon="taskSearch"
               />
             ) : null}
             {tasks.widgets ? (

@@ -205,28 +205,33 @@ const defState = {
         payload: "open",
       },
       {
-        type: "hr",
+        name: "Run as administrator",
+        action: "performApp",
+        payload: "open",
+        icon: "win/shield",
       },
       {
         name: "Open file location",
         dsb: true,
       },
       {
-        name: "Run as Administrator",
-        action: "performApp",
-        payload: "open",
-        icon: "win/shield",
-      },
-      {
-        type: "hr",
-      },
-      {
         name: "Unpin from start",
         dsb: true,
       },
       {
-        name: "Pin to taskbar",
+        name: "Compress to Zip file",
         dsb: true,
+      },
+      {
+        name: "Copy as path",
+        dsb: true,
+      },
+      {
+        name: "Properties",
+        dsb: true,
+      },
+      {
+        type: "hr",
       },
       {
         name: "Delete shortcut",
@@ -237,14 +242,6 @@ const defState = {
         name: "Delete",
         action: "delApp",
         payload: "delete",
-      },
-      {
-        name: "Rename",
-        dsb: true,
-      },
-      {
-        name: "Properties",
-        dsb: true,
       },
     ],
   },
