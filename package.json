@@ -11,7 +11,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@sentry/react": "^7.1.1",
+    "@sentry/react": "^7.2.0",
     "@sentry/tracing": "^7.1.1",
     "@tauri-apps/api": "^1.0.0-rc.7",
     "@widgetbot/react-embed": "1.4.1",
