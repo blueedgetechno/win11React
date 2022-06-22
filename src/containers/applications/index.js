@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./tabs.scss";
 import "./tabs2.scss";
 import "./wnapp.scss";
@@ -21,8 +21,6 @@ export * from "./apps/whiteboard";
 
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);
-  const [boolCh, setCheck] = useState(true);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (tasks.prevApp != "" && tasks.prev && false) {
