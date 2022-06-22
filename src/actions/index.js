@@ -218,20 +218,10 @@ const loadWidget = async () => {
     .then((res) => res.data)
     .then((data) => {
       var newsList = [];
-      for (var i = 0; i < data.totalResults; i++) {
-        var item = {
-          ...data.articles[i],
-        };
-        item.title = item.title
-          .split("-")
-          .reverse()
-          .splice(1)
-          .reverse()
-          .join("-")
-          .trim();
-        newsList.push(item);
-      }
-
+      data["articles"].forEach((e) => {
+        e.title = e["title"].split(`-`).slice(0, -1).join(`-`).trim();
+        newsList.push(e);
+      });
       tmpWdgt.data.news = newsList;
     })
     .catch((error) => {});

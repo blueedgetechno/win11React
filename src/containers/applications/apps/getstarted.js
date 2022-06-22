@@ -62,8 +62,12 @@ export const Getstarted = () => {
                     <div className="header_sml"></div>
                   </div>
                   <div className="list_oobe mt-4 win11Scroll">
-                    {countries.map((e) => {
-                      return <div className="list_oobe_opt">{e}</div>;
+                    {countries.map((e, i) => {
+                      return (
+                        <div key={i} className="list_oobe_opt">
+                          {e}
+                        </div>
+                      );
                     })}
                   </div>
                 </div>

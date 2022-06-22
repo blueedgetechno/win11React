@@ -54,9 +54,10 @@ export const Taskmanager = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <nav className={nav}>
-            {tabNames.map((t) => {
+            {tabNames.map((t, i) => {
               return (
                 <div
+                  key={i}
                   className={`navLink ${t.title === tab ? "selected" : ""}`}
                   onClick={() => setTab(t.title)}
                 >
@@ -87,9 +88,9 @@ export const Taskmanager = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {appList.map((e) => {
+                          {appList.map((e, i) => {
                             return (
-                              <tr>
+                              <tr key={i}>
                                 <td className="name">{e}</td>
                                 <td>{(Math.random() * 10).toFixed(2)}%</td>
                                 <td>{(Math.random() * 100).toFixed(2)} MB</td>
