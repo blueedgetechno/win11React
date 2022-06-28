@@ -9,4 +9,4 @@ jobs:
       - uses: vedantmgoyal2009/winget-releaser@latest
         with:
           identifier: blueedge.win11react
-          token: ${{ secrets.WINGET_TOKEN }}
+          token: ${{ secrets.BOT}}
