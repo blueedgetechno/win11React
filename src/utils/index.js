@@ -7,7 +7,7 @@ var {
   recent
 } = {
   taskbar: (localStorage.getItem("taskbar") &&
-    JSON.parse(localStorage.getItem("taskbar"))) || ["Settings", "File Explorer", "Edge", "Store", "Spotify"],
+    JSON.parse(localStorage.getItem("taskbar"))) || ["Settings", "File Explorer", "Browser", "Store", "Spotify"],
   desktop: (localStorage.getItem("desktop") &&
     JSON.parse(localStorage.getItem("desktop"))) || ["Blue", "Unescape", "Recycle Bin", "File Explorer", "Store",
     "Browser", "Github", "Spotify", "Buy me a coffee"
