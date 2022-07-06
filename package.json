@@ -20,7 +20,7 @@
     "eslint-config-react-app": "^7.0.1",
     "firebase": "9.8.4",
     "firebaseui": "^6.0.1",
-    "i18next": "^21.8.11",
+    "i18next": "^21.8.13",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",
     "i18next-xhr-backend": "^3.2.2",
