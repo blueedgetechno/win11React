@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 export default ({ mode }) => {
     return defineConfig({
         plugins: [react()],
+        base: "",
         define: {
             "process.env.NODE_ENV": `"${mode}"`,
         },
