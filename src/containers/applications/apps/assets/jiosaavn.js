@@ -4,14 +4,9 @@ import axios from 'axios';
 const search_url = "/search?query="
 const song_url = "/song?pids="
 const album_url = "/album?id="
-const playlist_url = "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid="
-const lyrics_url = "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id="
 
 const {
-  round,
   floor,
-  max,
-  min,
   random
 } = Math;
 
@@ -52,7 +47,7 @@ class JioSaavn {
   }
 
   fetchSong(pids) {
-    if (typeof(pids) != "object") pids = [pids];
+    if (typeof (pids) != "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
         resolve(res[0]);
@@ -61,7 +56,7 @@ class JioSaavn {
   }
 
   fetchSongs(pids) {
-    if (typeof(pids) != "object") pids = [pids];
+    if (typeof (pids) != "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(",")).then(res => {
         resolve(res);
@@ -89,8 +84,8 @@ class JioSaavn {
     })
   }
 
-  searchQuery(query){
-    if(query.length<1) return;
+  searchQuery(query) {
+    if (query.length < 1) return;
     return new Promise((resolve, reject) => {
       this.fetch(search_url + query)
         .then(res => resolve(res)).catch(err => reject(err))
@@ -124,10 +119,10 @@ class JioSaavn {
 
   formatPeriod(sec) {
     if (!sec) return "";
-    var res ="", h = floor(sec/3600);
-    if(h!=0) res+=h+" hr ";
-    sec = sec%3600;
-    res += floor(sec / 60)+' min ';
+    var res = "", h = floor(sec / 3600);
+    if (h != 0) res += h + " hr ";
+    sec = sec % 3600;
+    res += floor(sec / 60) + ' min ';
     sec %= 60;
     res += sec + ' sec';
     return res;
