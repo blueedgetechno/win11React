@@ -23,11 +23,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          
+
       - if: ${{ github.event.action == 'opened'}}
         run: gh repo create win11bot/${{ github.event.pull_request.number }} --public
         env:
-          GITHUB_TOKEN: ${{ secrets.BOT }}    
+          GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - name: Install NPM packages
         run: npm ci
@@ -42,8 +42,6 @@ jobs:
         env:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-
-      
 
       - uses: peaceiris/actions-gh-pages@v3
         with:

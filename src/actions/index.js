@@ -189,8 +189,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -210,7 +210,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -224,7 +224,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -249,7 +249,7 @@ export const loadSettings = () => {
   if (sett.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
-  if (process.env.REACT_APP_ENV != "development") {
+  if (import.meta.env.MODE != "development") {
     loadWidget();
   }
 };

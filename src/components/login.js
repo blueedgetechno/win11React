@@ -1,7 +1,5 @@
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
-import {useAuthState} from 'react-firebase-hooks/auth';
-import { GithubAuthProvider, OAuthCredential } from 'firebase/auth';
 
 firebase.initializeApp({
   apiKey: "AIzaSyBdZVIp08RqYKc2s88MfH6B8eiwIeK8mpI",
@@ -16,12 +14,12 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const githubLoginProvider = new firebase.auth.GithubAuthProvider();
 
-async function login() {  
-      auth.signInWithPopup(githubLoginProvider).then((res)=>{
-       const token = res.credential.accessToken
-       const user = res.additionalUserInfo.username;
-       const email = res.user.email;
-       console.log(res);
-      })
+async function login() {
+  auth.signInWithPopup(githubLoginProvider).then((res) => {
+    const token = res.credential.accessToken
+    const user = res.additionalUserInfo.username;
+    const email = res.user.email;
+    console.log(res);
+  })
 }
 export default login;
