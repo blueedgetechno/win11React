@@ -113,7 +113,7 @@ export const MicroStore = () => {
 
   useEffect(() => {
     if (!wnapp.hide && fetchState == 0) {
-      var url = process.env.REACT_APP_STOREURL;
+      var url = import.meta.env.REACT_APP_STOREURL;
       if (!url) url = "https://store.win11react.com/store/index.json";
 
       axios

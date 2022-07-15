@@ -249,7 +249,7 @@ export const loadSettings = () => {
   if (sett.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
-  if (process.env.REACT_APP_ENV != "development") {
+  if (import.meta.env.MODE != "development") {
     loadWidget();
   }
 };
