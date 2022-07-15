@@ -17,7 +17,7 @@ jobs:
           node-version: 16
 
       - name: update
-        run: npm update
+        run: npm update --save
         env:
           CI: false
 
