@@ -6,7 +6,7 @@ export const AboutWin = () => {
 	const { abOpen } = useSelector((state) => state.desktop);
 	const { locked, booted } = useSelector((state) => state.wallpaper);
 	const [open, setOpen] = useState(
-		true && process.env.REACT_APP_ENV != "development"
+		true && import.meta.env.MODE != "development"
 	);
 	const [timer, setTimer] = useState(
 		localStorage.getItem("closeAbout") == "true" ? 0 : 5
