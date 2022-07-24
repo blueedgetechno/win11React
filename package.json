@@ -61,7 +61,7 @@
 		]
 	},
 	"devDependencies": {
-		"@tauri-apps/cli": "1.0.4",
+		"@tauri-apps/cli": "1.0.5",
 		"@vitejs/plugin-react": "2.0.0",
 		"autoprefixer": "^10.4.7",
 		"postcss": "^8.4.14",
