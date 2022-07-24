@@ -32,7 +32,7 @@
 		"react-player": "^2.10.1",
 		"react-redux": "^8.0.2",
 		"redux": "^4.2.0",
-		"sass": "^1.53.0",
+		"sass": "^1.54.0",
 		"translation-check": "^1.0.2"
 	},
 	"scripts": {
