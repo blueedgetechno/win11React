@@ -215,9 +215,9 @@
       "icon": ""
     }
   ],
-  "Personalization": [
+  "Personalisation": [
     {
-      "type": "personalizeTop"
+      "type": "personaliseTop"
     },
     {
       "type": "tile",
@@ -270,7 +270,7 @@
     {
       "type": "tile",
       "name": "Device usage",
-      "desc": "Select all the ways you plan to use your device to get personalized tips, ads and recommendations within Microsoft experiences",
+      "desc": "Select all the ways you plan to use your device to get personalised tips, ads and recommendations within Microsoft experiences",
       "icon": ""
     }
   ],
@@ -367,7 +367,7 @@
     {
       "type": "tile",
       "name": "Access work or school",
-      "desc": "Organization resources like email, apps, and network",
+      "desc": "Organisation resources like email, apps, and network",
       "icon": ""
     }
   ],
@@ -562,7 +562,7 @@
     },
     {
       "type": "tile",
-      "name": "Inking & typing personalization",
+      "name": "Inking & typing personalisation",
       "desc": "Personal dictionary, words in your dictionary",
       "icon": ""
     },
@@ -741,7 +741,7 @@
     {
       "type": "tile",
       "name": "Advanced options",
-      "desc": "Delivery optimizations, optional updates, active hours, other update settings",
+      "desc": "Delivery optimisations, optional updates, active hours, other update settings",
       "icon": ""
     },
     {
