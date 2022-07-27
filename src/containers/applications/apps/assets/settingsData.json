@@ -54,7 +54,7 @@
     {
       "type": "tile",
       "name": "Activation",
-      "desc": "Activation state, subcription, product key",
+      "desc": "Activation state, subscription, product key",
       "icon": ""
     },
     {
@@ -215,9 +215,9 @@
       "icon": ""
     }
   ],
-  "Personalisation": [
+  "Personalization": [
     {
-      "type": "personaliseTop"
+      "type": "personalizeTop"
     },
     {
       "type": "tile",
@@ -258,7 +258,7 @@
     {
       "type": "tile",
       "name": "Taskbar",
-      "desc": "Taskbar behaviours, system pins",
+      "desc": "Taskbar behaviors, system pins",
       "icon": ""
     },
     {
@@ -270,7 +270,7 @@
     {
       "type": "tile",
       "name": "Device usage",
-      "desc": "Select all the ways you plan to use your device to get personalised tips, ads and recommendations within Microsoft experiences",
+      "desc": "Select all the ways you plan to use your device to get personalized tips, ads and recommendations within Microsoft experiences",
       "icon": ""
     }
   ],
@@ -301,7 +301,7 @@
     },
     {
       "type": "tile",
-      "name": "Apps for wesites",
+      "name": "Apps for websites",
       "desc": "Websites that can open in an app instead of a browser",
       "icon": ""
     },
@@ -367,7 +367,7 @@
     {
       "type": "tile",
       "name": "Access work or school",
-      "desc": "Organisation resources like email, apps, and network",
+      "desc": "Organization resources like email, apps, and network",
       "icon": ""
     }
   ],
@@ -562,7 +562,7 @@
     },
     {
       "type": "tile",
-      "name": "Inking & typing personalisation",
+      "name": "Inking & typing personalization",
       "desc": "Personal dictionary, words in your dictionary",
       "icon": ""
     },
@@ -741,7 +741,7 @@
     {
       "type": "tile",
       "name": "Advanced options",
-      "desc": "Delivery optimisations, optional updates, active hours, other update settings",
+      "desc": "Delivery optimizations, optional updates, active hours, other update settings",
       "icon": ""
     },
     {
