@@ -54,7 +54,7 @@
     {
       "type": "tile",
       "name": "Activation",
-      "desc": "Activation state, subcription, product key",
+      "desc": "Activation state, subscription, product key",
       "icon": ""
     },
     {
@@ -301,7 +301,7 @@
     },
     {
       "type": "tile",
-      "name": "Apps for wesites",
+      "name": "Apps for websites",
       "desc": "Websites that can open in an app instead of a browser",
       "icon": ""
     },
