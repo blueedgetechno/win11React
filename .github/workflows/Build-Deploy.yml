@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build-Deploy:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -45,9 +45,22 @@ jobs:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.BOT }}
-          cname: win11.blueedge.me
-          publish_dir: ./build
+          path: build
+
+  Deploy:
+    needs: Build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v1
