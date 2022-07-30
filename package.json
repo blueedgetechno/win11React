@@ -28,7 +28,7 @@
 		"react-dom": "^18.2.0",
 		"react-error-boundary": "^3.1.4",
 		"react-firebase-hooks": "^5.0.3",
-		"react-i18next": "^11.18.1",
+		"react-i18next": "^11.18.3",
 		"react-player": "^2.10.1",
 		"react-redux": "^8.0.2",
 		"redux": "^4.2.0",
