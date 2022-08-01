@@ -14,7 +14,7 @@
 		"@sentry/react": "^7.8.0",
 		"@sentry/tracing": "^7.8.0",
 		"@tauri-apps/api": "^1.0.2",
-		"@widgetbot/react-embed": "1.4.1",
+		"@widgetbot/react-embed": "1.5.0",
 		"@win11react/react-canvas-draw": "1.2.2",
 		"axios": "^0.27.2",
 		"eslint-config-react-app": "^7.0.1",
