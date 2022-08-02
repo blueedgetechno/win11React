@@ -1,4 +1,4 @@
-.github/* @andrewstech
-src-tauri/* @andrewstech
-src/* @blueedgetechno
+.github/** @andrewstech
+src-tauri/** @andrewstech
+src/** @blueedgetechno
 **/apps/**/settings*.* @yashash1511
