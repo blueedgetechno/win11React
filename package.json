@@ -12,7 +12,7 @@
 		"@fortawesome/free-solid-svg-icons": "^6.1.2",
 		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@sentry/react": "^7.8.0",
-		"@sentry/tracing": "^7.8.0",
+		"@sentry/tracing": "^7.8.1",
 		"@tauri-apps/api": "^1.0.2",
 		"@widgetbot/react-embed": "1.5.0",
 		"@win11react/react-canvas-draw": "1.2.2",
