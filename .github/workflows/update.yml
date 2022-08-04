@@ -1,30 +1,26 @@
-name: update
+name: Update Dependencies
 on:
+  schedule:
+    - cron: "0 0 1 * *"
   workflow_dispatch:
 
 jobs:
-  update:
-    name: update
-    runs-on: windows-latest
+  Update:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
+          cache: npm
           node-version: 16
 
-      - name: update
-        run: npm update --save
-        env:
-          CI: false
+      - run: npm update --save
 
-      - name: cpr
-        uses: peter-evans/create-pull-request@v4
+      - uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.BOT }}
-          commit-message: Update package-lock
-          title: Update package-lock
-          body: Update package-lock
+          commit-message: updated deps
+          title: Updated Dependencies
+          body: Updated Dependencies
