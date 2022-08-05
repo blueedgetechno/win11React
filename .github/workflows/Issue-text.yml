@@ -4,9 +4,15 @@ on:
   issues:
     types: [opened]
 
+permissions:
+  contents: read
+
 jobs:
   comment:
     runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
 
     steps:
       - uses: peter-evans/create-or-update-comment@v2
@@ -20,11 +26,11 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
 
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-
-      - run: echo ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
-
-      - uses: actions-ecosystem/action-add-labels@v1
+      - name: Set labels based on browsers field
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@v1
         with:
-          labels: ${{ steps.issue-parser.outputs.issueparser_what_browser_are_you_seeing_the_problem_on }}
-          github_token: ${{ secrets.BOT }}
+          issue-form: ${{ steps.issue-parser.outputs.jsonString }}
+          section: browsers
+          block-list: |
+            Other Browser
+          token: ${{ secrets.GITHUB_TOKEN }}
