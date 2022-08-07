@@ -9,12 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: peter-evans/create-or-update-comment@v2
-        id: couc
+      - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          body: ⌛ Deploy Preview - Build in Progress
-          issue-number: ${{ github.event.pull_request.number }}
-          token: ${{ secrets.BOT }}
+          message: |
+            ### 👷 Deploy Preview for win11react processing.
+
+            | Name | Link |
+            |-|-|
+            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
+            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+
+          GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - uses: actions/checkout@v3
         with:
@@ -54,22 +59,28 @@ jobs:
         shell: bash
 
       - name: comment Preview Ready
-        uses: peter-evans/create-or-update-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          body: |
-            ✔️ Deploy Preview for Ready!
-            😎 Browse the preview: https://pr-preview.win11react.com/${{ github.event.pull_request.number }} !
-            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          comment-id: ${{ steps.couc.outputs.comment-id }}
-          edit-mode: replace
-          token: ${{ secrets.BOT }}
+          message: |
+            ### ✅ Deploy Preview for win11react ready!
+
+            | Name | Link |
+            |-|-|
+            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
+            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+            | 😎 Deploy Preview | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
+
+          GITHUB_TOKEN: ${{ secrets.BOT }}
 
       - if: ${{ failure() }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          body: |
-            ❌ Deploy Preview failed
-            🔍 Inspect the deploy log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          comment-id: ${{ steps.couc.outputs.comment-id }}
-          edit-mode: replace
-          token: ${{ secrets.BOT }}
+          message: |
+            ### ❌ Deploy Preview for win11react failed.
+
+            | Name | Link |
+            |-|-|
+            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
+            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+
+          GITHUB_TOKEN: ${{ secrets.BOT }}
