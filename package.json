@@ -64,7 +64,7 @@
 		"@tauri-apps/cli": "1.0.5",
 		"@vitejs/plugin-react": "2.0.0",
 		"autoprefixer": "^10.4.8",
-		"postcss": "^8.4.14",
+		"postcss": "^8.4.16",
 		"tailwindcss": "^3.1.7",
 		"vite": "3.0.4",
 		"vite-plugin-pwa": "^0.12.3"
