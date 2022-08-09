@@ -11,8 +11,8 @@
 		"@fortawesome/free-regular-svg-icons": "^6.1.2",
 		"@fortawesome/free-solid-svg-icons": "^6.1.2",
 		"@fortawesome/react-fontawesome": "^0.2.0",
-		"@sentry/react": "^7.8.1",
-		"@sentry/tracing": "^7.8.1",
+		"@sentry/react": "^7.9.0",
+		"@sentry/tracing": "^7.9.0",
 		"@tauri-apps/api": "^1.0.2",
 		"@widgetbot/react-embed": "1.5.0",
 		"@win11react/react-canvas-draw": "1.2.2",
@@ -20,7 +20,7 @@
 		"eslint-config-react-app": "^7.0.1",
 		"firebase": "9.9.1",
 		"firebaseui": "^6.0.1",
-		"i18next": "^21.8.16",
+		"i18next": "^21.9.0",
 		"i18next-browser-languagedetector": "^6.1.4",
 		"i18next-http-backend": "^1.4.1",
 		"i18next-xhr-backend": "^3.2.2",
@@ -32,7 +32,7 @@
 		"react-player": "^2.10.1",
 		"react-redux": "^8.0.2",
 		"redux": "^4.2.0",
-		"sass": "^1.54.2",
+		"sass": "^1.54.3",
 		"translation-check": "^1.0.2"
 	},
 	"scripts": {
@@ -64,8 +64,8 @@
 		"@tauri-apps/cli": "1.0.5",
 		"@vitejs/plugin-react": "2.0.0",
 		"autoprefixer": "^10.4.8",
-		"postcss": "^8.4.14",
-		"tailwindcss": "^3.1.7",
+		"postcss": "^8.4.16",
+		"tailwindcss": "^3.1.8",
 		"vite": "3.0.4",
 		"vite-plugin-pwa": "^0.12.3"
 	}
