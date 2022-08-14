@@ -38,8 +38,8 @@ export const Icon = (props) => {
 
 	const clickDispatch = (event) => {
 		var action = {
-			type: event.target.dataset.action,
-			payload: event.target.dataset.payload,
+			type: event.currentTarget.dataset.action,
+			payload: event.currentTarget.dataset.payload,
 		};
 
 		if (action.type) {
@@ -166,14 +166,14 @@ export const Image = (props) => {
 
 	const errorHandler = (e) => {
 		if (props.err) {
-			e.target.src = props.err;
+			e.currentTarget.src = props.err;
 		}
 	};
 
 	const clickDispatch = (event) => {
 		var action = {
-			type: event.target.dataset.action,
-			payload: event.target.dataset.payload,
+			type: event.currentTarget.dataset.action,
+			payload: event.currentTarget.dataset.payload,
 		};
 
 		if (action.type) {
@@ -219,9 +219,9 @@ export const SnapScreen = (props) => {
 
 	const clickDispatch = (event) => {
 		var action = {
-			type: event.target.dataset.action,
-			payload: event.target.dataset.payload,
-			dim: JSON.parse(event.target.dataset.dim),
+			type: event.currentTarget.dataset.action,
+			payload: event.currentTarget.dataset.payload,
+			dim: JSON.parse(event.currentTarget.dataset.dim),
 		};
 
 		if (action.dim && action.type) {
@@ -298,16 +298,16 @@ export const ToolBar = (props) => {
 		e = e || window.event;
 		e.preventDefault();
 		posM = [e.clientY, e.clientX];
-		op = e.target.dataset.op;
+		op = e.currentTarget.dataset.op;
 
 		if (op == 0) {
-			wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+			wnapp = e.currentTarget.parentElement && e.currentTarget.parentElement.parentElement;
 		} else {
-			vec = e.target.dataset.vec.split(",");
+			vec = e.currentTarget.dataset.vec.split(",");
 			wnapp =
-				e.target.parentElement &&
-				e.target.parentElement.parentElement &&
-				e.target.parentElement.parentElement.parentElement;
+				e.currentTarget.parentElement &&
+				e.currentTarget.parentElement.parentElement &&
+				e.currentTarget.parentElement.parentElement.parentElement;
 		}
 
 		if (wnapp) {
