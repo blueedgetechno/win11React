@@ -17,6 +17,7 @@ jobs:
           cache: npm
 
       - run: |
+          npm update --save
           git config --global user.email "w11bot@andrewstech.me"
           git config --global user.name "win11bot"
           git add .
