@@ -13,14 +13,13 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          cache: npm
           node-version: 16
+          cache: npm
 
-      - run: npm update --save
-
-      - uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.BOT }}
-          commit-message: updated deps
-          title: Updated Dependencies
-          body: Updated Dependencies
+      - run: |
+          npm update --save
+          git config --global user.email "w11bot@andrewstech.me"
+          git config --global user.name "win11bot"
+          git add .
+          git commit -m "Updated Dependencies"
+          git push
