@@ -163,6 +163,9 @@
                 "info": {
                   "spid": "%videos%",
                   "icon": "vid"
+                },
+                "data": {
+                  "porn-collection": {}
                 }
               },
               "Github": {
