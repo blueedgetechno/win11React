@@ -211,7 +211,7 @@ var apps = [{
   action: 'SPOTIFY'
 },
 {
-  name: 'Share',
+  name: 'Sharepoint',
   icon: 'share',
   type: 'app'
 },
@@ -269,7 +269,7 @@ var apps = [{
   type: 'app'
 },
 {
-  name: 'White Board',
+  name: 'Whiteboard',
   icon: 'board',
   type: 'app',
   action: 'WHITEBOARD'

@@ -14,7 +14,7 @@ var {
   ],
   pinned: (localStorage.getItem("pinned") &&
     JSON.parse(localStorage.getItem("pinned"))) || ["Browser", "Get Started", "Task Manager", "Mail", "Settings", "Store",
-    "Unescape", "Buy me a coffee", "Notepad", "White Board", "Calculator",
+    "Unescape", "Buy me a coffee", "Notepad", "Whiteboard", "Calculator",
     "Spotify", "Twitter", "File Explorer", "Terminal", "Github", "Discord", "Camera"
   ],
   recent: (localStorage.getItem("recent") &&
