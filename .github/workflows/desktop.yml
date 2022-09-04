@@ -1,11 +1,9 @@
 name: publish
 on:
-  issues:
-    types:
-      - labeled
+  workflow_dispatch:
+  
 jobs:
   publish-tauri:
-    if: github.event.label.name == 'desktop-release'
     strategy:
       fail-fast: false
       matrix:
@@ -45,7 +43,7 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: install app dependencies and build it
-        run: npm run turbuild
+        run: npm run build
         env:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
@@ -58,6 +56,6 @@ jobs:
         with:
           tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: "Win11inReact v__VERSION__"
-          releaseBody: ${{ github.event.issue.body }}
+          releaseBody: "new build"
           releaseDraft: false
           prerelease: false
