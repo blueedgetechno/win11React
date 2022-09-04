@@ -23,9 +23,11 @@ jobs:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-      - uses: actions/upload-pages-artifact@v1
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v2
         with:
-          path: build
+          name: production-files
+          path: ./build
           
   publish-tauri:
     needs: Build-Deploy
