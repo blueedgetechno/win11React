@@ -28,6 +28,7 @@ jobs:
           path: build
           
   publish-tauri:
+    needs: Build-Deploy
     strategy:
       fail-fast: false
       matrix:
