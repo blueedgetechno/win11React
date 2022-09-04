@@ -39,6 +39,7 @@
 		"start": "vite",
 		"build": "vite build",
 		"ghbuild": "CI=false vite build",
+		"turbuild": "CI=false react-scripts build",
 		"tauri": "tauri",
 		"crowdin": "crowdin"
 	},
