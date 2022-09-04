@@ -3,6 +3,30 @@ on:
   workflow_dispatch:
   
 jobs:
+  Build-Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - run: |
+          npm ci
+          npm run crowdin upload
+          npm run crowdin download
+          npm run ghbuild
+        env:
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: build
+          
   publish-tauri:
     strategy:
       fail-fast: false
@@ -17,13 +41,14 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 12
+          node-version: 16
           cache: npm
-
-      - name: git http
-        run: |
-          git config --global url."https://github.com/".insteadOf git@github.com:
-          git config --global url."https://".insteadOf git://
+      
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./build
 
       - name: install Rust stable
         uses: actions-rs/toolchain@v1
@@ -34,19 +59,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
-
-      - name: Get translations
-        run: |
-          npm ci
-          npm run crowdin download
-        env:
-          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-
-      - name: install app dependencies and build it
-        run: npm run build
-        env:
-          REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
       - uses: tauri-apps/tauri-action@v0
         env:
