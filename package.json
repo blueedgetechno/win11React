@@ -31,6 +31,7 @@
 		"react-i18next": "^11.18.5",
 		"react-player": "^2.10.1",
 		"react-redux": "^8.0.2",
+		"react-scripts": "^5.0.1",
 		"redux": "^4.2.0",
 		"sass": "^1.54.8",
 		"translation-check": "^1.0.2"
