@@ -214,7 +214,7 @@ const loadWidget = async () => {
 
   // console.log('fetching NEWS');
   await axios
-    .get("https://github.win11react.com/NewsAPI/data.json")
+    .get("https://github.win11react.com/api-cache/news.json")
     .then((res) => res.data)
     .then((data) => {
       var newsList = [];
