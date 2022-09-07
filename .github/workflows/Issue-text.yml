@@ -27,7 +27,7 @@ jobs:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
 
       - name: Set labels based on browsers field
-        uses: redhat-plumbers-in-action/advanced-issue-labeler@v1
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
         with:
           issue-form: ${{ steps.issue-parser.outputs.jsonString }}
           section: browsers
