@@ -15,6 +15,8 @@ jobs:
       issues: write
 
     steps:
+      - uses: actions/checkout@v3
+
       - uses: peter-evans/create-or-update-comment@v2
         with:
           body: Hey, thank you for creating an issue. We will normally respond within 24 hours.
