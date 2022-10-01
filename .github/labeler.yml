@@ -1,2 +1,4 @@
 CI:
  - .github/
+MAIN:
+- src/
