@@ -1,0 +1,28 @@
+{
+    "about.opensource": "win11React es un proyecto de código abierto hecho con la esperanza de replicar la experiencia de escritorio de Windows 11 en una web, usando tecnologias web estandar como React, CSS, y JavaScript.",
+    "about.notmicrosoft": "Este proyecto no está afiliado de ninguna forma con Microsoft y no debería ser confundido con el sistema operativo de Microsoft o sus productos.",
+    "about.Creative-Commons": "Creative Commons",
+    "about.title": "Sobre nosotros",
+    "about.licensed": "La licencia de este proyecto es",
+    "about.alsonot": "Esto tampoco es",
+    "about.microsoftcopywrite": "Microsoft, Windows y otros productos mostrados en este proyecto son marcas comerciales del grupo de empresas de Microsoft",
+    "about.understand": "Vale, lo he entendido",
+    "about.contact": "contacto",
+    "store.featured-app": "Apps destacadas",
+    "store.featured-app.info": "Lleva tu experiencia a nuevas alturas con estas aplicaciones imprescindibles",
+    "store.featured-game": "Juegos Destacados",
+    "store.featured-game.info": "Explora la diversión de jugar juegos Xbox y encontra un nuevo favorito",
+    "store.featured-film": "Películas Destacadas",
+    "store.featured-film.info": "Alquila o compra las últimas películas taquilleras y míralas en casa o mientras viajas",
+    "store.free": "Gratis",
+    "store.owned": "Instalada",
+    "store.rent": "Alquilar",
+    "store.features": "Características",
+    "store.ratings": "Puntuación y reseñas",
+    "store.description": "Descripción",
+    "camera.take-photo": "Toma una foto",
+    "oobe.country": "¿Es este el país o la región correctos?",
+    "oobe.keyboard": "¿Es este el diseño de teclado o el método de entrada correcto?",
+    "oobe.anotherkeyboard": "Si también usas otro diseño de teclado, puedes agregarlo a continuación"
+  }
+  
