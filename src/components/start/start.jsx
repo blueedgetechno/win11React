@@ -416,9 +416,8 @@ export const StartMenu = () => {
 									<div className="topApps flex w-full justify-between">
 										{start.rcApps.slice(1, 7).map((app, i) => {
 											return (
-												<div key={i} className="topApp pt-6 py-4 ltShad">
+												<div key={i} className="topApp pt-6 py-4 ltShad" onClick={clickDispatch}>
 													<Icon
-														onClick={clickDispatch}
 														click={app.action}
 														payload={app.payload || "full"}
 														src={app.icon}
