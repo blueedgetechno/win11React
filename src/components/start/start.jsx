@@ -416,14 +416,14 @@ export const StartMenu = () => {
 									<div className="topApps flex w-full justify-between">
 										{start.rcApps.slice(1, 7).map((app, i) => {
 											return (
-												<div key={i} className="topApp pt-6 py-4 ltShad">
-													<Icon
-														onClick={clickDispatch}
-														click={app.action}
-														payload={app.payload || "full"}
-														src={app.icon}
-														width={30}
-													/>
+												<div
+													key={i}
+													className="topApp pt-6 py-4 ltShad prtclk"
+													onClick={clickDispatch}
+													data-action={app.action}
+													data-payload={app.payload || "full"}
+												>
+													<Icon src={app.icon} width={30} />
 													<div className="text-xs mt-2">{app.name}</div>
 												</div>
 											);
