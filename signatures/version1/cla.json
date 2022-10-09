@@ -103,6 +103,14 @@
       "created_at": "2022-10-05T14:04:02Z",
       "repoId": 385332374,
       "pullRequestNo": 666
+    },
+    {
+      "name": "matteomessmer",
+      "id": 40521259,
+      "comment_id": 1272513953,
+      "created_at": "2022-10-09T10:47:59Z",
+      "repoId": 385332374,
+      "pullRequestNo": 671
     }
   ]
 }
