@@ -301,7 +301,9 @@ export const ToolBar = (props) => {
 		op = e.currentTarget.dataset.op;
 
 		if (op == 0) {
-			wnapp = e.currentTarget.parentElement && e.currentTarget.parentElement.parentElement;
+			wnapp =
+				e.currentTarget.parentElement &&
+				e.currentTarget.parentElement.parentElement;
 		} else {
 			vec = e.currentTarget.dataset.vec.split(",");
 			wnapp =

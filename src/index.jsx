@@ -18,8 +18,15 @@ Sentry.init({
 });
 
 const root = createRoot(document.getElementById("root"));
+
 root.render(
-	<Suspense fallback={<div id="sus-fallback"><h1>Loading...</h1></div>}>
+	<Suspense
+		fallback={
+			<div id="sus-fallback">
+				<h1>Loading</h1>
+			</div>
+		}
+	>
 		<Provider store={store}>
 			<App />
 		</Provider>
