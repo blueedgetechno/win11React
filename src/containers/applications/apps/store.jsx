@@ -58,8 +58,10 @@ export const MicroStore = () => {
       payload = e.target.dataset.payload;
 
     // console.log(act, payload);
-    if (act == "page1") setPage(act[4]);
-    else if (act == "page2") {
+    if (act == "page1") {
+      setPage(act[4]);
+      document.querySelector(".restWindow.win11Scroll").scrollTop = 0;
+    } else if (act == "page2") {
       for (var i = 0; i < storeapps.length; i++) {
         if (storeapps[i].data.url == payload) {
           setOpapp(storeapps[i]);
