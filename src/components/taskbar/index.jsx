@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../shared/Battery";
@@ -5,7 +6,6 @@ import "./taskbar.scss";
 
 const Taskbar = () => {
 	const tasks = useSelector((state) => {
-		//console.log(state)
 		return state.taskbar;
 	});
 	const apps = useSelector((state) => {
@@ -51,6 +51,15 @@ const Taskbar = () => {
 			dispatch(action);
 		}
 	};
+
+	const [time, setTime] = useState(new Date());
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setTime(new Date());
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
 		<div className="taskbar">
@@ -150,13 +159,13 @@ const Taskbar = () => {
 						data-action="CALNTOGG"
 					>
 						<div>
-							{new Date().toLocaleTimeString("en-US", {
+							{time.toLocaleTimeString("en-US", {
 								hour: "numeric",
 								minute: "numeric",
 							})}
 						</div>
 						<div>
-							{new Date().toLocaleDateString("en-US", {
+							{time.toLocaleDateString("en-US", {
 								year: "2-digit",
 								month: "2-digit",
 								day: "numeric",

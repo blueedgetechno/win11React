@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
@@ -195,16 +196,29 @@ export const Image = (props) => {
 			data-var={props.var}
 		>
 			{!props.back ? (
-				<img
-					width={props.w}
-					height={props.h}
-					data-free={props.free != null}
-					data-var={props.var}
-					loading={props.lazy ? "lazy" : null}
-					src={src}
-					alt=""
-					onError={errorHandler}
-				/>
+				props.lazy ? (
+					<LazyLoadImage
+						width={props.w}
+						height={props.h}
+						data-free={props.free != null}
+						data-var={props.var}
+						loading={props.lazy ? "lazy" : null}
+						src={src}
+						alt=""
+						onError={errorHandler}
+					/>
+				) : (
+					<img
+						width={props.w}
+						height={props.h}
+						data-free={props.free != null}
+						data-var={props.var}
+						loading={props.lazy ? "lazy" : null}
+						src={src}
+						alt=""
+						onError={errorHandler}
+					/>
+				)
 			) : null}
 		</div>
 	);

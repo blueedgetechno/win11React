@@ -29,6 +29,7 @@ specifiers:
   react-error-boundary: ^3.1.4
   react-firebase-hooks: ^5.0.3
   react-i18next: ^11.18.6
+  react-lazy-load-image-component: ^1.5.5
   react-player: ^2.11.0
   react-redux: ^8.0.4
   react-scripts: ^5.0.1
@@ -64,6 +65,7 @@ dependencies:
   react-error-boundary: 3.1.4_react@18.2.0
   react-firebase-hooks: 5.0.3_so7e4zbu37ibsppgxaig5bgaeu
   react-i18next: 11.18.6_vfm63zmruocgezzfl2v26zlzpy
+  react-lazy-load-image-component: 1.5.5_biqbaboplfbrettd7655fr4n2y
   react-player: 2.11.0_react@18.2.0
   react-redux: 8.0.4_e42enmjmqb4imi3q3iaq2rrebm
   react-scripts: 5.0.1_react@18.2.0+sass@1.55.0
@@ -7710,6 +7712,10 @@ packages:
   /lodash.sortby/4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
 
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
+    dev: false
+
   /lodash.uniq/4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
     dev: false
@@ -9372,6 +9378,18 @@ packages:
 
   /react-is/18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+    dev: false
+
+  /react-lazy-load-image-component/1.5.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-pPtq48tIhkLIZg6MAhB3VvVhntJLrc3MBun/lQkNmNtrRFXdjEc5aHlPT5EhpXPQR1nsNVwN91ne6Aagm3rtNQ==}
+    peerDependencies:
+      react: ^15.x.x || ^16.x.x || ^17.x.x || ^18.x.x
+      react-dom: ^15.x.x || ^16.x.x || ^17.x.x || ^18.x.x
+    dependencies:
+      lodash.debounce: 4.0.8
+      lodash.throttle: 4.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-player/2.11.0_react@18.2.0:
