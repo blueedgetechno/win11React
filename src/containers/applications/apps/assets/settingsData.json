@@ -568,7 +568,7 @@
     },
     {
       "type": "tile",
-      "name": "Diagnostic &amp; feedback",
+      "name": "Diagnostic & feedback",
       "desc": "Diagnostic data, inking and typing data, tailored experiences, feedback frequency",
       "icon": ""
     },
