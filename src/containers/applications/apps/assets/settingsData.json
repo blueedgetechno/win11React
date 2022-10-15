@@ -153,13 +153,13 @@
       "type": "tile",
       "name": "Pen & Windows Ink",
       "desc": "Right-handed or left-handed, pen button shortcuts, handwriting",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "AutoPlay",
       "desc": "Defaults for removable drives and memory cards",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -200,19 +200,19 @@
       "type": "tile",
       "name": "Proxy",
       "desc": "Proxy server for WiFi and Ethernet connections",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Dial-up",
       "desc": "Set up a dial-up internet connection",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Advanced network settings",
       "desc": "View all network adapters, network reset",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Personalisation": [
@@ -223,13 +223,13 @@
       "type": "tile",
       "name": "Background",
       "desc": "Background image, colour, slideshow",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Colours",
       "desc": "Accent colours, transparency effects, colour theme",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -241,7 +241,7 @@
       "type": "tile",
       "name": "Lock screen",
       "desc": "Lock screen images, apps, animations",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -253,7 +253,7 @@
       "type": "tile",
       "name": "Start",
       "desc": "Recent apps and items, folders",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -265,13 +265,13 @@
       "type": "tile",
       "name": "Fonts",
       "desc": "Install, manage",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Device usage",
       "desc": "Select all the ways you plan to use your device to get personalised tips, ads and recommendations within Microsoft experiences",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Apps": [
@@ -285,13 +285,13 @@
       "type": "tile",
       "name": "Default apps",
       "desc": "Defaults for file and link types, other defaults",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Offline maps",
       "desc": "Downloads, storage location, map updates",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -315,7 +315,7 @@
       "type": "tile",
       "name": "Startup",
       "desc": "Apps that start automatically when you sign in",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Accounts": [
@@ -332,25 +332,25 @@
       "type": "tile",
       "name": "Your info",
       "desc": "Accounts used by email, calendar, and contacts",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Sign-in options",
       "desc": "Windows Hello, security key, password, dynamic lock",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Email & accounts",
       "desc": "Accounts used by email, calendar, and contacts",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Family",
       "desc": "Manage your family group, edit account types and device permissions",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -368,7 +368,7 @@
       "type": "tile",
       "name": "Access work or school",
       "desc": "Organisation resources like email, apps, and network",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Time & language": [
@@ -438,7 +438,7 @@
       "type": "tile",
       "name": "Visual effects",
       "desc": "Scroll bars, transparency, animations, notification timeout",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -450,7 +450,7 @@
       "type": "tile",
       "name": "Text cursor",
       "desc": "Appearance and thickness, text cursor indicator",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -462,7 +462,7 @@
       "type": "tile",
       "name": "Colour filters",
       "desc": "Colour-blindness filters, grey scale, inverted",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -474,7 +474,7 @@
       "type": "tile",
       "name": "Narrator",
       "desc": "Voice, verbosity, keyboard, braille",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "subHeading",
@@ -490,7 +490,7 @@
       "type": "tile",
       "name": "Captions",
       "desc": "Styles",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "subHeading",
@@ -518,7 +518,7 @@
       "type": "tile",
       "name": "Eye control",
       "desc": "Eye tracker, text-to-speech",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Privacy & security": [
@@ -570,25 +570,25 @@
       "type": "tile",
       "name": "Diagnostic &amp; feedback",
       "desc": "Diagnostic data, inking and typing data, tailored experiences, feedback frequency",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Activity history",
       "desc": "Options for getting more from your activity history across devices and accounts",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Search permissions",
       "desc": "SafeSearch, cloud content search, search history",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Searching Windows",
       "desc": "Search indexing for faster results, Find My Files, folders excluded from search",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "subHeading",
@@ -617,12 +617,12 @@
     {
       "type": "tile",
       "name": "Notification",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Account info",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -632,12 +632,12 @@
     {
       "type": "tile",
       "name": "Calendar",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Phone calls",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -647,57 +647,57 @@
     {
       "type": "tile",
       "name": "Email",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Tasks",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Messaging",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Radios",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Other devices",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "App diagnostics",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Automatic file downloads",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Documents",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Downloads folder",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Music library",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
       "name": "Pictures",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -712,7 +712,7 @@
     {
       "type": "tile",
       "name": "Screenshot borders",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
