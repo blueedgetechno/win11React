@@ -221,7 +221,7 @@ export const SidePane = () => {
 				</div>
 			</div>
 			<div className="p-1 bottomBar">
-				<div className="px-3 bettery">
+				<div className="px-3 battery-sidepane">
 					<Battery pct />
 				</div>
 			</div>
