@@ -6,11 +6,18 @@
   min-width: 720px;
 }
 
+@supports (container-type: inline-size) {
+  .settingsApp {
+    min-width: 360px;
+  }
+}
+
 .settingsApp .restWindow {
   font-size: 14px;
   height: 100%;
 
-  // container: inline-size / appWrapper;
+  container-type: inline-size;
+  container-name: appWrapper;
 
   * {
     margin: 0;
@@ -432,41 +439,41 @@
     display: none;
   }
 
-  // @container appWrapper size(max-width: 800px) {
-  //   .navMenuBtn {
-  //     display: flex;
-  //     position: absolute;
-  //     top: 8px;
-  //     right: 8px;
-  //     padding: 12px;
-  //     border-radius: 6px;
+  @container appWrapper (max-width: 800px) {
+    .navMenuBtn {
+      display: flex;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 12px;
+      border-radius: 6px;
 
-  //     &:hover {
-  //       background: rgb(var(--txt_clr-rgb) / 5%);
-  //     }
+      &:hover {
+        background: rgb(var(--txt_clr-rgb) / 5%);
+      }
 
-  //     svg {
-  //       transition: all 0.1s;
-  //     }
-  //     &:active svg {
-  //       transform: scaleX(0.67);
-  //     }
-  //   }
+      svg {
+        transition: all 0.1s;
+      }
+      &:active svg {
+        transform: scaleX(0.67);
+      }
+    }
 
-  //   main {
-  //     margin-left: 0;
-  //   }
-  //   nav {
-  //     background: var(--bg);
-  //     z-index: 999;
-  //     transform: translateX(-100%);
-  //     transition: all 0.2s cubic-bezier(0, 0, 0, 1);
+    main {
+      margin-left: 0;
+    }
+    nav {
+      background: var(--bg);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: all 0.2s cubic-bezier(0, 0, 0, 1);
 
-  //     &.open {
-  //       transform: translateX(0);
-  //     }
-  //   }
-  // }
+      &.open {
+        transform: translateX(0);
+      }
+    }
+  }
 }
 body[data-theme="dark"] .settingsApp {
   --bg: #202020;
