@@ -434,6 +434,11 @@
       z-index: 0;
     }
 
+    &:hover {
+      filter: brightness(0.9);
+      cursor: pointer;
+    }
+
     .tpNews {
       position: absolute;
       bottom: 0;

@@ -223,23 +223,27 @@ export const EdgeMenu = () => {
 								id="isite"
 								frameborder="0"
 								className="w-full h-full"
+								title="site"
 							></iframe>
 						</LazyComponent>
-						{ierror ? (
-							<div className="bg-blue-200 w-48 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12">
-								<div
-									className="absolute bg-red-400 m-1 text-red-800 text-xs px-1 font-bold handcr top-0 right-0"
-									onClick={handleFailed}
-								>
-									x
-								</div>
-								<div className="text-gray-800 text-xs font-medium">
-									If it shows <b>"Refused to connect"</b>, then{" "}
-									<b>that website doesn't allow </b>
-									other websites to show their content. <b>I cannot fix it</b>.
-								</div>
+
+						<div
+							className={`bg-blue-100 w-64 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12 transition-all ${
+								ierror ? "opacity-100" : "opacity-0 pointer-events-none"
+							}`}
+						>
+							<div
+								className="absolute bg-red-400 m-1 text-red-900 text-xs px-1 font-bold handcr top-0 right-0 rounded hover:bg-red-500"
+								onClick={handleFailed}
+							>
+								x
 							</div>
-						) : null}
+							<div className="text-gray-800 text-xs font-medium">
+								If it shows <b>"Refused to connect"</b>, then{" "}
+								<b>that website doesn't allow </b>
+								other websites to show their content. <b>I cannot fix it</b>.
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
