@@ -8,6 +8,7 @@ permissions: write-all
 
 jobs:
   prettier:
+    if: "!contains(github.actor, 'win11bot')" #skips if win11bot trigged pr
     runs-on: ubuntu-latest
 
     steps:
