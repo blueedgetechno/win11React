@@ -28,5 +28,5 @@ jobs:
           git config --global user.email "w11bot@andrewstech.me"
           git config --global user.name "win11bot"
           git add .
-          git commit -m "Prettier PR"
+          git commit -m "Prettied PR #${{ github.event.pull_request.number }} -m "skip actions"
           git push
