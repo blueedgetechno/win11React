@@ -122,10 +122,10 @@ export const SidePane = () => {
 
 		dispatch({ type: "TASKAUDO", payload: aud });
 
-		silderBackground(vSlider, e.target.value);
+		sliderBackground(vSlider, e.target.value);
 	};
 
-	function silderBackground(elem, e) {
+	function sliderBackground(elem, e) {
 		elem.style.setProperty(
 			"--track-color",
 			`linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
@@ -142,7 +142,7 @@ export const SidePane = () => {
 				value: brgt,
 			},
 		});
-		silderBackground(bSlider, brgt);
+		sliderBackground(bSlider, brgt);
 	};
 
 	useEffect(() => {
@@ -221,7 +221,7 @@ export const SidePane = () => {
 				</div>
 			</div>
 			<div className="p-1 bottomBar">
-				<div className="px-3 bettery">
+				<div className="px-3 battery-sidepane">
 					<Battery pct />
 				</div>
 			</div>
