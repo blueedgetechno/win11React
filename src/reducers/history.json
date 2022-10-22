@@ -307,7 +307,8 @@
   },
   {
     "text": "British Prime Minister John Major announced the Stone of Scone would be returned to Scotland.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "John_Major",
         "displaytitle": "John Major",
@@ -412,7 +413,8 @@
   },
   {
     "text": "The Fatih Sultan Mehmet Bridge in Istanbul, Turkey is completed, providing the second connection between the continents of Europe and Asia over the Bosphorus.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "Fatih_Sultan_Mehmet_Bridge",
         "displaytitle": "Fatih Sultan Mehmet Bridge",
@@ -523,7 +525,8 @@
   },
   {
     "text": "United States Navy warship USS Vincennes shoots down Iran Air Flight 655 over the Persian Gulf, killing all 290 people aboard.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "United_States_Navy",
         "displaytitle": "United States Navy",
@@ -736,7 +739,8 @@
   },
   {
     "text": "U.S. President Jimmy Carter signs the first directive for secret aid to the opponents of the pro-Soviet regime in Kabul.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "Jimmy_Carter",
         "displaytitle": "Jimmy Carter",
@@ -831,7 +835,8 @@
   },
   {
     "text": "Dan-Air Flight 1903 crashes into the Les Agudes mountain in the Montseny Massif near the village of Arbúcies in Catalonia, Spain, killing all 112 people aboard.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "Dan-Air_Flight_1903",
         "displaytitle": "Dan-Air Flight 1903",
@@ -1196,7 +1201,8 @@
   },
   {
     "text": "The Troubles: The \"Falls Curfew\" begins in Belfast, Northern Ireland.",
-    "pages": [{
+    "pages": [
+      {
         "type": "standard",
         "title": "The_Troubles",
         "displaytitle": "The Troubles",

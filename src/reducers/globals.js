@@ -1,147 +1,170 @@
 const defState = {
   lays: [
-    [{
-      dim: {
-        width: "50%",
-        height: "100%",
-        top: 0,
-        left: 0
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
       },
-      br: 14
-    }, {
-      dim: {
-        width: "50%",
-        height: "100%",
-        top: 0,
-        left: "50%"
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: "50%",
+        },
+        br: 15,
       },
-      br: 15
-    }],
-    [{
-      dim: {
-        width: "66%",
-        height: "100%",
-        top: 0,
-        left: 0
+    ],
+    [
+      {
+        dim: {
+          width: "66%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
       },
-      br: 14
-    }, {
-      dim: {
-        width: "34%",
-        height: "100%",
-        top: 0,
-        left: "66%"
+      {
+        dim: {
+          width: "34%",
+          height: "100%",
+          top: 0,
+          left: "66%",
+        },
+        br: 15,
       },
-      br: 15
-    }],
-    [{
-      dim: {
-        width: "33%",
-        height: "100%",
-        top: 0,
-        left: 0
+    ],
+    [
+      {
+        dim: {
+          width: "33%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
       },
-      br: 14
-    }, {
-      dim: {
-        width: "34%",
-        height: "100%",
-        top: 0,
-        left: "33%"
+      {
+        dim: {
+          width: "34%",
+          height: "100%",
+          top: 0,
+          left: "33%",
+        },
+        br: 1,
       },
-      br: 1
-    }, {
-      dim: {
-        width: "33%",
-        height: "100%",
-        top: 0,
-        left: "67%"
+      {
+        dim: {
+          width: "33%",
+          height: "100%",
+          top: 0,
+          left: "67%",
+        },
+        br: 15,
       },
-      br: 15
-    }],
-    [{
-      dim: {
-        width: "50%",
-        height: "100%",
-        top: 0,
-        left: 0
+    ],
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
       },
-      br: 14
-    }, {
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: 0,
-        left: "50%"
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: "50%",
+        },
+        br: 3,
       },
-      br: 3
-    }, {
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%",
-        left: "50%"
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: "50%",
+        },
+        br: 5,
       },
-      br: 5
-    }],
-    [{
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: 0,
-        left: 0
+    ],
+    [
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: 0,
+        },
+        br: 2,
       },
-      br: 2
-    }, {
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: 0,
-        left: "50%"
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: 0,
+          left: "50%",
+        },
+        br: 3,
       },
-      br: 3
-    }, {
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%",
-        left: 0
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: 0,
+        },
+        br: 7,
       },
-      br: 7
-    }, {
-      dim: {
-        width: "50%",
-        height: "50%",
-        top: "50%",
-        left: "50%"
+      {
+        dim: {
+          width: "50%",
+          height: "50%",
+          top: "50%",
+          left: "50%",
+        },
+        br: 5,
       },
-      br: 5
-    }],
-    [{
-      dim: {
-        width: "25%",
-        height: "100%",
-        top: 0,
-        left: 0
+    ],
+    [
+      {
+        dim: {
+          width: "25%",
+          height: "100%",
+          top: 0,
+          left: 0,
+        },
+        br: 14,
       },
-      br: 14
-    }, {
-      dim: {
-        width: "50%",
-        height: "100%",
-        top: 0,
-        left: "25%"
+      {
+        dim: {
+          width: "50%",
+          height: "100%",
+          top: 0,
+          left: "25%",
+        },
+        br: 1,
       },
-      br: 1
-    }, {
-      dim: {
-        width: "25%",
-        height: "100%",
-        top: 0,
-        left: "75%"
+      {
+        dim: {
+          width: "25%",
+          height: "100%",
+          top: 0,
+          left: "75%",
+        },
+        br: 15,
       },
-      br: 15
-    }]
+    ],
   ],
   ribbon: [
     "luca",
@@ -153,7 +176,7 @@ const defState = {
     "security",
     "utility apps",
     "forza horizon",
-    "kids apps"
+    "kids apps",
   ],
   apprib: [
     "netflix",
@@ -162,7 +185,7 @@ const defState = {
     "facebook",
     "amazon prime",
     "office",
-    "lightroom"
+    "lightroom",
   ],
   gamerib: [
     "call of duty",
@@ -171,7 +194,7 @@ const defState = {
     "battle field v",
     "far cry 5",
     "hitman 3",
-    "residental evil"
+    "residental evil",
   ],
   movrib: [
     "antman",
@@ -180,12 +203,12 @@ const defState = {
     "wrath of man",
     "john wick",
     "wonder woman 1984",
-    "nobody"
-  ]
+    "nobody",
+  ],
 };
 
 const globalReducer = (state = defState, action) => {
   return state;
-}
+};
 
 export default globalReducer;

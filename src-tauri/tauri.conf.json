@@ -22,9 +22,7 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": [
-        "icons/icon.ico"
-      ],
+      "icon": ["icons/icon.ico"],
       "identifier": "com.blueedgetechno.win11react",
       "longDescription": "",
       "macOS": {

@@ -1,7 +1,8 @@
 {
   "status": "ok",
   "totalResults": 44,
-  "articles": [{
+  "articles": [
+    {
       "source": {
         "id": null,
         "name": "India Today"
