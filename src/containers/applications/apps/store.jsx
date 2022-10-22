@@ -34,6 +34,7 @@ const emap = (v) => {
 
 export const MicroStore = () => {
 	const apps = useSelector((state) => state.apps);
+	const queryParams = new URLSearchParams(window.location.search);
 	const wnapp = useSelector((state) => state.apps.store);
 	const hide = useSelector((state) => state.apps.store.hide);
 	const [tab, setTab] = useState("sthome");
@@ -113,7 +114,7 @@ export const MicroStore = () => {
 
 	useEffect(() => {
 		if (!wnapp.hide && fetchState == 0) {
-			var url = import.meta.env.REACT_APP_STOREURL;
+			var url = queryParams.get("customstore");
 			if (!url) url = "https://store.win11react.com/store/index.json";
 
 			axios
