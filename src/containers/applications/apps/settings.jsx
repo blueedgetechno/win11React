@@ -345,13 +345,14 @@ export const Settings = () => {
                 style={{
                   transform: `translateX(-50%) translateY(-50%)`,
                   background: `var(--wintheme)`,
-                  padding: `14px`,
+                  padding: `1.5rem`,
                 }}
               >
                 <h1
                   style={{
                     marginBottom: `10px`,
                   }}
+                  className="text-2xl font-semibold"
                 >
                   Restart required
                 </h1>
@@ -385,8 +386,9 @@ export const Settings = () => {
                   <button
                     style={{
                       padding: "10px",
+                      color: "var(--sat-txt)",
                     }}
-                    className="flex-1 rounded border-none"
+                    className="flex-1 rounded border"
                     onClick={() => {
                       setUpmodalOpen(false);
                     }}
