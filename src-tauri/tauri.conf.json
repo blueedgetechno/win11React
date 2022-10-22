@@ -1,58 +1,62 @@
 {
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "http://localhost:3000",
+    "distDir": "../build"
+  },
   "package": {
     "productName": "Win11React",
     "version": "0.3.0"
   },
-  "build": {
-    "distDir": "../build",
-    "devPath": "http://localhost:3000",
-    "beforeDevCommand": "",
-    "beforeBuildCommand": ""
-  },
   "tauri": {
+    "allowlist": {
+      "all": true
+    },
     "bundle": {
       "active": true,
-      "targets": "all",
-      "identifier": "com.blueedgetechno.win11react",
-      "icon": [
-        "icons/icon.ico"
-      ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "blueedgetechno",
       "category": "DeveloperTool",
-      "shortDescription": "",
-      "longDescription": "",
+      "copyright": "blueedgetechno",
       "deb": {
         "depends": []
       },
+      "externalBin": [],
+      "icon": [
+        "icons/icon.ico"
+      ],
+      "identifier": "com.blueedgetechno.win11react",
+      "longDescription": "",
       "macOS": {
-        "frameworks": [],
-        "minimumSystemVersion": "",
+        "entitlements": null,
         "exceptionDomain": "",
-        "signingIdentity": null,
-        "entitlements": null
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
       },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
         "timestampUrl": ""
       }
     },
-    "allowlist": {
-      "all": true
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
     },
     "windows": [
       {
-        "title": "win11React",
-        "width": 800,
+        "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "title": "win11react",
+        "width": 800
       }
-    ],
-    "security": {
-      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
-    }
+    ]
   }
 }
