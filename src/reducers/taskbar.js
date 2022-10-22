@@ -1,61 +1,67 @@
-import {
-  taskApps
-} from '../utils';
+import { taskApps } from "../utils";
 
 const defState = {
   apps: taskApps,
   prev: false,
-  prevApp: '',
+  prevApp: "",
   prevPos: 0,
-  align: 'center',
+  align: "center",
   search: true,
   widgets: true,
-  audio: 3
+  audio: 3,
 };
 
 const taskReducer = (state = defState, action) => {
   switch (action.type) {
-    case 'TASKADD':
+    case "TASKADD":
       return state;
-    case 'TASKREM':
+    case "TASKREM":
       return state;
-    case 'TASKCEN':
+    case "TASKCEN":
       return {
-        ...state, align: 'center'
+        ...state,
+        align: "center",
       };
-    case 'TASKLEF':
+    case "TASKLEF":
       return {
-        ...state, align: 'left'
+        ...state,
+        align: "left",
       };
-    case 'TASKTOG':
+    case "TASKTOG":
       return {
-        ...state, align: state.align == 'left' ? 'center' : 'left'
+        ...state,
+        align: state.align == "left" ? "center" : "left",
       };
-    case 'TASKPSHOW':
+    case "TASKPSHOW":
       return {
-        ...state, prev: true,
-          prevApp: (action.payload && action.payload.app) || 'store',
-          prevPos: (action.payload && action.payload.pos) || 50
+        ...state,
+        prev: true,
+        prevApp: (action.payload && action.payload.app) || "store",
+        prevPos: (action.payload && action.payload.pos) || 50,
       };
-    case 'TASKPHIDE':
+    case "TASKPHIDE":
       return {
-        ...state, prev: false
+        ...state,
+        prev: false,
       };
-    case 'TASKSRCH':
+    case "TASKSRCH":
       return {
-        ...state, search: action.payload == "true"
+        ...state,
+        search: action.payload == "true",
       };
-    case 'TASKWIDG':
+    case "TASKWIDG":
       return {
-        ...state, widgets: action.payload == "true"
+        ...state,
+        widgets: action.payload == "true",
       };
-    case 'TASKAUDO':
+    case "TASKAUDO":
       return {
-        ...state, audio: action.payload
+        ...state,
+        audio: action.payload,
       };
     default:
       return state;
   }
-}
+};
 
 export default taskReducer;

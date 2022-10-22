@@ -3,6 +3,7 @@
 ## Getting started
 
 Before you begin:
+
 - This site is powered ⚡ by React.js
 - Check out the [existing issues](https://github.com/blueedgetechno/win11React/issues), [pull requests](https://github.com/blueedgetechno/win11React/pulls) and [discussions](https://github.com/blueedgetechno/win11React/discussions).
 - Check the [already existing and upcoming features](https://github.com/blueedgetechno/win11React#features).
@@ -22,11 +23,13 @@ If you spot something new, [open an issue](https://github.com/blueedgetechno/win
 - Fork with [GitHub Codespaces](https://github.com/features/codespaces):
 
 ### Open a pull request
+
 When you're done making changes and you'd like to propose them for review, use the [pull request tab](https://github.com/blueedgetechno/win11React/pulls) to open your PR.
 
 Once you submit your PR, we will review it with you. The first thing you're going to want to do is a self review 🧾.
 
 ### Your PR is merged!
+
 Congratulations 🎊!
 
 Once your PR is merged, you will be proudly listed as a contributor in the [contributor chart](https://github.com/blueedgetechno/win11React/graphs/contributors).

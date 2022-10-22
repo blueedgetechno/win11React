@@ -1,41 +1,47 @@
 const defState = {
-  quicks: [{
+  quicks: [
+    {
       ui: true,
       src: "wifi",
       name: "WiFi",
       state: "network.wifi.state",
-      action: "STNGTOGG"
-    },{
+      action: "STNGTOGG",
+    },
+    {
       ui: true,
       src: "bluetooth",
       name: "Bluetooth",
       state: "devices.bluetooth",
-      action: "STNGTOGG"
-    },{
+      action: "STNGTOGG",
+    },
+    {
       ui: true,
       src: "airplane",
       name: "Flight Mode",
       state: "network.airplane",
-      action: "STNGTOGG"
-    },{
+      action: "STNGTOGG",
+    },
+    {
       ui: true,
       src: "saver",
       name: "Battery Saver",
       state: "system.power.saver.state",
-      action: "STNGTOGG"
-    },{
+      action: "STNGTOGG",
+    },
+    {
       ui: true,
       src: "sun",
       name: "Theme",
       state: "person.theme",
-      action: "changeTheme"
-    },{
+      action: "changeTheme",
+    },
+    {
       ui: true,
       src: "nightlight",
       name: "Night Light",
       state: "system.display.nightlight.state",
-      action: "STNGTOGG"
-    }
+      action: "STNGTOGG",
+    },
   ],
   hide: true,
   banhide: true,

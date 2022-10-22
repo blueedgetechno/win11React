@@ -1,7 +1,7 @@
 name: publish
 on:
   workflow_dispatch:
-  
+
 jobs:
   Build-Deploy:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
         with:
           name: production-files
           path: ./build
-          
+
   publish-tauri:
     needs: Build-Deploy
     strategy:
@@ -46,7 +46,7 @@ jobs:
         with:
           node-version: 16
           cache: npm
-      
+
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:

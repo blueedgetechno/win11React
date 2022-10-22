@@ -1,0 +1,33 @@
+name: Prettier PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions: write-all
+
+jobs:
+  prettier:
+    if: "!contains(github.actor, 'win11bot')" #skips if win11bot trigged pr
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.BOT }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+
+      - name: Magic
+        run: |
+          npm ci
+          npm run prettier
+          git config --global user.email "w11bot@andrewstech.me"
+          git config --global user.name "win11bot"
+          git add .
+          git commit -m "Prettied PR #${{ github.event.pull_request.number }}" -m "skip actions"
+          git push
