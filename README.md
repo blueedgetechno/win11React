@@ -142,3 +142,7 @@ If you have one of the latest windows builds then you can enter the command belo
 ## License
 
 ⚖️ CC0-1.0 License
+
+## Sharing
+
+Although our license does allow for this project to be reposted, modified and shared without permission from us, we do kindly ask that credits are given to the original GitHub page and the Win11 react team when reposting the project publicly.
