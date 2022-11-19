@@ -31,7 +31,7 @@
       "type": "tile",
       "name": "Power & battery",
       "desc": "Sleep, battery usage, battery saver",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -259,7 +259,7 @@
       "type": "tile",
       "name": "Taskbar",
       "desc": "Taskbar behaviours, system pins",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -303,7 +303,7 @@
       "type": "tile",
       "name": "Apps for websites",
       "desc": "Websites that can open in an app instead of a browser",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -362,7 +362,7 @@
       "type": "tile",
       "name": "Other users",
       "desc": "Device access, work or school user, kiosk assigned access",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -456,7 +456,7 @@
       "type": "tile",
       "name": "Magnifier",
       "desc": "Magnifier reading, zoom increment",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -564,7 +564,7 @@
       "type": "tile",
       "name": "Inking & typing personalisation",
       "desc": "Personal dictionary, words in your dictionary",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -642,7 +642,7 @@
     {
       "type": "tile",
       "name": "Call history",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -702,7 +702,7 @@
     {
       "type": "tile",
       "name": "Videos",
-      "icon": ""
+      "icon": ""
     },
     {
       "type": "tile",
@@ -717,7 +717,7 @@
     {
       "type": "tile",
       "name": "Screenshot and apps",
-      "icon": ""
+      "icon": ""
     }
   ],
   "Windows Update": [
