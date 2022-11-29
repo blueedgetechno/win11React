@@ -24,7 +24,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           token: ${{ secrets.BOT }}
 
-      - uses: stefanbuck/github-issue-parser@v2
+      - uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
