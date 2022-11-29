@@ -1,4 +1,5 @@
 name: Update Dependencies
+
 on:
   schedule:
     - cron: "0 0 * * 0"
@@ -18,8 +19,8 @@ jobs:
 
       - run: |
           npm update --save
-          git config --global user.email "w11bot@andrewstech.me"
+          git config --global user.email "win11bot@win11react.com"
           git config --global user.name "win11bot"
           git add .
-          git commit -m "Updated Dependencies"
+          git commit -m "Update Dependencies"
           git push

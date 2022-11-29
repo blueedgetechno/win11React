@@ -1,4 +1,4 @@
-name: issue-text
+name: Issue Text
 
 on:
   issues:
@@ -17,9 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: peter-evans/create-or-update-comment@v2
+      - name: Comment
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          body: Hey, thank you for creating an issue. We will normally respond within 24 hours.
+          body: Thank you for creating an issue. We will normally respond within 24 hours.
           issue-number: ${{ github.event.issue.number }}
           token: ${{ secrets.BOT }}
 
@@ -28,7 +29,7 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
 
-      - name: Set labels based on browsers field
+      - name: Set Labels
         uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
         with:
           issue-form: ${{ steps.issue-parser.outputs.jsonString }}
