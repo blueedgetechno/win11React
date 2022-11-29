@@ -1,4 +1,4 @@
-name: Prettier
+name: Prettier PR
 
 on:
   pull_request:
