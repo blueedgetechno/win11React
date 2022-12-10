@@ -22,7 +22,7 @@ jobs:
           node-version: 16
           cache: npm
 
-      - name: Run
+      - name: Run Commands
         run: |
           npm ci
           npm run prettier
