@@ -1,4 +1,4 @@
-name: Preview
+name: PR Preview
 
 on:
   pull_request_target:
@@ -11,15 +11,14 @@ jobs:
     steps:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### 🔨 Building
-
-            | Name | Link |
-            |-|-|
-            | Commit | ${{ github.event.pull_request.head.sha }} |
-            | Deploy Log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ## Deploying with :page_facing_up: Github Pages
+
+            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            |-|-|
+            | **Status:** | 🔨 Building |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
       - uses: actions/checkout@v3
         with:
@@ -61,26 +60,24 @@ jobs:
       - name: Comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### ✅ Ready
-
-            | Name | Link |
-            |-|-|
-            | Preview | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
-            | Commit | ${{ github.event.pull_request.head.sha }} |
-            | Deploy Log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ## Deploying with :page_facing_up: Github Pages
+
+            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            |-|-|
+            | **Status:** | ✅ Deploy successful! |
+            | **Preview:** | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
       - if: ${{ failure() }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### ❌ Failure
-
-            | Name | Link |
-            |-|-|
-            | Commit | ${{ github.event.pull_request.head.sha }} |
-            | Deploy Log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ### 🔨 Deploying with :page_facing_up: Github Pages
+
+            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            |-|-|
+            | **Status:** | ❌ Build failed. |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
