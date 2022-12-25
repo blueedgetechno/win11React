@@ -11,8 +11,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@sentry/react": "^7.27.0",
-    "@sentry/tracing": "^7.27.0",
+    "@sentry/react": "^7.28.1",
+    "@sentry/tracing": "^7.28.1",
     "@tauri-apps/api": "^1.2.0",
     "@widgetbot/react-embed": "1.5.0",
     "@win11react/react-canvas-draw": "1.2.2",
@@ -34,7 +34,7 @@
     "react-redux": "^8.0.5",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "sass": "^1.57.0",
+    "sass": "^1.57.1",
     "translation-check": "^1.0.2"
   },
   "scripts": {
