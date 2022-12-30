@@ -15,7 +15,7 @@ jobs:
           message: |
             ## Deploying with :page_facing_up: GitHub Pages
 
-            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
             | :-- | :-- |
             | **Status:** | 🔨 Building |
             | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
@@ -62,7 +62,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.BOT }}
           message: |
-            ## Deploying with :page_facing_up: GitHub Pages
+            ## Deployed with :page_facing_up: GitHub Pages
 
             | **Commit:** | ${{ github.event.pull_request.head.sha }} |
             | :-- | :-- |
