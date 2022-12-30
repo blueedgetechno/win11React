@@ -24,5 +24,14 @@ jobs:
           git config --global user.name "win11bot"
           git config --global user.email "w11bot@andrewstech.me"
           git add .
-          git commit -m "Prettier" -m "skip actions"
-          git push
+          set +e
+          git status | grep modified
+          if [ $? -eq 0 ]
+          then
+            set -e
+            git commit -m "Prettier" -m "skip actions"
+            git push
+          else
+            set -e
+            echo "No changes since last run"
+          fi
