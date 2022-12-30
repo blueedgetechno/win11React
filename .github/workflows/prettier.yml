@@ -1,6 +1,8 @@
-name: Prettier PR
+name: Prettier
 
 on:
+  push:
+    branches: [main]
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -15,19 +17,21 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-          token: ${{ secrets.BOT }}
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: npm
 
       - name: Run Commands
         run: |
-          npm ci
-          npm run prettier
-          git config --global user.email "win11bot@win11react.com"
+          npx prettier --write .
           git config --global user.name "win11bot"
+          git config --global user.email "w11bot@andrewstech.me"
           git add .
-          git commit -m "Prettier (#${{ github.event.pull_request.number }})" -m "skip actions"
-          git push
+          set +e
+          git status | grep modified
+          if [ $? -eq 0 ]
+          then
+            set -e
+            git commit -m "Prettier" -m "skip actions"
+            git push
+          else
+            set -e
+            echo "No changes since last run"
+          fi
