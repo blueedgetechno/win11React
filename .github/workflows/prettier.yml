@@ -22,7 +22,7 @@ jobs:
         run: |
           npx prettier --write .
           git config --global user.name "win11bot"
-          git config --global user.email "win11bot@win11react.com"
+          git config --global user.email "w11bot@andrewstech.me"
           git add .
           git commit -m "Prettier (#${{ github.event.pull_request.number }})" -m "skip actions"
           git push
