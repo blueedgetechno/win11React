@@ -13,11 +13,11 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.BOT }}
           message: |
-            ## Deploying with :page_facing_up: Github Pages
+            ## Deploying with :page_facing_up: GitHub Pages
 
-            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
             | :-- | :-- |
-            | **Status:** | 🔨 Building. |
+            | **Status:** | 🔨 Building |
             | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
       - uses: actions/checkout@v3
@@ -62,11 +62,11 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.BOT }}
           message: |
-            ## Deploying with :page_facing_up: Github Pages
+            ## Deployed with :page_facing_up: GitHub Pages
 
-            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
             | :-- | :-- |
-            | **Status:** | ✅ Deploy successful! |
+            | **Status:** | ✅ Success |
             | **Preview:** | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
             | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
@@ -75,9 +75,9 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.BOT }}
           message: |
-            ## Deploying with :page_facing_up: Github Pages
+            ## Deploying with :page_facing_up: GitHub Pages
 
-            | **Latest commit:** | ${{ github.event.pull_request.head.sha }} |
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
             | :-- | :-- |
-            | **Status:** | ❌ Build failed. |
+            | **Status:** | ❌ Failure |
             | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
