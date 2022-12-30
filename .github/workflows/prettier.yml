@@ -2,7 +2,7 @@ name: Prettier
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
     types: [opened, reopened, synchronize]
 
