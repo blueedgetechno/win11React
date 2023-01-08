@@ -236,7 +236,7 @@ export const WnTerminal = () => {
       var helpArr = [
         "CD             Displays the name of or changes the current directory.",
         "CLS            Clears the screen.",
-        "COLOR		  	Sets the default console foreground and background colors.",
+        "COLOR		Sets the default console foreground and background colors.",
         "DATE           Displays or sets the date.",
         "DIR            Displays a list of files and subdirectories in a directory.",
         "ECHO           Displays messages, or turns command echoing on or off.",
