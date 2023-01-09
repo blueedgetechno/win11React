@@ -145,9 +145,16 @@ export const LockScreen = (props) => {
         <div className="mt-2 text-2xl font-medium text-gray-200">
           {userName}
         </div>
+        {/* TODO */}
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
-          Sign in
+          <Image
+            className="overflow-hidden "
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+            w={100}
+            ext />
         </div>
+
+        {/* TODO password login */}
         {/*   <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
           <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
