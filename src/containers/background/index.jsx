@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
+import { createClient }  from "@supabase/supabase-js"
 import "./back.scss";
 
 export const Background = () => {
@@ -75,6 +76,16 @@ export const LockScreen = (props) => {
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
 
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  async function signInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    })
+  }
+
+
   const userName = useSelector((state) => state.setting.person.name);
 
   const action = (e) => {
@@ -146,7 +157,7 @@ export const LockScreen = (props) => {
           {userName}
         </div>
         {/* TODO */}
-        <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
+        <div className="flex items-center mt-6 signInBtn" onClick={signInWithGoogle}>
           <Image
             className="overflow-hidden "
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
@@ -154,26 +165,6 @@ export const LockScreen = (props) => {
             ext
           />
         </div>
-
-        {/* TODO password login */}
-        {/*   <input type={passType?"text":"password"} value={password} onChange={action}
-              data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
-          <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
-            color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
-        </div>
-        <div className="text-xs text-gray-400 mt-4 handcr"
-          onClick={proceed}>
-          {!forgot?`I forgot my ${passType?"password":"pin"}`:"Not my problem"}
-        </div>
-        <div className="text-xs text-gray-400 mt-6">
-          Sign-in options
-        </div>
-        <div className="lockOpt flex">
-          <Icon src="pinlock" onClick={action} ui width={36}
-            click="pinlock" payload={passType==0}/>
-          <Icon src="passkey" onClick={action} ui width={36}
-            click="passkey" payload={passType==1}/>
-        </div> */}
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={16} invert />
