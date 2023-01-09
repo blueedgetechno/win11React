@@ -19,7 +19,7 @@ import { Background, BootScreen, LockScreen } from "./containers/background";
 import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
-import { AuthProvider } from "./context/supabase";
+import { AuthProvider } from "./context/auth";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (

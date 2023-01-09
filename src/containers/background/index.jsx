@@ -4,7 +4,7 @@ import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
-import { useAuth } from "../../context/supabase";
+import { useAuth } from "../../context/auth";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
