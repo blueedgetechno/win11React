@@ -1,11 +1,10 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { supabase } from "./supabase-client.js";
 
-
-export class AuthCtx{
-  public signOut: () => void
-  public signInWithGoogle: () => void
-  public authenticated: () => boolean
+export class AuthCtx {
+  public signOut: () => void;
+  public signInWithGoogle: () => void;
+  public authenticated: () => boolean;
 }
 
 // create a context for authentication
@@ -24,7 +23,9 @@ export const AuthProvider = ({ children }) => {
   const value = {
     signInWithGoogle: () => signInWithGoogle(),
     signOut: () => supabase.auth.signOut(),
-    authenticated: () => { return Authenticated }
+    authenticated: () => {
+      return Authenticated;
+    },
   };
   async function signInWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
