@@ -19,6 +19,7 @@ import { Background, BootScreen, LockScreen } from "./containers/background";
 import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
+import { AuthProvider } from "./context/supabase";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -137,6 +138,7 @@ function App() {
   });
 
   return (
+    <AuthProvider>
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
@@ -169,6 +171,7 @@ function App() {
         </div>
       </ErrorBoundary>
     </div>
+    </AuthProvider>
   );
 }
 

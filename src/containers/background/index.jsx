@@ -4,6 +4,7 @@ import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
+import { useAuth } from "../../context/supabase";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
@@ -74,16 +75,11 @@ export const LockScreen = (props) => {
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
+  const {signInWithGoogle} = useAuth();
   const dispatch = useDispatch();
 
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-  const supabase = createClient(supabaseUrl, supabaseKey);
-  async function signInWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-  }
+
+
 
   const userName = useSelector((state) => state.setting.person.name);
 
