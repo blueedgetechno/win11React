@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
-import { createClient }  from "@supabase/supabase-js"
+import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
 
 export const Background = () => {
@@ -81,10 +81,9 @@ export const LockScreen = (props) => {
   const supabase = createClient(supabaseUrl, supabaseKey);
   async function signInWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    })
+      provider: "google",
+    });
   }
-
 
   const userName = useSelector((state) => state.setting.person.name);
 
@@ -157,7 +156,10 @@ export const LockScreen = (props) => {
           {userName}
         </div>
         {/* TODO */}
-        <div className="flex items-center mt-6 signInBtn" onClick={signInWithGoogle}>
+        <div
+          className="flex items-center mt-6 signInBtn"
+          onClick={signInWithGoogle}
+        >
           <Image
             className="overflow-hidden "
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
