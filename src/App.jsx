@@ -139,38 +139,38 @@ function App() {
 
   return (
     <AuthProvider>
-    <div className="App">
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-        {wall.locked ? <LockScreen dir={wall.dir} /> : null}
-        <div className="appwrap">
-          <Background />
-          <div className="desktop" data-menu="desk">
-            <DesktopApp />
-            {Object.keys(Applications).map((key, idx) => {
-              var WinApp = Applications[key];
-              return <WinApp key={idx} />;
-            })}
-            {Object.keys(apps)
-              .filter((x) => x != "hz")
-              .map((key) => apps[key])
-              .map((app, i) => {
-                if (app.pwa) {
-                  var WinApp = Drafts[app.data.type];
-                  return <WinApp key={i} icon={app.icon} {...app.data} />;
-                }
+      <div className="App">
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+          {wall.locked ? <LockScreen dir={wall.dir} /> : null}
+          <div className="appwrap">
+            <Background />
+            <div className="desktop" data-menu="desk">
+              <DesktopApp />
+              {Object.keys(Applications).map((key, idx) => {
+                var WinApp = Applications[key];
+                return <WinApp key={idx} />;
               })}
-            <StartMenu />
-            <BandPane />
-            <SidePane />
-            <WidPane />
-            <CalnWid />
+              {Object.keys(apps)
+                .filter((x) => x != "hz")
+                .map((key) => apps[key])
+                .map((app, i) => {
+                  if (app.pwa) {
+                    var WinApp = Drafts[app.data.type];
+                    return <WinApp key={i} icon={app.icon} {...app.data} />;
+                  }
+                })}
+              <StartMenu />
+              <BandPane />
+              <SidePane />
+              <WidPane />
+              <CalnWid />
+            </div>
+            <Taskbar />
+            <ActMenu />
           </div>
-          <Taskbar />
-          <ActMenu />
-        </div>
-      </ErrorBoundary>
-    </div>
+        </ErrorBoundary>
+      </div>
     </AuthProvider>
   );
 }
