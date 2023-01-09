@@ -33,6 +33,7 @@
     "react-player": "^2.11.0",
     "react-redux": "^8.0.5",
     "react-scripts": "^5.0.1",
+    "react-use-googlelogin": "^0.12.5",
     "redux": "^4.2.0",
     "sass": "^1.57.1",
     "translation-check": "^1.0.2"
