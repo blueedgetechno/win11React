@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect, createContext } from 'react';
-import { supabase } from './supabase-client.js';
+import React, { useContext, useState, useEffect, createContext } from "react";
+import { supabase } from "./supabase-client.js";
 
-
-export class AuthCtx{
-  public signOut: () => void
-  public signInWithGoogle: () => void
+export class AuthCtx {
+  public signOut: () => void;
+  public signInWithGoogle: () => void;
 }
-
 
 // create a context for authentication
 const AuthContext = createContext(new AuthCtx());
@@ -32,15 +30,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   // use a provider to pass down the value
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 // export the useAuth hook
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
