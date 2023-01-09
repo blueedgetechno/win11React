@@ -1,3 +1,1 @@
-export class UserSetting {
-
-}
+export class UserSetting {}
