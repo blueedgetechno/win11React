@@ -151,7 +151,8 @@ export const LockScreen = (props) => {
             className="overflow-hidden "
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
             w={100}
-            ext />
+            ext
+          />
         </div>
 
         {/* TODO password login */}
