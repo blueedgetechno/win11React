@@ -5,6 +5,7 @@ import { supabase } from './supabase-client.js';
 export class AuthCtx{
   public signOut: () => void
   public signInWithGoogle: () => void
+  public authenticated: () => boolean
 }
 
 
@@ -14,22 +15,25 @@ const AuthContext = createContext(new AuthCtx());
 export const AuthProvider = ({ children }) => {
   // create state values for user data and loading
   const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true);
+  const [Authenticated, setAuthenticated] = useState(true);
 
   useEffect(() => {
     // TODO
   }, []);
 
-  async function signInWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-  }
   // create signUp, signIn, signOut functions
   const value = {
     signInWithGoogle: () => signInWithGoogle(),
     signOut: () => supabase.auth.signOut(),
+    authenticated: () => { return Authenticated }
   };
+  async function signInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+
+    setAuthenticated(true);
+  }
 
   // use a provider to pass down the value
   return (
