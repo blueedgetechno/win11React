@@ -14,7 +14,7 @@ import {
   WidPane,
 } from "./components/start";
 import Taskbar from "./components/taskbar";
-import { Background, BootScreen, LockScreen } from "./containers/background";
+import { Background, } from "./containers/background";
 
 import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
@@ -141,8 +141,6 @@ function App() {
     <AuthProvider>
       <div className="App">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-          {wall.locked ? <LockScreen dir={wall.dir} /> : null}
           <div className="appwrap">
             <Background />
             <div className="desktop" data-menu="desk">
