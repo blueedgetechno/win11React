@@ -75,7 +75,7 @@ export const LockScreen = (props) => {
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
-  const { userProfile,signInWithGoogle } = useAuth();
+  const { userProfile, signInWithGoogle } = useAuth();
   const dispatch = useDispatch();
 
   const userName = userProfile.email;

@@ -5,13 +5,13 @@ import { BootScreen, LockScreen } from "../containers/background/index.jsx";
 import { supabase } from "./supabase-client.js";
 
 export class UserProfile {
-  constructor(email?: string,avatar?: string) {
-    this.email = email ? email : "anonymous"
-    this.avatar = avatar ? avatar : ""
+  constructor(email?: string, avatar?: string) {
+    this.email = email ? email : "anonymous";
+    this.avatar = avatar ? avatar : "";
   }
 
-  public email: string | null
-  public avatar: string | null
+  public email: string | null;
+  public avatar: string | null;
 }
 export class AuthCtx {
   public signOut: () => void;
@@ -32,10 +32,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // TODO
-    supabase.auth.getUser().then(res => {
-      const email = res.data?.user?.email
-      setProfile(new UserProfile(email))
-    })
+    supabase.auth.getUser().then((res) => {
+      const email = res.data?.user?.email;
+      setProfile(new UserProfile(email));
+    });
   }, []);
 
   // create signUp, signIn, signOut functions
@@ -44,24 +44,35 @@ export const AuthProvider = ({ children }) => {
     signOut: () => supabase.auth.signOut(),
   };
   async function signInWithGoogle() {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-    }).then(({data,error}) => {
-      setLock(false);
-    });
+    supabase.auth
+      .signInWithOAuth({
+        provider: "google",
+      })
+      .then(({ data, error }) => {
+        setLock(false);
+      });
   }
   async function signOut() {
     supabase.auth.signOut().then(() => {
-      setProfile(new UserProfile())
+      setProfile(new UserProfile());
       setLock(true);
-    })
+    });
   }
 
   // use a provider to pass down the value
-  return <AuthContext.Provider value={{ signInWithGoogle,signOut,userProfile: Profile, supabase: supabase }}>
-    {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-    {wall.locked ? <LockScreen dir={wall.dir} /> : children}
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        signInWithGoogle,
+        signOut,
+        userProfile: Profile,
+        supabase: supabase,
+      }}
+    >
+      {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+      {wall.locked ? <LockScreen dir={wall.dir} /> : children}
+    </AuthContext.Provider>
+  );
 };
 
 // export the useAuth hook
