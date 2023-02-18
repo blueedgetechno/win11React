@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useAuth } from "../../context/auth";
 import { Icon } from "../../utils/general";
 
 export const StartMenu = () => {
@@ -58,7 +57,9 @@ export const StartMenu = () => {
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
   const [atab, setTab] = useState("All");
-  const { signOut } = useAuth();
+  const signOut = ()=>{
+    console.log('Sign Out');
+  }
 
   const dispatch = useDispatch();
   const tabSw = (e) => {
@@ -107,7 +108,9 @@ export const StartMenu = () => {
   }, [query]);
 
   // const userName = useSelector((state) => state.setting.person.name);
-  const userName = useAuth().userProfile.email;
+  const user = useSelector((state) => state.user);
+
+  const userName = user.email
 
   return (
     <div

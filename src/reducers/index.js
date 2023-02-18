@@ -11,8 +11,10 @@ import menusReducer from "./menu";
 import globalReducer from "./globals";
 import settReducer from "./settings";
 import fileReducer from "./files";
+import userReducer from "./user";
 
 const allReducers = combineReducers({
+	user: userReducer,
   wallpaper: wallReducer,
   taskbar: taskReducer,
   desktop: deskReducer,

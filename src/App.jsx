@@ -71,8 +71,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
-  const dispatch = useDispatch();
-
+ const dispatch = useDispatch()
   const afterMath = (event) => {
     var ess = [
       ["START", "STARTHID"],

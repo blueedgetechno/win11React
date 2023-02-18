@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
-import { useAuth } from "../../context/auth";
+import { loginWithGoogle } from "../../actions";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
@@ -70,16 +70,15 @@ export const BootScreen = (props) => {
 
 export const LockScreen = (props) => {
   const wall = useSelector((state) => state.wallpaper);
+  const user = useSelector((state) => state.user);
   const [lock, setLock] = useState(false);
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
-  const { userProfile, signInWithGoogle } = useAuth();
   const dispatch = useDispatch();
 
-  const userName = userProfile.email;
-  // const userName = useSelector((state) => state.setting.person.name);
+  const userName = user.email;
 
   const action = (e) => {
     var act = e.target.dataset.action,
@@ -112,6 +111,16 @@ export const LockScreen = (props) => {
     if (e.key == "Enter") proceed();
   };
 
+  useEffect(()=>{
+    window.addEventListener('keydown',(e) =>{
+      console.log(e.key);
+    if (e.key === "Enter" && userName !=='') {
+        console.log('run key press');
+      proceed()
+    };
+
+    })
+  }, [])
   return (
     <div
       className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
@@ -152,7 +161,7 @@ export const LockScreen = (props) => {
         {/* TODO */}
         <div
           className="flex items-center mt-6 signInBtn"
-          onClick={signInWithGoogle}
+          onClick={()=>{loginWithGoogle()}}
         >
           <Image
             className="overflow-hidden "
