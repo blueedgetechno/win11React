@@ -30,6 +30,7 @@ https://win11react-docs.andrewstech.me/
 ![Home](./public/img/home.jpg)
 
 ## Translation
+
 You can find other language versions of Win11React here.
 
 Simplified Chinese(**[中文简体](https://github.com/inwinter04/win11React_CN)**)
