@@ -11,15 +11,14 @@ jobs:
     steps:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### 👷 Deploy Preview for win11react processing.
-
-            | Name | Link |
-            |-|-|
-            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
-            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ## Deploying with :page_facing_up: GitHub Pages
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | 🔨 Building |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
       - uses: actions/checkout@v3
         with:
@@ -42,7 +41,7 @@ jobs:
         env:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
-      - name: Build project
+      - name: Build
         run: npm run ghbuild
         env:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
@@ -54,33 +53,31 @@ jobs:
           publish_dir: ./build
           external_repository: win11bot/${{ github.event.pull_request.number }}
 
-      - name: Sleep to make sure page gets updated
+      - name: Sleep
         run: sleep 1m
         shell: bash
 
-      - name: comment Preview Ready
+      - name: Comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### ✅ Deploy Preview for win11react ready!
-
-            | Name | Link |
-            |-|-|
-            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
-            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-            | 😎 Deploy Preview | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ## Deployed with :page_facing_up: GitHub Pages
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | ✅ Success |
+            | **Preview:** | https://pr-preview.win11react.com/${{ github.event.pull_request.number }} |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
 
       - if: ${{ failure() }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          message: |
-            ### ❌ Deploy Preview for win11react failed.
-
-            | Name | Link |
-            |-|-|
-            | 🔨 Latest commit | ${{ github.event.pull_request.head.sha }} |
-            | 🔍 Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-
           GITHUB_TOKEN: ${{ secrets.BOT }}
+          message: |
+            ## Deploying with :page_facing_up: GitHub Pages
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | ❌ Failure |
+            | **Deploy Log:** | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |

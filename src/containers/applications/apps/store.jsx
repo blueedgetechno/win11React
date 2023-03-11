@@ -233,7 +233,7 @@ const DownPage = ({ action, apps }) => {
         </div>
         <div className="absolute right-0 mr-4 text-sm">
           <a
-            href="https://github.com/win11react/store"
+            href="https://win11react-docs.andrewstech.me/docs/Store/add-app"
             className="catbtn"
             target="_blank"
             rel="noreferrer"

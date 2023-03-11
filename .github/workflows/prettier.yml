@@ -1,0 +1,37 @@
+name: Prettier
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions: write-all
+
+jobs:
+  prettier:
+    if: "!contains(github.actor, 'win11bot')" # Skips if the bot triggered the event
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Run Commands
+        run: |
+          npx prettier --write .
+          git config --global user.name "win11bot"
+          git config --global user.email "w11bot@andrewstech.me"
+          git add .
+          set +e
+          git status | grep modified
+          if [ $? -eq 0 ]
+          then
+            set -e
+            git commit -m "Prettier" -m "skip actions"
+            git push
+          else
+            set -e
+            echo "No changes since last run"
+          fi
