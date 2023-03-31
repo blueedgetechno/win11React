@@ -6,14 +6,14 @@
   "private": true,
   "dependencies": {
     "-": "^0.0.1",
-    "@crowdin/cli": "^3.9.1",
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-regular-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@crowdin/cli": "^3.10.1",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-regular-svg-icons": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@sentry/react": "^7.30.0",
-    "@sentry/tracing": "^7.30.0",
     "@supabase/supabase-js": "^2.4.0",
+    "@sentry/react": "^7.45.0",
+    "@sentry/tracing": "^7.45.0",
     "@tauri-apps/api": "^1.2.0",
     "@widgetbot/react-embed": "1.5.0",
     "@win11react/react-canvas-draw": "1.2.2",
@@ -28,11 +28,11 @@
     "react-error-boundary": "^3.1.4",
     "react-i18next": "^11.18.6",
     "react-lazy-load-image-component": "^1.5.6",
-    "react-player": "^2.11.0",
+    "react-player": "^2.12.0",
     "react-redux": "^8.0.5",
     "react-scripts": "^5.0.1",
-    "redux": "^4.2.0",
-    "sass": "^1.57.1",
+    "redux": "^4.2.1",
+    "sass": "^1.60.0",
     "translation-check": "^1.0.2"
   },
   "scripts": {
@@ -63,12 +63,12 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.2",
+    "@tauri-apps/cli": "^1.2.3",
     "@vitejs/plugin-react": "2.0.0",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
-    "prettier": "^2.8.3",
-    "tailwindcss": "^3.2.4",
+    "prettier": "^2.8.7",
+    "tailwindcss": "^3.2.7",
     "vite": "3.0.4",
     "vite-plugin-pwa": "^0.12.8"
   }

@@ -69,7 +69,7 @@ export const Camera = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="camcont">
-            <div className="camctrl">
+            {/* <div className="camctrl">
               <div
                 className="cmicon"
                 title={t("camera.take-photo")}
@@ -78,10 +78,18 @@ export const Camera = () => {
                 <Icon icon="camera" />
               </div>
               <canvas id="camcanvas"></canvas>
-            </div>
+            </div> */}
             <div className="vidcont">
               <div className="vidwrap">
-                <video id="camvideo"></video>
+                {/* <video id="camvideo"></video> */}
+                <video
+                id="camvideo"
+                src={"https://remote.thinkmay.net/_next/static/media/video_demo_desktop.46d53d9af9a11fac1405c922fab7e4d2.mp4"}
+                playsInline={true}
+                autoPlay={true}
+                loop={true}
+                className="w-full h-full"
+                > </video>
               </div>
             </div>
           </div>

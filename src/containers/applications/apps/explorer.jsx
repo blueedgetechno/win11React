@@ -383,6 +383,7 @@ const Ribbon = ({}) => {
         <Icon src="copy" ui width={18} margin="0 6px" />
         <Icon src="paste" ui width={18} margin="0 6px" />
         <Icon src="rename" ui width={18} margin="0 6px" />
+        <Icon src="share" ui width={18} margin="0 6px" />
       </div>
       <div className="ribsec">
         <div className="drdwcont flex">
