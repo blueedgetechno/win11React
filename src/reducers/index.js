@@ -12,8 +12,10 @@ import globalReducer from "./globals";
 import settReducer from "./settings";
 import fileReducer from "./files";
 import userReducer from "./user";
+import paramsReducer from "./params"
 
 const allReducers = combineReducers({
+	params: paramsReducer,
 	user: userReducer,
 	wallpaper: wallReducer,
 	taskbar: taskReducer,

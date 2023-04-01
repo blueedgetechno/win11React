@@ -73,7 +73,28 @@ function App() {
   const wall = useSelector((state) => state.wallpaper);
   const user = useSelector(state => state.user);
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const signaling = urlParams.get('signaling');
+  const token = urlParams.get('token');
+  const fps = urlParams.get('fps');
+  const bitrate = urlParams.get('bitrate');
+  const platform = urlParams.get('platform');
+  const pingUrl = urlParams.get('pingUrl');
+  const loggingClientUrl = urlParams.get('loggingInforUrl');
   const dispatch = useDispatch();
+  
+  const params = {
+	signaling,
+	token,
+	fps,
+	bitrate,
+	platform,
+	pingUrl,
+	loggingClientUrl
+  }
+  dispatch({type: 'UPDATE_PARAM', payload: params})
+
 
   const afterMath = (event) => {
     var ess = [
@@ -149,7 +170,7 @@ function App() {
   }, [dispatch])
   useEffect(()=>{
 	verifyUserInfo()
-	
+
   }, [verifyUserInfo])
   if(!user.email){
   }
