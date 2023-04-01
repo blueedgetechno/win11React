@@ -11,19 +11,21 @@ import menusReducer from "./menu";
 import globalReducer from "./globals";
 import settReducer from "./settings";
 import fileReducer from "./files";
+import userReducer from "./user";
 
 const allReducers = combineReducers({
-  wallpaper: wallReducer,
-  taskbar: taskReducer,
-  desktop: deskReducer,
-  startmenu: menuReducer,
-  sidepane: paneReducer,
-  widpane: widReducer,
-  apps: appReducer,
-  menus: menusReducer,
-  globals: globalReducer,
-  setting: settReducer,
-  files: fileReducer,
+	user: userReducer,
+	wallpaper: wallReducer,
+	taskbar: taskReducer,
+	desktop: deskReducer,
+	startmenu: menuReducer,
+	sidepane: paneReducer,
+	widpane: widReducer,
+	apps: appReducer,
+	menus: menusReducer,
+	globals: globalReducer,
+	setting: settReducer,
+	files: fileReducer,
 });
 
 var store = createStore(allReducers);

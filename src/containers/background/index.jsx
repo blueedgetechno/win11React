@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import "./back.scss";
+import supabase from "../../supabase/createClient";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
@@ -75,6 +76,8 @@ export const LockScreen = (props) => {
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.user);
+
   const userName = useSelector((state) => state.setting.person.name);
 
   const action = (e) => {
@@ -97,11 +100,30 @@ export const LockScreen = (props) => {
     if (act == "pinlock" || act == "passkey") setPass("");
   };
 
-  const proceed = () => {
-    setUnLock(true);
-    setTimeout(() => {
-      dispatch({ type: "WALLUNLOCK" });
-    }, 1000);
+  const proceed = async () => {
+
+	if(user.id){
+		setUnLock(true);
+		setTimeout(() => {
+		  dispatch({ type: "WALLUNLOCK" });
+		}, 1000);
+		return
+	}
+
+	const { data, error } = await supabase.auth.signInWithOAuth({
+		provider: 'google',
+		options: {
+		queryParams: {
+			access_type: 'offline',
+			prompt: 'consent',
+		},
+		},
+	})
+	dispatch({type:'WALLUNLOCK'})
+
+	if(error){
+		throw new Error(error)
+	}
   };
 
   const action2 = (e) => {
@@ -143,12 +165,13 @@ export const LockScreen = (props) => {
           ext
         />
         <div className="mt-2 text-2xl font-medium text-gray-200">
-          {userName}
+          { user?.email ?? userName}
         </div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
-          Sign in
+		  {user.id ? ' Enter' : 'Sign In with GG'}
         </div>
-        {/*   <input type={passType?"text":"password"} value={password} onChange={action}
+		{/*<div>
+          <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
           <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
             color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
@@ -165,7 +188,7 @@ export const LockScreen = (props) => {
             click="pinlock" payload={passType==0}/>
           <Icon src="passkey" onClick={action} ui width={36}
             click="passkey" payload={passType==1}/>
-        </div> */}
+        </div>*/}
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={16} invert />

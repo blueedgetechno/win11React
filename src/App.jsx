@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
@@ -19,6 +19,7 @@ import { Background, BootScreen, LockScreen } from "./containers/background";
 import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
+import supabase from "./supabase/createClient";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -70,6 +71,8 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
+  const user = useSelector(state => state.user);
+
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -136,36 +139,59 @@ function App() {
     }
   });
 
+  const verifyUserInfo = React.useCallback(async()=>{
+	const {data, error} = await supabase.auth.getUser();
+	if(error !== null) {
+		throw new Error(error)
+	}
+	console.log(data, 'userin ofr');
+	dispatch({type: 'ADD_USER', payload: data.user})
+  }, [dispatch])
+  useEffect(()=>{
+	verifyUserInfo()
+	
+  }, [verifyUserInfo])
+  if(!user.email){
+  }
+  console.log(user, 'userrrrrrrrrrrr');
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-        {wall.locked ? <LockScreen dir={wall.dir} /> : null}
+        {wall.locked  ? <LockScreen dir={wall.dir} /> : null}
+        {!user.id  ? <LockScreen dir={wall.dir} /> : null}
         <div className="appwrap">
           <Background />
-          <div className="desktop" data-menu="desk">
-            <DesktopApp />
-            {Object.keys(Applications).map((key, idx) => {
-              var WinApp = Applications[key];
-              return <WinApp key={idx} />;
-            })}
-            {Object.keys(apps)
-              .filter((x) => x != "hz")
-              .map((key) => apps[key])
-              .map((app, i) => {
-                if (app.pwa) {
-                  var WinApp = Drafts[app.data.type];
-                  return <WinApp key={i} icon={app.icon} {...app.data} />;
-                }
-              })}
-            <StartMenu />
-            <BandPane />
-            <SidePane />
-            <WidPane />
-            <CalnWid />
-          </div>
-          <Taskbar />
-          <ActMenu />
+		  {
+			//user => render 
+			user.id ?
+			<>
+				<div className="desktop" data-menu="desk">
+					<DesktopApp />
+					{Object.keys(Applications).map((key, idx) => {
+					var WinApp = Applications[key];
+					return <WinApp key={idx} />;
+					})}
+					{Object.keys(apps)
+					.filter((x) => x != "hz")
+					.map((key) => apps[key])
+					.map((app, i) => {
+						if (app.pwa) {
+						var WinApp = Drafts[app.data.type];
+						return <WinApp key={i} icon={app.icon} {...app.data} />;
+						}
+					})}
+					<StartMenu />
+					<BandPane />
+					<SidePane />
+					<WidPane />
+					<CalnWid />
+				</div>
+				<Taskbar />
+				<ActMenu />
+			</>
+			 : null
+		  }
         </div>
       </ErrorBoundary>
     </div>
