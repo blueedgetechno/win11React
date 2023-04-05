@@ -33,8 +33,6 @@ export const Camera = () => {
 	// Get query 
   const params = useSelector(state => state.params) 
 
-  console.log(params);
-
 
   const signaling = params.signaling
   const token = params.token
@@ -97,8 +95,6 @@ export const Camera = () => {
     }
   }, [hide]);
 
-
-  console.log(client);
   
   const initVideo =  React.useCallback(()=>{
 	if(hide === false) {

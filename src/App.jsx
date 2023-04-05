@@ -168,13 +168,13 @@ function App() {
 	console.log(data, 'userin ofr');
 	dispatch({type: 'ADD_USER', payload: data.user})
   }, [dispatch])
+
   useEffect(()=>{
 	verifyUserInfo()
 
   }, [verifyUserInfo])
   if(!user.email){
   }
-  console.log(user, 'userrrrrrrrrrrr');
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
