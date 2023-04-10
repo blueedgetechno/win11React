@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, handleFileOpen } from "../../../actions";
+import { dispatchAction, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
 
 const NavTitle = (props) => {
@@ -50,7 +50,7 @@ const FolderDrop = ({ dir }) => {
 
 const Dropdown = (props) => {
   const [open, setOpen] = useState(props.isDropped != null);
-  const special = useSelector((state) => state.files.data.special);
+  const special = useSelector((state) => state.worker.data.special);
   const [fid, setFID] = useState(() => {
     if (props.spid) return special[props.spid];
     else return props.dir;
@@ -75,7 +75,7 @@ const Dropdown = (props) => {
           icon={props.icon}
           title={props.title}
           isize={props.isize}
-          action={props.action != "" ? props.action || "FILEDIR" : null}
+          action={props.action != "" ? props.action || "FILEDIRWORKER" : null}
           payload={fid}
         />
         {props.pinned != null ? (
@@ -92,15 +92,52 @@ const Dropdown = (props) => {
   );
 };
 
-export const Explorer = () => {
-  const apps = useSelector((state) => state.apps);
-  const wnapp = useSelector((state) => state.apps.explorer);
-  const files = useSelector((state) => state.files);
+const fdata2 = {
+	"backup": {
+		"type": "folder",
+		"name": "backup",
+		"info": {
+			"size": "104000000000",
+			"used": "90000000000",
+			"spid": "%worker%"
+		},
+		"data": {
+			"config": {
+				"type": "folder",
+				"name": "config",
+				"info": {
+					"spid": "%config%"
+				},
+				"data": {
+					"update": {
+						"type": "file",
+						"name": "update"
+					},
+					"update2": {
+						"type": "folder",
+						"name": "update2"
+					}
+				}
+			},
+			"config2": {
+				"type": "folder",
+				"name": "config2"
+			},
+			"config4": {
+				"type": "folder",
+				"name": "config4"
+			}
+		}
+	},
+}
+export const Worker = () => {
+  const wnapp = useSelector((state) => state.apps.worker);
+  const files = useSelector((state) => state.worker);
   const fdata = files.data.getId(files.cdir);
   const [cpath, setPath] = useState(files.cpath);
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
-
+  
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(()=>{
@@ -117,11 +154,11 @@ export const Explorer = () => {
 			}
 		},
 	}
-	dispatch({type: 'FILEUPDATE', payload: Data})
+	dispatch({type: 'FILEUPDATEWORKER', payload: fdata2})
   }, [])
   const handleEnter = (e) => {
     if (e.key === "Enter") {
-      dispatch({ type: "FILEPATH", payload: cpath });
+      dispatch({ type: "FILEPATHWORKER", payload: cpath });
     }
   };
 
@@ -136,7 +173,7 @@ export const Explorer = () => {
             className="dncont"
             onClick={dispatchAction}
             tabIndex="-1"
-            data-action="FILEDIR"
+            data-action="FILEDIRWORKER"
             data-payload={curr.id}
           >
             {curr.name}
@@ -151,7 +188,7 @@ export const Explorer = () => {
     arr.push(
       <div key={index++} className="dirCont flex items-center">
         <div className="dncont" tabIndex="-1">
-          This PC
+          Worker
         </div>
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
       </div>
@@ -196,7 +233,7 @@ export const Explorer = () => {
         app={wnapp.action}
         icon={wnapp.icon}
         size={wnapp.size}
-        name="File Explorer"
+        name={wnapp.name}
       />
       <div className="windowScreen flex flex-col">
         <Ribbon />
@@ -208,7 +245,7 @@ export const Explorer = () => {
               }
               fafa="faArrowLeft"
               width={14}
-              click="FILEPREV"
+              click="FILEPREVWORKER"
               pr
             />
             <Icon
@@ -218,14 +255,14 @@ export const Explorer = () => {
               }
               fafa="faArrowRight"
               width={14}
-              click="FILENEXT"
+              click="FILENEXTWORKER"
               pr
             />
             <Icon
               className="navIcon hvtheme"
               fafa="faArrowUp"
               width={14}
-              click="FILEBACK"
+              click="FILEBACKWORKER"
               pr
             />
             <div className="path-bar noscroll" tabIndex="-1">
@@ -257,7 +294,7 @@ export const Explorer = () => {
             <div className="view-opts flex">
               <Icon
                 className="viewicon hvtheme p-1"
-                click="FILEVIEW"
+                click="FILEVIEWWORKER"
                 payload="5"
                 open={files.view == 5}
                 src="win/viewinfo"
@@ -265,7 +302,7 @@ export const Explorer = () => {
               />
               <Icon
                 className="viewicon hvtheme p-1"
-                click="FILEVIEW"
+                click="FILEVIEWWORKER"
                 payload="1"
                 open={files.view == 1}
                 src="win/viewlarge"
@@ -280,8 +317,8 @@ export const Explorer = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
-  const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  const files = useSelector((state) => state.worker);
+  const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState(null);
   const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
@@ -299,7 +336,7 @@ const ContentArea = ({ searchtxt }) => {
 
   const handleDouble = (e) => {
     e.stopPropagation();
-    handleFileOpen(e.target.dataset.id);
+    handleFileOpenWorker(e.target.dataset.id);
   };
 
   const emptyClick = (e) => {
@@ -308,7 +345,7 @@ const ContentArea = ({ searchtxt }) => {
 
   const handleKey = (e) => {
     if (e.key == "Backspace") {
-      dispatch({ type: "FILEPREV" });
+      dispatch({ type: "FILEPREVWORKER" });
     }
   };
 
@@ -326,7 +363,7 @@ const ContentArea = ({ searchtxt }) => {
               item.name.includes(searchtxt) && (
                 <div
                   key={i}
-                  className="conticon hvtheme flex flex-col items-center prtclk"
+                  className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                   data-id={item.id}
                   data-focus={selected == item.id}
                   onClick={handleClick}
@@ -348,42 +385,20 @@ const ContentArea = ({ searchtxt }) => {
 };
 
 const NavPane = ({}) => {
-  const files = useSelector((state) => state.files);
-  const special = useSelector((state) => state.files.data.special);
+  const files = useSelector((state) => state.worker);
+  const special = useSelector((state) => state.worker.data.special);
 
+  console.log(special);
   return (
     <div className="navpane win11Scroll">
       <div className="extcont">
-        <Dropdown icon="star" title="Quick access" action="" isDropped>
-          <Dropdown
-            icon="down"
-            title="Downloads"
-            spid="%downloads%"
-            notoggle
-            pinned
-          />
-          <Dropdown icon="user" title="Blue" spid="%user%" notoggle pinned />
-          <Dropdown
-            icon="docs"
-            title="Documents"
-            spid="%documents%"
-            notoggle
-            pinned
-          />
-          <Dropdown title="Github" spid="%github%" notoggle />
-          <Dropdown icon="pics" title="Pictures" spid="%pictures%" notoggle />
-        </Dropdown>
-        <Dropdown icon="onedrive" title="OneDrive" spid="%onedrive%" />
-        <Dropdown icon="thispc" title="This PC" action="" isDropped>
-          <Dropdown icon="desk" title="Desktop" spid="%desktop%" />
-          <Dropdown icon="docs" title="Documents" spid="%documents%" />
-          <Dropdown icon="down" title="Downloads" spid="%downloads%" />
-          <Dropdown icon="music" title="Music" spid="%music%" />
-          <Dropdown icon="pics" title="Pictures" spid="%pictures%" />
-          <Dropdown icon="vid" title="Videos" spid="%videos%" />
-          <Dropdown icon="disc" title="OS (C:)" spid="%cdrive%" />
-          <Dropdown icon="disk" title="Blue (D:)" spid="%ddrive%" />
-          <Dropdown icon="folder" title="Workder" spid="%workers%" />
+        <Dropdown icon="thispc" title="Worker" action="" isDropped>
+			{
+				//special?.map((item, index)=>(
+				//	<Dropdown icon="folder" title="" spid="%worker%"/>
+				//))
+			}
+          <Dropdown icon="folder" title="Workder" spid="%worker%" />
         </Dropdown>
       </div>
     </div>

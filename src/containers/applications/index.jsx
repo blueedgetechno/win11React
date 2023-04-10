@@ -10,6 +10,7 @@ export * from "./apps/camera";
 export * from "./apps/discord";
 export * from "./apps/edge";
 export * from "./apps/explorer";
+export * from "./apps/worker";
 export * from "./apps/getstarted";
 export * from "./apps/notepad";
 export * from "./apps/settings";

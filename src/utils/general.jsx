@@ -43,6 +43,7 @@ export const Icon = (props) => {
       payload: event.currentTarget.dataset.payload,
     };
 
+	console.log(action);
     if (action.type) {
       dispatch(action);
     }
@@ -178,7 +179,7 @@ export const Image = (props) => {
     };
 
     if (action.type) {
-      dispatch(action);
+      dispatch(action)
     }
   };
 

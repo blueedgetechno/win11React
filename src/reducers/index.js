@@ -13,6 +13,7 @@ import settReducer from "./settings";
 import fileReducer from "./files";
 import userReducer from "./user";
 import paramsReducer from "./params"
+import workerReducer from "./worker"
 
 const allReducers = combineReducers({
 	params: paramsReducer,
@@ -28,6 +29,7 @@ const allReducers = combineReducers({
 	globals: globalReducer,
 	setting: settReducer,
 	files: fileReducer,
+	worker: workerReducer
 });
 
 var store = createStore(allReducers);

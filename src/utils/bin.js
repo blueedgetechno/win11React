@@ -104,7 +104,6 @@ export class Bin {
 	}
 
 	parseFolder(data, name, host = null) {
-		//console.log(data, 'input parse folder');
 		var item = new Item({
 			type: data.type,
 			name: data.name || name,
@@ -131,7 +130,6 @@ export class Bin {
 			item.setData(fdata);
 		}
 
-		//console.log(item, 'output parser folder');
 		return item;
 	}
 
@@ -140,10 +138,8 @@ export class Bin {
 		var tree = [];
 
 		for (var i = 0; i < drives.length; i++) {
-			console.log(data[drives[i]], 'data[drives[i]]');
 			tree.push(this.parseFolder(data[drives[i]]));
 		}
-		console.log(tree, 'tree');
 
 		this.tree = tree;
 	}
