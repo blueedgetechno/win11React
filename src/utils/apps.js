@@ -41,6 +41,12 @@ const apps = [
     action: "EXPLORER",
   },
   {
+    name: "Worker Profile",
+    icon: "worker",
+    type: "app",
+    action: "WORKER",
+  },
+  {
     name: "Browser",
     icon: "edge",
     type: "app",

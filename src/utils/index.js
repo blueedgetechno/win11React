@@ -15,6 +15,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Unescape",
     "Recycle Bin",
     "File Explorer",
+    "Worker Profile",
     "Store",
     "Browser",
     "Github",

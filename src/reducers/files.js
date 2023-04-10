@@ -36,14 +36,8 @@ const fileReducer = (state = defState, action) => {
 		tmp.hid++;
 		if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
 		navHist = true;
-	} else if (action.type === "FILEUPDATE") {
-		const newData = action.payload
-		console.log(newData, 'newData');
-		const convertData = tmp.data.parse(newData)
-		//tmp.data.lookup = { ...tmp.data.lookup, newData }
-		console.log(convertData, 'convertData');
 	}
-	console.log(tmp, 'tmp');
+	//console.log(tmp, 'tmp');
 
 
 
