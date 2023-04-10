@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import { dispatchAction, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
-
+import fdata2 from '../../../reducers/dir.json'
 const NavTitle = (props) => {
   var src = props.icon || "folder";
 
@@ -92,44 +92,46 @@ const Dropdown = (props) => {
   );
 };
 
-const fdata2 = {
-	"backup": {
-		"type": "folder",
-		"name": "backup",
-		"info": {
-			"size": "104000000000",
-			"used": "90000000000",
-			"spid": "%worker%"
-		},
-		"data": {
-			"config": {
-				"type": "folder",
-				"name": "config",
-				"info": {
-					"spid": "%config%"
-				},
-				"data": {
-					"update": {
-						"type": "file",
-						"name": "update"
-					},
-					"update2": {
-						"type": "folder",
-						"name": "update2"
-					}
-				}
-			},
-			"config2": {
-				"type": "folder",
-				"name": "config2"
-			},
-			"config4": {
-				"type": "folder",
-				"name": "config4"
-			}
-		}
-	},
-}
+const fdata = fdata2
+
+//{
+//	"backup": {
+//		"type": "folder",
+//		"name": "backup",
+//		"info": {
+//			"size": "104000000000",
+//			"used": "90000000000",
+//			"spid": "%worker%"
+//		},
+//		"data": {
+//			"config": {
+//				"type": "folder",
+//				"name": "config",
+//				"info": {
+//					"spid": "%config%"
+//				},
+//				"data": {
+//					"update": {
+//						"type": "file",
+//						"name": "update"
+//					},
+//					"update2": {
+//						"type": "folder",
+//						"name": "update2"
+//					}
+//				}
+//			},
+//			"config2": {
+//				"type": "folder",
+//				"name": "config2"
+//			},
+//			"config4": {
+//				"type": "folder",
+//				"name": "config4"
+//			}
+//		}
+//	},
+//}
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
   const files = useSelector((state) => state.worker);
@@ -141,20 +143,7 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(()=>{
-	//fetchData()
-	const Data = {
-		"backup": {
-			"type": "folder",
-			"name": "backup",
-			"data": {
-				"config": {
-					"type": "folder",
-					"name": "config"
-				}
-			}
-		},
-	}
-	dispatch({type: 'FILEUPDATEWORKER', payload: fdata2})
+	dispatch({type: 'FILEUPDATEWORKER', payload: fdata})
   }, [])
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -290,7 +279,7 @@ export const Worker = () => {
             <ContentArea searchtxt={searchtxt} />
           </div>
           <div className="sec3">
-            <div className="item-count text-xs">{fdata.data.length} items</div>
+            <div className="item-count text-xs">{fdata?.data?.length} items</div>
             <div className="view-opts flex">
               <Icon
                 className="viewicon hvtheme p-1"
@@ -320,6 +309,12 @@ const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState(null);
+  const [subInfo, setSubInfo] = useState({})
+  React.useEffect(()=>{
+	const res = files.data.getId(selected);
+	debugger
+	setSubInfo(res)
+  }, [ selected])
   const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
 
@@ -376,10 +371,18 @@ const ContentArea = ({ searchtxt }) => {
             );
           })}
         </div>
-        {fdata.data.length == 0 ? (
+        {fdata?.data?.length == 0 ? (
           <span className="text-xs mx-auto">This folder is empty.</span>
         ) : null}
       </div>
+	  <div
+	  	className="subinfo"
+	  >
+		{
+			subInfo?.info?.spid ?? fdata?.subInfo?.spid
+		}
+
+	  </div>
     </div>
   );
 };
@@ -388,7 +391,6 @@ const NavPane = ({}) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
-  console.log(special);
   return (
     <div className="navpane win11Scroll">
       <div className="extcont">

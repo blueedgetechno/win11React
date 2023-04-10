@@ -264,3 +264,15 @@ export const handleFileOpen = (id) => {
     }
   }
 };
+export const handleFileOpenWorker = (id) => {
+  // handle double click open
+  const item = store.getState().worker.data.getId(id);
+  if (item != null) {
+    if (item.type == "folder") {
+        store.dispatch({ type: "FILEDIRWORKER", payload: item.id });
+    }
+    if (item.type == "file") {
+        console.log('object');
+    }
+  }
+};

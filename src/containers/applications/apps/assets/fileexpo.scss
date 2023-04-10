@@ -231,8 +231,13 @@
 
 .contentarea {
   display: flex;
-  flex-direction: column;
-
+//  flex-direction: column;
+  .subinfo {
+	border: 0 solid var(--gray2);
+	border-left-width: medium;
+	width: 200px;
+	height: 100%;
+  } 
   &:focus {
     outline: none;
   }
@@ -294,6 +299,7 @@
     justify-content: space-between;
     align-items: flex-end;
   }
+
 }
 
 .sec3 {
