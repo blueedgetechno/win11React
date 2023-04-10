@@ -139,11 +139,11 @@ export const Worker = () => {
   const [cpath, setPath] = useState(files.cpath);
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
-  
+
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-  React.useEffect(()=>{
-	dispatch({type: 'FILEUPDATEWORKER', payload: fdata})
+  React.useEffect(() => {
+    dispatch({ type: 'FILEUPDATEWORKER', payload: fdata })
   }, [])
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -309,21 +309,24 @@ const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState(null);
-  const [subInfo, setSubInfo] = useState({})
-  React.useEffect(()=>{
-	const res = files.data.getId(selected);
-	debugger
-	setSubInfo(res)
-  }, [ selected])
+  //const [subInfo, setSubInfo] = useState({})
+  const subInfo = React.useMemo(() => {
+    const res = files.data.getId(selected);
+    //setSubInfo(res)
+    return res
+  }, [selected])
   const fdata = files.data.getId(files.cdir);
+
+  console.log(fdata.info, 'fdata');
+  console.log(subInfo, 'subInfo');
   const dispatch = useDispatch();
 
-  const fetchData = async () =>{
-	const res = await fetch('https://jsonplaceholder.typicode.com/users')
-	const resParse = await res.json()
-	return resParse
+  const fetchData = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users')
+    const resParse = await res.json()
+    return resParse
   }
- 
+
   const handleClick = (e) => {
     e.stopPropagation();
     setSelect(e.target.dataset.id);
@@ -375,19 +378,43 @@ const ContentArea = ({ searchtxt }) => {
           <span className="text-xs mx-auto">This folder is empty.</span>
         ) : null}
       </div>
-	  <div
-	  	className="subinfo"
-	  >
-		{
-			subInfo?.info?.spid ?? fdata?.subInfo?.spid
-		}
+      <div
+        className="subinfo"
+      >
+        {
+          <>
+            <div
+              className="conticon  flex flex-col items-center gap-2 prtclk containerImg"
+            >
+              <Image src={`icon/win/worker_connect`} />
+              <h4>Worker 1</h4>
+              <div className="wrapperText">
+                <p className="title">Work group</p>
+                <p>WorkGroup</p>
+              </div>
+              <div className="wrapperText">
+                <p className="title">Processor</p>
+                <p>InterCore i7-13999k @3.3GHz</p>
+              </div>
+              <div className="wrapperText">
+                <p className="title">Work group</p>
+                <p>WorkGroup</p>
+              </div>
+              <span>
+              {
+                subInfo?.info.spid ?? fdata?.info?.spid
+              }  
+              </span>
+            </div>
+          </>
+        }
 
-	  </div>
+      </div>
     </div>
   );
 };
 
-const NavPane = ({}) => {
+const NavPane = ({ }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -395,11 +422,11 @@ const NavPane = ({}) => {
     <div className="navpane win11Scroll">
       <div className="extcont">
         <Dropdown icon="thispc" title="Worker" action="" isDropped>
-			{
-				//special?.map((item, index)=>(
-				//	<Dropdown icon="folder" title="" spid="%worker%"/>
-				//))
-			}
+          {
+            //special?.map((item, index)=>(
+            //	<Dropdown icon="folder" title="" spid="%worker%"/>
+            //))
+          }
           <Dropdown icon="folder" title="Workder" spid="%worker%" />
         </Dropdown>
       </div>
@@ -407,7 +434,7 @@ const NavPane = ({}) => {
   );
 };
 
-const Ribbon = ({}) => {
+const Ribbon = ({ }) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">

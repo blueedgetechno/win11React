@@ -237,6 +237,21 @@
 	border-left-width: medium;
 	width: 200px;
 	height: 100%;
+  padding: 8px;
+  font-size: 12px;
+    //set width img
+    .containerImg{
+      .imageCont  > img{
+        width: 100px;
+      }
+    }
+    .wrapperText{
+      display: flex;
+      width: 100%;
+      .title{
+        min-width: 80px;
+      }
+    }
   } 
   &:focus {
     outline: none;
