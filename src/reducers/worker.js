@@ -43,7 +43,6 @@ const fdata = {
 		}
 	},
 }
-//debugger
 const defState = {
 	cdir: "%user%",
 	hist: [],
@@ -82,10 +81,9 @@ const workerReducer = (state = defState, action) => {
 		//const newData = action.payload; 	
 		tmp.data = new Bin()
 		tmp.data.parse(fdatacopy);
-		console.log(tmp.data, 'update');
 		tmp.cdir = '%user%'
 		defState.hist = ['%user%']
-		tmp.hid  = 0
+		tmp.hid = 0
 		tmp.view = 1
 	}
 

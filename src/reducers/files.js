@@ -37,7 +37,6 @@ const fileReducer = (state = defState, action) => {
 		if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
 		navHist = true;
 	}
-	//console.log(tmp, 'tmp');
 
 
 
