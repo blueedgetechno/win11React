@@ -3,7 +3,7 @@ document.write(
     'ipt async src="https://www.googletagmanager.com/gtag/js?id=G-QNW5K71MZ0"></scr' +
     "ipt>"
 );
-location.replace('https://andrewstech.github.io/win11react-add-test/');
+location.replace("https://andrewstech.github.io/win11react-add-test/");
 window.dataLayer = window.dataLayer || [];
 function gtag() {
   dataLayer.push(arguments);
