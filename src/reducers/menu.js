@@ -19,6 +19,10 @@ const defState = {
       width: "310px",
       secwid: "200px",
     },
+    worker: {
+      width: "150px",
+      secwid: "100px",
+    },
   },
   menus: {
     desk: [
@@ -244,6 +248,22 @@ const defState = {
         payload: "delete",
       },
     ],
+    worker: [
+      {
+        name: "Open",
+        action: "FILEDIRWORKER",
+        payload: "open",
+      },
+      {
+        name: "Connect",
+        action: "CONNECTWORKER",
+        payload: "connect",
+      },
+      {
+        name: "Properties",
+        dsb: true,
+      },
+    ]
   },
 };
 
@@ -266,6 +286,8 @@ const menusReducer = (state = defState, action) => {
     };
   }
 
+  console.log(tmpState, 'menu state');
+  console.log(action.payload, 'menu payload');
   return tmpState;
 };
 

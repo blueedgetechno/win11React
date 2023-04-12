@@ -46,19 +46,26 @@ export const ActMenu = () => {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
     };
-
+    // Right click and open file in worker
     if (action.type) {
-      if (action.type != action.type.toUpperCase()) {
+      if(action.type === 'FILEDIRWORKER') {
+        Actions.handleFileOpenWorker(event.target.dataset.pid)
+      }
+
+      
+      else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {
         dispatch(action);
       }
       dispatch({ type: "MENUHIDE" });
     }
+
   };
 
-  const menuobj = (data) => {
+  const menuobj = (data, parentId) => {
     var mnode = [];
+
     data.map((opt, i) => {
       if (opt.type == "hr") {
         mnode.push(<div key={i} className="menuhr"></div>);
@@ -71,6 +78,7 @@ export const ActMenu = () => {
             onClick={clickDispatch}
             data-action={opt.action}
             data-payload={opt.payload}
+            data-pid={parentId}
           >
             {menudata.ispace != false ? (
               <div className="spcont">
@@ -140,7 +148,7 @@ export const ActMenu = () => {
       data-hide={menu.hide}
       data-left={isLeft}
     >
-      {menuobj(menu.menus[menu.opts])}
+      {menuobj(menu.menus[menu.opts], menu?.dataset?.id)}
     </div>
   );
 };

@@ -308,7 +308,7 @@ export const Worker = () => {
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
-  const [selected, setSelect] = useState(null);
+  const [selected, setSelect] = useState('null');
   //const [subInfo, setSubInfo] = useState({})
   const subInfo = React.useMemo(() => {
     const res = files.data.getId(selected);
@@ -317,8 +317,6 @@ const ContentArea = ({ searchtxt }) => {
   }, [selected])
   const fdata = files.data.getId(files.cdir);
 
-  console.log(fdata.info, 'fdata');
-  console.log(subInfo, 'subInfo');
   const dispatch = useDispatch();
 
   const fetchData = async () => {
@@ -330,6 +328,8 @@ const ContentArea = ({ searchtxt }) => {
   const handleClick = (e) => {
     e.stopPropagation();
     setSelect(e.target.dataset.id);
+    dispatch({ type: "MENUHIDE" });
+
   };
 
   const handleDouble = (e) => {
@@ -346,6 +346,7 @@ const ContentArea = ({ searchtxt }) => {
       dispatch({ type: "FILEPREVWORKER" });
     }
   };
+
 
   return (
     <div
@@ -364,8 +365,10 @@ const ContentArea = ({ searchtxt }) => {
                   className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                   data-id={item.id}
                   data-focus={selected == item.id}
+                  //data-focus={false}
                   onClick={handleClick}
                   onDoubleClick={handleDouble}
+                  data-menu='worker'
                 >
                   <Image src={`icon/win/${item.info.icon}`} />
                   <span>{item.name}</span>
@@ -401,9 +404,9 @@ const ContentArea = ({ searchtxt }) => {
                 <p>WorkGroup</p>
               </div>
               <span>
-              {
-                subInfo?.info.spid ?? fdata?.info?.spid
-              }  
+                {
+                  subInfo?.info.spid ?? fdata?.info?.spid
+                }
               </span>
             </div>
           </>
