@@ -20,7 +20,7 @@ import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
-import { LockScreen } from "./containers/background";
+import { LockScreen,BootScreen } from "./containers/background";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
