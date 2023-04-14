@@ -178,7 +178,7 @@ export const Image = (props) => {
     };
 
     if (action.type) {
-      dispatch(action)
+      dispatch(action);
     }
   };
 

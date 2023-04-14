@@ -103,22 +103,22 @@ export const Explorer = () => {
 
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-  React.useEffect(()=>{
-	//fetchData()
-	const Data = {
-		"backup": {
-			"type": "folder",
-			"name": "backup",
-			"data": {
-				"config": {
-					"type": "folder",
-					"name": "config"
-				}
-			}
-		},
-	}
-	dispatch({type: 'FILEUPDATE', payload: Data})
-  }, [])
+  React.useEffect(() => {
+    //fetchData()
+    const Data = {
+      backup: {
+        type: "folder",
+        name: "backup",
+        data: {
+          config: {
+            type: "folder",
+            name: "config",
+          },
+        },
+      },
+    };
+    dispatch({ type: "FILEUPDATE", payload: Data });
+  }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       dispatch({ type: "FILEPATH", payload: cpath });
@@ -286,12 +286,12 @@ const ContentArea = ({ searchtxt }) => {
   const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
 
-  const fetchData = async () =>{
-	const res = await fetch('https://jsonplaceholder.typicode.com/users')
-	const resParse = await res.json()
-	return resParse
-  }
- 
+  const fetchData = async () => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+    const resParse = await res.json();
+    return resParse;
+  };
+
   const handleClick = (e) => {
     e.stopPropagation();
     setSelect(e.target.dataset.id);

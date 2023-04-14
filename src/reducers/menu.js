@@ -263,7 +263,7 @@ const defState = {
         name: "Properties",
         dsb: true,
       },
-    ]
+    ],
   },
 };
 

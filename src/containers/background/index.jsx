@@ -79,7 +79,7 @@ export const LockScreen = (props) => {
   const { userProfile, signInWithGoogle } = useAuth();
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const userName = useSelector((state) => state.setting.person.name);
 
@@ -104,29 +104,28 @@ export const LockScreen = (props) => {
   };
 
   const proceed = async () => {
+    if (user.id) {
+      setUnLock(true);
+      setTimeout(() => {
+        dispatch({ type: "WALLUNLOCK" });
+      }, 1000);
+      return;
+    }
 
-	if(user.id){
-		setUnLock(true);
-		setTimeout(() => {
-		  dispatch({ type: "WALLUNLOCK" });
-		}, 1000);
-		return
-	}
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+    dispatch({ type: "WALLUNLOCK" });
 
-	const { data, error } = await supabase.auth.signInWithOAuth({
-		provider: 'google',
-		options: {
-		queryParams: {
-			access_type: 'offline',
-			prompt: 'consent',
-		},
-		},
-	})
-	dispatch({type:'WALLUNLOCK'})
-
-	if(error){
-		throw new Error(error)
-	}
+    if (error) {
+      throw new Error(error);
+    }
   };
 
   const action2 = (e) => {
@@ -168,12 +167,12 @@ export const LockScreen = (props) => {
           ext
         />
         <div className="mt-2 text-2xl font-medium text-gray-200">
-          { user?.email ?? userName}
+          {user?.email ?? userName}
         </div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
-		  {user.id ? ' Enter' : 'Sign In with GG'}
+          {user.id ? " Enter" : "Sign In with GG"}
         </div>
-		{/*<div>
+        {/*<div>
           <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
           <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}

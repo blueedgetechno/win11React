@@ -12,24 +12,24 @@ import globalReducer from "./globals";
 import settReducer from "./settings";
 import fileReducer from "./files";
 import userReducer from "./user";
-import paramsReducer from "./params"
-import workerReducer from "./worker"
+import paramsReducer from "./params";
+import workerReducer from "./worker";
 
 const allReducers = combineReducers({
-	params: paramsReducer,
-	user: userReducer,
-	wallpaper: wallReducer,
-	taskbar: taskReducer,
-	desktop: deskReducer,
-	startmenu: menuReducer,
-	sidepane: paneReducer,
-	widpane: widReducer,
-	apps: appReducer,
-	menus: menusReducer,
-	globals: globalReducer,
-	setting: settReducer,
-	files: fileReducer,
-	worker: workerReducer
+  params: paramsReducer,
+  user: userReducer,
+  wallpaper: wallReducer,
+  taskbar: taskReducer,
+  desktop: deskReducer,
+  startmenu: menuReducer,
+  sidepane: paneReducer,
+  widpane: widReducer,
+  apps: appReducer,
+  menus: menusReducer,
+  globals: globalReducer,
+  setting: settReducer,
+  files: fileReducer,
+  worker: workerReducer,
 });
 
 var store = createStore(allReducers);

@@ -48,19 +48,15 @@ export const ActMenu = () => {
     };
     // Right click and open file in worker
     if (action.type) {
-      if(action.type === 'FILEDIRWORKER') {
-        Actions.handleFileOpenWorker(event.target.dataset.pid)
-      }
-
-      
-      else if (action.type != action.type.toUpperCase()) {
+      if (action.type === "FILEDIRWORKER") {
+        Actions.handleFileOpenWorker(event.target.dataset.pid);
+      } else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {
         dispatch(action);
       }
       dispatch({ type: "MENUHIDE" });
     }
-
   };
 
   const menuobj = (data, parentId) => {

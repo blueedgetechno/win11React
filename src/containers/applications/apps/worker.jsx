@@ -96,56 +96,58 @@ const Dropdown = (props) => {
 function autoFormatData(data) {
   const newData = {};
   newData.backup = {};
-  newData.backup.type = 'folder';
-  newData.backup.name = 'backup ';
+  newData.backup.type = "folder";
+  newData.backup.name = "backup ";
   newData.backup.info = {};
-  newData.backup.info.size = '';
-  newData.backup.info.used = '';
-  newData.backup.info.spid = '%worker%';
+  newData.backup.info.size = "";
+  newData.backup.info.used = "";
+  newData.backup.info.spid = "%worker%";
   newData.backup.data = {};
   for (const proxy of data.tree) {
     newData.backup.data[proxy.name] = {};
-    newData.backup.data[proxy.name].type = 'folder';
+    newData.backup.data[proxy.name].type = "folder";
     newData.backup.data[proxy.name].name = proxy.name;
     newData.backup.data[proxy.name].info = proxy.info;
-    newData.backup.data[proxy.name].info.spid = '%config%';
+    newData.backup.data[proxy.name].info.spid = "%config%";
     newData.backup.data[proxy.name].data = {};
 
     if (proxy.data) {
       proxy.data.forEach((worker) => {
-        newData.backup.data[proxy.name].data[worker.name] = {}
-        newData.backup.data[proxy.name].data[worker.name].type = 'folder'
-        newData.backup.data[proxy.name].data[worker.name].name = worker.name
-        newData.backup.data[proxy.name].data[worker.name].info = worker.info
-        newData.backup.data[proxy.name].data[worker.name].data = {}
+        newData.backup.data[proxy.name].data[worker.name] = {};
+        newData.backup.data[proxy.name].data[worker.name].type = "folder";
+        newData.backup.data[proxy.name].data[worker.name].name = worker.name;
+        newData.backup.data[proxy.name].data[worker.name].info = worker.info;
+        newData.backup.data[proxy.name].data[worker.name].data = {};
         if (worker.data) {
           worker.data.forEach((session) => {
-            newData.backup.data[proxy.name].data[worker.name].data[session.name] = {}
-            newData.backup.data[proxy.name].data[worker.name].data[session.name].type = 'folder'
-            newData.backup.data[proxy.name].data[worker.name].data[session.name].data = {}
-            newData.backup.data[proxy.name].data[worker.name].data[session.name].info = session.info
+            newData.backup.data[proxy.name].data[worker.name].data[
+              session.name
+            ] = {};
+            newData.backup.data[proxy.name].data[worker.name].data[
+              session.name
+            ].type = "folder";
+            newData.backup.data[proxy.name].data[worker.name].data[
+              session.name
+            ].data = {};
+            newData.backup.data[proxy.name].data[worker.name].data[
+              session.name
+            ].info = session.info;
 
             if (session.data) {
               session.data.forEach((item, index) => {
-                newData.backup.data[proxy.name].data[worker.name].data[session.name].data[index] = { item }
-
-              })
+                newData.backup.data[proxy.name].data[worker.name].data[
+                  session.name
+                ].data[index] = { item };
+              });
             }
-          })
-
+          });
         }
-
-      })
-
-
+      });
     }
   }
   return newData;
 }
 console.log(autoFormatData(test));
-
-
-
 
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
@@ -159,13 +161,13 @@ export const Worker = () => {
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
     const fetchData = async () => {
-      const data =  await FetchAuthorizedWorkers()
-      console.log(data, 'data fkae');
-      const dataFormat = autoFormatData(data)
-      dispatch({ type: 'FILEUPDATEWORKER', payload: dataFormat })
-    }
-    fetchData()
-  }, [])
+      const data = await FetchAuthorizedWorkers();
+      console.log(data, "data fkae");
+      const dataFormat = autoFormatData(data);
+      dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
+    };
+    fetchData();
+  }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       dispatch({ type: "FILEPATHWORKER", payload: cpath });
@@ -300,7 +302,9 @@ export const Worker = () => {
             <ContentArea searchtxt={searchtxt} />
           </div>
           <div className="sec3">
-            <div className="item-count text-xs">{fdata?.data?.length} items</div>
+            <div className="item-count text-xs">
+              {fdata?.data?.length} items
+            </div>
             <div className="view-opts flex">
               <Icon
                 className="viewicon hvtheme p-1"
@@ -329,35 +333,33 @@ export const Worker = () => {
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
-  const [selected, setSelect] = useState('null');
+  const [selected, setSelect] = useState("null");
   //const [subInfo, setSubInfo] = useState({})
   const subInfo = React.useMemo(() => {
     const res = files.data.getId(selected);
     //setSubInfo(res)
-    return res
-  }, [selected])
+    return res;
+  }, [selected]);
 
   const renderSubdata = (data) => {
-    const list = []
-    console.log(data, 'subinfo');
+    const list = [];
+    console.log(data, "subinfo");
     for (const key in data) {
       if (typeof data[key] === "object") {
-        renderSubdata(data[key])
+        renderSubdata(data[key]);
       }
       list.push(
         <div>
-          <span>{data[key] && key}: {typeof data[key] !=='object' && data[key]}</span>
-          {
-            typeof data[key] =='object' &&
-            renderSubdata(data[key])
-          }
+          <span>
+            {data[key] && key}: {typeof data[key] !== "object" && data[key]}
+          </span>
+          {typeof data[key] == "object" && renderSubdata(data[key])}
         </div>
-      )
+      );
     }
 
-    return list
-
-  }
+    return list;
+  };
   const fdata = files.data.getId(files.cdir);
 
   const dispatch = useDispatch();
@@ -365,7 +367,6 @@ const ContentArea = ({ searchtxt }) => {
     e.stopPropagation();
     setSelect(e.target.dataset.id);
     dispatch({ type: "MENUHIDE" });
-
   };
 
   const handleDouble = (e) => {
@@ -382,7 +383,6 @@ const ContentArea = ({ searchtxt }) => {
       dispatch({ type: "FILEPREVWORKER" });
     }
   };
-
 
   return (
     <div
@@ -404,7 +404,7 @@ const ContentArea = ({ searchtxt }) => {
                   //data-focus={false}
                   onClick={handleClick}
                   onDoubleClick={handleDouble}
-                  data-menu='worker'
+                  data-menu="worker"
                 >
                   <Image src={`icon/win/${item.info.icon}`} />
                   <span>{item.name}</span>
@@ -417,14 +417,10 @@ const ContentArea = ({ searchtxt }) => {
           <span className="text-xs mx-auto">This folder is empty.</span>
         ) : null}
       </div>
-      <div
-        className="subinfo"
-      >
+      <div className="subinfo">
         {
           <>
-            <div
-              className="conticon  flex flex-col items-center gap-2 prtclk containerImg"
-            >
+            <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               <Image src={`icon/win/worker_connect`} />
               <h4>Worker 1</h4>
               <div className="wrapperText">
@@ -439,21 +435,16 @@ const ContentArea = ({ searchtxt }) => {
                 <p className="title">Work group</p>
                 <p>WorkGroup</p>
               </div>
-              <div>
-                {
-                  renderSubdata(subInfo?.info)
-                }
-              </div>
+              <div>{renderSubdata(subInfo?.info)}</div>
             </div>
           </>
         }
-
       </div>
     </div>
   );
 };
 
-const NavPane = ({ }) => {
+const NavPane = ({}) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -473,7 +464,7 @@ const NavPane = ({ }) => {
   );
 };
 
-const Ribbon = ({ }) => {
+const Ribbon = ({}) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">
