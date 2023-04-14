@@ -105,7 +105,7 @@ export const StartMenu = () => {
     }
   }, [query]);
 
-  // const userName = useSelector((state) => state.setting.person.name);
+  const userName = useSelector((state) => state.setting.person.name);
   // const userName = useAuth().userProfile.email;
 
   return (
