@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import { dispatchAction, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
-import fdata2 from '../../../reducers/dir.json'
+import axios from "axios";
+import { FetchAuthorizedWorkers } from "../../../supabase/fucntion";
 const NavTitle = (props) => {
   var src = props.icon || "folder";
 
@@ -92,46 +93,60 @@ const Dropdown = (props) => {
   );
 };
 
-const fdata = fdata2
+function autoFormatData(data) {
+  const newData = {};
+  newData.backup = {};
+  newData.backup.type = 'folder';
+  newData.backup.name = 'backup ';
+  newData.backup.info = {};
+  newData.backup.info.size = '';
+  newData.backup.info.used = '';
+  newData.backup.info.spid = '%worker%';
+  newData.backup.data = {};
+  for (const proxy of data.tree) {
+    newData.backup.data[proxy.name] = {};
+    newData.backup.data[proxy.name].type = 'folder';
+    newData.backup.data[proxy.name].name = proxy.name;
+    newData.backup.data[proxy.name].info = proxy.info;
+    newData.backup.data[proxy.name].info.spid = '%config%';
+    newData.backup.data[proxy.name].data = {};
 
-//{
-//	"backup": {
-//		"type": "folder",
-//		"name": "backup",
-//		"info": {
-//			"size": "104000000000",
-//			"used": "90000000000",
-//			"spid": "%worker%"
-//		},
-//		"data": {
-//			"config": {
-//				"type": "folder",
-//				"name": "config",
-//				"info": {
-//					"spid": "%config%"
-//				},
-//				"data": {
-//					"update": {
-//						"type": "file",
-//						"name": "update"
-//					},
-//					"update2": {
-//						"type": "folder",
-//						"name": "update2"
-//					}
-//				}
-//			},
-//			"config2": {
-//				"type": "folder",
-//				"name": "config2"
-//			},
-//			"config4": {
-//				"type": "folder",
-//				"name": "config4"
-//			}
-//		}
-//	},
-//}
+    if (proxy.data) {
+      proxy.data.forEach((worker) => {
+        newData.backup.data[proxy.name].data[worker.name] = {}
+        newData.backup.data[proxy.name].data[worker.name].type = 'folder'
+        newData.backup.data[proxy.name].data[worker.name].name = worker.name
+        newData.backup.data[proxy.name].data[worker.name].info = worker.info
+        newData.backup.data[proxy.name].data[worker.name].data = {}
+        if (worker.data) {
+          worker.data.forEach((session) => {
+            newData.backup.data[proxy.name].data[worker.name].data[session.name] = {}
+            newData.backup.data[proxy.name].data[worker.name].data[session.name].type = 'folder'
+            newData.backup.data[proxy.name].data[worker.name].data[session.name].data = {}
+            newData.backup.data[proxy.name].data[worker.name].data[session.name].info = session.info
+
+            if (session.data) {
+              session.data.forEach((item, index) => {
+                newData.backup.data[proxy.name].data[worker.name].data[session.name].data[index] = { item }
+
+              })
+            }
+          })
+
+        }
+
+      })
+
+
+    }
+  }
+  return newData;
+}
+console.log(autoFormatData(test));
+
+
+
+
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
   const files = useSelector((state) => state.worker);
@@ -143,7 +158,13 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
-    dispatch({ type: 'FILEUPDATEWORKER', payload: fdata })
+    const fetchData = async () => {
+      const data =  await FetchAuthorizedWorkers()
+      console.log(data, 'data fkae');
+      const dataFormat = autoFormatData(data)
+      dispatch({ type: 'FILEUPDATEWORKER', payload: dataFormat })
+    }
+    fetchData()
   }, [])
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -315,16 +336,31 @@ const ContentArea = ({ searchtxt }) => {
     //setSubInfo(res)
     return res
   }, [selected])
+
+  const renderSubdata = (data) => {
+    const list = []
+    console.log(data, 'subinfo');
+    for (const key in data) {
+      if (typeof data[key] === "object") {
+        renderSubdata(data[key])
+      }
+      list.push(
+        <div>
+          <span>{data[key] && key}: {typeof data[key] !=='object' && data[key]}</span>
+          {
+            typeof data[key] =='object' &&
+            renderSubdata(data[key])
+          }
+        </div>
+      )
+    }
+
+    return list
+
+  }
   const fdata = files.data.getId(files.cdir);
 
   const dispatch = useDispatch();
-
-  const fetchData = async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/users')
-    const resParse = await res.json()
-    return resParse
-  }
-
   const handleClick = (e) => {
     e.stopPropagation();
     setSelect(e.target.dataset.id);
@@ -403,11 +439,11 @@ const ContentArea = ({ searchtxt }) => {
                 <p className="title">Work group</p>
                 <p>WorkGroup</p>
               </div>
-              <span>
+              <div>
                 {
-                  subInfo?.info.spid ?? fdata?.info?.spid
+                  renderSubdata(subInfo?.info)
                 }
-              </span>
+              </div>
             </div>
           </>
         }

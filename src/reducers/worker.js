@@ -1,48 +1,6 @@
 import { Bin } from "../utils/bin";
 import fdata2 from "./dir.json";
 import fdatacopy from "./dir2.json";
-const fdata = {
-	"backup": {
-		"type": "folder",
-		"name": "backup",
-		"info": {
-			"size": "104000000000",
-			"used": "90000000000",
-			"spid": "%worker%"
-		},
-		"data": {
-			"config": {
-				"type": "folder",
-				"name": "toidaidot",
-				"info": {
-					"spid": "%config%"
-				},
-				"data": {
-					"config": {
-						"type": "file",
-						"name": "config"
-					},
-					"config2": {
-						"type": "folder",
-						"name": "config2"
-					},
-					"config4": {
-						"type": "folder",
-						"name": "config4"
-					}
-				}
-			},
-			"config2": {
-				"type": "folder",
-				"name": "config2"
-			},
-			"config4": {
-				"type": "folder",
-				"name": "config4"
-			}
-		}
-	},
-}
 const defState = {
 	cdir: "%user%",
 	hist: [],
@@ -78,11 +36,11 @@ const workerReducer = (state = defState, action) => {
 		if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
 		navHist = true;
 	} else if (action.type === "FILEUPDATEWORKER") {
-		//const newData = action.payload; 	
+		const newData = action.payload;
 		tmp.data = new Bin()
-		tmp.data.parse(fdatacopy);
-		tmp.cdir = '%user%'
-		defState.hist = ['%user%']
+		tmp.data.parse(newData);
+		tmp.cdir = '%worker%'
+		defState.hist = ['%worker%']
 		tmp.hid = 0
 		tmp.view = 1
 	}

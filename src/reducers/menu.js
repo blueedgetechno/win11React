@@ -286,8 +286,6 @@ const menusReducer = (state = defState, action) => {
     };
   }
 
-  console.log(tmpState, 'menu state');
-  console.log(action.payload, 'menu payload');
   return tmpState;
 };
 
