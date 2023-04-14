@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
-import axios from "axios";
-import { FetchAuthorizedWorkers } from "../../../supabase/function";
+import ReactModal from 'react-modal';
+
 const NavTitle = (props) => {
   var src = props.icon || "folder";
 
@@ -271,6 +271,7 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
+  const [modalIsOpen, setModalOpen] = React.useState(false)
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
@@ -280,7 +281,6 @@ const ContentArea = ({ searchtxt }) => {
     //setSubInfo(res)
     return res;
   }, [selected]);
-
   const renderSubdata = (data) => {
     const list = [];
     for (const key in data) {
@@ -378,11 +378,12 @@ const ContentArea = ({ searchtxt }) => {
           </>
         }
       </div>
+      {/*<ModalInfo modalIsOpen={modalInfo.isOpen} setModalOpen={()=>{dispatch({type:'CLOSE_MODAL'})}} data={modalInfo.data}/>*/}
     </div>
   );
 };
 
-const NavPane = ({}) => {
+const NavPane = ({ }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -402,7 +403,7 @@ const NavPane = ({}) => {
   );
 };
 
-const Ribbon = ({}) => {
+const Ribbon = ({ }) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -431,3 +432,5 @@ const Ribbon = ({}) => {
     </div>
   );
 };
+
+

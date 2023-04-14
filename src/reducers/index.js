@@ -14,6 +14,7 @@ import fileReducer from "./files";
 import userReducer from "./user";
 import paramsReducer from "./params";
 import workerReducer from "./worker";
+import modalReducer from "./modal";
 
 const allReducers = combineReducers({
   params: paramsReducer,
@@ -30,6 +31,7 @@ const allReducers = combineReducers({
   setting: settReducer,
   files: fileReducer,
   worker: workerReducer,
+  modal: modalReducer,
 });
 
 var store = createStore(allReducers);

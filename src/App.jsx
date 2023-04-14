@@ -21,6 +21,7 @@ import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
+import ReactModal from "react-modal";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -73,6 +74,7 @@ function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
   const user = useSelector((state) => state.user);
+  ReactModal.setAppElement('#root');
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -214,9 +216,43 @@ function App() {
             // : null
           }
         </div>
+        <ModalInfo/>
       </ErrorBoundary>
     </div>
   );
 }
+const ModalInfo = () => {
+  const modalInfo = useSelector((state) => state.modal);
+  const {isOpen, data} = modalInfo
+  const dispatch = useDispatch()
+ 
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
 
+  function closeModal() {
+    dispatch({type: 'CLOSE_MODAL'})
+  }
+  return (
+    <div>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+      >
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </ReactModal>
+    </div>
+  )
+
+}
 export default App;

@@ -47,6 +47,7 @@ export const ActMenu = () => {
       payload: event.target.dataset.payload,
     };
     // Right click and open file in worker
+    console.log(action, 'action');
     if (action.type) {
       if (action.type === "FILEDIRWORKER") {
         Actions.handleFileOpenWorker(event.target.dataset.pid);
@@ -57,6 +58,9 @@ export const ActMenu = () => {
       else if (action.type === 'DEACTIVATESESSION') {
         Actions.deactiveWorkerSeesion(event.target.dataset.pid)
       } 
+      else if(action.type === 'OPEN_MODAL') {
+        Actions.handleOpenModal(event.target.dataset.pid)
+      }
       else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {

@@ -271,8 +271,9 @@ const defState = {
         payload: "connect",
       },
       {
-        name: "Properties",
-        dsb: true,
+        name: "Detail Info",
+        action: 'OPEN_MODAL',
+        payload: 'openmodal'
       },
     ],
   },
