@@ -259,6 +259,17 @@ const defState = {
         action: "CONNECTWORKER",
         payload: "connect",
       },
+      ,
+      {
+        name: "Create Session",
+        action: "CREATESESSION",
+        payload: "connect",
+      },
+      {
+        name: "Deactivate Session",
+        action: "DEACTIVATESESSION",
+        payload: "connect",
+      },
       {
         name: "Properties",
         dsb: true,

@@ -50,7 +50,14 @@ export const ActMenu = () => {
     if (action.type) {
       if (action.type === "FILEDIRWORKER") {
         Actions.handleFileOpenWorker(event.target.dataset.pid);
-      } else if (action.type != action.type.toUpperCase()) {
+      } 
+      else if(action.type ==='CREATESESSION') {
+        Actions.createWorkerSession(event.target.dataset.pid)
+      }
+      else if (action.type === 'DEACTIVATESESSION') {
+        Actions.deactiveWorkerSeesion(event.target.dataset.pid)
+      } 
+      else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {
         dispatch(action);

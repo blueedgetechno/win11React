@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, handleFileOpenWorker } from "../../../actions";
+import { dispatchAction, fetchWoker, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
 import axios from "axios";
 import { FetchAuthorizedWorkers } from "../../../supabase/function";
@@ -93,60 +93,7 @@ const Dropdown = (props) => {
   );
 };
 
-function autoFormatData(data) {
-  const newData = {};
-  newData.backup = {};
-  newData.backup.type = "folder";
-  newData.backup.name = "backup ";
-  newData.backup.info = {};
-  newData.backup.info.size = "";
-  newData.backup.info.used = "";
-  newData.backup.info.spid = "%worker%";
-  newData.backup.data = {};
-  for (const proxy of data.tree) {
-    newData.backup.data[proxy.name] = {};
-    newData.backup.data[proxy.name].type = "folder";
-    newData.backup.data[proxy.name].name = proxy.name;
-    newData.backup.data[proxy.name].info = proxy.info;
-    newData.backup.data[proxy.name].info.spid = "%config%";
-    newData.backup.data[proxy.name].data = {};
 
-    if (proxy.data) {
-      proxy.data.forEach((worker) => {
-        newData.backup.data[proxy.name].data[worker.name] = {};
-        newData.backup.data[proxy.name].data[worker.name].type = "folder";
-        newData.backup.data[proxy.name].data[worker.name].name = worker.name;
-        newData.backup.data[proxy.name].data[worker.name].info = worker.info;
-        newData.backup.data[proxy.name].data[worker.name].data = {};
-        if (worker.data) {
-          worker.data.forEach((session) => {
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ] = {};
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].type = "folder";
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].data = {};
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].info = session.info;
-
-            if (session.data) {
-              session.data.forEach((item, index) => {
-                newData.backup.data[proxy.name].data[worker.name].data[
-                  session.name
-                ].data[index] = { item };
-              });
-            }
-          });
-        }
-      });
-    }
-  }
-  return newData;
-}
 
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
@@ -159,12 +106,7 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await FetchAuthorizedWorkers();
-      const dataFormat = autoFormatData(data);
-      dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
-    };
-    fetchData();
+    fetchWoker()
   }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -341,7 +283,6 @@ const ContentArea = ({ searchtxt }) => {
 
   const renderSubdata = (data) => {
     const list = [];
-    console.log(data, "subinfo");
     for (const key in data) {
       if (typeof data[key] === "object") {
         renderSubdata(data[key]);
@@ -359,7 +300,6 @@ const ContentArea = ({ searchtxt }) => {
     return list;
   };
   const fdata = files.data.getId(files.cdir);
-
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
