@@ -161,7 +161,6 @@ export const Worker = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await FetchAuthorizedWorkers();
-      console.log(data, "data fkae");
       const dataFormat = autoFormatData(data);
       dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
     };

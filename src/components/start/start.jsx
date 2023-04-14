@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
+import supabase from "../../supabase/createClient";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -106,7 +107,6 @@ export const StartMenu = () => {
   }, [query]);
 
   const userName = useSelector((state) => state.setting.person.name);
-  // const userName = useAuth().userProfile.email;
 
   return (
     <div
@@ -276,7 +276,7 @@ export const StartMenu = () => {
               <div className="powerCont" data-vis={start.pwctrl}>
                 <div
                   className="flex prtclk items-center gap-2"
-                  // onClick={signOut}
+                  onClick={supabase.auth.signOut}
                   data-action="WALLALOCK"
                 >
                   <svg
