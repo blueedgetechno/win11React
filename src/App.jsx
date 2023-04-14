@@ -14,7 +14,7 @@ import {
   WidPane,
 } from "./components/start";
 import Taskbar from "./components/taskbar";
-import { Background, BootScreen, LockScreen } from "./containers/background";
+import { Background } from "./containers/background";
 
 import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";

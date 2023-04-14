@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
-import login from "../../../components/login";
 
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
@@ -204,7 +203,8 @@ export const WnTerminal = () => {
     } else if (type == "hostname") {
       tmpStack.push("blue");
     } else if (type == "login") {
-      login();
+      // login();
+      // TODO supabase implement
       tmpStack.push("started login");
     } else if (type == "lang-test") {
       i18next.changeLanguage("fr-FR");

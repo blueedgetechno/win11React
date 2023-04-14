@@ -130,7 +130,7 @@ export const Camera = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="camcont">
-            <div className="camctrl">
+            {/* <div className="camctrl">
               <div
                 className="cmicon"
                 title={t("camera.take-photo")}
@@ -139,7 +139,7 @@ export const Camera = () => {
                 <Icon icon="camera" />
               </div>
               <canvas id="camcanvas"></canvas>
-            </div>
+            </div> */}
             <div className="vidcont">
               <div className="vidwrap">
                 <video
