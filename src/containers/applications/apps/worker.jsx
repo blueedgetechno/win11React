@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, fetchWoker, handleFileOpenWorker } from "../../../actions";
+import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
 import axios from "axios";
 import { FetchAuthorizedWorkers } from "../../../supabase/function";
@@ -106,7 +106,7 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
-    fetchWoker()
+    fetchWorker()
   }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {

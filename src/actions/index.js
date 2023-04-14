@@ -4,6 +4,8 @@ import { dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 import { CreateWorkerSession, DeactivateWorkerSession, FetchAuthorizedWorkers } from "../supabase/function";
 import { autoFormatData } from "../utils/formatData";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export const dispatchAction = (event) => {
   const action = {
@@ -283,7 +285,7 @@ export const handleFileOpenWorker = (id) => {
 // 
 
 //
-export const fetchWoker = async () => {
+export const fetchWorker = async () => {
   const data = await FetchAuthorizedWorkers();
   const dataFormat = autoFormatData(data);
   store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
@@ -295,13 +297,27 @@ export const deactiveWorkerSeesion = async (itemId) => {
   console.log(item);
   const { worker_session_id } = item.info
   if (!worker_session_id) return
-
+  Swal.fire({
+    title: 'Loading!',
+    text: 'Loading',
+  })
   const res = await DeactivateWorkerSession(worker_session_id)
   if (res instanceof Error) {
     console.log('err');
+    Swal.fire({
+      title: 'Error!',
+      text: 'Do you want to continue',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
     return
   }
-  fetchWoker()
+  Swal.fire({
+    title: 'Success!',
+    text: 'Sucess!',
+    icon: 'success'
+  })
+  fetchWorker()
 
 
   // dispatch ....
@@ -313,12 +329,22 @@ export const createWorkerSession = async (itemId) => {
   console.log(item);
   const { worker_profile_id, media_device } = item.info
   if (!worker_profile_id) return
+  Swal.fire({
+    title: 'Loading!',
+    text: 'Loading',
+  })
   const res = await CreateWorkerSession(worker_profile_id, media_device)
   if (res instanceof Error) {
     console.log('err');
+    Swal.fire({
+      title: 'Error!',
+      text: res,
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
     return
   }
-  fetchWoker()
+  fetchWorker()
   // dispath ...
 }
 
