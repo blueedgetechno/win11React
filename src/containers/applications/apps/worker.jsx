@@ -4,7 +4,7 @@ import { Icon, Image, ToolBar } from "../../../utils/general";
 import { dispatchAction, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
 import axios from "axios";
-import { FetchAuthorizedWorkers } from "../../../supabase/fucntion";
+import { FetchAuthorizedWorkers } from "../../../supabase/function";
 const NavTitle = (props) => {
   var src = props.icon || "folder";
 
@@ -147,7 +147,6 @@ function autoFormatData(data) {
   }
   return newData;
 }
-console.log(autoFormatData(test));
 
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);

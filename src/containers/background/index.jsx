@@ -5,7 +5,6 @@ import { Icon, Image } from "../../utils/general";
 import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
 import supabase from "../../supabase/createClient";
-import { useAuth } from "../../context/auth";
 
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
@@ -76,7 +75,6 @@ export const LockScreen = (props) => {
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
-  const { userProfile, signInWithGoogle } = useAuth();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);

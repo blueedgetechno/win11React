@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useAuth } from "../../context/auth";
 import { Icon } from "../../utils/general";
 
 export const StartMenu = () => {
@@ -58,7 +57,7 @@ export const StartMenu = () => {
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
   const [atab, setTab] = useState("All");
-  const { signOut } = useAuth();
+  // const { signOut } = useAuth();
 
   const dispatch = useDispatch();
   const tabSw = (e) => {
@@ -107,7 +106,7 @@ export const StartMenu = () => {
   }, [query]);
 
   // const userName = useSelector((state) => state.setting.person.name);
-  const userName = useAuth().userProfile.email;
+  // const userName = useAuth().userProfile.email;
 
   return (
     <div
@@ -277,7 +276,7 @@ export const StartMenu = () => {
               <div className="powerCont" data-vis={start.pwctrl}>
                 <div
                   className="flex prtclk items-center gap-2"
-                  onClick={signOut}
+                  // onClick={signOut}
                   data-action="WALLALOCK"
                 >
                   <svg

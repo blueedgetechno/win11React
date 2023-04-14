@@ -20,6 +20,7 @@ import { loadSettings } from "./actions";
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
+import { LockScreen } from "./containers/background";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -173,12 +174,13 @@ function App() {
   }, [verifyUserInfo]);
   if (!user.email) {
   }
+
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
         {wall.locked ? <LockScreen dir={wall.dir} /> : null}
-        {/*{!user.id  ? <LockScreen dir={wall.dir} /> : null}*/}
+        {!user.id  ? <LockScreen dir={wall.dir} /> : null}
         <div className="appwrap">
           <Background />
           {
