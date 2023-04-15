@@ -4,6 +4,7 @@ import { Icon, Image, ToolBar } from "../../../utils/general";
 import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
 import ReactModal from 'react-modal';
+import { combineText } from "../../../utils/combineText";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -290,7 +291,7 @@ const ContentArea = ({ searchtxt }) => {
       }
       list.push(
         <div className="wrapperText">
-          <p className="title">{data[key] && key}: </p>
+          <p className="title">{data[key] && combineText(key)}: </p>
           <p>{' '}{data[key]}</p>
         </div>
       );

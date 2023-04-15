@@ -22,6 +22,7 @@ import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
+import { combineText } from "./utils/combineText";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -242,7 +243,7 @@ const ModalInfo = () => {
       }
       list.push(
         <div >
-          <span className="font-medium">{data[key] && key}</span>: 
+          <span className="font-medium">{data[key] && combineText(key)}</span>: 
           <span> {typeof data[key] !== "object" && data[key]}</span>
           <div style={{
             marginLeft: 15
