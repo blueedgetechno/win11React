@@ -47,7 +47,6 @@ export const ActMenu = () => {
       payload: event.target.dataset.payload,
     };
     // Right click and open file in worker
-    console.log(action, 'action');
     if (action.type) {
       if (action.type === "FILEDIRWORKER") {
         Actions.handleFileOpenWorker(event.target.dataset.pid);

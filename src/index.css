@@ -2,7 +2,7 @@
 @tailwind utilities;
 
 *::selection {
-  background: initial;
+  /*background: initial;*/
 }
 
 body {
@@ -264,4 +264,32 @@ a {
   align-items: center;
   background: #010001;
   color: white;
+}
+
+.modalContent{
+  display: flex;
+  flex-direction: column;
+
+
+  position: absolute;
+  top: 10%;
+  right: 25%;
+  left: 25%;
+  bottom: 5%;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  outline: none;
+  overflow: hidden;
+
+ 
+}
+.selectText{
+  user-select: text;
+  -webkit-user-select: text;
+}
+.selectText::selection {
+  /*content: none;  */
+  background: inherit;
+  color: inherit;
 }

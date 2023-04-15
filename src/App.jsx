@@ -111,7 +111,7 @@ function App() {
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix"
@@ -167,7 +167,6 @@ function App() {
     if (error !== null) {
       throw new Error(error);
     }
-    console.log(data, "userin ofr");
     dispatch({ type: "ADD_USER", payload: data.user });
   }, [dispatch]);
 
@@ -216,40 +215,64 @@ function App() {
             // : null
           }
         </div>
-        <ModalInfo/>
+        <ModalInfo />
       </ErrorBoundary>
     </div>
   );
 }
 const ModalInfo = () => {
   const modalInfo = useSelector((state) => state.modal);
-  const {isOpen, data} = modalInfo
+  const { isOpen, data } = modalInfo
   const dispatch = useDispatch()
- 
+
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
-
+  console.log(modalInfo.data);
   function closeModal() {
-    dispatch({type: 'CLOSE_MODAL'})
+    dispatch({ type: 'CLOSE_MODAL' })
   }
+
+  const renderData = (data) => {
+    const list = [];
+    for (const key in data) {
+      if (key === "icon" || key =='spid') {
+        break
+      }
+      list.push(
+        <div >
+          <span className="font-medium">{data[key] && key}</span>: 
+          <span> {typeof data[key] !== "object" && data[key]}</span>
+          <div style={{
+            marginLeft: 15
+          }}>
+            {typeof data[key] == "object" && renderData(data[key])}
+          </div>
+        </div>
+      );
+    }
+
+    return list;
+  };
   return (
     <div>
       <ReactModal
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
+        className='modalContent '
+        overlayClassName='fixed inset-0'
+        //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
       >
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <div className="flex flex-col bg-[#eff4f9]">
+          <button className="self-end flex items-center bg-transparent outline-none border-none px-3 py-2 hover:bg-red-500" onClick={closeModal}>
+            <img className="w-[14px]" src="img/icon/ui/close.png" alt="" />
+          </button>
+        </div>
+        <div className="selectText d-flex overflow-scroll min-h-full p-5 pb-9">
+          {renderData(modalInfo.data)}
+        </div>
       </ReactModal>
     </div>
   )

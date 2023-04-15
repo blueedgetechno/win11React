@@ -283,7 +283,6 @@ export const handleFileOpenWorker = (id) => {
 
 export const handleOpenModal = (id) => {
   const foundItem = store.getState().worker.data.getId(id);
-  console.log(foundItem, 'foundItem');
   if (!foundItem) return
   store.dispatch({ type: 'OPEN_MODAL', payload: foundItem.info })
 

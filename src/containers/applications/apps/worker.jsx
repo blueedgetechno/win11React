@@ -281,18 +281,17 @@ const ContentArea = ({ searchtxt }) => {
     //setSubInfo(res)
     return res;
   }, [selected]);
+  console.log(subInfo, 'subinfo');
   const renderSubdata = (data) => {
     const list = [];
     for (const key in data) {
       if (typeof data[key] === "object") {
-        renderSubdata(data[key]);
+        break
       }
       list.push(
-        <div>
-          <span>
-            {data[key] && key}: {typeof data[key] !== "object" && data[key]}
-          </span>
-          {typeof data[key] == "object" && renderSubdata(data[key])}
+        <div className="wrapperText">
+          <p className="title">{data[key] && key}: </p>
+          <p>{' '}{data[key]}</p>
         </div>
       );
     }
@@ -360,20 +359,8 @@ const ContentArea = ({ searchtxt }) => {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               <Image src={`icon/win/worker_connect`} />
-              <h4>Worker 1</h4>
-              <div className="wrapperText">
-                <p className="title">Work group</p>
-                <p>WorkGroup</p>
-              </div>
-              <div className="wrapperText">
-                <p className="title">Processor</p>
-                <p>InterCore i7-13999k @3.3GHz</p>
-              </div>
-              <div className="wrapperText">
-                <p className="title">Work group</p>
-                <p>WorkGroup</p>
-              </div>
-              <div>{renderSubdata(subInfo?.info)}</div>
+             
+             {renderSubdata(subInfo?.info)}
             </div>
           </>
         }
