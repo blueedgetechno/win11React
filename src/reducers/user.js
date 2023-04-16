@@ -1,9 +1,9 @@
 import supabase from "../supabase/createClient";
 
-const defUser = async () => {
-  const { data, error } = await supabase.auth.getUser();
-  return data;
-};
+// const defUser = async () => {
+//   const { data, error } = await supabase.auth.getUser();
+//   return data;
+// };
 
 const userReducer = (state = {}, action) => {
   switch (action.type) {

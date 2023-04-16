@@ -304,7 +304,7 @@ const ContentArea = ({ searchtxt }) => {
       });
     };
     fetchProfile();
-  });
+  },[]);
 
   const renderSubdata = (data) => {
     const list = [];
