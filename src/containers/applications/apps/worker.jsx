@@ -309,22 +309,31 @@ const ContentArea = ({ searchtxt }) => {
   const renderSubdata = (data) => {
     const list = [];
     for (const key in data) {
-      if (key == "hardware") {
+      if (key == "hardware" || key == "media_config") {
         for (const hwkey in data[key]) {
-          if (hwkey == "NICs" || hwkey == "PublicIP" || hwkey == "PrivateIP") {
+
+          if ( hwkey == "NICs" || 
+              hwkey == "PublicIP" || 
+              hwkey == "PrivateIP") {
             continue;
           }
+
+          const renderobj = typeof data[key][hwkey] === "string" ? data[key][hwkey] : JSON.stringify(data[key][hwkey])
+
           list.push(
             <div className="wrapperText">
               <p className="title">
-                {data[key][hwkey] && combineText(hwkey)}:{" "}
+                {renderobj && combineText(hwkey)}:{" "}
               </p>
-              <p> {data[key][hwkey]}</p>
+              <p> {renderobj}</p>
             </div>
           );
         }
         continue;
       }
+
+
+
 
       if (
         typeof data[key] === "object" ||
@@ -333,6 +342,8 @@ const ContentArea = ({ searchtxt }) => {
         key == "account_id" ||
         key == "proxy_profile_id" ||
         key == "worker_profile_id" ||
+        key == "worker_session_id" || 
+        key == "user_session_id" || 
         key == "spid"
       ) {
         continue;
