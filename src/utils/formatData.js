@@ -28,17 +28,33 @@ export function autoFormatData(data) {
         newData.Account.data[proxy.name].data[worker.name].data = {};
         if (worker.data) {
           worker.data.forEach((session) => {
-            newData.Account.data[proxy.name].data[worker.name].data[ session.name ] = {};
-            newData.Account.data[proxy.name].data[worker.name].data[ session.name ].type = "folder";
-            newData.Account.data[proxy.name].data[worker.name].data[ session.name ].data = {};
-            newData.Account.data[proxy.name].data[worker.name].data[ session.name ].info = session.info;
+            newData.Account.data[proxy.name].data[worker.name].data[
+              session.name
+            ] = {};
+            newData.Account.data[proxy.name].data[worker.name].data[
+              session.name
+            ].type = "folder";
+            newData.Account.data[proxy.name].data[worker.name].data[
+              session.name
+            ].data = {};
+            newData.Account.data[proxy.name].data[worker.name].data[
+              session.name
+            ].info = session.info;
 
             if (session.data) {
               session.data.forEach((user_session) => {
-                newData.Account.data[proxy.name].data[worker.name].data[ session.name ].data[ user_session.name ] = {};
-                newData.Account.data[proxy.name].data[worker.name].data[ session.name ].data[ user_session.name ].info = user_session.info 
-                newData.Account.data[proxy.name].data[worker.name].data[ session.name ].data[ user_session.name ].type = "folder";
-                newData.Account.data[proxy.name].data[worker.name].data[ session.name ].data[ user_session.name ].data = {};
+                newData.Account.data[proxy.name].data[worker.name].data[
+                  session.name
+                ].data[user_session.name] = {};
+                newData.Account.data[proxy.name].data[worker.name].data[
+                  session.name
+                ].data[user_session.name].info = user_session.info;
+                newData.Account.data[proxy.name].data[worker.name].data[
+                  session.name
+                ].data[user_session.name].type = "folder";
+                newData.Account.data[proxy.name].data[worker.name].data[
+                  session.name
+                ].data[user_session.name].data = {};
               });
             }
           });
