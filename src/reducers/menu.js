@@ -272,8 +272,8 @@ const defState = {
       },
       {
         name: "Detail Info",
-        action: 'OPEN_MODAL',
-        payload: 'openmodal'
+        action: "OPEN_MODAL",
+        payload: "openmodal",
       },
     ],
   },

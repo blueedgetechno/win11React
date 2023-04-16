@@ -75,7 +75,7 @@ function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
   const user = useSelector((state) => state.user);
-  ReactModal.setAppElement('#root');
+  ReactModal.setAppElement("#root");
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -112,7 +112,7 @@ function App() {
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix"
@@ -223,30 +223,32 @@ function App() {
 }
 const ModalInfo = () => {
   const modalInfo = useSelector((state) => state.modal);
-  const { isOpen, data } = modalInfo
-  const dispatch = useDispatch()
+  const { isOpen, data } = modalInfo;
+  const dispatch = useDispatch();
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = "#f00";
   }
   function closeModal() {
-    dispatch({ type: 'CLOSE_MODAL' })
+    dispatch({ type: "CLOSE_MODAL" });
   }
 
   const renderData = (data) => {
     const list = [];
     for (const key in data) {
-      if (key === "icon" || key =='spid') {
-        break
+      if (key === "icon" || key == "spid") {
+        break;
       }
       list.push(
-        <div >
-          <span className="font-medium">{data[key] && combineText(key)}</span>: 
+        <div>
+          <span className="font-medium">{data[key] && combineText(key)}</span>:
           <span> {typeof data[key] !== "object" && data[key]}</span>
-          <div style={{
-            marginLeft: 15
-          }}>
+          <div
+            style={{
+              marginLeft: 15,
+            }}
+          >
             {typeof data[key] == "object" && renderData(data[key])}
           </div>
         </div>
@@ -261,12 +263,15 @@ const ModalInfo = () => {
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
-        className='modalContent '
-        overlayClassName='fixed inset-0'
+        className="modalContent "
+        overlayClassName="fixed inset-0"
         //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
       >
         <div className="flex flex-col bg-[#eff4f9]">
-          <button className="self-end flex items-center bg-transparent outline-none border-none px-3 py-2 hover:bg-red-500" onClick={closeModal}>
+          <button
+            className="self-end flex items-center bg-transparent outline-none border-none px-3 py-2 hover:bg-red-500"
+            onClick={closeModal}
+          >
             <img className="w-[14px]" src="img/icon/ui/close.png" alt="" />
           </button>
         </div>
@@ -275,7 +280,6 @@ const ModalInfo = () => {
         </div>
       </ReactModal>
     </div>
-  )
-
-}
+  );
+};
 export default App;

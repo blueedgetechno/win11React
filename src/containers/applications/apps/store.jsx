@@ -114,7 +114,7 @@ export const MicroStore = () => {
   };
 
   useEffect(() => {
-    setApps(advancedstoredata)
+    setApps(advancedstoredata);
     setFetch(1);
   }, [hide]);
 

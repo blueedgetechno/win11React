@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../actions";
+import {
+  dispatchAction,
+  fetchWorker,
+  handleFileOpenWorker,
+} from "../../../actions";
 import "./assets/fileexpo.scss";
-import ReactModal from 'react-modal';
+import ReactModal from "react-modal";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
 
@@ -95,8 +99,6 @@ const Dropdown = (props) => {
   );
 };
 
-
-
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
   const files = useSelector((state) => state.worker);
@@ -108,7 +110,7 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
-    fetchWorker()
+    fetchWorker();
   }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -273,18 +275,18 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
-  const [modalIsOpen, setModalOpen] = React.useState(false)
+  const [modalIsOpen, setModalOpen] = React.useState(false);
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   //const [subInfo, setSubInfo] = useState({})
-  const [userInfo,setuserInfo] = useState(null);
+  const [userInfo, setuserInfo] = useState(null);
 
   const subInfo = React.useMemo(() => {
     if (selected == null) {
       return {
-        info : userInfo
-      } 
+        info: userInfo,
+      };
     }
     const res = files.data.getId(selected);
     return res;
@@ -298,48 +300,48 @@ const ContentArea = ({ searchtxt }) => {
       }
 
       setuserInfo({
-        email : data.user.email
-      })
-    }
-    fetchProfile()
-  })
+        email: data.user.email,
+      });
+    };
+    fetchProfile();
+  });
 
   const renderSubdata = (data) => {
     const list = [];
     for (const key in data) {
-      if ( key == "hardware" ) {
+      if (key == "hardware") {
         for (const hwkey in data[key]) {
-          if (hwkey == "NICs" ||
-              hwkey == "PublicIP" ||
-              hwkey == "PrivateIP") {
-            continue
+          if (hwkey == "NICs" || hwkey == "PublicIP" || hwkey == "PrivateIP") {
+            continue;
           }
           list.push(
             <div className="wrapperText">
-              <p className="title">{data[key][hwkey] && combineText(hwkey)}: </p>
-              <p>{' '}{data[key][hwkey]}</p>
+              <p className="title">
+                {data[key][hwkey] && combineText(hwkey)}:{" "}
+              </p>
+              <p> {data[key][hwkey]}</p>
             </div>
           );
         }
-        continue 
+        continue;
       }
 
       if (
-        typeof data[key] === "object" || 
+        typeof data[key] === "object" ||
         key == "icon" ||
         key == "id" ||
         key == "account_id" ||
         key == "proxy_profile_id" ||
         key == "worker_profile_id" ||
-        key == "spid" 
+        key == "spid"
       ) {
-        continue 
+        continue;
       }
 
       list.push(
         <div className="wrapperText">
           <p className="title">{data[key] && combineText(key)}: </p>
-          <p>{' '}{data[key]}</p>
+          <p> {data[key]}</p>
         </div>
       );
     }
@@ -407,8 +409,8 @@ const ContentArea = ({ searchtxt }) => {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               <Image src={`icon/win/worker_connect`} />
-             
-             {renderSubdata(subInfo?.info)}
+
+              {renderSubdata(subInfo?.info)}
             </div>
           </>
         }
@@ -418,7 +420,7 @@ const ContentArea = ({ searchtxt }) => {
   );
 };
 
-const NavPane = ({ }) => {
+const NavPane = ({}) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -438,7 +440,7 @@ const NavPane = ({ }) => {
   );
 };
 
-const Ribbon = ({ }) => {
+const Ribbon = ({}) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -467,5 +469,3 @@ const Ribbon = ({ }) => {
     </div>
   );
 };
-
-
