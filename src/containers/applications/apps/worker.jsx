@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, handleFileOpenWorker } from "../../../actions";
+import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../actions";
 import "./assets/fileexpo.scss";
-import axios from "axios";
-import { FetchAuthorizedWorkers } from "../../../supabase/function";
+import ReactModal from 'react-modal';
+import { combineText } from "../../../utils/combineText";
+import supabase from "../../../supabase/createClient";
+
 const NavTitle = (props) => {
   var src = props.icon || "folder";
 
@@ -93,60 +95,7 @@ const Dropdown = (props) => {
   );
 };
 
-function autoFormatData(data) {
-  const newData = {};
-  newData.backup = {};
-  newData.backup.type = "folder";
-  newData.backup.name = "backup ";
-  newData.backup.info = {};
-  newData.backup.info.size = "";
-  newData.backup.info.used = "";
-  newData.backup.info.spid = "%worker%";
-  newData.backup.data = {};
-  for (const proxy of data.tree) {
-    newData.backup.data[proxy.name] = {};
-    newData.backup.data[proxy.name].type = "folder";
-    newData.backup.data[proxy.name].name = proxy.name;
-    newData.backup.data[proxy.name].info = proxy.info;
-    newData.backup.data[proxy.name].info.spid = "%config%";
-    newData.backup.data[proxy.name].data = {};
 
-    if (proxy.data) {
-      proxy.data.forEach((worker) => {
-        newData.backup.data[proxy.name].data[worker.name] = {};
-        newData.backup.data[proxy.name].data[worker.name].type = "folder";
-        newData.backup.data[proxy.name].data[worker.name].name = worker.name;
-        newData.backup.data[proxy.name].data[worker.name].info = worker.info;
-        newData.backup.data[proxy.name].data[worker.name].data = {};
-        if (worker.data) {
-          worker.data.forEach((session) => {
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ] = {};
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].type = "folder";
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].data = {};
-            newData.backup.data[proxy.name].data[worker.name].data[
-              session.name
-            ].info = session.info;
-
-            if (session.data) {
-              session.data.forEach((item, index) => {
-                newData.backup.data[proxy.name].data[worker.name].data[
-                  session.name
-                ].data[index] = { item };
-              });
-            }
-          });
-        }
-      });
-    }
-  }
-  return newData;
-}
 
 export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
@@ -159,12 +108,7 @@ export const Worker = () => {
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await FetchAuthorizedWorkers();
-      const dataFormat = autoFormatData(data);
-      dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
-    };
-    fetchData();
+    fetchWorker()
   }, []);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -329,29 +273,73 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
+  const [modalIsOpen, setModalOpen] = React.useState(false)
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   //const [subInfo, setSubInfo] = useState({})
+  const [userInfo,setuserInfo] = useState(null);
+
   const subInfo = React.useMemo(() => {
+    if (selected == null) {
+      return {
+        info : userInfo
+      } 
+    }
     const res = files.data.getId(selected);
-    //setSubInfo(res)
     return res;
   }, [selected]);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error !== null) {
+        throw new Error(error);
+      }
+
+      setuserInfo({
+        email : data.user.email
+      })
+    }
+    fetchProfile()
+  })
+
   const renderSubdata = (data) => {
     const list = [];
-    console.log(data, "subinfo");
     for (const key in data) {
-      if (typeof data[key] === "object") {
-        renderSubdata(data[key]);
+      if ( key == "hardware" ) {
+        for (const hwkey in data[key]) {
+          if (hwkey == "NICs" ||
+              hwkey == "PublicIP" ||
+              hwkey == "PrivateIP") {
+            continue
+          }
+          list.push(
+            <div className="wrapperText">
+              <p className="title">{data[key][hwkey] && combineText(hwkey)}: </p>
+              <p>{' '}{data[key][hwkey]}</p>
+            </div>
+          );
+        }
+        continue 
       }
+
+      if (
+        typeof data[key] === "object" || 
+        key == "icon" ||
+        key == "id" ||
+        key == "account_id" ||
+        key == "proxy_profile_id" ||
+        key == "worker_profile_id" ||
+        key == "spid" 
+      ) {
+        continue 
+      }
+
       list.push(
-        <div>
-          <span>
-            {data[key] && key}: {typeof data[key] !== "object" && data[key]}
-          </span>
-          {typeof data[key] == "object" && renderSubdata(data[key])}
+        <div className="wrapperText">
+          <p className="title">{data[key] && combineText(key)}: </p>
+          <p>{' '}{data[key]}</p>
         </div>
       );
     }
@@ -359,7 +347,6 @@ const ContentArea = ({ searchtxt }) => {
     return list;
   };
   const fdata = files.data.getId(files.cdir);
-
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -420,29 +407,18 @@ const ContentArea = ({ searchtxt }) => {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               <Image src={`icon/win/worker_connect`} />
-              <h4>Worker 1</h4>
-              <div className="wrapperText">
-                <p className="title">Work group</p>
-                <p>WorkGroup</p>
-              </div>
-              <div className="wrapperText">
-                <p className="title">Processor</p>
-                <p>InterCore i7-13999k @3.3GHz</p>
-              </div>
-              <div className="wrapperText">
-                <p className="title">Work group</p>
-                <p>WorkGroup</p>
-              </div>
-              <div>{renderSubdata(subInfo?.info)}</div>
+             
+             {renderSubdata(subInfo?.info)}
             </div>
           </>
         }
       </div>
+      {/*<ModalInfo modalIsOpen={modalInfo.isOpen} setModalOpen={()=>{dispatch({type:'CLOSE_MODAL'})}} data={modalInfo.data}/>*/}
     </div>
   );
 };
 
-const NavPane = ({}) => {
+const NavPane = ({ }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -462,7 +438,7 @@ const NavPane = ({}) => {
   );
 };
 
-const Ribbon = ({}) => {
+const Ribbon = ({ }) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -491,3 +467,5 @@ const Ribbon = ({}) => {
     </div>
   );
 };
+
+

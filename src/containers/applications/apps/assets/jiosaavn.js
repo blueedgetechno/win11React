@@ -122,7 +122,6 @@ class JioSaavn {
           resolve([this.mapToSong(res)]);
         })
         .catch((err) => {
-          console.log(err);
           resolve(this.dfdata);
         });
     });

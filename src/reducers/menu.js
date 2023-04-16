@@ -259,9 +259,21 @@ const defState = {
         action: "CONNECTWORKER",
         payload: "connect",
       },
+      ,
       {
-        name: "Properties",
-        dsb: true,
+        name: "Create Session",
+        action: "CREATESESSION",
+        payload: "connect",
+      },
+      {
+        name: "Deactivate Session",
+        action: "DEACTIVATESESSION",
+        payload: "connect",
+      },
+      {
+        name: "Detail Info",
+        action: 'OPEN_MODAL',
+        payload: 'openmodal'
       },
     ],
   },

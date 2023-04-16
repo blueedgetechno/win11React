@@ -221,7 +221,7 @@ export const EdgeMenu = () => {
               <iframe
                 src={!isTyping ? url : hist[0]}
                 id="isite"
-                frameborder="0"
+                frameBorder="0"
                 className="w-full h-full"
                 title="site"
               ></iframe>

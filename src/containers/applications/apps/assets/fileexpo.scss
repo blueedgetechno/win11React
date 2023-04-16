@@ -235,7 +235,7 @@
   .subinfo {
     border: 0 solid var(--gray2);
     border-left-width: medium;
-    width: 200px;
+    width: 250px;
     height: 100%;
     padding: 8px;
     font-size: 12px;
@@ -249,7 +249,9 @@
       display: flex;
       width: 100%;
       .title {
-        min-width: 80px;
+        width: 100px;
+        min-width: 100px;
+        font-weight: 500;
       }
     }
   }

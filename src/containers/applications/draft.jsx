@@ -37,7 +37,7 @@ export const IFrame = (props) => {
               src={data.url}
               allow="camera;microphone"
               className="w-full h-full"
-              frameborder="0"
+              frameBorder="0"
             ></iframe>
           </div>
         </div>

@@ -52,7 +52,7 @@ const workerReducer = (state = defState, action) => {
   }
 
   tmp.cdir = tmp.hist[tmp.hid];
-  if (tmp.cdir.includes("%")) {
+  if (tmp.cdir?.includes("%")) {
     if (tmp.data.special[tmp.cdir] != null) {
       tmp.cdir = tmp.data.special[tmp.cdir];
       tmp[tmp.hid] = tmp.cdir;
