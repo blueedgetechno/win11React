@@ -339,6 +339,7 @@ const ContentArea = ({ searchtxt }) => {
         typeof data[key] === "object" ||
         key == "icon" ||
         key == "id" ||
+        key == "ended" ||
         key == "account_id" ||
         key == "proxy_profile_id" ||
         key == "worker_profile_id" ||
