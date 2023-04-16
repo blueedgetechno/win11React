@@ -230,7 +230,6 @@ const ModalInfo = () => {
     // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
-  console.log(modalInfo.data);
   function closeModal() {
     dispatch({ type: 'CLOSE_MODAL' })
   }

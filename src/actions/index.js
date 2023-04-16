@@ -298,9 +298,7 @@ export const fetchWorker = async () => {
 }
 export const deactiveWorkerSeesion = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId)
-  console.log(item);
   if (!item) return
-  console.log(item);
   const { worker_session_id } = item.info
   if (!worker_session_id) return
   Swal.fire({
@@ -309,7 +307,6 @@ export const deactiveWorkerSeesion = async (itemId) => {
   })
   const res = await DeactivateWorkerSession(worker_session_id)
   if (res instanceof Error) {
-    console.log('err');
     Swal.fire({
       title: 'Error!',
       text: 'Do you want to continue',

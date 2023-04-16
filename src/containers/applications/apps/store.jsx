@@ -4,6 +4,7 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import axios from "axios";
 import storedata from "./assets/store.json";
+import advancedstoredata from "./assets/advancedstore.json";
 import { installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
 
@@ -113,22 +114,8 @@ export const MicroStore = () => {
   };
 
   useEffect(() => {
-    if (!wnapp.hide && fetchState == 0) {
-      var url = queryParams.get("customstore");
-      if (!url) url = "https://store.win11react.com/store/index.json";
-
-      axios
-        .get(url)
-        .then((res) => res.data)
-        .then((data) => {
-          if (data) setApps(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      setFetch(1);
-    }
+    setApps(advancedstoredata)
+    setFetch(1);
   }, [hide]);
 
   return (

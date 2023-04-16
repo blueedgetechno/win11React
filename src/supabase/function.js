@@ -53,7 +53,5 @@ export const CreateWorkerSession = async (worker_profile_id, media) => {
     method: 'POST',
   })
 
-  console.log(error);
-
   return error == null ? data : new Error(error + ":" + data)
 }

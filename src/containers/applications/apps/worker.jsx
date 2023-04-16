@@ -5,6 +5,7 @@ import { dispatchAction, fetchWorker, handleFileOpenWorker } from "../../../acti
 import "./assets/fileexpo.scss";
 import ReactModal from 'react-modal';
 import { combineText } from "../../../utils/combineText";
+import supabase from "../../../supabase/createClient";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -277,18 +278,64 @@ const ContentArea = ({ searchtxt }) => {
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   //const [subInfo, setSubInfo] = useState({})
+  const [userInfo,setuserInfo] = useState(null);
+
   const subInfo = React.useMemo(() => {
+    if (selected == null) {
+      return {
+        info : userInfo
+      } 
+    }
     const res = files.data.getId(selected);
-    //setSubInfo(res)
     return res;
   }, [selected]);
-  console.log(subInfo, 'subinfo');
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error !== null) {
+        throw new Error(error);
+      }
+
+      setuserInfo({
+        email : data.user.email
+      })
+    }
+    fetchProfile()
+  })
+
   const renderSubdata = (data) => {
     const list = [];
     for (const key in data) {
-      if (typeof data[key] === "object") {
-        break
+      if ( key == "hardware" ) {
+        for (const hwkey in data[key]) {
+          if (hwkey == "NICs" ||
+              hwkey == "PublicIP" ||
+              hwkey == "PrivateIP") {
+            continue
+          }
+          list.push(
+            <div className="wrapperText">
+              <p className="title">{data[key][hwkey] && combineText(hwkey)}: </p>
+              <p>{' '}{data[key][hwkey]}</p>
+            </div>
+          );
+        }
+        continue 
       }
+
+      if (
+        typeof data[key] === "object" || 
+        key == "icon" ||
+        key == "id" ||
+        key == "account_id" ||
+        key == "proxy_profile_id" ||
+        key == "worker_profile_id" ||
+        key == "spid" 
+      ) {
+        continue 
+      }
+
       list.push(
         <div className="wrapperText">
           <p className="title">{data[key] && combineText(key)}: </p>
