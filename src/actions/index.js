@@ -8,9 +8,10 @@ import {
   FetchAuthorizedWorkers,
 } from "../supabase/function";
 import { autoFormatData } from "../utils/formatData";
-import Swal from "sweetalert2/dist/sweetalert2.js";
+import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { isActive } from "../utils/isActive";
+import { log } from "../lib/log";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -307,64 +308,35 @@ export const deactiveWorkerSeesion = async (itemId) => {
 
   if (ended || !worker_session_id) return
 
-  Swal.fire({
-    title: "Loading!",
-    text: "Loading",
-    showCancelButton: false,
-    showConfirmButton: false
-  });
-
-
+  log({ type: "loading" })
   const res = await DeactivateWorkerSession(worker_session_id);
   if (res instanceof Error) {
-    Swal.fire({
-      title: "Error!",
-      text: "Do you want to continue",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
+    log({ type: 'error', content: res })
     return;
   }
-  Swal.fire({
-    title: "Success!",
-    text: "Sucess!",
-    icon: "success",
-    timer: 1000,
-
-  });
+  log({ type: 'sucess' })
   fetchWorker();
 
   // dispatch ....
 };
 
 export const createWorkerSession = async (itemId) => {
+
   const item = store.getState().worker.data.getId(itemId);
 
   if (!item) return;
 
   const { worker_profile_id, media_device, last_check } = item.info;
   if (!worker_profile_id || !isActive(last_check)) return;
-  Swal.fire({
-    title: "Loading!",
-    text: "Loading",
-    showCancelButton: false,
-    showConfirmButton: false
-  });
+
+  log({ type: 'loading' })
+
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
-    console.log("err");
-    Swal.fire({
-      title: "Error!",
-      text: res,
-      icon: "error",
-    });
+    log({ type: 'error', content: res })
     return;
   }
-  Swal.fire({
-    title: "Success!",
-    text: "Sucess!",
-    icon: "success",
-  });
+  log({ type: 'success' })
   fetchWorker();
   // dispath ...
 };
