@@ -10,6 +10,7 @@ import {
 import { autoFormatData } from "../utils/formatData";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { isActive } from "../utils/isActive";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -298,6 +299,7 @@ export const fetchWorker = async () => {
   const dataFormat = autoFormatData(data);
   store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
 };
+
 export const deactiveWorkerSeesion = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item) return;
@@ -337,11 +339,11 @@ export const deactiveWorkerSeesion = async (itemId) => {
 
 export const createWorkerSession = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
-  console.log(122);
+
   if (!item) return;
-  console.log(item);
-  const { worker_profile_id, media_device } = item.info;
-  if (!worker_profile_id) return;
+
+  const { worker_profile_id, media_device, last_check } = item.info;
+  if (!worker_profile_id || !isActive(last_check)) return;
   Swal.fire({
     title: "Loading!",
     text: "Loading",
