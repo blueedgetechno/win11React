@@ -237,7 +237,7 @@ const ModalInfo = () => {
   const renderData = (data) => {
     const list = [];
     for (const key in data) {
-      if (key === "icon" || key == "spid") {
+      if (key === "icon" || key === "spid" || key === 'menu') {
         break;
       }
       list.push(
