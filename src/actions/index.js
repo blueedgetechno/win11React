@@ -301,12 +301,15 @@ export const fetchWorker = async () => {
 export const deactiveWorkerSeesion = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item) return;
-  const { worker_session_id } = item.info;
+  const { worker_session_id, ended } = item.info;
+  console.log(ended);
   if (!worker_session_id) return;
   Swal.fire({
     title: "Loading!",
     text: "Loading",
   });
+
+
   const res = await DeactivateWorkerSession(worker_session_id);
   if (res instanceof Error) {
     Swal.fire({

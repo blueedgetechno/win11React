@@ -306,7 +306,6 @@ const ContentArea = ({ searchtxt }) => {
   }, []);
 
   const renderSubdata = (data) => {
-    console.log('render sub data');
     const list = [];
     for (const key in data) {
       if (key == "hardware" || key == "media_config") {
@@ -380,8 +379,14 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
-  const renderIconName = (lastcheck) =>{
-    const isOnline = isActive(lastcheck)
+  const renderIconName = (lastcheckOrEnded) =>{
+    let isOnline
+    if (typeof lastcheckOrEnded =='boolean') {
+      isOnline = lastcheckOrEnded
+    } 
+    else{
+      isOnline = isActive(lastcheckOrEnded)
+    }
     
     if(isOnline){
       return 'worker_connect'
@@ -426,7 +431,7 @@ const ContentArea = ({ searchtxt }) => {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               
-              {subInfo?.info.menu == 'worker' ? <Image src={`icon/win/${renderIconName(subInfo?.info?.last_check ?? '')}`} />  : null}
+              {subInfo?.info.menu == 'worker' || subInfo?.info.menu == 'session'  ? <Image src={`icon/win/${renderIconName(subInfo?.info?.last_check ?? subInfo?.info?.ended)}`} />  : null}
 
               {renderSubdata(subInfo?.info)}
             </div>
@@ -445,13 +450,7 @@ const NavPane = ({}) => {
   return (
     <div className="navpane win11Scroll">
       <div className="extcont">
-        <Dropdown icon="thispc" title="Worker" action="" isDropped>
-          {
-            //special?.map((item, index)=>(
-            //	<Dropdown icon="folder" title="" spid="%worker%"/>
-            //))
-          }
-          <Dropdown icon="folder" title="Workder" spid="%worker%" />
+        <Dropdown icon="thispc" title="Worker" action="" >
         </Dropdown>
       </div>
     </div>
