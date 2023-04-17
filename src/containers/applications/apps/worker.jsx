@@ -415,7 +415,7 @@ const ContentArea = ({ searchtxt }) => {
                   onDoubleClick={handleDouble}
                   data-menu={item.info.menu}
                 >
-                  <Image src={`icon/win/${item.info.icon || 'folder'}`} />
+                  <Image src={`icon/win/${renderIconName(item.info?.last_check ?? item.info?.ended)}`} />
                   <span>{item.name}</span>
                 </div>
               )
