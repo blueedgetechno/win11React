@@ -302,11 +302,14 @@ export const deactiveWorkerSeesion = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item) return;
   const { worker_session_id, ended } = item.info;
-  console.log(ended);
-  if (!worker_session_id) return;
+
+  if (ended || !worker_session_id) return
+
   Swal.fire({
     title: "Loading!",
     text: "Loading",
+    showCancelButton: false,
+    showConfirmButton: false
   });
 
 
@@ -316,7 +319,7 @@ export const deactiveWorkerSeesion = async (itemId) => {
       title: "Error!",
       text: "Do you want to continue",
       icon: "error",
-      confirmButtonText: "Cool",
+      confirmButtonText: "Ok",
     });
     return;
   }
@@ -324,6 +327,8 @@ export const deactiveWorkerSeesion = async (itemId) => {
     title: "Success!",
     text: "Sucess!",
     icon: "success",
+    timer: 1000,
+
   });
   fetchWorker();
 
@@ -332,6 +337,7 @@ export const deactiveWorkerSeesion = async (itemId) => {
 
 export const createWorkerSession = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
+  console.log(122);
   if (!item) return;
   console.log(item);
   const { worker_profile_id, media_device } = item.info;
@@ -339,6 +345,8 @@ export const createWorkerSession = async (itemId) => {
   Swal.fire({
     title: "Loading!",
     text: "Loading",
+    showCancelButton: false,
+    showConfirmButton: false
   });
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
@@ -347,10 +355,14 @@ export const createWorkerSession = async (itemId) => {
       title: "Error!",
       text: res,
       icon: "error",
-      confirmButtonText: "Cool",
     });
     return;
   }
+  Swal.fire({
+    title: "Success!",
+    text: "Sucess!",
+    icon: "success",
+  });
   fetchWorker();
   // dispath ...
 };
