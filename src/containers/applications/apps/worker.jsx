@@ -10,6 +10,7 @@ import "./assets/fileexpo.scss";
 import ReactModal from "react-modal";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
+import { isActive } from "../../../utils/isActive";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -275,11 +276,9 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
-  const [modalIsOpen, setModalOpen] = React.useState(false);
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
-  //const [subInfo, setSubInfo] = useState({})
   const [userInfo, setuserInfo] = useState(null);
 
   const subInfo = React.useMemo(() => {
@@ -307,6 +306,7 @@ const ContentArea = ({ searchtxt }) => {
   }, []);
 
   const renderSubdata = (data) => {
+    console.log('render sub data');
     const list = [];
     for (const key in data) {
       if (key == "hardware" || key == "media_config") {
@@ -323,7 +323,7 @@ const ContentArea = ({ searchtxt }) => {
           list.push(
             <div className="wrapperText">
               <p className="title">{renderobj && combineText(hwkey)}: </p>
-              <p> {renderobj}</p>
+              <p className="content"> {renderobj}</p>
             </div>
           );
         }
@@ -340,7 +340,8 @@ const ContentArea = ({ searchtxt }) => {
         key == "worker_profile_id" ||
         key == "worker_session_id" ||
         key == "user_session_id" ||
-        key == "spid"
+        key == "spid" ||
+        key == "menu"
       ) {
         continue;
       }
@@ -348,7 +349,7 @@ const ContentArea = ({ searchtxt }) => {
       list.push(
         <div className="wrapperText">
           <p className="title">{data[key] && combineText(key)}: </p>
-          <p> {data[key]}</p>
+          <p className="content"> {data[key]}</p>
         </div>
       );
     }
@@ -356,6 +357,7 @@ const ContentArea = ({ searchtxt }) => {
     return list;
   };
   const fdata = files.data.getId(files.cdir);
+  console.log(subInfo, 'subInfo');
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -378,6 +380,15 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
+  const renderIconName = (lastcheck) =>{
+    const isOnline = isActive(lastcheck)
+    
+    if(isOnline){
+      return 'worker_connect'
+    }
+    return 'worker_disconnect'
+
+  }
   return (
     <div
       className="contentarea"
@@ -395,12 +406,11 @@ const ContentArea = ({ searchtxt }) => {
                   className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                   data-id={item.id}
                   data-focus={selected == item.id}
-                  //data-focus={false}
                   onClick={handleClick}
                   onDoubleClick={handleDouble}
-                  data-menu="worker"
+                  data-menu={item.info.menu}
                 >
-                  <Image src={`icon/win/${item.info.icon}`} />
+                  <Image src={`icon/win/${item.info.icon || 'folder'}`} />
                   <span>{item.name}</span>
                 </div>
               )
@@ -415,7 +425,8 @@ const ContentArea = ({ searchtxt }) => {
         {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
-              <Image src={`icon/win/worker_connect`} />
+              
+              {subInfo?.info.menu == 'worker' ? <Image src={`icon/win/${renderIconName(subInfo?.info?.last_check ?? '')}`} />  : null}
 
               {renderSubdata(subInfo?.info)}
             </div>
