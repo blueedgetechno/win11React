@@ -6,6 +6,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Settings",
     "File Explorer",
     "Browser",
+    "Terminal",
     "Store",
     "Spotify",
   ],

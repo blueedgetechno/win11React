@@ -4,6 +4,7 @@ import i18next from "i18next";
 
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
+import supabase from "../../../supabase/createClient"
 
 export const WnTerminal = () => {
   const wnapp = useSelector((state) => state.apps.terminal);
@@ -254,6 +255,27 @@ export const WnTerminal = () => {
       for (var i = 0; i < helpArr.length; i++) {
         tmpStack.push(helpArr[i]);
       }
+    } else if (type == "vendor" && arg == "keygen") {
+      const result = await supabase.functions.invoke('user_keygen',{
+        body: {},
+        headers: {
+          access_token: (await supabase.auth.getSession()).data?.session?.access_token
+        }
+      })
+      navigator.clipboard.writeText(result.data.key);
+      tmpStack.push("copied apikey to your clipboard");
+    } else if (type == "proxy" && arg == "register") {
+      const result = await supabase.functions.invoke('proxy_register',{
+        body: {
+          public_ip: await (await fetch("https://api64.ipify.org")).text()
+        },
+        headers: {
+          access_token: (await supabase.auth.getSession()).data?.session?.access_token
+        }
+      })
+      navigator.clipboard.writeText(JSON.stringify(result.data));
+      tmpStack.push("copied proxy credential to your clipboard");
+
     } else if (type == "") {
     } else {
       tmpStack.push(
