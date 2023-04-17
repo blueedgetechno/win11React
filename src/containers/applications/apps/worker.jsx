@@ -382,7 +382,7 @@ const ContentArea = ({ searchtxt }) => {
   const renderIconName = (lastcheckOrEnded) =>{
     let isOnline
     if (typeof lastcheckOrEnded =='boolean') {
-      isOnline = lastcheckOrEnded
+      isOnline = !lastcheckOrEnded
     } 
     else{
       isOnline = isActive(lastcheckOrEnded)
