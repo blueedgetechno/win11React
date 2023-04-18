@@ -383,9 +383,12 @@ const ContentArea = ({ searchtxt }) => {
     if (info.ended != undefined && typeof info.ended == "boolean") {
       return !info.ended ? "worker_connect" : "worker_disconnect";
     }
-    if(info.last_check != undefined ){
-      const time = Date.now() - Date.parse(info.last_check) + ((new Date()).getTimezoneOffset() * 60 * 1000)
-      return time < 3 * 60 * 1000 ? 'worker_connect' : 'worker_disconnect'
+    if (info.last_check != undefined) {
+      const time =
+        Date.now() -
+        Date.parse(info.last_check) +
+        new Date().getTimezoneOffset() * 60 * 1000;
+      return time < 3 * 60 * 1000 ? "worker_connect" : "worker_disconnect";
     }
 
     return "worker_connect";
