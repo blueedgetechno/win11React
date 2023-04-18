@@ -113,6 +113,7 @@ export const LockScreen = (props) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        redirectTo: `https://win11.thinkmay.net`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
