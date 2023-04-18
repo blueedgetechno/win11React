@@ -8,8 +8,10 @@ import {
   FetchAuthorizedWorkers,
 } from "../supabase/function";
 import { autoFormatData } from "../utils/formatData";
-import Swal from "sweetalert2/dist/sweetalert2.js";
+import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { isActive } from "../utils/isActive";
+import { log } from "../lib/log";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -197,8 +199,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -218,7 +220,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -232,7 +234,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -276,12 +278,11 @@ export const handleFileOpenWorker = (id) => {
   // handle double click open
   const item = store.getState().worker.data.getId(id);
   if (item != null) {
-    if (item.type == "folder") {
+    if (item.type !== "file") {
       store.dispatch({ type: "FILEDIRWORKER", payload: item.id });
     }
-    if (item.type == "file") {
-      console.log("object");
-    }
+
+    //console.log("user");
   }
 };
 
@@ -299,56 +300,43 @@ export const fetchWorker = async () => {
   const dataFormat = autoFormatData(data);
   store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
 };
+
 export const deactiveWorkerSeesion = async (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item) return;
-  const { worker_session_id } = item.info;
-  if (!worker_session_id) return;
-  Swal.fire({
-    title: "Loading!",
-    text: "Loading",
-  });
+  const { worker_session_id, ended } = item.info;
+
+  if (ended || !worker_session_id) return
+
+  log({ type: "loading" })
   const res = await DeactivateWorkerSession(worker_session_id);
   if (res instanceof Error) {
-    Swal.fire({
-      title: "Error!",
-      text: "Do you want to continue",
-      icon: "error",
-      confirmButtonText: "Cool",
-    });
+    log({ type: 'error', content: res })
     return;
   }
-  Swal.fire({
-    title: "Success!",
-    text: "Sucess!",
-    icon: "success",
-  });
+  log({ type: 'sucess' })
   fetchWorker();
 
   // dispatch ....
 };
 
 export const createWorkerSession = async (itemId) => {
+
   const item = store.getState().worker.data.getId(itemId);
+
   if (!item) return;
-  console.log(item);
-  const { worker_profile_id, media_device } = item.info;
-  if (!worker_profile_id) return;
-  Swal.fire({
-    title: "Loading!",
-    text: "Loading",
-  });
+
+  const { worker_profile_id, media_device, last_check } = item.info;
+  if (!worker_profile_id || !isActive(last_check)) return;
+
+  log({ type: 'loading' })
+
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
-    console.log("err");
-    Swal.fire({
-      title: "Error!",
-      text: res,
-      icon: "error",
-      confirmButtonText: "Cool",
-    });
+    log({ type: 'error', content: res })
     return;
   }
+  log({ type: 'success' })
   fetchWorker();
   // dispath ...
 };

@@ -10,6 +10,7 @@ import "./assets/fileexpo.scss";
 import ReactModal from "react-modal";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
+import { isActive } from "../../../utils/isActive";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -275,11 +276,9 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt }) => {
-  const [modalIsOpen, setModalOpen] = React.useState(false);
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
-  //const [subInfo, setSubInfo] = useState({})
   const [userInfo, setuserInfo] = useState(null);
 
   const subInfo = React.useMemo(() => {
@@ -323,7 +322,7 @@ const ContentArea = ({ searchtxt }) => {
           list.push(
             <div className="wrapperText">
               <p className="title">{renderobj && combineText(hwkey)}: </p>
-              <p> {renderobj}</p>
+              <p className="content"> {renderobj}</p>
             </div>
           );
         }
@@ -340,7 +339,8 @@ const ContentArea = ({ searchtxt }) => {
         key == "worker_profile_id" ||
         key == "worker_session_id" ||
         key == "user_session_id" ||
-        key == "spid"
+        key == "spid" ||
+        key == "menu"
       ) {
         continue;
       }
@@ -348,7 +348,7 @@ const ContentArea = ({ searchtxt }) => {
       list.push(
         <div className="wrapperText">
           <p className="title">{data[key] && combineText(key)}: </p>
-          <p> {data[key]}</p>
+          <p className="content"> {data[key]}</p>
         </div>
       );
     }
@@ -378,6 +378,19 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
+  const renderIconName = (info) =>{
+    if (info == undefined) {
+      return 'worker_disconnect'
+    }
+    if(info.ended != undefined && typeof info.ended == "boolean"){
+      return !info.ended ? 'worker_connect' : 'worker_disconnect'
+    }
+    if(info.last_check != undefined ){
+      return (Date.now() - Date.parse(info?.lastcheck)) > 10 * 1000 ? 'worker_connect' : 'worker_disconnect'
+    }
+
+    return 'worker_connect'
+  }
   return (
     <div
       className="contentarea"
@@ -395,12 +408,11 @@ const ContentArea = ({ searchtxt }) => {
                   className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                   data-id={item.id}
                   data-focus={selected == item.id}
-                  //data-focus={false}
                   onClick={handleClick}
                   onDoubleClick={handleDouble}
-                  data-menu="worker"
+                  data-menu={item.info.menu}
                 >
-                  <Image src={`icon/win/${item.info.icon}`} />
+                  <Image src={`icon/win/${renderIconName(item.info)}`} />
                   <span>{item.name}</span>
                 </div>
               )
@@ -415,7 +427,8 @@ const ContentArea = ({ searchtxt }) => {
         {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
-              <Image src={`icon/win/worker_connect`} />
+              
+              {subInfo?.info.menu == 'worker' || subInfo?.info.menu == 'session'  ? <Image src={`icon/win/${renderIconName(subInfo?.info?.last_check ?? subInfo?.info?.ended)}`} />  : null}
 
               {renderSubdata(subInfo?.info)}
             </div>
@@ -434,13 +447,7 @@ const NavPane = ({}) => {
   return (
     <div className="navpane win11Scroll">
       <div className="extcont">
-        <Dropdown icon="thispc" title="Worker" action="" isDropped>
-          {
-            //special?.map((item, index)=>(
-            //	<Dropdown icon="folder" title="" spid="%worker%"/>
-            //))
-          }
-          <Dropdown icon="folder" title="Workder" spid="%worker%" />
+        <Dropdown icon="thispc" title="Worker" action="" >
         </Dropdown>
       </div>
     </div>

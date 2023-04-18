@@ -19,7 +19,19 @@ const defState = {
       width: "310px",
       secwid: "200px",
     },
+    proxy: {
+      width: "150px",
+      secwid: "100px",
+    },
     worker: {
+      width: "150px",
+      secwid: "100px",
+    },
+    session: {
+      width: "150px",
+      secwid: "100px",
+    },
+    user: {
       width: "150px",
       secwid: "100px",
     },
@@ -259,15 +271,9 @@ const defState = {
         action: "CONNECTWORKER",
         payload: "connect",
       },
-      ,
       {
         name: "Create Session",
         action: "CREATESESSION",
-        payload: "connect",
-      },
-      {
-        name: "Deactivate Session",
-        action: "DEACTIVATESESSION",
         payload: "connect",
       },
       {
@@ -276,6 +282,47 @@ const defState = {
         payload: "openmodal",
       },
     ],
+    proxy: [
+      {
+        name: "Open",
+        action: "FILEDIRWORKER",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "OPEN_MODAL",
+        payload: "openmodal",
+      },
+    ],
+    session: [
+      {
+        name: "Open",
+        action: "FILEDIRWORKER"
+      },
+      {
+        name: "Deactivate Session",
+        action: "DEACTIVATESESSION",
+        payload: "connect",
+      },
+      {
+      //   name: "Get remote URL", // TODO
+      //   action: "REMOTEURL",
+      //   payload: "remote",
+      // },
+      // {
+        name: "Detail",
+        action: "OPEN_MODAL",
+        payload: "detail",
+      },
+
+    ],
+    user: [
+      {
+        name: "Detail",
+        action: "OPEN_MODAL",
+        payload: "detail"
+      }
+    ]
   },
 };
 
