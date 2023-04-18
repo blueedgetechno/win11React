@@ -4,7 +4,7 @@ export const FetchAuthorizedWorkers = async () => {
   const session = await supabase.auth.getSession();
   if (session.error != null) return new Error(session.error.message);
 
-  const body = JSON.stringify({});
+  const body = JSON.stringify({use_case: 'web'});
   const { data, error } = await supabase.functions.invoke(
     "worker_profile_fetch",
     {

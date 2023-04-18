@@ -7,10 +7,8 @@ import {
   handleFileOpenWorker,
 } from "../../../actions";
 import "./assets/fileexpo.scss";
-import ReactModal from "react-modal";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
-import { isActive } from "../../../utils/isActive";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -386,7 +384,8 @@ const ContentArea = ({ searchtxt }) => {
       return !info.ended ? 'worker_connect' : 'worker_disconnect'
     }
     if(info.last_check != undefined ){
-      return (Date.now() - Date.parse(info?.lastcheck)) > 10 * 1000 ? 'worker_connect' : 'worker_disconnect'
+      const time = Date.now() - Date.parse(info.last_check) + ((new Date()).getTimezoneOffset() * 60 * 1000)
+      return time < 3 * 60 * 1000 ? 'worker_connect' : 'worker_disconnect'
     }
 
     return 'worker_connect'
