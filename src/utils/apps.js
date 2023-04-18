@@ -4,10 +4,10 @@ import store from "../containers/applications/apps/assets/advancedstore.json";
 export const gene_name = () =>
   Math.random().toString(36).substring(2, 10).toUpperCase();
 
-let installed = JSON.parse(localStorage.getItem("installed") || "[]");
-console.log(installed);
+// let installed = JSON.parse(localStorage.getItem("installed") || "[]");
+// console.log(installed);
 // let installed = [store.at(1)]
-installed = [];
+let installed = [];
 
 const apps = [
   {
