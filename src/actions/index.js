@@ -199,8 +199,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -220,7 +220,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -234,7 +234,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -306,22 +306,21 @@ export const deactiveWorkerSeesion = async (itemId) => {
   if (!item) return;
   const { worker_session_id, ended } = item.info;
 
-  if (ended || !worker_session_id) return
+  if (ended || !worker_session_id) return;
 
-  log({ type: "loading" })
+  log({ type: "loading" });
   const res = await DeactivateWorkerSession(worker_session_id);
   if (res instanceof Error) {
-    log({ type: 'error', content: res })
+    log({ type: "error", content: res });
     return;
   }
-  log({ type: 'sucess' })
+  log({ type: "sucess" });
   fetchWorker();
 
   // dispatch ....
 };
 
 export const createWorkerSession = async (itemId) => {
-
   const item = store.getState().worker.data.getId(itemId);
 
   if (!item) return;
@@ -329,14 +328,14 @@ export const createWorkerSession = async (itemId) => {
   const { worker_profile_id, media_device, last_check } = item.info;
   if (!worker_profile_id || !isActive(last_check)) return;
 
-  log({ type: 'loading' })
+  log({ type: "loading" });
 
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
-    log({ type: 'error', content: res })
+    log({ type: "error", content: res });
     return;
   }
-  log({ type: 'success' })
+  log({ type: "success" });
   fetchWorker();
   // dispath ...
 };

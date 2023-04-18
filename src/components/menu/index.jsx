@@ -54,9 +54,9 @@ export const ActMenu = () => {
         Actions.createWorkerSession(event.target.dataset.pid);
       } else if (action.type === "DEACTIVATESESSION") {
         Actions.deactiveWorkerSeesion(event.target.dataset.pid);
-      // } else if (action.type === "REMOTEURL") { // TODO: get info from folder info
-      //   navigator.clipboard.writeText(event.target.dataset.pid);
-      //   return
+        // } else if (action.type === "REMOTEURL") { // TODO: get info from folder info
+        //   navigator.clipboard.writeText(event.target.dataset.pid);
+        //   return
       } else if (action.type === "OPEN_MODAL") {
         Actions.handleOpenModal(event.target.dataset.pid);
       } else if (action.type != action.type.toUpperCase()) {
