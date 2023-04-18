@@ -297,7 +297,7 @@ const defState = {
     session: [
       {
         name: "Open",
-        action: "FILEDIRWORKER"
+        action: "FILEDIRWORKER",
       },
       {
         name: "Deactivate Session",
@@ -305,24 +305,23 @@ const defState = {
         payload: "connect",
       },
       {
-      //   name: "Get remote URL", // TODO
-      //   action: "REMOTEURL",
-      //   payload: "remote",
-      // },
-      // {
+        //   name: "Get remote URL", // TODO
+        //   action: "REMOTEURL",
+        //   payload: "remote",
+        // },
+        // {
         name: "Detail",
         action: "OPEN_MODAL",
         payload: "detail",
       },
-
     ],
     user: [
       {
         name: "Detail",
         action: "OPEN_MODAL",
-        payload: "detail"
-      }
-    ]
+        payload: "detail",
+      },
+    ],
   },
 };
 

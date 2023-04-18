@@ -9,7 +9,6 @@ export function autoFormatData(data) {
   newData.Account.info.spid = "%worker%";
   newData.Account.data = {};
 
-
   for (const proxy of data.tree) {
     newData.Account.data[proxy.name] = {};
     newData.Account.data[proxy.name].type = "folder";
@@ -25,8 +24,7 @@ export function autoFormatData(data) {
         newData.Account.data[proxy.name].data[worker.name].type = "folder";
         newData.Account.data[proxy.name].data[worker.name].name = worker.name;
         newData.Account.data[proxy.name].data[worker.name].info = worker.info;
-        newData.Account.data[proxy.name].data[worker.name].info.menu =
-          "worker";
+        newData.Account.data[proxy.name].data[worker.name].info.menu = "worker";
         newData.Account.data[proxy.name].data[worker.name].data = {};
         if (worker.data) {
           worker.data.forEach((session) => {

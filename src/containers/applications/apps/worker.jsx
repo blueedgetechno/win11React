@@ -378,19 +378,21 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
-  const renderIconName = (info) =>{
+  const renderIconName = (info) => {
     if (info == undefined) {
-      return 'worker_disconnect'
+      return "worker_disconnect";
     }
-    if(info.ended != undefined && typeof info.ended == "boolean"){
-      return !info.ended ? 'worker_connect' : 'worker_disconnect'
+    if (info.ended != undefined && typeof info.ended == "boolean") {
+      return !info.ended ? "worker_connect" : "worker_disconnect";
     }
-    if(info.last_check != undefined ){
-      return (Date.now() - Date.parse(info?.lastcheck)) > 10 * 1000 ? 'worker_connect' : 'worker_disconnect'
+    if (info.last_check != undefined) {
+      return Date.now() - Date.parse(info?.lastcheck) > 10 * 1000
+        ? "worker_connect"
+        : "worker_disconnect";
     }
 
-    return 'worker_connect'
-  }
+    return "worker_connect";
+  };
   return (
     <div
       className="contentarea"
@@ -427,8 +429,14 @@ const ContentArea = ({ searchtxt }) => {
         {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
-              
-              {subInfo?.info.menu == 'worker' || subInfo?.info.menu == 'session'  ? <Image src={`icon/win/${renderIconName(subInfo?.info?.last_check ?? subInfo?.info?.ended)}`} />  : null}
+              {subInfo?.info.menu == "worker" ||
+              subInfo?.info.menu == "session" ? (
+                <Image
+                  src={`icon/win/${renderIconName(
+                    subInfo?.info?.last_check ?? subInfo?.info?.ended
+                  )}`}
+                />
+              ) : null}
 
               {renderSubdata(subInfo?.info)}
             </div>
@@ -447,8 +455,7 @@ const NavPane = ({}) => {
   return (
     <div className="navpane win11Scroll">
       <div className="extcont">
-        <Dropdown icon="thispc" title="Worker" action="" >
-        </Dropdown>
+        <Dropdown icon="thispc" title="Worker" action=""></Dropdown>
       </div>
     </div>
   );
