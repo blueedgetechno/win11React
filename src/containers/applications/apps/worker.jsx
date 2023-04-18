@@ -356,7 +356,6 @@ const ContentArea = ({ searchtxt }) => {
     return list;
   };
   const fdata = files.data.getId(files.cdir);
-  console.log(subInfo, 'subInfo');
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -379,20 +378,18 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
-  const renderIconName = (lastcheckOrEnded) =>{
-    let isOnline
-    if (typeof lastcheckOrEnded =='boolean') {
-      isOnline = !lastcheckOrEnded
-    } 
-    else{
-      isOnline = isActive(lastcheckOrEnded)
+  const renderIconName = (info) =>{
+    if (info == undefined) {
+      return 'worker_disconnect'
     }
-    
-    if(isOnline){
-      return 'worker_connect'
+    if(info.ended != undefined && typeof info.ended == "boolean"){
+      return !info.ended ? 'worker_connect' : 'worker_disconnect'
     }
-    return 'worker_disconnect'
+    if(info.last_check != undefined ){
+      return (Date.now() - Date.parse(info?.lastcheck)) > 10 * 1000 ? 'worker_connect' : 'worker_disconnect'
+    }
 
+    return 'worker_connect'
   }
   return (
     <div
@@ -415,7 +412,7 @@ const ContentArea = ({ searchtxt }) => {
                   onDoubleClick={handleDouble}
                   data-menu={item.info.menu}
                 >
-                  <Image src={`icon/win/${renderIconName(item.info?.last_check ?? item.info?.ended)}`} />
+                  <Image src={`icon/win/${renderIconName(item.info)}`} />
                   <span>{item.name}</span>
                 </div>
               )
