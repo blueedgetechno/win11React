@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { externalLink } from "../../../data/constant";
 
 export const AboutWin = () => {
   const [open, setOpen] = useState(
-   false 
+   true 
   );
+  const {abOpen} = useSelector(state => state.desktop)
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   React.useLayoutEffect(()=>{
@@ -18,15 +20,19 @@ export const AboutWin = () => {
     dispatch({ type: "DESKABOUT", payload: false });
   };
 
+  console.log(abOpen, 'abOpen');
   return(
     <>
       {
-         open === true ? (
+         open === true || abOpen ? (
           <div className="aboutApp floatTab dpShad">
             <div className="content p-6">
               <div className="text-xl font-semibold">{t("about.title")}</div>
               <code >
                 <strong>Thinkmay</strong> is the organization was born with the ultimate goal is to <i className="font-bold">“change the way technology serve human and shape our knowledge about the world”</i>.
+                <a target="_blank" href={externalLink.INTRODUCE_LINK}>Listen more!</a>
+                <br />
+                Our Team: <a target="_blank" href={externalLink.INTRODUCE_MEMBER_LINK}>See</a>
               </code>
               
               <p className="my-2">This is Thinkmay's dashbroad:</p>

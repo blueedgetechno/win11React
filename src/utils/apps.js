@@ -149,6 +149,12 @@ const apps = [
     payload: externalLink.DOCUMENT_LINK
   },
   {
+    name: "About",
+    icon: "about",
+    type: "any",
+    action: "DESKABOUT",
+  },
+  {
     name: "Yammer",
     icon: "yammer",
     type: "app",

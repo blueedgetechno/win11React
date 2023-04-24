@@ -152,7 +152,7 @@ const defState = {
       {
         name: "About",
         action: "DESKABOUT",
-        icon: "win/info",
+        icon: "about",
         payload: true,
       },
     ],
