@@ -1,5 +1,6 @@
 import { installApp } from "../actions";
 import store from "../containers/applications/apps/assets/advancedstore.json";
+import { externalLink } from "../data/constant";
 
 export const gene_name = () =>
   Math.random().toString(36).substring(2, 10).toUpperCase();
@@ -145,7 +146,7 @@ const apps = [
     icon: "doc",
     type: "any",
     action: "EXTERNAL",
-    payload: import.meta.env.VITE_DOCUMENT_LINK
+    payload: externalLink.DOCUMENT_LINK
   },
   {
     name: "Yammer",
