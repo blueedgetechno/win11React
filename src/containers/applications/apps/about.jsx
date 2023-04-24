@@ -24,7 +24,7 @@ export const AboutWin = () => {
     <>
       {
          open === true || abOpen ? (
-          <div className="aboutApp floatTab dpShad">
+          <div className="aboutApp floatTab dpShad aboutAnimation">
             <div className="content p-6">
               <div className="text-xl font-semibold">{t("about.title")}</div>
               <code >
