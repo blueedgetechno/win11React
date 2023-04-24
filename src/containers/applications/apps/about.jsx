@@ -6,71 +6,51 @@ export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
   const { locked, booted } = useSelector((state) => state.wallpaper);
   const [open, setOpen] = useState(
-    true && import.meta.env.MODE != "development"
-  );
-  const [timer, setTimer] = useState(
-    localStorage.getItem("closeAbout") == "true" ? 0 : 5
+   true 
   );
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-
+  console.log(open);
+  React.useLayoutEffect(()=>{
+    const value = localStorage.getItem("openAboutThinkmay") ?? true
+    console.log(value, 'local');
+    setOpen(value)
+  }, [])
   const action = () => {
     setOpen(false);
-    localStorage.setItem("closeAbout", true);
+    localStorage.setItem("openAboutThinkmay", false);
     dispatch({ type: "DESKABOUT", payload: false });
   };
 
-  useEffect(() => {
-    if (timer > 0 && !locked && booted) {
-      setTimeout(() => {
-        setTimer(timer - 1);
-      }, 1000);
-    }
-  }, [timer, locked, booted]);
-
-  return open || abOpen ? (
-    <div className="aboutApp floatTab dpShad">
-      <div className="content p-6">
-        <div className="text-xl font-semibold">{t("about.title")}</div>
-        <p>{t("about.opensource")}</p>
-        <p>
-          {t("about.licensed")}&nbsp;
-          <a
-            target="_blank"
-            href="https://github.com/blueedgetechno/win11React/blob/master/LICENSE"
-            rel="noreferrer"
-          >
-            {t("about.Creative-Commons")}
-          </a>
-          .
-        </p>
-        <p className="pl-4">
-          {t("about.contact")} :&nbsp;
-          <a target="_blank" href="mailto:blue@win11react.com" rel="noreferrer">
-            blue@win11react.com
-          </a>
-        </p>
-
-        <p>{t("about.notmicrosoft")}</p>
-        <p>
-          {t("about.alsonot")}&nbsp;
-          <a
-            target="_blank"
-            href="https://www.microsoft.com/en-in/windows-365"
-            rel="noreferrer"
-          >
-            Windows 365 cloud PC
-          </a>
-          .
-        </p>
-        <p>{t("about.microsoftcopywrite")}.</p>
-      </div>
-      <div className="okbtn px-6 py-4">
-        <div data-allow={timer == 0} onClick={timer == 0 && action}>
-          {t("about.understand")}{" "}
-          {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
-        </div>
-      </div>
-    </div>
-  ) : null;
+  return(
+    <>
+      {
+         open === true ? (
+          <div className="aboutApp floatTab dpShad">
+            <div className="content p-6">
+              <div className="text-xl font-semibold">{t("about.title")}</div>
+              <code >
+                <strong>Thinkmay</strong> is the organization was born with the ultimate goal is to <i className="font-bold">“change the way technology serve human and shape our knowledge about the world”</i>.
+              </code>
+              
+              <p className="my-2">This is Thinkmay's dashbroad:</p>
+              <p className="mb-2">
+                1. If you're are user: This app is make for you,explore, and play on it.
+              </p>
+              2. If you're vender:
+              <ul className="pl-5">
+                <li > Go to <strong>Worker Profile</strong> to see your worker status.</li>
+                <li > Go to <strong>Documentation</strong> to: read <strong>Document</strong>, see <strong>Pricing plan & Product timeline</strong>. And maybe about Thinkmay ^^</li>
+              </ul>
+            </div>
+            <div className="okbtn px-6 py-4">
+              <div onClick={action}>
+                {t("I got it")}{" "}
+              </div>
+            </div>
+          </div>
+        ) : null
+      }
+    </>
+  )
 };
