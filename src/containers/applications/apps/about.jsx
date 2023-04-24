@@ -3,17 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 export const AboutWin = () => {
-  const { abOpen } = useSelector((state) => state.desktop);
-  const { locked, booted } = useSelector((state) => state.wallpaper);
   const [open, setOpen] = useState(
-   true 
+   false 
   );
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  console.log(open);
   React.useLayoutEffect(()=>{
     const value = localStorage.getItem("openAboutThinkmay") ?? true
-    console.log(value, 'local');
     setOpen(value)
   }, [])
   const action = () => {
