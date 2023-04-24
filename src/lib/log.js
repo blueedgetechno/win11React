@@ -26,45 +26,42 @@ export const log = ({ type, title, content, icon, time }) => {
       });
       break;
     case "close":
-      Swal.close()
+      Swal.close();
       break;
     default:
       break;
   }
-
 };
 
 export class Log {
-
-  constructor() {
-  }
+  constructor() {}
   loading(title, content, time, icon) {
     Swal.fire({
-      title: title ?? 'Loading!',
-      text: content ?? 'Take a breath ^^',
-      icon: icon ?? 'info',
+      title: title ?? "Loading!",
+      text: content ?? "Take a breath ^^",
+      icon: icon ?? "info",
       timer: time,
       showCancelButton: false,
       showConfirmButton: false,
-    })
+    });
   }
   error(title, content, icon, time) {
     Swal.fire({
-      title: title ?? 'Error!!',
-      text: content ?? 'Something went wrong:(',
-      icon: icon ?? 'error',
-      timer: time
-    })
+      title: title ?? "Error!!",
+      text: content ?? "Something went wrong:(",
+      icon: icon ?? "error",
+      timer: time,
+    });
   }
   success(title, content, icon, time) {
     Swal.fire({
-      title: title ?? 'Success!',
-      text: content ?? 'Nice try!',
-      icon: icon ?? 'success',
-      timer: time
-    })
+      title: title ?? "Success!",
+      text: content ?? "Nice try!",
+      icon: icon ?? "success",
+      timer: time,
+    });
   }
   close() {
-    Swal.close()
+    Swal.close();
   }
 }

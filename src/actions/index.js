@@ -200,8 +200,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -221,7 +221,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -235,7 +235,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -276,30 +276,20 @@ export const handleFileOpen = (id) => {
   }
 };
 
-
 //USER:
 
 export const handleLogOut = async () => {
-  const logging = new Log()
+  const logging = new Log();
   logging.loading();
   const { error } = await supabase.auth.signOut();
   if (error) {
     logging.error();
-    throw new Error(error)
+    throw new Error(error);
   }
   logging.close();
-  store.dispatch({ type: 'DELETE_USER' })
-  store.dispatch({ type: 'WALLALOCK' })
-
-}
-
-
-
-
-
-
-
-
+  store.dispatch({ type: "DELETE_USER" });
+  store.dispatch({ type: "WALLALOCK" });
+};
 
 export const handleFileOpenWorker = (id) => {
   // handle double click open

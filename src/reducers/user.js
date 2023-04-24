@@ -1,4 +1,3 @@
-
 // const defUser = async () => {
 //   const { data, error } = await supabase.auth.getUser();
 //   return data;
@@ -11,7 +10,7 @@ const userReducer = (state = {}, action) => {
     case "UPDATE_USER":
       return state;
     case "DELETE_USER":
-      return {}
+      return {};
     default:
       return state;
   }

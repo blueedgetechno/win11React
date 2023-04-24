@@ -146,7 +146,7 @@ const apps = [
     icon: "doc",
     type: "any",
     action: "EXTERNAL",
-    payload: externalLink.DOCUMENT_LINK
+    payload: externalLink.DOCUMENT_LINK,
   },
   {
     name: "About",
@@ -164,7 +164,7 @@ const apps = [
     icon: "mail",
     type: "app",
     action: "EXTERNAL",
-    payload: externalLink.MAILTO_ADDRESS
+    payload: externalLink.MAILTO_ADDRESS,
   },
   {
     name: "Movies",

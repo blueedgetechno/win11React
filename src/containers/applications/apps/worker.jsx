@@ -318,7 +318,7 @@ const ContentArea = ({ searchtxt }) => {
               : JSON.stringify(data[key][hwkey]);
 
           list.push(
-            <div className="wrapperText" key={Math.random()} >
+            <div className="wrapperText" key={Math.random()}>
               <p className="title">{renderobj && combineText(hwkey)}: </p>
               <p className="content"> {renderobj}</p>
             </div>
