@@ -182,12 +182,11 @@ function App() {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
         {wall.locked ? <LockScreen dir={wall.dir} /> : null}
-        {!user.id ? <LockScreen dir={wall.dir} /> : null}
         <div className="appwrap">
           <Background />
           {
             //user => render
-            //user.id ?
+            user.id ?
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />
@@ -213,7 +212,7 @@ function App() {
               <Taskbar />
               <ActMenu />
             </>
-            // : null
+             : null
           }
         </div>
         <ModalInfo />
