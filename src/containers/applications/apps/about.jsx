@@ -20,7 +20,6 @@ export const AboutWin = () => {
     dispatch({ type: "DESKABOUT", payload: false });
   };
 
-  console.log(abOpen, 'abOpen');
   return(
     <>
       {
