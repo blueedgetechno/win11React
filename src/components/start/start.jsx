@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import supabase from "../../supabase/createClient";
+import { handleLogOut } from "../../actions";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -276,7 +277,7 @@ export const StartMenu = () => {
               <div className="powerCont" data-vis={start.pwctrl}>
                 <div
                   className="flex prtclk items-center gap-2"
-                  onClick={supabase.auth.signOut}
+                  onClick={clickDispatch}
                   data-action="WALLALOCK"
                 >
                   <svg
@@ -295,7 +296,7 @@ export const StartMenu = () => {
                 </div>
                 <div
                   className="flex prtclk items-center gap-2"
-                  onClick={clickDispatch}
+                  onClick={handleLogOut}
                   data-action="WALLSHUTDN"
                 >
                   <svg
@@ -310,7 +311,7 @@ export const StartMenu = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  <span>Shut down</span>
+                  <span>Log Out</span>
                 </div>
                 <div
                   className="flex prtclk items-center gap-2"

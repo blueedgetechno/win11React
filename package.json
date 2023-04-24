@@ -39,7 +39,7 @@
     "translation-check": "^1.0.3"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --port 3000",
     "build": "vite build",
     "ghbuild": "CI=false vite build",
     "prettier": "prettier --write .",

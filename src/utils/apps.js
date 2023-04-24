@@ -307,6 +307,7 @@ const apps = [
     action: "EXTERNAL",
     payload: externalLink.GITHUB_LINK,
   },
+  //TODO: change discord channel.
   {
     name: "Discord",
     icon: "discord",

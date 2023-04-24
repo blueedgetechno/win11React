@@ -113,18 +113,17 @@ export const LockScreen = (props) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `https://win11.thinkmay.net`,
+        redirectTo: `http://localhost:3000`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
         },
       },
     });
-    dispatch({ type: "WALLUNLOCK" });
-
     if (error) {
       throw new Error(error);
     }
+    dispatch({ type: "WALLUNLOCK" });
   };
 
   const action2 = (e) => {

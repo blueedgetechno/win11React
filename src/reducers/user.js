@@ -1,4 +1,3 @@
-import supabase from "../supabase/createClient";
 
 // const defUser = async () => {
 //   const { data, error } = await supabase.auth.getUser();
@@ -11,6 +10,8 @@ const userReducer = (state = {}, action) => {
       return { ...action.payload };
     case "UPDATE_USER":
       return state;
+    case "DELETE_USER":
+      return {}
     default:
       return state;
   }
