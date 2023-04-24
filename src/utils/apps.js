@@ -139,7 +139,7 @@ const apps = [
     icon: "help",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://win11react-docs.andrewstech.me/",
+    payload: externalLink.DOCUMENT_LINK,
   },
   {
     name: "Document",
@@ -164,7 +164,7 @@ const apps = [
     icon: "mail",
     type: "app",
     action: "EXTERNAL",
-    payload: "mailto:blueedgetechno@gmail.com",
+    payload: externalLink.MAILTO_ADDRESS
   },
   {
     name: "Movies",
@@ -228,13 +228,6 @@ const apps = [
     type: "app",
   },
   {
-    name: "Pinterest",
-    icon: "pinterest",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://www.pinterest.com/blueedgetechno/",
-  },
-  {
     name: "Security",
     icon: "security",
     type: "app",
@@ -259,13 +252,6 @@ const apps = [
     name: "Snipping Tool",
     icon: "snip",
     type: "app",
-  },
-  {
-    name: "Twitter",
-    icon: "twitter",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://twitter.com/blueedgetechno",
   },
   {
     name: "Teams",
@@ -319,14 +305,7 @@ const apps = [
     icon: "github",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://github.com/thinkonmay/thinkshare-v2",
-  },
-  {
-    name: "Unescape",
-    icon: "unescape",
-    type: "action",
-    action: "EXTERNAL",
-    payload: "https://blueedge.me/unescape",
+    payload: externalLink.GITHUB_LINK,
   },
   {
     name: "Discord",
