@@ -75,13 +75,6 @@ const apps = [
     action: "MSEDGE",
   },
   {
-    name: "Buy me a coffee",
-    icon: "buyme",
-    type: "app",
-    action: "EXTERNAL",
-    payload: "https://www.buymeacoffee.com/blueedgetechno",
-  },
-  {
     name: "Store",
     icon: "store",
     type: "app",
@@ -146,6 +139,13 @@ const apps = [
     type: "app",
     action: "EXTERNAL",
     payload: "https://win11react-docs.andrewstech.me/",
+  },
+  {
+    name: "Document",
+    icon: "doc",
+    type: "any",
+    action: "EXTERNAL",
+    payload: "https://thinkonmay.notion.site/Our-service-b6a51122ef8f4a998594576a9f3aed0f"
   },
   {
     name: "Yammer",
