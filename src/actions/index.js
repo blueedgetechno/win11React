@@ -313,6 +313,7 @@ export const handleOpenModal = (id) => {
 
 //
 export const fetchWorker = async (oldCpath = "Account") => {
+  const logging = new Log();
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
     logging.error("", res);
