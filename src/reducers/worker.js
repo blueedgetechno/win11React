@@ -45,7 +45,7 @@ const workerReducer = (state = defState, action) => {
     tmp.hid = 0;
     tmp.view = 1;
   }
-  console.log(tmp.data, 'tmp data');
+  console.log(tmp.data, "tmp data");
 
   if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
     tmp.hist.splice(tmp.hid + 1);

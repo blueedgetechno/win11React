@@ -200,8 +200,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -221,7 +221,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -235,7 +235,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -312,21 +312,24 @@ export const handleOpenModal = (id) => {
 //
 
 //
-export const fetchWorker = async (oldCpath = 'Account') => {
+export const fetchWorker = async (oldCpath = "Account") => {
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
-    logging.error('', res)
+    logging.error("", res);
     return;
   }
   const dataFormat = autoFormatData(res);
-  store.dispatch({ type: "FILEUPDATEWORKER", payload: { data: dataFormat, oldCpath } });
+  store.dispatch({
+    type: "FILEUPDATEWORKER",
+    payload: { data: dataFormat, oldCpath },
+  });
 };
 
-export const refeshFetchWorker = async (oldCpath = 'Account') => {
+export const refeshFetchWorker = async (oldCpath = "Account") => {
   const logging = new Log();
-  logging.loading()
-  await fetchWorker(oldCpath)
-  logging.success()
+  logging.loading();
+  await fetchWorker(oldCpath);
+  logging.success();
 };
 
 export const deactiveWorkerSeesion = async (itemId) => {
@@ -368,11 +371,9 @@ export const createWorkerSession = async (itemId) => {
   // dispath ...
 };
 
-
 export const connectWokerSession = (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item.info.remote_url) return;
 
-
-  window.open(item.info.remote_url, "_blank")
-}
+  window.open(item.info.remote_url, "_blank");
+};
