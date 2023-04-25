@@ -267,10 +267,17 @@ export const WnTerminal = () => {
       navigator.clipboard.writeText(result.data.key);
       tmpStack.push("copied apikey to your clipboard");
     } else if (type == "proxy" && arg == "register") {
+      const body = { 
+        public_ip: "unknown"
+      }
+
+      try {
+        body.public_ip = await (await fetch("https://api64.ipify.org")).text() 
+      } catch (error) {
+      }
+
       const result = await supabase.functions.invoke("proxy_register", {
-        body: {
-          public_ip: await (await fetch("https://api64.ipify.org")).text(),
-        },
+        body: body,
         headers: {
           access_token: (
             await supabase.auth.getSession()
