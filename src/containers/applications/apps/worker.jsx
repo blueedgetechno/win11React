@@ -5,6 +5,7 @@ import {
   dispatchAction,
   fetchWorker,
   handleFileOpenWorker,
+  refeshFetchWorker,
 } from "../../../actions";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
@@ -106,6 +107,8 @@ export const Worker = () => {
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
 
+
+  console.log(cpath, 'cpath');
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
@@ -453,6 +456,9 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
+
+  const cpath = useSelector((state) => state.worker.cpath);
+  
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -476,7 +482,7 @@ const Ribbon = ({}) => {
           <Icon src="view" ui width={18} margin="0 6px" />
         </div>
         <div className="drdwcont flex">
-          <Icon src="refresh" click={'FUNC'} func={fetchWorker} ui width={18} margin="0 6px" />
+          <Icon src="refresh" click={'FUNC'} func={()=>{refeshFetchWorker(cpath)}} ui width={18} margin="0 6px" />
         </div>
       </div>
     </div>

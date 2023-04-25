@@ -36,14 +36,16 @@ const workerReducer = (state = defState, action) => {
     if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
     navHist = true;
   } else if (action.type === "FILEUPDATEWORKER") {
-    const newData = action.payload;
+    const { data, oldCpath } = action.payload;
     tmp.data = new Bin();
-    tmp.data.parse(newData);
-    tmp.cdir = "%worker%";
+    tmp.data.parse(data);
+    var pathid = tmp.data.parsePath(oldCpath);
+    tmp.cdir = pathid ?? "%worker%";
     defState.hist = [];
     tmp.hid = 0;
     tmp.view = 1;
   }
+  console.log(tmp.data, 'tmp data');
 
   if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
     tmp.hist.splice(tmp.hid + 1);

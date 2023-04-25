@@ -312,18 +312,21 @@ export const handleOpenModal = (id) => {
 //
 
 //
-export const fetchWorker = async () => {
-  const logging = new Log();
-  logging.loading()
+export const fetchWorker = async (oldCpath = 'Account') => {
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
     logging.error('', res)
-
     return;
   }
-  logging.success()
   const dataFormat = autoFormatData(res);
-  store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
+  store.dispatch({ type: "FILEUPDATEWORKER", payload: { data: dataFormat, oldCpath } });
+};
+
+export const refeshFetchWorker = async (oldCpath = 'Account') => {
+  const logging = new Log();
+  logging.loading()
+  await fetchWorker(oldCpath)
+  logging.success()
 };
 
 export const deactiveWorkerSeesion = async (itemId) => {
