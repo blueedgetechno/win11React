@@ -471,13 +471,13 @@ const Ribbon = ({}) => {
       <div className="ribsec">
         <div className="drdwcont flex">
           <Icon src="sort" ui width={18} margin="0 6px" />
-          <span>Sort</span>
         </div>
         <div className="drdwcont flex">
           <Icon src="view" ui width={18} margin="0 6px" />
-          <span>View</span>
         </div>
-       
+        <div className="drdwcont flex">
+          <Icon src="refresh" click={'FUNC'} func={fetchWorker} ui width={18} margin="0 6px" />
+        </div>
       </div>
     </div>
   );

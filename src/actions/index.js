@@ -313,8 +313,16 @@ export const handleOpenModal = (id) => {
 
 //
 export const fetchWorker = async () => {
-  const data = await FetchAuthorizedWorkers();
-  const dataFormat = autoFormatData(data);
+  const logging = new Log();
+  logging.loading()
+  const res = await FetchAuthorizedWorkers();
+  if (res instanceof Error) {
+    logging.error('', res)
+
+    return;
+  }
+  logging.success()
+  const dataFormat = autoFormatData(res);
   store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
 };
 

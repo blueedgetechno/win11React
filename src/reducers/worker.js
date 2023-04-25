@@ -40,7 +40,7 @@ const workerReducer = (state = defState, action) => {
     tmp.data = new Bin();
     tmp.data.parse(newData);
     tmp.cdir = "%worker%";
-    defState.hist = ["%worker%"];
+    defState.hist = [];
     tmp.hid = 0;
     tmp.view = 1;
   }

@@ -14,7 +14,7 @@ export function autoFormatData(data) {
     newData.Account.data[proxy.name].type = "folder";
     newData.Account.data[proxy.name].name = proxy.name;
     newData.Account.data[proxy.name].info = proxy.info;
-    newData.Account.data[proxy.name].info.spid = "%worker%";
+    //newData.Account.data[proxy.name].info.spid = "%worker%";
     newData.Account.data[proxy.name].info.menu = "proxy";
     newData.Account.data[proxy.name].data = {};
 
