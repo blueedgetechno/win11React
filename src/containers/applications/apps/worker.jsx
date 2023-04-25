@@ -108,7 +108,6 @@ export const Worker = () => {
   const dispatch = useDispatch();
 
 
-  console.log(cpath, 'cpath');
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
