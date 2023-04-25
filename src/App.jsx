@@ -23,6 +23,7 @@ import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import { combineText } from "./utils/combineText";
+import { analytics } from "./lib/segment,js";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -76,7 +77,6 @@ function App() {
   const wall = useSelector((state) => state.wallpaper);
   const user = useSelector((state) => state.user);
   ReactModal.setAppElement("#root");
-
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const signaling = urlParams.get("signaling");
