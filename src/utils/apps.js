@@ -149,6 +149,14 @@ const apps = [
     payload: externalLink.DOCUMENT_LINK,
   },
   {
+    name: "Pricing",
+    icon: "pricing",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.PRICING_LINK,
+
+  },
+  {
     name: "About",
     icon: "about",
     type: "any",
