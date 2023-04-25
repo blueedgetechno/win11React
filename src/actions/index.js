@@ -312,10 +312,24 @@ export const handleOpenModal = (id) => {
 //
 
 //
-export const fetchWorker = async () => {
-  const data = await FetchAuthorizedWorkers();
-  const dataFormat = autoFormatData(data);
-  store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
+export const fetchWorker = async (oldCpath = "Account") => {
+  const res = await FetchAuthorizedWorkers();
+  if (res instanceof Error) {
+    logging.error("", res);
+    return;
+  }
+  const dataFormat = autoFormatData(res);
+  store.dispatch({
+    type: "FILEUPDATEWORKER",
+    payload: { data: dataFormat, oldCpath },
+  });
+};
+
+export const refeshFetchWorker = async (oldCpath = "Account") => {
+  const logging = new Log();
+  logging.loading();
+  await fetchWorker(oldCpath);
+  logging.success();
 };
 
 export const deactiveWorkerSeesion = async (itemId) => {
@@ -355,4 +369,11 @@ export const createWorkerSession = async (itemId) => {
   log({ type: "success" });
   fetchWorker();
   // dispath ...
+};
+
+export const connectWokerSession = (itemId) => {
+  const item = store.getState().worker.data.getId(itemId);
+  if (!item.info.remote_url) return;
+
+  window.open(item.info.remote_url, "_blank");
 };

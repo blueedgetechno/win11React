@@ -5,6 +5,7 @@ import {
   dispatchAction,
   fetchWorker,
   handleFileOpenWorker,
+  refeshFetchWorker,
 } from "../../../actions";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
@@ -142,15 +143,6 @@ export const Worker = () => {
 
     arr.push(
       <div key={index++} className="dirCont flex items-center">
-        <div className="dncont" tabIndex="-1">
-          Worker
-        </div>
-        <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>
-    );
-
-    arr.push(
-      <div key={index++} className="dirCont flex items-center">
         <Icon
           className="pr-1 pb-px"
           src={"win/" + fdata.info.icon + "-sm"}
@@ -278,7 +270,7 @@ const ContentArea = ({ searchtxt }) => {
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   const [userInfo, setuserInfo] = useState(null);
-
+  const fdata = files.data.getId(files.cdir);
   const subInfo = React.useMemo(() => {
     if (selected == null) {
       return {
@@ -353,7 +345,6 @@ const ContentArea = ({ searchtxt }) => {
 
     return list;
   };
-  const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -462,6 +453,8 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
+  const cpath = useSelector((state) => state.worker.cpath);
+
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -480,11 +473,21 @@ const Ribbon = ({}) => {
       <div className="ribsec">
         <div className="drdwcont flex">
           <Icon src="sort" ui width={18} margin="0 6px" />
-          <span>Sort</span>
         </div>
         <div className="drdwcont flex">
           <Icon src="view" ui width={18} margin="0 6px" />
-          <span>View</span>
+        </div>
+        <div className="drdwcont flex">
+          <Icon
+            src="refresh"
+            click={"FUNC"}
+            func={() => {
+              refeshFetchWorker(cpath);
+            }}
+            ui
+            width={18}
+            margin="0 6px"
+          />
         </div>
       </div>
     </div>
