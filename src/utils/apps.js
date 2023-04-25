@@ -154,7 +154,6 @@ const apps = [
     type: "any",
     action: "EXTERNAL",
     payload: externalLink.PRICING_LINK,
-
   },
   {
     name: "About",
