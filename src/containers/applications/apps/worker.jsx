@@ -107,7 +107,6 @@ export const Worker = () => {
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
 
-
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => {
@@ -141,7 +140,6 @@ export const Worker = () => {
 
       curr = curr.host;
     }
-
 
     arr.push(
       <div key={index++} className="dirCont flex items-center">
@@ -455,9 +453,8 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
-
   const cpath = useSelector((state) => state.worker.cpath);
-  
+
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -481,7 +478,16 @@ const Ribbon = ({}) => {
           <Icon src="view" ui width={18} margin="0 6px" />
         </div>
         <div className="drdwcont flex">
-          <Icon src="refresh" click={'FUNC'} func={()=>{refeshFetchWorker(cpath)}} ui width={18} margin="0 6px" />
+          <Icon
+            src="refresh"
+            click={"FUNC"}
+            func={() => {
+              refeshFetchWorker(cpath);
+            }}
+            ui
+            width={18}
+            margin="0 6px"
+          />
         </div>
       </div>
     </div>

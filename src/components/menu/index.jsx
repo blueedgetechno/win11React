@@ -11,9 +11,9 @@ export const ActMenu = () => {
   const { abpos, isLeft } = useSelector((state) => {
     var acount = state.menus.menus[state.menus.opts].length;
     var tmpos = {
-      top: state.menus.top,
-      left: state.menus.left,
-    },
+        top: state.menus.top,
+        left: state.menus.left,
+      },
       tmpleft = false;
 
     var wnwidth = window.innerWidth,
@@ -46,7 +46,7 @@ export const ActMenu = () => {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
     };
-    // Right click and open file in worker 
+    // Right click and open file in worker
     if (action.type) {
       if (action.type === "FILEDIRWORKER") {
         Actions.handleFileOpenWorker(event.target.dataset.pid);
@@ -54,8 +54,8 @@ export const ActMenu = () => {
         Actions.createWorkerSession(event.target.dataset.pid);
       } else if (action.type === "DEACTIVATESESSION") {
         Actions.deactiveWorkerSeesion(event.target.dataset.pid);
-      } else if (action.type === 'CONNECTWORKER') {
-        Actions.connectWokerSession(event.target.dataset.pid)
+      } else if (action.type === "CONNECTWORKER") {
+        Actions.connectWokerSession(event.target.dataset.pid);
       } else if (action.type === "OPEN_MODAL") {
         Actions.handleOpenModal(event.target.dataset.pid);
       } else if (action.type != action.type.toUpperCase()) {

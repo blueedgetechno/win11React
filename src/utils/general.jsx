@@ -43,17 +43,16 @@ export const Icon = (props) => {
       payload: event.currentTarget.dataset.payload,
     };
 
-    if(action.type === 'FUNC'){
-      const func = props.func
-      func()
+    if (action.type === "FUNC") {
+      const func = props.func;
+      func();
 
-      return
+      return;
     }
 
     if (action.type) {
       dispatch(action);
     }
-
   };
 
   if (props.fafa != null) {
