@@ -267,11 +267,6 @@ const defState = {
         payload: "open",
       },
       {
-        name: "Connect",
-        action: "CONNECTWORKER",
-        payload: "connect",
-      },
-      {
         name: "Create Session",
         action: "CREATESESSION",
         payload: "connect",
@@ -298,6 +293,11 @@ const defState = {
       {
         name: "Open",
         action: "FILEDIRWORKER",
+      },
+      {
+        name: "Connect",
+        action: "CONNECTWORKER",
+        payload: "connect",
       },
       {
         name: "Deactivate Session",
