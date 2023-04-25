@@ -140,14 +140,6 @@ export const Worker = () => {
       curr = curr.host;
     }
 
-    arr.push(
-      <div key={index++} className="dirCont flex items-center">
-        <div className="dncont" tabIndex="-1">
-          Worker
-        </div>
-        <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>
-    );
 
     arr.push(
       <div key={index++} className="dirCont flex items-center">
@@ -278,7 +270,7 @@ const ContentArea = ({ searchtxt }) => {
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   const [userInfo, setuserInfo] = useState(null);
-
+  const fdata = files.data.getId(files.cdir);
   const subInfo = React.useMemo(() => {
     if (selected == null) {
       return {
@@ -353,7 +345,6 @@ const ContentArea = ({ searchtxt }) => {
 
     return list;
   };
-  const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -486,6 +477,7 @@ const Ribbon = ({}) => {
           <Icon src="view" ui width={18} margin="0 6px" />
           <span>View</span>
         </div>
+       
       </div>
     </div>
   );
