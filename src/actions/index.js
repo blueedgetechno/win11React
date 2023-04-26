@@ -199,8 +199,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -220,7 +220,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -234,7 +234,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -313,7 +313,7 @@ export const handleOpenModal = (id) => {
 //
 export const fetchWorker = async (oldCpath = "Account") => {
   const logging = new Log();
-  const cpath = store.getState().worker.cpath ?? 'Account'
+  const cpath = store.getState().worker.cpath ?? "Account";
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
     logging.error("", res);
@@ -327,7 +327,6 @@ export const fetchWorker = async (oldCpath = "Account") => {
 };
 
 export const refeshFetchWorker = async () => {
-
   const logging = new Log();
   logging.loading();
   await fetchWorker();
@@ -349,7 +348,6 @@ export const deactiveWorkerSeesion = async (workerId) => {
   }
   await fetchWorker();
   log({ type: "success" });
-
 };
 
 export const createWorkerSession = async (workerId) => {
@@ -357,7 +355,8 @@ export const createWorkerSession = async (workerId) => {
 
   if (!workerFound) return;
 
-  const { worker_profile_id, media_device, last_check, isActive } = workerFound.info;
+  const { worker_profile_id, media_device, last_check, isActive } =
+    workerFound.info;
   if (!worker_profile_id || isActive) return;
 
   log({ type: "loading" });
@@ -373,26 +372,31 @@ export const createWorkerSession = async (workerId) => {
 
 export const connectWorker = async (workerId) => {
   const workerFound = store.getState().worker.data.getId(workerId);
-  if (!workerFound) return
+  if (!workerFound) return;
 
-  const sessionUrlFound = workerFound.data.find(session => session.info.ended === false)?.info?.remote_url
+  const sessionUrlFound = workerFound.data.find(
+    (session) => session.info.ended === false
+  )?.info?.remote_url;
   if (sessionUrlFound) {
     window.open(sessionUrlFound, "_blank");
-    return
-  }
-
-  const media_device = workerFound.info.media_device ?? ''
-  log({ type: "loading", title: 'Await create a new session' });
-  const res = await CreateWorkerSession(workerFound.info.worker_profile_id, media_device);
-  if (res instanceof Error) {
-    log({ type: "error", title: 'Create Worker Session Fail!', content: res });
     return;
   }
-  log({ type: 'close' })
+
+  const media_device = workerFound.info.media_device ?? "";
+  log({ type: "loading", title: "Await create a new session" });
+  const res = await CreateWorkerSession(
+    workerFound.info.worker_profile_id,
+    media_device
+  );
+  if (res instanceof Error) {
+    log({ type: "error", title: "Create Worker Session Fail!", content: res });
+    return;
+  }
+  log({ type: "close" });
   window.open(res.url, "_blank");
 };
 
-//TODO: have bug when navigate(-1) after fetch data. 
+//TODO: have bug when navigate(-1) after fetch data.
 export const connectWorkerSession = (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item.info.remote_url) return;

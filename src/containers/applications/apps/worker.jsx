@@ -417,9 +417,7 @@ const ContentArea = ({ searchtxt }) => {
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               {subInfo?.info?.menu == "worker" ||
               subInfo?.info?.menu == "session" ? (
-                <Image
-                  src={`icon/win/${renderIconName(subInfo?.info)}`}
-                />
+                <Image src={`icon/win/${renderIconName(subInfo?.info)}`} />
               ) : null}
 
               {renderSubdata(subInfo?.info)}
@@ -446,7 +444,6 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
-
   return (
     <div className="msribbon flex">
       <div className="ribsec">
