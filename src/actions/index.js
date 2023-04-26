@@ -200,8 +200,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -221,7 +221,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -235,7 +235,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -312,7 +312,9 @@ export const handleOpenModal = (id) => {
 //
 
 //
-export const fetchWorker = async (oldCpath = "Account") => {
+export const fetchWorker = async (oldCpath) => {
+  const cpath = store.getState().worker.cpath ?? 'Account'
+
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
     logging.error("", res);
@@ -321,14 +323,15 @@ export const fetchWorker = async (oldCpath = "Account") => {
   const dataFormat = autoFormatData(res);
   store.dispatch({
     type: "FILEUPDATEWORKER",
-    payload: { data: dataFormat, oldCpath },
+    payload: { data: dataFormat, oldCpath: oldCpath ?? cpath },
   });
 };
 
-export const refeshFetchWorker = async (oldCpath = "Account") => {
+export const refeshFetchWorker = async () => {
+
   const logging = new Log();
   logging.loading();
-  await fetchWorker(oldCpath);
+  await fetchWorker();
   logging.success();
 };
 
@@ -345,10 +348,9 @@ export const deactiveWorkerSeesion = async (itemId) => {
     log({ type: "error", content: res });
     return;
   }
-  log({ type: "sucess" });
-  fetchWorker();
+  await fetchWorker();
+  log({ type: "success" });
 
-  // dispatch ....
 };
 
 export const createWorkerSession = async (itemId) => {
@@ -366,9 +368,8 @@ export const createWorkerSession = async (itemId) => {
     log({ type: "error", content: res });
     return;
   }
+  await fetchWorker();
   log({ type: "success" });
-  fetchWorker();
-  // dispath ...
 };
 
 export const connectWokerSession = (itemId) => {
