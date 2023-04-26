@@ -335,8 +335,8 @@ export const refeshFetchWorker = async () => {
   logging.success();
 };
 
-export const deactiveWorkerSeesion = async (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
+export const deactiveWorkerSeesion = async (workerId) => {
+  const item = store.getState().worker.data.getId(workerId);
   if (!item) return;
   const { worker_session_id, ended } = item.info;
 
@@ -353,26 +353,48 @@ export const deactiveWorkerSeesion = async (itemId) => {
 
 };
 
-export const createWorkerSession = async (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
+export const createWorkerSession = async (workerId) => {
+  const workerFound = store.getState().worker.data.getId(workerId);
 
-  if (!item) return;
+  if (!workerFound) return;
 
-  const { worker_profile_id, media_device, last_check } = item.info;
+  const { worker_profile_id, media_device, last_check } = workerFound.info;
   if (!worker_profile_id || !isActive(last_check)) return;
 
   log({ type: "loading" });
 
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
-    log({ type: "error", content: res });
+    log({ type: "Create Worker Session Fail!", content: res });
     return;
   }
   await fetchWorker();
   log({ type: "success" });
 };
 
-export const connectWokerSession = (itemId) => {
+export const connectWorker = async (workerId) => {
+  const workerFound = store.getState().worker.data.getId(workerId);
+  if (!workerFound) return
+
+  const sessionUrlFound = workerFound.data.find(session => session.info.ended === false)?.info?.remote_url
+  if (sessionUrlFound) {
+    window.open(sessionUrlFound, "_blank");
+    return
+  }
+
+  const media_device = workerFound.info.media_device ?? ''
+  log({ type: "loading", title: 'Await create a new session' });
+  const res = await CreateWorkerSession(workerFound.info.worker_profile_id, media_device);
+  if (res instanceof Error) {
+    log({ type: "error", title: 'Create Worker Session Fail!', content: res });
+    return;
+  }
+  log({ type: 'close' })
+  window.open(res.url, "_blank");
+};
+
+//TODO: have bug when navigate(-1) after fetch data. 
+export const connectWorkerSession = (itemId) => {
   const item = store.getState().worker.data.getId(itemId);
   if (!item.info.remote_url) return;
 
