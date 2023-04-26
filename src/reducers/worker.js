@@ -1,19 +1,5 @@
 import { Bin } from "../utils/bin";
-import fdata2 from "./dir.json";
-import fdatacopy from "./dir2.json";
-const test = {
-  "name": "D:",
-  "info": {
-    "spid": "%ddrive%"
-  },
-  "data": {
-    "Adobe": {},
-    "Programs": {},
-    "Unity": {},
-    "WindowsApp": {},
-    "Temp": {}
-  }
-}
+
 const defState = {
   cdir: "%user%",
   hist: [],
