@@ -55,7 +55,9 @@ export const ActMenu = () => {
       } else if (action.type === "DEACTIVATESESSION") {
         Actions.deactiveWorkerSeesion(event.target.dataset.pid);
       } else if (action.type === "CONNECTWORKER") {
-        Actions.connectWokerSession(event.target.dataset.pid);
+        Actions.connectWorker(event.target.dataset.pid);
+      } else if (action.type === "CONNECTWORKERSESSION") {
+        Actions.connectWorkerSession(event.target.dataset.pid);
       } else if (action.type === "OPEN_MODAL") {
         Actions.handleOpenModal(event.target.dataset.pid);
       } else if (action.type != action.type.toUpperCase()) {

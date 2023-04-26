@@ -1,6 +1,5 @@
 import { Bin } from "../utils/bin";
-import fdata2 from "./dir.json";
-import fdatacopy from "./dir2.json";
+
 const defState = {
   cdir: "%user%",
   hist: [],
@@ -10,7 +9,7 @@ const defState = {
 
 defState.hist.push(defState.cdir);
 defState.data = new Bin();
-defState.data.parse(fdata2);
+defState.data.parse({});
 
 const workerReducer = (state = defState, action) => {
   var tmp = { ...state };

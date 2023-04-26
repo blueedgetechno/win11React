@@ -145,7 +145,7 @@ export const Worker = () => {
       <div key={index++} className="dirCont flex items-center">
         <Icon
           className="pr-1 pb-px"
-          src={"win/" + fdata.info.icon + "-sm"}
+          src={"win/" + fdata?.info?.icon + "-sm"}
           width={16}
         />
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
@@ -374,14 +374,9 @@ const ContentArea = ({ searchtxt }) => {
     if (info.ended != undefined && typeof info.ended == "boolean") {
       return !info.ended ? "worker_connect" : "worker_disconnect";
     }
-    if (info.last_check != undefined) {
-      const time =
-        Date.now() -
-        Date.parse(info.last_check) +
-        new Date().getTimezoneOffset() * 60 * 1000;
-      return time < 3 * 60 * 1000 ? "worker_connect" : "worker_disconnect";
+    if (info.isActive != undefined && typeof info.isActive == "boolean") {
+      return info.isActive ? "worker_connect" : "worker_disconnect";
     }
-
     return "worker_connect";
   };
   return (
@@ -393,7 +388,7 @@ const ContentArea = ({ searchtxt }) => {
     >
       <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
-          {fdata.data.map((item, i) => {
+          {fdata?.data.map((item, i) => {
             return (
               item.name.includes(searchtxt) && (
                 <div
@@ -423,9 +418,7 @@ const ContentArea = ({ searchtxt }) => {
               {subInfo?.info?.menu == "worker" ||
               subInfo?.info?.menu == "session" ? (
                 <Image
-                  src={`icon/win/${renderIconName(
-                    subInfo?.info?.last_check ?? subInfo?.info?.ended
-                  )}`}
+                  src={`icon/win/${renderIconName(subInfo?.info)}`}
                 />
               ) : null}
 
@@ -453,7 +446,6 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
-  const cpath = useSelector((state) => state.worker.cpath);
 
   return (
     <div className="msribbon flex">
@@ -482,7 +474,7 @@ const Ribbon = ({}) => {
             src="refresh"
             click={"FUNC"}
             func={() => {
-              refeshFetchWorker(cpath);
+              refeshFetchWorker();
             }}
             ui
             width={18}
