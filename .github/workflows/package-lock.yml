@@ -25,7 +25,7 @@ jobs:
           CI: false
 
       - name: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.BOT }}
           commit-message: Update package-lock
