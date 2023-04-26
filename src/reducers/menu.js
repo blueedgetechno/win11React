@@ -150,7 +150,7 @@ const defState = {
         payload: "C:\\Users\\Blue\\Desktop",
       },
       {
-        name: "About",
+        name: "About Us",
         action: "DESKABOUT",
         icon: "about",
         payload: true,

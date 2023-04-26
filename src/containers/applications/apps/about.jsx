@@ -25,39 +25,32 @@ export const AboutWin = () => {
           <div className="content p-6">
             <div className="text-xl font-semibold">{t("about.title")}</div>
             <code>
-              <strong>Thinkmay</strong> is the organization was born with the
-              ultimate goal is to{" "}
-              <i className="font-bold">
-                “change the way technology serve human and shape our knowledge
-                about the world”
-              </i>
-              .
-              <a target="_blank" href={externalLink.INTRODUCE_LINK}>
-                Listen more!
-              </a>
-              <br />
-              Our Team:{" "}
-              <a target="_blank" href={externalLink.INTRODUCE_MEMBER_LINK}>
-                See
-              </a>
+              <strong> <a target="_blank" href={externalLink.INTRODUCE_MEMBER_LINK}> Thinkmay </a> </strong> 
+              is an organization was born with the ultimate goal is to{" "}
+              <i className="font-bold"> “change the way technology serve human and shape our knowledge about the world”.  </i>
             </code>
-            <p className="my-2">This is Thinkmay's dashbroad:</p>
-            <p className="mb-2">
-              1. If you're are user: This app is make for you,explore, and play
-              on it.
-            </p>
-            2. If you're vender:
+
+              <br />
+            <br />
+
+            <p className="my-2">
+                About this  {" "}
+              <strong>
+                dashboard
+              </strong>
+              </p>
+            1. For cloud PC user: 
+            <ul className="pl-5">
+              <li>
+                {" "}
+                Go to <strong>Store</strong> to explore our vendor's services
+              </li>
+            </ul>
+            2. For our cloud PC vendor: 
             <ul className="pl-5">
               <li>
                 {" "}
                 Go to <strong>Worker Profile</strong> to see your worker status.
-              </li>
-              <li>
-                {" "}
-                Go to <strong>Documentation</strong> to: read{" "}
-                <strong>Document</strong>, see{" "}
-                <strong>Pricing plan & Product timeline</strong>. And maybe
-                about Thinkmay ^^
               </li>
             </ul>
           </div>

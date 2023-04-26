@@ -142,6 +142,13 @@ const apps = [
     payload: externalLink.DOCUMENT_LINK,
   },
   {
+    name: "Our Service",
+    icon: "doc",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.SERVICE_LINK,
+  },
+  {
     name: "Document",
     icon: "doc",
     type: "any",
@@ -156,7 +163,14 @@ const apps = [
     payload: externalLink.PRICING_LINK,
   },
   {
-    name: "About",
+    name: "Contact Us",
+    icon: "mail",
+    type: "app",
+    action: "EXTERNAL",
+    payload: externalLink.MAILTO_ADDRESS,
+  },
+  {
+    name: "About Us",
     icon: "about",
     type: "any",
     action: "DESKABOUT",
@@ -165,13 +179,6 @@ const apps = [
     name: "Yammer",
     icon: "yammer",
     type: "app",
-  },
-  {
-    name: "Mail",
-    icon: "mail",
-    type: "app",
-    action: "EXTERNAL",
-    payload: externalLink.MAILTO_ADDRESS,
   },
   {
     name: "Movies",
