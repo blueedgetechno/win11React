@@ -8,5 +8,6 @@ export const externalLink = {
   INTRODUCE_MEMBER_LINK:
     "https://thinkonmay.notion.site/Team-member-f1060888766245dda40b3c46624a0223",
   GITHUB_LINK: "https://github.com/thinkonmay/thinkshare-v2",
+  DISCORD_LINK: "https://discord.gg/mYk7HxFh",
   MAILTO_ADDRESS: "mailto:datdovan@gmail.com",
 };

@@ -318,8 +318,9 @@ const apps = [
   {
     name: "Discord",
     icon: "discord",
-    type: "app",
-    action: "DISCORD",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.DISCORD_LINK
   },
 ];
 
