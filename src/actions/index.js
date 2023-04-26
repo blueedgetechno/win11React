@@ -10,7 +10,6 @@ import {
 import { autoFormatData } from "../utils/formatData";
 import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { isActive } from "../utils/isActive";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
 
@@ -358,8 +357,8 @@ export const createWorkerSession = async (workerId) => {
 
   if (!workerFound) return;
 
-  const { worker_profile_id, media_device, last_check } = workerFound.info;
-  if (!worker_profile_id || !isActive(last_check)) return;
+  const { worker_profile_id, media_device, last_check, isActive } = workerFound.info;
+  if (!worker_profile_id || isActive) return;
 
   log({ type: "loading" });
 
