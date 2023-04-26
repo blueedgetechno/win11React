@@ -453,7 +453,6 @@ const NavPane = ({}) => {
 };
 
 const Ribbon = ({}) => {
-  const cpath = useSelector((state) => state.worker.cpath);
 
   return (
     <div className="msribbon flex">
@@ -482,7 +481,7 @@ const Ribbon = ({}) => {
             src="refresh"
             click={"FUNC"}
             func={() => {
-              refeshFetchWorker(cpath);
+              refeshFetchWorker();
             }}
             ui
             width={18}
