@@ -324,6 +324,7 @@ const ContentArea = ({ searchtxt }) => {
         key == "icon" ||
         key == "id" ||
         key == "ended" ||
+        key == "isActive" ||
         key == "account_id" ||
         key == "proxy_profile_id" ||
         key == "worker_profile_id" ||
