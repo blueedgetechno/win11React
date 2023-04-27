@@ -199,8 +199,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -220,7 +220,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -234,7 +234,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -312,12 +312,10 @@ export const handleOpenModal = (id) => {
 
 //
 export const fetchWorker = async (oldCpath = "Account") => {
-  const logging = new Log();
   const cpath = store.getState().worker.cpath ?? "Account";
   const res = await FetchAuthorizedWorkers();
   if (res instanceof Error) {
-    logging.error("", res);
-    return;
+    return new Error(res);
   }
   const dataFormat = autoFormatData(res);
   store.dispatch({
@@ -327,10 +325,14 @@ export const fetchWorker = async (oldCpath = "Account") => {
 };
 
 export const refeshFetchWorker = async () => {
-  const logging = new Log();
-  logging.loading();
-  await fetchWorker();
-  logging.success();
+  log({ type: "loading" });
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return
+  }
+
+  log({ type: "success" });
 };
 
 export const deactiveWorkerSeesion = async (workerId) => {
@@ -346,7 +348,12 @@ export const deactiveWorkerSeesion = async (workerId) => {
     log({ type: "error", content: res });
     return;
   }
-  await fetchWorker();
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return
+  }
+
   log({ type: "success" });
 };
 
@@ -366,7 +373,12 @@ export const createWorkerSession = async (workerId) => {
     log({ type: "error", content: res });
     return;
   }
-  await fetchWorker();
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return
+  }
+
   log({ type: "success" });
 };
 
@@ -392,6 +404,7 @@ export const connectWorker = async (workerId) => {
     log({ type: "error", title: "Create Worker Session Fail!", content: res });
     return;
   }
+
   log({ type: "close" });
   window.open(res.url, "_blank");
 };
