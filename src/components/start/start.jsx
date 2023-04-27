@@ -108,7 +108,7 @@ export const StartMenu = () => {
   }, [query]);
 
   const user = useSelector((state) => state.user);
-  const userName = user?.email ?? 'Admin';
+  const userName = user?.email ?? "Admin";
   return (
     <div
       className="startMenu dpShad"
