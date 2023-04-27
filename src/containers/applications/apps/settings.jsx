@@ -42,7 +42,8 @@ export const Settings = () => {
     });
   };
 
-  const userName = useSelector((state) => state.setting.person.name);
+  const user = useSelector((state) => state.user);
+  const userName = user?.email ?? 'Admin';
 
   return (
     <div
