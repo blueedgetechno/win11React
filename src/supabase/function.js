@@ -40,7 +40,7 @@ export const DeactivateWorkerSession = async (worker_session_id) => {
 
     return error == null ? data : new Error(error + ":" + data);
   } catch (error) {
-    return new Error(error)
+    return new Error(error);
   }
 };
 
@@ -66,6 +66,6 @@ export const CreateWorkerSession = async (worker_profile_id, media) => {
 
     return error == null ? data : new Error(error + ":" + data);
   } catch (error) {
-    return new Error(error)
+    return new Error(error);
   }
 };
