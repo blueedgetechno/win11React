@@ -199,8 +199,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -220,7 +220,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -234,7 +234,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -322,7 +322,7 @@ export const fetchWorker = async (oldCpath = "Account") => {
   const dataFormat = autoFormatData(res);
   store.dispatch({
     type: "FILEUPDATEWORKER",
-    payload: { data: dataFormat, oldCpath: oldCpath ?? cpath },
+    payload: { data: dataFormat, oldCpath: cpath ?? oldCpath },
   });
 };
 
@@ -363,7 +363,7 @@ export const createWorkerSession = async (workerId) => {
 
   const res = await CreateWorkerSession(worker_profile_id, media_device);
   if (res instanceof Error) {
-    log({ type: "Create Worker Session Fail!", content: res });
+    log({ type: "error", content: res });
     return;
   }
   await fetchWorker();
