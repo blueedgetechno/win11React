@@ -13,7 +13,7 @@ export * from "./start";
 export * from "./widget";
 
 export const DesktopApp = () => {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
   const deskApps = useSelector((state) => {
     var arr = { ...state.desktop };
     var tmpApps = [...arr.apps];
@@ -48,14 +48,14 @@ export const DesktopApp = () => {
   });
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    analytics.identify(user.id,{
+  useEffect(() => {
+    analytics.identify(user.id, {
       ...user,
-      userAgent: window?.navigator?.userAgent ?? '',
+      userAgent: window?.navigator?.userAgent ?? "",
       timestamp: new Date(),
-      locate: navigator?.language ?? ''
-    })
-  },[])
+      locate: navigator?.language ?? "",
+    });
+  }, []);
   return (
     <div className="desktopCont">
       {!deskApps.hide &&

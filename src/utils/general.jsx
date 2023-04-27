@@ -47,14 +47,16 @@ export const Icon = (props) => {
     if (action.type) {
       dispatch(action);
     }
-    const iconName = props.name ?? props.src
-    const eventName = props.name ? `Click App ${iconName}` : `Action: ${action?.type}`
+    const iconName = props.name ?? props.src;
+    const eventName = props.name
+      ? `Click App ${iconName}`
+      : `Action: ${action?.type}`;
 
-    analytics.track(eventName,{
+    analytics.track(eventName, {
       name: iconName,
-      
-      timestamp: new Date()
-    })
+
+      timestamp: new Date(),
+    });
   };
 
   if (props.fafa != null) {
