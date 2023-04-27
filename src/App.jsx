@@ -23,7 +23,6 @@ import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import { combineText } from "./utils/combineText";
-import { analytics } from "./lib/segment,js";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
