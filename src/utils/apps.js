@@ -142,6 +142,13 @@ const apps = [
     payload: externalLink.DOCUMENT_LINK,
   },
   {
+    name: "Our Service",
+    icon: "doc",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.SERVICE_LINK,
+  },
+  {
     name: "Document",
     icon: "doc",
     type: "any",
@@ -149,7 +156,21 @@ const apps = [
     payload: externalLink.DOCUMENT_LINK,
   },
   {
-    name: "About",
+    name: "Pricing",
+    icon: "pricing",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.PRICING_LINK,
+  },
+  {
+    name: "Contact Us",
+    icon: "mail",
+    type: "app",
+    action: "EXTERNAL",
+    payload: externalLink.MAILTO_ADDRESS,
+  },
+  {
+    name: "About Us",
     icon: "about",
     type: "any",
     action: "DESKABOUT",
@@ -158,13 +179,6 @@ const apps = [
     name: "Yammer",
     icon: "yammer",
     type: "app",
-  },
-  {
-    name: "Mail",
-    icon: "mail",
-    type: "app",
-    action: "EXTERNAL",
-    payload: externalLink.MAILTO_ADDRESS,
   },
   {
     name: "Movies",
@@ -311,8 +325,9 @@ const apps = [
   {
     name: "Discord",
     icon: "discord",
-    type: "app",
-    action: "DISCORD",
+    type: "any",
+    action: "EXTERNAL",
+    payload: externalLink.DISCORD_LINK,
   },
 ];
 

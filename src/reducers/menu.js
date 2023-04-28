@@ -150,7 +150,7 @@ const defState = {
         payload: "C:\\Users\\Blue\\Desktop",
       },
       {
-        name: "About",
+        name: "About Us",
         action: "DESKABOUT",
         icon: "about",
         payload: true,
@@ -298,6 +298,11 @@ const defState = {
       {
         name: "Open",
         action: "FILEDIRWORKER",
+      },
+      {
+        name: "Connect",
+        action: "CONNECTWORKERSESSION",
+        payload: "connect",
       },
       {
         name: "Deactivate Session",

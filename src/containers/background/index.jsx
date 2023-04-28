@@ -123,7 +123,6 @@ export const LockScreen = (props) => {
     if (error) {
       throw new Error(error);
     }
-    dispatch({ type: "WALLUNLOCK" });
   };
 
   const action2 = (e) => {

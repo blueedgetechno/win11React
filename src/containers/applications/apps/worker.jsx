@@ -5,6 +5,7 @@ import {
   dispatchAction,
   fetchWorker,
   handleFileOpenWorker,
+  refeshFetchWorker,
 } from "../../../actions";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
@@ -142,18 +143,9 @@ export const Worker = () => {
 
     arr.push(
       <div key={index++} className="dirCont flex items-center">
-        <div className="dncont" tabIndex="-1">
-          Worker
-        </div>
-        <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>
-    );
-
-    arr.push(
-      <div key={index++} className="dirCont flex items-center">
         <Icon
           className="pr-1 pb-px"
-          src={"win/" + fdata.info.icon + "-sm"}
+          src={"win/" + fdata?.info?.icon + "-sm"}
           width={16}
         />
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
@@ -278,7 +270,7 @@ const ContentArea = ({ searchtxt }) => {
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   const [userInfo, setuserInfo] = useState(null);
-
+  const fdata = files.data.getId(files.cdir);
   const subInfo = React.useMemo(() => {
     if (selected == null) {
       return {
@@ -332,6 +324,7 @@ const ContentArea = ({ searchtxt }) => {
         key == "icon" ||
         key == "id" ||
         key == "ended" ||
+        key == "isActive" ||
         key == "account_id" ||
         key == "proxy_profile_id" ||
         key == "worker_profile_id" ||
@@ -353,7 +346,6 @@ const ContentArea = ({ searchtxt }) => {
 
     return list;
   };
-  const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.stopPropagation();
@@ -383,14 +375,9 @@ const ContentArea = ({ searchtxt }) => {
     if (info.ended != undefined && typeof info.ended == "boolean") {
       return !info.ended ? "worker_connect" : "worker_disconnect";
     }
-    if (info.last_check != undefined) {
-      const time =
-        Date.now() -
-        Date.parse(info.last_check) +
-        new Date().getTimezoneOffset() * 60 * 1000;
-      return time < 3 * 60 * 1000 ? "worker_connect" : "worker_disconnect";
+    if (info.isActive != undefined && typeof info.isActive == "boolean") {
+      return info.isActive ? "worker_connect" : "worker_disconnect";
     }
-
     return "worker_connect";
   };
   return (
@@ -402,7 +389,7 @@ const ContentArea = ({ searchtxt }) => {
     >
       <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
-          {fdata.data.map((item, i) => {
+          {fdata?.data.map((item, i) => {
             return (
               item.name.includes(searchtxt) && (
                 <div
@@ -431,11 +418,7 @@ const ContentArea = ({ searchtxt }) => {
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               {subInfo?.info?.menu == "worker" ||
               subInfo?.info?.menu == "session" ? (
-                <Image
-                  src={`icon/win/${renderIconName(
-                    subInfo?.info?.last_check ?? subInfo?.info?.ended
-                  )}`}
-                />
+                <Image src={`icon/win/${renderIconName(subInfo?.info)}`} />
               ) : null}
 
               {renderSubdata(subInfo?.info)}
@@ -480,11 +463,21 @@ const Ribbon = ({}) => {
       <div className="ribsec">
         <div className="drdwcont flex">
           <Icon src="sort" ui width={18} margin="0 6px" />
-          <span>Sort</span>
         </div>
         <div className="drdwcont flex">
           <Icon src="view" ui width={18} margin="0 6px" />
-          <span>View</span>
+        </div>
+        <div className="drdwcont flex">
+          <Icon
+            src="refresh"
+            click={"FUNC"}
+            func={() => {
+              refeshFetchWorker();
+            }}
+            ui
+            width={18}
+            margin="0 6px"
+          />
         </div>
       </div>
     </div>

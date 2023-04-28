@@ -120,8 +120,8 @@ export const StartMenu = () => {
     }
   }, [query]);
 
-  const userName = useSelector((state) => state.setting.person.name);
-
+  const user = useSelector((state) => state.user);
+  const userName = user?.email ?? "Admin";
   return (
     <div
       className="startMenu dpShad"
@@ -287,8 +287,8 @@ export const StartMenu = () => {
                 ui
                 rounded
                 width={26}
-                click="EXTERNAL"
-                payload="https://blueedge.me"
+                //click="EXTERNAL"
+                //payload="https://thinkmay.net/"
               />
               <div className="usName">{userName}</div>
             </div>

@@ -13,15 +13,10 @@ export const EdgeMenu = () => {
   const iframes = {
     "https://www.google.com/webhp?igu=1": "Google",
     "https://bing.com": "Bing",
-    "https://www.youtube.com/embed/m0EHSoZzHEA": "Youtube",
-    "https://blueedge.me": "blueedge",
-    "https://andrewstech.me": "\nandrewstech",
-    "https://blueedge.me/unescape": "Unescape",
-    "https://win11.blueedge.me": "Inception",
-    "https://open.spotify.com/embed/user/jhfivkgdtg4s97pwbo1rbvr9v/playlist/6IdR78TOog83PV4XhLDvWN":
-      "Spotify",
-    "https://bluelab.blueedge.me": "BlueLab",
-    "https://othello.blueedge.me": "Othello",
+    //"https://www.youtube.com/embed/m0EHSoZzHEA": "Youtube",
+    //"https://blueedge.me": "blueedge",
+    //"https://andrewstech.me": "\nandrewstech",
+    "https://thinkmay.net/": "Inception",
   };
 
   const favicons = {

@@ -10,7 +10,6 @@ import {
 import { autoFormatData } from "../utils/formatData";
 import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { isActive } from "../utils/isActive";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
 
@@ -312,14 +311,32 @@ export const handleOpenModal = (id) => {
 //
 
 //
-export const fetchWorker = async () => {
-  const data = await FetchAuthorizedWorkers();
-  const dataFormat = autoFormatData(data);
-  store.dispatch({ type: "FILEUPDATEWORKER", payload: dataFormat });
+export const fetchWorker = async (oldCpath = "Account") => {
+  const cpath = store.getState().worker.cpath ?? "Account";
+  const res = await FetchAuthorizedWorkers();
+  if (res instanceof Error) {
+    return new Error(res);
+  }
+  const dataFormat = autoFormatData(res);
+  store.dispatch({
+    type: "FILEUPDATEWORKER",
+    payload: { data: dataFormat, oldCpath: cpath ?? oldCpath },
+  });
 };
 
-export const deactiveWorkerSeesion = async (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
+export const refeshFetchWorker = async () => {
+  log({ type: "loading" });
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return;
+  }
+
+  log({ type: "success" });
+};
+
+export const deactiveWorkerSeesion = async (workerId) => {
+  const item = store.getState().worker.data.getId(workerId);
   if (!item) return;
   const { worker_session_id, ended } = item.info;
 
@@ -331,19 +348,23 @@ export const deactiveWorkerSeesion = async (itemId) => {
     log({ type: "error", content: res });
     return;
   }
-  log({ type: "sucess" });
-  fetchWorker();
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return;
+  }
 
-  // dispatch ....
+  log({ type: "success" });
 };
 
-export const createWorkerSession = async (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
+export const createWorkerSession = async (workerId) => {
+  const workerFound = store.getState().worker.data.getId(workerId);
 
-  if (!item) return;
+  if (!workerFound) return;
 
-  const { worker_profile_id, media_device, last_check } = item.info;
-  if (!worker_profile_id || !isActive(last_check)) return;
+  const { worker_profile_id, media_device, last_check, isActive } =
+    workerFound.info;
+  if (!worker_profile_id || isActive) return;
 
   log({ type: "loading" });
 
@@ -352,7 +373,46 @@ export const createWorkerSession = async (itemId) => {
     log({ type: "error", content: res });
     return;
   }
+  const error = await fetchWorker();
+  if (error instanceof Error) {
+    log({ type: "error", content: error });
+    return;
+  }
+
   log({ type: "success" });
-  fetchWorker();
-  // dispath ...
+};
+
+export const connectWorker = async (workerId) => {
+  const workerFound = store.getState().worker.data.getId(workerId);
+  if (!workerFound) return;
+
+  const sessionUrlFound = workerFound.data.find(
+    (session) => session.info.ended === false
+  )?.info?.remote_url;
+  if (sessionUrlFound) {
+    window.open(sessionUrlFound, "_blank");
+    return;
+  }
+
+  const media_device = workerFound.info.media_device ?? "";
+  log({ type: "loading", title: "Await create a new session" });
+  const res = await CreateWorkerSession(
+    workerFound.info.worker_profile_id,
+    media_device
+  );
+  if (res instanceof Error) {
+    log({ type: "error", title: "Create Worker Session Fail!", content: res });
+    return;
+  }
+
+  log({ type: "close" });
+  window.open(res.url, "_blank");
+};
+
+//TODO: have bug when navigate(-1) after fetch data.
+export const connectWorkerSession = (itemId) => {
+  const item = store.getState().worker.data.getId(itemId);
+  if (!item.info.remote_url) return;
+
+  window.open(item.info.remote_url, "_blank");
 };
