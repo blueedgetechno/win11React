@@ -7,7 +7,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
-import { analytics } from "../lib/segment.js";
+import { AnalyticTrack, analytics } from "../lib/segment.js";
 
 String.prototype.strip = function (c) {
   var i = 0,
@@ -55,7 +55,7 @@ export const Icon = (props) => {
       const eventName = isClose
         ? `Close App ${iconName}`
         : `Click App ${iconName}`
-      analytics.track(eventName, {
+      AnalyticTrack(eventName, {
         name: iconName,
         user: user.email || user.id || 'anoymous',
         timestamp: new Date(),
@@ -202,7 +202,7 @@ export const Image = (props) => {
         const typeApp = props.type ?? 'App'
         const eventName = `Click ${typeApp}: ${imgName}`
         
-        analytics.track(eventName, {
+        AnalyticTrack(eventName, {
           name: imgName,
           user: user.email || user.id || 'anoymous',
           timestamp: new Date(),

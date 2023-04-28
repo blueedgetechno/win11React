@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import supabase from "../../supabase/createClient";
 import { handleLogOut } from "../../actions";
-import { analytics } from "../../lib/segment";
+import { AnalyticTrack, analytics } from "../../lib/segment";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -94,18 +94,14 @@ export const StartMenu = () => {
         target.parentNode.scrollTop = target.offsetTop;
       } else {
         var target = document.getElementById("charA");
-        target.parentNode.scrollTop = 0;analytics.track(eventName, {
-      name: iconName,
-      user: user.email || user.id || 'anoymous',
-      timestamp: new Date(),
-    });
+        target.parentNode.scrollTop = 0;
       }
     }
     if(isTrack){
       const iconName = event.target.dataset.name ;
       const eventName = `Click App ${iconName}`
   
-      analytics.track(eventName, {
+      AnalyticTrack(eventName, {
         name: iconName,
         user: user.email || user.id || 'anoymous',
         timestamp: new Date(),

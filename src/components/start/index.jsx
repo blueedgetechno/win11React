@@ -7,7 +7,7 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-import { analytics } from "../../lib/segment.js";
+import { AnalyticIdentify } from "../../lib/segment.js";
 
 export * from "./start";
 export * from "./widget";
@@ -49,7 +49,7 @@ export const DesktopApp = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    analytics.identify(user.id, {
+    AnalyticIdentify(user.id ?? 'anoymous', {
       ...user,
       userAgent: window?.navigator?.userAgent ?? "",
       timestamp: new Date(),

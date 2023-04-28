@@ -5,7 +5,7 @@ import i18next from "i18next";
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 import supabase from "../../../supabase/createClient";
-import { analytics } from "../../../lib/segment";
+import { AnalyticTrack } from "../../../lib/segment";
 
 export const WnTerminal = () => {
   const wnapp = useSelector((state) => state.apps.terminal);
@@ -295,7 +295,7 @@ export const WnTerminal = () => {
     const eventType = type ?? ''
     const typeArg = arg ?? ''
     const eventName = `Terminal: ${eventType} + ${typeArg}`
-    analytics.track(eventName, {
+    AnalyticTrack(eventName, {
       name: iconName,
       user: user.email || user.id || 'anoymous',
       timestamp: new Date(),
