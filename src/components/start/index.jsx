@@ -49,7 +49,7 @@ export const DesktopApp = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    AnalyticIdentify(user.id ?? 'anoymous', {
+    AnalyticIdentify(user.id ?? "anoymous", {
       ...user,
       userAgent: window?.navigator?.userAgent ?? "",
       timestamp: new Date(),
