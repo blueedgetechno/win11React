@@ -72,6 +72,7 @@ export const DesktopApp = () => {
                 width={Math.round(deskApps.size * 36)}
                 menu="app"
                 name={app.name}
+                isTrack={true}
               />
               <div className="appName">{app.name}</div>
             </div>

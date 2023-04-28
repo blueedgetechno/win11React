@@ -49,16 +49,18 @@ export const Icon = (props) => {
     if (action.type) {
       dispatch(action);
     }
-    const iconName = props.name ?? props.src;
-    const eventName = props.name
-      ? `Click App ${iconName}`
-      : `Action: ${action?.type}`;
-
-    analytics.track(eventName, {
-      name: iconName,
-      user: user.email || user.id || 'anoymous',
-      timestamp: new Date(),
-    });
+    if(props.isTrack){
+      const iconName = props.name ?? props.src;
+      const isClose = props.payload === 'close'
+      const eventName = isClose
+        ? `Close App ${iconName}`
+        : `Click App ${iconName}`
+      analytics.track(eventName, {
+        name: iconName,
+        user: user.email || user.id || 'anoymous',
+        timestamp: new Date(),
+      });
+    } 
   };
 
   if (props.fafa != null) {
@@ -479,12 +481,14 @@ export const ToolBar = (props) => {
           <Icon
             className="closeBtn"
             invert={props.invert}
+            name={props.app}
             click={props.app}
             payload="close"
             pr
             src="close"
             ui
             width={14}
+            isTrack={true}
           />
         </div>
       </div>
