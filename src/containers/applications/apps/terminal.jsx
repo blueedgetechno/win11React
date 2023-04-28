@@ -5,9 +5,11 @@ import i18next from "i18next";
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 import supabase from "../../../supabase/createClient";
+import { analytics } from "../../../lib/segment";
 
 export const WnTerminal = () => {
   const wnapp = useSelector((state) => state.apps.terminal);
+  const user = useSelector((state) => state.user);
   const [stack, setStack] = useState(["OS [Version 10.0.22000.51]", ""]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
   const [lastCmd, setLsc] = useState(0);
@@ -210,10 +212,8 @@ export const WnTerminal = () => {
     } else if (type == "lang-test") {
       i18next.changeLanguage("fr-FR");
       tmpStack.push("French");
-    } else if (type == "blue") {
-      tmpStack.push("blueedgetechno");
     } else if (type == "dev") {
-      tmpStack.push("https://dev.blueedge.me/");
+      tmpStack.push("Huy Hoang Do. Le Van Thien. Do Van Dat");
     } else if (type == "ver") {
       tmpStack.push("OS [Version 10.0.22000.51]");
     } else if (type == "systeminfo") {
@@ -256,6 +256,7 @@ export const WnTerminal = () => {
         tmpStack.push(helpArr[i]);
       }
     } else if (type == "vendor" && arg == "keygen") {
+
       const result = await supabase.functions.invoke("user_keygen", {
         body: {},
         headers: {
@@ -290,6 +291,16 @@ export const WnTerminal = () => {
     }
 
     if (type.length > 0) tmpStack.push("");
+
+    const eventType = type ?? ''
+    const typeArg = arg ?? ''
+    const eventName = `Terminal: ${eventType} + ${typeArg}`
+    analytics.track(eventName, {
+      name: iconName,
+      user: user.email || user.id || 'anoymous',
+      timestamp: new Date(),
+    });
+
     setStack(tmpStack);
   };
 
