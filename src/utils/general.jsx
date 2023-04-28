@@ -26,6 +26,8 @@ String.prototype.count = function (c) {
 
 export const Icon = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
   if (props.ext != null || (props.src && props.src.includes("http"))) {
     src = props.src;
@@ -54,7 +56,7 @@ export const Icon = (props) => {
 
     analytics.track(eventName, {
       name: iconName,
-
+      user: user.email || user.id || 'anoymous',
       timestamp: new Date(),
     });
   };
