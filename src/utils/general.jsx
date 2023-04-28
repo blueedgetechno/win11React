@@ -173,6 +173,8 @@ export const Icon = (props) => {
 
 export const Image = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   var src = `img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
   if (props.ext != null) {
     src = props.src;
@@ -192,6 +194,18 @@ export const Image = (props) => {
 
     if (action.type) {
       dispatch(action);
+      
+      if(props.isTrack){
+        const imgName = props.src || props.name || 'unknow'
+        const typeApp = props.type ?? 'App'
+        const eventName = `Click ${typeApp}: ${imgName}`
+        
+        analytics.track(eventName, {
+          name: imgName,
+          user: user.email || user.id || 'anoymous',
+          timestamp: new Date(),
+        });
+      }
     }
   };
 
