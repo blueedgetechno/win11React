@@ -513,8 +513,8 @@ const FrontPage = (props) => {
                     dir="store/apps"
                     src={x}
                     isTrack={true}
-                    type={'Store App'}
-                    click={'track'}
+                    type={"Store App"}
+                    click={"track"}
                   />
                   <div className="capitalize text-xs font-semibold">{x}</div>
                   <div className="flex mt-2 items-center">

@@ -5,9 +5,9 @@ export const analytics = AnalyticsBrowser.load({
 });
 
 export const AnalyticTrack = (evtName, data) => {
-  analytics.track(evtName, data)
-}
+  analytics.track(evtName, data);
+};
 
 export const AnalyticIdentify = (userId, data) => {
-  analytics.identify(userId, data)
-}
+  analytics.identify(userId, data);
+};

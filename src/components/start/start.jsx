@@ -69,7 +69,7 @@ export const StartMenu = () => {
   };
 
   const clickDispatch = (event) => {
-    const isTrack = event.target.dataset.click == 'track'
+    const isTrack = event.target.dataset.click == "track";
     var action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
@@ -97,13 +97,13 @@ export const StartMenu = () => {
         target.parentNode.scrollTop = 0;
       }
     }
-    if(isTrack){
-      const iconName = event.target.dataset.name ;
-      const eventName = `Click App ${iconName}`
-  
+    if (isTrack) {
+      const iconName = event.target.dataset.name;
+      const eventName = `Click App ${iconName}`;
+
       AnalyticTrack(eventName, {
         name: iconName,
-        user: user.email || user.id || 'anoymous',
+        user: user.email || user.id || "anoymous",
         timestamp: new Date(),
       });
     }
@@ -156,7 +156,7 @@ export const StartMenu = () => {
                         onClick={clickDispatch}
                         data-action={app.action}
                         data-payload={app.payload || "full"}
-                        data-click={'track'}
+                        data-click={"track"}
                         data-name={app.name}
                       >
                         <Icon className="pnIcon" src={app.icon} width={32} />
@@ -184,7 +184,7 @@ export const StartMenu = () => {
                         onClick={clickDispatch}
                         data-action={app.action}
                         data-payload={app.payload || "full"}
-                        data-click={'track'}
+                        data-click={"track"}
                         data-name={app.name}
                       >
                         <Icon className="pnIcon" src={app.icon} width={32} />
@@ -240,7 +240,7 @@ export const StartMenu = () => {
                         data-action={app.action}
                         data-payload={app.payload || "full"}
                         data-name={app.name}
-                        data-click={'track'}
+                        data-click={"track"}
                       >
                         <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
@@ -423,7 +423,6 @@ export const StartMenu = () => {
                     onClick={clickDispatch}
                     data-action="EDGELINK"
                     data-payload={query}
-                    
                   >
                     <Icon className="blueicon" src="search" ui width={20} />
                     <div className="matchInfo flex-col px-2">
@@ -443,7 +442,7 @@ export const StartMenu = () => {
                           onClick={clickDispatch}
                           data-action={app.action}
                           data-payload={app.payload || "full"}
-                          data-click={'track'}
+                          data-click={"track"}
                           data-name={app.name}
                         >
                           <Icon src={app.icon} width={30} />

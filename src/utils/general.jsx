@@ -56,18 +56,18 @@ export const Icon = (props) => {
     if (action.type) {
       dispatch(action);
     }
-    if(props.isTrack){
+    if (props.isTrack) {
       const iconName = props.name ?? props.src;
-      const isClose = props.payload === 'close'
+      const isClose = props.payload === "close";
       const eventName = isClose
         ? `Close App ${iconName}`
-        : `Click App ${iconName}`
+        : `Click App ${iconName}`;
       AnalyticTrack(eventName, {
         name: iconName,
-        user: user.email || user.id || 'anoymous',
+        user: user.email || user.id || "anoymous",
         timestamp: new Date(),
       });
-    } 
+    }
   };
 
   if (props.fafa != null) {
@@ -203,15 +203,15 @@ export const Image = (props) => {
 
     if (action.type) {
       dispatch(action);
-      
-      if(props.isTrack){
-        const imgName = props.src || props.name || 'unknow'
-        const typeApp = props.type ?? 'App'
-        const eventName = `Click ${typeApp}: ${imgName}`
-        
+
+      if (props.isTrack) {
+        const imgName = props.src || props.name || "unknow";
+        const typeApp = props.type ?? "App";
+        const eventName = `Click ${typeApp}: ${imgName}`;
+
         AnalyticTrack(eventName, {
           name: imgName,
-          user: user.email || user.id || 'anoymous',
+          user: user.email || user.id || "anoymous",
           timestamp: new Date(),
         });
       }

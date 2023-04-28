@@ -256,7 +256,6 @@ export const WnTerminal = () => {
         tmpStack.push(helpArr[i]);
       }
     } else if (type == "vendor" && arg == "keygen") {
-
       const result = await supabase.functions.invoke("user_keygen", {
         body: {},
         headers: {
@@ -298,12 +297,12 @@ export const WnTerminal = () => {
 
     if (type.length > 0) tmpStack.push("");
 
-    const eventType = type ?? ''
-    const typeArg = arg ?? ''
-    const eventName = `Terminal: ${eventType} + ${typeArg}`
+    const eventType = type ?? "";
+    const typeArg = arg ?? "";
+    const eventName = `Terminal: ${eventType} + ${typeArg}`;
     AnalyticTrack(eventName, {
       name: iconName,
-      user: user.email || user.id || 'anoymous',
+      user: user.email || user.id || "anoymous",
       timestamp: new Date(),
     });
 
