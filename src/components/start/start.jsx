@@ -119,7 +119,7 @@ export const StartMenu = () => {
       }
     }
   }, [query]);
-  
+
   const userName = user?.email ?? "Admin";
   return (
     <div
