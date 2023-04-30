@@ -7,6 +7,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
+import { AnalyticTrack, analytics } from "../lib/segment.js";
 
 String.prototype.strip = function (c) {
   var i = 0,
@@ -25,6 +26,8 @@ String.prototype.count = function (c) {
 
 export const Icon = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
 
   if (src == undefined || src.includes("undefined")) {
@@ -57,6 +60,18 @@ export const Icon = (props) => {
 
     if (action.type) {
       dispatch(action);
+    }
+    if (props.isTrack) {
+      const iconName = props.name ?? props.src;
+      const isClose = props.payload === "close";
+      const eventName = isClose
+        ? `Close App ${iconName}`
+        : `Click App ${iconName}`;
+      AnalyticTrack(eventName, {
+        name: iconName,
+        user: user.email || user.id || "anoymous",
+        timestamp: new Date(),
+      });
     }
   };
 
@@ -172,6 +187,7 @@ export const Icon = (props) => {
 
 export const Image = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   let src = props.absolute
     ? props.src
@@ -199,6 +215,18 @@ export const Image = (props) => {
 
     if (action.type) {
       dispatch(action);
+
+      if (props.isTrack) {
+        const imgName = props.src || props.name || "unknow";
+        const typeApp = props.type ?? "App";
+        const eventName = `Click ${typeApp}: ${imgName}`;
+
+        AnalyticTrack(eventName, {
+          name: imgName,
+          user: user.email || user.id || "anoymous",
+          timestamp: new Date(),
+        });
+      }
     }
   };
 
@@ -472,12 +500,14 @@ export const ToolBar = (props) => {
           <Icon
             className="closeBtn"
             invert={props.invert}
+            name={props.app}
             click={props.app}
             payload="close"
             pr
             src="close"
             ui
             width={14}
+            isTrack={true}
           />
         </div>
       </div>

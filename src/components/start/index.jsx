@@ -7,11 +7,13 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
+import { AnalyticIdentify } from "../../lib/segment.js";
 
 export * from "./start";
 export * from "./widget";
 
 export const DesktopApp = () => {
+  const user = useSelector((state) => state.user);
   const deskApps = useSelector((state) => {
     var arr = { ...state.desktop };
     var tmpApps = [...arr.apps];
@@ -46,6 +48,14 @@ export const DesktopApp = () => {
   });
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    AnalyticIdentify(user.id ?? "anoymous", {
+      ...user,
+      userAgent: window?.navigator?.userAgent ?? "",
+      timestamp: new Date(),
+      locate: navigator?.language ?? "",
+    });
+  }, []);
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
@@ -61,6 +71,8 @@ export const DesktopApp = () => {
                 pr
                 width={Math.round(deskApps.size * 36)}
                 menu="app"
+                name={app.name}
+                isTrack={true}
               />
               <div className="appName">{app.name}</div>
             </div>
