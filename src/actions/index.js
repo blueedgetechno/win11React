@@ -233,7 +233,7 @@ const loadWidget = async () => {
 };
 
 export const loadSettings = () => {
-  sett = JSON.parse('[]'); // TODO setting from database
+  let sett = JSON.parse('[]'); // TODO setting from database
 
   if (sett.person == null) {
     sett = JSON.parse(JSON.stringify(store.getState().setting));

@@ -58,18 +58,16 @@ const changeVal = (obj, path, val = "togg") => {
 
 // TODO setting in db
 const settReducer = (state = defState, action) => {
-  var tmpState = { ...state },
+  var tmpState = { ...state }
+
   switch (action.type) {
     case "STNGTHEME":
-      changed = true;
       tmpState.person.theme = action.payload;
       break;
     case "STNGTOGG":
-      changed = true;
       tmpState = changeVal(tmpState, action.payload);
       break;
     case "STNGSETV":
-      changed = true;
       tmpState = changeVal(tmpState, action.payload.path, action.payload.value);
       break;
     case "SETTLOAD":
