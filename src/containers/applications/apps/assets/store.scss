@@ -127,7 +127,11 @@
 
 .amzGames {
   background: #000000;
-  background: -webkit-linear-gradient( 48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
+  background: -webkit-linear-gradient(
+    48deg,
+    #522f8b 0%,
+    rgba(113, 35, 133, 1) 100%
+  );
   background: -o-linear-gradient(48deg, #522f8b 0%, rgba(113, 35, 133, 1) 100%);
   background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
 }

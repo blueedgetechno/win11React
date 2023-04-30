@@ -28,7 +28,7 @@ export const Icon = (props) => {
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
 
   if (src == undefined || src.includes("undefined")) {
-    src = "img/icon/win/50"
+    src = "img/icon/win/50";
   }
 
   if (props.ext != null || (props.src && props.src.includes("http"))) {
@@ -173,12 +173,12 @@ export const Icon = (props) => {
 export const Image = (props) => {
   const dispatch = useDispatch();
 
-  let src = props.absolute 
-    ?  props.src 
+  let src = props.absolute
+    ? props.src
     : `img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
-  
+
   if (src == undefined || src.includes("undefined")) {
-    src = "img/icon/win/50"
+    src = "img/icon/win/50";
   }
 
   if (props.ext != null) {

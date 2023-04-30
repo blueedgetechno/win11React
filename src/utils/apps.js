@@ -33,17 +33,14 @@ const apps = [
       url: "https://www.programiz.com/python-programming/online-compiler/",
       gallery: [
         "https://cdn.programiz.com/cdn/farfuture/IwFGGPqycIxTfzLl7mPdcaqUaircnStXfipaHd4EBik/mtime:1605833048/sites/all/themes/programiz/assets/compiler.png",
-        "https://www.programiz.com/blog/content/images/2020/07/programiz-online-compiler.png"
+        "https://www.programiz.com/blog/content/images/2020/07/programiz-online-compiler.png",
       ],
-      desc: "Compile Python"
+      desc: "Compile Python",
     },
     hide: true,
     pwa: true,
     full: true,
   },
-
-
-
 
   {
     name: "Start",

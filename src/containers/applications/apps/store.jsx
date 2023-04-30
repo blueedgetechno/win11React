@@ -330,79 +330,71 @@ const FrontPage = (props) => {
   const gamerib = useSelector((state) => state.globals.gamerib);
   const { t, i18n } = useTranslation();
 
-  const [Cover,setCover] = useState("img/store/lucacover.jpg")
+  const [Cover, setCover] = useState("img/store/lucacover.jpg");
 
   const updateStoreContent = async () => {
-    const {data,error} = await supabase
+    const { data, error } = await supabase
       .from("public_store")
       .select("title,removed_at,type,metadata")
-      .in("type" , ["game","app","vendor"])
+      .in("type", ["game", "app", "vendor"]);
     if (error != null) {
-      throw error.message
+      throw error.message;
     }
 
     const content = {
       games: [],
       apps: [],
-      vendors: []
-    }
+      vendors: [],
+    };
 
     for (let index = 0; index < data.length; index++) {
       const x = data[index];
       if (x.removed_at != null) {
-        continue
+        continue;
       }
 
       const img = await supabase.storage
         .from("public_store")
-        .getPublicUrl(`store/${x.type}/${x.title}.png`)
+        .getPublicUrl(`store/${x.type}/${x.title}.png`);
 
-
-      let row = null
-      if (x.type == 'game') {
-        row = content.games
-      } else if (x.type == 'app') {
-        row = content.apps
-      } else if (x.type == 'vendor') {
-        row = content.vendors
-        setCover(img.data.publicUrl)
+      let row = null;
+      if (x.type == "game") {
+        row = content.games;
+      } else if (x.type == "app") {
+        row = content.apps;
+      } else if (x.type == "vendor") {
+        row = content.vendors;
+        setCover(img.data.publicUrl);
       }
-      
+
       row.push({
         title: x.title,
         image: img.data.publicUrl,
-        metadata : x.metadata
-      })
+        metadata: x.metadata,
+      });
     }
 
-
-    store.dispatch({ 
+    store.dispatch({
       type: "UPDATEAPP",
-      payload: content.apps
-    })
-    store.dispatch({ 
+      payload: content.apps,
+    });
+    store.dispatch({
       type: "UPDATEVENDOR",
-      payload: content.vendors
-    })
-    store.dispatch({ 
+      payload: content.vendors,
+    });
+    store.dispatch({
       type: "UPDATEGAME",
-      payload: content.games
-    })
-  }
-
+      payload: content.games,
+    });
+  };
 
   useEffect(() => {
-    updateStoreContent()
-  },[])
+    updateStoreContent();
+  }, []);
 
   return (
     <div className="pagecont w-full absolute top-0">
-      <Image
-        id="sthome"
-        className="frontPage w-full"
-        src={Cover}
-        ext
-      />
+      <Image id="sthome" className="frontPage w-full" src={Cover} ext />
       {/* <div className="panelName absolute m-6 text-xl top-0">Home</div> */}
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
@@ -414,10 +406,10 @@ const FrontPage = (props) => {
                   href={x.metadata?.href}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={()=>{
+                  onMouseEnter={() => {
                     setTimeout(() => {
-                      setCover(x.image)
-                    },500)
+                      setCover(x.image);
+                    }, 500);
                   }}
                 >
                   <Image
@@ -427,7 +419,7 @@ const FrontPage = (props) => {
                     src={x.image}
                   />
                 </a>
-              ) 
+              );
             })}
         </div>
       </div>
@@ -443,7 +435,7 @@ const FrontPage = (props) => {
         <div className="flex w-max pr-8">
           {gamerib &&
             gamerib.map((x, i) => {
-              var stars = 5 
+              var stars = 5;
               return (
                 <div key={i} className="ribcont rounded-2xl my-auto p-2 pb-2">
                   <Image
@@ -452,7 +444,9 @@ const FrontPage = (props) => {
                     absolute={true}
                     src={x.image}
                   />
-                  <div className="capitalize text-xs font-semibold">{x.title}</div>
+                  <div className="capitalize text-xs font-semibold">
+                    {x.title}
+                  </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -470,8 +464,8 @@ const FrontPage = (props) => {
                     <div className="text-xss">{1}k</div>
                   </div>
                   <div className="text-xss mt-8">
-                      <>{t("store.free")}</>
-                      {/* <>{t("store.owned")}</> */}
+                    <>{t("store.free")}</>
+                    {/* <>{t("store.owned")}</> */}
                   </div>
                 </div>
               );
@@ -491,7 +485,7 @@ const FrontPage = (props) => {
         <div className="flex w-max pr-8">
           {apprib &&
             apprib.map((x, i) => {
-              var stars = 5 
+              var stars = 5;
               return (
                 <div key={i} className="ribcont rounded-2xl my-auto p-2 pb-2">
                   <Image
@@ -500,7 +494,9 @@ const FrontPage = (props) => {
                     absolute={true}
                     src={x.image}
                   />
-                  <div className="capitalize text-xs font-semibold">{x.title}</div>
+                  <div className="capitalize text-xs font-semibold">
+                    {x.title}
+                  </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -518,15 +514,14 @@ const FrontPage = (props) => {
                     <div className="text-xss">{"1k"}</div>
                   </div>
                   <div className="text-xss mt-8">
-                      <>{t("store.free")}</>
-                      {/* <>{t("store.owned")}</> */}
+                    <>{t("store.free")}</>
+                    {/* <>{t("store.owned")}</> */}
                   </div>
                 </div>
               );
             })}
         </div>
       </div>
-
     </div>
   );
 };

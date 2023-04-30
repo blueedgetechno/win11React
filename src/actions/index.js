@@ -137,7 +137,6 @@ export const delApp = (act, menu) => {
           store.dispatch({ type: app.action, payload: "close" });
           store.dispatch({ type: "DELAPP", payload: app.icon });
 
-
           let installed = "[]";
 
           installed = JSON.parse(installed);
@@ -233,7 +232,7 @@ const loadWidget = async () => {
 };
 
 export const loadSettings = () => {
-  let sett = JSON.parse('[]'); // TODO setting from database
+  let sett = JSON.parse("[]"); // TODO setting from database
 
   if (sett.person == null) {
     sett = JSON.parse(JSON.stringify(store.getState().setting));

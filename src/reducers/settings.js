@@ -55,10 +55,9 @@ const changeVal = (obj, path, val = "togg") => {
   return obj;
 };
 
-
 // TODO setting in db
 const settReducer = (state = defState, action) => {
-  var tmpState = { ...state }
+  var tmpState = { ...state };
 
   switch (action.type) {
     case "STNGTHEME":

@@ -79,7 +79,6 @@ function App() {
   // const urlParams = new URLSearchParams(window.location.search);
   const dispatch = useDispatch();
 
-
   const afterMath = (event) => {
     var ess = [
       ["START", "STARTHID"],

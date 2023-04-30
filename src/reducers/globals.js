@@ -214,7 +214,7 @@ const globalReducer = (state = defState, action) => {
     state.gamerib = action.payload;
   } else if (action.type === "UPDATEAPP") {
     state.apprib = action.payload;
-  } 
+  }
   return state;
 };
 
