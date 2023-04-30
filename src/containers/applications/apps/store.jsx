@@ -41,8 +41,6 @@ export const MicroStore = () => {
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState({});
 
-
-
   const totab = (e) => {
     var x = e.target && e.target.dataset.action;
     if (x) {
@@ -63,7 +61,7 @@ export const MicroStore = () => {
 
   const frontScroll = (e) => {
     if (page == 0) {
-      var tabs = ["sthome",  "gamerib"],
+      var tabs = ["sthome", "gamerib"],
         mntab = "sthome",
         mndis = window.innerHeight;
 
@@ -122,10 +120,14 @@ export const MicroStore = () => {
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
-            {page == 0 ? <FrontPage app_click={(data) => {
-              setOpapp(data)
-              setPage(2)
-            }} /> : null}
+            {page == 0 ? (
+              <FrontPage
+                app_click={(data) => {
+                  setOpapp(data);
+                  setPage(2);
+                }}
+              />
+            ) : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
@@ -133,7 +135,6 @@ export const MicroStore = () => {
     </div>
   );
 };
-
 
 const FrontPage = (props) => {
   const ribbon = useSelector((state) => state.globals.ribbon);
@@ -153,9 +154,9 @@ const FrontPage = (props) => {
     }
 
     const content = {
-      games:      [],
-      apps:       [],
-      vendors:    [],
+      games: [],
+      apps: [],
+      vendors: [],
     };
 
     for (let index = 0; index < data.length; index++) {
@@ -168,9 +169,13 @@ const FrontPage = (props) => {
         .from("public_store")
         .getPublicUrl(`store/${x.type}/${x.title}.png`);
 
-      const icon = x.metadata.icon || (await supabase.storage
-        .from("public_store")
-        .getPublicUrl(`store/logo/${x.title}.png`)).data.publicUrl;
+      const icon =
+        x.metadata.icon ||
+        (
+          await supabase.storage
+            .from("public_store")
+            .getPublicUrl(`store/logo/${x.title}.png`)
+        ).data.publicUrl;
 
       let row = null;
       if (x.type == "game") {
@@ -220,7 +225,9 @@ const FrontPage = (props) => {
               return (
                 <a
                   key={i}
-                  onClick={() => {props.app_click(x)}}
+                  onClick={() => {
+                    props.app_click(x);
+                  }}
                   target="_blank"
                   rel="noreferrer"
                   onMouseEnter={() => {
@@ -254,11 +261,13 @@ const FrontPage = (props) => {
             gamerib.map((x, i) => {
               var stars = 5;
               return (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
-                  onClick={() => {props.app_click(x)}}
-                  >
+                  onClick={() => {
+                    props.app_click(x);
+                  }}
+                >
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
@@ -308,11 +317,13 @@ const FrontPage = (props) => {
             apprib.map((x, i) => {
               var stars = 5;
               return (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
-                  onClick={() => {props.app_click(x)}}
-                  >
+                  onClick={() => {
+                    props.app_click(x);
+                  }}
+                >
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
@@ -352,22 +363,25 @@ const FrontPage = (props) => {
 };
 
 const DetailPage = ({ app }) => {
-  const stars = 5
-  const reviews = 5000
+  const stars = 5;
+  const reviews = 5000;
 
   app = {
     ...app,
     data: {
-      feat: app.type === 'vendor' ? `${app.title} is one of our cloud provider` : "good",
-      desc: app.type === 'vendor' ? "We collaborate with our cloud provider to provide always available cloud PC to end-user" : "good",
-    }
-  }
-
-
+      feat:
+        app.type === "vendor"
+          ? `${app.title} is one of our cloud provider`
+          : "good",
+      desc:
+        app.type === "vendor"
+          ? "We collaborate with our cloud provider to provide always available cloud PC to end-user"
+          : "good",
+    },
+  };
 
   const [dstate, setDown] = useState(0);
   const { t, i18n } = useTranslation();
-
 
   // TODO download to desktop
   // const apps = useSelector((state) => state.apps);
@@ -376,27 +390,44 @@ const DetailPage = ({ app }) => {
   // useEffect(() => { if (apps[app.icon] != null) setDown(3); }, [dstate]);
   const download = () => {
     setDown(1);
-    setTimeout(() => { setDown(3); }, 3000);
+    setTimeout(() => {
+      setDown(3);
+    }, 3000);
   };
   const GotoButton = () => {
-    if (app.type == 'vendor') {
-      return ( 
-      <div className="instbtn mt-12 mb-8 handcr" > 
-        <a
-          href={app.metadata.href}
-          target={"_blank"}
-          style={{color: "white"}}
-        > Checkout
-        </a>
-      </div>)
+    if (app.type == "vendor") {
+      return (
+        <div className="instbtn mt-12 mb-8 handcr">
+          <a
+            href={app.metadata.href}
+            target={"_blank"}
+            style={{ color: "white" }}
+          >
+            {" "}
+            Checkout
+          </a>
+        </div>
+      );
     }
 
-    return (<div>
-      {dstate == 0 ? ( <div className="instbtn mt-12 mb-8 handcr" onClick={download}> Get </div>) : null}
-      {dstate == 1 ? <div className="downbar mt-12 mb-8"></div> : null}
-      {dstate == 3 ? ( <div className="instbtn mt-12 mb-8 handcr" onClick={download}> Open </div>) : null}
-    </div> )
-  }
+    return (
+      <div>
+        {dstate == 0 ? (
+          <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
+            {" "}
+            Get{" "}
+          </div>
+        ) : null}
+        {dstate == 1 ? <div className="downbar mt-12 mb-8"></div> : null}
+        {dstate == 3 ? (
+          <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
+            {" "}
+            Open{" "}
+          </div>
+        ) : null}
+      </div>
+    );
+  };
 
   return (
     <div className="detailpage w-full absolute top-0 flex">
@@ -411,7 +442,7 @@ const DetailPage = ({ app }) => {
         <div className="flex flex-col items-center text-center relative">
           <div className="text-2xl font-semibold mt-6">{app.title}</div>
           <div className="text-xs text-blue-500">{app.type}</div>
-          <GotoButton/>
+          <GotoButton />
 
           <div className="flex mt-4">
             <div>
@@ -503,4 +534,3 @@ const DetailPage = ({ app }) => {
     </div>
   );
 };
-

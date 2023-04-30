@@ -167,10 +167,10 @@ const defState = {
     ],
   ],
 
-  ribbon:   [ ],
-  apprib:   [ ],
-  gamerib:  [ ],
-  movrib:   [ ],
+  ribbon: [],
+  apprib: [],
+  gamerib: [],
+  movrib: [],
 };
 
 const globalReducer = (state = defState, action) => {
