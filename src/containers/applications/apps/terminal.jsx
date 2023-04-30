@@ -9,7 +9,6 @@ import { AnalyticTrack } from "../../../lib/segment";
 
 export const WnTerminal = () => {
   const wnapp = useSelector((state) => state.apps.terminal);
-  const user = useSelector((state) => state.user);
   const [stack, setStack] = useState(["OS [Version 10.0.22000.51]", ""]);
   const [pwd, setPwd] = useState("C:\\Users\\Blue");
   const [lastCmd, setLsc] = useState(0);
@@ -297,13 +296,12 @@ export const WnTerminal = () => {
 
     if (type.length > 0) tmpStack.push("");
 
-    const eventType = type ?? "";
-    const typeArg = arg ?? "";
-    const eventName = `Terminal: ${eventType} + ${typeArg}`;
-    AnalyticTrack(eventName, {
-      name: iconName,
-      user: user.email || user.id || "anoymous",
+    AnalyticTrack(`terminal`, {
+      name: `${type ?? ""} ${arg ?? ""}`,
       timestamp: new Date(),
+      metadata: { 
+        stack: tmpStack
+      }
     });
 
     setStack(tmpStack);

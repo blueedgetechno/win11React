@@ -99,11 +99,8 @@ export const StartMenu = () => {
     }
     if (isTrack) {
       const iconName = event.target.dataset.name;
-      const eventName = `Click App ${iconName}`;
-
-      AnalyticTrack(eventName, {
+      AnalyticTrack(`click app`, {
         name: iconName,
-        user: user.email || user.id || "anoymous",
         timestamp: new Date(),
       });
     }
@@ -120,7 +117,6 @@ export const StartMenu = () => {
     }
   }, [query]);
 
-  const userName = user?.email ?? "Admin";
   return (
     <div
       className="startMenu dpShad"
@@ -289,7 +285,7 @@ export const StartMenu = () => {
                 //click="EXTERNAL"
                 //payload="https://thinkmay.net/"
               />
-              <div className="usName">{userName}</div>
+              <div className="usName">{user?.email ?? "Admin"}</div>
             </div>
             <div className="relative powerMenu">
               <div className="powerCont" data-vis={start.pwctrl}>

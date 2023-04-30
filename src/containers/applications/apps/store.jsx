@@ -9,6 +9,7 @@ import { installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
+import { AnalyticTrack } from "../../../lib/segment"
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -82,6 +83,18 @@ export const MicroStore = () => {
     }
   };
 
+  const app_click = async (data) => {
+    setOpapp(data);
+    setPage(2);
+    AnalyticTrack(`open store`, {
+      name: data.title,
+      timestamp: new Date(),
+      metadata: {
+      app: data
+      }
+    });
+  }
+
   return (
     <div
       className="wnstore floatTab dpShad"
@@ -120,14 +133,7 @@ export const MicroStore = () => {
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
-            {page == 0 ? (
-              <FrontPage
-                app_click={(data) => {
-                  setOpapp(data);
-                  setPage(2);
-                }}
-              />
-            ) : null}
+            {page == 0 ? <FrontPage  app_click={app_click} /> : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>

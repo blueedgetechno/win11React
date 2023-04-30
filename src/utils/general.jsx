@@ -26,8 +26,6 @@ String.prototype.count = function (c) {
 
 export const Icon = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
 
   if (src == undefined || src.includes("undefined")) {
@@ -63,14 +61,10 @@ export const Icon = (props) => {
     }
     if (props.isTrack) {
       const iconName = props.name ?? props.src;
-      const isClose = props.payload === "close";
-      const eventName = isClose
-        ? `Close App ${iconName}`
-        : `Click App ${iconName}`;
-      AnalyticTrack(eventName, {
+      AnalyticTrack(props.payload === "close" ? `close icon` : `click icon`, {
         name: iconName,
-        user: user.email || user.id || "anoymous",
         timestamp: new Date(),
+        metadata: { }
       });
     }
   };
@@ -187,7 +181,6 @@ export const Icon = (props) => {
 
 export const Image = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
 
   let src = props.absolute
     ? props.src
@@ -218,13 +211,11 @@ export const Image = (props) => {
 
       if (props.isTrack) {
         const imgName = props.src || props.name || "unknow";
-        const typeApp = props.type ?? "App";
-        const eventName = `Click ${typeApp}: ${imgName}`;
 
-        AnalyticTrack(eventName, {
+        AnalyticTrack(`click ${props.type ?? "app"}`, {
           name: imgName,
-          user: user.email || user.id || "anoymous",
           timestamp: new Date(),
+          metadata: { }
         });
       }
     }
