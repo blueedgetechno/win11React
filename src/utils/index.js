@@ -1,8 +1,7 @@
 import icons from "./apps";
 
 var { taskbar, desktop, pinned, recent } = {
-  taskbar: (localStorage.getItem("taskbar") &&
-    JSON.parse(localStorage.getItem("taskbar"))) || [
+  taskbar: [
     "Settings",
     "File Explorer",
     "Browser",
@@ -10,12 +9,13 @@ var { taskbar, desktop, pinned, recent } = {
     "Store",
     "Spotify",
   ],
-  desktop: (localStorage.getItem("desktop") &&
-    JSON.parse(localStorage.getItem("desktop"))) || [
+  desktop: [
     "Worker Profile",
     "Store",
-    "Browser",
     "Github",
+    "Visual Studio Code",
+    "Python Compiler",
+    "Browser",
     "Our Service",
     "Document",
     "Pricing",
@@ -24,8 +24,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Contact Us",
     // "Camera", //TODO
   ],
-  pinned: (localStorage.getItem("pinned") &&
-    JSON.parse(localStorage.getItem("pinned"))) || [
+  pinned: [
     "Browser",
     "Get Started",
     "Task Manager",
@@ -44,8 +43,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Discord",
     "Camera",
   ],
-  recent: (localStorage.getItem("recent") &&
-    JSON.parse(localStorage.getItem("recent"))) || [
+  recent: [
     "Mail",
     "Twitter",
     "Terminal",

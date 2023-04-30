@@ -5,11 +5,7 @@ import { externalLink } from "../data/constant";
 export const gene_name = () =>
   Math.random().toString(36).substring(2, 10).toUpperCase();
 
-// let installed = JSON.parse(localStorage.getItem("installed") || "[]");
-// console.log(installed);
-// let installed = [store.at(1)]
 let installed = [];
-
 const apps = [
   {
     name: "Visual Studio Code",
@@ -27,6 +23,28 @@ const apps = [
     pwa: true,
     full: true,
   },
+  {
+    name: "Python Compiler",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png",
+    type: "app",
+    action: gene_name(),
+    data: {
+      type: "IFrame",
+      url: "https://www.programiz.com/python-programming/online-compiler/",
+      gallery: [
+        "https://cdn.programiz.com/cdn/farfuture/IwFGGPqycIxTfzLl7mPdcaqUaircnStXfipaHd4EBik/mtime:1605833048/sites/all/themes/programiz/assets/compiler.png",
+        "https://www.programiz.com/blog/content/images/2020/07/programiz-online-compiler.png"
+      ],
+      desc: "Compile Python"
+    },
+    hide: true,
+    pwa: true,
+    full: true,
+  },
+
+
+
+
   {
     name: "Start",
     icon: "home",

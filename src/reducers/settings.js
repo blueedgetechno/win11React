@@ -55,9 +55,10 @@ const changeVal = (obj, path, val = "togg") => {
   return obj;
 };
 
+
+// TODO setting in db
 const settReducer = (state = defState, action) => {
   var tmpState = { ...state },
-    changed = false;
   switch (action.type) {
     case "STNGTHEME":
       changed = true;
@@ -75,7 +76,6 @@ const settReducer = (state = defState, action) => {
       tmpState = { ...action.payload };
   }
 
-  if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));
   return tmpState;
 };
 

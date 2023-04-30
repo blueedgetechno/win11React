@@ -137,12 +137,12 @@ export const delApp = (act, menu) => {
           store.dispatch({ type: app.action, payload: "close" });
           store.dispatch({ type: "DELAPP", payload: app.icon });
 
-          var installed = localStorage.getItem("installed");
-          if (!installed) installed = "[]";
+
+          let installed = "[]";
 
           installed = JSON.parse(installed);
           installed = installed.filter((x) => x.icon != app.icon);
-          localStorage.setItem("installed", JSON.stringify(installed));
+          // TODO install app
 
           store.dispatch({ type: "DESKREM", payload: app.name });
         }
@@ -151,22 +151,12 @@ export const delApp = (act, menu) => {
   }
 };
 
+// TODO install app database
 export const installApp = (data) => {
   var app = { ...data, type: "app", pwa: true };
 
-  var installed = localStorage.getItem("installed");
-  if (!installed) installed = "[]";
-
-  installed = JSON.parse(installed);
-  installed.push(app);
-  localStorage.setItem("installed", JSON.stringify(installed));
-
-  var desk = localStorage.getItem("desktop");
-  if (!desk) desk = dfApps.desktop;
-  else desk = JSON.parse(desk);
-
+  let desk = dfApps.desktop;
   desk.push(app.name);
-  localStorage.setItem("desktop", JSON.stringify(desk));
 
   app.action = gene_name();
   store.dispatch({ type: "ADDAPP", payload: app });
@@ -243,8 +233,7 @@ const loadWidget = async () => {
 };
 
 export const loadSettings = () => {
-  var sett = localStorage.getItem("setting") || "{}";
-  sett = JSON.parse(sett);
+  sett = JSON.parse('[]'); // TODO setting from database
 
   if (sett.person == null) {
     sett = JSON.parse(JSON.stringify(store.getState().setting));
