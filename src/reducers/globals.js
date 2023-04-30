@@ -208,6 +208,13 @@ const defState = {
 };
 
 const globalReducer = (state = defState, action) => {
+  if (action.type === "UPDATEVENDOR") {
+    state.ribbon = action.payload;
+  } else if (action.type === "UPDATEGAME") {
+    state.gamerib = action.payload;
+  } else if (action.type === "UPDATEAPP") {
+    state.apprib = action.payload;
+  } 
   return state;
 };
 

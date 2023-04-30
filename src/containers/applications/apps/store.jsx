@@ -7,6 +7,8 @@ import storedata from "./assets/store.json";
 import advancedstoredata from "./assets/advancedstore.json";
 import { installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
+import supabase from "../../../supabase/createClient";
+import store from "../../../reducers";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -160,135 +162,13 @@ export const MicroStore = () => {
               width={20}
               payload={page == 0 && tab == "gamerib"}
             />
-            <Icon
-              fafa="faFilm"
-              onClick={totab}
-              click="movrib"
-              width={20}
-              payload={page == 0 && tab == "movrib"}
-            />
-            <Icon
-              fafa="faDownload"
-              onClick={action}
-              click="page1"
-              width={20}
-              payload={page == 1}
-            />
           </div>
+
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page == 0 ? <FrontPage /> : null}
-            {page == 1 ? (
-              <DownPage
-                action={action}
-                apps={(storeapps.length && storeapps) || storedata}
-              />
-            ) : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
-      </div>
-    </div>
-  );
-};
-
-const DownPage = ({ action, apps }) => {
-  const [catg, setCatg] = useState("all");
-
-  return (
-    <div className="pagecont w-full absolute top-0 box-border p-12">
-      <div className="flex">
-        <div
-          className="catbtn handcr"
-          value={catg == "all"}
-          onClick={() => setCatg("all")}
-        >
-          All
-        </div>
-        <div
-          className="catbtn handcr"
-          value={catg == "app"}
-          onClick={() => setCatg("app")}
-        >
-          Apps
-        </div>
-        <div
-          className="catbtn handcr"
-          value={catg == "game"}
-          onClick={() => setCatg("game")}
-        >
-          Games
-        </div>
-        <div className="absolute right-0 mr-4 text-sm">
-          <a
-            href="https://win11react-docs.andrewstech.me/docs/Store/add-app"
-            className="catbtn"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Add your own app
-          </a>
-        </div>
-      </div>
-      <div className="appscont mt-8">
-        {apps.map((item, i) => {
-          if (item.type != catg && catg != "all") return;
-
-          var stars = geneStar(item);
-          var reviews = Math.round(geneStar(item, 1) / 100) / 10;
-
-          return (
-            <div
-              key={i}
-              className="ribcont p-4 pt-8 ltShad prtclk"
-              onClick={action}
-              data-action="page2"
-              data-payload={item.data.url}
-            >
-              <Image
-                className="mx-4 mb-6 rounded"
-                w={100}
-                h={100}
-                src={item.icon}
-                ext
-              />
-              <div className="capitalize text-xs font-semibold">
-                {item.name}
-              </div>
-              <div className="capitalize text-xss text-gray-600">
-                {item.type}
-              </div>
-              <div className="flex items-center">
-                <Icon
-                  className={stars > 1 ? "bluestar" : ""}
-                  fafa="faStar"
-                  width={6}
-                />
-                <Icon
-                  className={stars > 1.5 ? "bluestar" : ""}
-                  fafa="faStar"
-                  width={6}
-                />
-                <Icon
-                  className={stars > 2.5 ? "bluestar" : ""}
-                  fafa="faStar"
-                  width={6}
-                />
-                <Icon
-                  className={stars > 3.5 ? "bluestar" : ""}
-                  fafa="faStar"
-                  width={6}
-                />
-                <Icon
-                  className={stars > 4.5 ? "bluestar" : ""}
-                  fafa="faStar"
-                  width={6}
-                />
-                <div className="text-xss">{reviews}k</div>
-              </div>
-              <div className="text-xss mt-8">{"Free"}</div>
-            </div>
-          );
-        })}
       </div>
     </div>
   );
@@ -448,101 +328,109 @@ const FrontPage = (props) => {
   const ribbon = useSelector((state) => state.globals.ribbon);
   const apprib = useSelector((state) => state.globals.apprib);
   const gamerib = useSelector((state) => state.globals.gamerib);
-  const movrib = useSelector((state) => state.globals.movrib);
   const { t, i18n } = useTranslation();
+
+  const [Cover,setCover] = useState("img/store/lucacover.jpg")
+
+  const updateStoreContent = async () => {
+    const {data,error} = await supabase
+      .from("public_store")
+      .select("title,removed_at,type,metadata")
+      .in("type" , ["game","app","vendor"])
+    if (error != null) {
+      throw error.message
+    }
+
+    const content = {
+      games: [],
+      apps: [],
+      vendors: []
+    }
+
+    for (let index = 0; index < data.length; index++) {
+      const x = data[index];
+      if (x.removed_at != null) {
+        continue
+      }
+
+      const img = await supabase.storage
+        .from("public_store")
+        .getPublicUrl(`store/${x.type}/${x.title}.png`)
+
+
+      let row = null
+      if (x.type == 'game') {
+        row = content.games
+      } else if (x.type == 'app') {
+        row = content.apps
+      } else if (x.type == 'vendor') {
+        row = content.vendors
+        setCover(img.data.publicUrl)
+      }
+      
+      row.push({
+        title: x.title,
+        image: img.data.publicUrl,
+        metadata : x.metadata
+      })
+    }
+
+
+    store.dispatch({ 
+      type: "UPDATEAPP",
+      payload: content.apps
+    })
+    store.dispatch({ 
+      type: "UPDATEVENDOR",
+      payload: content.vendors
+    })
+    store.dispatch({ 
+      type: "UPDATEGAME",
+      payload: content.games
+    })
+  }
+
+
+  useEffect(() => {
+    updateStoreContent()
+  },[])
 
   return (
     <div className="pagecont w-full absolute top-0">
       <Image
         id="sthome"
         className="frontPage w-full"
-        src="img/store/lucacover.jpg"
+        src={Cover}
         ext
       />
-      <div className="panelName absolute m-6 text-xl top-0">Home</div>
+      {/* <div className="panelName absolute m-6 text-xl top-0">Home</div> */}
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
           {ribbon &&
             ribbon.map((x, i) => {
-              return x == "unescape" ? (
+              return (
                 <a
                   key={i}
-                  href="https://blueedge.me/unescape"
+                  href={x.metadata?.href}
                   target="_blank"
                   rel="noreferrer"
+                  onMouseEnter={()=>{
+                    setTimeout(() => {
+                      setCover(x.image)
+                    },500)
+                  }}
                 >
                   <Image
                     className="mx-1 dpShad rounded"
-                    var={x}
                     h={100}
-                    dir="store/float"
-                    src={x}
+                    absolute={true}
+                    src={x.image}
                   />
                 </a>
-              ) : (
-                <Image
-                  key={i}
-                  className="mx-1 dpShad rounded"
-                  var={x}
-                  h={100}
-                  dir="store/float"
-                  src={x}
-                />
-              );
+              ) 
             })}
         </div>
       </div>
-      <div
-        id="apprib"
-        className="frontCont amzApps my-8 py-20 w-auto mx-8 \
-        flex justify-between noscroll overflow-x-scroll overflow-y-hidden"
-      >
-        <div className="flex w-64 flex-col text-gray-100 h-full px-8  ">
-          <div className="text-xl">{t("store.featured-app")}</div>
-          <div className="text-xs mt-2">{t("store.featured-app.info")}</div>
-        </div>
-        <div className="flex w-max pr-8">
-          {apprib &&
-            apprib.map((x, i) => {
-              var stars = 3 + ((x.charCodeAt(0) + x.charCodeAt(1)) % 3);
-              return (
-                <div key={i} className="ribcont rounded my-auto p-2 pb-2">
-                  <Image
-                    className="mx-1 py-1 mb-2 rounded"
-                    w={120}
-                    dir="store/apps"
-                    src={x}
-                  />
-                  <div className="capitalize text-xs font-semibold">{x}</div>
-                  <div className="flex mt-2 items-center">
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon
-                      className={stars > 3 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <Icon
-                      className={stars > 4 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
-                  </div>
-                  <div className="text-xss mt-8">
-                    {x.charCodeAt(4) % 2 ? (
-                      <>{t("store.free")}</>
-                    ) : (
-                      <>{t("store.owned")}</>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      </div>
-
       <div
         id="gamerib"
         className="frontCont amzGames my-8 py-20 w-auto mx-8 \
@@ -555,16 +443,16 @@ const FrontPage = (props) => {
         <div className="flex w-max pr-8">
           {gamerib &&
             gamerib.map((x, i) => {
-              var stars = 3 + ((x.charCodeAt(0) + x.charCodeAt(1)) % 3);
+              var stars = 5 
               return (
-                <div key={i} className="ribcont rounded my-auto p-2 pb-2">
+                <div key={i} className="ribcont rounded-2xl my-auto p-2 pb-2">
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
-                    dir="store/games"
-                    src={x}
+                    absolute={true}
+                    src={x.image}
                   />
-                  <div className="capitalize text-xs font-semibold">{x}</div>
+                  <div className="capitalize text-xs font-semibold">{x.title}</div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -579,14 +467,11 @@ const FrontPage = (props) => {
                       fafa="faStar"
                       width={6}
                     />
-                    <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
+                    <div className="text-xss">{1}k</div>
                   </div>
                   <div className="text-xss mt-8">
-                    {x.charCodeAt(4) % 2 ? (
                       <>{t("store.free")}</>
-                    ) : (
-                      <>{t("store.owned")}</>
-                    )}
+                      {/* <>{t("store.owned")}</> */}
                   </div>
                 </div>
               );
@@ -595,27 +480,27 @@ const FrontPage = (props) => {
       </div>
 
       <div
-        id="movrib"
-        className="frontCont amzMovies my-8 py-20 w-auto mx-8 \
+        id="apprib"
+        className="frontCont amzApps my-8 py-20 w-auto mx-8 \
         flex justify-between noscroll overflow-x-scroll overflow-y-hidden"
       >
-        <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-          <div className="text-xl">{t("store.featured-film")}</div>
-          <div className="text-xs mt-2">{t("store.featured-film.info")}</div>
+        <div className="flex w-64 flex-col text-gray-100 h-full px-8  ">
+          <div className="text-xl">{t("store.featured-app")}</div>
+          <div className="text-xs mt-2">{t("store.featured-app.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {movrib &&
-            movrib.map((x, i) => {
-              var stars = 3 + ((x.charCodeAt(0) + x.charCodeAt(1)) % 3);
+          {apprib &&
+            apprib.map((x, i) => {
+              var stars = 5 
               return (
-                <div key={i} className="ribcont rounded my-auto p-2 pb-2">
+                <div key={i} className="ribcont rounded-2xl my-auto p-2 pb-2">
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
-                    dir="store/movies"
-                    src={x}
+                    absolute={true}
+                    src={x.image}
                   />
-                  <div className="capitalize text-xs font-semibold">{x}</div>
+                  <div className="capitalize text-xs font-semibold">{x.title}</div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -630,20 +515,18 @@ const FrontPage = (props) => {
                       fafa="faStar"
                       width={6}
                     />
-                    <div className="text-xss">{1 + (x.charCodeAt(3) % 5)}k</div>
+                    <div className="text-xss">{"1k"}</div>
                   </div>
                   <div className="text-xss mt-8">
-                    {x.charCodeAt(4) % 2 ? (
-                      <>{t("store.rent")}</>
-                    ) : (
-                      <>{t("store.owned")}</>
-                    )}
+                      <>{t("store.free")}</>
+                      {/* <>{t("store.owned")}</> */}
                   </div>
                 </div>
               );
             })}
         </div>
       </div>
+
     </div>
   );
 };
