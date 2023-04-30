@@ -6,13 +6,13 @@
   "private": true,
   "dependencies": {
     "-": "^0.0.1",
-    "@crowdin/cli": "^3.10.1",
+    "@crowdin/cli": "^3.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@sentry/react": "^7.49.0",
-    "@sentry/tracing": "^7.49.0",
+    "@sentry/react": "^7.50.0",
+    "@sentry/tracing": "^7.50.0",
     "@tauri-apps/api": "^1.2.0",
     "@widgetbot/react-embed": "1.5.0",
     "@win11react/react-canvas-draw": "1.2.2",
@@ -34,7 +34,7 @@
     "react-redux": "^8.0.5",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "sass": "^1.62.0",
+    "sass": "^1.62.1",
     "translation-check": "^1.0.3"
   },
   "scripts": {
@@ -69,8 +69,8 @@
     "@vitejs/plugin-react": "2.0.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
-    "prettier": "^2.8.7",
-    "tailwindcss": "^3.3.1",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.2",
     "vite": "3.0.4",
     "vite-plugin-pwa": "^0.12.8"
   }
