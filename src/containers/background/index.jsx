@@ -159,8 +159,8 @@ export const LockScreen = (props) => {
       </div>
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
         <Image
-          className="rounded-full overflow-hidden"
-          src="img/asset/prof.jpg"
+          className="rounded-2xl overflow-hidden"
+          src="img/asset/prof.png"
           w={200}
           ext
         />
