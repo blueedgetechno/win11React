@@ -326,7 +326,8 @@ const FrontPage = (props) => {
                 >
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
-                    w={120}
+                    // w={120}
+                    h={100}
                     absolute={true}
                     src={x.image}
                   />
@@ -351,7 +352,6 @@ const FrontPage = (props) => {
                   </div>
                   <div className="text-xss mt-8">
                     <>{t("store.free")}</>
-                    {/* <>{t("store.owned")}</> */}
                   </div>
                 </div>
               );
