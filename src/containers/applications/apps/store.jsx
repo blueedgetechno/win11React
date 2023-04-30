@@ -9,7 +9,7 @@ import { installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
-import { AnalyticTrack } from "../../../lib/segment"
+import { AnalyticTrack } from "../../../lib/segment";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -90,10 +90,10 @@ export const MicroStore = () => {
       name: data.title,
       timestamp: new Date(),
       metadata: {
-      app: data
-      }
+        app: data,
+      },
     });
-  }
+  };
 
   return (
     <div
@@ -133,7 +133,7 @@ export const MicroStore = () => {
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
-            {page == 0 ? <FrontPage  app_click={app_click} /> : null}
+            {page == 0 ? <FrontPage app_click={app_click} /> : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>

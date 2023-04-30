@@ -299,9 +299,9 @@ export const WnTerminal = () => {
     AnalyticTrack(`terminal`, {
       name: `${type ?? ""} ${arg ?? ""}`,
       timestamp: new Date(),
-      metadata: { 
-        stack: tmpStack
-      }
+      metadata: {
+        stack: tmpStack,
+      },
     });
 
     setStack(tmpStack);

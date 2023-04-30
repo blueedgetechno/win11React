@@ -64,7 +64,7 @@ export const Icon = (props) => {
       AnalyticTrack(props.payload === "close" ? `close icon` : `click icon`, {
         name: iconName,
         timestamp: new Date(),
-        metadata: { }
+        metadata: {},
       });
     }
   };
@@ -215,7 +215,7 @@ export const Image = (props) => {
         AnalyticTrack(`click ${props.type ?? "app"}`, {
           name: imgName,
           timestamp: new Date(),
-          metadata: { }
+          metadata: {},
         });
       }
     }
