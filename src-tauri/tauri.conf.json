@@ -1,45 +1,30 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
+    "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "",
-    "beforeDevCommand": "",
-    "devPath": "http://localhost:3000",
-    "distDir": "../build"
+    "devPath": "http://localhost:1420",
+    "distDir": "../build",
+    "withGlobalTauri": false
   },
   "package": {
-    "productName": "Win11React",
-    "version": "0.3.0"
+    "productName": "win11react",
+    "version": "0.0.0"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      }
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
-      "copyright": "blueedgetechno",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
-      "icon": ["icons/icon.ico"],
+      "icon": [
+        "icons/icon.ico"
+      ],
       "identifier": "com.blueedgetechno.win11react",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
+      "targets": "all"
     },
     "security": {
       "csp": null
@@ -50,10 +35,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
         "resizable": true,
         "title": "win11react",
-        "width": 800
+        "width": 800,
+        "height": 600
       }
     ]
   }
