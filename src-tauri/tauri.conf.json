@@ -20,9 +20,7 @@
     },
     "bundle": {
       "active": true,
-      "icon": [
-        "icons/icon.ico"
-      ],
+      "icon": ["icons/icon.ico"],
       "identifier": "com.blueedgetechno.win11react",
       "targets": "all"
     },
