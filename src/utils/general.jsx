@@ -8,6 +8,7 @@ import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
 import { AnalyticTrack, analytics } from "../lib/segment.js";
+import useAnalyticsEventTracker from "../lib/googleAnalytics";
 
 String.prototype.strip = function (c) {
   var i = 0,
@@ -61,11 +62,18 @@ export const Icon = (props) => {
     }
     if (props.isTrack) {
       const iconName = props.name ?? props.src;
-      AnalyticTrack(props.payload === "close" ? `close icon` : `click icon`, {
+      const eventName = props.payload === "close" ? `close icon` : `click icon` 
+      AnalyticTrack(eventName, {
         name: iconName,
         timestamp: new Date(),
         metadata: {},
       });
+
+      useAnalyticsEventTracker({
+        category : "Track call", 
+        eventName,  
+        value: iconName
+      })
     }
   };
 

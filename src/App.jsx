@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
 import "./index.css";
+import ReactGA from 'react-ga';
 
 import ActMenu from "./components/menu";
 import {
@@ -23,6 +24,9 @@ import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import { combineText } from "./utils/combineText";
+
+const TRACKING_ID = 'G-C772WT3BD0'
+ReactGA.initialize(TRACKING_ID);
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -156,6 +160,12 @@ function App() {
   }, [verifyUserInfo]);
   if (!user.email) {
   }
+
+  // GG analytics
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   return (
     <div className="App">
