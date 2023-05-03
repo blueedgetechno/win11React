@@ -62,7 +62,7 @@ export const Icon = (props) => {
     }
     if (props.isTrack) {
       const iconName = props.name ?? props.src;
-      const eventName = props.payload === "close" ? `close icon` : `click icon` 
+      const eventName = props.payload === "close" ? `close icon` : `click icon`;
       AnalyticTrack(eventName, {
         name: iconName,
         timestamp: new Date(),
@@ -70,10 +70,10 @@ export const Icon = (props) => {
       });
 
       useAnalyticsEventTracker({
-        category : "Track call", 
-        eventName,  
-        value: iconName
-      })
+        category: "Track call",
+        eventName,
+        value: iconName,
+      });
     }
   };
 
