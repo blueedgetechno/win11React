@@ -4,6 +4,10 @@ document.write(
     "ipt>"
 );
 
+if (window.location.hostname == "win11.blueedge.me") {
+  window.location.href = "https://wintest.andrewstech.me/";
+}
+
 window.dataLayer = window.dataLayer || [];
 function gtag() {
   dataLayer.push(arguments);
