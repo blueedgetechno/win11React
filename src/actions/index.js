@@ -152,15 +152,12 @@ export const delApp = (act, menu) => {
 
 // TODO install app database
 export const installApp = (data) => {
-  var app = { ...data, type: "app", pwa: true };
+  var app = { ...data, name: data.title, icon: data.image, type: "any", pwa: true };
 
   let desk = dfApps.desktop;
-  desk.push(app.name);
 
-  app.action = gene_name();
-  store.dispatch({ type: "ADDAPP", payload: app });
+  app.action = 'EXTERNAL_APP';
   store.dispatch({ type: "DESKADD", payload: app });
-  store.dispatch({ type: "WNSTORE", payload: "mnmz" });
 };
 
 export const getTreeValue = (obj, path) => {
@@ -188,8 +185,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -209,7 +206,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -223,7 +220,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -404,3 +401,11 @@ export const connectWorkerSession = (itemId) => {
 
   window.open(item.info.remote_url, "_blank");
 };
+
+
+// Handle app
+
+export const openExternalApp = () => {
+
+  console.log('open');
+}

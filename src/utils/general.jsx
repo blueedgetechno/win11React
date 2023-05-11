@@ -9,6 +9,7 @@ import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
 import { AnalyticTrack, analytics } from "../lib/segment.js";
 import useAnalyticsEventTracker from "../lib/googleAnalytics";
+import { openExternalApp } from "../actions";
 
 String.prototype.strip = function (c) {
   var i = 0,
@@ -57,7 +58,14 @@ export const Icon = (props) => {
       return;
     }
 
-    if (action.type) {
+    console.log(action.type);
+    if (action.type === 'EXTERNAL_APP') {
+      openExternalApp()
+    } else if(action.type === "FUNC"){
+      const func = props.func;
+      func();
+
+    } else{
       dispatch(action);
     }
     if (props.isTrack) {

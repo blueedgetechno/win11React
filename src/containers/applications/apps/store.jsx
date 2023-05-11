@@ -371,7 +371,7 @@ const FrontPage = (props) => {
 const DetailPage = ({ app }) => {
   const stars = 5;
   const reviews = 5000;
-
+  console.log(app, 'app');
   app = {
     ...app,
     data: {
@@ -390,16 +390,17 @@ const DetailPage = ({ app }) => {
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
-  // const apps = useSelector((state) => state.apps);
-  // const dispatch = useDispatch();
-  // const openApp = () => { dispatch({ type: apps[app.icon].action, payload: "full" }); };
-  // useEffect(() => { if (apps[app.icon] != null) setDown(3); }, [dstate]);
+   const apps = useSelector((state) => state.apps);
+   const dispatch = useDispatch();
+   const openApp = () => { dispatch({ type: apps[app.icon].action, payload: "full" }); };
   const download = () => {
     setDown(1);
     setTimeout(() => {
+      installApp(app);
       setDown(3);
     }, 3000);
   };
+   useEffect(() => { if (apps[app.title] != null) setDown(3); }, [dstate]);
   const GotoButton = () => {
     if (app.type == "vendor") {
       return (
