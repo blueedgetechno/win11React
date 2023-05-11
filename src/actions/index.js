@@ -128,7 +128,8 @@ export const delApp = (act, menu) => {
   };
 
   if (act == "delete") {
-    if (data.type) {
+
+    if (data.type !== 'EXTERNAL_APP') {
       var apps = store.getState().apps;
       var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
       if (app) {
@@ -146,6 +147,8 @@ export const delApp = (act, menu) => {
           store.dispatch({ type: "DESKREM", payload: app.name });
         }
       }
+    } else {
+      deleteExternalApp()
     }
   }
 };
@@ -408,4 +411,8 @@ export const connectWorkerSession = (itemId) => {
 export const openExternalApp = () => {
 
   console.log('open');
+}
+export const deleteExternalApp = () => {
+
+  console.log('Delete');
 }

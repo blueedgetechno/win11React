@@ -58,7 +58,6 @@ export const Icon = (props) => {
       return;
     }
 
-    console.log(action.type);
     if (action.type === 'EXTERNAL_APP') {
       openExternalApp()
     } else if(action.type === "FUNC"){

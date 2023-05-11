@@ -371,7 +371,6 @@ const FrontPage = (props) => {
 const DetailPage = ({ app }) => {
   const stars = 5;
   const reviews = 5000;
-  console.log(app, 'app');
   app = {
     ...app,
     data: {
