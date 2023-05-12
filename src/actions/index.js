@@ -290,7 +290,7 @@ export const handleFileOpenWorker = (id) => {
   }
 };
 
-export const handleOpenModal = (id) => {
+export const handleOpenModalDetailWorker = (id) => {
   const foundItem = store.getState().worker.data.getId(id);
   if (!foundItem) return;
   store.dispatch({ type: "OPEN_MODAL", payload: foundItem.info });

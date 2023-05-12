@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
@@ -96,7 +96,7 @@ function App() {
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix"
@@ -217,15 +217,12 @@ const ModalInfo = () => {
   const { isOpen, data } = modalInfo;
   const dispatch = useDispatch();
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
+
   function closeModal() {
     dispatch({ type: "CLOSE_MODAL" });
   }
 
-  const renderData = (data) => {
+  const renderDetailWorker = (data) => {
     const list = [];
     for (const key in data) {
       if (key === "icon" || key === "spid" || key === "menu") {
@@ -240,7 +237,7 @@ const ModalInfo = () => {
               marginLeft: 15,
             }}
           >
-            {typeof data[key] == "object" && renderData(data[key])}
+            {typeof data[key] == "object" && renderDetailWorker(data[key])}
           </div>
         </div>
       );
@@ -248,6 +245,27 @@ const ModalInfo = () => {
 
     return list;
   };
+  const [files, setFiles] = useState([]);
+
+  function handleFileSelect(event) {
+    const newFiles = Array.from(event.target.files);
+    const fileNames = files.map(file => file.name);
+    const uniqueFiles = newFiles.filter(file => !fileNames.includes(file.name));
+    setFiles([...files, ...uniqueFiles]);
+  }
+  function handleFileDelete(fileName) {
+    setFiles(files.filter(file => file.name !== fileName));
+  }
+  const handleSubmitForm = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const name = formData.get('name');
+    const desc = formData.get('desc');
+    const screenshoot = formData.get('screenshoot');
+    console.log(`Name: ${name}`);
+    console.log(`Description: ${desc}`);
+    console.log(`screenshoot: ${screenshoot}`);
+  }
   return (
     <div>
       <ReactModal
@@ -256,7 +274,7 @@ const ModalInfo = () => {
         contentLabel="Example Modal"
         className="modalContent "
         overlayClassName="fixed inset-0"
-        //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
+      //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
       >
         <div className="flex flex-col bg-[#eff4f9]">
           <button
@@ -267,7 +285,28 @@ const ModalInfo = () => {
           </button>
         </div>
         <div className="selectText d-flex overflow-scroll min-h-full p-5 pb-9">
-          {renderData(modalInfo.data)}
+          {/*{renderDetailWorker(data)}*/}
+
+          <form class="p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmitForm}>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2" for="name">Name</label>
+              <input class="input w-full border" type="text" id="name" name="name" />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2" for="desc">Description</label>
+              <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" id="desc" name="desc"></textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2" for="screenshoot">Screen shot</label>
+              <input multiple onChange={handleFileSelect} class="file-input w-full" type="file" id="screenshoot" name="screenshoot" />
+            </div>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Submit</button>
+          </form>
+          <ul>
+            {files.map(file => (
+              <li key={file.name}>{file.name} <button onClick={() => handleFileDelete(file.name)}>Delete</button></li>
+            ))}
+          </ul>
         </div>
       </ReactModal>
     </div>

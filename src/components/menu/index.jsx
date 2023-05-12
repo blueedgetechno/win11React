@@ -59,7 +59,7 @@ export const ActMenu = () => {
       } else if (action.type === "CONNECTWORKERSESSION") {
         Actions.connectWorkerSession(event.target.dataset.pid);
       } else if (action.type === "OPEN_MODAL") {
-        Actions.handleOpenModal(event.target.dataset.pid);
+        Actions.handleOpenModalDetailWorker(event.target.dataset.pid);
       } else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {

@@ -435,6 +435,9 @@ const DetailPage = ({ app }) => {
     );
   };
 
+  const handleEdit = () =>{
+    dispatch({ type: "OPEN_MODAL", payload: {} })
+  }
   return (
     <div className="detailpage w-full absolute top-0 flex">
       <div className="detailcont">
@@ -449,7 +452,7 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{app.title}</div>
           <div className="text-xs text-blue-500">{app.type}</div>
           <GotoButton />
-
+          <button onClick={handleEdit}>Edit</button>
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
