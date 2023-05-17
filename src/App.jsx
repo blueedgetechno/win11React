@@ -24,6 +24,7 @@ import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import { combineText } from "./utils/combineText";
+import { Image } from "./utils/general";
 
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
@@ -248,13 +249,21 @@ const ModalInfo = () => {
   const [files, setFiles] = useState([]);
 
   function handleFileSelect(event) {
+    if(event.target.files.length < 1) return
+
     const newFiles = Array.from(event.target.files);
-    const fileNames = files.map(file => file.name);
-    const uniqueFiles = newFiles.filter(file => !fileNames.includes(file.name));
-    setFiles([...files, ...uniqueFiles]);
+    console.log(newFiles);
+    newFiles[0].link = URL.createObjectURL(newFiles[0])
+    setFiles([...files, ...newFiles]);
+    document.getElementById('screenshootInput').value = ''
   }
-  function handleFileDelete(fileName) {
-    setFiles(files.filter(file => file.name !== fileName));
+  function handleFileDelete(fileInput) {
+    setFiles(files.filter(file => file.name !== fileInput.name));
+    try {
+      URL.revokeObjectURL(file)
+    } catch (error) {
+      
+    }
   }
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -290,7 +299,7 @@ const ModalInfo = () => {
           <form class="p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmitForm}>
             <div class="mb-4">
               <label class="block text-gray-700 font-medium mb-2" for="name">Name</label>
-              <input class="input w-full border" type="text" id="name" name="name" />
+              <input class="input w-full border-solid border border-gray-400 " type="text" id="name" name="name" />
             </div>
             <div class="mb-4">
               <label class="block text-gray-700 font-medium mb-2" for="desc">Description</label>
@@ -298,15 +307,32 @@ const ModalInfo = () => {
             </div>
             <div class="mb-4">
               <label class="block text-gray-700 font-medium mb-2" for="screenshoot">Screen shot</label>
-              <input multiple onChange={handleFileSelect} class="file-input w-full" type="file" id="screenshoot" name="screenshoot" />
+              <input onChange={handleFileSelect} class="file-input file-input-bordered w-full" type="file" id="screenshootInput" name="screenshoot" />
             </div>
+            <div className="briefcont py-2 pb-3">
+            <div className="overflow-x-scroll win11Scroll mt-4">
+              <div className="w-max flex">
+                {files.map(file => (
+                  <div className="mr-6">
+                    <p className="mb-6 " key={file.name}>{file.name} <button onClick={() => handleFileDelete(file)}>Delete</button></p>
+
+                    <Image
+                      key={Math.random()}
+                      className="mr-2 rounded"
+                      h={250}
+                      src={file.link}
+                      ext
+                      err="file.link"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Submit</button>
           </form>
-          <ul>
-            {files.map(file => (
-              <li key={file.name}>{file.name} <button onClick={() => handleFileDelete(file.name)}>Delete</button></li>
-            ))}
-          </ul>
+
+         
         </div>
       </ReactModal>
     </div>
