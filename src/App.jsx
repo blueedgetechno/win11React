@@ -246,34 +246,62 @@ const ModalInfo = () => {
 
     return list;
   };
-  const [files, setFiles] = useState([]);
+  const [screenShootFiles, setScreenShootFiles] = useState([]);
+  const [logoFile, setLogoFile] = useState([]);
 
   function handleFileSelect(event) {
-    if(event.target.files.length < 1) return
+    if (event.target.files.length < 1) return
 
     const newFiles = Array.from(event.target.files);
     console.log(newFiles);
     newFiles[0].link = URL.createObjectURL(newFiles[0])
-    setFiles([...files, ...newFiles]);
+    setScreenShootFiles([...screenShootFiles, ...newFiles]);
     document.getElementById('screenshootInput').value = ''
   }
+  function handleLogoSelect(event) {
+    if (event.target.files.length < 1) return
+
+    const newFiles = Array.from(event.target.files);
+    console.log(newFiles);
+    newFiles[0].link = URL.createObjectURL(newFiles[0])
+    setLogoFile(...newFiles);
+    document.getElementById('logoInput').value = ''
+  }
   function handleFileDelete(fileInput) {
-    setFiles(files.filter(file => file.name !== fileInput.name));
+    setScreenShootFiles(screenShootFiles.filter(file => file.name !== fileInput.name));
     try {
       URL.revokeObjectURL(file)
     } catch (error) {
-      
+
     }
   }
-  const handleSubmitForm = (event) => {
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const name = formData.get('name');
     const desc = formData.get('desc');
-    const screenshoot = formData.get('screenshoot');
     console.log(`Name: ${name}`);
     console.log(`Description: ${desc}`);
-    console.log(`screenshoot: ${screenshoot}`);
+
+    //upload logo by tile => to store/title game/app
+    
+    //Upload list Img: for loop
+    
+    //use title to get all img.
+    const {data, error} = supabase.storage
+      .from('test')
+      .upload(`store/logo/${name}`, logoFile)
+    
+
+    screenShootFiles.forEach(async (file, index) =>{
+      const avatarFile = file
+      const { data, error } = await supabase
+        .storage
+        .from('test')
+        .upload(`store/${name}/${name}${index}`, avatarFile)
+      
+    })
+      console.log(data);
   }
   return (
     <div>
@@ -306,33 +334,48 @@ const ModalInfo = () => {
               <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" id="desc" name="desc"></textarea>
             </div>
             <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2" for="logoInput">Logo</label>
+              <input onChange={handleLogoSelect} class="file-input file-input-bordered w-full" type="file" id="logoInput" name="logoInput" />
+            </div>
+            {
+              logoFile ?
+                <Image
+                  className="rounded"
+                  ext
+                  h={100}
+                  src={logoFile.link}
+                  err="img/asset/mixdef.jpg"
+                />
+                : null
+           }
+            <div class="mb-4">
               <label class="block text-gray-700 font-medium mb-2" for="screenshoot">Screen shot</label>
               <input onChange={handleFileSelect} class="file-input file-input-bordered w-full" type="file" id="screenshootInput" name="screenshoot" />
             </div>
             <div className="briefcont py-2 pb-3">
-            <div className="overflow-x-scroll win11Scroll mt-4">
-              <div className="w-max flex">
-                {files.map(file => (
-                  <div className="mr-6">
-                    <p className="mb-6 " key={file.name}>{file.name} <button onClick={() => handleFileDelete(file)}>Delete</button></p>
+              <div className="overflow-x-scroll win11Scroll mt-4">
+                <div className="w-max flex">
+                  {screenShootFiles.map(file => (
+                    <div className="mr-6">
+                      <p className="mb-6 " key={file.name}>{file.name} <button onClick={() => handleFileDelete(file)}>Delete</button></p>
 
-                    <Image
-                      key={Math.random()}
-                      className="mr-2 rounded"
-                      h={250}
-                      src={file.link}
-                      ext
-                      err="file.link"
-                    />
-                  </div>
-                ))}
+                      <Image
+                        key={Math.random()}
+                        className="mr-2 rounded"
+                        h={250}
+                        src={file.link}
+                        ext
+                        err="file.link"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Submit</button>
           </form>
 
-         
+
         </div>
       </ReactModal>
     </div>

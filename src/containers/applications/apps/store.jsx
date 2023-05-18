@@ -171,16 +171,21 @@ const FrontPage = (props) => {
         continue;
       }
 
-      const img = await supabase.storage
-        .from("public_store")
-        .getPublicUrl(`store/${x.type}/${x.title}.png`);
+      const screenshoots = await supabase.storage
+        .from('test')
+        .list(`store/${x.title}`, {
+          limit: 100,
+          offset: 0,
+          sortBy: { column: 'name', order: 'asc' },
+        })
 
+      console.log(screenshoots);
       const icon =
         x.metadata.icon ||
         (
           await supabase.storage
-            .from("public_store")
-            .getPublicUrl(`store/logo/${x.title}.png`)
+            .from("test")
+            .getPublicUrl(`store/logo/${x.title}`)
         ).data.publicUrl;
 
       let row = null;
@@ -190,13 +195,13 @@ const FrontPage = (props) => {
         row = content.apps;
       } else if (x.type == "vendor") {
         row = content.vendors;
-        setCover(img.data.publicUrl);
+        setCover(screenshoots.data.publicUrl);
       }
 
       row.push({
         title: x.title,
         type: x.type,
-        image: img.data.publicUrl,
+        images: screenshoots.data,
         icon: icon,
         metadata: x.metadata,
       });
@@ -389,9 +394,9 @@ const DetailPage = ({ app }) => {
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
-   const apps = useSelector((state) => state.apps);
-   const dispatch = useDispatch();
-   const openApp = () => { dispatch({ type: apps[app.icon].action, payload: "full" }); };
+  const apps = useSelector((state) => state.apps);
+  const dispatch = useDispatch();
+  const openApp = () => { dispatch({ type: apps[app.icon].action, payload: "full" }); };
   const download = () => {
     setDown(1);
     setTimeout(() => {
@@ -399,7 +404,7 @@ const DetailPage = ({ app }) => {
       setDown(3);
     }, 3000);
   };
-   useEffect(() => { if (apps[app.title] != null) setDown(3); }, [dstate]);
+  useEffect(() => { if (apps[app.title] != null) setDown(3); }, [dstate]);
   const GotoButton = () => {
     if (app.type == "vendor") {
       return (
@@ -435,9 +440,10 @@ const DetailPage = ({ app }) => {
     );
   };
 
-  const handleEdit = () =>{
+  const handleEdit = () => {
     dispatch({ type: "OPEN_MODAL", payload: {} })
   }
+  console.log(app);
   return (
     <div className="detailpage w-full absolute top-0 flex">
       <div className="detailcont">
@@ -481,15 +487,21 @@ const DetailPage = ({ app }) => {
           <div className="text-xs font-semibold">Screenshots</div>
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
-              <Image
-                key={0}
-                className="mr-2 rounded"
-                h={250}
-                src={app.image}
-                ext
-                err="img/asset/mixdef.jpg"
-              />
-              {/* {app.data.gallery ??  app.data.gallery.map((x, i) => {})} */}
+              {
+                app?.images?.map(img => (
+                  <div className="mr-6 relative">
+                    <Image
+                      key={Math.random()}
+                      className="mr-2 rounded"
+                      h={250}
+                      src={`https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/test/store/${app.title}/${img.name}`}
+                      ext
+                      err="img/asset/mixdef.jpg"
+                    />
+                    <button className="button absolute top-0 right-0" onClick={() => { console.log('delete') }}> X </button>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
