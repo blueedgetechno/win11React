@@ -175,8 +175,7 @@ const FrontPage = (props) => {
         .from('test')
         .list(`store/${x.title}`, {
           limit: 100,
-          offset: 0,
-          sortBy: { column: 'name', order: 'asc' },
+          offset: 0
         })
 
       console.log(screenshoots);
@@ -283,7 +282,7 @@ const FrontPage = (props) => {
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
                     absolute={true}
-                    src={x.image}
+                    src={x.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
                     {x.title}
@@ -443,6 +442,15 @@ const DetailPage = ({ app }) => {
   const handleEdit = () => {
     dispatch({ type: "OPEN_MODAL", payload: {} })
   }
+
+  const handleDeleteScreenShoot = async (name) => {
+    console.log(name);
+    const { data, error } = await supabase
+      .storage
+      .from('test')
+      .remove([name])
+    
+  }
   console.log(app);
   return (
     <div className="detailpage w-full absolute top-0 flex">
@@ -488,7 +496,7 @@ const DetailPage = ({ app }) => {
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
               {
-                app?.images?.map(img => (
+                app.images.length > 0 && app.images.map(img => (
                   <div className="mr-6 relative">
                     <Image
                       key={Math.random()}
@@ -498,7 +506,7 @@ const DetailPage = ({ app }) => {
                       ext
                       err="img/asset/mixdef.jpg"
                     />
-                    <button className="button absolute top-0 right-0" onClick={() => { console.log('delete') }}> X </button>
+                    <button className="button absolute top-0 right-0" onClick={() => handleDeleteScreenShoot(`store/${app.title}/${img.name}`) }> X </button>
                   </div>
                 ))
               }
