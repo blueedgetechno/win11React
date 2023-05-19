@@ -4,8 +4,6 @@ import App from "./App";
 import store from "./reducers";
 import { Provider } from "react-redux";
 
-
-
 const root = createRoot(document.getElementById("root"));
 
 root.render(
