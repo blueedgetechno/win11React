@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
@@ -10,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
+import Modal from "../../../components/modal";
+import { log } from "../../../lib/log";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -41,7 +43,82 @@ export const MicroStore = () => {
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState({});
+  const [isModalOpen, setModalOpen] = useState(false)
+  const updateStoreContent = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("public_store")
+      .select("title,removed_at,type,metadata, id, description")
+      .in("type", ["game", "app", "vendor"]);
+    if (error != null) {
+      throw error.message;
+    }
 
+    const content = {
+      games: [],
+      apps: [],
+      vendors: [],
+    };
+
+    for (let index = 0; index < data.length; index++) {
+      const x = data[index];
+      if (x.removed_at != null) {
+        continue;
+      }
+
+      const screenshoots = await supabase.storage
+        .from('test')
+        .list(`store/${x.title}`, {
+          limit: 100,
+          offset: 0
+        })
+
+      console.log(screenshoots);
+      const icon =
+        (
+          await supabase.storage
+            .from("test")
+            .getPublicUrl(`store/logo/${x.title}`)
+        ).data.publicUrl;
+
+      let row = null;
+      if (x.type == "game") {
+        row = content.games;
+      } else if (x.type == "app") {
+        row = content.apps;
+      } else if (x.type == "vendor") {
+        row = content.vendors;
+        const venderCover = screenshoots.data[0]
+        const url = import.meta.env.VITE_PUBLIC_URL + '/' + x.title + '/' + venderCover.name
+      }
+
+      row.push({
+        id: x.id,
+        title: x.title,
+        type: x.type,
+        images: screenshoots.data,
+        description: x.description,
+        icon: icon,
+        metadata: x.metadata,
+      });
+    }
+
+    store.dispatch({
+      type: "UPDATEAPP",
+      payload: content.apps,
+    });
+    store.dispatch({
+      type: "UPDATEVENDOR",
+      payload: content.vendors,
+    });
+    store.dispatch({
+      type: "UPDATEGAME",
+      payload: content.games,
+    });
+  }, [])
+
+  useEffect(() => {
+    updateStoreContent();
+  }, [updateStoreContent]);
   const totab = (e) => {
     var x = e.target && e.target.dataset.action;
     if (x) {
@@ -130,6 +207,8 @@ export const MicroStore = () => {
               width={20}
               payload={page == 0 && tab == "gamerib"}
             />
+
+            <button onClick={() => { setModalOpen(true) }}>Add</button>
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
@@ -138,119 +217,52 @@ export const MicroStore = () => {
           </div>
         </LazyComponent>
       </div>
+      <Modal isOpen={isModalOpen} closeModal={() => { setModalOpen(false) }}>
+        <ModalEditOrInsert modalType='insert' />
+      </Modal>
     </div>
   );
 };
 
 const FrontPage = (props) => {
-  const ribbon = useSelector((state) => state.globals.ribbon);
-  const apprib = useSelector((state) => state.globals.apprib);
-  const gamerib = useSelector((state) => state.globals.gamerib);
+  const ribbons = useSelector((state) => state.globals.ribbon);
+  const appribs = useSelector((state) => state.globals.apprib);
+  const gameribs = useSelector((state) => state.globals.gamerib);
   const { t, i18n } = useTranslation();
 
-  const [Cover, setCover] = useState("img/store/lucacover.jpg");
-
-  const updateStoreContent = async () => {
-    const { data, error } = await supabase
-      .from("public_store")
-      .select("title,removed_at,type,metadata")
-      .in("type", ["game", "app", "vendor"]);
-    if (error != null) {
-      throw error.message;
-    }
-
-    const content = {
-      games: [],
-      apps: [],
-      vendors: [],
-    };
-
-    for (let index = 0; index < data.length; index++) {
-      const x = data[index];
-      if (x.removed_at != null) {
-        continue;
-      }
-
-      const screenshoots = await supabase.storage
-        .from('test')
-        .list(`store/${x.title}`, {
-          limit: 100,
-          offset: 0
-        })
-
-      console.log(screenshoots);
-      const icon =
-        x.metadata.icon ||
-        (
-          await supabase.storage
-            .from("test")
-            .getPublicUrl(`store/logo/${x.title}`)
-        ).data.publicUrl;
-
-      let row = null;
-      if (x.type == "game") {
-        row = content.games;
-      } else if (x.type == "app") {
-        row = content.apps;
-      } else if (x.type == "vendor") {
-        row = content.vendors;
-        setCover(screenshoots.data.publicUrl);
-      }
-
-      row.push({
-        title: x.title,
-        type: x.type,
-        images: screenshoots.data,
-        icon: icon,
-        metadata: x.metadata,
-      });
-    }
-
-    store.dispatch({
-      type: "UPDATEAPP",
-      payload: content.apps,
-    });
-    store.dispatch({
-      type: "UPDATEVENDOR",
-      payload: content.vendors,
-    });
-    store.dispatch({
-      type: "UPDATEGAME",
-      payload: content.games,
-    });
-  };
-
+  const [cover, setCover] = useState('');
   useEffect(() => {
-    updateStoreContent();
-  }, []);
+    setCover(import.meta.env.VITE_PUBLIC_URL + '/' + ribbons[0]?.title + '/' + ribbons[0]?.images[0]?.name)
+  }, [])
+
 
   return (
     <div className="pagecont w-full absolute top-0">
-      <Image id="sthome" className="frontPage w-full" src={Cover} ext />
+      <Image id="sthome" className="frontPage w-full" src={cover} ext />
       {/* <div className="panelName absolute m-6 text-xl top-0">Home</div> */}
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
-          {ribbon &&
-            ribbon.map((x, i) => {
+          {ribbons &&
+            ribbons.map((ribbon, i) => {
               return (
                 <a
                   key={i}
                   onClick={() => {
-                    props.app_click(x);
+                    props.app_click(ribbon);
                   }}
                   target="_blank"
                   rel="noreferrer"
                   onMouseEnter={() => {
                     setTimeout(() => {
-                      setCover(x.image);
-                    }, 500);
+                      setCover(import.meta.env.VITE_PUBLIC_URL + '/' + ribbon.title + '/' + ribbon.images[0]?.name);
+                    }, 300);
                   }}
                 >
                   <Image
                     className="mx-1 dpShad rounded"
                     h={100}
                     absolute={true}
-                    src={x.image}
+                    src={import.meta.env.VITE_PUBLIC_URL + '/' + ribbon.title + '/' + ribbon.images[0].name}
                   />
                 </a>
               );
@@ -267,25 +279,25 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-game.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {gamerib &&
-            gamerib.map((x, i) => {
+          {gameribs &&
+            gameribs.map((gamerib, i) => {
               var stars = 5;
               return (
                 <div
                   key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
                   onClick={() => {
-                    props.app_click(x);
+                    props.app_click(gamerib);
                   }}
                 >
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
                     absolute={true}
-                    src={x.icon}
+                    src={gamerib.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {x.title}
+                    {gamerib.title}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -323,15 +335,15 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-app.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {apprib &&
-            apprib.map((x, i) => {
+          {appribs &&
+            appribs.map((apprib, i) => {
               var stars = 5;
               return (
                 <div
                   key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
                   onClick={() => {
-                    props.app_click(x);
+                    props.app_click(apprib);
                   }}
                 >
                   <Image
@@ -339,10 +351,10 @@ const FrontPage = (props) => {
                     // w={120}
                     h={100}
                     absolute={true}
-                    src={x.image}
+                    src={apprib.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {x.title}
+                    {apprib.title}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -390,6 +402,7 @@ const DetailPage = ({ app }) => {
   };
 
   const [dstate, setDown] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false)
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
@@ -440,7 +453,7 @@ const DetailPage = ({ app }) => {
   };
 
   const handleEdit = () => {
-    dispatch({ type: "OPEN_MODAL", payload: {} })
+    setModalOpen(true)
   }
 
   const handleDeleteScreenShoot = async (name) => {
@@ -449,9 +462,53 @@ const DetailPage = ({ app }) => {
       .storage
       .from('test')
       .remove([name])
-    
+
   }
   console.log(app);
+  const handleDeleteApp = async () => {
+    const { id, title, images } = app
+
+    const deleteApp = async () => {
+      try {
+        const deleteDb = await supabase
+          .from('public_store')
+          .delete()
+          .eq('id', id)
+        //delete logo
+        if (deleteDb.error) {
+          throw new Error(deleteDb.error)
+        }
+        const deleteLogo = await supabase
+          .storage
+          .from('test')
+          .remove([`store/logo/${title}`])
+        if (deleteLogo.error) {
+          throw new Error(deleteDb.error)
+        }
+
+        //delete screen shoots.
+
+        if (images.length > 0) {
+          images.forEach(async (img) => {
+            const deleteImg = await supabase
+              .storage
+              .from('test')
+              .remove([`store/${title}/${img.name}`])
+            if (deleteImg.error) {
+              throw new Error(deleteDb.error)
+            }
+          })
+        }
+
+        log({ type: 'success' })
+      } catch (error) {
+        log({ type: 'error', content: error })
+      }
+    }
+    log({ type: 'confirm', confirmCallback: deleteApp })
+
+
+  }
   return (
     <div className="detailpage w-full absolute top-0 flex">
       <div className="detailcont">
@@ -467,6 +524,7 @@ const DetailPage = ({ app }) => {
           <div className="text-xs text-blue-500">{app.type}</div>
           <GotoButton />
           <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleDeleteApp}>Delete</button>
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
@@ -496,19 +554,22 @@ const DetailPage = ({ app }) => {
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
               {
-                app.images.length > 0 && app.images.map(img => (
-                  <div className="mr-6 relative">
-                    <Image
-                      key={Math.random()}
-                      className="mr-2 rounded"
-                      h={250}
-                      src={`https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/test/store/${app.title}/${img.name}`}
-                      ext
-                      err="img/asset/mixdef.jpg"
-                    />
-                    <button className="button absolute top-0 right-0" onClick={() => handleDeleteScreenShoot(`store/${app.title}/${img.name}`) }> X </button>
-                  </div>
-                ))
+                app.images.length > 0 && app.images.map(img => {
+                  if (img.name == '.emptyFolderPlaceholder') return null
+                  return (
+                    <div className="mr-6 relative" key={Math.random()}>
+                      <Image
+                        key={Math.random()}
+                        className="mr-2 rounded"
+                        h={250}
+                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${img.name}`}
+                        ext
+                        err="img/asset/mixdef.jpg"
+                      />
+                      <button className="button absolute top-0 right-0" onClick={() => handleDeleteScreenShoot(`store/${app.title}/${img.name}`)}> X </button>
+                    </div>
+                  )
+                })
               }
             </div>
           </div>
@@ -560,6 +621,202 @@ const DetailPage = ({ app }) => {
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} closeModal={() => { setModalOpen(false) }}>
+        <ModalEditOrInsert modalType={'edit'} appData={app} />
+      </Modal>
     </div>
   );
 };
+
+
+const ModalEditOrInsert = (props) => {
+  const { modalType, appData } = props
+  const [screenShootFiles, setScreenShootFiles] = useState([]);
+  const [logoFile, setLogoFile] = useState([]);
+  const [formData, setFormData] = useState({ title: appData?.title, type: appData?.type, description: appData?.description })
+
+
+
+  function handleChangeInput(e) {
+    const name = e.target.name
+    const value = e.target.value
+    console.log(name, value);
+    setFormData(prev => (
+      {
+        ...prev, [name]: value
+      }
+    ))
+  }
+  function handleFileSelect(event) {
+    if (event.target.files.length < 1) return
+
+    const newFiles = Array.from(event.target.files);
+    console.log(newFiles);
+    newFiles[0].link = URL.createObjectURL(newFiles[0])
+    setScreenShootFiles([...screenShootFiles, ...newFiles]);
+    document.getElementById('screenshootInput').value = ''
+  }
+  function handleLogoSelect(event) {
+    if (event.target.files.length < 1) return
+
+    const newFiles = Array.from(event.target.files);
+    console.log(newFiles);
+    newFiles[0].link = URL.createObjectURL(newFiles[0])
+    setLogoFile(...newFiles);
+    document.getElementById('logoInput').value = ''
+  }
+  function handleFileDelete(fileInput) {
+    setScreenShootFiles(screenShootFiles.filter(file => file.name !== fileInput.name));
+    try {
+      URL.revokeObjectURL(file)
+    } catch (error) {
+
+    }
+  }
+
+  async function handleUpdateApp(fieldChange, appData) {
+    const { title, description, type } = fieldChange
+    const { id, images, title: oldTitle } = appData
+    let requestDb = await supabase
+      .from('public_store')
+      .update({ title, description, type })
+      .eq('id', id)
+    if (requestDb.error) {
+      throw new Error(requestDb.error)
+    }
+    // move file
+    //if (images.length > 0 && title !== oldTitle) {
+    //  images.forEach(async (img) => {
+    //    const requestMoveFile = await supabase
+    //      .storage
+    //      .from('test')
+    //      .move(`store/${oldTitle}/${img.name}`, `store/${title}/${img.name}`)
+    //  })
+    //}
+    //screenShootFiles.forEach(async (file, index) => {
+    //  const screenshootFile = file
+    //  const uploadScreenShoot = await supabase
+    //    .storage
+    //    .from('test')
+    //    .upload(`store/${title}/${title}${crypto.randomUUID()}`, screenshootFile)
+    //  if (uploadScreenShoot.error) {
+    //    throw new Error(requestDb.error)
+    //  }
+    //})
+  }
+
+  async function handleInsertApp(newData) {
+    const { title, description, type } = newData
+    console.log(newData);
+    const requestDb = await supabase
+      .from('public_store')
+      .insert({ title, description, type })
+    if (requestDb.error) {
+      throw new Error(requestDb.error)
+    }
+
+    const uploadLogo = await supabase.storage
+      .from('test')
+      .upload(`store/logo/${title}`, logoFile)
+
+    if (uploadLogo.error) {
+      throw new Error(requestDb.error)
+    }
+    screenShootFiles.forEach(async (file, index) => {
+      const avatarFile = file
+      const uploadScreenShoot = await supabase
+        .storage
+        .from('test')
+        .upload(`store/${title}/${title}${crypto.randomUUID()}`, avatarFile)
+      if (uploadScreenShoot.error) {
+        throw new Error(requestDb.error)
+      }
+    })
+
+  }
+  const handleSubmitForm = async (event) => {
+    event.preventDefault();
+    const title = formData.title
+    const description = formData.description
+    const type = formData.type
+
+    if (!title || !description || !type || !logoFile) {
+      log({ type: 'error', content: 'Fill in form.' })
+      return
+    }
+    if(type =='vendor' && screenShootFiles.length < 1){
+      log({type: 'error', content: 'Need at least 1 screenshoot!1'})
+      return
+    }
+    try {
+      if (modalType == 'insert') {
+        await handleInsertApp(formData)
+      }
+      else if (modalType == 'edit') {
+        await handleUpdateApp(formData, appData)
+      }
+      log({ type: 'success' })
+    } catch (error) {
+      log({ type: 'error', content: error })
+
+    }
+  }
+  return (
+    <form className="p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmitForm}>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="title">Name</label>
+        <input onChange={handleChangeInput} value={formData.title} className="input w-full border-solid border border-gray-400 " type="text" id="title" name="title" />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="description">Description</label>
+        <textarea onChange={handleChangeInput} value={formData.description} className="w-full px-3 py-2 border border-gray-300 rounded-md" id="description" name="description"></textarea>
+      </div>
+      <select defaultValue={formData.type} onChange={handleChangeInput} name="type" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Type?</option>
+        <option value={'app'}>app</option>
+        <option value={'vendor'}>vendor</option>
+        <option value={'game'}>game</option>
+      </select>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="logoInput">Logo</label>
+        <input onChange={handleLogoSelect} className="file-input file-input-bordered w-full" type="file" id="logoInput" name="logoInput" />
+      </div>
+      {
+        logoFile ?
+          <Image
+            className="rounded"
+            ext
+            h={100}
+            src={logoFile.link}
+            err="img/asset/mixdef.jpg"
+          />
+          : null
+      }
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="screenshoot">Screen shot</label>
+        <input onChange={handleFileSelect} className="file-input file-input-bordered w-full" type="file" id="screenshootInput" name="screenshoot" />
+      </div>
+      <div className="briefcont py-2 pb-3">
+        <div className="overflow-x-scroll win11Scroll mt-4">
+          <div className="w-max flex">
+            {screenShootFiles.map(file => (
+              <div className="mr-6" key={Math.random()}>
+                <p className="mb-6 " key={file.name}>{file.name} <button onClick={() => handleFileDelete(file)}>Delete</button></p>
+
+                <Image
+                  key={Math.random()}
+                  className="mr-2 rounded"
+                  h={250}
+                  src={file.link}
+                  ext
+                  err="file.link"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Submit</button>
+    </form>
+  )
+}
