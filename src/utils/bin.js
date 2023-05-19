@@ -1,3 +1,18 @@
+String.prototype.strip = function (c) {
+  var i = 0,
+    j = this.length - 1;
+  while (this[i] === c) i++;
+  while (this[j] === c) j--;
+  return this.slice(i, j + 1);
+};
+
+String.prototype.count = function (c) {
+  var result = 0,
+    i = 0;
+  for (i; i < this.length; i++) if (this[i] == c) result++;
+  return result;
+};
+
 export class Item {
   constructor({ type, name, info, data, host }) {
     this.type = type || "folder";
@@ -53,7 +68,6 @@ export class Bin {
       cpath = curr.name + "\\" + cpath;
       curr = curr.host;
     }
-
     return cpath.count("\\") > 1 ? cpath.strip("\\") : cpath;
   }
 
