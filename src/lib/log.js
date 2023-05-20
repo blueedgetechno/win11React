@@ -1,6 +1,14 @@
 import Swal from "sweetalert2";
 
-export const log = ({ type, title, content, icon, time, confirmButtonText, confirmCallback }) => {
+export const log = ({
+  type,
+  title,
+  content,
+  icon,
+  time,
+  confirmButtonText,
+  confirmCallback,
+}) => {
   switch (type) {
     case "loading":
       Swal.fire({
@@ -28,23 +36,23 @@ export const log = ({ type, title, content, icon, time, confirmButtonText, confi
 
     case "confirm":
       Swal.fire({
-        title: title ?? 'Are you sure?',
+        title: title ?? "Are you sure?",
         text: content ?? "You won't be able to revert this!",
-        icon: icon ?? 'warning',
+        icon: icon ?? "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: confirmButtonText ?? 'Yes, do it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: confirmButtonText ?? "Yes, do it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const { data, error } = await confirmCallback()
+          const { data, error } = await confirmCallback();
           if (error) {
             Swal.fire({
               title: "Error!",
               text: error,
               icon: "error",
             });
-            return
+            return;
           }
           Swal.fire({
             title: "Success!",
@@ -52,7 +60,7 @@ export const log = ({ type, title, content, icon, time, confirmButtonText, confi
             icon: "success",
           });
         }
-      })
+      });
       break;
     case "close":
       Swal.close();
@@ -63,7 +71,7 @@ export const log = ({ type, title, content, icon, time, confirmButtonText, confi
 };
 
 export class Log {
-  constructor() { }
+  constructor() {}
   loading(title, content, time, icon) {
     Swal.fire({
       title: title ?? "Loading!",

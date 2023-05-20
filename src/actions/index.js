@@ -128,8 +128,7 @@ export const delApp = (act, menu) => {
   };
 
   if (act == "delete") {
-
-    if (data.type !== 'EXTERNAL_APP') {
+    if (data.type !== "EXTERNAL_APP") {
       var apps = store.getState().apps;
       var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
       if (app) {
@@ -148,18 +147,24 @@ export const delApp = (act, menu) => {
         }
       }
     } else {
-      deleteExternalApp()
+      deleteExternalApp();
     }
   }
 };
 
 // TODO install app database
 export const installApp = (data) => {
-  var app = { ...data, name: data.title, icon: data.image, type: "any", pwa: true };
+  var app = {
+    ...data,
+    name: data.title,
+    icon: data.image,
+    type: "any",
+    pwa: true,
+  };
 
   let desk = dfApps.desktop;
 
-  app.action = 'EXTERNAL_APP';
+  app.action = "EXTERNAL_APP";
   store.dispatch({ type: "DESKADD", payload: app });
 };
 
@@ -188,8 +193,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -209,7 +214,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -223,7 +228,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -405,14 +410,11 @@ export const connectWorkerSession = (itemId) => {
   window.open(item.info.remote_url, "_blank");
 };
 
-
 // Handle app
 
 export const openExternalApp = () => {
-
-  console.log('open');
-}
+  console.log("open");
+};
 export const deleteExternalApp = () => {
-
-  console.log('Delete');
-}
+  console.log("Delete");
+};

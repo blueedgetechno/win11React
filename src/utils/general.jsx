@@ -58,13 +58,12 @@ export const Icon = (props) => {
       return;
     }
 
-    if (action.type === 'EXTERNAL_APP') {
-      openExternalApp()
-    } else if(action.type === "FUNC"){
+    if (action.type === "EXTERNAL_APP") {
+      openExternalApp();
+    } else if (action.type === "FUNC") {
       const func = props.func;
       func();
-
-    } else{
+    } else {
       dispatch(action);
     }
     if (props.isTrack) {

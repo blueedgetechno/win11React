@@ -97,7 +97,7 @@ function App() {
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix"

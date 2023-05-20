@@ -108,8 +108,6 @@ export const Worker = () => {
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
   const modalInfo = useSelector((state) => state.modal);
- 
-
 
   function closeModal() {
     dispatch({ type: "CLOSE_MODAL" });
@@ -269,45 +267,39 @@ export const Worker = () => {
         </div>
       </div>
 
-      <Modal isOpen ={modalInfo.isOpen} closeModal={closeModal}>
-        <ModalWorkerInfo data={modalInfo.data}/>
+      <Modal isOpen={modalInfo.isOpen} closeModal={closeModal}>
+        <ModalWorkerInfo data={modalInfo.data} />
       </Modal>
     </div>
   );
 };
-const ModalWorkerInfo =(info) =>{
-  
-
+const ModalWorkerInfo = (info) => {
   const renderDetailWorker = (data) => {
-		const list = [];
-		for (const key in data) {
-			if (key === "icon" || key === "spid" || key === "menu") {
-				break;
-			}
-			list.push(
-				<div>
-					<span className="font-medium">{data[key] && combineText(key)}</span>:
-					<span> {typeof data[key] !== "object" && data[key]}</span>
-					<div
-						style={{
-							marginLeft: 15,
-						}}
-					>
-						{typeof data[key] == "object" && renderDetailWorker(data[key])}
-					</div>
-				</div>
-			);
-		}
+    const list = [];
+    for (const key in data) {
+      if (key === "icon" || key === "spid" || key === "menu") {
+        break;
+      }
+      list.push(
+        <div>
+          <span className="font-medium">{data[key] && combineText(key)}</span>:
+          <span> {typeof data[key] !== "object" && data[key]}</span>
+          <div
+            style={{
+              marginLeft: 15,
+            }}
+          >
+            {typeof data[key] == "object" && renderDetailWorker(data[key])}
+          </div>
+        </div>
+      );
+    }
 
-		return list;
-	};
+    return list;
+  };
 
-  return(
-    <>
-      {renderDetailWorker(info)}
-    </>
-  )
-}
+  return <>{renderDetailWorker(info)}</>;
+};
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
