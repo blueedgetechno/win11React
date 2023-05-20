@@ -37,8 +37,20 @@ export const log = ({ type, title, content, icon, time, confirmButtonText, confi
         confirmButtonText: confirmButtonText ?? 'Yes, do it!'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await confirmCallback()
-          console.log('toi dai dot');
+          const { data, error } = await confirmCallback()
+          if (error) {
+            Swal.fire({
+              title: "Error!",
+              text: error,
+              icon: "error",
+            });
+            return
+          }
+          Swal.fire({
+            title: "Success!",
+            text: "You've succeed",
+            icon: "success",
+          });
         }
       })
       break;
