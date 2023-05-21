@@ -12,6 +12,7 @@ import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import Modal from "../../../components/modal";
 import { log } from "../../../lib/log";
+import { combineText } from "../../../utils/combineText";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -254,10 +255,10 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(
       import.meta.env.VITE_PUBLIC_URL +
-        "/" +
-        ribbons[0]?.title +
-        "/" +
-        ribbons[0]?.images[0]?.name
+      "/" +
+      ribbons[0]?.title +
+      "/" +
+      ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -281,10 +282,10 @@ const FrontPage = (props) => {
                     setTimeout(() => {
                       setCover(
                         import.meta.env.VITE_PUBLIC_URL +
-                          "/" +
-                          ribbon.title +
-                          "/" +
-                          ribbon.images[0]?.name
+                        "/" +
+                        ribbon.title +
+                        "/" +
+                        ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -440,7 +441,8 @@ const DetailPage = ({ app }) => {
   };
 
   const [dstate, setDown] = useState(0);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalAdminOpen, setModalAdminOpen] = useState(false);
+  const [isModalInstallAppOpen, setModalInstallAppOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
@@ -450,11 +452,12 @@ const DetailPage = ({ app }) => {
     dispatch({ type: apps[app.icon].action, payload: "full" });
   };
   const download = () => {
-    setDown(1);
-    setTimeout(() => {
-      installApp(app);
-      setDown(3);
-    }, 3000);
+    //setDown(1);
+    //setTimeout(() => {
+    //  installApp(app);
+    //  setDown(3);
+    //}, 3000);
+    setModalInstallAppOpen(true)
   };
   useEffect(() => {
     if (apps[app.title] != null) setDown(3);
@@ -495,7 +498,7 @@ const DetailPage = ({ app }) => {
   };
 
   const handleEdit = () => {
-    setModalOpen(true);
+    setModalAdminOpen(true);
   };
 
   const handleDeleteApp = async () => {
@@ -590,9 +593,8 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${
-                          img.name
-                        }`}
+                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${img.name
+                          }`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
@@ -650,12 +652,21 @@ const DetailPage = ({ app }) => {
         </div>
       </div>
       <Modal
-        isOpen={isModalOpen}
+        isOpen={isModalAdminOpen}
         closeModal={() => {
-          setModalOpen(false);
+          setModalAdminOpen(false);
         }}
       >
         <ModalEditOrInsert modalType={"edit"} appData={app} />
+      </Modal>
+
+      <Modal
+        isOpen={isModalInstallAppOpen}
+        closeModal={() => {
+          setModalInstallAppOpen(false);
+        }}
+      >
+        <ModalSelectVendor />
       </Modal>
     </div>
   );
@@ -718,7 +729,7 @@ const ModalEditOrInsert = (props) => {
           return { data, error };
         };
         log({ type: "confirm", confirmCallback: deleteScreenShoot });
-      } catch (error) {}
+      } catch (error) { }
 
       return;
     }
@@ -728,7 +739,7 @@ const ModalEditOrInsert = (props) => {
     );
     try {
       URL.revokeObjectURL(file);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handleUpdateApp(fieldChange, appData) {
@@ -989,3 +1000,75 @@ const ModalEditOrInsert = (props) => {
     </form>
   );
 };
+
+const arr = [{
+  id: '1'
+},
+{
+  id: '2'
+},
+{
+  id: '3'
+},
+{
+  id: '4'
+}]
+
+const ModalSelectVendor = (props) => {
+  const { listVendor } = props
+  const [ vendorChoose, setVendorChoose ] = useState()
+
+  const renderVendorInfo = (data) => {
+    const list = [];
+    for (const key in data) {
+      list.push(
+        <div>
+          <span className="font-medium">{data[key] && combineText(key)}</span>:
+          <span> {typeof data[key] !== "object" && data[key]}</span>
+          <div
+            style={{
+              marginLeft: 15,
+            }}
+          >
+            {typeof data[key] == "object" && renderVendorInfo(data[key])}
+          </div>
+        </div>
+      );
+    }
+
+    return list;
+  };
+
+  const handleChooseVendor = (vendorId) => {
+    setVendorChoose(vendorId)
+    
+  }
+
+  const VendorInfo = (props) => {
+    const { vendorInfo, handleChooseVendor, isChoosen } = props
+    
+    let outline = isChoosen ? '2px solid' : 'none'
+    return (
+      <div style={{outline}} onClick={handleChooseVendor} className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer ">
+        <h3 className="text-center mb-[8px]">Vendor Name</h3>
+          <p>Gpu: GTX 1660 super 6GB</p>
+          <p>Gpu: GTX 1660 super 6GB</p>
+          <p>Gpu: GTX 1660 super 6GB</p>
+      </div>
+    )
+  }
+
+  
+  return (
+    <div>
+      <h3 className="mb-[24px]">Select Vendor</h3>
+      <div className="grid grid-cols-3 gap-[16px] ">
+        {
+          arr.map(item =>(
+            <VendorInfo handleChooseVendor={()=>{handleChooseVendor(item.id)}} vendorInfo={item} isChoosen={item.id == vendorChoose }/>
+          ))
+        }
+      </div>
+    </div>
+  )
+}
