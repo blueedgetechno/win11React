@@ -255,10 +255,10 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(
       import.meta.env.VITE_PUBLIC_URL +
-      "/" +
-      ribbons[0]?.title +
-      "/" +
-      ribbons[0]?.images[0]?.name
+        "/" +
+        ribbons[0]?.title +
+        "/" +
+        ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -282,10 +282,10 @@ const FrontPage = (props) => {
                     setTimeout(() => {
                       setCover(
                         import.meta.env.VITE_PUBLIC_URL +
-                        "/" +
-                        ribbon.title +
-                        "/" +
-                        ribbon.images[0]?.name
+                          "/" +
+                          ribbon.title +
+                          "/" +
+                          ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -457,7 +457,7 @@ const DetailPage = ({ app }) => {
     //  installApp(app);
     //  setDown(3);
     //}, 3000);
-    setModalInstallAppOpen(true)
+    setModalInstallAppOpen(true);
   };
   useEffect(() => {
     if (apps[app.title] != null) setDown(3);
@@ -593,8 +593,9 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${img.name
-                          }`}
+                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${
+                          img.name
+                        }`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
@@ -729,7 +730,7 @@ const ModalEditOrInsert = (props) => {
           return { data, error };
         };
         log({ type: "confirm", confirmCallback: deleteScreenShoot });
-      } catch (error) { }
+      } catch (error) {}
 
       return;
     }
@@ -739,7 +740,7 @@ const ModalEditOrInsert = (props) => {
     );
     try {
       URL.revokeObjectURL(file);
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handleUpdateApp(fieldChange, appData) {
@@ -1001,22 +1002,24 @@ const ModalEditOrInsert = (props) => {
   );
 };
 
-const arr = [{
-  id: '1'
-},
-{
-  id: '2'
-},
-{
-  id: '3'
-},
-{
-  id: '4'
-}]
+const arr = [
+  {
+    id: "1",
+  },
+  {
+    id: "2",
+  },
+  {
+    id: "3",
+  },
+  {
+    id: "4",
+  },
+];
 
 const ModalSelectVendor = (props) => {
-  const { listVendor } = props
-  const [ vendorChoose, setVendorChoose ] = useState()
+  const { listVendor } = props;
+  const [vendorChoose, setVendorChoose] = useState();
 
   const renderVendorInfo = (data) => {
     const list = [];
@@ -1040,35 +1043,41 @@ const ModalSelectVendor = (props) => {
   };
 
   const handleChooseVendor = (vendorId) => {
-    setVendorChoose(vendorId)
-    
-  }
+    setVendorChoose(vendorId);
+  };
 
   const VendorInfo = (props) => {
-    const { vendorInfo, handleChooseVendor, isChoosen } = props
-    
-    let outline = isChoosen ? '2px solid' : 'none'
-    return (
-      <div style={{outline}} onClick={handleChooseVendor} className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer ">
-        <h3 className="text-center mb-[8px]">Vendor Name</h3>
-          <p>Gpu: GTX 1660 super 6GB</p>
-          <p>Gpu: GTX 1660 super 6GB</p>
-          <p>Gpu: GTX 1660 super 6GB</p>
-      </div>
-    )
-  }
+    const { vendorInfo, handleChooseVendor, isChoosen } = props;
 
-  
+    let outline = isChoosen ? "2px solid" : "none";
+    return (
+      <div
+        style={{ outline }}
+        onClick={handleChooseVendor}
+        className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer "
+      >
+        <h3 className="text-center mb-[8px]">Vendor Name</h3>
+        <p>Gpu: GTX 1660 super 6GB</p>
+        <p>Gpu: GTX 1660 super 6GB</p>
+        <p>Gpu: GTX 1660 super 6GB</p>
+      </div>
+    );
+  };
+
   return (
     <div>
       <h3 className="mb-[24px]">Select Vendor</h3>
       <div className="grid grid-cols-3 gap-[16px] ">
-        {
-          arr.map(item =>(
-            <VendorInfo handleChooseVendor={()=>{handleChooseVendor(item.id)}} vendorInfo={item} isChoosen={item.id == vendorChoose }/>
-          ))
-        }
+        {arr.map((item) => (
+          <VendorInfo
+            handleChooseVendor={() => {
+              handleChooseVendor(item.id);
+            }}
+            vendorInfo={item}
+            isChoosen={item.id == vendorChoose}
+          />
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
