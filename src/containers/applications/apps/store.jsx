@@ -453,16 +453,16 @@ const DetailPage = ({ app }) => {
     //dispatch({ type: apps[app.icon].action, payload: "full" });
   };
   const handleInstallApp = (appInfo) => {
-    setModalInstallAppOpen(false)
+    setModalInstallAppOpen(false);
 
     setDown(1);
     setTimeout(() => {
       installApp(appInfo);
       setDown(3);
     }, 3000);
-  }
+  };
   const download = () => {
-    setModalInstallAppOpen(true)
+    setModalInstallAppOpen(true);
   };
   useEffect(() => {
     if (apps[app.title] != null) setDown(3);
@@ -493,7 +493,12 @@ const DetailPage = ({ app }) => {
         ) : null}
         {dstate == 1 ? <div className="downbar mt-12 mb-8"></div> : null}
         {dstate == 3 ? (
-          <div className="instbtn mt-12 mb-8 handcr" onClick={() => { console.log('Open app'); }}>
+          <div
+            className="instbtn mt-12 mb-8 handcr"
+            onClick={() => {
+              console.log("Open app");
+            }}
+          >
             {" "}
             Open{" "}
           </div>
@@ -672,28 +677,34 @@ const DetailPage = ({ app }) => {
           setModalInstallAppOpen(false);
         }}
       >
-        <ModalSelectVendor listVendor={arr} appData={app} handleInstallApp={handleInstallApp} />
+        <ModalSelectVendor
+          listVendor={arr}
+          appData={app}
+          handleInstallApp={handleInstallApp}
+        />
       </Modal>
     </div>
   );
 };
 
-const arr = [{
-  id: '1'
-},
-{
-  id: '2'
-},
-{
-  id: '3'
-},
-{
-  id: '4'
-}]
+const arr = [
+  {
+    id: "1",
+  },
+  {
+    id: "2",
+  },
+  {
+    id: "3",
+  },
+  {
+    id: "4",
+  },
+];
 
 const ModalSelectVendor = (props) => {
-  const { listVendor, handleInstallApp, appData } = props
-  const [vendorChoosen, setVendorChoose] = useState({ id: null })
+  const { listVendor, handleInstallApp, appData } = props;
+  const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
   const renderVendorInfo = (data) => {
     const list = [];
@@ -717,50 +728,63 @@ const ModalSelectVendor = (props) => {
   };
 
   const handleChooseVendor = (vendorId) => {
-    const vendorFound = listVendor.find(vendor => vendor.id == vendorId)
-    setVendorChoose(vendorFound)
-
-  }
+    const vendorFound = listVendor.find((vendor) => vendor.id == vendorId);
+    setVendorChoose(vendorFound);
+  };
 
   const VendorInfo = (props) => {
-    const { vendorInfo, handleChooseVendor, isChoosen } = props
+    const { vendorInfo, handleChooseVendor, isChoosen } = props;
 
-    let outline = isChoosen ? '2px solid' : 'none'
+    let outline = isChoosen ? "2px solid" : "none";
     return (
-      <div style={{ outline }} onClick={handleChooseVendor} className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer ">
+      <div
+        style={{ outline }}
+        onClick={handleChooseVendor}
+        className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer "
+      >
         <h3 className="text-center mb-[8px]">Vendor Name</h3>
         <div className="text-[12px] flex">
-          <span className="font-bold min-w-[35px] ">Gpu:</span> 
+          <span className="font-bold min-w-[35px] ">Gpu:</span>
           <span className="line-clamp-2">GTX 1660 super 6GB</span>
         </div>
         <div className="text-[12px] flex">
-          <span className="font-bold min-w-[35px] ">Gpu:</span> 
+          <span className="font-bold min-w-[35px] ">Gpu:</span>
           <span className="line-clamp-2">GTX 1660 super 6GB</span>
         </div>
         <div className="text-[12px] flex">
-          <span className="font-bold min-w-[35px] ">Gpu:</span> 
+          <span className="font-bold min-w-[35px] ">Gpu:</span>
           <span className="line-clamp-2">GTX 1660 super 6GB</span>
         </div>
       </div>
-    )
-  }
-
+    );
+  };
 
   const installApp = () => {
-    handleInstallApp({ ...appData, vendorChoosen })
-  }
+    handleInstallApp({ ...appData, vendorChoosen });
+  };
   return (
     <div className="h-full relative">
       <h3 className="mb-[24px]">Select Vendor</h3>
       <div className="grid grid-cols-3 gap-[16px] ">
-        {
-          listVendor.map(item => (
-            <VendorInfo key={Math.random()} handleChooseVendor={() => { handleChooseVendor(item.id) }} vendorInfo={item} isChoosen={item.id == vendorChoosen.id} />
-          ))
-        }
+        {listVendor.map((item) => (
+          <VendorInfo
+            key={Math.random()}
+            handleChooseVendor={() => {
+              handleChooseVendor(item.id);
+            }}
+            vendorInfo={item}
+            isChoosen={item.id == vendorChoosen.id}
+          />
+        ))}
       </div>
 
-      <button className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10" onClick={installApp}> Get </button>
+      <button
+        className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
+        onClick={installApp}
+      >
+        {" "}
+        Get{" "}
+      </button>
     </div>
-  )
-}
+  );
+};
