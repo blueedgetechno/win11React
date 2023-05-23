@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
+import store from "../reducers";
 
 export const isAdmin = () => {
-  const user = useSelector((state) => state.user);
+  const user = store.getState().user
 
   return user?.app_metadata?.role == "admin";
 };
