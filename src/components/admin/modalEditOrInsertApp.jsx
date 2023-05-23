@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import supabase from "../../supabase/createClient";
 import { log } from "../../lib/log";
 import { Image } from "../../utils/general";
+import {PUBLIC_IMG_URL} from "../../data/constant"
+
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData, closeModal } = props;
@@ -10,7 +12,7 @@ const ModalEditOrInsert = (props) => {
     appData?.images?.map((img) => ({
       name: img?.name,
       link:
-        import.meta.env.VITE_PUBLIC_URL + "/" + appData.title + "/" + img?.name,
+      PUBLIC_IMG_URL + "/" + appData.title + "/" + img?.name,
     }))
   );
   const [logoFile, setLogoFile] = useState({ link: appData?.icon });
