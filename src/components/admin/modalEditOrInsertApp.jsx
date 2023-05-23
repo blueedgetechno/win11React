@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import supabase from "../../supabase/createClient";
 import { log } from "../../lib/log";
 import { Image } from "../../utils/general";
-import {PUBLIC_IMG_URL} from "../../data/constant"
-
+import { PUBLIC_IMG_URL } from "../../data/constant";
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData, closeModal } = props;
@@ -11,8 +10,7 @@ const ModalEditOrInsert = (props) => {
   const [screenShootFilesOld, setScreenShootFilesOld] = useState(
     appData?.images?.map((img) => ({
       name: img?.name,
-      link:
-      PUBLIC_IMG_URL + "/" + appData.title + "/" + img?.name,
+      link: PUBLIC_IMG_URL + "/" + appData.title + "/" + img?.name,
     }))
   );
   const [logoFile, setLogoFile] = useState({ link: appData?.icon });

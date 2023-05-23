@@ -15,7 +15,7 @@ import { log } from "../../../lib/log";
 import { combineText } from "../../../utils/combineText";
 import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
 import { isAdmin } from "../../../utils/isAdmin";
-import {PUBLIC_IMG_URL} from "../../../data/constant"
+import { PUBLIC_IMG_URL } from "../../../data/constant";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -91,12 +91,7 @@ export const MicroStore = () => {
       } else if (x.type == "vendor") {
         row = content.vendors;
         const venderCover = screenshoots.data[0];
-        const url =
-        PUBLIC_IMG_URL +
-          "/" +
-          x.title +
-          "/" +
-          venderCover?.name;
+        const url = PUBLIC_IMG_URL + "/" + x.title + "/" + venderCover?.name;
       }
 
       row.push({
@@ -233,8 +228,8 @@ export const MicroStore = () => {
           </div>
         </LazyComponent>
       </div>
-      {
-        isAdmin() ? <Modal
+      {isAdmin() ? (
+        <Modal
           isOpen={isModalOpen}
           closeModal={() => {
             setModalOpen(false);
@@ -247,8 +242,7 @@ export const MicroStore = () => {
             }}
           />
         </Modal>
-          : null
-      }
+      ) : null}
     </div>
   );
 };
@@ -263,10 +257,10 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(
       PUBLIC_IMG_URL +
-      "/" +
-      ribbons[0]?.title +
-      "/" +
-      ribbons[0]?.images[0]?.name
+        "/" +
+        ribbons[0]?.title +
+        "/" +
+        ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -290,10 +284,10 @@ const FrontPage = (props) => {
                     setTimeout(() => {
                       setCover(
                         PUBLIC_IMG_URL +
-                        "/" +
-                        ribbon.title +
-                        "/" +
-                        ribbon.images[0]?.name
+                          "/" +
+                          ribbon.title +
+                          "/" +
+                          ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -518,7 +512,6 @@ const DetailPage = ({ app }) => {
     setModalAdminOpen(true);
   };
 
-  
   return (
     <div className="detailpage w-full absolute top-0 flex">
       <div className="detailcont">
@@ -533,14 +526,18 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{app.title}</div>
           <div className="text-xs text-blue-500">{app.type}</div>
           <GotoButton />
-          {
-            isAdmin() ?
-              <>
-                <button onClick={handleEdit}>Edit</button>
-                <button onClick={()=>{handleDeleteApp(app)}}>Delete</button>
-              </>
-              : null
-          }
+          {isAdmin() ? (
+            <>
+              <button onClick={handleEdit}>Edit</button>
+              <button
+                onClick={() => {
+                  handleDeleteApp(app);
+                }}
+              >
+                Delete
+              </button>
+            </>
+          ) : null}
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
@@ -578,8 +575,7 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${PUBLIC_IMG_URL}/${app.title}/${img.name
-                          }`}
+                        src={`${PUBLIC_IMG_URL}/${app.title}/${img.name}`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
