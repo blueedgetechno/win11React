@@ -12,6 +12,7 @@ import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
+import { isAdmin } from "../utils/isAdmin";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -193,8 +194,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -214,7 +215,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -228,7 +229,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -417,4 +418,51 @@ export const openExternalApp = () => {
 };
 export const deleteExternalApp = () => {
   console.log("Delete");
+};
+
+
+// For admin 
+
+export const handleDeleteApp = async (app) => {
+  if (!isAdmin()) {
+    return
+  }
+
+  const { id, title, images } = app;
+
+  try {
+    const deleteApp = async () => {
+      const deleteDb = await supabase
+        .from("public_store")
+        .delete()
+        .eq("id", id);
+      //delete logo
+      if (deleteDb.error) {
+        return { data: null, error };
+      }
+      const deleteLogo = await supabase.storage
+        .from("test")
+        .remove([`store/logo/${title}`]);
+      if (deleteLogo.error) {
+        return { data: null, error };
+      }
+
+      //delete screen shoots.
+
+      if (images.length > 0) {
+        images.forEach(async (img) => {
+          const deleteImg = await supabase.storage
+            .from("test")
+            .remove([`store/${title}/${img.name}`]);
+          if (deleteImg.error) {
+            return { data: null, error };
+          }
+        });
+      }
+      return { data: true, error: null };
+    };
+    log({ type: "confirm", confirmCallback: deleteApp });
+  } catch (error) {
+    log({ type: "error", content: error });
+  }
 };
