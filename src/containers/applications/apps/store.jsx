@@ -5,7 +5,7 @@ import "./assets/store.scss";
 import axios from "axios";
 import storedata from "./assets/store.json";
 import advancedstoredata from "./assets/advancedstore.json";
-import { installApp } from "../../../actions";
+import { handleDeleteApp, installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
@@ -15,6 +15,7 @@ import { log } from "../../../lib/log";
 import { combineText } from "../../../utils/combineText";
 import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
 import { isAdmin } from "../../../utils/isAdmin";
+import {PUBLIC_IMG_URL} from "../../../data/constant"
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -91,7 +92,7 @@ export const MicroStore = () => {
         row = content.vendors;
         const venderCover = screenshoots.data[0];
         const url =
-          import.meta.env.VITE_PUBLIC_URL +
+        PUBLIC_IMG_URL +
           "/" +
           x.title +
           "/" +
@@ -232,19 +233,22 @@ export const MicroStore = () => {
           </div>
         </LazyComponent>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          setModalOpen(false);
-        }}
-      >
-        <ModalEditOrInsert
-          modalType="insert"
+      {
+        isAdmin() ? <Modal
+          isOpen={isModalOpen}
           closeModal={() => {
             setModalOpen(false);
           }}
-        />
-      </Modal>
+        >
+          <ModalEditOrInsert
+            modalType="insert"
+            closeModal={() => {
+              setModalOpen(false);
+            }}
+          />
+        </Modal>
+          : null
+      }
     </div>
   );
 };
@@ -258,11 +262,11 @@ const FrontPage = (props) => {
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(
-      import.meta.env.VITE_PUBLIC_URL +
-        "/" +
-        ribbons[0]?.title +
-        "/" +
-        ribbons[0]?.images[0]?.name
+      PUBLIC_IMG_URL +
+      "/" +
+      ribbons[0]?.title +
+      "/" +
+      ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -285,11 +289,11 @@ const FrontPage = (props) => {
                   onMouseEnter={() => {
                     setTimeout(() => {
                       setCover(
-                        import.meta.env.VITE_PUBLIC_URL +
-                          "/" +
-                          ribbon.title +
-                          "/" +
-                          ribbon.images[0]?.name
+                        PUBLIC_IMG_URL +
+                        "/" +
+                        ribbon.title +
+                        "/" +
+                        ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -299,7 +303,7 @@ const FrontPage = (props) => {
                     h={100}
                     absolute={true}
                     src={
-                      import.meta.env.VITE_PUBLIC_URL +
+                      PUBLIC_IMG_URL +
                       "/" +
                       ribbon.title +
                       "/" +
@@ -514,45 +518,7 @@ const DetailPage = ({ app }) => {
     setModalAdminOpen(true);
   };
 
-  const handleDeleteApp = async () => {
-    const { id, title, images } = app;
-
-    try {
-      const deleteApp = async () => {
-        const deleteDb = await supabase
-          .from("public_store")
-          .delete()
-          .eq("id", id);
-        //delete logo
-        if (deleteDb.error) {
-          return { data: null, error };
-        }
-        const deleteLogo = await supabase.storage
-          .from("test")
-          .remove([`store/logo/${title}`]);
-        if (deleteLogo.error) {
-          return { data: null, error };
-        }
-
-        //delete screen shoots.
-
-        if (images.length > 0) {
-          images.forEach(async (img) => {
-            const deleteImg = await supabase.storage
-              .from("test")
-              .remove([`store/${title}/${img.name}`]);
-            if (deleteImg.error) {
-              return { data: null, error };
-            }
-          });
-        }
-        return { data: true, error: null };
-      };
-      log({ type: "confirm", confirmCallback: deleteApp });
-    } catch (error) {
-      log({ type: "error", content: error });
-    }
-  };
+  
   return (
     <div className="detailpage w-full absolute top-0 flex">
       <div className="detailcont">
@@ -567,8 +533,14 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{app.title}</div>
           <div className="text-xs text-blue-500">{app.type}</div>
           <GotoButton />
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDeleteApp}>Delete</button>
+          {
+            isAdmin() ?
+              <>
+                <button onClick={handleEdit}>Edit</button>
+                <button onClick={()=>{handleDeleteApp(app)}}>Delete</button>
+              </>
+              : null
+          }
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
@@ -606,9 +578,8 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${
-                          img.name
-                        }`}
+                        src={`${PUBLIC_IMG_URL}/${app.title}/${img.name
+                          }`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
@@ -748,6 +719,7 @@ const ModalSelectVendor = (props) => {
         className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer "
       >
         <h3 className="text-center mb-[8px]">Vendor Name</h3>
+        {/* Render vendor Info. */}
         <div className="text-[12px] flex">
           <span className="font-bold min-w-[35px] ">Gpu:</span>
           <span className="line-clamp-2">GTX 1660 super 6GB</span>
