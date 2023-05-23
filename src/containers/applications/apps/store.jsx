@@ -257,10 +257,10 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(
       PUBLIC_IMG_URL +
-      "/" +
-      ribbons[0]?.title +
-      "/" +
-      ribbons[0]?.images[0]?.name
+        "/" +
+        ribbons[0]?.title +
+        "/" +
+        ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -284,10 +284,10 @@ const FrontPage = (props) => {
                     setTimeout(() => {
                       setCover(
                         PUBLIC_IMG_URL +
-                        "/" +
-                        ribbon.title +
-                        "/" +
-                        ribbon.images[0]?.name
+                          "/" +
+                          ribbon.title +
+                          "/" +
+                          ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -662,26 +662,23 @@ const DetailPage = ({ app }) => {
 const arr = [
   {
     id: "1",
-    gpu: 'i7 7770k',
+    gpu: "i7 7770k",
     server: {
-      cpu: 'i9 9000l#k',
-      ram: '8gb'
-    }
+      cpu: "i9 9000l#k",
+      ram: "8gb",
+    },
   },
   {
     id: "2",
-    gpu: 'i6 7770k',
-
+    gpu: "i6 7770k",
   },
   {
     id: "3",
-    gpu: 'i4 7770k',
-
+    gpu: "i4 7770k",
   },
   {
     id: "4",
-    gpu: 'i2 7770k',
-
+    gpu: "i2 7770k",
   },
 ];
 
@@ -692,14 +689,19 @@ const ModalSelectVendor = (props) => {
   const renderVendorInfo = (data) => {
     const list = [];
     for (const key in data) {
-      if (key == 'id') {
-        continue
+      if (key == "id") {
+        continue;
       }
       list.push(
         <div>
           <div className="flex gap-[4px]">
-            <span className="font-medium">{data[key] && combineText(key)+':'} </span>
-            <span className="line-clamp-2"> {typeof data[key] !== "object" && data[key]}</span>
+            <span className="font-medium">
+              {data[key] && combineText(key) + ":"}{" "}
+            </span>
+            <span className="line-clamp-2">
+              {" "}
+              {typeof data[key] !== "object" && data[key]}
+            </span>
           </div>
           <div
             style={{
