@@ -13,3 +13,5 @@ export const externalLink = {
   DISCORD_LINK: "https://discord.gg/mYk7HxFh",
   MAILTO_ADDRESS: "mailto:huyhoangdo0205@gmail.com",
 };
+
+export const PUBLIC_IMG_URL = 'https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/test/store'
