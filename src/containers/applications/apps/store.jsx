@@ -14,6 +14,7 @@ import Modal from "../../../components/modal";
 import { log } from "../../../lib/log";
 import { combineText } from "../../../utils/combineText";
 import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
+import { isAdmin } from "../../../utils/isAdmin";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -214,13 +215,16 @@ export const MicroStore = () => {
               payload={page == 0 && tab == "gamerib"}
             />
 
-            <button
-              onClick={() => {
-                setModalOpen(true);
-              }}
-            >
-              Add
-            </button>
+            {
+              isAdmin() ? <button
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+              >
+                Add
+              </button> 
+              : null
+           }
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
@@ -256,10 +260,10 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(
       import.meta.env.VITE_PUBLIC_URL +
-        "/" +
-        ribbons[0]?.title +
-        "/" +
-        ribbons[0]?.images[0]?.name
+      "/" +
+      ribbons[0]?.title +
+      "/" +
+      ribbons[0]?.images[0]?.name
     );
   }, []);
 
@@ -283,10 +287,10 @@ const FrontPage = (props) => {
                     setTimeout(() => {
                       setCover(
                         import.meta.env.VITE_PUBLIC_URL +
-                          "/" +
-                          ribbon.title +
-                          "/" +
-                          ribbon.images[0]?.name
+                        "/" +
+                        ribbon.title +
+                        "/" +
+                        ribbon.images[0]?.name
                       );
                     }, 300);
                   }}
@@ -603,9 +607,8 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${
-                          img.name
-                        }`}
+                        src={`${import.meta.env.VITE_PUBLIC_URL}/${app.title}/${img.name
+                          }`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
@@ -662,14 +665,18 @@ const DetailPage = ({ app }) => {
           </div>
         </div>
       </div>
-      <Modal
-        isOpen={isModalAdminOpen}
-        closeModal={() => {
-          setModalAdminOpen(false);
-        }}
-      >
-        <ModalEditOrInsert modalType={"edit"} appData={app} />
-      </Modal>
+      {
+        isAdmin() ?
+          <Modal
+            isOpen={isModalAdminOpen}
+            closeModal={() => {
+              setModalAdminOpen(false);
+            }}
+          >
+            <ModalEditOrInsert modalType={"edit"} appData={app} />
+          </Modal>
+          : null
+      }
 
       <Modal
         isOpen={isModalInstallAppOpen}
