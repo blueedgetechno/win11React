@@ -190,11 +190,39 @@ export const delApp = (act, menu, event) => {
       }
     } else {
       const appId = menu.dataset.id
+      deleteExternalApp(appId);
     }
   }
 };
 
 
+export const openExternalApp = () => {
+  console.log("open");
+};
+export const deleteExternalApp = async (appId) => {
+  // delete in db
+
+  try {
+    const oldUserMetaData = store.getState().user?.user_metadata
+    const newListAppMetadata = oldUserMetaData.apps.filter(app => app.id != appId)
+
+    oldUserMetaData.apps = newListAppMetadata
+    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData })
+    if (error) throw new Error(error)
+  } catch (error) {
+    log({ type: 'error', content: error })
+  }
+
+  // delete in state
+  const listApp = store.getState().desktop.apps
+
+  const newListApp = listApp.filter(app => app?.id != appId)
+
+  store.dispatch({ type: "DESK_APP_UPDATE", payload: newListApp });
+
+
+
+};
 
 
 
