@@ -23,10 +23,10 @@ const deskReducer = (state = defState, action) => {
       return { ...state, apps: arr };
     case "DESK_ADD_LIST_APP":
       var arr = [...state.apps];
-      const listApp = action.payload
+      const listApp = action.payload;
       return { ...state, apps: [...arr, ...listApp] };
     case "DESK_APP_UPDATE":
-      return { ...state, apps: action.payload }
+      return { ...state, apps: action.payload };
     case "DESKHIDE":
       return {
         ...state,
