@@ -122,52 +122,51 @@ export const performApp = (act, menu) => {
   }
 };
 
-export const delApp = (act, menu) => {
-  var data = {
-    type: menu.dataset.action,
-    payload: menu.dataset.payload,
+
+// Handle app
+export const installApp = async (appInput) => {
+
+  var newApp = {
+    ...appInput,
+    name: appInput.title,
+    icon: appInput.icon,
+    action: "EXTERNAL_APP",
+    type: 'any'
+
   };
 
-  if (act == "delete") {
-    if (data.type !== "EXTERNAL_APP") {
-      var apps = store.getState().apps;
-      var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
-      if (app) {
-        app = apps[app];
-        if (app.pwa == true) {
-          store.dispatch({ type: app.action, payload: "close" });
-          store.dispatch({ type: "DELAPP", payload: app.icon });
 
-          let installed = "[]";
+  //update to user metdata
+  try {
+    const oldUserMetaData = store.getState().user?.user_metadata
+    console.log(oldUserMetaData);
+    if (oldUserMetaData?.apps) {
+      //Check duplicate app
+      const isDuplicate = oldUserMetaData.apps.some(app => app.id == appInput.id)
 
-          installed = JSON.parse(installed);
-          installed = installed.filter((x) => x.icon != app.icon);
-          // TODO install app
+      if (isDuplicate) throw new Error('You have installed this App')
+      oldUserMetaData.apps.push(newApp)
 
-          store.dispatch({ type: "DESKREM", payload: app.name });
-        }
-      }
     } else {
-      deleteExternalApp();
+      oldUserMetaData.apps = []
     }
+
+    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData })
+    if (error) {
+      throw new Error(error)
+    }
+    store.dispatch({ type: "DESKADD", payload: newApp });
+  } catch (error) {
+    log({ type: 'error', content: error })
   }
+
+
 };
 
-// TODO install app database
-export const installApp = (data) => {
-  var app = {
-    ...data,
-    name: data.title,
-    icon: data.icon,
-    type: "any",
-    pwa: true,
-  };
 
-  let desk = dfApps.desktop;
 
-  app.action = "EXTERNAL_APP";
-  store.dispatch({ type: "DESKADD", payload: app });
-};
+
+
 
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
@@ -194,8 +193,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-      ...store.getState().widpane,
-    },
+    ...store.getState().widpane,
+  },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -215,7 +214,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   // console.log('fetching NEWS');
   await axios
@@ -229,7 +228,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 
   store.dispatch({
     type: "WIDGREST",
@@ -411,14 +410,7 @@ export const connectWorkerSession = (itemId) => {
   window.open(item.info.remote_url, "_blank");
 };
 
-// Handle app
 
-export const openExternalApp = () => {
-  console.log("open");
-};
-export const deleteExternalApp = () => {
-  console.log("Delete");
-};
 
 // For admin
 
