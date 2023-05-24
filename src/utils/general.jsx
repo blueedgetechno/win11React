@@ -50,17 +50,8 @@ export const Icon = (props) => {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
     };
-
+  
     if (action.type === "FUNC") {
-      const func = props.func;
-      func();
-
-      return;
-    }
-
-    if (action.type === "EXTERNAL_APP") {
-      openExternalApp();
-    } else if (action.type === "FUNC") {
       const func = props.func;
       func();
     } else {
