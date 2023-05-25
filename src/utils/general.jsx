@@ -50,7 +50,7 @@ export const Icon = (props) => {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
     };
-  
+
     if (action.type === "FUNC") {
       const func = props.func;
       func();

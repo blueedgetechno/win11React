@@ -122,47 +122,41 @@ export const performApp = (act, menu) => {
   }
 };
 
-
 // Handle app
 export const installApp = async (appInput) => {
-
   var newApp = {
     ...appInput,
     name: appInput.title,
     icon: appInput.icon,
     action: "EXTERNAL_APP",
-    type: 'any'
-
+    type: "any",
   };
-
 
   //update to user metdata
   try {
-    const oldUserMetaData = store.getState().user?.user_metadata
+    const oldUserMetaData = store.getState().user?.user_metadata;
     console.log(oldUserMetaData);
     if (oldUserMetaData?.apps) {
       //Check duplicate app
-      const isDuplicate = oldUserMetaData.apps.some(app => app.id == appInput.id)
+      const isDuplicate = oldUserMetaData.apps.some(
+        (app) => app.id == appInput.id
+      );
 
-      if (isDuplicate) throw new Error('You have installed this App')
-      oldUserMetaData.apps.push(newApp)
-
+      if (isDuplicate) throw new Error("You have installed this App");
+      oldUserMetaData.apps.push(newApp);
     } else {
-      oldUserMetaData.apps = []
+      oldUserMetaData.apps = [];
     }
 
-    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData })
+    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
     if (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
     store.dispatch({ type: "DESKADD", payload: newApp });
   } catch (error) {
-    log({ type: 'error', content: error })
+    log({ type: "error", content: error });
   }
-
-
 };
-
 
 export const delApp = (act, menu, event) => {
   var data = {
@@ -189,12 +183,11 @@ export const delApp = (act, menu, event) => {
         }
       }
     } else {
-      const appId = menu.dataset.id
+      const appId = menu.dataset.id;
       deleteExternalApp(appId);
     }
   }
 };
-
 
 export const openExternalApp = () => {
   console.log("open");
@@ -203,28 +196,25 @@ export const deleteExternalApp = async (appId) => {
   // delete in db
 
   try {
-    const oldUserMetaData = store.getState().user?.user_metadata
-    const newListAppMetadata = oldUserMetaData.apps.filter(app => app.id != appId)
+    const oldUserMetaData = store.getState().user?.user_metadata;
+    const newListAppMetadata = oldUserMetaData.apps.filter(
+      (app) => app.id != appId
+    );
 
-    oldUserMetaData.apps = newListAppMetadata
-    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData })
-    if (error) throw new Error(error)
+    oldUserMetaData.apps = newListAppMetadata;
+    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
+    if (error) throw new Error(error);
   } catch (error) {
-    log({ type: 'error', content: error })
+    log({ type: "error", content: error });
   }
 
   // delete in state
-  const listApp = store.getState().desktop.apps
+  const listApp = store.getState().desktop.apps;
 
-  const newListApp = listApp.filter(app => app?.id != appId)
+  const newListApp = listApp.filter((app) => app?.id != appId);
 
   store.dispatch({ type: "DESK_APP_UPDATE", payload: newListApp });
-
-
-
 };
-
-
 
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
@@ -251,8 +241,8 @@ export const changeTheme = () => {
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -272,7 +262,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -286,7 +276,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -467,8 +457,6 @@ export const connectWorkerSession = (itemId) => {
 
   window.open(item.info.remote_url, "_blank");
 };
-
-
 
 // For admin
 

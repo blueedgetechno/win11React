@@ -65,8 +65,7 @@ export const DesktopApp = () => {
 
     if (action.type === "EXTERNAL_APP") {
       Actions.openExternalApp();
-    }
-    else {
+    } else {
       dispatch(action);
     }
     //track
@@ -84,29 +83,28 @@ export const DesktopApp = () => {
         eventName,
         value: iconName,
       });
-    } catch (error) {
-
-    }
-
-  }
+    } catch (error) {}
+  };
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
         deskApps.apps.map((app, i) => {
           return (
             // to allow it to be focusable (:focus)
-            <div key={i} className="dskApp prtclk" tabIndex={0}
+            <div
+              key={i}
+              className="dskApp prtclk"
+              tabIndex={0}
               onClick={handleOpen}
               data-action={app.action}
               data-menu="app"
               data-payload={app.payload || "full"}
-              data-id={app.id ?? 'null'}
+              data-id={app.id ?? "null"}
               data-name={app.name}
-
             >
               <Icon
                 className="dskIcon "
-                click={'null'}
+                click={"null"}
                 src={app.icon}
                 pr
                 width={Math.round(deskApps.size * 36)}
@@ -146,7 +144,7 @@ export const SidePane = () => {
   const dispatch = useDispatch();
 
   let [btlevel, setBtLevel] = useState("");
-  const childToParent = () => { };
+  const childToParent = () => {};
 
   const clickDispatch = (event) => {
     var action = {
