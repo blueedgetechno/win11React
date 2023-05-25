@@ -69,8 +69,6 @@ export const MicroStore = () => {
         continue;
       }
 
-
-
       const icon = (
         await supabase.storage
           .from("test")
@@ -264,7 +262,7 @@ const FrontPage = (props) => {
                   rel="noreferrer"
                   onMouseEnter={() => {
                     setTimeout(() => {
-                      setCover(vendor.images[0])
+                      setCover(vendor.images[0]);
                     }, 300);
                   }}
                 >
@@ -398,9 +396,7 @@ const stars = 5;
 const reviews = 5000;
 
 const DetailPage = ({ app }) => {
-  const [appData, setAppData] = useState({})
-
- 
+  const [appData, setAppData] = useState({});
 
   const [dstate, setDown] = useState(0);
   const [isModalAdminOpen, setModalAdminOpen] = useState(false);
@@ -409,7 +405,8 @@ const DetailPage = ({ app }) => {
 
   useEffect(() => {
     setAppData({
-      ...app, data: {
+      ...app,
+      data: {
         feat:
           appData.type === "vendor"
             ? `${appData.title} is one of our cloud provider`
@@ -419,7 +416,7 @@ const DetailPage = ({ app }) => {
             ? "We collaborate with our cloud provider to provide always available cloud PC to end-user"
             : "good",
       },
-    })
+    });
     const fetchImg = async () => {
       const screenshoots = await supabase.storage
         .from("test")
@@ -428,11 +425,10 @@ const DetailPage = ({ app }) => {
           offset: 0,
         });
 
-      setAppData(prev => ({...prev,images:screenshoots.data}))
-    }
-    fetchImg()
-
-  }, [app])
+      setAppData((prev) => ({ ...prev, images: screenshoots.data }));
+    };
+    fetchImg();
+  }, [app]);
 
   console.log(appData);
   // TODO download to desktop
@@ -546,7 +542,9 @@ const DetailPage = ({ app }) => {
               <div className="text-xss mt-px pt-1">Ratings</div>
             </div>
           </div>
-          <div className="descnt text-xs relative w-0">{appData?.data?.desc}</div>
+          <div className="descnt text-xs relative w-0">
+            {appData?.data?.desc}
+          </div>
         </div>
       </div>
       <div className="growcont flex flex-col">
