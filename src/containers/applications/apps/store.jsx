@@ -69,14 +69,8 @@ export const MicroStore = () => {
         continue;
       }
 
-      const screenshoots = await supabase.storage
-        .from("test")
-        .list(`store/${x.title}`, {
-          limit: 100,
-          offset: 0,
-        });
 
-      console.log(screenshoots);
+
       const icon = (
         await supabase.storage
           .from("test")
@@ -90,15 +84,13 @@ export const MicroStore = () => {
         row = content.apps;
       } else if (x.type == "vendor") {
         row = content.vendors;
-        const venderCover = screenshoots.data[0];
-        const url = PUBLIC_IMG_URL + "/" + x.title + "/" + venderCover?.name;
       }
 
       row.push({
         id: x.id,
         title: x.title,
         type: x.type,
-        images: screenshoots.data,
+        images: [],
         description: x.description,
         icon: icon,
         metadata: x.metadata,
@@ -106,15 +98,11 @@ export const MicroStore = () => {
     }
 
     store.dispatch({
-      type: "UPDATEAPP",
+      type: "ADD_LIST_APP",
       payload: content.apps,
     });
     store.dispatch({
-      type: "UPDATEVENDOR",
-      payload: content.vendors,
-    });
-    store.dispatch({
-      type: "UPDATEGAME",
+      type: "ADD_LIST_GAME",
       payload: content.games,
     });
   }, []);
@@ -248,20 +236,14 @@ export const MicroStore = () => {
 };
 
 const FrontPage = (props) => {
-  const ribbons = useSelector((state) => state.globals.ribbon);
+  const vendors = useSelector((state) => state.globals.vendors);
   const appribs = useSelector((state) => state.globals.apprib);
   const gameribs = useSelector((state) => state.globals.gamerib);
   const { t, i18n } = useTranslation();
 
   const [cover, setCover] = useState("");
   useEffect(() => {
-    setCover(
-      PUBLIC_IMG_URL +
-        "/" +
-        ribbons[0]?.title +
-        "/" +
-        ribbons[0]?.images[0]?.name
-    );
+    setCover(vendors[0]?.images[0]);
   }, []);
 
   return (
@@ -270,25 +252,19 @@ const FrontPage = (props) => {
       {/* <div className="panelName absolute m-6 text-xl top-0">Home</div> */}
       <div className="w-full overflow-x-scroll noscroll overflow-y-hidden -mt-16">
         <div className="storeRibbon">
-          {ribbons &&
-            ribbons.map((ribbon, i) => {
+          {vendors &&
+            vendors.map((vendor, i) => {
               return (
                 <a
                   key={i}
                   onClick={() => {
-                    props.app_click(ribbon);
+                    props.app_click(vendor);
                   }}
                   target="_blank"
                   rel="noreferrer"
                   onMouseEnter={() => {
                     setTimeout(() => {
-                      setCover(
-                        PUBLIC_IMG_URL +
-                          "/" +
-                          ribbon.title +
-                          "/" +
-                          ribbon.images[0]?.name
-                      );
+                      setCover(vendor.images[0])
                     }, 300);
                   }}
                 >
@@ -296,14 +272,8 @@ const FrontPage = (props) => {
                     className="mx-1 dpShad rounded"
                     h={100}
                     absolute={true}
-                    src={
-                      PUBLIC_IMG_URL +
-                      "/" +
-                      ribbon.title +
-                      "/" +
-                      ribbon?.images[0]?.name
-                    }
-                    err={ribbon.icon}
+                    src={vendor?.images[0]}
+                    err={vendor.icon}
                   />
                 </a>
               );
@@ -424,29 +394,47 @@ const FrontPage = (props) => {
     </div>
   );
 };
+const stars = 5;
+const reviews = 5000;
 
 const DetailPage = ({ app }) => {
-  const stars = 5;
-  const reviews = 5000;
-  app = {
-    ...app,
-    data: {
-      feat:
-        app.type === "vendor"
-          ? `${app.title} is one of our cloud provider`
-          : "good",
-      desc:
-        app.type === "vendor"
-          ? "We collaborate with our cloud provider to provide always available cloud PC to end-user"
-          : "good",
-    },
-  };
+  const [appData, setAppData] = useState({})
+
+ 
 
   const [dstate, setDown] = useState(0);
   const [isModalAdminOpen, setModalAdminOpen] = useState(false);
   const [isModalInstallAppOpen, setModalInstallAppOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
+  useEffect(() => {
+    setAppData({
+      ...app, data: {
+        feat:
+          appData.type === "vendor"
+            ? `${appData.title} is one of our cloud provider`
+            : "good",
+        desc:
+          appData.type === "vendor"
+            ? "We collaborate with our cloud provider to provide always available cloud PC to end-user"
+            : "good",
+      },
+    })
+    const fetchImg = async () => {
+      const screenshoots = await supabase.storage
+        .from("test")
+        .list(`store/${app.title}`, {
+          limit: 100,
+          offset: 0,
+        });
+
+      setAppData(prev => ({...prev,images:screenshoots.data}))
+    }
+    fetchImg()
+
+  }, [app])
+
+  console.log(appData);
   // TODO download to desktop
   const apps = useSelector((state) => state.apps);
   const dispatch = useDispatch();
@@ -466,14 +454,14 @@ const DetailPage = ({ app }) => {
     setModalInstallAppOpen(true);
   };
   useEffect(() => {
-    if (apps[app.title] != null) setDown(3);
+    if (apps[appData.title] != null) setDown(3);
   }, [dstate]);
   const GotoButton = () => {
-    if (app.type == "vendor") {
+    if (appData.type == "vendor") {
       return (
         <div className="instbtn mt-12 mb-8 handcr">
           <a
-            href={app.metadata.href}
+            href={appData.metadata.href}
             target={"_blank"}
             style={{ color: "white" }}
           >
@@ -519,19 +507,19 @@ const DetailPage = ({ app }) => {
           className="rounded"
           ext
           h={100}
-          src={app.icon}
+          src={appData?.icon}
           err="img/asset/mixdef.jpg"
         />
         <div className="flex flex-col items-center text-center relative">
-          <div className="text-2xl font-semibold mt-6">{app.title}</div>
-          <div className="text-xs text-blue-500">{app.type}</div>
+          <div className="text-2xl font-semibold mt-6">{appData?.title}</div>
+          <div className="text-xs text-blue-500">{appData?.type}</div>
           <GotoButton />
           {isAdmin() ? (
             <>
               <button onClick={handleEdit}>Edit</button>
               <button
                 onClick={() => {
-                  handleDeleteApp(app);
+                  handleDeleteApp(appData);
                 }}
               >
                 Delete
@@ -558,7 +546,7 @@ const DetailPage = ({ app }) => {
               <div className="text-xss mt-px pt-1">Ratings</div>
             </div>
           </div>
-          <div className="descnt text-xs relative w-0">{app.data.desc}</div>
+          <div className="descnt text-xs relative w-0">{appData?.data?.desc}</div>
         </div>
       </div>
       <div className="growcont flex flex-col">
@@ -566,8 +554,8 @@ const DetailPage = ({ app }) => {
           <div className="text-xs font-semibold">Screenshots</div>
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
-              {app.images.length > 0 &&
-                app.images.map((img) => {
+              {appData?.images?.length > 0 &&
+                appData?.images?.map((img) => {
                   if (img.name == ".emptyFolderPlaceholder") return null;
                   return (
                     <div className="mr-6 relative" key={Math.random()}>
@@ -575,7 +563,7 @@ const DetailPage = ({ app }) => {
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${PUBLIC_IMG_URL}/${app.title}/${img.name}`}
+                        src={`${PUBLIC_IMG_URL}/${appData?.title}/${img?.name}`}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
@@ -588,7 +576,7 @@ const DetailPage = ({ app }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.description")}</div>
           <div className="text-xs mt-4">
-            <pre>{app.data.desc}</pre>
+            <pre>{appData?.data?.desc}</pre>
           </div>
         </div>
         <div className="briefcont py-2 pb-3">
@@ -628,7 +616,7 @@ const DetailPage = ({ app }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.features")}</div>
           <div className="text-xs mt-4">
-            <pre>{app.data.feat}</pre>
+            <pre>{appData?.data?.feat}</pre>
           </div>
         </div>
       </div>
@@ -639,7 +627,7 @@ const DetailPage = ({ app }) => {
             setModalAdminOpen(false);
           }}
         >
-          <ModalEditOrInsert modalType={"edit"} appData={app} />
+          <ModalEditOrInsert modalType={"edit"} appData={appData} />
         </Modal>
       ) : null}
 
@@ -651,7 +639,7 @@ const DetailPage = ({ app }) => {
       >
         <ModalSelectVendor
           listVendor={arr}
-          appData={app}
+          appData={appData}
           handleInstallApp={handleInstallApp}
         />
       </Modal>
