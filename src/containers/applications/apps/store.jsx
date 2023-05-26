@@ -191,12 +191,13 @@ export const MicroStore = () => {
             />
 
             {isAdmin() ? (
-            <Icon
-              onClick={() => {
-                setModalOpen(true);
-              }}
-              fafa="faGamepad"
-            />) : null}
+              <Icon
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                fafa="faGamepad"
+              />
+            ) : null}
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
@@ -446,25 +447,23 @@ const DetailPage = ({ app }) => {
 
   const DeleteButton = (props) => {
     return (
-      <div onClick={() => { handleDeleteApp(props.appData); }} >
-        <div className="instbtn mt-1 mb-8 handcr">
-          Delete
-        </div>
+      <div
+        onClick={() => {
+          handleDeleteApp(props.appData);
+        }}
+      >
+        <div className="instbtn mt-1 mb-8 handcr">Delete</div>
       </div>
     );
   };
 
   const EditButton = () => {
     return (
-      <div onClick={handleEdit} >
-          <div className="instbtn mt-1 mb-8 handcr">
-            Edit
-          </div>
+      <div onClick={handleEdit}>
+        <div className="instbtn mt-1 mb-8 handcr">Edit</div>
       </div>
     );
   };
-
-
 
   const GotoButton = () => {
     if (appData.type == "vendor") {
@@ -561,19 +560,19 @@ const DetailPage = ({ app }) => {
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
               {appData?.images?.map((img) => {
-                  return (
-                    <div  className="mr-6 relative"key={Math.random()}>
-                      <Image
-                        key={Math.random()}
-                        className="mr-2 rounded"
-                        h={250}
-                        src={img}
-                        ext
-                        err="img/asset/mixdef.jpg"
-                      />
-                    </div>
-                  );
-                })}
+                return (
+                  <div className="mr-6 relative" key={Math.random()}>
+                    <Image
+                      key={Math.random()}
+                      className="mr-2 rounded"
+                      h={250}
+                      src={img}
+                      ext
+                      err="img/asset/mixdef.jpg"
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
