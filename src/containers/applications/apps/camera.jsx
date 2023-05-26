@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, ToolBar } from "../../../utils/general";
 import { useTranslation } from "react-i18next";
-import { WebRTCClient } from "../../../../core/src/app";
+import { RemoteDesktopClient } from "../../../../core/src/app";
 import {
   DeviceSelection,
   DeviceSelectionResult,
@@ -97,7 +97,7 @@ export const Camera = () => {
     if (hide === false) {
       let newplatform = "desktop";
       setclient(
-        new WebRTCClient(
+        new RemoteDesktopClient(
           signalingURL,
           remoteVideo.current,
           remoteAudio.current,
@@ -110,6 +110,7 @@ export const Camera = () => {
       );
     }
   }, [hide]);
+
   useEffect(() => {
     initVideo();
   }, [initVideo]);

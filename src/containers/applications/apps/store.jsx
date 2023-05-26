@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
-import axios from "axios";
-import storedata from "./assets/store.json";
-import advancedstoredata from "./assets/advancedstore.json";
 import { handleDeleteApp, installApp } from "../../../actions";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import Modal from "../../../components/modal";
-import { log } from "../../../lib/log";
 import { combineText } from "../../../utils/combineText";
 import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
 import { isAdmin } from "../../../utils/isAdmin";
@@ -52,7 +48,7 @@ export const MicroStore = () => {
     const { data, error } = await supabase
       .from("public_store")
       .select("title,removed_at,type,metadata, id, description")
-      .in("type", ["game", "app", "vendor"]);
+      .in("type", ["game", "app"]);
     if (error != null) {
       throw error.message;
     }
@@ -60,7 +56,6 @@ export const MicroStore = () => {
     const content = {
       games: [],
       apps: [],
-      vendors: [],
     };
 
     for (let index = 0; index < data.length; index++) {
@@ -80,8 +75,6 @@ export const MicroStore = () => {
         row = content.games;
       } else if (x.type == "app") {
         row = content.apps;
-      } else if (x.type == "vendor") {
-        row = content.vendors;
       }
 
       row.push({
@@ -198,14 +191,12 @@ export const MicroStore = () => {
             />
 
             {isAdmin() ? (
-              <button
-                onClick={() => {
-                  setModalOpen(true);
-                }}
-              >
-                Add
-              </button>
-            ) : null}
+            <Icon
+              onClick={() => {
+                setModalOpen(true);
+              }}
+              fafa="faGamepad"
+            />) : null}
           </div>
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
@@ -403,6 +394,7 @@ const DetailPage = ({ app }) => {
   const [isModalInstallAppOpen, setModalInstallAppOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
+  // TODO
   useEffect(() => {
     setAppData({
       ...app,
@@ -425,12 +417,11 @@ const DetailPage = ({ app }) => {
           offset: 0,
         });
 
-      setAppData((prev) => ({ ...prev, images: screenshoots.data }));
+      // setAppData((prev) => ({ ...prev, images: screenshoots.data }));
     };
     fetchImg();
   }, [app]);
 
-  console.log(appData);
   // TODO download to desktop
   const apps = useSelector((state) => state.apps);
   const dispatch = useDispatch();
@@ -452,6 +443,29 @@ const DetailPage = ({ app }) => {
   useEffect(() => {
     if (apps[appData.title] != null) setDown(3);
   }, [dstate]);
+
+  const DeleteButton = (props) => {
+    return (
+      <div onClick={() => { handleDeleteApp(props.appData); }} >
+        <div className="instbtn mt-1 mb-8 handcr">
+          Delete
+        </div>
+      </div>
+    );
+  };
+
+  const EditButton = () => {
+    return (
+      <div onClick={handleEdit} >
+          <div className="instbtn mt-1 mb-8 handcr">
+            Edit
+          </div>
+      </div>
+    );
+  };
+
+
+
   const GotoButton = () => {
     if (appData.type == "vendor") {
       return (
@@ -512,14 +526,8 @@ const DetailPage = ({ app }) => {
           <GotoButton />
           {isAdmin() ? (
             <>
-              <button onClick={handleEdit}>Edit</button>
-              <button
-                onClick={() => {
-                  handleDeleteApp(appData);
-                }}
-              >
-                Delete
-              </button>
+              <EditButton />
+              <DeleteButton />
             </>
           ) : null}
           <div className="flex mt-4">
@@ -552,16 +560,14 @@ const DetailPage = ({ app }) => {
           <div className="text-xs font-semibold">Screenshots</div>
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
-              {appData?.images?.length > 0 &&
-                appData?.images?.map((img) => {
-                  if (img.name == ".emptyFolderPlaceholder") return null;
+              {appData?.images?.map((img) => {
                   return (
-                    <div className="mr-6 relative" key={Math.random()}>
+                    <div  className="mr-6 relative"key={Math.random()}>
                       <Image
                         key={Math.random()}
                         className="mr-2 rounded"
                         h={250}
-                        src={`${PUBLIC_IMG_URL}/${appData?.title}/${img?.name}`}
+                        src={img}
                         ext
                         err="img/asset/mixdef.jpg"
                       />
