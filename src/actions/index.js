@@ -134,25 +134,28 @@ export const installApp = async (appInput) => {
 
   //update to user metdata
   try {
-    const oldUserMetaData = store.getState().user?.user_metadata;
-    console.log(oldUserMetaData);
-    if (oldUserMetaData?.apps) {
-      //Check duplicate app
-      const isDuplicate = oldUserMetaData.apps.some(
-        (app) => app.id == appInput.id
-      );
+    const {data,error} = await supabase
+      .from("user_profile")
+      .select("id,metadata->installed_app,metadata")
+    if (error != null) 
+      throw error
 
-      if (isDuplicate) throw("You have installed this App");
-      oldUserMetaData.apps.push(newApp);
-    } else {
-      oldUserMetaData.apps = [];
-    }
+    console.log(data)
 
-    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
-    if (error) {
-      throw(error);
-    }
     store.dispatch({ type: "DESKADD", payload: newApp });
+
+    const apps = data.at(0).installed_app ?? []
+    apps.push(newApp)
+    const updateResult = await supabase
+      .from("user_profile")
+      .update({
+        metadata: {
+          ...data.at(0).metadata,
+          installed_app: apps
+        }
+      }).eq("id",data.at(0)?.id)
+    if (updateResult.error != null) 
+      throw updateResult.error.message
   } catch (error) {
     log({ type: "error", content: error });
   }
@@ -464,22 +467,21 @@ export const handleDeleteApp = async (app) => {
   if (!isAdmin()) 
     return;
   
-  console.log(app)
-
   const { id } = app;
-
   const deleteApp = async () => {
     const {data,error} = await supabase
       .from("store")
       .delete()
       .eq("id", id);
+
     if (error) 
-      console.log("fail to delete app " +error.message)
-      
+      return { error: `fail to delete app ${error.message}`}
+    
+    return {error : null}
   };
 
-
-  log({ 
+  await log({ 
+    error: null,
     type: "confirm", 
     confirmCallback: deleteApp 
   });

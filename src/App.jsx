@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
+import store from "./reducers";
 import "./i18nextConf";
 import "./index.css";
 import ReactGA from "react-ga";
@@ -128,7 +129,7 @@ function App() {
       dispatch({
         type: "MENUSHOW",
         payload: data,
-      });
+      });   
     }
   };
 
@@ -138,9 +139,25 @@ function App() {
     dispatch({ type: "WALLBOOTED" });
   };
 
+
+  const updateApp = async () => {
+    const {data,error} = await supabase
+      .from("user_profile")
+      .select("metadata->installed_app")
+    if (error != null) 
+      throw error
+
+
+    const apps = data.at(0).installed_app ?? []
+    apps.forEach(val => {
+      store.dispatch({ type: "DESKADD", payload: val });
+    })
+  }
+
   useEffect(() => {
     if (!window.onstart) {
       loadSettings();
+      updateApp()
       window.onstart = setTimeout(() => {
         // console.log("prematurely loading ( ﾉ ﾟｰﾟ)ﾉ");
         dispatch({ type: "WALLBOOTED" });

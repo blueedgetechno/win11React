@@ -5,18 +5,19 @@ import { Image } from "../../utils/general";
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData, closeModal } = props;
-  const [formData, setFormData] = useState({
-    title: appData?.title,
-    type: appData?.type,
-    description: appData?.description,
-    screenshoots: appData?.screenshoots,
-    icon: appData?.icon
+  const [formData, setFormData] = useState(modalType == 'edit' ? appData : {
+    id :            "",
+    title:          "",
+    type:           "",
+    description:    "",
+    feature:        "",
+    screenshoots:   [],
+    icon:           ""
   });
 
   function handleChangeInput(e) {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name, value);
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -29,13 +30,14 @@ const ModalEditOrInsert = (props) => {
       return;
 
     const newFiles = Array.from(event.target.files);
-    const from = URL.createObjectURL(newFiles[0]);
+    newFiles[0].link = URL.createObjectURL(newFiles[0]);
+    const from = newFiles[0];
 
 
 
 
     const rand = crypto.randomUUID()
-    const randPath = `store/${appData.title}/${rand}`
+    const randPath = `store/${formData.title}/${rand}`
 
     const uploadScreenShoot = await supabase.storage
       .from("test")
@@ -51,7 +53,6 @@ const ModalEditOrInsert = (props) => {
 
     const screenshoots = formData.screenshoots
     screenshoots.push(getScreenshootURL.data.publicUrl)
-    console.log(screenshoots)
 
 
     setFormData((prev) => ({
@@ -64,12 +65,15 @@ const ModalEditOrInsert = (props) => {
     if (event.target.files.length < 1) 
       return;
 
-    const logoPath = `store/${appData.title}/logo`
+    const rand = crypto.randomUUID()
+    const logoPath = `store/${formData.title}/${rand}`
 
     const newFiles = Array.from(event.target.files);
+    newFiles[0].link = URL.createObjectURL(newFiles[0]);
+
     const uploadLogo = await supabase.storage
       .from("test")
-      .upload(logoPath, URL.createObjectURL(newFiles[0]),{
+      .upload(logoPath, newFiles[0],{
         upsert : true
       });
     if (uploadLogo.error) 
@@ -89,134 +93,74 @@ const ModalEditOrInsert = (props) => {
 
 
 
-  function handleFileDelete(fileName, type) {
-    // check atleast has 1 screenshoot
-
-    if (type == "upstream") {
-      try {
-        const deleteScreenShoot = async () => {
-          const { data, error } = await supabase.storage
-            .from("test")
-            .remove([fileName]);
-
-          return { data, error };
-        };
-        log({ type: "confirm", confirmCallback: deleteScreenShoot });
-      } catch (error) {}
-
-      return;
-    }
-
+  function handleFileDelete(fileName) {
+    setFormData(old => {
+      return {
+        ...old,
+        screenshoots: formData.screenshoots.filter(x => x != fileName)
+      }
+    })
   }
 
 
-  async function handleUpdateApp(fieldChange, appData) {
-    const { title, description, type } = fieldChange;
-    const { id, images, title: oldTitle } = appData;
-
-    // move file
-    const requestMoveLogo = await supabase.storage
-      .from("test")
-      .move(`store/logo/${oldTitle}`, `store/logo/${title}`);
-    if (requestMoveLogo.error) 
-      throw(requestMoveLogo.error);
-    
-
-    if (images.length > 0 && title !== oldTitle) {
-      images.forEach(async (img) => {
-        const requestMoveFile = await supabase.storage
-          .from("test")
-          .move(`store/${oldTitle}/${img.name}`, `store/${title}/${img.name}`);
-        if (requestMoveFile.error) {
-          throw(requestMoveFile.error);
-        }
-      });
-    }
-
-    //add on files
-    screenShootFiles.forEach(async (file, index) => {
-
-    });
-
+  async function handleUpdateApp(app) {
+    const { id, title , icon, description, feature, screenshoots } = app;
     //update DB
     let requestDb = await supabase
       .from("store")
       .update({
-        title,
-        type,
+        title: title,
+        icon: icon,
         metadata : {
-          description : description
+          description : description,
+          feature     : feature,
+          screenshoots: screenshoots
         }
       }) .eq("id", id);
-
     if (requestDb.error) 
       throw (requestDb.error);
   }
 
 
   async function handleInsertApp(newData) {
-    const { title, description, type } = newData;
-
-
-    const Screenshoots = []
-    for (let index = 0; index < screenShootFiles.length; index++) {
-      const element = screenShootFiles[index];
-
-      
-      Screenshoots.push(getScreenshootURL.data.publicUrl)
-    }
-
-
+    const { title, icon, description, type ,feature, screenshoots } = newData;
     const {data,error} = await supabase
       .from("store")
       .insert({ 
-        title, 
-        icon : getLogoID.data.publicUrl, 
-        type,
+        title : title, 
+        icon : icon, 
+        type : type,
         metadata : {
           description : description,
-          screenshoots : Screenshoots,
+          feature     : feature,
+          screenshoots : screenshoots,
         }
       });
-    if (error) {
+    if (error) 
       throw (error);
-    }
   }
 
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
+
     const title = formData.title;
     const description = formData.description;
+    const feature     = formData.feature;
     const type = formData.type;
 
-    if (!title || !description || !type || !logoFile) {
+    if (!title || !description || !type || !feature) {
       log({ type: "error", content: "Fill in form." });
       return;
     }
-    if (
-      modalType == "insert" &&
-      type == "vendor" &&
-      screenShootFiles.length < 1
-    ) {
-      log({ type: "error", content: "Need at least 1 screenshoot!1" });
-      return;
-    }
 
-
-    try {
-      if (modalType == "insert") {
-        await handleInsertApp(formData);
-        closeModal();
-      } else if (modalType == "edit") {
-        await handleUpdateApp(formData, appData);
-        closeModal();
-      }
-
-      log({ type: "success" });
-    } catch (error) {
-      log({ type: "error", content: error });
-    }
+    if (modalType == "insert") 
+      await handleInsertApp(formData);
+    else if (modalType == "edit") 
+      await handleUpdateApp(formData);
+    
+    closeModal()
+    log({ type: "success" });
   };
 
 
@@ -256,15 +200,30 @@ const ModalEditOrInsert = (props) => {
           name="description"
         ></textarea>
       </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 font-medium mb-2"
+          htmlFor="feature"
+        >
+          Feature
+        </label>
+        <textarea
+          onChange={handleChangeInput}
+          value={formData.feature}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          id="feature"
+          name="feature"
+        ></textarea>
+      </div>
+
       <select
-        defaultValue={formData.type}
+        defaultValue={"NONE"}
         onChange={handleChangeInput}
         name="type"
         className="select select-bordered w-full max-w-xs"
       >
-        <option disabled defaultValue={true}>
-          Type?
-        </option>
+        <option value={"NONE"}>Select</option>
         <option value={"APP"}>app</option>
         <option value={"GAME"}>game</option>
       </select>
@@ -289,7 +248,7 @@ const ModalEditOrInsert = (props) => {
         ext
         h={100}
         src={formData.icon}
-        err="img/asset/mixdef.jpg"
+        // err="img/asset/mixdef.jpg"
       />
 
       <div className="mb-4">
@@ -310,7 +269,7 @@ const ModalEditOrInsert = (props) => {
       <div className="briefcont py-2 pb-3">
         <div className="overflow-x-scroll win11Scroll mt-4">
           <div className="w-max flex">
-            {formData.screenshoots.map((file) => (
+            {formData.screenshoots?.map((file) => (
               <div className="mr-6" key={Math.random()}>
 
                 <p className="mb-6 " key={file}>

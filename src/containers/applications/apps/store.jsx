@@ -27,7 +27,7 @@ export const MicroStore = () => {
   const updateStoreContent = useCallback(async () => {
     const { data, error } = await supabase
       .from("store")
-      .select("id,title,icon,type,metadata->description,metadata->screenshoots")
+      .select("id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature")
       .in("type", ["GAME", "APP"]);
     if (error != null) 
       throw error;
@@ -56,6 +56,8 @@ export const MicroStore = () => {
       type: "UPDATEGAME",
       payload: content.games,
     });
+
+    setPage(0)
   }, []);
 
   useEffect(() => {
@@ -162,20 +164,22 @@ export const MicroStore = () => {
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
-            {page == 2 ? <DetailPage app={opapp} /> : null}
+            {page == 2 ? <DetailPage update={updateStoreContent} app={opapp} /> : null}
           </div>
         </LazyComponent>
       </div>
       {isAdmin() ? (
         <Modal
           isOpen={isModalOpen}
-          closeModal={() => {
-            setModalOpen(false);
-          }}
+            closeModal={async () => {
+              await updateStoreContent()
+              setModalOpen(false);
+            }}
         >
           <ModalEditOrInsert
-            modalType="insert"
-            closeModal={() => {
+            modalType={"insert"}
+            closeModal={async () => {
+              await updateStoreContent()
               setModalOpen(false);
             }}
           />
@@ -240,24 +244,24 @@ const FrontPage = (props) => {
         </div>
         <div className="flex w-max pr-8">
           {games &&
-            games.map((gamerib, i) => {
+            games.map((game, i) => {
               var stars = 5;
               return (
                 <div
                   key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
                   onClick={() => {
-                    props.app_click(gamerib);
+                    props.app_click(game);
                   }}
                 >
                   <Image
                     className="mx-1 py-1 mb-2 rounded"
                     w={120}
                     absolute={true}
-                    src={gamerib.icon}
+                    src={game.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {gamerib.title}
+                    {game.title}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -347,30 +351,13 @@ const FrontPage = (props) => {
 const stars = 5;
 const reviews = 5000;
 
-const DetailPage = ({ app }) => {
-  const [appData, setAppData] = useState({});
+const DetailPage = ({ app, update }) => {
+  const [appData, setAppData] = useState(app);
 
   const [dstate, setDown] = useState(0);
   const [isModalAdminOpen, setModalAdminOpen] = useState(false);
   const [isModalInstallAppOpen, setModalInstallAppOpen] = useState(false);
   const { t, i18n } = useTranslation();
-
-  // TODO
-  useEffect(() => {
-    setAppData({
-      ...app,
-      data: {
-        feat:
-          appData.type === "vendor"
-            ? `${appData.title} is one of our cloud provider`
-            : "good",
-        desc:
-          appData.type === "vendor"
-            ? "We collaborate with our cloud provider to provide always available cloud PC to end-user"
-            : "good",
-      },
-    });
-  }, [app]);
 
   // TODO download to desktop
   const apps = useSelector((state) => state.apps);
@@ -397,8 +384,9 @@ const DetailPage = ({ app }) => {
   const DeleteButton = () => {
     return (
       <div
-        onClick={() => {
-          handleDeleteApp(app);
+        onClick={async () => {
+          await handleDeleteApp(app);
+          await update()
         }}
       >
         <div className="instbtn mt-1 mb-8 handcr">Delete</div>
@@ -472,7 +460,7 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{appData?.title}</div>
           <div className="text-xs text-blue-500">{appData?.type}</div>
           <GotoButton />
-          {isAdmin() ? (
+          {isAdmin() && (appData.type != "vendor") ? (
             <>
               <EditButton />
               <DeleteButton />
@@ -499,7 +487,7 @@ const DetailPage = ({ app }) => {
             </div>
           </div>
           <div className="descnt text-xs relative w-0">
-            {appData?.data?.desc}
+            {appData?.description}
           </div>
         </div>
       </div>
@@ -528,7 +516,7 @@ const DetailPage = ({ app }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.description")}</div>
           <div className="text-xs mt-4">
-            <pre>{appData?.data?.desc}</pre>
+            <pre>{appData?.description}</pre>
           </div>
         </div>
         <div className="briefcont py-2 pb-3">
@@ -568,22 +556,24 @@ const DetailPage = ({ app }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.features")}</div>
           <div className="text-xs mt-4">
-            <pre>{appData?.data?.feat}</pre>
+            <pre>{appData?.feature}</pre>
           </div>
         </div>
       </div>
       {isAdmin() ? (
         <Modal
           isOpen={isModalAdminOpen}
-          closeModal={() => {
+          closeModal={async () => {
             setModalAdminOpen(false);
+            await update()
           }}
         >
           <ModalEditOrInsert 
             modalType={"edit"} 
             appData={appData} 
-            closeModal={() => {
-              setModalOpen(false);
+            closeModal={async () => {
+              setModalAdminOpen(false);
+              await update()
             }}
           />
         </Modal>
@@ -639,7 +629,7 @@ const ModalSelectVendor = (props) => {
         continue;
       }
       list.push(
-        <div>
+        <div key={Math.random()} >
           <div className="flex gap-[4px]">
             <span className="font-medium">
               {data[key] && combineText(key) + ":"}{" "}

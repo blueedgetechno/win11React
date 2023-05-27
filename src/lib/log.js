@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const log = ({
+export const log = async ({
   type,
   title,
   content,
@@ -35,7 +35,7 @@ export const log = ({
       break;
 
     case "confirm":
-      Swal.fire({
+      const result = await Swal.fire({
         title: title ?? "Are you sure?",
         text: content ?? "You won't be able to revert this!",
         icon: icon ?? "warning",
@@ -43,24 +43,26 @@ export const log = ({
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: confirmButtonText ?? "Yes, do it!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const { data, error } = await confirmCallback();
-          if (error) {
-            Swal.fire({
-              title: "Error!",
-              text: error,
-              icon: "error",
-            });
-            return;
-          }
-          Swal.fire({
-            title: "Success!",
-            text: "You've succeed",
-            icon: "success",
-          });
-        }
-      });
+      })
+
+      if (!result.isConfirmed) 
+        break
+      
+      const { error } = await confirmCallback();
+      if (error) {
+        await Swal.fire({
+          title: "Error!",
+          text: error,
+          icon: "error",
+        });
+      } else {
+        await Swal.fire({
+          title: "Success!",
+          text: "You've succeed",
+          icon: "success",
+        });
+      }
+
       break;
     case "close":
       Swal.close();
