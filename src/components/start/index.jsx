@@ -64,7 +64,7 @@ export const DesktopApp = () => {
     };
 
     if (action.type === "EXTERNAL_APP") {
-      console.log(" TODO index.jsx")
+      console.log(" TODO index.jsx");
       Actions.openExternalApp();
     } else {
       dispatch(action);

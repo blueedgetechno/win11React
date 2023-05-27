@@ -27,12 +27,11 @@ export const MicroStore = () => {
   const updateStoreContent = useCallback(async () => {
     const { data, error } = await supabase
       .from("store")
-      .select("id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature")
+      .select(
+        "id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature"
+      )
       .in("type", ["GAME", "APP"]);
-    if (error != null) 
-      throw error;
-    
-
+    if (error != null) throw error;
 
     const content = {
       games: [],
@@ -42,10 +41,8 @@ export const MicroStore = () => {
     for (let index = 0; index < data.length; index++) {
       const appOrGame = data[index];
 
-      if (appOrGame.type == "GAME") 
-        content.games.push(appOrGame);
-      else if (appOrGame.type == "APP") 
-        content.apps.push(appOrGame);
+      if (appOrGame.type == "GAME") content.games.push(appOrGame);
+      else if (appOrGame.type == "APP") content.apps.push(appOrGame);
     }
 
     store.dispatch({
@@ -57,7 +54,7 @@ export const MicroStore = () => {
       payload: content.games,
     });
 
-    setPage(0)
+    setPage(0);
   }, []);
 
   useEffect(() => {
@@ -164,22 +161,24 @@ export const MicroStore = () => {
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
-            {page == 2 ? <DetailPage update={updateStoreContent} app={opapp} /> : null}
+            {page == 2 ? (
+              <DetailPage update={updateStoreContent} app={opapp} />
+            ) : null}
           </div>
         </LazyComponent>
       </div>
       {isAdmin() ? (
         <Modal
           isOpen={isModalOpen}
-            closeModal={async () => {
-              await updateStoreContent()
-              setModalOpen(false);
-            }}
+          closeModal={async () => {
+            await updateStoreContent();
+            setModalOpen(false);
+          }}
         >
           <ModalEditOrInsert
             modalType={"insert"}
             closeModal={async () => {
-              await updateStoreContent()
+              await updateStoreContent();
               setModalOpen(false);
             }}
           />
@@ -197,7 +196,9 @@ const FrontPage = (props) => {
   const { t, i18n } = useTranslation();
 
   const [cover, setCover] = useState("");
-  useEffect(() => { setCover(vendors[0]?.images[0]); }, []);
+  useEffect(() => {
+    setCover(vendors[0]?.images[0]);
+  }, []);
 
   return (
     <div className="pagecont w-full absolute top-0">
@@ -375,8 +376,6 @@ const DetailPage = ({ app, update }) => {
     setModalInstallAppOpen(true);
   };
 
-
-
   useEffect(() => {
     if (apps[appData.title] != null) setDown(3);
   }, [dstate]);
@@ -386,7 +385,7 @@ const DetailPage = ({ app, update }) => {
       <div
         onClick={async () => {
           await handleDeleteApp(app);
-          await update()
+          await update();
         }}
       >
         <div className="instbtn mt-1 mb-8 handcr">Delete</div>
@@ -460,7 +459,7 @@ const DetailPage = ({ app, update }) => {
           <div className="text-2xl font-semibold mt-6">{appData?.title}</div>
           <div className="text-xs text-blue-500">{appData?.type}</div>
           <GotoButton />
-          {isAdmin() && (appData.type != "vendor") ? (
+          {isAdmin() && appData.type != "vendor" ? (
             <>
               <EditButton />
               <DeleteButton />
@@ -565,15 +564,15 @@ const DetailPage = ({ app, update }) => {
           isOpen={isModalAdminOpen}
           closeModal={async () => {
             setModalAdminOpen(false);
-            await update()
+            await update();
           }}
         >
-          <ModalEditOrInsert 
-            modalType={"edit"} 
-            appData={appData} 
+          <ModalEditOrInsert
+            modalType={"edit"}
+            appData={appData}
             closeModal={async () => {
               setModalAdminOpen(false);
-              await update()
+              await update();
             }}
           />
         </Modal>
@@ -622,14 +621,15 @@ const ModalSelectVendor = (props) => {
   const { listVendor, handleInstallApp, appData } = props;
   const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
-  const renderVendorInfo = (data) => { // TODO handle filter 
+  const renderVendorInfo = (data) => {
+    // TODO handle filter
     const list = [];
     for (const key in data) {
       if (key == "id") {
         continue;
       }
       list.push(
-        <div key={Math.random()} >
+        <div key={Math.random()}>
           <div className="flex gap-[4px]">
             <span className="font-medium">
               {data[key] && combineText(key) + ":"}{" "}

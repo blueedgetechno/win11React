@@ -5,15 +5,19 @@ import { Image } from "../../utils/general";
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData, closeModal } = props;
-  const [formData, setFormData] = useState(modalType == 'edit' ? appData : {
-    id :            "",
-    title:          "",
-    type:           "",
-    description:    "",
-    feature:        "",
-    screenshoots:   [],
-    icon:           ""
-  });
+  const [formData, setFormData] = useState(
+    modalType == "edit"
+      ? appData
+      : {
+          id: "",
+          title: "",
+          type: "",
+          description: "",
+          feature: "",
+          screenshoots: [],
+          icon: "",
+        }
+  );
 
   function handleChangeInput(e) {
     const name = e.target.name;
@@ -24,129 +28,110 @@ const ModalEditOrInsert = (props) => {
     }));
   }
 
-
   async function handleFileSelect(event) {
-    if (event.target.files.length < 1) 
-      return;
+    if (event.target.files.length < 1) return;
 
     const newFiles = Array.from(event.target.files);
     newFiles[0].link = URL.createObjectURL(newFiles[0]);
     const from = newFiles[0];
 
-
-
-
-    const rand = crypto.randomUUID()
-    const randPath = `store/${formData.title}/${rand}`
+    const rand = crypto.randomUUID();
+    const randPath = `store/${formData.title}/${rand}`;
 
     const uploadScreenShoot = await supabase.storage
       .from("test")
       .upload(randPath, from);
-    if (uploadScreenShoot.error) 
-      throw (requestDb.error);
-    
+    if (uploadScreenShoot.error) throw requestDb.error;
+
     const getScreenshootURL = await supabase.storage
       .from("test")
       .getPublicUrl(randPath);
-    if (getScreenshootURL.error) 
-      throw(getScreenshootURL.error);
+    if (getScreenshootURL.error) throw getScreenshootURL.error;
 
-    const screenshoots = formData.screenshoots
-    screenshoots.push(getScreenshootURL.data.publicUrl)
-
+    const screenshoots = formData.screenshoots;
+    screenshoots.push(getScreenshootURL.data.publicUrl);
 
     setFormData((prev) => ({
       ...prev,
-      screenshoots: screenshoots
+      screenshoots: screenshoots,
     }));
   }
 
   async function handleLogoSelect(event) {
-    if (event.target.files.length < 1) 
-      return;
+    if (event.target.files.length < 1) return;
 
-    const rand = crypto.randomUUID()
-    const logoPath = `store/${formData.title}/${rand}`
+    const rand = crypto.randomUUID();
+    const logoPath = `store/${formData.title}/${rand}`;
 
     const newFiles = Array.from(event.target.files);
     newFiles[0].link = URL.createObjectURL(newFiles[0]);
 
     const uploadLogo = await supabase.storage
       .from("test")
-      .upload(logoPath, newFiles[0],{
-        upsert : true
+      .upload(logoPath, newFiles[0], {
+        upsert: true,
       });
-    if (uploadLogo.error) 
-      throw (uploadLogo.error);
-    
+    if (uploadLogo.error) throw uploadLogo.error;
+
     const getLogoID = await supabase.storage
       .from("test")
       .getPublicUrl(logoPath);
-    if (getLogoID.error) 
-      throw(getLogoID.error);
+    if (getLogoID.error) throw getLogoID.error;
 
     setFormData((prev) => ({
       ...prev,
-      icon: getLogoID.data.publicUrl
+      icon: getLogoID.data.publicUrl,
     }));
   }
 
-
-
   function handleFileDelete(fileName) {
-    setFormData(old => {
+    setFormData((old) => {
       return {
         ...old,
-        screenshoots: formData.screenshoots.filter(x => x != fileName)
-      }
-    })
+        screenshoots: formData.screenshoots.filter((x) => x != fileName),
+      };
+    });
   }
 
-
   async function handleUpdateApp(app) {
-    const { id, title , icon, description, feature, screenshoots } = app;
+    const { id, title, icon, description, feature, screenshoots } = app;
     //update DB
     let requestDb = await supabase
       .from("store")
       .update({
         title: title,
         icon: icon,
-        metadata : {
-          description : description,
-          feature     : feature,
-          screenshoots: screenshoots
-        }
-      }) .eq("id", id);
-    if (requestDb.error) 
-      throw (requestDb.error);
+        metadata: {
+          description: description,
+          feature: feature,
+          screenshoots: screenshoots,
+        },
+      })
+      .eq("id", id);
+    if (requestDb.error) throw requestDb.error;
   }
-
 
   async function handleInsertApp(newData) {
-    const { title, icon, description, type ,feature, screenshoots } = newData;
-    const {data,error} = await supabase
-      .from("store")
-      .insert({ 
-        title : title, 
-        icon : icon, 
-        type : type,
-        metadata : {
-          description : description,
-          feature     : feature,
-          screenshoots : screenshoots,
-        }
-      });
-    if (error) 
-      throw (error);
+    const { title, icon, description, type, feature, screenshoots } = newData;
+    const { data, error } = await supabase.from("store").insert({
+      title: title,
+      icon: icon,
+      type: type,
+      metadata: {
+        description: description,
+        feature: feature,
+        screenshoots: screenshoots,
+      },
+    });
+    if (error) throw error;
   }
-
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
     const title = formData.title;
     const description = formData.description;
-    const feature     = formData.feature;
+    const feature = formData.feature;
     const type = formData.type;
 
     if (!title || !description || !type || !feature) {
@@ -154,15 +139,12 @@ const ModalEditOrInsert = (props) => {
       return;
     }
 
-    if (modalType == "insert") 
-      await handleInsertApp(formData);
-    else if (modalType == "edit") 
-      await handleUpdateApp(formData);
-    
-    closeModal()
+    if (modalType == "insert") await handleInsertApp(formData);
+    else if (modalType == "edit") await handleUpdateApp(formData);
+
+    closeModal();
     log({ type: "success" });
   };
-
 
   return (
     <form
@@ -271,12 +253,8 @@ const ModalEditOrInsert = (props) => {
           <div className="w-max flex">
             {formData.screenshoots?.map((file) => (
               <div className="mr-6" key={Math.random()}>
-
                 <p className="mb-6 " key={file}>
-                  <button
-                    type="button"
-                    onClick={() => handleFileDelete(file)}
-                  >
+                  <button type="button" onClick={() => handleFileDelete(file)}>
                     Delete
                   </button>
                 </p>
