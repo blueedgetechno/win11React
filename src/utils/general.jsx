@@ -9,7 +9,6 @@ import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
 import { AnalyticTrack, analytics } from "../lib/segment.js";
 import useAnalyticsEventTracker from "../lib/googleAnalytics";
-import { openExternalApp } from "../actions";
 
 String.prototype.strip = function (c) {
   var i = 0,

@@ -192,8 +192,8 @@ export const delApp = (act, menu, event) => {
   }
 };
 
-export const openExternalApp = () => {
-  console.log("open");
+export const openExternalApp = async () => {
+  console.log("open"); // TODO this logic
 };
 export const deleteExternalApp = async (appId) => {
   // delete in db

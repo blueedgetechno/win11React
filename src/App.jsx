@@ -176,11 +176,8 @@ function App() {
   useEffect(() => {
     verifyUserInfo();
   }, [verifyUserInfo]);
-  if (!user.email) {
-  }
 
   // GG analytics
-
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);

@@ -622,7 +622,7 @@ const ModalSelectVendor = (props) => {
   const { listVendor, handleInstallApp, appData } = props;
   const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
-  const renderVendorInfo = (data) => {
+  const renderVendorInfo = (data) => { // TODO handle filter 
     const list = [];
     for (const key in data) {
       if (key == "id") {
