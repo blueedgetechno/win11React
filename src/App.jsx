@@ -151,7 +151,7 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error !== null) {
-      throw new Error(error);
+      throw(error);
     }
     dispatch({ type: "ADD_USER", payload: data.user });
   }, [dispatch]);

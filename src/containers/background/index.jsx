@@ -110,19 +110,20 @@ export const LockScreen = (props) => {
       return;
     }
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `https://thinkmay.net/`,
-        // redirectTo: `http://localhost:3000`,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
+    const { data, error } = await supabase.auth
+      .signInWithOAuth({
+        provider: "google",
+        options: {
+          // redirectTo: `https://thinkmay.net/`,
+          redirectTo: `http://localhost:3000`,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
         },
-      },
     });
     if (error) {
-      throw new Error(error);
+      throw(error);
     }
   };
 

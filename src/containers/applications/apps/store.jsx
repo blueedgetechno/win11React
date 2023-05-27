@@ -11,27 +11,6 @@ import Modal from "../../../components/modal";
 import { combineText } from "../../../utils/combineText";
 import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
 import { isAdmin } from "../../../utils/isAdmin";
-import { PUBLIC_IMG_URL } from "../../../data/constant";
-
-const geneStar = (item, rv = 0) => {
-  var url = item.data.url,
-    stars = 0;
-
-  for (var i = 0; i < url.length; i++) {
-    if (rv) stars += url[i].charCodeAt() / (i + 3);
-    else stars += url[i].charCodeAt() / (i + 2);
-  }
-
-  if (rv) {
-    stars = stars % 12;
-    stars = Math.round(stars * 1000);
-  } else {
-    stars = stars % 4;
-    stars = Math.round(stars * 10) / 10;
-  }
-
-  return 1 + stars;
-};
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -44,14 +23,16 @@ export const MicroStore = () => {
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
+
   const updateStoreContent = useCallback(async () => {
     const { data, error } = await supabase
-      .from("public_store")
-      .select("title,removed_at,type,metadata, id, description")
-      .in("type", ["game", "app"]);
-    if (error != null) {
-      throw error.message;
-    }
+      .from("store")
+      .select("id,title,icon,type,metadata->description,metadata->screenshoots")
+      .in("type", ["GAME", "APP"]);
+    if (error != null) 
+      throw error;
+    
+
 
     const content = {
       games: [],
@@ -59,41 +40,20 @@ export const MicroStore = () => {
     };
 
     for (let index = 0; index < data.length; index++) {
-      const x = data[index];
-      if (x.removed_at != null) {
-        continue;
-      }
+      const appOrGame = data[index];
 
-      const icon = (
-        await supabase.storage
-          .from("test")
-          .getPublicUrl(`store/logo/${x.title}`)
-      ).data.publicUrl;
-
-      let row = null;
-      if (x.type == "game") {
-        row = content.games;
-      } else if (x.type == "app") {
-        row = content.apps;
-      }
-
-      row.push({
-        id: x.id,
-        title: x.title,
-        type: x.type,
-        images: [],
-        description: x.description,
-        icon: icon,
-        metadata: x.metadata,
-      });
+      if (appOrGame.type == "GAME") 
+        content.games.push(appOrGame);
+      else if (appOrGame.type == "APP") 
+        content.apps.push(appOrGame);
     }
 
     store.dispatch({
-      type: "ADD_LIST_APP",
+      type: "UPDATEAPP",
       payload: content.apps,
     });
     store.dispatch({
-      type: "ADD_LIST_GAME",
+      type: "UPDATEGAME",
       payload: content.games,
     });
   }, []);
@@ -227,14 +187,13 @@ export const MicroStore = () => {
 
 const FrontPage = (props) => {
   const vendors = useSelector((state) => state.globals.vendors);
-  const appribs = useSelector((state) => state.globals.apprib);
-  const gameribs = useSelector((state) => state.globals.gamerib);
+  const apps = useSelector((state) => state.globals.apps);
+  const games = useSelector((state) => state.globals.games);
+
   const { t, i18n } = useTranslation();
 
   const [cover, setCover] = useState("");
-  useEffect(() => {
-    setCover(vendors[0]?.images[0]);
-  }, []);
+  useEffect(() => { setCover(vendors[0]?.images[0]); }, []);
 
   return (
     <div className="pagecont w-full absolute top-0">
@@ -280,8 +239,8 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-game.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {gameribs &&
-            gameribs.map((gamerib, i) => {
+          {games &&
+            games.map((gamerib, i) => {
               var stars = 5;
               return (
                 <div
@@ -336,15 +295,16 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-app.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {appribs &&
-            appribs.map((apprib, i) => {
+          {apps &&
+            apps.map((app, i) => {
               var stars = 5;
+
               return (
                 <div
                   key={i}
                   className="ribcont rounded-2xl my-auto p-2 pb-2"
                   onClick={() => {
-                    props.app_click(apprib);
+                    props.app_click(app);
                   }}
                 >
                   <Image
@@ -352,10 +312,10 @@ const FrontPage = (props) => {
                     // w={120}
                     h={100}
                     absolute={true}
-                    src={apprib.icon}
+                    src={app.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {apprib.title}
+                    {app.title}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -410,25 +370,11 @@ const DetailPage = ({ app }) => {
             : "good",
       },
     });
-    const fetchImg = async () => {
-      const screenshoots = await supabase.storage
-        .from("test")
-        .list(`store/${app.title}`, {
-          limit: 100,
-          offset: 0,
-        });
-
-      // setAppData((prev) => ({ ...prev, images: screenshoots.data }));
-    };
-    fetchImg();
   }, [app]);
 
   // TODO download to desktop
   const apps = useSelector((state) => state.apps);
-  const dispatch = useDispatch();
-  const openApp = () => {
-    //dispatch({ type: apps[app.icon].action, payload: "full" });
-  };
+
   const handleInstallApp = (appInfo) => {
     setModalInstallAppOpen(false);
 
@@ -441,15 +387,18 @@ const DetailPage = ({ app }) => {
   const download = () => {
     setModalInstallAppOpen(true);
   };
+
+
+
   useEffect(() => {
     if (apps[appData.title] != null) setDown(3);
   }, [dstate]);
 
-  const DeleteButton = (props) => {
+  const DeleteButton = () => {
     return (
       <div
         onClick={() => {
-          handleDeleteApp(props.appData);
+          handleDeleteApp(app);
         }}
       >
         <div className="instbtn mt-1 mb-8 handcr">Delete</div>
@@ -559,7 +508,7 @@ const DetailPage = ({ app }) => {
           <div className="text-xs font-semibold">Screenshots</div>
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
-              {appData?.images?.map((img) => {
+              {appData?.screenshoots?.map((img) => {
                 return (
                   <div className="mr-6 relative" key={Math.random()}>
                     <Image
@@ -630,7 +579,13 @@ const DetailPage = ({ app }) => {
             setModalAdminOpen(false);
           }}
         >
-          <ModalEditOrInsert modalType={"edit"} appData={appData} />
+          <ModalEditOrInsert 
+            modalType={"edit"} 
+            appData={appData} 
+            closeModal={() => {
+              setModalOpen(false);
+            }}
+          />
         </Modal>
       ) : null}
 
@@ -733,6 +688,7 @@ const ModalSelectVendor = (props) => {
   const installApp = () => {
     handleInstallApp({ ...appData, vendorChoosen });
   };
+
   return (
     <div className="h-full relative">
       <h3 className="mb-[24px]">Select Vendor</h3>

@@ -142,7 +142,7 @@ export const installApp = async (appInput) => {
         (app) => app.id == appInput.id
       );
 
-      if (isDuplicate) throw new Error("You have installed this App");
+      if (isDuplicate) throw("You have installed this App");
       oldUserMetaData.apps.push(newApp);
     } else {
       oldUserMetaData.apps = [];
@@ -150,7 +150,7 @@ export const installApp = async (appInput) => {
 
     const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
     if (error) {
-      throw new Error(error);
+      throw(error);
     }
     store.dispatch({ type: "DESKADD", payload: newApp });
   } catch (error) {
@@ -203,7 +203,7 @@ export const deleteExternalApp = async (appId) => {
 
     oldUserMetaData.apps = newListAppMetadata;
     const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
-    if (error) throw new Error(error);
+    if (error) throw(error);
   } catch (error) {
     log({ type: "error", content: error });
   }
@@ -324,7 +324,7 @@ export const handleLogOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
     logging.error();
-    throw new Error(error);
+    throw(error);
   }
   logging.close();
   store.dispatch({ type: "DELETE_USER" });
@@ -461,45 +461,26 @@ export const connectWorkerSession = (itemId) => {
 // For admin
 
 export const handleDeleteApp = async (app) => {
-  if (!isAdmin()) {
+  if (!isAdmin()) 
     return;
-  }
+  
+  console.log(app)
 
-  const { id, title, images } = app;
+  const { id } = app;
 
-  try {
-    const deleteApp = async () => {
-      const deleteDb = await supabase
-        .from("public_store")
-        .delete()
-        .eq("id", id);
-      //delete logo
-      if (deleteDb.error) {
-        return { data: null, error };
-      }
-      const deleteLogo = await supabase.storage
-        .from("test")
-        .remove([`store/logo/${title}`]);
-      if (deleteLogo.error) {
-        return { data: null, error };
-      }
+  const deleteApp = async () => {
+    const {data,error} = await supabase
+      .from("store")
+      .delete()
+      .eq("id", id);
+    if (error) 
+      console.log("fail to delete app " +error.message)
+      
+  };
 
-      //delete screen shoots.
 
-      if (images.length > 0) {
-        images.forEach(async (img) => {
-          const deleteImg = await supabase.storage
-            .from("test")
-            .remove([`store/${title}/${img.name}`]);
-          if (deleteImg.error) {
-            return { data: null, error };
-          }
-        });
-      }
-      return { data: true, error: null };
-    };
-    log({ type: "confirm", confirmCallback: deleteApp });
-  } catch (error) {
-    log({ type: "error", content: error });
-  }
+  log({ 
+    type: "confirm", 
+    confirmCallback: deleteApp 
+  });
 };
