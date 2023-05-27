@@ -129,7 +129,7 @@ function App() {
       dispatch({
         type: "MENUSHOW",
         payload: data,
-      });   
+      });
     }
   };
 
@@ -139,25 +139,22 @@ function App() {
     dispatch({ type: "WALLBOOTED" });
   };
 
-
   const updateApp = async () => {
-    const {data,error} = await supabase
+    const { data, error } = await supabase
       .from("user_profile")
-      .select("metadata->installed_app")
-    if (error != null) 
-      throw error
+      .select("metadata->installed_app");
+    if (error != null) throw error;
 
-
-    const apps = data.at(0).installed_app ?? []
-    apps.forEach(val => {
+    const apps = data.at(0).installed_app ?? [];
+    apps.forEach((val) => {
       store.dispatch({ type: "DESKADD", payload: val });
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (!window.onstart) {
       loadSettings();
-      updateApp()
+      updateApp();
       window.onstart = setTimeout(() => {
         // console.log("prematurely loading ( ﾉ ﾟｰﾟ)ﾉ");
         dispatch({ type: "WALLBOOTED" });
@@ -168,7 +165,7 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error !== null) {
-      throw(error);
+      throw error;
     }
     dispatch({ type: "ADD_USER", payload: data.user });
   }, [dispatch]);

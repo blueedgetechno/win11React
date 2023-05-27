@@ -134,28 +134,27 @@ export const installApp = async (appInput) => {
 
   //update to user metdata
   try {
-    const {data,error} = await supabase
+    const { data, error } = await supabase
       .from("user_profile")
-      .select("id,metadata->installed_app,metadata")
-    if (error != null) 
-      throw error
+      .select("id,metadata->installed_app,metadata");
+    if (error != null) throw error;
 
-    console.log(data)
+    console.log(data);
 
     store.dispatch({ type: "DESKADD", payload: newApp });
 
-    const apps = data.at(0).installed_app ?? []
-    apps.push(newApp)
+    const apps = data.at(0).installed_app ?? [];
+    apps.push(newApp);
     const updateResult = await supabase
       .from("user_profile")
       .update({
         metadata: {
           ...data.at(0).metadata,
-          installed_app: apps
-        }
-      }).eq("id",data.at(0)?.id)
-    if (updateResult.error != null) 
-      throw updateResult.error.message
+          installed_app: apps,
+        },
+      })
+      .eq("id", data.at(0)?.id);
+    if (updateResult.error != null) throw updateResult.error.message;
   } catch (error) {
     log({ type: "error", content: error });
   }
@@ -206,7 +205,7 @@ export const deleteExternalApp = async (appId) => {
 
     oldUserMetaData.apps = newListAppMetadata;
     const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
-    if (error) throw(error);
+    if (error) throw error;
   } catch (error) {
     log({ type: "error", content: error });
   }
@@ -327,7 +326,7 @@ export const handleLogOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
     logging.error();
-    throw(error);
+    throw error;
   }
   logging.close();
   store.dispatch({ type: "DELETE_USER" });
@@ -464,25 +463,20 @@ export const connectWorkerSession = (itemId) => {
 // For admin
 
 export const handleDeleteApp = async (app) => {
-  if (!isAdmin()) 
-    return;
-  
+  if (!isAdmin()) return;
+
   const { id } = app;
   const deleteApp = async () => {
-    const {data,error} = await supabase
-      .from("store")
-      .delete()
-      .eq("id", id);
+    const { data, error } = await supabase.from("store").delete().eq("id", id);
 
-    if (error) 
-      return { error: `fail to delete app ${error.message}`}
-    
-    return {error : null}
+    if (error) return { error: `fail to delete app ${error.message}` };
+
+    return { error: null };
   };
 
-  await log({ 
+  await log({
     error: null,
-    type: "confirm", 
-    confirmCallback: deleteApp 
+    type: "confirm",
+    confirmCallback: deleteApp,
   });
 };

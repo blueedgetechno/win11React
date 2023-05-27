@@ -43,11 +43,10 @@ export const log = async ({
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: confirmButtonText ?? "Yes, do it!",
-      })
+      });
 
-      if (!result.isConfirmed) 
-        break
-      
+      if (!result.isConfirmed) break;
+
       const { error } = await confirmCallback();
       if (error) {
         await Swal.fire({

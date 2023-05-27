@@ -320,7 +320,7 @@ const ContentArea = ({ searchtxt }) => {
     const fetchProfile = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (error !== null) {
-        throw(error);
+        throw error;
       }
 
       setuserInfo({

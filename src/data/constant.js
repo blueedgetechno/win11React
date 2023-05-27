@@ -13,4 +13,3 @@ export const externalLink = {
   DISCORD_LINK: "https://discord.gg/mYk7HxFh",
   MAILTO_ADDRESS: "mailto:huyhoangdo0205@gmail.com",
 };
-
