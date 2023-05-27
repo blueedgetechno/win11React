@@ -33,8 +33,9 @@ const ModalEditOrInsert = (props) => {
 
 
 
+
     const rand = crypto.randomUUID()
-    const randPath = `store/${title}/${rand}`
+    const randPath = `store/${appData.title}/${rand}`
 
     const uploadScreenShoot = await supabase.storage
       .from("test")
@@ -49,7 +50,8 @@ const ModalEditOrInsert = (props) => {
       throw(getScreenshootURL.error);
 
     const screenshoots = formData.screenshoots
-    screenshoots.push(getScreenshootURL)
+    screenshoots.push(getScreenshootURL.data.publicUrl)
+    console.log(screenshoots)
 
 
     setFormData((prev) => ({
@@ -58,16 +60,30 @@ const ModalEditOrInsert = (props) => {
     }));
   }
 
-  function handleLogoSelect(event) {
-    if (event.target.files.length < 1) return;
+  async function handleLogoSelect(event) {
+    if (event.target.files.length < 1) 
+      return;
+
+    const logoPath = `store/${appData.title}/logo`
 
     const newFiles = Array.from(event.target.files);
-    newFiles[0].link = URL.createObjectURL(newFiles[0]);
-    setLogoFile(...newFiles);
+    const uploadLogo = await supabase.storage
+      .from("test")
+      .upload(logoPath, URL.createObjectURL(newFiles[0]),{
+        upsert : true
+      });
+    if (uploadLogo.error) 
+      throw (uploadLogo.error);
+    
+    const getLogoID = await supabase.storage
+      .from("test")
+      .getPublicUrl(logoPath);
+    if (getLogoID.error) 
+      throw(getLogoID.error);
 
     setFormData((prev) => ({
       ...prev,
-      icon: newFiles.at(0)
+      icon: getLogoID.data.publicUrl
     }));
   }
 
@@ -131,30 +147,15 @@ const ModalEditOrInsert = (props) => {
         metadata : {
           description : description
         }
-      })
-      .eq("id", id);
-    if (requestDb.error) {
-      throw(requestDb.error);
-    }
+      }) .eq("id", id);
+
+    if (requestDb.error) 
+      throw (requestDb.error);
   }
+
 
   async function handleInsertApp(newData) {
     const { title, description, type } = newData;
-    const logoPath = `store/${title}/logo`
-
-    const uploadLogo = await supabase.storage
-      .from("test")
-      .upload(logoPath, logoFile,{
-        upsert : true
-      });
-    if (uploadLogo.error) 
-      throw (uploadLogo.error);
-    
-    const getLogoID = await supabase.storage
-      .from("test")
-      .getPublicUrl(logoPath);
-    if (getLogoID.error) 
-      throw(getLogoID.error);
 
 
     const Screenshoots = []
@@ -261,7 +262,7 @@ const ModalEditOrInsert = (props) => {
         name="type"
         className="select select-bordered w-full max-w-xs"
       >
-        <option disabled selected>
+        <option disabled defaultValue={true}>
           Type?
         </option>
         <option value={"APP"}>app</option>
@@ -296,7 +297,7 @@ const ModalEditOrInsert = (props) => {
           className="block text-gray-700 font-medium mb-2"
           htmlFor="screenshoot"
         >
-          Screen shot
+          Screenshoots
         </label>
         <input
           onChange={handleFileSelect}
@@ -325,9 +326,9 @@ const ModalEditOrInsert = (props) => {
                   key={Math.random()}
                   className="mr-2 rounded"
                   h={250}
+                  absolute={true}
                   src={file}
                   ext
-                  err="file.link"
                 />
               </div>
             ))}
