@@ -57,35 +57,6 @@ export const DesktopApp = () => {
       locate: navigator?.language ?? "",
     });
   }, []);
-  const handleOpen = (event) => {
-    const action = {
-      type: event.currentTarget.dataset.action,
-      payload: event.currentTarget.dataset.payload,
-    };
-
-    if (action.type === "EXTERNAL_APP") {
-      console.log(" TODO index.jsx")
-      Actions.openExternalApp();
-    } else {
-      dispatch(action);
-    }
-    //track
-    try {
-      const iconName = event.currentTarget.dataset.name;
-      const eventName = `click icon ${iconName}`;
-      AnalyticTrack(eventName, {
-        name: iconName,
-        timestamp: new Date(),
-        metadata: {},
-      });
-
-      useAnalyticsEventTracker({
-        category: "Track call",
-        eventName,
-        value: iconName,
-      });
-    } catch (error) {}
-  };
   return (
     <div className="desktopCont">
       {!deskApps.hide &&
@@ -96,7 +67,6 @@ export const DesktopApp = () => {
               key={i}
               className="dskApp prtclk"
               tabIndex={0}
-              onClick={handleOpen}
               data-action={app.action}
               data-menu="app"
               data-payload={app.payload || "full"}
