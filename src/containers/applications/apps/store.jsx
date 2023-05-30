@@ -9,7 +9,7 @@ import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import Modal from "../../../components/modal";
 import { combineText } from "../../../utils/combineText";
-import ModalEditOrInsert from "../../../components/admin/modalEditOrInsertApp";
+import ModalEditOrInsert from "../../../components/admin/modal";
 import { isAdmin } from "../../../utils/isAdmin";
 
 const emap = (v) => {

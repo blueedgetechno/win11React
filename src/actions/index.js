@@ -1,18 +1,8 @@
 import axios from "axios";
 import store from "../reducers";
-import { dfApps } from "../utils";
-import { gene_name } from "../utils/apps";
-import {
-  CreateWorkerSession,
-  DeactivateWorkerSession,
-  FetchAuthorizedWorkers,
-} from "../supabase/function";
-import { autoFormatData } from "../utils/formatData";
-import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
-import { isAdmin } from "../utils/isAdmin";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -122,43 +112,7 @@ export const performApp = (act, menu) => {
   }
 };
 
-// Handle app
-export const installApp = async (appInput) => {
-  var newApp = {
-    ...appInput,
-    name: appInput.title,
-    icon: appInput.icon,
-    action: "EXTERNAL_APP",
-    type: "any",
-  };
 
-  //update to user metdata
-  try {
-    const { data, error } = await supabase
-      .from("user_profile")
-      .select("id,metadata->installed_app,metadata");
-    if (error != null) throw error;
-
-    console.log(data);
-
-    store.dispatch({ type: "DESKADD", payload: newApp });
-
-    const apps = data.at(0).installed_app ?? [];
-    apps.push(newApp);
-    const updateResult = await supabase
-      .from("user_profile")
-      .update({
-        metadata: {
-          ...data.at(0).metadata,
-          installed_app: apps,
-        },
-      })
-      .eq("id", data.at(0)?.id);
-    if (updateResult.error != null) throw updateResult.error.message;
-  } catch (error) {
-    log({ type: "error", content: error });
-  }
-};
 
 export const delApp = (act, menu, event) => {
   var data = {
@@ -191,9 +145,6 @@ export const delApp = (act, menu, event) => {
   }
 };
 
-export const openExternalApp = async () => {
-  console.log("open"); // TODO this logic
-};
 export const deleteExternalApp = async (appId) => {
   // delete in db
 
@@ -236,9 +187,9 @@ export const changeTheme = () => {
   var icon = thm == "light" ? "sun" : "moon";
 
   document.body.dataset.theme = thm;
-  store.dispatch({ type: "STNGTHEME", payload: thm });
-  store.dispatch({ type: "PANETHEM", payload: icon });
-  store.dispatch({ type: "WALLSET", payload: thm == "light" ? 0 : 1 });
+  store.dispatch({ type: "STNGTHEME"  , payload: thm });
+  store.dispatch({ type: "PANETHEM"   , payload: icon });
+  store.dispatch({ type: "WALLSET"    , payload: thm == "light" ? 0 : 1 });
 };
 
 const loadWidget = async () => {
@@ -319,7 +270,6 @@ export const handleFileOpen = (id) => {
 };
 
 //USER:
-
 export const handleLogOut = async () => {
   const logging = new Log();
   logging.loading();
@@ -347,136 +297,11 @@ export const handleFileOpenWorker = (id) => {
 
 export const handleOpenModalDetailWorker = (id) => {
   const foundItem = store.getState().worker.data.getId(id);
-  if (!foundItem) return;
-  store.dispatch({ type: "OPEN_MODAL", payload: foundItem.info });
-};
-
-//
-
-//
-export const fetchWorker = async (oldCpath = "Account") => {
-  const cpath = store.getState().worker.cpath ?? "Account";
-  const res = await FetchAuthorizedWorkers();
-  if (res instanceof Error) {
-    return new Error(res);
-  }
-  const dataFormat = autoFormatData(res);
-  store.dispatch({
-    type: "FILEUPDATEWORKER",
-    payload: { data: dataFormat, oldCpath: cpath ?? oldCpath },
+  if (!foundItem) 
+    return;
+  store.dispatch({ 
+    type: "OPEN_MODAL", 
+    payload: foundItem.info 
   });
 };
 
-export const refeshFetchWorker = async () => {
-  log({ type: "loading" });
-  const error = await fetchWorker();
-  if (error instanceof Error) {
-    log({ type: "error", content: error });
-    return;
-  }
-
-  log({ type: "success" });
-};
-
-export const deactiveWorkerSeesion = async (workerId) => {
-  const item = store.getState().worker.data.getId(workerId);
-  if (!item) return;
-  const { worker_session_id, ended } = item.info;
-
-  if (ended || !worker_session_id) return;
-
-  log({ type: "loading" });
-  const res = await DeactivateWorkerSession(worker_session_id);
-  if (res instanceof Error) {
-    log({ type: "error", content: res });
-    return;
-  }
-  const error = await fetchWorker();
-  if (error instanceof Error) {
-    log({ type: "error", content: error });
-    return;
-  }
-
-  log({ type: "success" });
-};
-
-export const createWorkerSession = async (workerId) => {
-  const workerFound = store.getState().worker.data.getId(workerId);
-
-  if (!workerFound) return;
-
-  const { worker_profile_id, media_device, last_check, isActive } =
-    workerFound.info;
-  if (!worker_profile_id || isActive) return;
-
-  log({ type: "loading" });
-
-  const res = await CreateWorkerSession(worker_profile_id, media_device);
-  if (res instanceof Error) {
-    log({ type: "error", content: res });
-    return;
-  }
-  const error = await fetchWorker();
-  if (error instanceof Error) {
-    log({ type: "error", content: error });
-    return;
-  }
-
-  log({ type: "success" });
-};
-
-export const connectWorker = async (workerId) => {
-  const workerFound = store.getState().worker.data.getId(workerId);
-  if (!workerFound) return;
-
-  const sessionUrlFound = workerFound.data.find(
-    (session) => session.info.ended === false
-  )?.info?.remote_url;
-  if (sessionUrlFound) {
-    window.open(sessionUrlFound, "_blank");
-    return;
-  }
-
-  const media_device = workerFound.info.media_device ?? "";
-  log({ type: "loading", title: "Await create a new session" });
-  const res = await CreateWorkerSession(
-    workerFound.info.worker_profile_id,
-    media_device
-  );
-  if (res instanceof Error) {
-    log({ type: "error", title: "Create Worker Session Fail!", content: res });
-    return;
-  }
-
-  log({ type: "close" });
-  window.open(res.url, "_blank");
-};
-
-//TODO: have bug when navigate(-1) after fetch data.
-export const connectWorkerSession = (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
-  if (!item.info.remote_url) return;
-
-  window.open(item.info.remote_url, "_blank");
-};
-
-// For admin
-
-export const handleDeleteApp = async (app) => {
-  if (!isAdmin()) return;
-
-  const { id } = app;
-  const deleteApp = async () => {
-    const { data, error } = await supabase.from("store").delete().eq("id", id);
-
-    if (error) return { error: `fail to delete app ${error.message}` };
-
-    return { error: null };
-  };
-
-  await log({
-    error: null,
-    type: "confirm",
-    confirmCallback: deleteApp,
-  });
-};

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
-import { createClient } from "@supabase/supabase-js";
 import "./back.scss";
 import supabase from "../../supabase/createClient";
 
@@ -113,8 +112,8 @@ export const LockScreen = (props) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `https://thinkmay.net/`,
-        // redirectTo: `http://localhost:3000`,
+        // redirectTo: `https://thinkmay.net/`,
+        redirectTo: `http://localhost:3000`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
