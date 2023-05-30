@@ -1,3 +1,4 @@
+import { openExternalApp } from "../actions";
 import { allApps } from "../utils";
 
 var dev = "";
@@ -65,6 +66,8 @@ const appReducer = (state = defState, action) => {
     return tmpState;
   } else if (action.type == "EXTERNAL") {
     window.open(action.payload, "_blank");
+  } else if (action.type === "EXTERNAL_APP") {
+    openExternalApp();
   } else if (action.type == "OPENTERM") {
     var obj = { ...tmpState["terminal"] };
     obj.dir = action.payload;

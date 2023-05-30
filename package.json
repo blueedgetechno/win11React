@@ -20,6 +20,7 @@
     "@win11react/react-canvas-draw": "1.2.2",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
+    "daisyui": "^2.51.6",
     "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",

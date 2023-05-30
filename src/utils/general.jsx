@@ -53,11 +53,7 @@ export const Icon = (props) => {
     if (action.type === "FUNC") {
       const func = props.func;
       func();
-
-      return;
-    }
-
-    if (action.type) {
+    } else {
       dispatch(action);
     }
     if (props.isTrack) {

@@ -167,20 +167,46 @@ const defState = {
     ],
   ],
 
-  ribbon: [],
-  apprib: [],
-  gamerib: [],
-  movrib: [],
+  vendors: [
+    {
+      images: [
+        "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png?t=2023-05-26T07%3A49%3A34.067Z",
+      ],
+
+      icon: "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png?t=2023-05-26T07%3A49%3A34.067Z",
+
+      type: "vendor",
+
+      metadata: {
+        href: "https://oneplay.in",
+      },
+    },
+    {
+      images: [
+        "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png?t=2023-05-26T07%3A46%3A14.705Z",
+      ],
+
+      icon: "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png?t=2023-05-26T07%3A46%3A14.705Z",
+
+      type: "vendor",
+
+      metadata: {
+        href: "https://oneplay.in",
+      },
+    },
+  ],
+
+  apps: [],
+  games: [],
 };
 
 const globalReducer = (state = defState, action) => {
-  if (action.type === "UPDATEVENDOR") {
-    state.ribbon = action.payload;
-  } else if (action.type === "UPDATEGAME") {
-    state.gamerib = action.payload;
+  if (action.type === "UPDATEGAME") {
+    state.games = action.payload;
   } else if (action.type === "UPDATEAPP") {
-    state.apprib = action.payload;
+    state.apps = action.payload;
   }
+
   return state;
 };
 

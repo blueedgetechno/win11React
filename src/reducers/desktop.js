@@ -16,8 +16,17 @@ const deskReducer = (state = defState, action) => {
       return { ...state, apps: arr };
     case "DESKADD":
       var arr = [...state.apps];
-      arr.push(action.payload);
+      arr.push({
+        ...action.payload,
+        pwa: true,
+      });
       return { ...state, apps: arr };
+    case "DESK_ADD_LIST_APP":
+      var arr = [...state.apps];
+      const listApp = action.payload;
+      return { ...state, apps: [...arr, ...listApp] };
+    case "DESK_APP_UPDATE":
+      return { ...state, apps: action.payload };
     case "DESKHIDE":
       return {
         ...state,

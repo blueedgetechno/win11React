@@ -12,6 +12,7 @@ import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
+import { isAdmin } from "../utils/isAdmin";
 
 export const dispatchAction = (event) => {
   const action = {
@@ -121,19 +122,57 @@ export const performApp = (act, menu) => {
   }
 };
 
-export const delApp = (act, menu) => {
+// Handle app
+export const installApp = async (appInput) => {
+  var newApp = {
+    ...appInput,
+    name: appInput.title,
+    icon: appInput.icon,
+    action: "EXTERNAL_APP",
+    type: "any",
+  };
+
+  //update to user metdata
+  try {
+    const { data, error } = await supabase
+      .from("user_profile")
+      .select("id,metadata->installed_app,metadata");
+    if (error != null) throw error;
+
+    console.log(data);
+
+    store.dispatch({ type: "DESKADD", payload: newApp });
+
+    const apps = data.at(0).installed_app ?? [];
+    apps.push(newApp);
+    const updateResult = await supabase
+      .from("user_profile")
+      .update({
+        metadata: {
+          ...data.at(0).metadata,
+          installed_app: apps,
+        },
+      })
+      .eq("id", data.at(0)?.id);
+    if (updateResult.error != null) throw updateResult.error.message;
+  } catch (error) {
+    log({ type: "error", content: error });
+  }
+};
+
+export const delApp = (act, menu, event) => {
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
   };
-
+  console.log(menu);
   if (act == "delete") {
-    if (data.type) {
+    if (data.type !== "EXTERNAL_APP") {
       var apps = store.getState().apps;
       var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
       if (app) {
         app = apps[app];
-        if (app.pwa == true) {
+        if (app?.pwa == true) {
           store.dispatch({ type: app.action, payload: "close" });
           store.dispatch({ type: "DELAPP", payload: app.icon });
 
@@ -141,26 +180,42 @@ export const delApp = (act, menu) => {
 
           installed = JSON.parse(installed);
           installed = installed.filter((x) => x.icon != app.icon);
-          // TODO install app
 
           store.dispatch({ type: "DESKREM", payload: app.name });
         }
       }
+    } else {
+      const appId = menu.dataset.id;
+      deleteExternalApp(appId);
     }
   }
 };
 
-// TODO install app database
-export const installApp = (data) => {
-  var app = { ...data, type: "app", pwa: true };
+export const openExternalApp = async () => {
+  console.log("open"); // TODO this logic
+};
+export const deleteExternalApp = async (appId) => {
+  // delete in db
 
-  let desk = dfApps.desktop;
-  desk.push(app.name);
+  try {
+    const oldUserMetaData = store.getState().user?.user_metadata;
+    const newListAppMetadata = oldUserMetaData.apps.filter(
+      (app) => app.id != appId
+    );
 
-  app.action = gene_name();
-  store.dispatch({ type: "ADDAPP", payload: app });
-  store.dispatch({ type: "DESKADD", payload: app });
-  store.dispatch({ type: "WNSTORE", payload: "mnmz" });
+    oldUserMetaData.apps = newListAppMetadata;
+    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
+    if (error) throw error;
+  } catch (error) {
+    log({ type: "error", content: error });
+  }
+
+  // delete in state
+  const listApp = store.getState().desktop.apps;
+
+  const newListApp = listApp.filter((app) => app?.id != appId);
+
+  store.dispatch({ type: "DESK_APP_UPDATE", payload: newListApp });
 };
 
 export const getTreeValue = (obj, path) => {
@@ -271,7 +326,7 @@ export const handleLogOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
     logging.error();
-    throw new Error(error);
+    throw error;
   }
   logging.close();
   store.dispatch({ type: "DELETE_USER" });
@@ -290,7 +345,7 @@ export const handleFileOpenWorker = (id) => {
   }
 };
 
-export const handleOpenModal = (id) => {
+export const handleOpenModalDetailWorker = (id) => {
   const foundItem = store.getState().worker.data.getId(id);
   if (!foundItem) return;
   store.dispatch({ type: "OPEN_MODAL", payload: foundItem.info });
@@ -403,4 +458,25 @@ export const connectWorkerSession = (itemId) => {
   if (!item.info.remote_url) return;
 
   window.open(item.info.remote_url, "_blank");
+};
+
+// For admin
+
+export const handleDeleteApp = async (app) => {
+  if (!isAdmin()) return;
+
+  const { id } = app;
+  const deleteApp = async () => {
+    const { data, error } = await supabase.from("store").delete().eq("id", id);
+
+    if (error) return { error: `fail to delete app ${error.message}` };
+
+    return { error: null };
+  };
+
+  await log({
+    error: null,
+    type: "confirm",
+    confirmCallback: deleteApp,
+  });
 };

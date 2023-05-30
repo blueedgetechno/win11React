@@ -7,7 +7,8 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-import { AnalyticIdentify } from "../../lib/segment.js";
+import { AnalyticIdentify, AnalyticTrack } from "../../lib/segment.js";
+import useAnalyticsEventTracker from "../../lib/googleAnalytics";
 
 export * from "./start";
 export * from "./widget";
@@ -62,18 +63,24 @@ export const DesktopApp = () => {
         deskApps.apps.map((app, i) => {
           return (
             // to allow it to be focusable (:focus)
-            <div key={i} className="dskApp" tabIndex={0}>
+            <div
+              key={i}
+              className="dskApp prtclk"
+              tabIndex={0}
+              data-action={app.action}
+              data-menu="app"
+              data-payload={app.payload || "full"}
+              data-id={app.id ?? "null"}
+              data-name={app.name}
+            >
               <Icon
-                click={app.action}
-                className="dskIcon prtclk"
+                className="dskIcon "
+                click={"null"}
                 src={app.icon}
-                payload={app.payload || "full"}
                 pr
                 width={Math.round(deskApps.size * 36)}
-                menu="app"
-                name={app.name}
-                isTrack={true}
               />
+
               <div className="appName">{app.name}</div>
             </div>
           );

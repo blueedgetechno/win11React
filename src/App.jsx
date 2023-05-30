@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
+import store from "./reducers";
 import "./i18nextConf";
 import "./index.css";
 import ReactGA from "react-ga";
@@ -24,6 +25,7 @@ import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import { combineText } from "./utils/combineText";
+import { Image } from "./utils/general";
 
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
@@ -137,9 +139,22 @@ function App() {
     dispatch({ type: "WALLBOOTED" });
   };
 
+  const updateApp = async () => {
+    const { data, error } = await supabase
+      .from("user_profile")
+      .select("metadata->installed_app");
+    if (error != null) throw error;
+
+    const apps = data.at(0).installed_app ?? [];
+    apps.forEach((val) => {
+      store.dispatch({ type: "DESKADD", payload: val });
+    });
+  };
+
   useEffect(() => {
     if (!window.onstart) {
       loadSettings();
+      updateApp();
       window.onstart = setTimeout(() => {
         // console.log("prematurely loading ( ﾉ ﾟｰﾟ)ﾉ");
         dispatch({ type: "WALLBOOTED" });
@@ -150,7 +165,7 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error !== null) {
-      throw new Error(error);
+      throw error;
     }
     dispatch({ type: "ADD_USER", payload: data.user });
   }, [dispatch]);
@@ -158,11 +173,8 @@ function App() {
   useEffect(() => {
     verifyUserInfo();
   }, [verifyUserInfo]);
-  if (!user.email) {
-  }
 
   // GG analytics
-
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
@@ -207,70 +219,9 @@ function App() {
             ) : null
           }
         </div>
-        <ModalInfo />
       </ErrorBoundary>
     </div>
   );
 }
-const ModalInfo = () => {
-  const modalInfo = useSelector((state) => state.modal);
-  const { isOpen, data } = modalInfo;
-  const dispatch = useDispatch();
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-  function closeModal() {
-    dispatch({ type: "CLOSE_MODAL" });
-  }
-
-  const renderData = (data) => {
-    const list = [];
-    for (const key in data) {
-      if (key === "icon" || key === "spid" || key === "menu") {
-        break;
-      }
-      list.push(
-        <div>
-          <span className="font-medium">{data[key] && combineText(key)}</span>:
-          <span> {typeof data[key] !== "object" && data[key]}</span>
-          <div
-            style={{
-              marginLeft: 15,
-            }}
-          >
-            {typeof data[key] == "object" && renderData(data[key])}
-          </div>
-        </div>
-      );
-    }
-
-    return list;
-  };
-  return (
-    <div>
-      <ReactModal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        className="modalContent "
-        overlayClassName="fixed inset-0"
-        //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
-      >
-        <div className="flex flex-col bg-[#eff4f9]">
-          <button
-            className="self-end flex items-center bg-transparent outline-none border-none px-3 py-2 hover:bg-red-500"
-            onClick={closeModal}
-          >
-            <img className="w-[14px]" src="img/icon/ui/close.png" alt="" />
-          </button>
-        </div>
-        <div className="selectText d-flex overflow-scroll min-h-full p-5 pb-9">
-          {renderData(modalInfo.data)}
-        </div>
-      </ReactModal>
-    </div>
-  );
-};
 export default App;
