@@ -158,7 +158,8 @@ export const MicroStore = () => {
             {isAdmin() ? (
               <Icon
                 onClick={insertApp}
-                fafa="faGamepad"
+                ui={true}
+                src={"new"}
               />
             ) : null}
           </div>
@@ -359,14 +360,18 @@ const DetailPage = ({ app, update }) => {
 
     setDown(1);
     setTimeout(() => {
-      setDown(3);
+      setDown(0);
     }, 3000);
 
   };
 
-  useEffect(() => {
-    if (apps[appData.title] != null) setDown(3);
-  }, [dstate]);
+  const handleEdit = () => {
+    dispatch({
+      type: "ADMIN_UPDATE_STORE",
+      payload: appData
+    })
+  };
+
 
   const DeleteButton = () => {
     return (
@@ -390,50 +395,24 @@ const DetailPage = ({ app, update }) => {
   };
 
   const GotoButton = () => {
-    if (appData.type == "vendor") {
-      return (
-        <div className="instbtn mt-12 mb-8 handcr">
-          <a
-            href={appData.metadata.href}
-            target={"_blank"}
-            style={{ color: "white" }}
-          >
-            {" "}
-            Checkout
-          </a>
-        </div>
-      );
-    }
-
     return (
       <div>
-        {dstate == 0 ? (
-          <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
-            {" "}
-            Get{" "}
+        {appData.type == "vendor" 
+        ? <div className="instbtn mt-12 mb-8 handcr">
+            <a
+              href={appData.metadata.href}
+              target={"_blank"}
+              style={{ color: "white" }}
+            >
+              {" "}
+              Checkout
+            </a>
           </div>
-        ) : null}
-        {dstate == 1 ? <div className="downbar mt-12 mb-8"></div> : null}
-        {dstate == 3 ? (
-          <div
-            className="instbtn mt-12 mb-8 handcr"
-            onClick={() => {
-              console.log("Open app");
-            }}
-          >
-            {" "}
-            Open{" "}
-          </div>
-        ) : null}
+        : dstate == 0 
+          ? <div className="instbtn mt-12 mb-8 handcr" onClick={download}> Get </div>
+          : <div className="downbar mt-12 mb-8"></div>}
       </div>
     );
-  };
-
-  const handleEdit = () => {
-    dispatch({
-      type: "ADMIN_UPDATE_STORE",
-      payload: appData
-    })
   };
 
   return (
