@@ -6,14 +6,12 @@ import "./menu.scss";
 
 import {
   handleFileOpenWorker,
-  handleOpenModalDetailWorker
-} from "../../actions";
-import {
+  handleOpenModalDetailWorker,
   createWorkerSession,
   deactiveWorkerSeesion,
   connectWorker,
   connectWorkerSession,
-} from "../../actions/api";
+} from "../../actions/worker";
 
 export const ActMenu = () => {
   const menu = useSelector((state) => state.menus);
@@ -60,24 +58,23 @@ export const ActMenu = () => {
 
     if (!action.type) 
       return
-    
-    if (action.type === "FILEDIRWORKER") {
-      handleFileOpenWorker(event.target.dataset.pid);
-    } else if (action.type === "CREATESESSION") {
-      createWorkerSession(event.target.dataset.pid);
-    } else if (action.type === "DEACTIVATESESSION") {
-      deactiveWorkerSeesion(event.target.dataset.pid);
-    } else if (action.type === "CONNECTWORKER") {
-      connectWorker(event.target.dataset.pid);
-    } else if (action.type === "CONNECTWORKERSESSION") {
-      connectWorkerSession(event.target.dataset.pid);
-    } else if (action.type === "OPEN_MODAL") {
-      handleOpenModalDetailWorker(event.target.dataset.pid);
-    } else if (action.type != action.type.toUpperCase()) {
+    if (action.type === "FILEDIRWORKER") 
+      handleFileOpenWorker(event);
+    else if (action.type === "CREATESESSION") 
+      createWorkerSession(event);
+    else if (action.type === "DEACTIVATESESSION") 
+      deactiveWorkerSeesion(event);
+    else if (action.type === "CONNECTWORKER") 
+      connectWorker(event);
+    else if (action.type === "CONNECTWORKERSESSION") 
+      connectWorkerSession(event);
+    else if (action.type === "VIEW_DETAIL") 
+      handleOpenModalDetailWorker(event);
+    else if (action.type != action.type.toUpperCase()) 
       Actions[action.type](action.payload, menu);
-    } else {
+    else 
       dispatch(action);
-    }
+    
 
     dispatch({ type: "MENUHIDE" });
   };

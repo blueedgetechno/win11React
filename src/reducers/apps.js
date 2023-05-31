@@ -1,4 +1,4 @@
-import { openExternalApp } from "../actions/api";
+import { openExternalApp } from "../actions/worker";
 import { allApps } from "../utils";
 
 var dev = "";

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import {
-  dispatchAction,
-  handleFileOpenWorker,
-} from "../../../actions";
+  defaultDispatch,
+} from "../../../actions/click";
 import {
   fetchWorker,
   refeshFetchWorker,
-} from "../../../actions/api";
+  handleFileOpenWorker,
+} from "../../../actions/worker";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
@@ -21,7 +21,7 @@ const NavTitle = (props) => {
       className="navtitle flex prtclk"
       data-action={props.action}
       data-payload={props.payload}
-      onClick={dispatchAction}
+      onClick={defaultDispatch}
     >
       <Icon
         className="mr-1"
@@ -130,7 +130,7 @@ export const Worker = () => {
         <div key={index++} className="dirCont flex items-center">
           <div
             className="dncont"
-            onClick={dispatchAction}
+            onClick={defaultDispatch}
             tabIndex="-1"
             data-action="FILEDIRWORKER"
             data-payload={curr.id}
@@ -358,7 +358,7 @@ const ContentArea = ({ searchtxt }) => {
 
   const handleDouble = (e) => {
     e.stopPropagation();
-    handleFileOpenWorker(e.target.dataset.id);
+    handleFileOpenWorker(e);
   };
 
   const emptyClick = (e) => {
@@ -383,7 +383,7 @@ const ContentArea = ({ searchtxt }) => {
     }
     return "worker_connect";
   };
-  
+
   return (
     <div
       className="contentarea"
@@ -400,6 +400,7 @@ const ContentArea = ({ searchtxt }) => {
                   key={i}
                   className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                   data-id={item.id}
+                  data-pid={item.id}
                   data-focus={selected == item.id}
                   onClick={handleClick}
                   onDoubleClick={handleDouble}

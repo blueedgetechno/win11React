@@ -1,6 +1,52 @@
 import store from "../reducers";
 import { changeTheme } from "./";
 import supabase from "../supabase/createClient";
+const loadWidget = async () => {
+  var tmpWdgt = {
+      ...store.getState().widpane,
+    },
+    date = new Date();
+
+  // console.log('fetching ON THIS DAY');
+  var wikiurl = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/events";
+  await axios
+    .get(`${wikiurl}/${date.getMonth()}/${date.getDay()}`)
+    .then((res) => res.data)
+    .then((data) => {
+      var event = data.events[Math.floor(Math.random() * data.events.length)];
+      date.setYear(event.year);
+
+      tmpWdgt.data.date = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+
+      tmpWdgt.data.event = event;
+    })
+    .catch((error) => {});
+
+  // console.log('fetching NEWS');
+  await axios
+    .get("https://github.win11react.com/api-cache/news.json")
+    .then((res) => res.data)
+    .then((data) => {
+      var newsList = [];
+      data["articles"].forEach((e) => {
+        e.title = e["title"].split(`-`).slice(0, -1).join(`-`).trim();
+        newsList.push(e);
+      });
+      tmpWdgt.data.news = newsList;
+    })
+    .catch((error) => {});
+
+  store.dispatch({
+    type: "WIDGREST",
+    payload: tmpWdgt,
+  });
+};
+
+
 
 const loadSettings = async () => {
   let sett = JSON.parse("[]"); // TODO setting from database

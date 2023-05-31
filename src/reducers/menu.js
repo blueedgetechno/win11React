@@ -278,7 +278,7 @@ const defState = {
       },
       {
         name: "Detail Info",
-        action: "OPEN_MODAL",
+        action: "VIEW_DETAIL",
         payload: "openmodal",
       },
     ],
@@ -290,7 +290,7 @@ const defState = {
       },
       {
         name: "Detail",
-        action: "OPEN_MODAL",
+        action: "VIEW_DETAIL",
         payload: "openmodal",
       },
     ],
@@ -311,14 +311,14 @@ const defState = {
       },
       {
         name: "Detail",
-        action: "OPEN_MODAL",
+        action: "VIEW_DETAIL",
         payload: "detail",
       },
     ],
     user: [
       {
         name: "Detail",
-        action: "OPEN_MODAL",
+        action: "VIEW_DETAIL",
         payload: "detail",
       },
     ],

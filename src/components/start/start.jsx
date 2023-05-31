@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import supabase from "../../supabase/createClient";
-import { handleLogOut } from "../../actions";
+import { handleLogOut } from "../../actions/click";
 import { AnalyticTrack, analytics } from "../../lib/segment";
 
 export const StartMenu = () => {

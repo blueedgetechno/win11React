@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import { dispatchAction, handleFileOpen } from "../../../actions";
+import { defaultDispatch, handleFileOpen } from "../../../actions/click";
 import "./assets/fileexpo.scss";
 
 const NavTitle = (props) => {
@@ -12,7 +12,7 @@ const NavTitle = (props) => {
       className="navtitle flex prtclk"
       data-action={props.action}
       data-payload={props.payload}
-      onClick={dispatchAction}
+      onClick={defaultDispatch}
     >
       <Icon
         className="mr-1"
@@ -134,7 +134,7 @@ export const Explorer = () => {
         <div key={index++} className="dirCont flex items-center">
           <div
             className="dncont"
-            onClick={dispatchAction}
+            onClick={defaultDispatch}
             tabIndex="-1"
             data-action="FILEDIR"
             data-payload={curr.id}

@@ -8,7 +8,9 @@ const ModalWorkerInfo = (info) => {
         break;
       }
       list.push(
-        <div>
+        <div
+        key={Math.random()}
+        >
           <span className="font-medium">{data[key] && combineText(key)}</span>:
           <span> {typeof data[key] !== "object" && data[key]}</span>
           <div

@@ -4,16 +4,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
 
-export const dispatchAction = (event) => {
-  const action = {
-    type: event.target.dataset.action,
-    payload: event.target.dataset.payload,
-  };
 
-  if (action.type) {
-    store.dispatch(action);
-  }
-};
 
 export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
@@ -115,34 +106,7 @@ export const performApp = (act, menu) => {
 
 
 
-export const delApp = (act, menu, event) => {
-  var data = {
-    type: menu.dataset.action,
-    payload: menu.dataset.payload,
-  };
-  console.log(menu);
-  if (act == "delete") {
-    if (data.type !== "EXTERNAL_APP") {
-      var apps = store.getState().apps;
-      var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
-      if (app) {
-        app = apps[app];
-        if (app?.pwa == true) {
-          store.dispatch({ type: app.action, payload: "close" });
-          store.dispatch({ type: "DELAPP", payload: app.icon });
 
-          let installed = "[]";
-
-          installed = JSON.parse(installed);
-          installed = installed.filter((x) => x.icon != app.icon);
-
-          store.dispatch({ type: "DESKREM", payload: app.name });
-        }
-      }
-    } else {
-    }
-  }
-};
 
 
 export const getTreeValue = (obj, path) => {
@@ -168,98 +132,8 @@ export const changeTheme = () => {
   store.dispatch({ type: "WALLSET"    , payload: thm == "light" ? 0 : 1 });
 };
 
-const loadWidget = async () => {
-  var tmpWdgt = {
-      ...store.getState().widpane,
-    },
-    date = new Date();
-
-  // console.log('fetching ON THIS DAY');
-  var wikiurl = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/events";
-  await axios
-    .get(`${wikiurl}/${date.getMonth()}/${date.getDay()}`)
-    .then((res) => res.data)
-    .then((data) => {
-      var event = data.events[Math.floor(Math.random() * data.events.length)];
-      date.setYear(event.year);
-
-      tmpWdgt.data.date = date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-
-      tmpWdgt.data.event = event;
-    })
-    .catch((error) => {});
-
-  // console.log('fetching NEWS');
-  await axios
-    .get("https://github.win11react.com/api-cache/news.json")
-    .then((res) => res.data)
-    .then((data) => {
-      var newsList = [];
-      data["articles"].forEach((e) => {
-        e.title = e["title"].split(`-`).slice(0, -1).join(`-`).trim();
-        newsList.push(e);
-      });
-      tmpWdgt.data.news = newsList;
-    })
-    .catch((error) => {});
-
-  store.dispatch({
-    type: "WIDGREST",
-    payload: tmpWdgt,
-  });
-};
 
 
-// mostly file explorer
-export const handleFileOpen = (id) => {
-  // handle double click open
-  const item = store.getState().files.data.getId(id);
-  if (item != null) {
-    if (item.type == "folder") {
-      store.dispatch({ type: "FILEDIR", payload: item.id });
-    }
-  }
-};
 
-//USER:
-export const handleLogOut = async () => {
-  const logging = new Log();
-  logging.loading();
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    logging.error();
-    throw error;
-  }
-  logging.close();
-  store.dispatch({ type: "DELETE_USER" });
-  store.dispatch({ type: "WALLALOCK" });
-};
 
-export const handleFileOpenWorker = (id) => {
-  // handle double click open
-  const item = store.getState().worker.data.getId(id);
-  if (item == null) 
-    return
-  else if (item.type == "file") 
-    return
-
-  store.dispatch({ 
-    type: "FILEDIRWORKER", 
-    payload: item.id 
-  });
-};
-
-export const handleOpenModalDetailWorker = (id) => {
-  const foundItem = store.getState().worker.data.getId(id);
-  if (!foundItem) 
-    return;
-  store.dispatch({ 
-    type: "WORKER_PROFILE_MODAL", 
-    payload: foundItem.info 
-  });
-};
 

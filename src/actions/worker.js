@@ -31,14 +31,26 @@ const wrapper = async (func) => {
 }
 
 
+const formatEvent = (event) => {
+  const pid = event.target.dataset.pid
+  const action = {
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload,
+    pid: event.target.dataset.pid,
+    ...store.getState().worker.data.getId(pid)
+  };
 
-export const createWorkerSession = (workerId) => wrapper(async () => {
-  const workerFound = store.getState().worker.data.getId(workerId);
+  console.log(action);
+  return action
+}
 
-  if (!workerFound) 
+export const createWorkerSession = (e) => wrapper(async () => {
+  const worker = formatEvent(e)
+
+  if (!worker) 
     return;
 
-  const { worker_profile_id, media_device, last_check, isActive } = workerFound.info;
+  const { worker_profile_id, media_device, last_check, isActive } = worker.info;
 
   if (!worker_profile_id || isActive) 
     return;
@@ -57,12 +69,12 @@ export const createWorkerSession = (workerId) => wrapper(async () => {
 })
 
 
-export const deactiveWorkerSeesion = (workerId) => wrapper(async () => {
-  const item = store.getState().worker.data.getId(workerId);
-  if (!item) 
+export const deactiveWorkerSeesion = (e) => wrapper(async () => {
+  const worker = formatEvent(e)
+  if (!worker) 
     return;
 
-  const { worker_session_id, ended } = item.info;
+  const { worker_session_id, ended } = worker.info;
 
   if (ended || !worker_session_id) return;
 
@@ -166,7 +178,6 @@ export const openExternalApp = async () => {
 
 
 
-//
 export const fetchWorker = async (oldCpath = "Account") => {
   const cpath = store.getState().worker.cpath ?? "Account";
   const res = await FetchAuthorizedWorkers();
@@ -185,19 +196,20 @@ export const fetchWorker = async (oldCpath = "Account") => {
 
 
 //TODO: have bug when navigate(-1) after fetch data.
-export const connectWorkerSession = (itemId) => {
-  const item = store.getState().worker.data.getId(itemId);
-  if (!item.info.remote_url) return;
+export const connectWorkerSession = (e) => {
+  const worker = formatEvent(e)
+  if (!worker.info.remote_url) return;
 
-  window.open(item.info.remote_url, "_blank");
+  window.open(worker.info.remote_url, "_blank");
 };
 
-export const connectWorker = (workerId) => wrapper(async ()=> {
-  const workerFound = store.getState().worker.data.getId(workerId);
-  if (!workerFound) 
+export const connectWorker = (e) => wrapper(async ()=> {
+  const worker = formatEvent(e)
+
+  if (!worker) 
     return;
 
-  const sessionUrlFound = workerFound.data
+  const sessionUrlFound = worker.data
     .find(session => session.info.ended === false)
     ?.info?.remote_url;
 
@@ -206,14 +218,14 @@ export const connectWorker = (workerId) => wrapper(async ()=> {
     return 'success';
   }
 
-  const media_device = workerFound.info.media_device ?? "";
+  const media_device = worker.info.media_device ?? "";
   log({ 
     type: "loading", 
     title: "Await create a new session" 
   });
 
   const res = await CreateWorkerSession(
-    workerFound.info.worker_profile_id,
+    worker.info.worker_profile_id,
     media_device
   );
 
@@ -242,3 +254,26 @@ export const refeshFetchWorker = () => wrapper(async () => {
 
   return 'success'
 })
+
+export const handleFileOpenWorker = (e) => {
+  const worker = formatEvent(e)
+  if (worker == null) 
+    return
+  else if (worker.type == "file") 
+    return
+
+  store.dispatch({ 
+    type: "FILEDIRWORKER", 
+    payload: worker.id 
+  });
+};
+
+export const handleOpenModalDetailWorker = (e) => {
+  const worker = formatEvent(e)
+  if (!worker) 
+    return;
+  store.dispatch({ 
+    type: "WORKER_PROFILE_MODAL", 
+    payload: worker.info 
+  });
+};
