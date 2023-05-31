@@ -26,38 +26,25 @@ const loadSettings = async () => {
 
 const loadApp = async () => {
 
-  // const updateApp = async () => {
-  //   const { data, error } = await supabase
-  //     .from("user_profile")
-  //     .select("metadata->installed_app");
-  //   if (error != null) throw error;
-
-  //   const apps = data.at(0).installed_app ?? [];
-  //   apps.forEach((val) => {
-  //     store.dispatch({ type: "DESKADD", payload: val });
-  //   });
-  // };
+  const { data, error } = await supabase
+    .from("user_profile")
+    .select("metadata->installed_app");
+  if (error != null) throw error;
 
 
-}
-
-
-const loadUser = async () => {
-      
-  const { data, error } = await supabase.auth.getUser();
-  if (error != null) 
-    throw error;
-
-  store.dispatch({ 
-    type: "ADD_USER", 
-    payload: data.user 
+  const apps = data.at(0).installed_app ?? [];
+  apps.forEach((val) => {
+    store.dispatch({ type: "DESKADD", payload: val });
   });
 }
+
+
+
 
 
 export const preload = async () => {
   await Promise.all([
     loadSettings(),
     loadApp(),
-    loadUser()])
+  ])
 }

@@ -111,6 +111,24 @@ function App() {
     }
   });
 
+  const verifyUserInfo = React.useCallback(async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (error != null) 
+      throw error;
+
+    dispatch({ 
+      type: "ADD_USER", 
+      payload: data.user 
+    });
+  }, [dispatch]);
+
+
+
+
+  useEffect(() => {
+    verifyUserInfo();
+  }, [verifyUserInfo]);
+
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
