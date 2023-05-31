@@ -108,9 +108,7 @@ export const Worker = () => {
   const [cpath, setPath] = useState(files.cpath);
   const [searchtxt, setShText] = useState("");
   const dispatch = useDispatch();
-  const modalInfo = useSelector((state) => state.modal);
 
-  function closeModal() { dispatch({ type: "CLOSE_MODAL" }); }
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
   React.useEffect(() => { fetchWorker() }, []);
@@ -385,6 +383,7 @@ const ContentArea = ({ searchtxt }) => {
     }
     return "worker_connect";
   };
+  
   return (
     <div
       className="contentarea"

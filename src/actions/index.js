@@ -93,6 +93,7 @@ export const performApp = (act, menu) => {
     payload: menu.dataset.payload,
   };
 
+
   if (act == "open") {
     if (data.type) store.dispatch(data);
   } else if (act == "delshort") {
@@ -139,35 +140,10 @@ export const delApp = (act, menu, event) => {
         }
       }
     } else {
-      const appId = menu.dataset.id;
-      deleteExternalApp(appId);
     }
   }
 };
 
-export const deleteExternalApp = async (appId) => {
-  // delete in db
-
-  try {
-    const oldUserMetaData = store.getState().user?.user_metadata;
-    const newListAppMetadata = oldUserMetaData.apps.filter(
-      (app) => app.id != appId
-    );
-
-    oldUserMetaData.apps = newListAppMetadata;
-    const { error } = await supabase.auth.updateUser({ data: oldUserMetaData });
-    if (error) throw error;
-  } catch (error) {
-    log({ type: "error", content: error });
-  }
-
-  // delete in state
-  const listApp = store.getState().desktop.apps;
-
-  const newListApp = listApp.filter((app) => app?.id != appId);
-
-  store.dispatch({ type: "DESK_APP_UPDATE", payload: newListApp });
-};
 
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
@@ -266,13 +242,15 @@ export const handleLogOut = async () => {
 export const handleFileOpenWorker = (id) => {
   // handle double click open
   const item = store.getState().worker.data.getId(id);
-  if (item != null) {
-    if (item.type !== "file") {
-      store.dispatch({ type: "FILEDIRWORKER", payload: item.id });
-    }
+  if (item == null) 
+    return
+  else if (item.type == "file") 
+    return
 
-    //console.log("user");
-  }
+  store.dispatch({ 
+    type: "FILEDIRWORKER", 
+    payload: item.id 
+  });
 };
 
 export const handleOpenModalDetailWorker = (id) => {

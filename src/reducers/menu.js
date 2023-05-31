@@ -310,11 +310,6 @@ const defState = {
         payload: "connect",
       },
       {
-        //   name: "Get remote URL", // TODO
-        //   action: "REMOTEURL",
-        //   payload: "remote",
-        // },
-        // {
         name: "Detail",
         action: "OPEN_MODAL",
         payload: "detail",

@@ -46,7 +46,17 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+
   const dispatch = useDispatch();
+  const handleDouble = (e) => {
+    e.stopPropagation();
+    const action = {
+      type: e.target.dataset.action,
+      payload: e.target.dataset.payload,
+    };
+
+    dispatch(action)
+  };
 
   useEffect(() => {
     AnalyticIdentify(user.email ?? "anoymous", {
@@ -71,6 +81,7 @@ export const DesktopApp = () => {
               data-payload={app.payload || "full"}
               data-id={app.id ?? "null"}
               data-name={app.name}
+              onDoubleClick={handleDouble}
             >
               <Icon
                 className="dskIcon "

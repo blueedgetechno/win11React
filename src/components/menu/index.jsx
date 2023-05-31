@@ -57,26 +57,29 @@ export const ActMenu = () => {
       payload: event.target.dataset.payload,
     };
     // Right click and open file in worker
-    if (action.type) {
-      if (action.type === "FILEDIRWORKER") {
-        handleFileOpenWorker(event.target.dataset.pid);
-      } else if (action.type === "CREATESESSION") {
-        createWorkerSession(event.target.dataset.pid);
-      } else if (action.type === "DEACTIVATESESSION") {
-        deactiveWorkerSeesion(event.target.dataset.pid);
-      } else if (action.type === "CONNECTWORKER") {
-        connectWorker(event.target.dataset.pid);
-      } else if (action.type === "CONNECTWORKERSESSION") {
-        connectWorkerSession(event.target.dataset.pid);
-      } else if (action.type === "OPEN_MODAL") {
-        handleOpenModalDetailWorker(event.target.dataset.pid);
-      } else if (action.type != action.type.toUpperCase()) {
-        Actions[action.type](action.payload, menu);
-      } else {
-        dispatch(action);
-      }
-      dispatch({ type: "MENUHIDE" });
+
+    if (!action.type) 
+      return
+    
+    if (action.type === "FILEDIRWORKER") {
+      handleFileOpenWorker(event.target.dataset.pid);
+    } else if (action.type === "CREATESESSION") {
+      createWorkerSession(event.target.dataset.pid);
+    } else if (action.type === "DEACTIVATESESSION") {
+      deactiveWorkerSeesion(event.target.dataset.pid);
+    } else if (action.type === "CONNECTWORKER") {
+      connectWorker(event.target.dataset.pid);
+    } else if (action.type === "CONNECTWORKERSESSION") {
+      connectWorkerSession(event.target.dataset.pid);
+    } else if (action.type === "OPEN_MODAL") {
+      handleOpenModalDetailWorker(event.target.dataset.pid);
+    } else if (action.type != action.type.toUpperCase()) {
+      Actions[action.type](action.payload, menu);
+    } else {
+      dispatch(action);
     }
+
+    dispatch({ type: "MENUHIDE" });
   };
 
   const menuobj = (data, parentId) => {

@@ -33,8 +33,9 @@ const loadApp = async () => {
 
 
   const apps = data.at(0).installed_app ?? [];
-  apps.forEach((val) => {
-    store.dispatch({ type: "DESKADD", payload: val });
+  store.dispatch({ 
+    type: "DESKADD", 
+    payload: [...apps]
   });
 }
 
