@@ -1,14 +1,16 @@
 const defData = {
-  isOpen: false,
+  type: "disable",
   data: {},
 };
 
 const modalReducer = (state = defData, action) => {
   switch (action.type) {
-    case "OPEN_MODAL":
-      return { isOpen: true, data: action.payload };
+    case "WORKER_PROFILE_MODAL":
+      return { type: "worker_profile", data: action.payload };
+    case "VENDOR_SELECT_MODAL":
+      return { type: "vendor", data: action.payload };
     case "CLOSE_MODAL":
-      return { data: {}, isOpen: false };
+      return { type: "disable", data: {} };
     default:
       return state;
   }

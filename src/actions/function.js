@@ -1,4 +1,4 @@
-import supabase from "../../supabase/createClient";
+import supabase from "../supabase/createClient";
 
 
 const getCredentialHeader = async () => {
@@ -9,6 +9,13 @@ const getCredentialHeader = async () => {
   return { 
     access_token: access_token
   }
+}
+const getUserId = async () => {
+  const {data: {user},error}= await supabase.auth.getUser();
+  if (error != null) 
+    throw new Error("unauthorized")
+    
+  return user?.id
 }
 
 export const FetchAuthorizedWorkers = async () => {
@@ -153,4 +160,20 @@ export const FetchApplicationTemplates = async (id) => {
     hardware: x.hardware_metadata,
     app_template_id: x.id
   }})
+};
+
+export const FetchExternalApps = async () => {
+  const { data, error } = await supabase
+    .functions.invoke( "worker_session_create", {
+      headers: await getCredentialHeader(),
+      method: "POST",
+      body : JSON.stringify({
+        action: "DELETE",
+        storage_id: storage_id,
+      })
+    }
+  );
+  if (error != null) 
+    throw error
+  return data
 };

@@ -109,14 +109,13 @@ export const Worker = () => {
   const dispatch = useDispatch();
   const modalInfo = useSelector((state) => state.modal);
 
-  function closeModal() {
-    dispatch({ type: "CLOSE_MODAL" });
-  }
+  function closeModal() { dispatch({ type: "CLOSE_MODAL" }); }
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-  React.useEffect(() => {
-    fetchWorker();
-  }, []);
+  React.useEffect( fetchWorker , []);
+
+
+
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       dispatch({ type: "FILEPATHWORKER", payload: cpath });
@@ -461,7 +460,7 @@ const ContentArea = ({ searchtxt }) => {
           </>
         }
       </div>
-      {/*<ModalInfo modalIsOpen={modalInfo.isOpen} setModalOpen={()=>{dispatch({type:'CLOSE_MODAL'})}} data={modalInfo.data}/>*/}
+      <ModalInfo modalIsOpen={modalInfo.isOpen} setModalOpen={()=>{dispatch({type:'CLOSE_MODAL'})}} data={modalInfo.data}/>
     </div>
   );
 };

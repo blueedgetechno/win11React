@@ -1,5 +1,3 @@
-import { installApp } from "../actions";
-import store from "../containers/applications/apps/assets/advancedstore.json";
 import { externalLink } from "../data/constant";
 
 export const gene_name = () =>

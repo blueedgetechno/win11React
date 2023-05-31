@@ -168,22 +168,8 @@ export const MicroStore = () => {
         </LazyComponent>
       </div>
       {isAdmin() ? (
-        <Modal
-          isOpen={isModalOpen}
-          closeModal={async () => {
-            await updateStoreContent();
-            setModalOpen(false);
-          }}
-        >
-          <ModalEditOrInsert
-            modalType={"insert"}
-            closeModal={async () => {
-              await updateStoreContent();
-              setModalOpen(false);
-            }}
-          />
-        </Modal>
       ) : null}
+
     </div>
   );
 };

@@ -83,6 +83,7 @@ function App() {
   const user = useSelector((state) => state.user);
   ReactModal.setAppElement("#root");
   // const urlParams = new URLSearchParams(window.location.search);
+  const modalInfo = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -215,6 +216,36 @@ function App() {
                 </div>
                 <Taskbar />
                 <ActMenu />
+                <Modal
+                  isOpen={isModalOpen}
+                  closeModal={async () => {
+                    await updateStoreContent();
+                    setModalOpen(false);
+                  }}
+                >
+                  {
+                    modalInfo.type == 'insert_store' 
+                    ?  (<ModalEditOrInsert
+                        modalType={"insert"}
+                        closeModal={async () => {
+                          await updateStoreContent();
+                          setModalOpen(false);
+                        }}
+                      />)
+                    : modalInfo.type == 'edit_store' 
+                    ?  (<ModalEditOrInsert
+                        modalType={"edit"}
+                        appData={appData}
+                        closeModal={async () => {
+                          setModalAdminOpen(false);
+                          await update();
+                        }}
+                      />)
+                    : modalInfo.type == 'edit_store' 
+                    ? (<ModalWorkerInfo data={modalInfo.data} />)
+                    : null
+                  }
+                </Modal>
               </>
             ) : null
           }
