@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import store from "./reducers";
@@ -24,8 +24,9 @@ import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
-import { combineText } from "./utils/combineText";
-import { Image } from "./utils/general";
+import Modal from "./components/modal";
+import ModalEditOrInsert from "./components/modal/admin";
+import ModalWorkerInfo from "./components/modal/worker";
 
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
@@ -217,32 +218,23 @@ function App() {
                 <Taskbar />
                 <ActMenu />
                 <Modal
-                  isOpen={isModalOpen}
-                  closeModal={async () => {
-                    await updateStoreContent();
-                    setModalOpen(false);
-                  }}
+                  isOpen={modalInfo.type != 'disable'}
                 >
                   {
                     modalInfo.type == 'insert_store' 
                     ?  (<ModalEditOrInsert
                         modalType={"insert"}
-                        closeModal={async () => {
-                          await updateStoreContent();
-                          setModalOpen(false);
-                        }}
+                        appData={modalInfo.data}
                       />)
                     : modalInfo.type == 'edit_store' 
                     ?  (<ModalEditOrInsert
                         modalType={"edit"}
-                        appData={appData}
-                        closeModal={async () => {
-                          setModalAdminOpen(false);
-                          await update();
-                        }}
+                        appData={modalInfo.data}
                       />)
-                    : modalInfo.type == 'edit_store' 
-                    ? (<ModalWorkerInfo data={modalInfo.data} />)
+                    : modalInfo.type == 'view_worker' 
+                    ? (<ModalWorkerInfo 
+                        data={modalInfo.data} 
+                      />)
                     : null
                   }
                 </Modal>

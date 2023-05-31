@@ -6,9 +6,13 @@ const defData = {
 const modalReducer = (state = defData, action) => {
   switch (action.type) {
     case "WORKER_PROFILE_MODAL":
-      return { type: "worker_profile", data: action.payload };
+      return { type: "view_worker", data: action.payload };
     case "VENDOR_SELECT_MODAL":
       return { type: "vendor", data: action.payload };
+    case "ADMIN_UPDATE_STORE":
+      return { type: "edit_store", data: action.payload };
+    case "ADMIN_INSERT_STORE":
+      return { type: "insert_store", data: action.payload };
     case "CLOSE_MODAL":
       return { type: "disable", data: {} };
     default:

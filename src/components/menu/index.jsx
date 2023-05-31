@@ -3,7 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import "./menu.scss";
 
-import * as Actions from "../../actions";
+import {
+  handleFileOpenWorker,
+  handleOpenModalDetailWorker
+} from "../../actions";
+import {
+  createWorkerSession,
+  deactiveWorkerSeesion,
+  connectWorker,
+  connectWorkerSession,
+} from "../../actions/api";
 
 export const ActMenu = () => {
   const menu = useSelector((state) => state.menus);
@@ -49,17 +58,17 @@ export const ActMenu = () => {
     // Right click and open file in worker
     if (action.type) {
       if (action.type === "FILEDIRWORKER") {
-        Actions.handleFileOpenWorker(event.target.dataset.pid);
+        handleFileOpenWorker(event.target.dataset.pid);
       } else if (action.type === "CREATESESSION") {
-        Actions.createWorkerSession(event.target.dataset.pid);
+        createWorkerSession(event.target.dataset.pid);
       } else if (action.type === "DEACTIVATESESSION") {
-        Actions.deactiveWorkerSeesion(event.target.dataset.pid);
+        deactiveWorkerSeesion(event.target.dataset.pid);
       } else if (action.type === "CONNECTWORKER") {
-        Actions.connectWorker(event.target.dataset.pid);
+        connectWorker(event.target.dataset.pid);
       } else if (action.type === "CONNECTWORKERSESSION") {
-        Actions.connectWorkerSession(event.target.dataset.pid);
+        connectWorkerSession(event.target.dataset.pid);
       } else if (action.type === "OPEN_MODAL") {
-        Actions.handleOpenModalDetailWorker(event.target.dataset.pid);
+        handleOpenModalDetailWorker(event.target.dataset.pid);
       } else if (action.type != action.type.toUpperCase()) {
         Actions[action.type](action.payload, menu);
       } else {

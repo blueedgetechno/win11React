@@ -1,7 +1,15 @@
 import ReactModal from "react-modal";
+import { useDispatch } from "react-redux";
 
 const Modal = (props) => {
-  const { isOpen, closeModal } = props;
+  const { isOpen } = props;
+
+  const dispatch = useDispatch()
+  const closeModal = () => {
+    dispatch({
+      type: "CLOSE_MODAL"
+    })
+  }
 
   return (
     <div>

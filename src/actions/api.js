@@ -8,6 +8,7 @@ import { isAdmin } from "../utils/isAdmin";
 import supabase from "../supabase/createClient";
 import store from "../reducers";
 import { log } from "../lib/log";
+import {autoFormatData} from "../utils/formatData"
 
 
 const wrapper = async (func) => {

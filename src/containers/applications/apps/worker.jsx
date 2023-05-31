@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
 import {
   dispatchAction,
-  fetchWorker,
   handleFileOpenWorker,
-  refeshFetchWorker,
 } from "../../../actions";
+import {
+  fetchWorker,
+  refeshFetchWorker,
+} from "../../../actions/api";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
-import Modal from "../../../components/modal";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -112,7 +113,7 @@ export const Worker = () => {
   function closeModal() { dispatch({ type: "CLOSE_MODAL" }); }
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-  React.useEffect( fetchWorker , []);
+  React.useEffect(() => { fetchWorker() }, []);
 
 
 
@@ -265,40 +266,10 @@ export const Worker = () => {
           </div>
         </div>
       </div>
-
-      <Modal isOpen={modalInfo.isOpen} closeModal={closeModal}>
-        <ModalWorkerInfo data={modalInfo.data} />
-      </Modal>
     </div>
   );
 };
-const ModalWorkerInfo = (info) => {
-  const renderDetailWorker = (data) => {
-    const list = [];
-    for (const key in data) {
-      if (key === "icon" || key === "spid" || key === "menu") {
-        break;
-      }
-      list.push(
-        <div>
-          <span className="font-medium">{data[key] && combineText(key)}</span>:
-          <span> {typeof data[key] !== "object" && data[key]}</span>
-          <div
-            style={{
-              marginLeft: 15,
-            }}
-          >
-            {typeof data[key] == "object" && renderDetailWorker(data[key])}
-          </div>
-        </div>
-      );
-    }
 
-    return list;
-  };
-
-  return <>{renderDetailWorker(info)}</>;
-};
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
@@ -460,7 +431,6 @@ const ContentArea = ({ searchtxt }) => {
           </>
         }
       </div>
-      <ModalInfo modalIsOpen={modalInfo.isOpen} setModalOpen={()=>{dispatch({type:'CLOSE_MODAL'})}} data={modalInfo.data}/>
     </div>
   );
 };

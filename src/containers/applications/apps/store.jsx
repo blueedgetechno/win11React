@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
-import { handleDeleteApp, installApp } from "../../../actions";
+import { handleDeleteApp, installApp } from "../../../actions/api";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
-import Modal from "../../../components/modal";
 import { combineText } from "../../../utils/combineText";
-import ModalEditOrInsert from "../../../components/admin/modal";
 import { isAdmin } from "../../../utils/isAdmin";
 
 const emap = (v) => {
@@ -113,6 +111,14 @@ export const MicroStore = () => {
     });
   };
 
+  const dispatch = useDispatch()
+  const insertApp = () => {
+    dispatch({
+      type: "ADMIN_INSERT_STORE",
+      payload: {}
+    })
+  }
+
   return (
     <div
       className="wnstore floatTab dpShad"
@@ -151,9 +157,7 @@ export const MicroStore = () => {
 
             {isAdmin() ? (
               <Icon
-                onClick={() => {
-                  setModalOpen(true);
-                }}
+                onClick={insertApp}
                 fafa="faGamepad"
               />
             ) : null}
@@ -167,9 +171,6 @@ export const MicroStore = () => {
           </div>
         </LazyComponent>
       </div>
-      {isAdmin() ? (
-      ) : null}
-
     </div>
   );
 };
@@ -427,8 +428,12 @@ const DetailPage = ({ app, update }) => {
     );
   };
 
+  const dispatch = useDispatch();
   const handleEdit = () => {
-    setModalAdminOpen(true);
+    dispatch({
+      type: "ADMIN_UPDATE_STORE",
+      payload: appData
+    })
   };
 
   return (
@@ -545,37 +550,6 @@ const DetailPage = ({ app, update }) => {
           </div>
         </div>
       </div>
-      {isAdmin() ? (
-        <Modal
-          isOpen={isModalAdminOpen}
-          closeModal={async () => {
-            setModalAdminOpen(false);
-            await update();
-          }}
-        >
-          <ModalEditOrInsert
-            modalType={"edit"}
-            appData={appData}
-            closeModal={async () => {
-              setModalAdminOpen(false);
-              await update();
-            }}
-          />
-        </Modal>
-      ) : null}
-
-      <Modal
-        isOpen={isModalInstallAppOpen}
-        closeModal={() => {
-          setModalInstallAppOpen(false);
-        }}
-      >
-        <ModalSelectVendor
-          listVendor={arr}
-          appData={appData}
-          handleInstallApp={handleInstallApp}
-        />
-      </Modal>
     </div>
   );
 };
