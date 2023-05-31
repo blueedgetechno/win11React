@@ -300,7 +300,7 @@ export const handleOpenModalDetailWorker = (id) => {
   if (!foundItem) 
     return;
   store.dispatch({ 
-    type: "OPEN_MODAL", 
+    type: "WORKER_PROFILE_MODAL", 
     payload: foundItem.info 
   });
 };

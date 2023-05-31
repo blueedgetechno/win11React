@@ -24,9 +24,7 @@ import * as Drafts from "./containers/applications/draft";
 import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
-import Modal from "./components/modal";
-import ModalEditOrInsert from "./components/modal/admin";
-import ModalWorkerInfo from "./components/modal/worker";
+import Popup from "./components/popup";
 
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
@@ -217,27 +215,7 @@ function App() {
                 </div>
                 <Taskbar />
                 <ActMenu />
-                <Modal
-                  isOpen={modalInfo.type != 'disable'}
-                >
-                  {
-                    modalInfo.type == 'insert_store' 
-                    ?  (<ModalEditOrInsert
-                        modalType={"insert"}
-                        appData={modalInfo.data}
-                      />)
-                    : modalInfo.type == 'edit_store' 
-                    ?  (<ModalEditOrInsert
-                        modalType={"edit"}
-                        appData={modalInfo.data}
-                      />)
-                    : modalInfo.type == 'view_worker' 
-                    ? (<ModalWorkerInfo 
-                        data={modalInfo.data} 
-                      />)
-                    : null
-                  }
-                </Modal>
+                <Popup />
               </>
             ) : null
           }

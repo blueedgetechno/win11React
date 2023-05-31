@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as Actions from "../../actions";
 import { Icon } from "../../utils/general";
 import "./menu.scss";
 

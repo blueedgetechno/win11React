@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import supabase from "../../supabase/createClient";
-import { log } from "../../lib/log";
-import { Image } from "../../utils/general";
+import supabase from "../../../supabase/createClient";
+import { log } from "../../../lib/log";
+import { Image } from "../../../utils/general";
 import { useDispatch } from "react-redux";
 
 const ModalEditOrInsert = (props) => {

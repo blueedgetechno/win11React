@@ -7,8 +7,7 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-import { AnalyticIdentify, AnalyticTrack } from "../../lib/segment.js";
-import useAnalyticsEventTracker from "../../lib/googleAnalytics";
+import { AnalyticIdentify } from "../../lib/segment.js";
 
 export * from "./start";
 export * from "./widget";
