@@ -2,6 +2,7 @@ import Modal from "./modal/index"
 import ModalEditOrInsert from "./modal/admin"
 import ModalWorkerInfo from "./modal/worker"
 import { useSelector } from "react-redux"
+import ModalSelectVendor from "./modal/vendor"
 
 const Popup = (props) => {
     const modalInfo = useSelector((state) => state.modal);
@@ -19,6 +20,10 @@ const Popup = (props) => {
                 ?  (<ModalEditOrInsert
                     modalType={"edit"}
                     appData={modalInfo.data}
+                  />)
+                : modalInfo.type == 'select_vendor' 
+                ?  (<ModalSelectVendor 
+                  storeID={modalInfo.data.storeID}
                   />)
                 : modalInfo.type == 'view_worker' 
                 ? (<ModalWorkerInfo 

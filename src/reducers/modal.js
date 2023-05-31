@@ -8,7 +8,7 @@ const modalReducer = (state = defData, action) => {
     case "WORKER_PROFILE_MODAL":
       return { type: "view_worker", data: action.payload };
     case "VENDOR_SELECT_MODAL":
-      return { type: "vendor", data: action.payload };
+      return { type: "select_vendor", data: action.payload };
     case "ADMIN_UPDATE_STORE":
       return { type: "edit_store", data: action.payload };
     case "ADMIN_INSERT_STORE":
