@@ -237,26 +237,6 @@ const loadWidget = async () => {
   });
 };
 
-export const loadSettings = () => {
-  let sett = JSON.parse("[]"); // TODO setting from database
-
-  if (sett.person == null) {
-    sett = JSON.parse(JSON.stringify(store.getState().setting));
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      sett.person.theme = "dark";
-    }
-  }
-
-  if (sett.person.theme != "light") changeTheme();
-
-  store.dispatch({ type: "SETTLOAD", payload: sett });
-  if (import.meta.env.MODE != "development") {
-    loadWidget();
-  }
-};
 
 // mostly file explorer
 export const handleFileOpen = (id) => {
