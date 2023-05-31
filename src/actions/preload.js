@@ -1,4 +1,8 @@
-const loadSettings = () => {
+import store from "../reducers";
+import { changeTheme } from "./";
+import supabase from "../supabase/createClient";
+
+const loadSettings = async () => {
   let sett = JSON.parse("[]"); // TODO setting from database
 
   if (sett.person == null) {
@@ -11,7 +15,8 @@ const loadSettings = () => {
     }
   }
 
-  if (sett.person.theme != "light") changeTheme();
+  if (sett.person.theme != "light")  
+    changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
   if (import.meta.env.MODE != "development") {
@@ -37,7 +42,22 @@ const loadApp = async () => {
 }
 
 
+const loadUser = async () => {
+      
+  const { data, error } = await supabase.auth.getUser();
+  if (error != null) 
+    throw error;
+
+  store.dispatch({ 
+    type: "ADD_USER", 
+    payload: data.user 
+  });
+}
+
+
 export const preload = async () => {
-    loadSettings();
-    loadApp();
+  await Promise.all([
+    loadSettings(),
+    loadApp(),
+    loadUser()])
 }

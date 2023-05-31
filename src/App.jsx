@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
-import store from "./reducers";
 import "./i18nextConf";
 import "./index.css";
 import ReactGA from "react-ga";
@@ -97,8 +96,11 @@ function App() {
 
   useEffect(() => {
     if (!window.onstart) {
-      preload().then(() => {
+      preload()
+      .then(() => {
         console.log("Loaded")
+      }).catch(err => {
+        console.log(err.message)
       })
 
       window.onstart = setTimeout(() => {
@@ -109,25 +111,6 @@ function App() {
     }
   });
 
-  const verifyUserInfo = React.useCallback(async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error != null) 
-      throw error;
-
-    dispatch({ 
-      type: "ADD_USER", 
-      payload: data.user 
-    });
-  }, [dispatch]);
-
-
-
-
-  useEffect(() => {
-    verifyUserInfo();
-  }, [verifyUserInfo]);
-
-  // GG analytics
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
