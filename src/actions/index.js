@@ -136,4 +136,18 @@ export const changeTheme = () => {
 
 
 
+export const handleLogOut = async () => {
+  const logging = new Log();
+  logging.loading();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) 
+    logging.error();
+  
+  logging.close();
+
+  store.dispatch({ type: "DELETE_USER" });
+  store.dispatch({ type: "WALLALOCK" });
+};
+
 

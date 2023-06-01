@@ -1,6 +1,12 @@
 import store from "../reducers";
 import { changeTheme } from "./";
+
 import supabase from "../supabase/createClient";
+import { FetchAuthorizedWorkers } from "./fetch";
+import {autoFormatData} from "../utils/formatData"
+
+
+
 const loadWidget = async () => {
   var tmpWdgt = {
       ...store.getState().widpane,
@@ -85,13 +91,65 @@ const loadApp = async () => {
   });
 }
 
+export const fetchWorker = async () => {
+  const cpath = store.getState().worker.cpath ?? "Account";
 
+  const res = await FetchAuthorizedWorkers();
+  const dataFormat = autoFormatData(res);
+
+  store.dispatch({
+    type: "FILEUPDATEWORKER",
+    payload: { 
+      data: dataFormat, 
+      oldCpath: cpath ?? oldCpath 
+    },
+  });
+
+};
+
+
+
+export const fetchStore = async () =>{
+  const { data, error } = await supabase
+    .from("store")
+    .select(
+      "id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature"
+    ).in("type", ["GAME", "APP"]);
+  if (error != null) 
+    throw error;
+
+  const content = {
+    games: [],
+    apps: [],
+  };
+
+  for (let index = 0; index < data.length; index++) {
+    const appOrGame = data[index];
+
+    if (appOrGame.type == "GAME") 
+      content.games.push(appOrGame);
+    else if (appOrGame.type == "APP") 
+      content.apps.push(appOrGame);
+  }
+
+  store.dispatch({
+    type: "UPDATEAPP",
+    payload: content.apps,
+  });
+  store.dispatch({
+    type: "UPDATEGAME",
+    payload: content.games,
+  });
+
+}
 
 
 
 export const preload = async () => {
   await Promise.all([
     loadSettings(),
+    fetchWorker(),
+    fetchStore(),
     loadApp(),
   ])
 }

@@ -70,8 +70,8 @@ export const ActMenu = () => {
       connectWorkerSession(event);
     else if (action.type === "VIEW_DETAIL") 
       handleOpenModalDetailWorker(event);
-    else if (action.type != action.type.toUpperCase()) 
-      Actions[action.type](action.payload, menu);
+    // else if (action.type != action.type.toUpperCase()) // TODO
+    //   Actions[action.type](action.payload, menu);
     else 
       dispatch(action);
     

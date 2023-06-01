@@ -5,7 +5,6 @@ import {
   defaultDispatch,
 } from "../../../actions/click";
 import {
-  fetchWorker,
   refeshFetchWorker,
   handleFileOpenWorker,
 } from "../../../actions/worker";
@@ -111,8 +110,6 @@ export const Worker = () => {
 
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-  React.useEffect(() => { fetchWorker() }, []);
-
 
 
   const handleEnter = (e) => {
@@ -475,9 +472,7 @@ const Ribbon = ({}) => {
           <Icon
             src="refresh"
             click={"FUNC"}
-            func={() => {
-              refeshFetchWorker();
-            }}
+            func={ refeshFetchWorker }
             ui
             width={18}
             margin="0 6px"

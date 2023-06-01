@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
-import { handleDeleteApp, installApp } from "../../../actions/worker";
+import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabase/createClient";
 import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
-import { combineText } from "../../../utils/combineText";
 import { isAdmin } from "../../../utils/isAdmin";
+import { fetchStore } from "../../../actions/preload";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -20,44 +20,7 @@ export const MicroStore = () => {
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState({});
-  const [isModalOpen, setModalOpen] = useState(false);
 
-  const updateStoreContent = useCallback(async () => {
-    const { data, error } = await supabase
-      .from("store")
-      .select(
-        "id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature"
-      )
-      .in("type", ["GAME", "APP"]);
-    if (error != null) throw error;
-
-    const content = {
-      games: [],
-      apps: [],
-    };
-
-    for (let index = 0; index < data.length; index++) {
-      const appOrGame = data[index];
-
-      if (appOrGame.type == "GAME") content.games.push(appOrGame);
-      else if (appOrGame.type == "APP") content.apps.push(appOrGame);
-    }
-
-    store.dispatch({
-      type: "UPDATEAPP",
-      payload: content.apps,
-    });
-    store.dispatch({
-      type: "UPDATEGAME",
-      payload: content.games,
-    });
-
-    setPage(0);
-  }, []);
-
-  useEffect(() => {
-    updateStoreContent();
-  }, [updateStoreContent]);
   const totab = (e) => {
     var x = e.target && e.target.dataset.action;
     if (x) {
@@ -166,9 +129,7 @@ export const MicroStore = () => {
 
           <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
-            {page == 2 ? (
-              <DetailPage update={updateStoreContent} app={opapp} />
-            ) : null}
+            {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
       </div>
@@ -340,21 +301,18 @@ const FrontPage = (props) => {
 const stars = 5;
 const reviews = 5000;
 
-const DetailPage = ({ app, update }) => {
-  const [appData, setAppData] = useState(app);
-
+const DetailPage = ({ app }) => {
   const [dstate, setDown] = useState(0);
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
-  const apps = useSelector((state) => state.apps);
   const dispatch = useDispatch()
 
   const download = () => {
     dispatch({
       type: "VENDOR_SELECT_MODAL",
       payload: {
-        storeID: appData.id,
+        storeID: app.id,
       },
     })
 
@@ -368,7 +326,7 @@ const DetailPage = ({ app, update }) => {
   const handleEdit = () => {
     dispatch({
       type: "ADMIN_UPDATE_STORE",
-      payload: appData
+      payload: app
     })
   };
 
@@ -377,8 +335,8 @@ const DetailPage = ({ app, update }) => {
     return (
       <div
         onClick={async () => {
-          await handleDeleteApp(app);
-          await update();
+          await deleteStore(app);
+          await fetchStore();
         }}
       >
         <div className="instbtn mt-1 mb-8 handcr">Delete</div>
@@ -397,10 +355,10 @@ const DetailPage = ({ app, update }) => {
   const GotoButton = () => {
     return (
       <div>
-        {appData.type == "vendor" 
+        {app.type == "vendor" 
         ? <div className="instbtn mt-12 mb-8 handcr">
             <a
-              href={appData.metadata.href}
+              href={app.metadata.href}
               target={"_blank"}
               style={{ color: "white" }}
             >
@@ -422,14 +380,14 @@ const DetailPage = ({ app, update }) => {
           className="rounded"
           ext
           h={100}
-          src={appData?.icon}
+          src={app?.icon}
           err="img/asset/mixdef.jpg"
         />
         <div className="flex flex-col items-center text-center relative">
-          <div className="text-2xl font-semibold mt-6">{appData?.title}</div>
-          <div className="text-xs text-blue-500">{appData?.type}</div>
+          <div className="text-2xl font-semibold mt-6">{app?.title}</div>
+          <div className="text-xs text-blue-500">{app?.type}</div>
           <GotoButton />
-          {isAdmin() && appData.type != "vendor" ? (
+          {isAdmin() && app.type != "vendor" ? (
             <>
               <EditButton />
               <DeleteButton />
@@ -456,7 +414,7 @@ const DetailPage = ({ app, update }) => {
             </div>
           </div>
           <div className="descnt text-xs relative w-0">
-            {appData?.description}
+            {app?.description}
           </div>
         </div>
       </div>
@@ -465,7 +423,7 @@ const DetailPage = ({ app, update }) => {
           <div className="text-xs font-semibold">Screenshots</div>
           <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
-              {appData?.screenshoots?.map((img) => {
+              {app?.screenshoots?.map((img) => {
                 return (
                   <div className="mr-6 relative" key={Math.random()}>
                     <Image
@@ -485,7 +443,7 @@ const DetailPage = ({ app, update }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.description")}</div>
           <div className="text-xs mt-4">
-            <pre>{appData?.description}</pre>
+            <pre>{app?.description}</pre>
           </div>
         </div>
         <div className="briefcont py-2 pb-3">
@@ -525,7 +483,7 @@ const DetailPage = ({ app, update }) => {
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">{t("store.features")}</div>
           <div className="text-xs mt-4">
-            <pre>{appData?.feature}</pre>
+            <pre>{app?.feature}</pre>
           </div>
         </div>
       </div>

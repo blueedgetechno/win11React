@@ -5,8 +5,6 @@ import supabase from "../supabase/createClient";
 
 
 const formatEvent = (event) => {
-
-
   const action = {
     type: event.target.dataset.action,
     payload: event.target.dataset.payload,
@@ -21,17 +19,16 @@ const formatEvent = (event) => {
 
 
 export const defaultDispatch = (event) => {
-  const action = {
-    type: event.target.dataset.action,
-    payload: event.target.dataset.payload,
-  };
+  const action = formatEvent(event);
 
-  if (action.type) {
-    store.dispatch(action);
-  }
+  if (!action.type) 
+    return
+
+  store.dispatch(action);
 };
 
 export const delApp = (act, menu, event) => {
+  console.log(act,menu,event);
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
@@ -62,21 +59,6 @@ export const delApp = (act, menu, event) => {
 
 
 
-
-export const handleLogOut = async () => {
-
-  const logging = new Log();
-  logging.loading();
-
-  const { error } = await supabase.auth.signOut();
-  if (error) 
-    logging.error();
-  
-  logging.close();
-
-  store.dispatch({ type: "DELETE_USER" });
-  store.dispatch({ type: "WALLALOCK" });
-};
 
 
 
