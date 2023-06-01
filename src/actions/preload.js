@@ -2,7 +2,7 @@ import store from "../reducers";
 import { changeTheme } from "./";
 
 import supabase from "../supabase/createClient";
-import { FetchAuthorizedWorkers } from "./fetch";
+import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {autoFormatData} from "../utils/formatData"
 
 
@@ -76,19 +76,15 @@ const loadSettings = async () => {
   }
 };
 
-const loadApp = async () => {
+const fetchApp = async () => {
+  const data = await FetchUserApplication()
 
-  const { data, error } = await supabase
-    .from("user_profile")
-    .select("metadata->installed_app");
-  if (error != null) throw error;
-
-
-  const apps = data.at(0).installed_app.map(x => {
+  const apps = data.tree.data.map(x => {
     return{
-      ...x,
       action: "CLOUDAPP",
-      payload:"test"
+      payload: {
+        ...x.info
+      }
     }
   }) ?? [];
 
@@ -98,6 +94,7 @@ const loadApp = async () => {
   });
 }
 
+// TODO
 export const fetchWorker = async () => {
   const cpath = store.getState().worker.cpath ?? "Account";
 
@@ -157,6 +154,6 @@ export const preload = async () => {
     loadSettings(),
     fetchWorker(),
     fetchStore(),
-    loadApp(),
+    fetchApp(),
   ])
 }

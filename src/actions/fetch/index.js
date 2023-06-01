@@ -30,6 +30,18 @@ export const FetchAuthorizedWorkers = async () => {
     throw error
   return data
 };
+export const FetchUserApplication = async () => {
+  const { data, error } = await supabase
+    .functions.invoke( "user_application_fetch", {
+      headers: await getCredentialHeader(),
+      method: "POST",
+      body: JSON.stringify({}),
+    }
+  );
+  if (error != null) 
+    throw error
+  return data
+};
 
 export const DeactivateWorkerSession = async (worker_session_id) => {
   const { data, error } = await supabase
