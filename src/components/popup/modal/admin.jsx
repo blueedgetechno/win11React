@@ -3,6 +3,7 @@ import supabase from "../../../supabase/createClient";
 import { log } from "../../../lib/log";
 import { Image } from "../../../utils/general";
 import { useDispatch } from "react-redux";
+import { fetchStore } from "../../../actions/preload";
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData } = props;
@@ -147,9 +148,12 @@ const ModalEditOrInsert = (props) => {
       return;
     }
 
-    if (modalType == "insert") await handleInsertApp(formData);
-    else if (modalType == "edit") await handleUpdateApp(formData);
+    if (modalType == "insert") 
+      await handleInsertApp(formData);
+    else if (modalType == "edit") 
+      await handleUpdateApp(formData);
 
+    fetchStore()
     closeModal();
     log({ type: "success" });
   };

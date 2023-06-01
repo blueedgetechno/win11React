@@ -83,7 +83,7 @@ const Dropdown = (props) => {
           icon={props.icon}
           title={props.title}
           isize={props.isize}
-          action={props.action != "" ? props.action || "FILEDIRWORKER" : null}
+          action={props.action}
           payload={fid}
         />
         {props.pinned != null ? (

@@ -1,4 +1,8 @@
 import store from "../reducers";
+import { isAdmin } from "../utils/isAdmin";
+import { log } from "../lib/log";
+import { fetchStore } from "./preload";
+import supabase from "../supabase/createClient";
 
 const wrapper = async (func) => {
   try {
@@ -47,6 +51,8 @@ export const deleteStore = async (app) => {
     type: "confirm",
     confirmCallback: deleteApp,
   });
+
+  fetchStore()
 };
 
 
