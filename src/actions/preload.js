@@ -86,7 +86,14 @@ const fetchApp = async () => {
   if (error != null) throw error;
 
 
-  const apps = data.at(0).installed_app ?? [];
+  const apps = data.at(0).installed_app.map(x => {
+    return{
+      ...x,
+      action: "CLOUDAPP",
+      payload:"test"
+    }
+  }) ?? [];
+
   store.dispatch({ 
     type: "DESKADD", 
     payload: [...apps]

@@ -18,7 +18,7 @@ const deskReducer = (state = defState, action) => {
       return { 
         ...state, 
         apps: [
-          ...state.apps, 
+          ...desktopApps, 
           ...action.payload
         ]
       };

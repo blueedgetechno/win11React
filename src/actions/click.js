@@ -27,35 +27,6 @@ export const defaultDispatch = (event) => {
   store.dispatch(action);
 };
 
-export const delApp = (act, menu, event) => {
-  console.log(act,menu,event);
-  var data = {
-    type: menu.dataset.action,
-    payload: menu.dataset.payload,
-  };
-  console.log(menu);
-  if (act == "delete") {
-    if (data.type !== "EXTERNAL_APP") {
-      var apps = store.getState().apps;
-      var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
-      if (app) {
-        app = apps[app];
-        if (app?.pwa == true) {
-          store.dispatch({ type: app.action, payload: "close" });
-          store.dispatch({ type: "DELAPP", payload: app.icon });
-
-          let installed = "[]";
-
-          installed = JSON.parse(installed);
-          installed = installed.filter((x) => x.icon != app.icon);
-
-          store.dispatch({ type: "DESKREM", payload: app.name });
-        }
-      }
-    } else {
-    }
-  }
-};
 
 
 
