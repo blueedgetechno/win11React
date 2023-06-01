@@ -84,7 +84,6 @@ const loadApp = async () => {
   if (error != null) throw error;
 
 
-  console.log(data)
   const apps = data.at(0).installed_app.map(x => {
     return{
       ...x,
