@@ -62,7 +62,7 @@ export const installApp = (appInput) => wrapper(async () => {
     ...appInput,
     name: appInput.title,
     icon: appInput.icon,
-    action: "EXTERNAL_APP",
+    action: "CLOUDAPP",
     type: "any",
   };
 
@@ -87,9 +87,12 @@ export const installApp = (appInput) => wrapper(async () => {
     throw updateResult.error.message;
 })
 
+export const deleteApp = (appInput) => wrapper(async () => {
+  console.log(`delete ${JSON.stringify(appInput)}`)
+})
 
 // desktop app
-export const openExternalApp = async () => {
-  console.log("open"); // TODO this logic
-};
+export const openApp = async (appInput) => wrapper(async () => {
+  console.log(`open ${JSON.stringify(appInput)}`); // TODO this logic
+})
 

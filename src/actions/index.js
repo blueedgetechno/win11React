@@ -12,6 +12,7 @@ import {
   connectWorkerSession,
   handleOpenModalDetailWorker 
 } from "./worker";
+import { deleteApp, openApp } from "./app";
 
 
 
@@ -93,6 +94,10 @@ export const performApp = (act, menu) => {
     payload: menu.dataset.payload,
   };
 
+  if (menu.dataset.action == "CLOUDAPP") {
+    cloudApp(menu)
+    return
+  }
 
   if (act == "open") {
     if (data.type) store.dispatch(data);
@@ -113,6 +118,28 @@ export const performApp = (act, menu) => {
   }
 };
 
+export const delDefaultApp = () => { // TODO
+}
+
+export const delApp = (event,menu) => {
+  console.log(menu);
+  var data = {
+    type: menu.dataset.action,
+    payload: menu.dataset.payload,
+  };
+
+
+  deleteApp(data)
+};
+
+export const cloudApp = (menu) => {
+  var data = {
+    type: menu.dataset.action,
+    payload: menu.dataset.payload,
+  };
+
+  openApp(data)
+};
 
 
 
