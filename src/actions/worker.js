@@ -41,14 +41,14 @@ const formatEvent = (event) => {
   return action
 }
 
-export const refeshFetchWorker = () => wrapper(async () => {
+export const refeshWorker = () => wrapper(async () => {
   log({ type: "loading" });
 
   await fetchWorker();
   return 'success'
 })
 
-export const createWorkerSession = (e) => wrapper(async () => {
+export const createSession = (e) => wrapper(async () => {
   const worker = formatEvent(e)
 
   if (!worker) 
@@ -72,7 +72,7 @@ export const createWorkerSession = (e) => wrapper(async () => {
 })
 
 
-export const deactiveWorkerSeesion = (e) => wrapper(async () => {
+export const deactiveSession = (e) => wrapper(async () => {
   const worker = formatEvent(e)
   if (!worker) 
     return;
@@ -95,7 +95,7 @@ export const deactiveWorkerSeesion = (e) => wrapper(async () => {
 
 
 //TODO: have bug when navigate(-1) after fetch data.
-export const connectWorkerSession = (e) => wrapper(async ()=> {
+export const connectSession = (e) => wrapper(async ()=> {
   const worker = formatEvent(e)
   if (!worker.info.remote_url) return;
 
@@ -139,7 +139,7 @@ export const connectWorker = (e) => wrapper(async ()=> {
 })
 
 
-export const handleFileOpenWorker = (e) => {
+export const openWorker = (e) => {
   const worker = formatEvent(e)
   if (worker == null) 
     return
@@ -152,7 +152,7 @@ export const handleFileOpenWorker = (e) => {
   });
 };
 
-export const handleOpenModalDetailWorker = (e) => {
+export const viewDetail = (e) => {
   const worker = formatEvent(e)
   if (!worker) 
     return;
