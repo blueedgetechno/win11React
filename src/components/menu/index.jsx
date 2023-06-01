@@ -1,17 +1,9 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import * as Actions from "../../actions";
+import { useSelector } from "react-redux";
+import {menuDispatch} from "../../actions";
 import { Icon } from "../../utils/general";
 import "./menu.scss";
 
-import {
-  handleFileOpenWorker,
-  handleOpenModalDetailWorker,
-  createWorkerSession,
-  deactiveWorkerSeesion,
-  connectWorker,
-  connectWorkerSession,
-} from "../../actions/worker";
 
 export const ActMenu = () => {
   const menu = useSelector((state) => state.menus);
@@ -46,37 +38,9 @@ export const ActMenu = () => {
     };
   });
 
-  const dispatch = useDispatch();
-
   const clickDispatch = (event) => {
     event.stopPropagation();
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
-    // Right click and open file in worker
-
-    if (!action.type) 
-      return
-    if (action.type === "FILEDIRWORKER") 
-      handleFileOpenWorker(event);
-    else if (action.type === "CREATESESSION") 
-      createWorkerSession(event);
-    else if (action.type === "DEACTIVATESESSION") 
-      deactiveWorkerSeesion(event);
-    else if (action.type === "CONNECTWORKER") 
-      connectWorker(event);
-    else if (action.type === "CONNECTWORKERSESSION") 
-      connectWorkerSession(event);
-    else if (action.type === "VIEW_DETAIL") 
-      handleOpenModalDetailWorker(event);
-    // else if (action.type != action.type.toUpperCase()) // TODO
-    //   Actions[action.type](action.payload, menu);
-    else 
-      dispatch(action);
-    
-
-    dispatch({ type: "MENUHIDE" });
+    menuDispatch(event,menu)
   };
 
   const menuobj = (data, parentId) => {

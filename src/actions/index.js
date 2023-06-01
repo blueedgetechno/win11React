@@ -3,6 +3,15 @@ import store from "../reducers";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
+import * as Actions from "."
+import { 
+  handleFileOpenWorker,
+  createWorkerSession,
+  deactiveWorkerSeesion,
+  connectWorker,
+  connectWorkerSession,
+  handleOpenModalDetailWorker 
+} from "./worker";
 
 
 
@@ -151,3 +160,34 @@ export const handleLogOut = async () => {
 };
 
 
+
+
+export const menuDispatch = async (event,menu) => {
+  const type = event.target.dataset.action;
+  const action = {
+      type: event.target.dataset.action,
+      payload: event.target.dataset.payload,
+    }
+  console.log(action)
+
+  if (!type) 
+    return
+  if (type === "FILEDIRWORKER") 
+    handleFileOpenWorker(event);
+  else if (type === "CREATESESSION") 
+    createWorkerSession(event);
+  else if (type === "DEACTIVATESESSION") 
+    deactiveWorkerSeesion(event);
+  else if (type === "CONNECTWORKER") 
+    connectWorker(event);
+  else if (type === "CONNECTWORKERSESSION") 
+    connectWorkerSession(event);
+  else if (type === "VIEW_DETAIL") 
+    handleOpenModalDetailWorker(event);
+  else if (type != type.toUpperCase()) // TODO
+    Actions[action.type](action.payload, menu);
+  else 
+    store.dispatch(action);
+  
+  store.dispatch({ type: "MENUHIDE" });
+};
