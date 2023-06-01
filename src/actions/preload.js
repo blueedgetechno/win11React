@@ -4,6 +4,7 @@ import { changeTheme } from "./";
 import supabase from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {autoFormatData} from "../utils/formatData"
+import axios from "axios";
 
 
 
@@ -14,7 +15,7 @@ const loadWidget = async () => {
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
-  var wikiurl = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/events";
+  var wikiurl = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/vents";
   await axios
     .get(`${wikiurl}/${date.getMonth()}/${date.getDay()}`)
     .then((res) => res.data)
@@ -71,9 +72,6 @@ const loadSettings = async () => {
     changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
-  if (import.meta.env.MODE != "development") {
-    loadWidget();
-  }
 };
 
 const fetchApp = async () => {
@@ -154,6 +152,7 @@ export const preload = async () => {
     loadSettings(),
     fetchWorker(),
     fetchStore(),
+    loadWidget(),
     fetchApp(),
   ])
 }

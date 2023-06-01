@@ -5,12 +5,12 @@ import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
 import * as Actions from "."
 import { 
-  handleFileOpenWorker,
-  createWorkerSession,
-  deactiveWorkerSeesion,
+  openWorker,
+  createSession,
+  deactiveSession,
   connectWorker,
-  connectWorkerSession,
-  handleOpenModalDetailWorker 
+  connectSession,
+  viewDetail 
 } from "./worker";
 import { deleteApp, openApp } from "./app";
 
@@ -200,17 +200,17 @@ export const menuDispatch = async (event,menu) => {
   if (!type) 
     return
   if (type === "FILEDIRWORKER") 
-    handleFileOpenWorker(event);
+    openWorker(event);
   else if (type === "CREATESESSION") 
-    createWorkerSession(event);
+    createSession(event);
   else if (type === "DEACTIVATESESSION") 
-    deactiveWorkerSeesion(event);
+    deactiveSession(event);
   else if (type === "CONNECTWORKER") 
     connectWorker(event);
   else if (type === "CONNECTWORKERSESSION") 
-    connectWorkerSession(event);
+    connectSession(event);
   else if (type === "VIEW_DETAIL") 
-    handleOpenModalDetailWorker(event);
+    viewDetail(event);
   else if (type != type.toUpperCase()) // TODO
     Actions[action.type](action.payload, menu);
   else 

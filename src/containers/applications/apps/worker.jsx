@@ -5,8 +5,8 @@ import {
   defaultDispatch,
 } from "../../../actions/click";
 import {
-  refeshFetchWorker,
-  handleFileOpenWorker,
+  refeshWorker,
+  openWorker,
 } from "../../../actions/worker";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
@@ -355,7 +355,7 @@ const ContentArea = ({ searchtxt }) => {
 
   const handleDouble = (e) => {
     e.stopPropagation();
-    handleFileOpenWorker(e);
+    openWorker(e);
   };
 
   const emptyClick = (e) => {
@@ -472,7 +472,7 @@ const Ribbon = ({}) => {
           <Icon
             src="refresh"
             click={"FUNC"}
-            func={ refeshFetchWorker }
+            func={ refeshWorker }
             ui
             width={18}
             margin="0 6px"
