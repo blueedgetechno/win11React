@@ -3,7 +3,7 @@ import { changeTheme } from "./";
 
 import supabase from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
-import {autoFormatData} from "../utils/formatData"
+import {autoFormatData, formatUserAppData} from "../utils/formatData"
 import axios from "axios";
 
 
@@ -76,15 +76,8 @@ const loadSettings = async () => {
 
 const fetchApp = async () => {
   const data = await FetchUserApplication()
+  const apps = formatUserAppData(data);
 
-  const apps = data.tree.data.map(x => {
-    return{
-      action: "CLOUDAPP",
-      payload: {
-        ...x.info
-      }
-    }
-  }) ?? [];
 
   store.dispatch({ 
     type: "DESKADD", 

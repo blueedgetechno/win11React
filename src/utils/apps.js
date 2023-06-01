@@ -14,8 +14,6 @@ const apps = [
       type: "IFrame",
       url: "https://github1s.com/thinkonmay/thinkshare-v2",
       invert: true,
-      desc: "Visual Studio Code is a free, lightweight, and extensible code editor for building web, desktop, and mobile applications, using any programming language and framework.\nVisual Studio Code has built-in support for Git source control management and powerful integrations with GitHub, an integrated debugger, and smart code completion with IntelliSense and with Al-driven IntelliCode. With over 30,000 extensions and themes in the Visual Studio Code Marketplace, you can customize the features and the look of Visual Studio Code to fit your needs, preferences, and style.\nYou can use Visual Studio Code to build any kind of app, for web, desktop, and mobile. Visual Studio Code supports JavaScript and TypeScript natively and offers extensions for coding in languages such as Python, Java, C/C++, C#, Go, Rust, PHP, and many more.",
-      feat: "Fast, Powerful Editing-Linting, multi-cursor editing, parameter hints, and other powerful editing features.\nOver 30,000 extensions, and growing - Enable additional languages, themes, debuggers, commands, and more. VS Code's growing community shares their secret sauce to improve your workflow.\nBuild any app type, using any programming language and framework, including JavaScript and TypeScript, Python, Java, C/C++, C#, Go, Rust, PHP, and many more, as well as many popular technologies.\nSupport for notebooks including Jupyter, for data science and Al development.\nBuilt-in support for Git source control management and integrations with GitHub for managing issues and pull requests.\nIntelligent Code Completion - IntelliSense and Al-driven IntelliCode offer completions for variables, methods, and imported modules.\nRich Debugging-Print debugging is a thing of the past. Use debugging tools directly in VS Code.\nWrite code from anywhere with the Visual Studio Code Remote extensions and support for GitHub Codespaces.",
     },
     hide: true,
     pwa: true,
@@ -29,11 +27,6 @@ const apps = [
     data: {
       type: "IFrame",
       url: "https://www.programiz.com/python-programming/online-compiler/",
-      gallery: [
-        "https://cdn.programiz.com/cdn/farfuture/IwFGGPqycIxTfzLl7mPdcaqUaircnStXfipaHd4EBik/mtime:1605833048/sites/all/themes/programiz/assets/compiler.png",
-        "https://www.programiz.com/blog/content/images/2020/07/programiz-online-compiler.png",
-      ],
-      desc: "Compile Python",
     },
     hide: true,
     pwa: true,
