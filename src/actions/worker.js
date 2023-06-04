@@ -124,11 +124,10 @@ export const connectWorker = (e) =>
       type: "close",
     });
 
-  window.open(res.url, "_blank");
-  await fetchWorker();
-  return 'success';
-})
-
+    window.open(res.url, "_blank");
+    await fetchWorker();
+    return "success";
+  });
 
 export const openWorker = (e) => {
   const worker = formatEvent(e);
