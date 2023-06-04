@@ -15,12 +15,9 @@ const deskReducer = (state = defState, action) => {
       var arr = state.apps.filter((x) => x.name != action.payload);
       return { ...state, apps: arr };
     case "DESKADD":
-      return { 
-        ...state, 
-        apps: [
-          ...desktopApps, 
-          ...action.payload
-        ]
+      return {
+        ...state,
+        apps: [...desktopApps, ...action.payload],
       };
     case "DESKHIDE":
       return {

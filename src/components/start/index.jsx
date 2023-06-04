@@ -55,7 +55,7 @@ export const DesktopApp = () => {
       payload: e.target.dataset.payload,
     };
 
-    dispatch(action)
+    dispatch(action);
   };
 
   useEffect(() => {

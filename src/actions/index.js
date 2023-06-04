@@ -3,18 +3,16 @@ import store from "../reducers";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
-import * as Actions from "."
-import { 
+import * as Actions from ".";
+import {
   openWorker,
   createSession,
   deactiveSession,
   connectWorker,
   connectSession,
-  viewDetail 
+  viewDetail,
 } from "./worker";
 import { deleteApp, openApp } from "./app";
-
-
 
 export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
@@ -95,8 +93,8 @@ export const performApp = (act, menu) => {
   };
 
   if (menu.dataset.action == "CLOUDAPP") {
-    cloudApp(menu)
-    return
+    cloudApp(menu);
+    return;
   }
 
   if (act == "open") {
@@ -118,18 +116,18 @@ export const performApp = (act, menu) => {
   }
 };
 
-export const delDefaultApp = () => { // TODO
-}
+export const delDefaultApp = () => {
+  // TODO
+};
 
-export const delApp = (event,menu) => {
+export const delApp = (event, menu) => {
   console.log(menu);
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
   };
 
-
-  deleteApp(data)
+  deleteApp(data);
 };
 
 export const cloudApp = (menu) => {
@@ -138,12 +136,8 @@ export const cloudApp = (menu) => {
     payload: menu.dataset.payload,
   };
 
-  openApp(data)
+  openApp(data);
 };
-
-
-
-
 
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
@@ -163,58 +157,43 @@ export const changeTheme = () => {
   var icon = thm == "light" ? "sun" : "moon";
 
   document.body.dataset.theme = thm;
-  store.dispatch({ type: "STNGTHEME"  , payload: thm });
-  store.dispatch({ type: "PANETHEM"   , payload: icon });
-  store.dispatch({ type: "WALLSET"    , payload: thm == "light" ? 0 : 1 });
+  store.dispatch({ type: "STNGTHEME", payload: thm });
+  store.dispatch({ type: "PANETHEM", payload: icon });
+  store.dispatch({ type: "WALLSET", payload: thm == "light" ? 0 : 1 });
 };
-
-
-
-
 
 export const handleLogOut = async () => {
   const logging = new Log();
   logging.loading();
 
   const { error } = await supabase.auth.signOut();
-  if (error) 
-    logging.error();
-  
+  if (error) logging.error();
+
   logging.close();
 
   store.dispatch({ type: "DELETE_USER" });
   store.dispatch({ type: "WALLALOCK" });
 };
 
-
-
-
-export const menuDispatch = async (event,menu) => {
+export const menuDispatch = async (event, menu) => {
   const type = event.target.dataset.action;
   const action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    }
-  console.log(action)
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload,
+  };
+  console.log(action);
 
-  if (!type) 
-    return
-  if (type === "FILEDIRWORKER") 
-    openWorker(event);
-  else if (type === "CREATESESSION") 
-    createSession(event);
-  else if (type === "DEACTIVATESESSION") 
-    deactiveSession(event);
-  else if (type === "CONNECTWORKER") 
-    connectWorker(event);
-  else if (type === "CONNECTWORKERSESSION") 
-    connectSession(event);
-  else if (type === "VIEW_DETAIL") 
-    viewDetail(event);
-  else if (type != type.toUpperCase()) // TODO
+  if (!type) return;
+  if (type === "FILEDIRWORKER") openWorker(event);
+  else if (type === "CREATESESSION") createSession(event);
+  else if (type === "DEACTIVATESESSION") deactiveSession(event);
+  else if (type === "CONNECTWORKER") connectWorker(event);
+  else if (type === "CONNECTWORKERSESSION") connectSession(event);
+  else if (type === "VIEW_DETAIL") viewDetail(event);
+  else if (type != type.toUpperCase())
+    // TODO
     Actions[action.type](action.payload, menu);
-  else 
-    store.dispatch(action);
-  
+  else store.dispatch(action);
+
   store.dispatch({ type: "MENUHIDE" });
 };

@@ -69,5 +69,5 @@ export function autoFormatData(data) {
 // }
 
 export function formatUserAppData(data) {
-  return []
+  return [];
 }

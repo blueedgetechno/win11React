@@ -6,22 +6,18 @@ const ModalSelectVendor = (props) => {
   const [vendors, setVendors] = useState([]);
   const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
-  useEffect(() => {
-
-
-  },[])
+  useEffect(() => {}, []);
 
   const handleInstallApp = () => {
-    console.log(appData)
-  }
+    console.log(appData);
+  };
 
   const handleChooseVendor = (vendorId) => {
     // const vendorFound = listVendor.find((vendor) => vendor.id == vendorId);
     // setVendorChoose(vendorFound);
-  }; 
-
-  const installApp = () => {
   };
+
+  const installApp = () => {};
 
   const renderVendorInfo = (data) => {
     // TODO handle filter
@@ -55,8 +51,6 @@ const ModalSelectVendor = (props) => {
     return list;
   };
 
-
-
   const VendorInfo = (props) => {
     const { vendorInfo, handleChooseVendor, isChoosen } = props;
 
@@ -73,7 +67,6 @@ const ModalSelectVendor = (props) => {
       </div>
     );
   };
-
 
   return (
     <div className="h-full relative">
@@ -101,6 +94,5 @@ const ModalSelectVendor = (props) => {
     </div>
   );
 };
-
 
 export default ModalSelectVendor;

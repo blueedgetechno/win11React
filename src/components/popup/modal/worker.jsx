@@ -8,9 +8,7 @@ const ModalWorkerInfo = (info) => {
         break;
       }
       list.push(
-        <div
-        key={Math.random()}
-        >
+        <div key={Math.random()}>
           <span className="font-medium">{data[key] && combineText(key)}</span>:
           <span> {typeof data[key] !== "object" && data[key]}</span>
           <div
@@ -29,6 +27,5 @@ const ModalWorkerInfo = (info) => {
 
   return <>{renderDetailWorker(info)}</>;
 };
-
 
 export default ModalWorkerInfo;

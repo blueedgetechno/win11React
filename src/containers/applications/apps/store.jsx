@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { deleteStore } from "../../../actions/app";
@@ -74,13 +74,13 @@ export const MicroStore = () => {
     });
   };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const insertApp = () => {
     dispatch({
       type: "ADMIN_INSERT_STORE",
-      payload: {}
-    })
-  }
+      payload: {},
+    });
+  };
 
   return (
     <div
@@ -119,11 +119,7 @@ export const MicroStore = () => {
             />
 
             {isAdmin() ? (
-              <Icon
-                onClick={insertApp}
-                ui={true}
-                src={"new"}
-              />
+              <Icon onClick={insertApp} ui={true} src={"new"} />
             ) : null}
           </div>
 
@@ -306,7 +302,7 @@ const DetailPage = ({ app }) => {
   const { t, i18n } = useTranslation();
 
   // TODO download to desktop
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const download = () => {
     dispatch({
@@ -314,22 +310,20 @@ const DetailPage = ({ app }) => {
       payload: {
         storeID: app.id,
       },
-    })
+    });
 
     setDown(1);
     setTimeout(() => {
       setDown(0);
     }, 3000);
-
   };
 
   const handleEdit = () => {
     dispatch({
       type: "ADMIN_UPDATE_STORE",
-      payload: app
-    })
+      payload: app,
+    });
   };
-
 
   const DeleteButton = () => {
     return (
@@ -355,8 +349,8 @@ const DetailPage = ({ app }) => {
   const GotoButton = () => {
     return (
       <div>
-        {app.type == "vendor" 
-        ? <div className="instbtn mt-12 mb-8 handcr">
+        {app.type == "vendor" ? (
+          <div className="instbtn mt-12 mb-8 handcr">
             <a
               href={app.metadata.href}
               target={"_blank"}
@@ -366,9 +360,14 @@ const DetailPage = ({ app }) => {
               Checkout
             </a>
           </div>
-        : dstate == 0 
-          ? <div className="instbtn mt-12 mb-8 handcr" onClick={download}> Get </div>
-          : <div className="downbar mt-12 mb-8"></div>}
+        ) : dstate == 0 ? (
+          <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
+            {" "}
+            Get{" "}
+          </div>
+        ) : (
+          <div className="downbar mt-12 mb-8"></div>
+        )}
       </div>
     );
   };
@@ -413,9 +412,7 @@ const DetailPage = ({ app }) => {
               <div className="text-xss mt-px pt-1">Ratings</div>
             </div>
           </div>
-          <div className="descnt text-xs relative w-0">
-            {app?.description}
-          </div>
+          <div className="descnt text-xs relative w-0">{app?.description}</div>
         </div>
       </div>
       <div className="growcont flex flex-col">

@@ -2,8 +2,6 @@ import axios from "axios";
 import store from "../reducers";
 import supabase from "../supabase/createClient";
 
-
-
 const formatEvent = (event) => {
   const action = {
     type: event.target.dataset.action,
@@ -13,29 +11,20 @@ const formatEvent = (event) => {
 
   console.log(action);
 
-  return action
-}
-
-
+  return action;
+};
 
 export const defaultDispatch = (event) => {
   const action = formatEvent(event);
 
-  if (!action.type) 
-    return
+  if (!action.type) return;
 
   store.dispatch(action);
 };
 
-
-
-
-
-
-
 // mostly file explorer
 export const handleFileOpen = (e) => {
-  const action = formatEvent(e)
+  const action = formatEvent(e);
 
   // handle double click open
   const item = store.getState().files.data.getId(action.pid);

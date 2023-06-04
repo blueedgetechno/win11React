@@ -6,7 +6,10 @@ import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 import supabase from "../../../supabase/createClient";
 import { AnalyticTrack } from "../../../lib/segment";
-import { KeygenWithCatch, RegisterProxyWithCatch } from "../../../actions/terminal";
+import {
+  KeygenWithCatch,
+  RegisterProxyWithCatch,
+} from "../../../actions/terminal";
 
 export const WnTerminal = () => {
   const wnapp = useSelector((state) => state.apps.terminal);
@@ -256,11 +259,11 @@ export const WnTerminal = () => {
         tmpStack.push(helpArr[i]);
       }
     } else if (type == "vendor" && arg == "keygen") {
-      const result = await KeygenWithCatch()
+      const result = await KeygenWithCatch();
       navigator.clipboard.writeText(result.key);
       tmpStack.push("copied apikey to your clipboard");
     } else if (type == "proxy" && arg == "register") {
-      const result = await RegisterProxyWithCatch()
+      const result = await RegisterProxyWithCatch();
       navigator.clipboard.writeText(JSON.stringify(result));
       tmpStack.push("copied proxy credential to your clipboard");
     } else if (type == "") {

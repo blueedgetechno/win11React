@@ -3,10 +3,8 @@ import { changeTheme } from "./";
 
 import supabase from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
-import {autoFormatData, formatUserAppData} from "../utils/formatData"
+import { autoFormatData, formatUserAppData } from "../utils/formatData";
 import axios from "axios";
-
-
 
 const loadWidget = async () => {
   var tmpWdgt = {
@@ -53,8 +51,6 @@ const loadWidget = async () => {
   });
 };
 
-
-
 const loadSettings = async () => {
   let sett = JSON.parse("[]"); // TODO setting from database
 
@@ -68,22 +64,20 @@ const loadSettings = async () => {
     }
   }
 
-  if (sett.person.theme != "light")  
-    changeTheme();
+  if (sett.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTLOAD", payload: sett });
 };
 
 const fetchApp = async () => {
-  const data = await FetchUserApplication()
+  const data = await FetchUserApplication();
   const apps = formatUserAppData(data);
 
-
-  store.dispatch({ 
-    type: "DESKADD", 
-    payload: [...apps]
+  store.dispatch({
+    type: "DESKADD",
+    payload: [...apps],
   });
-}
+};
 
 // TODO
 export const fetchWorker = async () => {
@@ -94,24 +88,21 @@ export const fetchWorker = async () => {
 
   store.dispatch({
     type: "FILEUPDATEWORKER",
-    payload: { 
-      data: dataFormat, 
-      oldCpath: cpath ?? oldCpath 
+    payload: {
+      data: dataFormat,
+      oldCpath: cpath ?? oldCpath,
     },
   });
-
 };
 
-
-
-export const fetchStore = async () =>{
+export const fetchStore = async () => {
   const { data, error } = await supabase
     .from("store")
     .select(
       "id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature"
-    ).in("type", ["GAME", "APP"]);
-  if (error != null) 
-    throw error;
+    )
+    .in("type", ["GAME", "APP"]);
+  if (error != null) throw error;
 
   const content = {
     games: [],
@@ -121,10 +112,8 @@ export const fetchStore = async () =>{
   for (let index = 0; index < data.length; index++) {
     const appOrGame = data[index];
 
-    if (appOrGame.type == "GAME") 
-      content.games.push(appOrGame);
-    else if (appOrGame.type == "APP") 
-      content.apps.push(appOrGame);
+    if (appOrGame.type == "GAME") content.games.push(appOrGame);
+    else if (appOrGame.type == "APP") content.apps.push(appOrGame);
   }
 
   store.dispatch({
@@ -135,10 +124,7 @@ export const fetchStore = async () =>{
     type: "UPDATEGAME",
     payload: content.games,
   });
-
-}
-
-
+};
 
 export const preload = async () => {
   await Promise.all([
@@ -147,5 +133,5 @@ export const preload = async () => {
     fetchStore(),
     loadWidget(),
     fetchApp(),
-  ])
-}
+  ]);
+};

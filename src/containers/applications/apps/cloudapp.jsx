@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
 import { useTranslation } from "react-i18next";
 import { RemoteDesktopClient } from "../../../../core/src/app";
-import {
-  DeviceSelectionResult,
-} from "../../../../core/src/models/devices.model";
+import { DeviceSelectionResult } from "../../../../core/src/models/devices.model";
 import {
   ConnectionEvent,
   LogConnectionEvent,

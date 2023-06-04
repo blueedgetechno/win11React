@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 const Modal = (props) => {
   const { isOpen } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const closeModal = () => {
     dispatch({
-      type: "CLOSE_MODAL"
-    })
-  }
+      type: "CLOSE_MODAL",
+    });
+  };
 
   return (
     <div>

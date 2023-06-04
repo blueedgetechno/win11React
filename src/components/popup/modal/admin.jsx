@@ -21,12 +21,12 @@ const ModalEditOrInsert = (props) => {
         }
   );
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const closeModal = async () => {
     dispatch({
-      type : "CLOSE_MODAL"
-    })
-  }
+      type: "CLOSE_MODAL",
+    });
+  };
 
   function handleChangeInput(e) {
     const name = e.target.name;
@@ -148,12 +148,10 @@ const ModalEditOrInsert = (props) => {
       return;
     }
 
-    if (modalType == "insert") 
-      await handleInsertApp(formData);
-    else if (modalType == "edit") 
-      await handleUpdateApp(formData);
+    if (modalType == "insert") await handleInsertApp(formData);
+    else if (modalType == "edit") await handleUpdateApp(formData);
 
-    fetchStore()
+    fetchStore();
     closeModal();
     log({ type: "success" });
   };

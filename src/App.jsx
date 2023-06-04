@@ -29,7 +29,6 @@ import { preload } from "./actions/preload";
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
 
-
 function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
@@ -92,20 +91,19 @@ function App() {
     dispatch({ type: "WALLBOOTED" });
   };
 
-
-
   useEffect(() => {
     if (!window.onstart) {
       preload()
-      .then(() => {
-        console.log("Loaded")
-      }).catch(err => {
-        console.log(err.message)
-      })
+        .then(() => {
+          console.log("Loaded");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
 
       window.onstart = setTimeout(() => {
-        dispatch({ 
-          type: "WALLBOOTED" 
+        dispatch({
+          type: "WALLBOOTED",
         });
       }, 5000);
     }
@@ -113,17 +111,13 @@ function App() {
 
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
-    if (error != null) 
-      throw error;
+    if (error != null) throw error;
 
-    dispatch({ 
-      type: "ADD_USER", 
-      payload: data.user 
+    dispatch({
+      type: "ADD_USER",
+      payload: data.user,
     });
   }, [dispatch]);
-
-
-
 
   useEffect(() => {
     verifyUserInfo();
@@ -137,12 +131,11 @@ function App() {
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-        {wall.locked || !user?.id ? ( <LockScreen dir={wall.dir} />) : null}
+        {wall.locked || !user?.id ? <LockScreen dir={wall.dir} /> : null}
 
         <div className="appwrap">
           <Background />
-          { user.id ? (
-
+          {user.id ? (
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />
@@ -170,8 +163,7 @@ function App() {
               <ActMenu />
               <Popup />
             </>
-            ) : null
-          }
+          ) : null}
         </div>
       </ErrorBoundary>
     </div>

@@ -1,9 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {menuDispatch} from "../../actions";
+import { menuDispatch } from "../../actions";
 import { Icon } from "../../utils/general";
 import "./menu.scss";
-
 
 export const ActMenu = () => {
   const menu = useSelector((state) => state.menus);
@@ -40,7 +39,7 @@ export const ActMenu = () => {
 
   const clickDispatch = (event) => {
     event.stopPropagation();
-    menuDispatch(event,menu)
+    menuDispatch(event, menu);
   };
 
   const menuobj = (data, parentId) => {

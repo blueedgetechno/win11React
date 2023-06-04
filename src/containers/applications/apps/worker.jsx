@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar } from "../../../utils/general";
-import {
-  defaultDispatch,
-} from "../../../actions/click";
-import {
-  refeshWorker,
-  openWorker,
-} from "../../../actions/worker";
+import { defaultDispatch } from "../../../actions/click";
+import { refeshWorker, openWorker } from "../../../actions/worker";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
 import supabase from "../../../supabase/createClient";
@@ -110,7 +105,6 @@ export const Worker = () => {
 
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
-
 
   const handleEnter = (e) => {
     if (e.key === "Enter") {
@@ -472,7 +466,7 @@ const Ribbon = ({}) => {
           <Icon
             src="refresh"
             click={"FUNC"}
-            func={ refeshWorker }
+            func={refeshWorker}
             ui
             width={18}
             margin="0 6px"
