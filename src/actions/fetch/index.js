@@ -189,3 +189,36 @@ export const FetchExternalApps = async () => {
     throw error
   return data
 };
+
+export const RegisterProxy = async () => {
+  const body = {
+    public_ip: await (await fetch("https://api64.ipify.org")).text(),
+  };
+
+  const {data,error} = await supabase.functions.invoke("proxy_register", {
+    body: JSON.stringify(body),
+    headers: {
+      access_token: (
+        await supabase.auth.getSession()
+      ).data?.session?.access_token,
+    },
+  });
+  if (error != null) 
+    throw error
+  return data
+}
+
+
+export const Keygen = async ()  => {
+  const {data,error} = await supabase.functions.invoke("user_keygen", {
+    body: JSON.stringify({}),
+    headers: {
+      access_token: (
+        await supabase.auth.getSession()
+      ).data?.session?.access_token,
+    },
+  });
+  if (error != null) 
+    throw error
+  return data
+}
