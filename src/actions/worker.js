@@ -81,6 +81,7 @@ export const deactiveSession = (e) =>
     const res = await DeactivateWorkerSession(worker_session_id);
     if (res instanceof Error) throw res;
 
+    await fetchWorker();
     return "success";
   });
 
@@ -123,9 +124,11 @@ export const connectWorker = (e) =>
       type: "close",
     });
 
-    window.open(res.url, "_blank");
-    return "success";
-  });
+  window.open(res.url, "_blank");
+  await fetchWorker();
+  return 'success';
+})
+
 
 export const openWorker = (e) => {
   const worker = formatEvent(e);
