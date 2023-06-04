@@ -89,6 +89,7 @@ export const deactiveSession = (e) => wrapper(async () => {
   if (res instanceof Error) 
     throw res
 
+  await fetchWorker();
   return 'success'
 })
 
@@ -135,6 +136,7 @@ export const connectWorker = (e) => wrapper(async ()=> {
   });
 
   window.open(res.url, "_blank");
+  await fetchWorker();
   return 'success';
 })
 
