@@ -51,7 +51,7 @@ function App() {
     var actionType = "";
     try {
       actionType = event.target.dataset.action || "";
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
       "--prefix"
@@ -127,13 +127,12 @@ function App() {
   // get params
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const refSource = urlParams.get('ref') ?? null
+  const refSource = urlParams.get("ref") ?? null;
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-    AnalyticTrack(`source ${refSource}`)
+    AnalyticTrack(`source ${refSource}`);
     window.history.replaceState({}, document.title, "/" + "");
   }, []);
-
 
   return (
     <div className="App">
