@@ -97,6 +97,7 @@ export const performApp = (act, menu) => {
   AnalyticTrack(`click app`, {
     name: appName,
     timestamp: new Date(),
+    action: data.type
   });
 
   if (menu.dataset.action == "CLOUDAPP") {
