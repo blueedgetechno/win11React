@@ -82,7 +82,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
 
 export const DownloadApplication = async (app_template_id) => {
   const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
+    "request_application",
     {
       headers: await getCredentialHeader(),
       method: "POST",
@@ -98,7 +98,7 @@ export const DownloadApplication = async (app_template_id) => {
 
 export const StartApplication = async (storage_id) => {
   const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
+    "request_application",
     {
       headers: await getCredentialHeader(),
       method: "POST",
@@ -111,10 +111,25 @@ export const StartApplication = async (storage_id) => {
   if (error != null) throw error;
   return data;
 };
+export const AccessApplication = async (storage_id) => {
+  const { data, error } = await supabase.functions.invoke(
+    "request_application",
+    {
+      headers: await getCredentialHeader(),
+      method: "POST",
+      body: JSON.stringify({
+        action: "ACCESS",
+        storage_id: storage_id,
+      }),
+    }
+  );
+  if (error != null) throw error;
+  return data;
+};
 
 export const DeleteApplication = async (storage_id) => {
   const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
+    "request_application",
     {
       headers: await getCredentialHeader(),
       method: "POST",
@@ -130,7 +145,7 @@ export const DeleteApplication = async (storage_id) => {
 
 export const StopApplication = async (storage_id) => {
   const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
+    "request_application",
     {
       headers: await getCredentialHeader(),
       method: "POST",
@@ -146,46 +161,33 @@ export const StopApplication = async (storage_id) => {
 
 export const FetchApplicationTemplates = async (id) => {
   const session = await supabase.auth.getSession();
-  if (session.error != null) return session.error;
-
-  const store_query = await supabase
-    .from("store")
-    .select("filter->title")
-    .eq("id", id)
-    .limit(1);
-  if (store_query.error) return store_query.error;
-  else if (store_query.data.length == 0) return new Error("invalid store id");
+  if (session.error != null) 
+    return session.error;
 
   const app_template_query = await supabase
     .from("app_template")
-    .select("id,hardware_metadata,pricing_metadata")
-    .ilike("title", `%${store_query.data.at(0)?.title}%`);
-  if (app_template_query.error != null) return app_template_query.error;
+    .select("id,pricing_metadata,resource_id")
+    .eq("store_id", id);
+  if (app_template_query.error != null) 
+    return app_template_query.error;
+
+  const vendor_resource_query = await supabase
+    .from("vendor_resources")
+    .select("id,hardware_metadata")
+    .in("id", app_template_query.data.map(x => x.resource_id));
+  if (vendor_resource_query.error != null) 
+    return vendor_resource_query.error;
 
   return app_template_query.data.map((x) => {
     return {
       pricing: x.pricing_metadata,
-      hardware: x.hardware_metadata,
+      hardware: vendor_resource_query.data.find(y => x.resource_id == y.id)?.hardware_metadata,
       app_template_id: x.id,
     };
   });
 };
 
-export const FetchExternalApps = async () => {
-  const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "DELETE",
-        storage_id: storage_id,
-      }),
-    }
-  );
-  if (error != null) throw error;
-  return data;
-};
+
 
 export const RegisterProxy = async () => {
   const body = {

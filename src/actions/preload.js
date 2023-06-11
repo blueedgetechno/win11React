@@ -3,7 +3,7 @@ import { changeTheme } from "./";
 
 import supabase from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
-import { autoFormatData, formatUserAppData } from "../utils/formatData";
+import { formatWorkerRenderTree, formatAppRenderTree } from "../utils/formatData";
 import axios from "axios";
 
 const loadWidget = async () => {
@@ -71,7 +71,7 @@ const loadSettings = async () => {
 
 const fetchApp = async () => {
   const data = await FetchUserApplication();
-  const apps = formatUserAppData(data);
+  const apps = formatAppRenderTree(data);
 
   store.dispatch({
     type: "DESKADD",
@@ -84,7 +84,7 @@ export const fetchWorker = async () => {
   const cpath = store.getState().worker.cpath ?? "Account";
 
   const res = await FetchAuthorizedWorkers();
-  const dataFormat = autoFormatData(res);
+  const dataFormat = formatWorkerRenderTree(res);
 
   store.dispatch({
     type: "FILEUPDATEWORKER",

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FetchApplicationTemplates } from "../../../actions/fetch";
 import { combineText } from "../../../utils/combineText";
+import { installApp } from "../../../actions/app";
 
 const ModalSelectVendor = (props) => {
   const { storeID } = props;
@@ -19,8 +20,8 @@ const ModalSelectVendor = (props) => {
     setVendorChoose(vendorFound);
   };
 
-  const installApp = () => {
-    console.log(vendorChoosen);
+  const handleInstallApp = () => {
+    installApp(vendorChoosen)
   };
 
   const renderVendorInfo = (data) => {
@@ -89,7 +90,7 @@ const ModalSelectVendor = (props) => {
 
       <button
         className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
-        onClick={installApp}
+        onClick={handleInstallApp}
       >
         {" "} Get{" "}
       </button>

@@ -93,7 +93,7 @@ export const performApp = (act, menu) => {
   };
 
   if (menu.dataset.action == "CLOUDAPP") {
-    cloudApp(menu);
+    openApp(data);
     return;
   }
 
@@ -121,7 +121,6 @@ export const delDefaultApp = () => {
 };
 
 export const delApp = (event, menu) => {
-  console.log(menu);
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
@@ -130,14 +129,6 @@ export const delApp = (event, menu) => {
   deleteApp(data);
 };
 
-export const cloudApp = (menu) => {
-  var data = {
-    type: menu.dataset.action,
-    payload: menu.dataset.payload,
-  };
-
-  openApp(data);
-};
 
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
@@ -190,6 +181,7 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTWORKER") connectWorker(event);
   else if (type === "CONNECTWORKERSESSION") connectSession(event);
   else if (type === "VIEW_DETAIL") viewDetail(event);
+  else if (type === "CLOUDAPP") console.log(event);
   else if (type != type.toUpperCase())
     // TODO
     Actions[action.type](action.payload, menu);
