@@ -161,33 +161,32 @@ export const StopApplication = async (storage_id) => {
 
 export const FetchApplicationTemplates = async (id) => {
   const session = await supabase.auth.getSession();
-  if (session.error != null) 
-    return session.error;
+  if (session.error != null) return session.error;
 
   const app_template_query = await supabase
     .from("app_template")
     .select("id,pricing_metadata,resource_id")
     .eq("store_id", id);
-  if (app_template_query.error != null) 
-    return app_template_query.error;
+  if (app_template_query.error != null) return app_template_query.error;
 
   const vendor_resource_query = await supabase
     .from("vendor_resources")
     .select("id,hardware_metadata")
-    .in("id", app_template_query.data.map(x => x.resource_id));
-  if (vendor_resource_query.error != null) 
-    return vendor_resource_query.error;
+    .in(
+      "id",
+      app_template_query.data.map((x) => x.resource_id)
+    );
+  if (vendor_resource_query.error != null) return vendor_resource_query.error;
 
   return app_template_query.data.map((x) => {
     return {
       pricing: x.pricing_metadata,
-      hardware: vendor_resource_query.data.find(y => x.resource_id == y.id)?.hardware_metadata,
+      hardware: vendor_resource_query.data.find((y) => x.resource_id == y.id)
+        ?.hardware_metadata,
       app_template_id: x.id,
     };
   });
 };
-
-
 
 export const RegisterProxy = async () => {
   const body = {

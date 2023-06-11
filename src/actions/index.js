@@ -129,7 +129,6 @@ export const delApp = (event, menu) => {
   deleteApp(data);
 };
 
-
 export const getTreeValue = (obj, path) => {
   if (path == null) return false;
 

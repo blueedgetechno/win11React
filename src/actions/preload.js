@@ -3,7 +3,10 @@ import { changeTheme } from "./";
 
 import supabase from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
-import { formatWorkerRenderTree, formatAppRenderTree } from "../utils/formatData";
+import {
+  formatWorkerRenderTree,
+  formatAppRenderTree,
+} from "../utils/formatData";
 import axios from "axios";
 
 const loadWidget = async () => {

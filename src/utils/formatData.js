@@ -69,20 +69,20 @@ export function formatWorkerRenderTree(data) {
 // }
 
 export function formatAppRenderTree(data) {
-  return data.tree.data.map(storage => {
-    const info = storage.data.find(x => x.type == "app_template")?.info
-    if (info == undefined || storage.info.desired_state == "DELETED")
-      return
+  return data.tree.data
+    .map((storage) => {
+      const info = storage.data.find((x) => x.type == "app_template")?.info;
+      if (info == undefined || storage.info.desired_state == "DELETED") return;
 
-
-    return {
-      name: `${info.title} ${storage.info.id}`,
-      icon: info.icon,
-      action: "CLOUDAPP",
-      payload : JSON.stringify({
-        storage_id : storage.info.id,
-        additional : info, // TODO
-      }),
-    }
-  }).filter(x => x != undefined);
+      return {
+        name: `${info.title} ${storage.info.id}`,
+        icon: info.icon,
+        action: "CLOUDAPP",
+        payload: JSON.stringify({
+          storage_id: storage.info.id,
+          additional: info, // TODO
+        }),
+      };
+    })
+    .filter((x) => x != undefined);
 }

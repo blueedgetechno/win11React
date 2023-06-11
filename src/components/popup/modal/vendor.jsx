@@ -10,18 +10,20 @@ const ModalSelectVendor = (props) => {
   const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
   useEffect(() => {
-    FetchApplicationTemplates(storeID).then(result => {
-      setVendors(result)
-    })
+    FetchApplicationTemplates(storeID).then((result) => {
+      setVendors(result);
+    });
   }, []);
 
   const handleChooseVendor = (vendorId) => {
-    const vendorFound = vendors.find((vendor) => vendor.app_template_id == vendorId);
+    const vendorFound = vendors.find(
+      (vendor) => vendor.app_template_id == vendorId
+    );
     setVendorChoose(vendorFound);
   };
 
   const handleInstallApp = () => {
-    installApp(vendorChoosen)
+    installApp(vendorChoosen);
   };
 
   const renderVendorInfo = (data) => {
@@ -68,7 +70,7 @@ const ModalSelectVendor = (props) => {
         <h4 className="text-center mb-[8px]">Option</h4>
         {renderVendorInfo({
           ...vendorInfo,
-          app_template_id: undefined
+          app_template_id: undefined,
         })}
       </div>
     );
@@ -82,7 +84,9 @@ const ModalSelectVendor = (props) => {
           <VendorInfo
             key={Math.random()}
             vendorInfo={item}
-            onClick={() => { handleChooseVendor(item.app_template_id); }}
+            onClick={() => {
+              handleChooseVendor(item.app_template_id);
+            }}
             isChoosen={item.app_template_id == vendorChoosen.app_template_id}
           />
         ))}
@@ -92,7 +96,8 @@ const ModalSelectVendor = (props) => {
         className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
         onClick={handleInstallApp}
       >
-        {" "} Get{" "}
+        {" "}
+        Get{" "}
       </button>
     </div>
   );

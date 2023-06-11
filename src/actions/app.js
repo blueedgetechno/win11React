@@ -3,7 +3,11 @@ import { isAdmin } from "../utils/isAdmin";
 import { log } from "../lib/log";
 import { fetchStore } from "./preload";
 import supabase from "../supabase/createClient";
-import { AccessApplication, DeleteApplication, DownloadApplication } from "./fetch";
+import {
+  AccessApplication,
+  DeleteApplication,
+  DownloadApplication,
+} from "./fetch";
 
 const wrapper = async (func) => {
   try {
@@ -45,25 +49,22 @@ export const deleteStore = async (app) => {
   fetchStore();
 };
 
-
-
-
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
-    await DownloadApplication(payload.app_template_id)
+    await DownloadApplication(payload.app_template_id);
   });
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
-    const payload = JSON.parse(appInput.payload)
-    await DeleteApplication(payload.storage_id)
+    const payload = JSON.parse(appInput.payload);
+    await DeleteApplication(payload.storage_id);
   });
 
 // desktop app
 export const openApp = async (appInput) =>
   wrapper(async () => {
-    const payload = JSON.parse(appInput.payload)
-    const result = await AccessApplication(payload.storage_id)
+    const payload = JSON.parse(appInput.payload);
+    const result = await AccessApplication(payload.storage_id);
     window.open(result.url, "_blank");
   });
