@@ -44,35 +44,13 @@ export const deleteStore = async (app) => {
   fetchStore();
 };
 
+
+
+
 // Handle app
 export const installApp = (appInput) =>
   wrapper(async () => {
-    const newApp = {
-      ...appInput,
-      name: appInput.title,
-      icon: appInput.icon,
-      action: "CLOUDAPP",
-      type: "any",
-    };
-
-    //update to user metdata
-    const { data, error } = await supabase
-      .from("user_profile")
-      .select("id,metadata->installed_app,metadata");
-    if (error != null) throw error;
-
-    const apps = data.at(0).installed_app ?? [];
-    apps.push(newApp);
-    const updateResult = await supabase
-      .from("user_profile")
-      .update({
-        metadata: {
-          ...data.at(0).metadata,
-          installed_app: apps,
-        },
-      })
-      .eq("id", data.at(0)?.id);
-    if (updateResult.error != null) throw updateResult.error.message;
+    console.log(`install ${JSON.stringify(appInput)}`);
   });
 
 export const deleteApp = (appInput) =>

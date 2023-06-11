@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
+import { FetchApplicationTemplates } from "../../../actions/fetch";
+import { combineText } from "../../../utils/combineText";
 
 const ModalSelectVendor = (props) => {
-  const { storeId } = props;
+  const { storeID } = props;
 
   const [vendors, setVendors] = useState([]);
   const [vendorChoosen, setVendorChoose] = useState({ id: null });
 
-  useEffect(() => {}, []);
-
-  const handleInstallApp = () => {
-    console.log(appData);
-  };
+  useEffect(() => {
+    FetchApplicationTemplates(storeID).then(result => {
+      setVendors(result)
+    })
+  }, []);
 
   const handleChooseVendor = (vendorId) => {
-    // const vendorFound = listVendor.find((vendor) => vendor.id == vendorId);
-    // setVendorChoose(vendorFound);
+    const vendorFound = vendors.find((vendor) => vendor.app_template_id == vendorId);
+    setVendorChoose(vendorFound);
   };
 
-  const installApp = () => {};
+  const installApp = () => {
+    console.log(vendorChoosen);
+  };
 
   const renderVendorInfo = (data) => {
     // TODO handle filter
@@ -52,18 +56,19 @@ const ModalSelectVendor = (props) => {
   };
 
   const VendorInfo = (props) => {
-    const { vendorInfo, handleChooseVendor, isChoosen } = props;
-
+    const { vendorInfo, isChoosen, onClick } = props;
     let outline = isChoosen ? "2px solid" : "none";
     return (
       <div
         style={{ outline }}
-        onClick={handleChooseVendor}
+        onClick={onClick}
         className="border border-slate-400 border-solid	 rounded-xl p-[8px] cursor-pointer "
       >
-        <h3 className="text-center mb-[8px]">Vendor Name</h3>
-        {/* Render vendor Info. */}
-        {renderVendorInfo(vendorInfo)}
+        <h4 className="text-center mb-[8px]">Option</h4>
+        {renderVendorInfo({
+          ...vendorInfo,
+          app_template_id: undefined
+        })}
       </div>
     );
   };
@@ -75,11 +80,9 @@ const ModalSelectVendor = (props) => {
         {vendors.map((item) => (
           <VendorInfo
             key={Math.random()}
-            handleChooseVendor={() => {
-              handleChooseVendor(item.id);
-            }}
             vendorInfo={item}
-            isChoosen={item.id == vendorChoosen.id}
+            onClick={() => { handleChooseVendor(item.app_template_id); }}
+            isChoosen={item.app_template_id == vendorChoosen.app_template_id}
           />
         ))}
       </div>
@@ -88,8 +91,7 @@ const ModalSelectVendor = (props) => {
         className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
         onClick={installApp}
       >
-        {" "}
-        Get{" "}
+        {" "} Get{" "}
       </button>
     </div>
   );
