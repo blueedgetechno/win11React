@@ -11,7 +11,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@segment/analytics-next": "^1.52.0",
+    "@segment/analytics-next": "^1.53.0",
     "@sentry/react": "^7.54.0",
     "@sentry/tracing": "^7.54.0",
     "@supabase/supabase-js": "^2.24.0",
@@ -37,8 +37,8 @@
     "react-redux": "^8.0.7",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "sass": "^1.62.1",
-    "sweetalert2": "^11.7.10",
+    "sass": "^1.63.3",
+    "sweetalert2": "^11.7.12",
     "translation-check": "^1.0.3"
   },
   "scripts": {
