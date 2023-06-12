@@ -13,6 +13,7 @@ import {
   viewDetail,
 } from "./worker";
 import { deleteApp, openApp } from "./app";
+import { AnalyticTrack } from "../lib/segment";
 
 export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
@@ -91,12 +92,18 @@ export const performApp = (act, menu) => {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
   };
+  // add analytic
+  const appName = menu.dataset.name;
+  AnalyticTrack(`click app`, {
+    name: appName,
+    timestamp: new Date(),
+    action: data.type,
+  });
 
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);
     return;
   }
-
   if (act == "open") {
     if (data.type) store.dispatch(data);
   } else if (act == "delshort") {
@@ -171,7 +178,6 @@ export const menuDispatch = async (event, menu) => {
     type: event.target.dataset.action,
     payload: event.target.dataset.payload,
   };
-  console.log(action);
 
   if (!type) return;
   if (type === "FILEDIRWORKER") openWorker(event);
