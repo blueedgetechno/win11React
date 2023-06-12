@@ -20,7 +20,7 @@ export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
     store.dispatch({ type: "DESKHIDE" });
     setTimeout(() => store.dispatch({ type: "DESKSHOW" }), 100);
-    fetchApp()
+    fetchApp();
   }
 };
 
