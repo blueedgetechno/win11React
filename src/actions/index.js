@@ -14,11 +14,13 @@ import {
 } from "./worker";
 import { deleteApp, openApp } from "./app";
 import { AnalyticTrack } from "../lib/segment";
+import { fetchApp } from "./preload";
 
 export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
     store.dispatch({ type: "DESKHIDE" });
     setTimeout(() => store.dispatch({ type: "DESKSHOW" }), 100);
+    fetchApp()
   }
 };
 
@@ -39,7 +41,7 @@ export const changeIconSize = (size, menu) => {
     tmpMenu.menus.desk[0].opts[2].dot = true;
   }
 
-  refresh("", tmpMenu);
+  // refresh("", tmpMenu);
   store.dispatch({ type: "DESKSIZE", payload: isize });
   store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
@@ -65,7 +67,7 @@ export const changeSort = (sort, menu) => {
     tmpMenu.menus.desk[1].opts[2].dot = true;
   }
 
-  refresh("", tmpMenu);
+  // refresh("", tmpMenu);
   store.dispatch({ type: "DESKSORT", payload: sort });
   store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
