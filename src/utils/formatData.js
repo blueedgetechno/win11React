@@ -71,6 +71,22 @@ export function formatWorkerRenderTree(data) {
 export function formatAppRenderTree(data) {
   return data.tree.data
     .map((storage) => {
+      if (storage.type == "processing_resource") {
+        return {
+          name: `${storage.name}`,
+          icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
+          action: "CLOUDAPP",
+          payload: JSON.stringify({
+            storage_id: null,
+            desired_state: "NOT_READY",
+            additional: {
+            }
+          }),
+        }
+      }
+
+
+
       const info = storage.data.find((x) => x.type == "app_template")?.info;
       if (info == undefined || storage.info.desired_state == "DELETED") return;
 
@@ -80,6 +96,7 @@ export function formatAppRenderTree(data) {
         action: "CLOUDAPP",
         payload: JSON.stringify({
           storage_id: storage.info.id,
+          desired_state: storage.info.desired_state,
           additional: info, // TODO
         }),
       };

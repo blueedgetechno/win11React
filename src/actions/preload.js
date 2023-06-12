@@ -72,7 +72,7 @@ const loadSettings = async () => {
   store.dispatch({ type: "SETTLOAD", payload: sett });
 };
 
-const fetchApp = async () => {
+export const fetchApp = async () => {
   const data = await FetchUserApplication();
   const apps = formatAppRenderTree(data);
 
