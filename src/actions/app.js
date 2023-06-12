@@ -53,14 +53,12 @@ export const deleteStore = async (app) => {
   fetchStore();
 };
 
-
-
 // desktop app
 export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "RUNNING") 
-      throw new Error(`app is not ready yet`)      
+    if (payload.desired_state != "RUNNING")
+      throw new Error(`app is not ready yet`);
 
     const result = await AccessApplication(payload.storage_id);
     window.open(result.url, "_blank");
@@ -70,34 +68,34 @@ export const openApp = async (appInput) =>
 export const installApp = (payload) =>
   wrapper(async () => {
     await DownloadApplication(payload.app_template_id);
-    fetchApp()
+    fetchApp();
   });
 
 // desktop app
 export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "PAUSED") 
-      throw new Error(`app is not ready yet`)      
+    if (payload.desired_state != "PAUSED")
+      throw new Error(`app is not ready yet`);
 
-    await StartApplication(payload.storage_id)
-    fetchApp()
+    await StartApplication(payload.storage_id);
+    fetchApp();
   });
 
 // desktop app
 export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "RUNNING") 
-      throw new Error(`app is not ready yet`)      
+    if (payload.desired_state != "RUNNING")
+      throw new Error(`app is not ready yet`);
 
-    await StopApplication(payload.storage_id)
-    fetchApp()
+    await StopApplication(payload.storage_id);
+    fetchApp();
   });
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
-    fetchApp()
+    fetchApp();
   });

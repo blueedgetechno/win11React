@@ -79,13 +79,10 @@ export function formatAppRenderTree(data) {
           payload: JSON.stringify({
             storage_id: null,
             desired_state: "NOT_READY",
-            additional: {
-            }
+            additional: {},
           }),
-        }
+        };
       }
-
-
 
       const info = storage.data.find((x) => x.type == "app_template")?.info;
       if (info == undefined || storage.info.desired_state == "DELETED") return;
