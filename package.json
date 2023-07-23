@@ -11,8 +11,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@sentry/react": "^7.58.1",
-    "@sentry/tracing": "^7.58.1",
+    "@sentry/react": "^7.60.0",
+    "@sentry/tracing": "^7.60.0",
     "@tauri-apps/api": "^1.4.0",
     "@widgetbot/react-embed": "1.5.0",
     "@win11react/react-canvas-draw": "1.2.2",
@@ -34,7 +34,7 @@
     "react-redux": "^8.1.1",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "sass": "^1.63.6",
+    "sass": "^1.64.1",
     "translation-check": "^1.0.3"
   },
   "scripts": {
@@ -68,7 +68,7 @@
     "@tauri-apps/cli": "^1.4.0",
     "@vitejs/plugin-react": "2.0.0",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.26",
+    "postcss": "^8.4.27",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.3.3",
     "vite": "3.0.4",
