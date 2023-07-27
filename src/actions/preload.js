@@ -99,13 +99,19 @@ export const fetchWorker = async () => {
 };
 
 export const fetchStore = async () => {
-  const { data, error } = await supabase
-    .from("store")
-    .select(
-      "id,title,icon,type,metadata->description,metadata->screenshoots,metadata->feature"
-    )
-    .in("type", ["GAME", "APP"]);
-  if (error != null) throw error;
+  const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA'
+  const resp = await fetch(`https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?select=*`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+        apikey: key,
+      },
+    },
+  );
+  if (error != null) 
+    throw error;
+  const data = await resp.json();
 
   const content = {
     games: [],
