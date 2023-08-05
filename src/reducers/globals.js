@@ -170,10 +170,10 @@ const defState = {
   vendors: [
     {
       images: [
-        "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png?t=2023-05-26T07%3A49%3A34.067Z",
+        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png",
       ],
 
-      icon: "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png?t=2023-05-26T07%3A49%3A34.067Z",
+      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png",
 
       type: "vendor",
 
@@ -183,10 +183,10 @@ const defState = {
     },
     {
       images: [
-        "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png?t=2023-05-26T07%3A46%3A14.705Z",
+        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png",
       ],
 
-      icon: "https://avmvymkexjarplbxwlnj.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png?t=2023-05-26T07%3A46%3A14.705Z",
+      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png",
 
       type: "vendor",
 
