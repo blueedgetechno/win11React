@@ -9,6 +9,7 @@ import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
+import { logFEEvent } from "../../../utils/log_front_end.js";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -65,6 +66,7 @@ export const MicroStore = () => {
   const app_click = async (data) => {
     setOpapp(data);
     setPage(2);
+    logFEEvent(`open store ${user.email}`, data);
     AnalyticTrack(`open store`, {
       name: data.title,
       timestamp: new Date(),
