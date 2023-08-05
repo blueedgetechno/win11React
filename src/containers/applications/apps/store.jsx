@@ -207,7 +207,7 @@ const FrontPage = (props) => {
                     src={game.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {game.title}
+                    {game.name}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -265,7 +265,7 @@ const FrontPage = (props) => {
                     src={app.icon}
                   />
                   <div className="capitalize text-xs font-semibold">
-                    {app.title}
+                    {app.name}
                   </div>
                   <div className="flex mt-2 items-center">
                     <Icon className="bluestar" fafa="faStar" width={6} />
@@ -383,7 +383,7 @@ const DetailPage = ({ app }) => {
           err="img/asset/mixdef.jpg"
         />
         <div className="flex flex-col items-center text-center relative">
-          <div className="text-2xl font-semibold mt-6">{app?.title}</div>
+          <div className="text-2xl font-semibold mt-6">{app?.name}</div>
           <div className="text-xs text-blue-500">{app?.type}</div>
           <GotoButton />
           {isAdmin() && app.type != "vendor" ? (
