@@ -99,4 +99,18 @@
       "feat": "free information\nadd information\nedit information"
     }
   }
+  {
+  "name": "YouTube",
+  "icon": "https://youtube.com/favicon.ico",
+  "type": "app",
+  "data": {
+    "type": "IFrame",
+    "url": "https://youtube.com",
+    "gallery": [
+    ],
+    "desc": "YouTube Video",
+    "feat": "....",
+    "invert": true
+  }
+}
 ]
