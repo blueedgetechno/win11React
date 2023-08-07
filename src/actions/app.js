@@ -14,7 +14,7 @@ import {
 
 const wrapper = async (func) => {
   try {
-    log({ type: "loading" });
+    log({ type: "loading", content: 'It took a minutes!, Meanwhile you can go and explore Thinkmay ^^' });
     const result = await func();
     await log({
       type: "success",
