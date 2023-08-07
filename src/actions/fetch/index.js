@@ -181,13 +181,16 @@ export const FetchApplicationTemplates = async (id) => {
   if (vendor_resource_query.error != null) return vendor_resource_query.error;
 
   return app_template_query.data.map((x) => {
+    const resource = vendor_resource_query.data.find((y) => x.resource_id == y.id)
+    if (resource == undefined)
+      return undefined
+
     return {
       pricing: x.pricing_metadata,
-      hardware: vendor_resource_query.data.find((y) => x.resource_id == y.id)
-        ?.hardware_metadata,
+      hardware: resource.hardware_metadata,
       app_template_id: x.id,
     };
-  });
+  }).filter(x => x != undefined);
 };
 
 export const RegisterProxy = async () => {
