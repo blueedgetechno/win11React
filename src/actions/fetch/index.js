@@ -172,6 +172,8 @@ export const FetchApplicationTemplates = async (id) => {
   const vendor_resource_query = await supabase
     .from("vendor_resources")
     .select("id,hardware_metadata")
+    .eq("desired_state", "PAUSED")
+    .eq("type", "APP")
     .in(
       "id",
       app_template_query.data.map((x) => x.resource_id)
