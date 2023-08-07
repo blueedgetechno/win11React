@@ -79,51 +79,101 @@ export const CreateWorkerSession = async (worker_profile_id) => {
   if (error != null) throw error;
   return data;
 };
+const SupabaseFuncInvoke = async (funcName, options) => {
+  try {
+    const credential = await getCredentialHeader();
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
+    const response = await fetch(`${supabaseURL}/functions/v1/${funcName}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        Access_token: credential.access_token,
+      },
+    });
+    if (response.ok === false) {
+      const resText = await response.text();
+      return { data: null, error: resText };
+    }
+    let responseType = (response.headers.get("Content-Type") ?? "text/plain")
+      .split(";")[0]
+      .trim();
+    let data;
+    if (responseType === "application/json") {
+      data = await response.json();
+    } else if (responseType === "application/octet-stream") {
+      data = await response.blob();
+    } else if (responseType === "multipart/form-data") {
+      data = await response.formData();
+    } else {
+      // default to text
+      data = await response.text();
+    }
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+};
 
 export const DownloadApplication = async (app_template_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "SETUP",
-        app_template_id: app_template_id,
-      }),
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "SETUP",
+      app_template_id: app_template_id,
+    }),
+  });
+  if (error != null) {
+    let msg = error;
+    if (error === "run out of gpu stock") {
+      msg = "Hệ thông đang hết máy, bạn quay lại sau nhé.";
     }
-  );
-  if (error != null) throw error;
+    throw `<p> 
+              
+              </br>
+              <b class='uppercase'>${msg}. Please reload and try it again, in fews minutes.</b> 
+              </br> Join 
+            <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
+          <p>`;
+  }
   return data;
 };
 
 export const StartApplication = async (storage_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "START",
-        storage_id: storage_id,
-      }),
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "START",
+      storage_id: storage_id,
+    }),
+  });
+  if (error != null) {
+    let msg = error;
+    if (error === "run out of gpu stock") {
+      msg = "Hệ thông đang hết máy, bạn quay lại sau nhé.";
     }
-  );
-  if (error != null) throw error;
+    throw `<p> 
+              
+              </br>
+              <b class='uppercase'>${msg} Please reload and try it again, in fews minutes.</b> 
+              </br> Join 
+            <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
+          <p>`;
+  }
+
   return data;
 };
 export const AccessApplication = async (storage_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "ACCESS",
-        storage_id: storage_id,
-      }),
-    }
-  );
-  if (error != null) throw error;
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "ACCESS",
+      storage_id: storage_id,
+    }),
+  });
+  if (error != null)
+    throw `<p> <br class='uppercase'>${error}. </br> Please reload and try it again, in fews minutes.</b> </br> Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. <p>`;
   return data;
 };
 
@@ -144,18 +194,16 @@ export const DeleteApplication = async (storage_id) => {
 };
 
 export const StopApplication = async (storage_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "STOP",
-        storage_id: storage_id,
-      }),
-    }
-  );
-  if (error != null) throw error;
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "STOP",
+      storage_id: storage_id,
+    }),
+  });
+  if (error != null)
+    throw `<p> <b class='uppercase'>${error} Please reload and try it again, in fews minutes.</b> </br> Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. <p>`;
+
   return data;
 };
 
