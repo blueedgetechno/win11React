@@ -79,26 +79,33 @@ const ModalSelectVendor = (props) => {
   return (
     <div className="h-full relative">
       <h3 className="mb-[24px]">Select Vendor</h3>
-      <div className="grid grid-cols-3 gap-[16px] ">
-        {vendors.map((item) => (
-          <VendorInfo
-            key={Math.random()}
-            vendorInfo={item}
-            onClick={() => {
-              handleChooseVendor(item.app_template_id);
-            }}
-            isChoosen={item.app_template_id == vendorChoosen.app_template_id}
-          />
-        ))}
-      </div>
+      {
+        vendors.length >= 1 ? (
+          <>
+            <div className="grid grid-cols-3 gap-[16px] ">
+              {vendors.map((item) => (
+                <VendorInfo
+                  key={Math.random()}
+                  vendorInfo={item}
+                  onClick={() => {
+                    handleChooseVendor(item.app_template_id);
+                  }}
+                  isChoosen={item.app_template_id == vendorChoosen.app_template_id}
+                />
+              ))}
+            </div>
 
-      <button
-        className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
-        onClick={handleInstallApp}
-      >
-        {" "}
-        Get{" "}
-      </button>
+            <button
+              className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
+              onClick={handleInstallApp}
+            >
+              {" "}
+              Get{" "}
+            </button>
+          </>
+        )
+          : <h3>Sorry:(( We're run out of VM, please give us a contact if you need ^^</h3>
+      }
     </div>
   );
 };
