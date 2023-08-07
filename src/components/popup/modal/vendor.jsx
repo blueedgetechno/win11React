@@ -98,7 +98,7 @@ const ModalSelectVendor = (props) => {
             <button
               className="instbtn h-[32px] max-w-[120px] absolute bottom-[5%] right-[5%] text-[1.6rem] font-medium border-none z-10"
               onClick={handleInstallApp}
-              disabled={vendorChoosen.id == null}
+              disabled={vendorChoosen.app_template_id == null}
             >
               {" "}
               Get{" "}
