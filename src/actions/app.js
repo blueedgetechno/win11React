@@ -58,7 +58,9 @@ export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     if (payload.desired_state != "RUNNING")
-      throw new Error(`app is not ready yet`);
+      throw new Error(
+        `App would be available about 3 minutes after download, Contact us (via email box) if it is stil unavailable`
+      );
 
     const result = await AccessApplication(payload.storage_id);
     window.open(result.url, "_blank");
@@ -76,7 +78,7 @@ export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     if (payload.desired_state != "PAUSED")
-      throw new Error(`app is not ready yet`);
+      throw new Error(`app is not paused yet`);
 
     await StartApplication(payload.storage_id);
     fetchApp();
@@ -87,7 +89,7 @@ export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     if (payload.desired_state != "RUNNING")
-      throw new Error(`app is not ready yet`);
+      throw new Error(`app is not running, abort pause`);
 
     await StopApplication(payload.storage_id);
     fetchApp();
