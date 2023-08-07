@@ -150,21 +150,21 @@ const apps = [
   {
     name: "Our Service",
     icon: "doc",
-    type: "any",
+    type: "app",
     action: "EXTERNAL",
     payload: externalLink.SERVICE_LINK,
   },
   {
     name: "Document",
     icon: "doc",
-    type: "any",
+    type: "app",
     action: "EXTERNAL",
     payload: externalLink.DOCUMENT_LINK,
   },
   {
     name: "Pricing",
     icon: "pricing",
-    type: "any",
+    type: "app",
     action: "EXTERNAL",
     payload: externalLink.PRICING_LINK,
   },
@@ -178,7 +178,7 @@ const apps = [
   {
     name: "About Us",
     icon: "about",
-    type: "any",
+    type: "app",
     action: "DESKABOUT",
   },
   {
@@ -331,7 +331,7 @@ const apps = [
   {
     name: "Discord",
     icon: "discord",
-    type: "any",
+    type: "app",
     action: "EXTERNAL",
     payload: externalLink.DISCORD_LINK,
   },

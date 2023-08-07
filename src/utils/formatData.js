@@ -33,14 +33,14 @@ export function formatWorkerRenderTree(data) {
 
       worker.data.forEach((session) => {
         newData.Account.data[proxy.name].data[worker.name].data[session.name] =
-          {
-            type: "folder",
-            data: {},
-            info: {
-              ...session.info,
-              menu: "session",
-            },
-          };
+        {
+          type: "folder",
+          data: {},
+          info: {
+            ...session.info,
+            menu: "session",
+          },
+        };
         session.data.forEach((user_session) => {
           newData.Account.data[proxy.name].data[worker.name].data[
             session.name
@@ -96,6 +96,7 @@ export function formatAppRenderTree(data) {
           desired_state: storage.info.desired_state,
           additional: info, // TODO
         }),
+        type: 'externalApp'
       };
     })
     .filter((x) => x != undefined);

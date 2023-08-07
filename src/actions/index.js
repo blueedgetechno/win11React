@@ -4,6 +4,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import supabase from "../supabase/createClient";
 import * as Actions from ".";
+import * as ActionExternal from "./app";
 import {
   openWorker,
   createSession,
@@ -180,6 +181,10 @@ export const menuDispatch = async (event, menu) => {
     type: event.target.dataset.action,
     payload: event.target.dataset.payload,
   };
+  const externalAppData = {
+    type: menu?.dataset?.action,
+    payload: menu?.dataset?.payload,
+  };
 
   if (!type) return;
   if (type === "FILEDIRWORKER") openWorker(event);
@@ -189,6 +194,12 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTWORKERSESSION") connectSession(event);
   else if (type === "VIEW_DETAIL") viewDetail(event);
   else if (type === "CLOUDAPP") console.log(event);
+  else if (type === "PAUSE_APP") {
+    ActionExternal.pauseApp(externalAppData)
+  }
+  else if (type === "START_APP") {
+    ActionExternal.startApp(externalAppData)
+  }
   else if (type != type.toUpperCase())
     // TODO
     Actions[action.type](action.payload, menu);
