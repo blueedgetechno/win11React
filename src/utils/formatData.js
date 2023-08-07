@@ -87,9 +87,11 @@ export function formatAppRenderTree(data) {
 
       const info = storage.data.find((x) => x.type == "app_template")?.info;
       if (info == undefined || storage.info.desired_state == "DELETED") return;
+      const paused = storage.data.length == 1 || storage.info.desired_state == "PAUSED"
 
       return {
-        name: `${info.title} ${storage.info.id}`,
+        name: `${info.title} ${storage.info.id} 
+                  ${paused ? "- (PAUSED)" : ''}`,
         icon: info.icon,
         action: "CLOUDAPP",
         payload: JSON.stringify({
@@ -98,7 +100,7 @@ export function formatAppRenderTree(data) {
           additional: info, // TODO
         }),
         type: 'externalApp',
-        status: storage.info.desired_state
+        status: paused ? "PAUSED" : null
       };
     })
     .filter((x) => x != undefined);
