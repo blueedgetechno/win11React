@@ -9,7 +9,7 @@ const config = ({ mode }) => {
       VitePWA({
         registerType: "autoUpdate",
         workbox: {
-          maximumFileSizeToCacheInBytes: 6000000
+          maximumFileSizeToCacheInBytes: 12000000
         }
       }),
     ],
