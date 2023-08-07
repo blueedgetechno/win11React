@@ -14,7 +14,7 @@ export const log = async ({
       Swal.fire({
         title: title ?? "Loading",
         text: content ?? "Take a breath ^^",
-        icon: icon ?? null,
+        icon: icon ?? 'info',
         showCancelButton: false,
         showConfirmButton: false,
         allowOutsideClick: false
