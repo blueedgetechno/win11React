@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
@@ -40,6 +40,11 @@ export const MicroStore = () => {
       }, 200);
     }
   };
+
+  useLayoutEffect(()=>{
+    const element = document.getElementById('storeScroll')
+    element.scrollTo({top: 120})
+  },[])
 
   const frontScroll = (e) => {
     if (page == 0) {
@@ -126,7 +131,7 @@ export const MicroStore = () => {
             ) : null}
           </div>
 
-          <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
+          <div id="storeScroll" className="restWindow msfull win11Scroll" onScroll={frontScroll}>
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
