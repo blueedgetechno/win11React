@@ -77,8 +77,8 @@ const ModalSelectVendor = (props) => {
   };
 
   return (
-    <div className="h-full relative">
-      <h3 className="mb-[24px]">Select Vendor</h3>
+    <div className="h-full relative p-[16px]">
+      <h3 className="mb-[24px] text-[1.6rem]">Select Vendor</h3>
       {
         vendors.length >= 1 ? (
           <>
@@ -96,7 +96,7 @@ const ModalSelectVendor = (props) => {
             </div>
 
             <button
-              className="instbtn h-[32px] max-w-[120px] absolute bottom-0 right-0 border-none z-10"
+              className="instbtn h-[32px] max-w-[120px] absolute bottom-[5%] right-[5%] text-[1.6rem] font-medium border-none z-10"
               onClick={handleInstallApp}
             >
               {" "}
