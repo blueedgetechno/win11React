@@ -335,6 +335,13 @@ const apps = [
     action: "EXTERNAL",
     payload: externalLink.DISCORD_LINK,
   },
+  {
+    name: "Thinkmay Fanpage",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png",
+    type: "app",
+    action: "EXTERNAL",
+    payload: externalLink.FACEBOOK_LINK,
+  }
 ];
 
 for (let i = 0; i < installed.length; i++) {
