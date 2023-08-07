@@ -21,6 +21,7 @@ export const MicroStore = () => {
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState({});
+  const user = useSelector((state) => state.user);
 
   const totab = (e) => {
     var x = e.target && e.target.dataset.action;

@@ -26,6 +26,7 @@ import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { AnalyticTrack } from "./lib/segment";
+import { logFEEvent } from "./utils/log_front_end.js";
 
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
@@ -113,7 +114,9 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error != null) throw error;
-
+    if (window.location.host == 'thinkmay.net') {
+      logFEEvent(`source ${urlParams.get("ref") ?? 'thinkmay'}`, data.user);
+    }
     dispatch({
       type: "ADD_USER",
       payload: data.user,
