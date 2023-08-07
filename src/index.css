@@ -277,9 +277,15 @@ a {
   bottom: 5%;
   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
+  color: black;
   border-radius: 4px;
   outline: none;
   overflow: hidden;
+}
+body[data-theme="dark"] .modalContent{
+  border: 1px solid #1c1f2b;
+  background: #202020;
+  color: #fff;
 }
 .selectText {
   user-select: text;
