@@ -10,7 +10,7 @@ export const externalLink = {
   INTRODUCE_MEMBER_LINK:
     "https://thinkonmay.notion.site/Team-member-f1060888766245dda40b3c46624a0223",
   GITHUB_LINK: "https://github.com/thinkonmay/thinkshare-v2",
-  DISCORD_LINK: "https://discord.gg/6WaSvY58",
+  DISCORD_LINK: "https://discord.gg/96BesGqXQk",
   FACEBOOK_LINK: "https://www.facebook.com/thinkonmay",
   MAILTO_ADDRESS: "mailto:huyhoangdo@contact.thinkmay.net",
 };
