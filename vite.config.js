@@ -8,6 +8,9 @@ const config = ({ mode }) => {
       react(),
       VitePWA({
         registerType: "autoUpdate",
+        workbox: {
+          maximumFileSizeToCacheInBytes: 5000000
+        }
       }),
     ],
     base: "",
