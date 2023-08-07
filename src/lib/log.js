@@ -17,6 +17,8 @@ export const log = async ({
         icon: icon ?? null,
         showCancelButton: false,
         showConfirmButton: false,
+        allowOutsideClick: false
+
       });
       break;
     case "error":
