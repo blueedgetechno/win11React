@@ -142,7 +142,11 @@
   background: -o-linear-gradient(47deg, #217558 0%, #0fa345 100%);
   background: linear-gradient(137deg, #070707 0%, #05a33f 100%);
 }
-
+.wrapperLogo{
+  img{
+    object-fit: contain;
+  }
+}
 .ribcont {
   background: var(--rib-bg);
   margin: auto 6px;
