@@ -14,6 +14,7 @@ todo*
 /build
 *.py
 rough*
+.env
 
 # misc
 .DS_Store
