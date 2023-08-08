@@ -13,8 +13,7 @@ export function formatWorkerRenderTree(data) {
   };
 
   data.tree.data.forEach((proxy) => {
-    const proxy_name = `${proxy.type} ${proxy.id}`
-    newData.Account.data[proxy_name] = {
+    newData.Account.data[proxy.name] = {
       type: "folder",
       data: {},
       info: {
@@ -23,8 +22,7 @@ export function formatWorkerRenderTree(data) {
       },
     };
     proxy.data.forEach((worker) => {
-      const worker_name = `${worker.type} ${worker.id}`
-      newData.Account.data[proxy_name].data[worker_name] = {
+      newData.Account.data[proxy.name].data[worker.name] = {
         type: "folder",
         data: {},
         info: {
@@ -34,8 +32,7 @@ export function formatWorkerRenderTree(data) {
       };
 
       worker.data.forEach((session) => {
-        const session_name = `${session.type} ${session.id}`
-        newData.Account.data[proxy_name].data[worker_name].data[session_name] =
+        newData.Account.data[proxy.name].data[worker.name].data[session.name] =
         {
           type: "folder",
           data: {},
@@ -45,9 +42,9 @@ export function formatWorkerRenderTree(data) {
           },
         };
         session.data.forEach((user_session) => {
-          newData.Account.data[proxy_name].data[worker_name].data[
-            session_name
-          ].data[`${user_session.type} ${user_session.id}`] = {
+          newData.Account.data[proxy.name].data[worker.name].data[
+            session.name
+          ].data[user_session.name] = {
             type: "file",
             data: {},
             info: {
