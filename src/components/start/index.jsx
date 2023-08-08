@@ -284,14 +284,14 @@ export const CalnWid = () => {
   useEffect(() => {
     if (!loaded) {
       setLoad(true);
-      window.dycalendar.draw({
-        target: "#dycalendar",
-        type: "month",
-        dayformat: "ddd",
-        monthformat: "full",
-        prevnextbutton: "show",
-        highlighttoday: true,
-      });
+      //const newLocal = window.dycalendar.draw({
+      //  target: "#dycalendar",
+      //  type: "month",
+      //  dayformat: "ddd",
+      //  monthformat: "full",
+      //  prevnextbutton: "show",
+      //  highlighttoday: true,
+      //});
     }
   });
 
