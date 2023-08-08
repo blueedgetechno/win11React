@@ -4,7 +4,7 @@ import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import "./back.scss";
 import supabase from "../../supabase/createClient";
-
+import ReactTyped from "react-typed";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   const dispatch = useDispatch();
