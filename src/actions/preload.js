@@ -74,7 +74,7 @@ const loadSettings = async () => {
 
 export const fetchApp = async () => {
   const data = await FetchUserApplication();
-  const apps = formatAppRenderTree(data);
+  const apps = (await formatAppRenderTree(data)).filter(x => x !== undefined);
 
   store.dispatch({
     type: "DESKADD",

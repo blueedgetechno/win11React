@@ -57,10 +57,12 @@ export const deleteStore = async (app) => {
 export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "RUNNING")
+    if (payload.status == 'NOT_READY')
       throw new Error(
         `App would be available about 3 minutes after download, Contact us (via email box) if it is stil unavailable`
       );
+    else if (payload.status != "RUNNING")
+      throw new Error('please start application before access')
 
     const result = await AccessApplication(payload.storage_id);
     window.open(result.url, "_blank");
@@ -77,7 +79,7 @@ export const installApp = (payload) =>
 export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "PAUSED")
+    if (payload.status != "PAUSED")
       throw new Error(`app is not paused yet`);
 
     await StartApplication(payload.storage_id);
@@ -88,7 +90,7 @@ export const startApp = async (appInput) =>
 export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.desired_state != "RUNNING")
+    if (payload.status != "RUNNING")
       throw new Error(`app is not running, abort pause`);
 
     await StopApplication(payload.storage_id);
