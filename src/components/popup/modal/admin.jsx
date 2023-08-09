@@ -240,7 +240,7 @@ const ModalEditOrInsert = (props) => {
         ext
         h={100}
         src={formData.icon}
-        // err="img/asset/mixdef.jpg"
+        err="img/asset/bootlogo.png"
       />
 
       <div className="mb-4">

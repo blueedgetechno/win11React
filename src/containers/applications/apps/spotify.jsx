@@ -601,7 +601,7 @@ const Search = ({ sid, action }) => {
                 src={songResults[0].image.to150()}
                 ext
                 w={92}
-                err="/img/asset/mixdef.jpg"
+                err="/img/asset/bootlogo.png"
                 lazy
               />
               <div className="fplay">
@@ -676,7 +676,7 @@ const Search = ({ sid, action }) => {
                     src={card.image.to250()}
                     ext
                     w={200}
-                    err="/img/asset/mixdef.jpg"
+                    err="/img/asset/bootlogo.png"
                     onClick={action}
                     click="album"
                     payload={card.id}
@@ -746,7 +746,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
       <div className="playinfo">
         <Image
           className="dpShad"
-          src={data.album_image || "/img/asset/mixdef.jpg"}
+          src={data.album_image || "/img/asset/bootlogo.png"}
           ext
           w={232}
           h={232}
@@ -816,7 +816,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
                     w={40}
                     h={40}
                     ext
-                    err="/img/asset/mixdef.jpg"
+                    err="/img/asset/bootlogo.png"
                     lazy
                   />
                 ) : null}
@@ -944,7 +944,7 @@ const Home = ({ tab, action, sid, paused }) => {
                     src={card.img}
                     ext
                     w={200}
-                    err="/img/asset/mixdef.jpg"
+                    err="/img/asset/bootlogo.png"
                     onClick={action}
                     click={card.type}
                     payload={"[" + ix + "," + idx + "]"}

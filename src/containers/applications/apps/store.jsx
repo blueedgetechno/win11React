@@ -10,6 +10,7 @@ import { AnalyticTrack } from "../../../lib/segment";
 import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
+import { installApp } from "../../../actions/app";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -308,19 +309,30 @@ const reviews = 5000;
 const DetailPage = ({ app }) => {
   const [dstate, setDown] = useState(0);
   const { t, i18n } = useTranslation();
+  const [Options, SetOptions] = useState([]);
 
-  // TODO download to desktop
+  useEffect(() => {
+    (async () => {
+      const anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA'
+      const options = await (await fetch('https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_from_store', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${anon}`,
+          apikey: anon
+        },
+        body: JSON.stringify({ store_id: `${app.id}` })
+      })).json()
+      console.log(options)
+      SetOptions(options)
+    })()
+  },[])
+
   const dispatch = useDispatch();
 
-  const download = () => {
-    dispatch({
-      type: "VENDOR_SELECT_MODAL",
-      payload: {
-        storeID: app.id,
-      },
-    });
-
-    
+  const download = async ({id}) => {
+    console.log(`download ${id}`)
+    await installApp({app_template_id:id})
   };
 
   const handleEdit = () => {
@@ -366,10 +378,10 @@ const DetailPage = ({ app }) => {
             </a>
           </div>
         ) : dstate == 0 ? (
-          <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
-            {" "}
-            Get{" "}
-          </div>
+          Options.map(x => 
+            <div className="instbtn mt-12 mb-8 handcr" payload={x} onClick={() => download(x)}>
+              {`${x.gpu} ${x.region}`}
+            </div>)
         ) : (
           <div className="downbar mt-12 mb-8"></div>
         )}
@@ -385,7 +397,7 @@ const DetailPage = ({ app }) => {
           ext
           h={100}
           src={app?.icon}
-          err="img/asset/mixdef.jpg"
+          err="img/asset/bootlogo.png"
         />
         <div className="flex flex-col items-center text-center relative">
           <div className="text-2xl font-semibold mt-6">{app?.name}</div>
@@ -434,7 +446,7 @@ const DetailPage = ({ app }) => {
                       h={250}
                       src={img}
                       ext
-                      err="img/asset/mixdef.jpg"
+                      err="img/asset/bootlogo.png"
                     />
                   </div>
                 );
