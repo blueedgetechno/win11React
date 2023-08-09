@@ -100,9 +100,9 @@ export const DesktopApp = () => {
               <div className="appName">{app.name}</div>
               {
                 app?.status == 'PAUSED' ?
-                  <PiPauseBold className="text-[1.2rem] absolute top-[-3px] right-[-3px]" />
+                  <PiPauseBold className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                   : app.status == 'NOT_READY' ?
-                    <AiOutlineCloudDownload className="text-[1.2rem] absolute top-[-3px] right-[-3px]" />
+                    <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                     : null
               }
             </div>

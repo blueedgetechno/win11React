@@ -71,40 +71,53 @@ export function formatWorkerRenderTree(data) {
 //   }
 // }
 
-export function formatAppRenderTree(data) {
-  return data.tree.data
-    .map((storage) => {
-      if (storage.type == "processing_resource") {
+export async function formatAppRenderTree(data) {
+  return await Promise.all(data.tree.data
+    .map(async storage => {
+      if (storage.type == "pending") {
         return {
-          name: `${storage.name} installing`,
+          name: `Installing`,
           icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
           action: "CLOUDAPP",
           payload: JSON.stringify({
             storage_id: null,
-            desired_state: "NOT_READY",
+            status: "NOT_READY",
             additional: {},
           }),
           status: "NOT_READY"
         };
       }
 
-      const info = storage.data.find((x) => x.type == "app_template")?.info;
-      if (info == undefined || storage.info.desired_state == "DELETED") return;
-      const paused = storage.data.length == 1 || storage.info.desired_state == "PAUSED"
 
+      const anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA'
+      const icons = await (await fetch('https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_metadata_from_volume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${anon}`,
+          apikey: anon
+        },
+        body: JSON.stringify({ deploy_as: `${storage.id}` })
+      })).json()
+
+      const icon = icons.at(0)
+      // id in store. +  icon: url img, => view 
+      // metatada: Meta in store.
+
+
+      // pause check by storage.data.lenghth > 0. 
+      const paused = storage.data.length == 0
       return {
-        name: `${info.title} ${storage.info.id} 
-                  ${paused ? "- (PAUSED)" : ''}`,
-        icon: info.icon,
+        name: `${icon.name}`,
+        icon: icon.icon,
         action: "CLOUDAPP",
         payload: JSON.stringify({
-          storage_id: storage.info.id,
-          desired_state: storage.info.desired_state,
-          additional: info, // TODO
+          status: paused ? "PAUSED" : 'RUNNING',
+          storage_id: storage.id,
+          additional: icon.metadata, // TODO
         }),
         type: 'externalApp',
-        status: paused ? "PAUSED" : null
+        status: paused ? "PAUSED" : 'RUNNING'
       };
-    })
-    .filter((x) => x != undefined);
+    }));
 }
