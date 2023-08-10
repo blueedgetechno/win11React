@@ -1,3 +1,4 @@
+import { externalLink } from "../../data/constant";
 import supabase from "../../supabase/createClient";
 
 const getCredentialHeader = async () => {

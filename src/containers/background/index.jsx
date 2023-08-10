@@ -88,6 +88,7 @@ export const LockScreen = (props) => {
   
   };
 
+  
   const proceed = async () => {
     if (user.id) {
       setUnLock(true);
@@ -96,12 +97,12 @@ export const LockScreen = (props) => {
       }, 1000);
       return;
     }
-
+    // for dev: https://dev--virtos-win11.netlify.app/
+    const redirectTo = import.meta.env.VITE_REDIRECT_TO
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `https://dev--virtos-win11.netlify.app/`,
-        // redirectTo: `http://localhost:3000`,
+        redirectTo: redirectTo,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
