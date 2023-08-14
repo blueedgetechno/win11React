@@ -138,6 +138,14 @@ export const DownloadApplication = async (app_template_id) => {
             <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
           <p>`;
   }
+  if (data == 'NOT_ALLOW') {
+    throw `<p> 
+              </br>
+              <b class='uppercase'>${msg}. Tài khoản này chưa đăng kí dịch vụ.</b> 
+              </br> Join 
+            <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
+          <p>`;
+  }
   return data;
 };
 
