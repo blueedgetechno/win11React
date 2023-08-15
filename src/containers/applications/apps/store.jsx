@@ -323,8 +323,22 @@ const DetailPage = ({ app }) => {
         },
         body: JSON.stringify({ store_id: `${app.id}` })
       })).json()
-      console.log(options)
-      SetOptions(options)
+
+      SetOptions(options.filter((e) => {
+        const hardware = e.app_hardware;
+        const ready = e.available.find(x => {
+          if (!x.available.gpus.includes(hardware.gpu_model))
+              return false
+          if (x.available.ram < hardware.ram)
+              return false
+          if (x.available.vcpus < hardware.vcpus)
+              return false
+          return true
+        })
+
+        return ready != undefined;
+      }))
+
     })()
   },[])
 
@@ -378,8 +392,8 @@ const DetailPage = ({ app }) => {
             </a>
           </div>
         ) : dstate == 0 ? (
-          Options.map(x => 
-            <div className="instbtn mt-12 mb-8 handcr" payload={x} onClick={() => download(x)}>
+          Options.map((x, index) => 
+            <div key={index} className="instbtn mt-12 mb-8 handcr" payload={x} onClick={() => download(x)}>
               {`${x.gpu} ${x.region}`}
             </div>)
         ) : (
