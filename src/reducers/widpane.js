@@ -75,14 +75,14 @@ const defState = {
     stock: [
       [
         Number(
-          parseFloat(2300 + Math.random() * 200).toFixed(2)
+          parseFloat(2300 + Math.random() * 200).toFixed(2),
         ).toLocaleString(),
         parseFloat(Math.random() * 2).toFixed(2),
         Math.round(Math.random()),
       ],
       [
         Number(
-          parseFloat(600 + Math.random() * 200).toFixed(2)
+          parseFloat(600 + Math.random() * 200).toFixed(2),
         ).toLocaleString(),
         parseFloat(Math.random() * 2).toFixed(2),
         Math.round(Math.random()),

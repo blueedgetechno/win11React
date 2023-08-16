@@ -115,7 +115,7 @@ export const performApp = (act, menu) => {
       var app = Object.keys(apps).filter(
         (x) =>
           apps[x].action == data.type ||
-          (apps[x].payload == data.payload && apps[x].payload != null)
+          (apps[x].payload == data.payload && apps[x].payload != null),
       );
 
       app = apps[app];
@@ -195,12 +195,10 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "VIEW_DETAIL") viewDetail(event);
   else if (type === "CLOUDAPP") console.log(event);
   else if (type === "PAUSE_APP") {
-    ActionExternal.pauseApp(externalAppData)
-  }
-  else if (type === "START_APP") {
-    ActionExternal.startApp(externalAppData)
-  }
-  else if (type != type.toUpperCase())
+    ActionExternal.pauseApp(externalAppData);
+  } else if (type === "START_APP") {
+    ActionExternal.startApp(externalAppData);
+  } else if (type != type.toUpperCase())
     // TODO
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);

@@ -83,12 +83,10 @@ export const LockScreen = (props) => {
   const action = (e) => {
     var act = e.target.dataset.action,
       payload = e.target.dataset.payload;
-    const userType = e.target.dataset.user //B2B or B2C. Change at: data-user  
+    const userType = e.target.dataset.user; //B2B or B2C. Change at: data-user
     setLock(true);
-  
   };
 
-  
   const proceed = async () => {
     if (user.id) {
       setUnLock(true);
@@ -98,7 +96,7 @@ export const LockScreen = (props) => {
       return;
     }
     // for dev: https://dev--virtos-win11.netlify.app/
-    const redirectTo = import.meta.env.VITE_REDIRECT_TO
+    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

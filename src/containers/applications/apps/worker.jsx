@@ -129,7 +129,7 @@ export const Worker = () => {
             {curr.name}
           </div>
           <Icon className="dirchev" fafa="faChevronRight" width={8} />
-        </div>
+        </div>,
       );
 
       curr = curr.host;
@@ -143,7 +143,7 @@ export const Worker = () => {
           width={16}
         />
         <Icon className="dirchev" fafa="faChevronRight" width={8} />
-      </div>
+      </div>,
     );
 
     return (
@@ -307,7 +307,7 @@ const ContentArea = ({ searchtxt }) => {
             <div className="wrapperText" key={Math.random()}>
               <p className="title">{renderobj && combineText(hwkey)}: </p>
               <p className="content"> {renderobj}</p>
-            </div>
+            </div>,
           );
         }
         continue;
@@ -334,7 +334,7 @@ const ContentArea = ({ searchtxt }) => {
         <div className="wrapperText" key={key}>
           <p className="title">{data[key] && combineText(key)}: </p>
           <p className="content"> {data[key]}</p>
-        </div>
+        </div>,
       );
     }
 

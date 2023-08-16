@@ -37,7 +37,7 @@ export const Camera = () => {
 
   const signalingURL = Buffer.from(
     signaling ? signaling : "d3NzOi8vc2VydmljZS50aGlua21heS5uZXQvaGFuZHNoYWtl",
-    "base64"
+    "base64",
   ).toString();
   const signalingToken = token ? token : "none";
   var defaultBitrate = parseInt(bitrate ? bitrate : "6000", 10);
@@ -47,7 +47,7 @@ export const Camera = () => {
     LogConnectionEvent(ConnectionEvent.WaitingAvailableDeviceSelection);
     let ret = new DeviceSelectionResult(
       offer.soundcards[0].DeviceID,
-      offer.monitors[0].MonitorHandle.toString()
+      offer.monitors[0].MonitorHandle.toString(),
     );
     ret.bitrate = defaultBitrate;
     ret.framerate = defaultFramerate;
@@ -98,10 +98,10 @@ export const Camera = () => {
           remoteAudio.current,
           signalingToken,
           selectDevice,
-          newplatform
+          newplatform,
         ).Notifier((message) => {
           console.log(message);
-        })
+        }),
       );
     }
   }, [hide]);

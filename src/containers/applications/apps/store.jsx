@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useCallback, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
@@ -42,10 +47,10 @@ export const MicroStore = () => {
     }
   };
 
-  useLayoutEffect(()=>{
-    const element = document.getElementById('storeScroll')
-    element.scrollTo({top: element.scrollHeight * 30 / 100})
-  },[])
+  useLayoutEffect(() => {
+    const element = document.getElementById("storeScroll");
+    element.scrollTo({ top: (element.scrollHeight * 30) / 100 });
+  }, []);
 
   const frontScroll = (e) => {
     if (page == 0) {
@@ -132,7 +137,11 @@ export const MicroStore = () => {
             ) : null}
           </div>
 
-          <div id="storeScroll" className="restWindow msfull win11Scroll" onScroll={frontScroll}>
+          <div
+            id="storeScroll"
+            className="restWindow msfull win11Scroll"
+            onScroll={frontScroll}
+          >
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
@@ -313,26 +322,33 @@ const DetailPage = ({ app }) => {
 
   useEffect(() => {
     (async () => {
-      const anon = import.meta.env.VITE_SUPABASE_ANON_KEY_VIRT
-      const options = await (await fetch(`${import.meta.env.VITE_SUPABASE_URL_VIRT}/rest/v1/rpc/get_app_from_store`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${anon}`,
-          apikey: anon
-        },
-        body: JSON.stringify({ store_id: `${app.id}` })
-      })).json()
-      console.log(options)
-      SetOptions(options)
-    })()
-  },[])
+      const anon = import.meta.env.VITE_SUPABASE_ANON_KEY_VIRT;
+      const options = await (
+        await fetch(
+          `${
+            import.meta.env.VITE_SUPABASE_URL_VIRT
+          }/rest/v1/rpc/get_app_from_store`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${anon}`,
+              apikey: anon,
+            },
+            body: JSON.stringify({ store_id: `${app.id}` }),
+          },
+        )
+      ).json();
+      console.log(options);
+      SetOptions(options);
+    })();
+  }, []);
 
   const dispatch = useDispatch();
 
-  const download = async ({id}) => {
-    console.log(`download ${id}`)
-    await installApp({app_template_id:id})
+  const download = async ({ id }) => {
+    console.log(`download ${id}`);
+    await installApp({ app_template_id: id });
   };
 
   const handleEdit = () => {
@@ -378,10 +394,15 @@ const DetailPage = ({ app }) => {
             </a>
           </div>
         ) : dstate == 0 ? (
-          Options.map(x => 
-            <div className="instbtn mt-12 mb-8 handcr" payload={x} onClick={() => download(x)}>
+          Options.map((x) => (
+            <div
+              className="instbtn mt-12 mb-8 handcr"
+              payload={x}
+              onClick={() => download(x)}
+            >
               {`${x.gpu} ${x.region}`}
-            </div>)
+            </div>
+          ))
         ) : (
           <div className="downbar mt-12 mb-8"></div>
         )}

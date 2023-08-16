@@ -2,18 +2,18 @@ import React from "react";
 import i18next from "i18next";
 
 function LangSwitch() {
-  const [languageValue, setLanguageValue] = React.useState('')
-  
-  React.useLayoutEffect(()=>{
-    setLanguageValue(i18next.language)
-  },[])
+  const [languageValue, setLanguageValue] = React.useState("");
+
+  React.useLayoutEffect(() => {
+    setLanguageValue(i18next.language);
+  }, []);
   return (
     <div className="langSwitcher">
       <select
         value={languageValue}
         onChange={(e) => {
-          i18next.changeLanguage(e.target.value)
-          setLanguageValue(e.target.value)
+          i18next.changeLanguage(e.target.value);
+          setLanguageValue(e.target.value);
         }}
       >
         <option value="en">English</option>

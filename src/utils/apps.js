@@ -341,7 +341,7 @@ const apps = [
     type: "app",
     action: "EXTERNAL",
     payload: externalLink.FACEBOOK_LINK,
-  }
+  },
 ];
 
 for (let i = 0; i < installed.length; i++) {
