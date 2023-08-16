@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import { externalLink } from "../../data/constant";
 import supabase from "../../supabase/createClient";
 
@@ -31,7 +32,7 @@ export const FetchAuthorizedWorkers = async () => {
       headers: await getCredentialHeader(),
       method: "POST",
       body: JSON.stringify({ use_case: "web" }),
-    }
+    },
   );
   if (error != null) throw error;
   return data;
@@ -43,7 +44,7 @@ export const FetchUserApplication = async () => {
       headers: await getCredentialHeader(),
       method: "POST",
       body: JSON.stringify({}),
-    }
+    },
   );
   if (error != null) throw error;
   return data;
@@ -58,7 +59,7 @@ export const DeactivateWorkerSession = async (worker_session_id) => {
       body: JSON.stringify({
         worker_session_id: worker_session_id,
       }),
-    }
+    },
   );
   if (error != null) throw error;
   return data;
@@ -75,7 +76,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
         soudcard_name: null,
         monitor_name: null,
       }),
-    }
+    },
   );
   if (error != null) throw error;
   return data;
@@ -117,7 +118,10 @@ const SupabaseFuncInvoke = async (funcName, options) => {
   }
 };
 
+const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
 export const DownloadApplication = async (app_template_id) => {
+  let msg;
+  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
     body: JSON.stringify({
@@ -126,22 +130,46 @@ export const DownloadApplication = async (app_template_id) => {
     }),
   });
   if (error != null) {
-    let msg = error;
+    msg = error;
     if (error === "run out of gpu stock") {
-      msg = "Hệ thông đang hết máy, bạn quay lại sau nhé.";
+      msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
               
               </br>
-              <b class='uppercase'>${msg}. Please reload and try it again, in fews minutes.</b> 
-              </br> Join 
-            <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
+              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
+              </br> 
+              ${directDiscordMsg} 
+          <p>`;
+  }
+
+  if (data.result == "NOT_ALLOW") {
+    msg = i18next.t("error.NOT_ALLOW");
+
+    throw `<p> 
+              </br>
+              <b class='uppercase'>${msg}</b> 
+              </br>               
+              ${directDiscordMsg} 
+
+          <p>`;
+  }
+  if (data.result == "ALREADY_DEPLOYED") {
+    msg = i18next.t("error.ALREADY_DEPLOYED");
+    throw `<p> 
+              </br>
+              <b class='uppercase'>${msg}</b> 
+              </br>  
+              ${directDiscordMsg} 
           <p>`;
   }
   return data;
 };
 
 export const StartApplication = async (storage_id) => {
+  let msg;
+  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
     body: JSON.stringify({
@@ -150,22 +178,23 @@ export const StartApplication = async (storage_id) => {
     }),
   });
   if (error != null) {
-    let msg = error;
+    msg = error;
     if (error === "run out of gpu stock") {
-      msg = "Hệ thông đang hết máy, bạn quay lại sau nhé.";
+      msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
-              
               </br>
-              <b class='uppercase'>${msg} Please reload and try it again, in fews minutes.</b> 
+              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
               </br> Join 
-            <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. 
+              ${directDiscordMsg} 
           <p>`;
   }
 
   return data;
 };
 export const AccessApplication = async (storage_id) => {
+  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
     body: JSON.stringify({
@@ -174,7 +203,12 @@ export const AccessApplication = async (storage_id) => {
     }),
   });
   if (error != null)
-    throw `<p> <br class='uppercase'>${error}. </br> Please reload and try it again, in fews minutes.</b> </br> Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. <p>`;
+    throw `<p> <b class='uppercase'>${error}. 
+              </b>
+               ${suggestMsg}
+              </br> 
+              ${directDiscordMsg} 
+            <p>`;
   return data;
 };
 
@@ -188,13 +222,15 @@ export const DeleteApplication = async (storage_id) => {
         action: "DELETE",
         storage_id: storage_id,
       }),
-    }
+    },
   );
   if (error != null) throw error;
   return data;
 };
 
 export const StopApplication = async (storage_id) => {
+  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
     body: JSON.stringify({
@@ -203,7 +239,13 @@ export const StopApplication = async (storage_id) => {
     }),
   });
   if (error != null)
-    throw `<p> <b class='uppercase'>${error} Please reload and try it again, in fews minutes.</b> </br> Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support. <p>`;
+    throw `<p> 
+              <b class='uppercase'>${error}. 
+              ${suggestMsg}
+              </b> 
+              </br> 
+              ${directDiscordMsg} 
+            <p>`;
 
   return data;
 };
@@ -225,21 +267,24 @@ export const FetchApplicationTemplates = async (id) => {
     .eq("type", "APP")
     .in(
       "id",
-      app_template_query.data.map((x) => x.resource_id)
+      app_template_query.data.map((x) => x.resource_id),
     );
   if (vendor_resource_query.error != null) return vendor_resource_query.error;
 
-  return app_template_query.data.map((x) => {
-    const resource = vendor_resource_query.data.find((y) => x.resource_id == y.id)
-    if (resource == undefined)
-      return undefined
+  return app_template_query.data
+    .map((x) => {
+      const resource = vendor_resource_query.data.find(
+        (y) => x.resource_id == y.id,
+      );
+      if (resource == undefined) return undefined;
 
-    return {
-      pricing: x.pricing_metadata,
-      hardware: resource.hardware_metadata,
-      app_template_id: x.id,
-    };
-  }).filter(x => x != undefined);
+      return {
+        pricing: x.pricing_metadata,
+        hardware: resource.hardware_metadata,
+        app_template_id: x.id,
+      };
+    })
+    .filter((x) => x != undefined);
 };
 
 export const RegisterProxy = async () => {
@@ -250,9 +295,8 @@ export const RegisterProxy = async () => {
   const { data, error } = await supabase.functions.invoke("proxy_register", {
     body: JSON.stringify(body),
     headers: {
-      access_token: (
-        await supabase.auth.getSession()
-      ).data?.session?.access_token,
+      access_token: (await supabase.auth.getSession()).data?.session
+        ?.access_token,
     },
   });
   if (error != null) throw error;
@@ -263,9 +307,8 @@ export const Keygen = async () => {
   const { data, error } = await supabase.functions.invoke("user_keygen", {
     body: JSON.stringify({}),
     headers: {
-      access_token: (
-        await supabase.auth.getSession()
-      ).data?.session?.access_token,
+      access_token: (await supabase.auth.getSession()).data?.session
+        ?.access_token,
     },
   });
   if (error != null) throw error;

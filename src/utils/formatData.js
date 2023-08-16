@@ -13,7 +13,7 @@ export function formatWorkerRenderTree(data) {
   };
 
   data.tree.data.forEach((proxy) => {
-    const proxy_name = `${proxy.type} ${proxy.id}`
+    const proxy_name = `${proxy.type} ${proxy.id}`;
     newData.Account.data[proxy_name] = {
       type: "folder",
       data: {},
@@ -23,7 +23,7 @@ export function formatWorkerRenderTree(data) {
       },
     };
     proxy.data.forEach((worker) => {
-      const worker_name = `${worker.type} ${worker.id}`
+      const worker_name = `${worker.type} ${worker.id}`;
       newData.Account.data[proxy_name].data[worker_name] = {
         type: "folder",
         data: {},
@@ -34,16 +34,16 @@ export function formatWorkerRenderTree(data) {
       };
 
       worker.data.forEach((session) => {
-        const session_name = `${session.type} ${session.id}`
+        const session_name = `${session.type} ${session.id}`;
         newData.Account.data[proxy_name].data[worker_name].data[session_name] =
-        {
-          type: "folder",
-          data: {},
-          info: {
-            ...session.info,
-            menu: "session",
-          },
-        };
+          {
+            type: "folder",
+            data: {},
+            info: {
+              ...session.info,
+              menu: "session",
+            },
+          };
         session.data.forEach((user_session) => {
           newData.Account.data[proxy_name].data[worker_name].data[
             session_name
@@ -72,8 +72,8 @@ export function formatWorkerRenderTree(data) {
 // }
 
 export async function formatAppRenderTree(data) {
-  return await Promise.all(data.tree.data
-    .map(async storage => {
+  return await Promise.all(
+    data.tree.data.map(async (storage) => {
       if (storage.type == "pending") {
         return {
           name: `Installing`,
@@ -84,40 +84,45 @@ export async function formatAppRenderTree(data) {
             status: "NOT_READY",
             additional: {},
           }),
-          status: "NOT_READY"
+          status: "NOT_READY",
         };
       }
 
+      const anon =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
+      const icons = await (
+        await fetch(
+          "https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_metadata_from_volume",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${anon}`,
+              apikey: anon,
+            },
+            body: JSON.stringify({ deploy_as: `${storage.id}` }),
+          },
+        )
+      ).json();
 
-      const anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA'
-      const icons = await (await fetch('https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_metadata_from_volume', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${anon}`,
-          apikey: anon
-        },
-        body: JSON.stringify({ deploy_as: `${storage.id}` })
-      })).json()
-
-      const icon = icons.at(0)
-      // id in store. +  icon: url img, => view 
+      const icon = icons.at(0);
+      // id in store. +  icon: url img, => view
       // metatada: Meta in store.
 
-
-      // pause check by storage.data.lenghth > 0. 
-      const paused = storage.data.length == 0
+      // pause check by storage.data.lenghth > 0.
+      const paused = storage.data.length == 0;
       return {
         name: `${icon.name}`,
         icon: icon.icon,
         action: "CLOUDAPP",
         payload: JSON.stringify({
-          status: paused ? "PAUSED" : 'RUNNING',
+          status: paused ? "PAUSED" : "RUNNING",
           storage_id: storage.id,
           additional: icon.metadata, // TODO
         }),
-        type: 'externalApp',
-        status: paused ? "PAUSED" : 'RUNNING'
+        type: "externalApp",
+        status: paused ? "PAUSED" : "RUNNING",
       };
-    }));
+    }),
+  );
 }

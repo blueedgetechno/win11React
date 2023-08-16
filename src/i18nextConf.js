@@ -4,9 +4,10 @@ import Backend from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { i18nextPlugin } from "translation-check";
 
-const fallbackLng = ["en"];
+const fallbackLng = ["vn"];
 const availableLanguages = [
   "en",
+  "vn",
   "da",
   "de",
   "es",

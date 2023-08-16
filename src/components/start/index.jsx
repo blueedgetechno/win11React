@@ -83,7 +83,7 @@ export const DesktopApp = () => {
               className="dskApp prtclk relative"
               tabIndex={0}
               data-action={app.action}
-              data-menu={app.type ?? 'app'}
+              data-menu={app.type ?? "app"}
               data-payload={app.payload || "full"}
               data-id={app.id ?? "null"}
               data-name={app.name}
@@ -98,13 +98,11 @@ export const DesktopApp = () => {
               />
 
               <div className="appName">{app.name}</div>
-              {
-                app?.status == 'PAUSED' ?
-                  <PiPauseBold className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
-                  : app.status == 'NOT_READY' ?
-                    <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
-                    : null
-              }
+              {app?.status == "PAUSED" ? (
+                <PiPauseBold className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
+              ) : app.status == "NOT_READY" ? (
+                <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
+              ) : null}
             </div>
           );
         })}
@@ -138,7 +136,7 @@ export const SidePane = () => {
   const dispatch = useDispatch();
 
   let [btlevel, setBtLevel] = useState("");
-  const childToParent = () => { };
+  const childToParent = () => {};
 
   const clickDispatch = (event) => {
     var action = {
@@ -170,7 +168,7 @@ export const SidePane = () => {
   function sliderBackground(elem, e) {
     elem.style.setProperty(
       "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
     );
   }
 

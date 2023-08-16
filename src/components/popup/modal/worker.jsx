@@ -18,7 +18,7 @@ const ModalWorkerInfo = (info) => {
           >
             {typeof data[key] == "object" && renderDetailWorker(data[key])}
           </div>
-        </div>
+        </div>,
       );
     }
 

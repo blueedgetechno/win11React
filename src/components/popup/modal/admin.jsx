@@ -18,7 +18,7 @@ const ModalEditOrInsert = (props) => {
           feature: "",
           screenshoots: [],
           icon: "",
-        }
+        },
   );
 
   const dispatch = useDispatch();

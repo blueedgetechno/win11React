@@ -306,16 +306,16 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"] {
 
     &:vertical {
       &:hover {
-        background: var(--scrollbar-bottom-btn) 0% calc(100% - 3px) / contain
-            no-repeat,
+        background:
+          var(--scrollbar-bottom-btn) 0% calc(100% - 3px) / contain no-repeat,
           var(--scrollbar-top-btn) 0% calc(0% + 3px) / contain no-repeat,
           var(--scroll);
       }
     }
     &:horizontal {
       &:hover {
-        background: var(--scrollbar-right-btn) calc(100% - 3px) 0% / contain
-            no-repeat,
+        background:
+          var(--scrollbar-right-btn) calc(100% - 3px) 0% / contain no-repeat,
           var(--scrollbar-left-btn) calc(0% + 3px) 0% / contain no-repeat,
           var(--scroll);
       }

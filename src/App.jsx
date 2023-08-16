@@ -55,7 +55,7 @@ function App() {
     } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
-      "--prefix"
+      "--prefix",
     );
 
     ess.forEach((item, i) => {
@@ -114,8 +114,8 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error != null) throw error;
-    if (window.location.host == 'thinkmay.net') {
-      logFEEvent(`source ${urlParams.get("ref") ?? 'thinkmay'}`, data.user);
+    if (window.location.host == "thinkmay.net") {
+      logFEEvent(`source ${urlParams.get("ref") ?? "thinkmay"}`, data.user);
     }
     dispatch({
       type: "ADD_USER",

@@ -11,8 +11,8 @@ import axios from "axios";
 
 const loadWidget = async () => {
   var tmpWdgt = {
-    ...store.getState().widpane,
-  },
+      ...store.getState().widpane,
+    },
     date = new Date();
 
   // console.log('fetching ON THIS DAY');
@@ -32,7 +32,7 @@ const loadWidget = async () => {
 
       tmpWdgt.data.event = event;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   // console.log('fetching NEWS');
   await axios
@@ -46,7 +46,7 @@ const loadWidget = async () => {
       });
       tmpWdgt.data.news = newsList;
     })
-    .catch((error) => { });
+    .catch((error) => {});
 
   store.dispatch({
     type: "WIDGREST",
@@ -74,7 +74,7 @@ const loadSettings = async () => {
 
 export const fetchApp = async () => {
   const data = await FetchUserApplication();
-  const apps = (await formatAppRenderTree(data)).filter(x => x !== undefined);
+  const apps = (await formatAppRenderTree(data)).filter((x) => x !== undefined);
 
   store.dispatch({
     type: "DESKADD",
@@ -99,20 +99,24 @@ export const fetchWorker = async () => {
 };
 
 export const fetchStore = async () => {
-  const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA'
-  const resp = await fetch(`https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?select=id,name,icon,type,metadata->description,metadata->screenshoots,metadata->feature`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
+  const key =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
+  const resp = await fetch(
+    `https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?select=id,name,icon,type,created_at,metadata->description,metadata->screenshoots,metadata->feature`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+        apikey: key,
+      },
     },
-  },
   );
-  if (resp.status != 200)
-    throw await resp.text();
+  if (resp.status != 200) throw await resp.text();
   const data = await resp.json();
-
+  data.sort((a, b) => {
+    if (a.created_at < b.created_at) return -1;
+  });
   const content = {
     games: [],
     apps: [],

@@ -10,7 +10,7 @@
   "about.contact": "contact",
   "store.featured-app": "Cloud PC",
   "store.featured-app.info": "Data visualization, 3D Rendering,... any heavy workload run on cloud",
-  "store.featured-game": "Cloud Gaming",
+  "store.featured-game": "Cloud Gaming-VN",
   "store.featured-game.info": "AAA gaming from your browser without download",
   "store.free": "FREE",
   "store.owned": "Owned",
@@ -22,12 +22,12 @@
   "oobe.country": "Is this the right country or region?",
   "oobe.keyboard": "Is this the right keyboard layout or input method?",
   "oobe.anotherkeyboard": "If you also use another keyboard layout, you can add that next",
-  "test": "ENlish",
+  "test": "Vietnamese",
   "error": {
-    "suggest": "Please reload and try it again, in fews minutes",
+    "suggest": "Vui lòng thử lại sau ít phút",
     "unspecific": "Something went wrong.",
-    "ALREADY_DEPLOYED": "You've installed 1 game",
-    "NOT_ALLOW": "Your account doesn't register our services",
-    "run_out_of_gpu_stock": "We've run out of Gpu stock, please contact with us"
+    "ALREADY_DEPLOYED": "Bạn đã install 1 game rồi. Xoá game cũ trước khi tải game mới",
+    "NOT_ALLOW": "Tài khoản của bạn chưa đăng kí dịch vụ.",
+    "run_out_of_gpu_stock": "Hệ thống đang hết máy, vui lòng liên hệ admin!"
   }
 }

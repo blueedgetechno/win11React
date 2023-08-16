@@ -101,7 +101,7 @@ export const connectWorker = (e) =>
     if (!worker) return;
 
     const sessionUrlFound = worker.data.find(
-      (session) => session.info.ended === false
+      (session) => session.info.ended === false,
     )?.info?.remote_url;
 
     if (sessionUrlFound) {
@@ -117,7 +117,7 @@ export const connectWorker = (e) =>
 
     const res = await CreateWorkerSession(
       worker.info.worker_profile_id,
-      media_device
+      media_device,
     );
 
     log({
