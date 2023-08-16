@@ -11,6 +11,7 @@ import {
   StartApplication,
   StopApplication,
 } from "./fetch";
+import i18next from "i18next";
 
 const wrapper = async (func) => {
   try {
@@ -60,12 +61,12 @@ export const deleteStore = async (app) => {
 export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+
     if (payload.status == "NOT_READY")
-      throw new Error(
-        `App would be available about 3 minutes after download, Contact us (via email box) if it is stil unavailable`,
-      );
+      throw (i18next.t("error.NOT_READY"));
     else if (payload.status != "RUNNING")
-      throw new Error("please start application before access");
+      throw (i18next.t("error.NOT_RUNNING"));
 
     const result = await AccessApplication(payload.storage_id);
     window.open(result.url, "_blank");
@@ -82,7 +83,7 @@ export const installApp = (payload) =>
 export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    if (payload.status != "PAUSED") throw new Error(`app is not paused yet`);
+    if (payload.status != "PAUSED") throw (i18next.t("error.NOT_PAUSED"));
 
     await StartApplication(payload.storage_id);
     fetchApp();
@@ -93,7 +94,7 @@ export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     if (payload.status != "RUNNING")
-      throw new Error(`app is not running, abort pause`);
+      throw (i18next.t("error.PAUSED"));
 
     await StopApplication(payload.storage_id);
     fetchApp();
