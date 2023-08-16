@@ -28,6 +28,10 @@
     "unspecific": "Something went wrong.",
     "ALREADY_DEPLOYED": "Bạn đã install 1 game rồi. Xoá game cũ trước khi tải game mới",
     "NOT_ALLOW": "Tài khoản của bạn chưa đăng kí dịch vụ.",
-    "run_out_of_gpu_stock": "Hệ thống đang hết máy, vui lòng liên hệ admin!"
+    "run_out_of_gpu_stock": "Hệ thống đang hết máy, vui lòng liên hệ admin!",
+    "NOT_READY": "Game đang tải xuống vui lòng đợi 3-5' cho đến khi logo game xuất hiện",
+    "NOT_RUNNING": "Game đã được Paused hoặc đang tải xuống , chạy 'Start app' để mở game",
+    "NOT_PAUSED": "Game đang chạy hoặc tải xuống, thử lại sau nhé!",
+    "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!"
   }
 }
