@@ -36,14 +36,14 @@ export function formatWorkerRenderTree(data) {
       worker.data.forEach((session) => {
         const session_name = `${session.type} ${session.id}`;
         newData.Account.data[proxy_name].data[worker_name].data[session_name] =
-          {
-            type: "folder",
-            data: {},
-            info: {
-              ...session.info,
-              menu: "session",
-            },
-          };
+        {
+          type: "folder",
+          data: {},
+          info: {
+            ...session.info,
+            menu: "session",
+          },
+        };
         session.data.forEach((user_session) => {
           newData.Account.data[proxy_name].data[worker_name].data[
             session_name
@@ -119,6 +119,8 @@ export async function formatAppRenderTree(data) {
           status: paused ? "PAUSED" : "RUNNING",
           storage_id: storage.id,
           additional: icon.metadata, // TODO
+          privateIp: storage.data[0].info.hardware.PrivateIP ?? 0,
+
         }),
         type: "externalApp",
         status: paused ? "PAUSED" : "RUNNING",
