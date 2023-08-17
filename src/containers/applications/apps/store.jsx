@@ -243,9 +243,10 @@ const FrontPage = (props) => {
                     />
                     <div className="text-xss">{1}k</div>
                   </div>
-                  <div className="text-xss mt-8">
-                    <>{t("store.free")}</>
-                    {/* <>{t("store.owned")}</> */}
+                  <div className="text-xss mt-4 mb-1">
+                    <>
+                      {game.platform}
+                    </>
                   </div>
                 </div>
               );
