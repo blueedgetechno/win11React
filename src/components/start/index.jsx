@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../actions";
 import { getTreeValue } from "../../actions";
@@ -10,6 +10,7 @@ import "./startmenu.scss";
 import { AnalyticIdentify, AnalyticTrack } from "../../lib/segment.js";
 import { PiPauseBold } from "react-icons/pi";
 import { AiOutlineCloudDownload } from "react-icons/ai";
+import { fetchApp } from "../../actions/preload";
 export * from "./start";
 export * from "./widget";
 
@@ -47,6 +48,21 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+
+  const hasNotReadyApp = useMemo(()=>{
+    return deskApps.apps.some(app => app.status =='NOT_READY')
+  },[deskApps.apps])
+
+  useEffect(()=>{
+
+    const intervalFetchApp = async()=>{
+      for (let index = 0; index < 10; index++) {
+          fetchApp()
+          await new Promise(r => setTimeout(r, 60 * 1000));
+      }
+    }
+    if(hasNotReadyApp) intervalFetchApp()
+  },[hasNotReadyApp])
 
   const dispatch = useDispatch();
   const handleDouble = (e) => {
