@@ -192,7 +192,8 @@ export const StartApplication = async (storage_id) => {
 
   return data;
 };
-export const AccessApplication = async (storage_id) => {
+export const AccessApplication = async (input) => {
+  const { storage_id, privateIp } = input
   const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
@@ -202,7 +203,14 @@ export const AccessApplication = async (storage_id) => {
       storage_id: storage_id,
     }),
   });
-  if (error != null)
+  if (error == 'timeout 3 mins waiting for worker') {
+    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
+            </b>
+            </br> 
+              Screenshot and send it to admin
+          <p>`;
+  }
+  else if (error != null)
     throw `<p> <b class='uppercase'>${error}. 
               </b>
                ${suggestMsg}

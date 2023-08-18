@@ -68,7 +68,11 @@ export const openApp = async (appInput) =>
     else if (payload.status != "RUNNING")
       throw (i18next.t("error.NOT_RUNNING"));
 
-    const result = await AccessApplication(payload.storage_id);
+    const input = {
+      storage_id: payload.storage_id,
+      privateIp: payload.privateIp
+    }
+    const result = await AccessApplication(input);
     window.open(result.url, "_blank");
   });
 
