@@ -119,7 +119,7 @@ export async function formatAppRenderTree(data) {
           status: paused ? "PAUSED" : "RUNNING",
           storage_id: storage.id,
           additional: icon.metadata, // TODO
-          privateIp: storage.data[0].info.hardware.PrivateIP ?? 0,
+          privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
 
         }),
         type: "externalApp",
