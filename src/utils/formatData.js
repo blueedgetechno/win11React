@@ -105,10 +105,12 @@ export async function formatAppRenderTree(data) {
         )
       ).json();
 
-      const icon = icons.at(0);
+      const icon = icons.at(0) ?? {
+        name: 'Game Pause',
+        icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
+      };
       // id in store. +  icon: url img, => view
       // metatada: Meta in store.
-
       // pause check by storage.data.lenghth > 0.
       const paused = storage.data.length == 0;
       return {
