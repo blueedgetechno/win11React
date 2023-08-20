@@ -362,17 +362,18 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
+
   const renderIconName = (info) => {
-    if (info == undefined) {
-      return "worker_disconnect";
-    }
-    if (info.ended != undefined && typeof info.ended == "boolean") {
-      return !info.ended ? "worker_connect" : "worker_disconnect";
-    }
-    if (info.isActive != undefined && typeof info.isActive == "boolean") {
-      return info.isActive ? "worker_connect" : "worker_disconnect";
-    }
-    return "worker_connect";
+    if (info.state == 'STOPPED')
+      return 'worker_disconnect'
+    if (info.state == 'RUNNING')
+      return 'worker_connect'
+    if (info.menu == 'worker')
+      return 'thispc'
+    if (info.menu == 'proxy')
+      return 'onedrive'
+    else
+      return "folder3d";
   };
 
   return (
