@@ -389,6 +389,16 @@ const defState = {
         action: "VIEW_DETAIL",
         payload: "detail",
       },
+      {
+        name: "Connect",
+        action: "CONNECTVOLUMEWORKER",
+        payload: "connect",
+      },
+      {
+        name: "Stop",
+        action: "STOPVOLUME",
+        payload: "stop",
+      },
     ],
     volumes: [
       {

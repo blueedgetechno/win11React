@@ -194,12 +194,12 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTWORKERSESSION") connectSession(event);
   else if (type === "VIEW_DETAIL") viewDetail(event);
   else if (type === "CLOUDAPP") console.log(event);
-  else if (type === "PAUSE_APP") {
-    ActionExternal.pauseApp(externalAppData);
-  } else if (type === "START_APP") {
-    ActionExternal.startApp(externalAppData);
-  } else if (type != type.toUpperCase())
-    // TODO
+
+  else if (type === "CONNECTVOLUMEWORKER")    ActionExternal.connectVolume(event);
+  else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
+  else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
+  else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
+  else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);
 

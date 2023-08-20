@@ -1,7 +1,7 @@
 import store from "../reducers";
 import { isAdmin } from "../utils/isAdmin";
 import { log } from "../lib/log";
-import { fetchApp, fetchStore } from "./preload";
+import { fetchApp, fetchStore, fetchWorker } from "./preload";
 import supabase from "../supabase/createClient";
 import {
   AccessApplication,
@@ -12,6 +12,20 @@ import {
   StopApplication,
 } from "./fetch";
 import i18next from "i18next";
+
+
+const formatEvent = (event) => {
+  const pid = event.target.dataset.pid;
+  const action = {
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload,
+    pid: event.target.dataset.pid,
+    ...store.getState().worker.data.getId(pid),
+  };
+
+  console.log(action);
+  return action;
+};
 
 const wrapper = async (func) => {
   try {
@@ -109,4 +123,28 @@ export const deleteApp = (appInput) =>
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
     fetchApp();
+  });
+
+export const connectVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+
+    const input = {
+      storage_id: payload.info.storage,
+      privateIp: 'unknown'
+    }
+
+    const result = await AccessApplication(input);
+    window.open(result.url, "_blank");
+  });
+
+
+export const stopVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+ 
+    await StopApplication(payload.info.storage);
+    await fetchWorker()
+    return "success";
   });
