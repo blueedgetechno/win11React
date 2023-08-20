@@ -258,6 +258,28 @@ export const StopApplication = async (storage_id) => {
   return data;
 };
 
+export const StopVolume = async (volume_id) => {
+  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "STOP_VOLUME",
+      volume_id: volume_id,
+    }),
+  });
+  if (error != null)
+    throw `<p> 
+              <b class='uppercase'>${error}. 
+              ${suggestMsg}
+              </b> 
+              </br> 
+              ${directDiscordMsg} 
+            <p>`;
+
+  return data;
+};
+
 export const FetchApplicationTemplates = async (id) => {
   const session = await supabase.auth.getSession();
   if (session.error != null) return session.error;

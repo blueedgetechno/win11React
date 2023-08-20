@@ -10,6 +10,7 @@ import {
   FetchUserApplication,
   StartApplication,
   StopApplication,
+  StopVolume,
 } from "./fetch";
 import i18next from "i18next";
 
@@ -144,7 +145,16 @@ export const stopVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
  
-    await StopApplication(payload.info.storage);
+    const storage = payload.info.storage
+    const volume  = payload.info.id
+    
+    if (storage != undefined) 
+      await StopApplication(storage);
+    else if (volume  != undefined)
+      await StopVolume(volume);
+    else 
+      throw 'invalid request'
+
     await fetchWorker()
     return "success";
   });
