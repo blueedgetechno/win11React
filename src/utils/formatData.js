@@ -1,65 +1,61 @@
 export function formatWorkerRenderTree(data) {
+  const tree = data.tree
   const newData = {
     Account: {
       type: "folder",
-      name: "Account",
-      info: {
-        size: "",
-        used: "",
+      name: "\\",
+      info: { 
+        ...tree.info,
         spid: "%worker%",
       },
       data: {},
     },
   };
 
-  data.tree.data.forEach((proxy) => {
+  if (tree.type != 'admin') {
+    newData.Account.data[tree.id] = RenderBranch(tree)
+  } else {
+    tree.data.forEach(x => {
+      const branch = RenderBranch(x)
+      if (branch == null)
+        return
+
+      newData.Account.data[x.id] = branch
+    })
+  }
+  return newData
+}
+
+function RenderBranch (tree) {
+  const folder = {}
+  AddNode(folder,tree)
+  return {
+    type: "folder",
+    data: folder,
+    info: {
+      ...tree.info,
+      // menu: "session",
+    },
+  };
+}
+
+
+function AddNode(folder,tree) {
+  tree.data.forEach((proxy) => {
     const proxy_name = `${proxy.type} ${proxy.id}`;
-    newData.Account.data[proxy_name] = {
-      type: "folder",
+    folder[proxy_name] = {
+      type: proxy.data.length > 0 
+        ? "folder"
+        : "file",
       data: {},
       info: {
         ...proxy.info,
-        menu: "proxy",
+        menu: proxy.type,
       },
     };
-    proxy.data.forEach((worker) => {
-      const worker_name = `${worker.type} ${worker.id}`;
-      newData.Account.data[proxy_name].data[worker_name] = {
-        type: "folder",
-        data: {},
-        info: {
-          ...worker.info,
-          menu: "worker",
-        },
-      };
 
-      worker.data.forEach((session) => {
-        const session_name = `${session.type} ${session.id}`;
-        newData.Account.data[proxy_name].data[worker_name].data[session_name] =
-        {
-          type: "folder",
-          data: {},
-          info: {
-            ...session.info,
-            menu: "session",
-          },
-        };
-        session.data.forEach((user_session) => {
-          newData.Account.data[proxy_name].data[worker_name].data[
-            session_name
-          ].data[`${user_session.type} ${user_session.id}`] = {
-            type: "file",
-            data: {},
-            info: {
-              ...user_session.info,
-              menu: "user",
-            },
-          };
-        });
-      });
-    });
-  });
-  return newData;
+    AddNode(folder[proxy_name].data,proxy)
+  })
 }
 
 // {

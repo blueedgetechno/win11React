@@ -31,11 +31,27 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
-    session: {
+    worker_session: {
       width: "150px",
       secwid: "100px",
     },
-    user: {
+    user_session: {
+      width: "150px",
+      secwid: "100px",
+    },
+    volumes: {
+      width: "150px",
+      secwid: "100px",
+    },
+    volume: {
+      width: "150px",
+      secwid: "100px",
+    },
+    apps: {
+      width: "150px",
+      secwid: "100px",
+    },
+    app: {
       width: "150px",
       secwid: "100px",
     },
@@ -332,7 +348,7 @@ const defState = {
         payload: "openmodal",
       },
     ],
-    session: [
+    worker_session: [
       {
         name: "Open",
         action: "FILEDIRWORKER",
@@ -353,7 +369,35 @@ const defState = {
         payload: "detail",
       },
     ],
-    user: [
+    app: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    apps: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    volume: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    volumes: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    user_session: [
       {
         name: "Detail",
         action: "VIEW_DETAIL",
