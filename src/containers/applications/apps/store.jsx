@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
   useLayoutEffect,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +8,12 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
-import supabase from "../../../supabase/createClient";
-import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
+import { PatchApp,ReleaseApp } from "../../../actions/app";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -340,7 +338,6 @@ const DetailPage = ({ app }) => {
           },
         )
       ).json();
-      console.log(options);
       SetOptions(options);
     })();
   }, []);
@@ -359,6 +356,7 @@ const DetailPage = ({ app }) => {
     });
   };
 
+
   const DeleteButton = () => {
     return (
       <div
@@ -371,6 +369,15 @@ const DetailPage = ({ app }) => {
       </div>
     );
   };
+
+  const ReleaseAppButton = () => {
+    return (
+      <div onClick={ReleaseApp}>
+        <div className="instbtn mt-1 mb-8 handcr">Release</div>
+      </div>
+    );
+  };
+
 
   const EditButton = () => {
     return (
@@ -395,13 +402,23 @@ const DetailPage = ({ app }) => {
             </a>
           </div>
         ) : dstate == 0 ? (
-          Options.map((x) => (
-            <div
-              className="instbtn mt-12 mb-8 handcr"
-              payload={x}
-              onClick={() => download(x)}
-            >
+          Options.map(x => (
+            <div key={x.id}>
+              <div
+                className="instbtn mt-12 handcr"
+                payload={x}
+                onClick={() => download(x)}
+              >
               {`${x.gpu} ${x.region}`}
+              </div>
+              {
+                isAdmin() 
+                ? <div onClick={() => PatchApp(x)}>
+                    <div className="instbtn mb-8 handcr">Patch</div>
+                  </div>
+                : null
+              }
+
             </div>
           ))
         ) : (
@@ -425,10 +442,13 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{app?.name}</div>
           <div className="text-xs text-blue-500">{app?.type}</div>
           <GotoButton />
+
           {isAdmin() && app.type != "vendor" ? (
             <>
+              <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
+              
             </>
           ) : null}
           <div className="flex mt-4">

@@ -12,6 +12,8 @@ import {
   StopApplication,
   StopVolume,
 } from "./fetch";
+import Swal from "sweetalert2";
+import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 
 
@@ -54,15 +56,27 @@ const wrapper = async (func) => {
 export const deleteStore = async (app) => {
   if (!isAdmin()) return;
 
-  const { id } = app;
-  const deleteApp = async () => {
-    const { data, error } = await supabase.from("store").delete().eq("id", id);
+  const virtless_anon =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
 
-    if (error) throw error;
+  const resp = await fetch(`https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?id=eq.${app.id}`,
+  {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${virtless_anon}`,
+      apikey: virtless_anon,
+      // "refer": "return=minimal"
+    },
+  }
+  )
 
-    return "success";
-  };
+  console.log(resp)
 
+  if (resp.status != 204 || 200 || 201) throw await resp.text();
+
+
+  
   await log({
     error: null,
     type: "confirm",
@@ -158,3 +172,56 @@ export const stopVolume = (e) =>
     await fetchWorker()
     return "success";
   });
+
+export const ReleaseApp = async (store) => {
+  wrapper(async () => {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+          'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "RELEASE",
+        store_id: store.id,
+        desc: text
+      }),
+    });
+
+    if (error) 
+      throw error
+  })}
+
+export const PatchApp = async (app) => {
+  wrapper(async () => {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+        'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "PATCH",
+        app_id: app.id,
+        desc: text
+      }),
+    });
+
+    if (error) 
+      throw error
+    
+  })}
