@@ -328,8 +328,7 @@ const DetailPage = ({ app }) => {
       const anon = import.meta.env.VITE_SUPABASE_ANON_KEY_VIRT;
       const options = await (
         await fetch(
-          `${
-            import.meta.env.VITE_SUPABASE_URL_VIRT
+          `${import.meta.env.VITE_SUPABASE_URL_VIRT
           }/rest/v1/rpc/get_app_from_store`,
           {
             method: "POST",
@@ -367,7 +366,7 @@ const DetailPage = ({ app }) => {
       inputLabel: 'Message',
       inputPlaceholder: 'Type your description here...',
       inputAttributes: {
-          'aria-label': 'Type your description here'
+        'aria-label': 'Type your description here'
       },
       showCancelButton: false
     })
@@ -390,20 +389,32 @@ const DetailPage = ({ app }) => {
       inputLabel: 'Message',
       inputPlaceholder: 'Type your description here...',
       inputAttributes: {
-          'aria-label': 'Type your description here'
+        'aria-label': 'Type your description here'
       },
       showCancelButton: false
     })
+
+    console.log(Options)
+
+    const { value: current_app } = await Swal.fire({
+      title: 'Select Cluster',
+      input: 'select',
+      inputOptions: Options.map(x => (x.region)),
+      inputPlaceholder: 'Select cluster',
+      showCancelButton: true,
+    })
     Swal.close();
 
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "PATCH",
-        store_id: app.id,
-        desc: value
-      }),
-    });
+    console.log(current_app)
+
+    // const { data, error } = await SupabaseFuncInvoke("request_application", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     action: "PATCH",
+    //     app_id: app.id,
+    //     desc: value
+    //   }),
+    // });  
   }
 
   const DeleteButton = () => {
@@ -498,7 +509,7 @@ const DetailPage = ({ app }) => {
               <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
-              
+
             </>
           ) : null}
           <div className="flex mt-4">
