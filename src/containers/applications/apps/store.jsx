@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
   useLayoutEffect,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,15 +8,12 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
-import supabase from "../../../supabase/createClient";
-import store from "../../../reducers";
 import { AnalyticTrack } from "../../../lib/segment";
 import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
-import Swal from "sweetalert2";
-import { SupabaseFuncInvoke } from "../../../actions/fetch/index.js";
+import { PatchApp,ReleaseApp } from "../../../actions/app";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -328,7 +324,8 @@ const DetailPage = ({ app }) => {
       const anon = import.meta.env.VITE_SUPABASE_ANON_KEY_VIRT;
       const options = await (
         await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL_VIRT
+          `${
+            import.meta.env.VITE_SUPABASE_URL_VIRT
           }/rest/v1/rpc/get_app_from_store`,
           {
             method: "POST",
@@ -359,63 +356,6 @@ const DetailPage = ({ app }) => {
     });
   };
 
-  const handleReleaseApp = async () => {
-
-    const { value: text } = await Swal.fire({
-      input: 'textarea',
-      inputLabel: 'Message',
-      inputPlaceholder: 'Type your description here...',
-      inputAttributes: {
-        'aria-label': 'Type your description here'
-      },
-      showCancelButton: false
-    })
-    Swal.close();
-
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "RELEASE",
-        store_id: app.id,
-        desc: text
-      }),
-    });
-  }
-
-  const handlePatch = async () => {
-
-    const { value: text } = await Swal.fire({
-      input: 'textarea',
-      inputLabel: 'Message',
-      inputPlaceholder: 'Type your description here...',
-      inputAttributes: {
-        'aria-label': 'Type your description here'
-      },
-      showCancelButton: false
-    })
-
-    console.log(Options)
-
-    const { value: current_app } = await Swal.fire({
-      title: 'Select Cluster',
-      input: 'select',
-      inputOptions: Options.map(x => (x.region)),
-      inputPlaceholder: 'Select cluster',
-      showCancelButton: true,
-    })
-    Swal.close();
-
-    console.log(current_app)
-
-    // const { data, error } = await SupabaseFuncInvoke("request_application", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     action: "PATCH",
-    //     app_id: app.id,
-    //     desc: value
-    //   }),
-    // });  
-  }
 
   const DeleteButton = () => {
     return (
@@ -430,19 +370,9 @@ const DetailPage = ({ app }) => {
     );
   };
 
-
-  const PatchButton = () => {
-    return (
-      <div onClick={handlePatch}>
-        <div className="instbtn mt-1 mb-8 handcr">Patch</div>
-      </div>
-    );
-  };
-
-
   const ReleaseAppButton = () => {
     return (
-      <div onClick={handleReleaseApp}>
+      <div onClick={ReleaseApp}>
         <div className="instbtn mt-1 mb-8 handcr">Release</div>
       </div>
     );
@@ -472,13 +402,23 @@ const DetailPage = ({ app }) => {
             </a>
           </div>
         ) : dstate == 0 ? (
-          Options.map((x) => (
-            <div
-              className="instbtn mt-12 mb-8 handcr"
-              payload={x}
-              onClick={() => download(x)}
-            >
+          Options.map(x => (
+            <div key={x.id}>
+              <div
+                className="instbtn mt-12 handcr"
+                payload={x}
+                onClick={() => download(x)}
+              >
               {`${x.gpu} ${x.region}`}
+              </div>
+              {
+                isAdmin() 
+                ? <div onClick={() => PatchApp(x)}>
+                    <div className="instbtn mb-8 handcr">Patch</div>
+                  </div>
+                : null
+              }
+
             </div>
           ))
         ) : (
@@ -505,11 +445,10 @@ const DetailPage = ({ app }) => {
 
           {isAdmin() && app.type != "vendor" ? (
             <>
-              <PatchButton />
               <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
-
+              
             </>
           ) : null}
           <div className="flex mt-4">

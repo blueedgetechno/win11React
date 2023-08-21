@@ -12,6 +12,8 @@ import {
   StopApplication,
   StopVolume,
 } from "./fetch";
+import Swal from "sweetalert2";
+import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 
 
@@ -170,3 +172,56 @@ export const stopVolume = (e) =>
     await fetchWorker()
     return "success";
   });
+
+export const ReleaseApp = async (store) => {
+  wrapper(async () => {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+          'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "RELEASE",
+        store_id: store.id,
+        desc: text
+      }),
+    });
+
+    if (error) 
+      throw error
+  })}
+
+export const PatchApp = async (app) => {
+  wrapper(async () => {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+        'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "PATCH",
+        app_id: app.id,
+        desc: text
+      }),
+    });
+
+    if (error) 
+      throw error
+    
+  })}
