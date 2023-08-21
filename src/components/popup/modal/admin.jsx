@@ -122,17 +122,33 @@ const ModalEditOrInsert = (props) => {
 
   async function handleInsertApp(newData) {
     const { title, icon, description, type, feature, screenshoots } = newData;
-    const { data, error } = await supabase.from("store").insert({
-      title: title,
-      icon: icon,
-      type: type,
-      metadata: {
-        description: description,
-        feature: feature,
-        screenshoots: screenshoots,
+    
+    const virtless_anon =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
+    const resp = await fetch(
+      `https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${virtless_anon}`,
+          apikey: virtless_anon,
+          // "refer": "return=minimal"
+        },
+        body: JSON.stringify({
+          "name": title,
+          "icon": icon,
+          "type": type,
+          "metadata": {
+            "description": description,
+            "feature": feature,
+            "screenshoots": screenshoots,
+          }
+        })
       },
-    });
-    if (error) throw error;
+    );
+
+    if (resp.status != 200) throw await resp.text();
   }
 
   const handleSubmitForm = async (event) => {
