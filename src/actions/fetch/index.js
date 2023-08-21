@@ -81,7 +81,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
   if (error != null) throw error;
   return data;
 };
-const SupabaseFuncInvoke = async (funcName, options) => {
+export const SupabaseFuncInvoke = async (funcName, options) => {
   try {
     const credential = await getCredentialHeader();
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;

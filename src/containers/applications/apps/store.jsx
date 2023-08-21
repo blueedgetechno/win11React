@@ -16,6 +16,8 @@ import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
+import Swal from "sweetalert2";
+import { SupabaseFuncInvoke } from "../../../actions/fetch/index.js";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -359,6 +361,54 @@ const DetailPage = ({ app }) => {
     });
   };
 
+  const handleReleaseApp = async () => {
+
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+          'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    console.log(value)
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "RELEASE",
+        store_id: app.id,
+        desc: value
+      }),
+    });
+  }
+
+  const handlePatch = async () => {
+
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Message',
+      inputPlaceholder: 'Type your description here...',
+      inputAttributes: {
+          'aria-label': 'Type your description here'
+      },
+      showCancelButton: false
+    })
+    Swal.close();
+
+    const { data, error } = await SupabaseFuncInvoke("request_application", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "PATCH",
+        store_id: app.id,
+        desc: value
+      }),
+    });
+  }
+
   const DeleteButton = () => {
     return (
       <div
@@ -371,6 +421,25 @@ const DetailPage = ({ app }) => {
       </div>
     );
   };
+
+
+  const PatchButton = () => {
+    return (
+      <div onClick={handlePatch}>
+        <div className="instbtn mt-1 mb-8 handcr">Patch</div>
+      </div>
+    );
+  };
+
+
+  const ReleaseAppButton = () => {
+    return (
+      <div onClick={handleReleaseApp}>
+        <div className="instbtn mt-1 mb-8 handcr">Release</div>
+      </div>
+    );
+  };
+
 
   const EditButton = () => {
     return (
@@ -425,10 +494,14 @@ const DetailPage = ({ app }) => {
           <div className="text-2xl font-semibold mt-6">{app?.name}</div>
           <div className="text-xs text-blue-500">{app?.type}</div>
           <GotoButton />
+
           {isAdmin() && app.type != "vendor" ? (
             <>
+              <PatchButton />
+              <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
+              
             </>
           ) : null}
           <div className="flex mt-4">
