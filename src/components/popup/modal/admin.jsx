@@ -107,20 +107,33 @@ const ModalEditOrInsert = (props) => {
   }
 
   async function handleUpdateApp(app) {
-    const { id, title, icon, description, feature, screenshoots } = app;
+    const { id, name, icon, description, feature, screenshoots } = app;
     //update DB
-    let requestDb = await supabase
-      .from("store")
-      .update({
-        title: title,
-        icon: icon,
-        metadata: {
-          description: description,
-          feature: feature,
-          screenshoots: screenshoots,
+    const resp = await fetch(
+      `https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?id=eq.${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${virtless_anon}`,
+          apikey: virtless_anon,
+          // "refer": "return=minimal"
         },
-      })
-      .eq("id", id);
+        body: JSON.stringify({
+          "name": name,
+          "icon": icon,
+          "metadata": {
+            "description": description,
+            "feature": feature,
+            "screenshoots": screenshoots,
+          }
+        })
+      },
+    );
+
+    if (resp.status != 200) throw await resp.text();
+
+
     if (requestDb.error) throw requestDb.error;
   }
 
