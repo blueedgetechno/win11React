@@ -342,7 +342,6 @@ const DetailPage = ({ app }) => {
           },
         )
       ).json();
-      console.log(options);
       SetOptions(options);
     })();
   }, []);
@@ -374,14 +373,12 @@ const DetailPage = ({ app }) => {
     })
     Swal.close();
 
-    console.log(value)
-
     const { data, error } = await SupabaseFuncInvoke("request_application", {
       method: "POST",
       body: JSON.stringify({
         action: "RELEASE",
         store_id: app.id,
-        desc: value
+        desc: text
       }),
     });
   }
