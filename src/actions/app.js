@@ -33,7 +33,11 @@ const formatEvent = (event) => {
 
 const wrapper = async (func, appType) => {
   let content = "It took about 5 minutes, take a break🧐"
- 
+  if (appType == 'startApp') content = i18next.t("info.startApp");
+  if (appType == 'installApp') content = i18next.t("info.installApp")
+  if (appType == 'pauseApp') content = i18next.t("info.pauseApp")
+
+
   try {
     log({
       type: "loading",
@@ -128,9 +132,11 @@ export const startApp = async (appInput) =>
           volume_id: payload.volume_id
         })
 
-      if (error) console.error(error)
-      console.log(data);
-      if (data == true) return
+      if (error) 
+        throw error
+      if (data == true) 
+        break
+
       await sleep(60 * 1000)
     }
     fetchApp();
@@ -145,14 +151,15 @@ export const pauseApp = async (appInput) =>
       throw (i18next.t("error.PAUSED"));
 
     await StopApplication(payload.storage_id);
-    fetchApp();
+    await sleep(15 * 1000)
+    await fetchApp();
   });
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
-    fetchApp();
+    await fetchApp();
   });
 
 export const connectVolume = (e) =>
