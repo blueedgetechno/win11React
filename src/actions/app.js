@@ -15,6 +15,7 @@ import {
 import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
+import { sleep } from "../utils/sleep";
 
 
 const formatEvent = (event) => {
@@ -30,11 +31,17 @@ const formatEvent = (event) => {
   return action;
 };
 
-const wrapper = async (func) => {
+const wrapper = async (func, appType) => {
+  let content = "It took about 5 minutes, take a break🧐"
+  if (appType == 'startApp') content = i18next.t("info.startApp");
+  if (appType == 'installApp') content = i18next.t("info.installApp")
+  if (appType == 'pauseApp') content = i18next.t("info.pauseApp")
+
+
   try {
     log({
       type: "loading",
-      content: "It took about 5 minutes, take a break🧐",
+      content: content,
     });
     const result = await func();
     await log({
@@ -119,8 +126,22 @@ export const startApp = async (appInput) =>
     if (payload.status != "PAUSED") throw (i18next.t("error.NOT_PAUSED"));
 
     await StartApplication(payload.storage_id);
+    for (let i = 0; i < 100; i++) {
+      let { data, error } = await supabase
+        .rpc('setup_status', {
+          volume_id: payload.volume_id
+        })
+
+      if (error) 
+        throw error
+      if (data == true) 
+        break
+
+      await sleep(60 * 1000)
+    }
     fetchApp();
-  });
+    await sleep(5 * 1000)
+  },'startApp');
 
 // desktop app
 export const pauseApp = async (appInput) =>
@@ -130,14 +151,15 @@ export const pauseApp = async (appInput) =>
       throw (i18next.t("error.PAUSED"));
 
     await StopApplication(payload.storage_id);
-    fetchApp();
+    await sleep(15 * 1000)
+    await fetchApp();
   });
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
-    fetchApp();
+    await fetchApp();
   });
 
 export const connectVolume = (e) =>

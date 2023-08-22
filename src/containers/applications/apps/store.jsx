@@ -47,7 +47,7 @@ export const MicroStore = () => {
 
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: (element.scrollHeight * 30) / 100 });
+    element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
   }, []);
 
   const frontScroll = (e) => {
@@ -160,7 +160,7 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
   }, []);
-
+ 
   return (
     <div className="pagecont w-full absolute top-0">
       <Image id="sthome" className="frontPage w-full" src={cover} ext />
@@ -341,7 +341,10 @@ const DetailPage = ({ app }) => {
       SetOptions(options);
     })();
   }, []);
-
+  useLayoutEffect(() => {
+    const element = document.getElementById("storeScroll");
+    element.scrollTo({ top: 0});
+  }, [])
   const dispatch = useDispatch();
 
   const download = async ({ id }) => {
