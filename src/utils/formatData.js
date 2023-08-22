@@ -118,6 +118,7 @@ export async function formatAppRenderTree(data) {
           storage_id: storage.id,
           additional: icon.metadata, // TODO
           privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
+          volume_id: storage?.info?.deploy_as ?? 0
 
         }),
         type: "externalApp",
