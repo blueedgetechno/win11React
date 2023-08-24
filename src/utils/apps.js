@@ -342,6 +342,20 @@ const apps = [
     action: "EXTERNAL",
     payload: externalLink.FACEBOOK_LINK,
   },
+  {
+    name: "Demo",
+    icon: "https://www.gstatic.com/images/branding/product/1x/forms_512dp.png",
+    type: "app",
+    action: gene_name(),
+    data: {
+      type: "IFrame",
+      url: "https://forms.gle/ej7RPwGMWqJG3S7p7",
+    },
+    hide: true,
+    pwa: true,
+    full: true,
+  },
+
 ];
 
 for (let i = 0; i < installed.length; i++) {
