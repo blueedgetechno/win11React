@@ -100,7 +100,7 @@ export const connectWorker = (e) =>
 
     if (!worker) return;
 
-    const sessionUrlFound = worker.data.find(
+    const sessionUrlFound = worker.data?.find(
       (session) => session.info.ended === false,
     )?.info?.remote_url;
 
