@@ -114,7 +114,8 @@ function App() {
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error != null) throw error;
-    if (window.location.host == "thinkmay.net") {
+    //move to win11.thinkmay.net
+    if (window.location.host == "win11.thinkmay.net") {
       logFEEvent(`source ${urlParams.get("ref") ?? "thinkmay"}`, data.user);
     }
     dispatch({

@@ -117,7 +117,7 @@ export const installApp = (payload) =>
   wrapper(async () => {
     await DownloadApplication(payload.app_template_id);
     fetchApp();
-  });
+  },'installApp');
 
 // desktop app
 export const startApp = async (appInput) =>
@@ -153,7 +153,7 @@ export const pauseApp = async (appInput) =>
     await StopApplication(payload.storage_id);
     await sleep(15 * 1000)
     await fetchApp();
-  });
+  },'pauseApp');
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
