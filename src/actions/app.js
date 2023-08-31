@@ -137,10 +137,9 @@ export const startApp = async (appInput) =>
       if (data == true) 
         break
 
-      await sleep(60 * 1000)
+      await sleep(10 * 1000)
     }
     await fetchApp();
-    await sleep(5 * 1000)
   },'startApp');
 
 // desktop app
