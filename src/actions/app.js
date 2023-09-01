@@ -97,7 +97,6 @@ export const deleteStore = async (app) => {
 export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
 
     if (payload.status == "NOT_READY")
       throw (i18next.t("error.NOT_READY"));
@@ -109,6 +108,7 @@ export const openApp = async (appInput) =>
       privateIp: payload.privateIp
     }
     const result = await AccessApplication(input);
+    
     window.open(result.url, "_blank");
   });
 
