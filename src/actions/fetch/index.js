@@ -168,7 +168,7 @@ export const DownloadApplication = async (app_template_id) => {
 
 export const StartApplication = async (storage_id) => {
   let msg;
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
@@ -185,7 +185,7 @@ export const StartApplication = async (storage_id) => {
     throw `<p> 
               </br>
               <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> Join 
+              </br> 
               ${directDiscordMsg} 
           <p>`;
   }
@@ -194,7 +194,7 @@ export const StartApplication = async (storage_id) => {
 };
 export const AccessApplication = async (input) => {
   const { storage_id, privateIp } = input
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
@@ -244,7 +244,7 @@ export const DeleteApplication = async (storage_id) => {
 };
 
 export const StopApplication = async (storage_id) => {
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
@@ -266,7 +266,7 @@ export const StopApplication = async (storage_id) => {
 };
 
 export const StopVolume = async (volume_id) => {
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
