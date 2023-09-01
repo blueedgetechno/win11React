@@ -210,6 +210,13 @@ export const AccessApplication = async (input) => {
               Screenshot and send it to admin
           <p>`;
   }
+  else if (error == 'worker not pinged') {
+    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
+            </b>
+            </br> 
+              Screenshot and send it to admin
+          <p>`;
+  }
   else if (error != null)
     throw `<p> <b class='uppercase'>${error}. 
               </b>

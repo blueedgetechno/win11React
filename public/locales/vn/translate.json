@@ -32,7 +32,9 @@
     "NOT_READY": "Game đang tải xuống vui lòng đợi 3-5' cho đến khi logo game xuất hiện",
     "NOT_RUNNING": "Game đã được Paused hoặc đang tải xuống , chạy 'Start app' để mở game",
     "NOT_PAUSED": "Game đang chạy hoặc tải xuống, thử lại sau nhé!",
-    "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!"
+    "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!",
+    "NOT_PINGED": "Game is pasued, reload và start app lại nhé!"
+
   },
   "info": {
     "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
