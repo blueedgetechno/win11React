@@ -97,34 +97,19 @@ export const connectSession = (e) =>
 export const connectWorker = (e) =>
   wrapper(async () => {
     const worker = formatEvent(e);
+    if (!worker) 
+      return;
 
-    if (!worker) return;
-
-    const sessionUrlFound = worker.data?.find(
-      (session) => session.info.ended === false,
-    )?.info?.remote_url;
-
-    if (sessionUrlFound) {
-      window.open(sessionUrlFound, "_blank");
-      return "success";
-    }
-
-    const media_device = worker.info.media_device ?? "";
     log({
       type: "loading",
       title: "Await create a new session",
     });
 
-    const res = await CreateWorkerSession(
-      worker.info.worker_profile_id,
-      media_device,
-    );
+    const res = await CreateWorkerSession(worker.info.worker_profile_id);
 
-    log({
-      type: "close",
-    });
-
+    log({ type: "close", });
     window.open(res.url, "_blank");
+
     await fetchWorker();
     return "success";
   });
