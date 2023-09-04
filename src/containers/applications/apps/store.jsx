@@ -14,6 +14,7 @@ import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
+import store from "../../../reducers";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -130,9 +131,8 @@ export const MicroStore = () => {
               payload={page == 0 && tab == "gamerib"}
             />
 
-            {isAdmin() ? (
-              <Icon onClick={insertApp} ui={true} src={"new"} />
-            ) : null}
+            {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
+            {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
           </div>
 
           <div
@@ -161,7 +161,7 @@ const FrontPage = (props) => {
     setCover(vendors[0]?.images[0]);
     let index = 0
     setInterval(() => {
-      setCover(vendors[index].images[0]);
+      setCover(vendors[index % vendors.length].images[0]);
       index++
     },10 * 1000)
   }, []);

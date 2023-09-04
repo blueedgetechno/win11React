@@ -32,6 +32,19 @@ const apps = [
     pwa: true,
     full: true,
   },
+  {
+    name: "Landing page",
+    icon: "thinkmay",
+    type: "app",
+    action: gene_name(),
+    data: {
+      type: "IFrame",
+      url: "https://landing.thinkmay.net",
+    },
+    hide: true,
+    pwa: true,
+    full: false,
+  },
 
   {
     name: "Start",
