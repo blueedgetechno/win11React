@@ -159,6 +159,11 @@ const FrontPage = (props) => {
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
+    let index = 0
+    setInterval(() => {
+      setCover(vendors[index].images[0]);
+      index++
+    },10 * 1000)
   }, []);
  
   return (
@@ -172,16 +177,9 @@ const FrontPage = (props) => {
               return (
                 <a
                   key={i}
-                  onClick={() => {
-                    props.app_click(vendor);
-                  }}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={() => {
-                    setTimeout(() => {
-                      setCover(vendor.images[0]);
-                    }, 300);
-                  }}
+                  onClick={() => {setCover(vendor.images[0])}}
                 >
                   <Image
                     className="mx-1 dpShad rounded"
@@ -468,6 +466,7 @@ const DetailPage = ({ app }) => {
               
             </>
           ) : null}
+
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
@@ -488,6 +487,7 @@ const DetailPage = ({ app }) => {
               <div className="text-xss mt-px pt-1">Ratings</div>
             </div>
           </div>
+
           <div className="descnt text-xs relative w-0">{app?.description}</div>
         </div>
       </div>
