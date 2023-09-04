@@ -383,7 +383,9 @@ const DetailPage = ({ app }) => {
 
   const ReleaseAppButton = () => {
     return (
-      <div onClick={ReleaseApp}>
+      <div onClick={() => {
+        ReleaseApp(app)
+      }}>
         <div className="instbtn mt-1 mb-8 handcr">Release</div>
       </div>
     );
