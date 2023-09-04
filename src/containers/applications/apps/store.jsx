@@ -338,7 +338,17 @@ const DetailPage = ({ app }) => {
           },
         )
       ).json();
-      SetOptions(options);
+
+
+      for (let index = 0; index < options.length; index++) {
+        const option = options[index];
+        for (let index = 0; index < option.available.length; index++) {
+          if (option.available[index].available.gpus.includes(option.gpu)) {
+            SetOptions(old => [...old,option]);
+            return
+          }
+        }
+      }
     })();
   }, []);
   useLayoutEffect(() => {
@@ -404,8 +414,9 @@ const DetailPage = ({ app }) => {
               Checkout
             </a>
           </div>
-        ) : dstate == 0 ? (
-          Options.map(x => (
+        ) : dstate == 0 ? 
+        Options.length > 0 
+        ? ( Options.map(x => (
             <div key={x.id}>
               <div
                 className="instbtn mt-12 handcr"
@@ -424,6 +435,9 @@ const DetailPage = ({ app }) => {
 
             </div>
           ))
+        ) : ( <div className="instbtn mt-12 handcr" >
+              {`not available`}
+          </div>
         ) : (
           <div className="downbar mt-12 mb-8"></div>
         )}
