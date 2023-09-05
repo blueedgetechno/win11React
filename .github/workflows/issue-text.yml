@@ -15,7 +15,7 @@ jobs:
       issues: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Comment
         uses: peter-evans/create-or-update-comment@v3
