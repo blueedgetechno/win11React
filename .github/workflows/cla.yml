@@ -19,7 +19,7 @@ jobs:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.BOT }}
         with:
           path-to-signatures: "signatures/version1/cla.json"
-          path-to-document: "https://win.asylum-os.com/cla/" # e.g. a CLA or a DCO document
+          path-to-document: "https://store.win11react.com/cla/" # e.g. a CLA or a DCO document
           # branch should not be protected
           branch: "master"
           allowlist: win11bot,bot*

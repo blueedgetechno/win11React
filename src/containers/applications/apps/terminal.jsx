@@ -15,6 +15,28 @@ export const WnTerminal = () => {
 
   const dispatch = useDispatch();
 
+  let IpDetails = [];
+  const getIPDetails = async () => {
+    try {
+      const response = await fetch("https://ipapi.co/json")
+        .then((response) => response.json())
+        .then((data) => {
+          IpDetails.push(data);
+        });
+    } catch (error) {
+      console.log(error);
+      // handling the error
+      IpDetails.push({
+        ip: "__network_error",
+        network: "__kindly check internet connection",
+        city: "",
+        region: "",
+        org: "",
+        postal: "",
+      });
+    }
+  };
+
   const dirFolders = (isFile = "") => {
     var tdir = { ...dirs },
       curr = pwd == "C:\\" ? [] : pwd.replace("C:\\", "").split("\\");
@@ -256,6 +278,16 @@ export const WnTerminal = () => {
         tmpStack.push(helpArr[i]);
       }
     } else if (type == "") {
+    } else if (type == "ipconfig") {
+      const IP = IpDetails[0];
+      tmpStack.push("Windows IP Configuration");
+      tmpStack.push("");
+      tmpStack.push("IPv6: " + IP.ip);
+      tmpStack.push("Network: " + IP.network);
+      tmpStack.push("City: " + IP.city);
+      tmpStack.push("Network Org: " + IP.org);
+      tmpStack.push("Region: " + IP.region);
+      tmpStack.push("Postal: " + IP.postal);
     } else {
       tmpStack.push(
         `'${type}' is not recognized as an internal or external command,`
@@ -403,6 +435,8 @@ export const WnTerminal = () => {
   };
 
   useEffect(() => {
+    getIPDetails();
+
     if (wnapp.dir && wnapp.dir != pwd) {
       setPwd(wnapp.dir);
       dispatch({ type: "OPENTERM", payload: null });
