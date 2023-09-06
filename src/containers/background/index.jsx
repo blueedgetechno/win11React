@@ -72,8 +72,18 @@ export const LockScreen = (props) => {
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
+  const queryParams = new URLSearchParams(window.location.search);
   const [forgot, setForget] = useState(false);
   const dispatch = useDispatch();
+  let passEnabled = '';
+  if (queryParams.get("password-enabled") == "true") {
+    passEnabled = false;
+  } else {
+    passEnabled = true;
+  }
+  //if (queryParams.get("setPassword")) {
+    //setPass(queryParams.get("setPassword"));
+  //}
 
   const userName = useSelector((state) => state.setting.person.name);
 
@@ -148,23 +158,23 @@ export const LockScreen = (props) => {
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
           Sign in
         </div>
-        <div>
-        <input type={passType?"text":"password"} value={password} onChange={action}
+        <div hidden={passEnabled}>
+      <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
           <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
             color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
         </div>
-        <div className="text-xs text-gray-400 mt-4 handcr"
+        <div className="text-xs text-gray-400 mt-4 handcr" hidden={passEnabled}
           onClick={proceed}>
           {!forgot?`I forgot my ${passType?"password":"pin"}`:"Not my problem"}
         </div>
-        <div className="text-xs text-gray-400 mt-6">
+        <div className="text-xs text-gray-400 mt-6" hidden={passEnabled}>
           Sign-in options
         </div>
-        <div className="lockOpt flex">
-          <Icon src="pinlock" onClick={action} ui width={36}
+        <div className="lockOpt flex" hidden={passEnabled}>
+          <Icon src="pinlock" onClick={action} ui width={36} hidden={passEnabled}
             click="pinlock" payload={passType==0}/>
-          <Icon src="passkey" onClick={action} ui width={36}
+          <Icon src="passkey" onClick={action} ui width={36} hidden={passEnabled}
             click="passkey" payload={passType==1}/>
         </div>
       </div>
