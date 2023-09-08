@@ -14,16 +14,12 @@ var { taskbar, desktop, pinned, recent } = {
     "Store",
     "Github",
     "Visual Studio Code",
-    "Python Compiler",
     "Browser",
-    "Our Service",
-    "Document",
-    "Pricing",
+    "Landing page",
     "About Us",
     "Discord",
-    "Contact Us",
     "Thinkmay Fanpage",
-    // "Camera", //TODO
+    "Demo"
   ],
   pinned: [
     "Browser",

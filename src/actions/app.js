@@ -97,7 +97,6 @@ export const deleteStore = async (app) => {
 export const openApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
 
     if (payload.status == "NOT_READY")
       throw (i18next.t("error.NOT_READY"));
@@ -109,6 +108,7 @@ export const openApp = async (appInput) =>
       privateIp: payload.privateIp
     }
     const result = await AccessApplication(input);
+    
     window.open(result.url, "_blank");
   });
 
@@ -116,8 +116,8 @@ export const openApp = async (appInput) =>
 export const installApp = (payload) =>
   wrapper(async () => {
     await DownloadApplication(payload.app_template_id);
-    fetchApp();
-  });
+    await fetchApp();
+  },'installApp');
 
 // desktop app
 export const startApp = async (appInput) =>
@@ -137,10 +137,9 @@ export const startApp = async (appInput) =>
       if (data == true) 
         break
 
-      await sleep(60 * 1000)
+      await sleep(10 * 1000)
     }
-    fetchApp();
-    await sleep(5 * 1000)
+    await fetchApp();
   },'startApp');
 
 // desktop app
@@ -153,7 +152,7 @@ export const pauseApp = async (appInput) =>
     await StopApplication(payload.storage_id);
     await sleep(15 * 1000)
     await fetchApp();
-  });
+  },'pauseApp');
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {

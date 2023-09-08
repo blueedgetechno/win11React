@@ -282,8 +282,6 @@ export const StartMenu = () => {
                 ui
                 rounded
                 width={26}
-                //click="EXTERNAL"
-                //payload="https://thinkmay.net/"
               />
               <div className="usName">{user?.email ?? "Admin"}</div>
             </div>

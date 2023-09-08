@@ -14,6 +14,7 @@ import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
+import store from "../../../reducers";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -130,9 +131,8 @@ export const MicroStore = () => {
               payload={page == 0 && tab == "gamerib"}
             />
 
-            {isAdmin() ? (
-              <Icon onClick={insertApp} ui={true} src={"new"} />
-            ) : null}
+            {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
+            {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
           </div>
 
           <div
@@ -159,6 +159,11 @@ const FrontPage = (props) => {
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
+    let index = 0
+    setInterval(() => {
+      setCover(vendors[index % vendors.length].images[0]);
+      index++
+    },10 * 1000)
   }, []);
  
   return (
@@ -172,16 +177,9 @@ const FrontPage = (props) => {
               return (
                 <a
                   key={i}
-                  onClick={() => {
-                    props.app_click(vendor);
-                  }}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={() => {
-                    setTimeout(() => {
-                      setCover(vendor.images[0]);
-                    }, 300);
-                  }}
+                  onClick={() => {setCover(vendor.images[0])}}
                 >
                   <Image
                     className="mx-1 dpShad rounded"
@@ -338,7 +336,17 @@ const DetailPage = ({ app }) => {
           },
         )
       ).json();
-      SetOptions(options);
+
+
+      for (let index = 0; index < options.length; index++) {
+        const option = options[index];
+        for (let index = 0; index < option.available.length; index++) {
+          if (option.available[index].available.gpus.includes(option.gpu)) {
+            SetOptions(old => [...old,option]);
+            return
+          }
+        }
+      }
     })();
   }, []);
   useLayoutEffect(() => {
@@ -375,7 +383,9 @@ const DetailPage = ({ app }) => {
 
   const ReleaseAppButton = () => {
     return (
-      <div onClick={ReleaseApp}>
+      <div onClick={() => {
+        ReleaseApp(app)
+      }}>
         <div className="instbtn mt-1 mb-8 handcr">Release</div>
       </div>
     );
@@ -404,8 +414,9 @@ const DetailPage = ({ app }) => {
               Checkout
             </a>
           </div>
-        ) : dstate == 0 ? (
-          Options.map(x => (
+        ) : dstate == 0 ? 
+        Options.length > 0 
+        ? ( Options.map(x => (
             <div key={x.id}>
               <div
                 className="instbtn mt-12 handcr"
@@ -424,6 +435,9 @@ const DetailPage = ({ app }) => {
 
             </div>
           ))
+        ) : ( <div className="instbtn mt-12 handcr" >
+              {`not available`}
+          </div>
         ) : (
           <div className="downbar mt-12 mb-8"></div>
         )}
@@ -454,6 +468,7 @@ const DetailPage = ({ app }) => {
               
             </>
           ) : null}
+
           <div className="flex mt-4">
             <div>
               <div className="flex items-center text-sm font-semibold">
@@ -474,6 +489,7 @@ const DetailPage = ({ app }) => {
               <div className="text-xss mt-px pt-1">Ratings</div>
             </div>
           </div>
+
           <div className="descnt text-xs relative w-0">{app?.description}</div>
         </div>
       </div>
