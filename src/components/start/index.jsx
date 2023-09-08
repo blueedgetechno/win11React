@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../actions";
 import { getTreeValue } from "../../actions";
@@ -48,7 +48,35 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+  const [holding, setHolding] = useState(false);
+  const timeoutRef = useRef(null);
 
+  const handleTouchStart = (e) => {
+    timeoutRef.current = setTimeout(() => {
+      setHolding(true);
+      e.preventDefault();
+    // dispatch({ type: 'GARBAGE'});
+      var data = {
+        top: e.clientY,
+        left: e.clientX,
+      };
+
+      if (e.target.dataset.menu != null) {
+        data.menu = e.target.dataset.menu;
+        data.attr = e.target.attributes;
+        data.dataset = e.target.dataset;
+        dispatch({
+          type: "MENUSHOW",
+          payload: data,
+        });
+      }
+    }, 1000); // 1000 milliseconds = 1 second
+  };
+
+  const handleTouchEnd = () => {
+    clearTimeout(timeoutRef.current);
+    setHolding(false);
+  };
   const hasNotReadyApp = useMemo(()=>{
     return deskApps.apps.some(app => app.status =='NOT_READY')
   },[deskApps.apps])
@@ -104,6 +132,8 @@ export const DesktopApp = () => {
               data-id={app.id ?? "null"}
               data-name={app.name}
               onDoubleClick={handleDouble}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
               <Icon
                 className="dskIcon "
