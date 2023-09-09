@@ -108,16 +108,25 @@ const ModalEditOrInsert = (props) => {
 
   async function handleUpdateApp(app) {
     const { id, name, icon, description, feature, screenshoots } = app;
-    //update DB
+    const {data,error} = await supabase
+      .from('constant')
+      .select('value->virt')
+    if (error) 
+      throw error
+
+    const url = data.at(0)?.virt.url;
+    const key = data.at(0)?.virt.anon_key;
+    if (url == undefined || key == undefined)
+      return
+
     const resp = await fetch(
-      `https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?id=eq.${id}`,
+      `${url}/rest/v1/stores?id=eq.${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${virtless_anon}`,
-          apikey: virtless_anon,
-          // "refer": "return=minimal"
+          Authorization: `Bearer ${key}`,
+          apikey: key,
         },
         body: JSON.stringify({
           "name": name,
@@ -140,14 +149,25 @@ const ModalEditOrInsert = (props) => {
   async function handleInsertApp(newData) {
     const { name, icon, description, type, feature, screenshoots } = newData;
     
+    const constantFetch = await supabase
+      .from('constant')
+      .select('value->virt')
+    if (constantFetch.error) 
+      throw constantFetch.error
+
+    const url = constantFetch.data.at(0)?.virt.url;
+    const key = constantFetch.data.at(0)?.virt.anon_key;
+    if (url == undefined || key == undefined)
+      return
+
     const resp = await fetch(
-        `https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores`,
+        `${url}/rest/v1/stores`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${virtless_anon}`,
-            apikey: virtless_anon,
+            Authorization: `Bearer ${key}`,
+            apikey: key,
             // "refer": "return=minimal"
           },
           body: JSON.stringify({

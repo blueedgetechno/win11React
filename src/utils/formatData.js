@@ -84,17 +84,26 @@ export async function formatAppRenderTree(data) {
         };
       }
 
-      const anon =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
+      const constantFetch = await supabase
+        .from('constant')
+        .select('value->virt')
+      if (constantFetch.error) 
+        throw constantFetch.error
+
+      const url = constantFetch.data.at(0)?.virt.url;
+      const key = constantFetch.data.at(0)?.virt.anon_key;
+      if (url == undefined || key == undefined)
+        return
+
       const icons = await (
         await fetch(
-          "https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_metadata_from_volume",
+          `${url}/rest/v1/rpc/get_app_metadata_from_volume`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${anon}`,
-              apikey: anon,
+              Authorization: `Bearer ${key}`,
+              apikey: key,
             },
             body: JSON.stringify({ deploy_as: `${storage.id}` }),
           },

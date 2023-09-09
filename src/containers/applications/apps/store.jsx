@@ -15,6 +15,7 @@ import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
+import supabase from "../../../supabase/createClient";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -319,18 +320,26 @@ const DetailPage = ({ app }) => {
 
   useEffect(() => {
     (async () => {
-      const anon = import.meta.env.VITE_SUPABASE_ANON_KEY_VIRT;
+      const {data,error} = await supabase
+        .from('constant')
+        .select('value->virt')
+      if (error) 
+        throw error
+
+      const url = data.at(0)?.virt.url;
+      const key = data.at(0)?.virt.anon_key;
+      if (url == undefined || key == undefined)
+        return
+        
       const options = await (
         await fetch(
-          `${
-            import.meta.env.VITE_SUPABASE_URL_VIRT
-          }/rest/v1/rpc/get_app_from_store`,
+          `${url}/rest/v1/rpc/get_app_from_store`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${anon}`,
-              apikey: anon,
+              Authorization: `Bearer ${key}`,
+              apikey: key,
             },
             body: JSON.stringify({ store_id: `${app.id}` }),
           },
