@@ -1,3 +1,5 @@
+import supabase from "../supabase/createClient";
+
 export function formatWorkerRenderTree(data) {
   const tree = data.tree
   const newData = {
@@ -68,6 +70,17 @@ function AddNode(folder,tree) {
 // }
 
 export async function formatAppRenderTree(data) {
+  const constantFetch = await supabase
+    .from('constant')
+    .select('value->virt')
+  if (constantFetch.error) 
+    throw constantFetch.error
+
+  const url = constantFetch.data.at(0)?.virt.url;
+  const key = constantFetch.data.at(0)?.virt.anon_key;
+  if (url == undefined || key == undefined)
+    return
+
   return await Promise.all(
     data.tree.data.map(async (storage) => {
       if (storage.type == "pending") {
@@ -84,16 +97,6 @@ export async function formatAppRenderTree(data) {
         };
       }
 
-      const constantFetch = await supabase
-        .from('constant')
-        .select('value->virt')
-      if (constantFetch.error) 
-        throw constantFetch.error
-
-      const url = constantFetch.data.at(0)?.virt.url;
-      const key = constantFetch.data.at(0)?.virt.anon_key;
-      if (url == undefined || key == undefined)
-        return
 
       const icons = await (
         await fetch(
