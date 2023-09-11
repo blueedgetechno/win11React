@@ -8,7 +8,6 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
-import { AnalyticTrack } from "../../../lib/segment";
 import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
@@ -79,13 +78,7 @@ export const MicroStore = () => {
     setOpapp(data);
     setPage(2);
     logFEEvent(`open store ${user.email}`, data);
-    AnalyticTrack(`open store`, {
-      name: data.title,
-      timestamp: new Date(),
-      metadata: {
-        app: data,
-      },
-    });
+    // AnalyticTrack(`open store`, {
   };
 
   const dispatch = useDispatch();

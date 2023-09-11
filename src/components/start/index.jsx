@@ -7,7 +7,6 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-import { AnalyticIdentify, AnalyticTrack } from "../../lib/segment.js";
 import { PiPauseBold } from "react-icons/pi";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { fetchApp } from "../../actions/preload";
@@ -73,21 +72,10 @@ export const DesktopApp = () => {
     };
 
     const appName = e.target.dataset.name;
-    AnalyticTrack(`click app`, {
-      name: appName,
-      timestamp: new Date(),
-    });
+    // AnalyticTrack(`click app`, {
     dispatch(action);
   };
 
-  useEffect(() => {
-    AnalyticIdentify(user.email ?? "anoymous", {
-      ...user,
-      timestamp: new Date(),
-      userAgent: window?.navigator?.userAgent ?? "",
-      locate: navigator?.language ?? "",
-    });
-  }, []);
   return (
     <div className="desktopCont">
       {!deskApps.hide &&

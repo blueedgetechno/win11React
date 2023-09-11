@@ -25,7 +25,6 @@ import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
-import { AnalyticTrack } from "./lib/segment";
 import { logFEEvent } from "./utils/log_front_end.js";
 
 const TRACKING_ID = "G-C772WT3BD0";
@@ -134,7 +133,7 @@ function App() {
   const refSource = urlParams.get("ref") ?? null;
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-    AnalyticTrack(`source ${refSource}`);
+    // AnalyticTrack(`source ${refSource}`);
     window.history.replaceState({}, document.title, "/" + "");
   }, []);
 

@@ -14,7 +14,6 @@ import {
   viewDetail,
 } from "./worker";
 import { deleteApp, openApp } from "./app";
-import { AnalyticTrack } from "../lib/segment";
 import { fetchApp } from "./preload";
 
 export const refresh = (pl, menu) => {
@@ -97,11 +96,7 @@ export const performApp = (act, menu) => {
   };
   // add analytic
   const appName = menu.dataset.name;
-  AnalyticTrack(`click app`, {
-    name: appName,
-    timestamp: new Date(),
-    action: data.type,
-  });
+  // AnalyticTrack(`click app`, {
 
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);

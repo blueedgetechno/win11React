@@ -5,7 +5,6 @@ import i18next from "i18next";
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 import supabase from "../../../supabase/createClient";
-import { AnalyticTrack } from "../../../lib/segment";
 import {
   KeygenWithCatch,
   RegisterProxyWithCatch,
@@ -278,14 +277,7 @@ export const WnTerminal = () => {
 
     if (type.length > 0) tmpStack.push("");
 
-    AnalyticTrack(`terminal`, {
-      name: `${type ?? ""} ${arg ?? ""}`,
-      timestamp: new Date(),
-      metadata: {
-        stack: tmpStack,
-      },
-    });
-
+    // AnalyticTrack(`terminal`, {
     setStack(tmpStack);
   };
 
