@@ -52,45 +52,45 @@ export const DesktopApp = () => {
   const timeoutRef = useRef(null);
 
   const handleTouchStart = (e) => {
+    Actions.afterMath(e)
     timeoutRef.current = setTimeout(() => {
       setHolding(true);
       e.preventDefault();
-    // dispatch({ type: 'GARBAGE'});
+      // dispatch({ type: 'GARBAGE'});
+      var touch = e.touches[0] || e.changedTouches[0];
+ 
       var data = {
-        top: e.clientY,
-        left: e.clientX,
+        top: touch.clientY,
+        left: touch.clientX,
       };
-
-      if (e.target.dataset.menu != null) {
-        data.menu = e.target.dataset.menu;
-        data.attr = e.target.attributes;
-        data.dataset = e.target.dataset;
-        dispatch({
-          type: "MENUSHOW",
-          payload: data,
-        });
-      }
-    }, 1000); // 1000 milliseconds = 1 second
+      data.menu = e.target.dataset.menu;
+      data.attr = e.target.attributes;
+      data.dataset = e.target.dataset;
+      dispatch({
+        type: "MENUSHOW",
+        payload: data,
+      });
+    }, 100); // 1000 milliseconds = 1 second
   };
 
   const handleTouchEnd = () => {
     clearTimeout(timeoutRef.current);
-    setHolding(false);
+    //setHolding(false);
   };
-  const hasNotReadyApp = useMemo(()=>{
-    return deskApps.apps.some(app => app.status =='NOT_READY')
-  },[deskApps.apps])
+  const hasNotReadyApp = useMemo(() => {
+    return deskApps.apps.some(app => app.status == 'NOT_READY')
+  }, [deskApps.apps])
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const intervalFetchApp = async()=>{
+    const intervalFetchApp = async () => {
       for (let index = 0; index < 10; index++) {
-          fetchApp()
-          await new Promise(r => setTimeout(r, 60 * 1000));
+        fetchApp()
+        await new Promise(r => setTimeout(r, 60 * 1000));
       }
     }
-    if(hasNotReadyApp) intervalFetchApp()
-  },[hasNotReadyApp])
+    if (hasNotReadyApp) intervalFetchApp()
+  }, [hasNotReadyApp])
 
   const dispatch = useDispatch();
   const handleDouble = (e) => {
@@ -182,7 +182,7 @@ export const SidePane = () => {
   const dispatch = useDispatch();
 
   let [btlevel, setBtLevel] = useState("");
-  const childToParent = () => {};
+  const childToParent = () => { };
 
   const clickDispatch = (event) => {
     var action = {
