@@ -101,6 +101,12 @@ const apps = [
     action: "WNSTORE",
   },
   {
+    name: "Time Manager",
+    icon: "timemanager",
+    type: "app",
+    action: "TIMEMANAGER",
+  },
+  {
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",
