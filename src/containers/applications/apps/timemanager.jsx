@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Icon, ToolBar } from "../../../utils/general";
 import LangSwitch from "./assets/Langswitch";
@@ -6,12 +7,14 @@ import LangSwitch from "./assets/Langswitch";
 export const Timemanager = () => {
   const wnapp = useSelector((state) => state.apps.timemanager);
   const apps = useSelector((state) => state.apps);
+  const user = useSelector((state) => state.user);
+  const userName = user?.email ?? "Admin";
   const [equa, setEqua] = useState([]);
   const [cval, setCval] = useState("0");
   const [err, setErr] = useState(null);
   const [hist, setHist] = useState([]);
+  const { t, i18n } = useTranslation();
 
-  console.log(apps);
   const getIdx = (node) => {
     var i = 0;
     while ((node = node.previousSibling) != null) {
@@ -161,7 +164,7 @@ export const Timemanager = () => {
       <div className="windowScreen flex flex-col p-2" data-dock="true">
         <div className="flex pt-2">
           <div className="flex pl-2 items-center">
-            <div className=" font-semibold pb-1">Datdovan1502@gmail.com</div>
+            <div className=" font-semibold pb-1">{userName}</div>
           </div>
         </div>
         
@@ -171,16 +174,16 @@ export const Timemanager = () => {
           </div>
         <div className="restWindow h-full w-full flex-grow flex flex-col ">
           <div className="w-full flex gap-4 justify-between mt-1">
-            <span>Ngày đăng kí</span>
+            <span>{t("timemanager.startAt")}:</span>
             <span>09-08-2023</span>
           </div>
           <div className="w-full flex gap-4 justify-between mt-1">
-            <span>Ngày hết hạn</span>
+            <span>{t("timemanager.endAt")}:</span>
             <span>09-08-2023</span>
           </div>          
           <hr className="my-[14px]"/>
           <div className="w-full flex gap-4 justify-between mt-auto">
-            <span>Số giờ đã chơi</span>
+            <span>{t("timemanager.time")}:</span>
             <span>20/100h</span>
           </div>
         </div>

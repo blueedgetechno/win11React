@@ -39,6 +39,10 @@
     "startApp":"It take a fews minutes. Please pause app when not using",
     "installApp":"It take a fews minutes, wait until logo appears",
     "pauseApp":"Tips, Right click => start app to play continuously"
+  },
+  "timemanager":{
+    "startAt": "Start at",
+    "endAt": "End",
+    "time": "Time used"
   }
-  
 }
