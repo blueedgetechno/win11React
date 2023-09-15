@@ -102,7 +102,7 @@ export const LockScreen = (props) => {
         queryParams: {
           access_type: "offline",
           prompt: "consent",
-          redirectTo
+          //redirectTo
 
         },
       },
