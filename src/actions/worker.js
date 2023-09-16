@@ -2,6 +2,7 @@ import { CreateWorkerSession, DeactivateWorkerSession } from "./fetch";
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchWorker } from "./preload";
+import { openRemotePage } from "./remote";
 
 const wrapper = async (func) => {
   try {
@@ -89,9 +90,8 @@ export const deactiveSession = (e) =>
 export const connectSession = (e) =>
   wrapper(async () => {
     const worker = formatEvent(e);
-    if (!worker.info.remote_url) return;
-
-    window.open(worker.info.remote_url, "_blank");
+    if (!worker.info.url) return;
+    openRemotePage(worker.info.url)
   });
 
 export const connectWorker = (e) =>
@@ -108,7 +108,7 @@ export const connectWorker = (e) =>
     const res = await CreateWorkerSession(worker.info.worker_profile_id);
 
     log({ type: "close", });
-    window.open(res.url, "_blank");
+    openRemotePage(res.url)
 
     await fetchWorker();
     return "success";

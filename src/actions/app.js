@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 import { sleep } from "../utils/sleep";
+import { openRemotePage } from "./remote";
 
 
 const formatEvent = (event) => {
@@ -117,7 +118,7 @@ export const openApp = async (appInput) =>
     }
     const result = await AccessApplication(input);
     
-    window.open(result.url, "_blank");
+    openRemotePage(result.url);
   });
 
 // Handle app
@@ -180,7 +181,7 @@ export const connectVolume = (e) =>
     }
 
     const result = await AccessApplication(input);
-    window.open(result.url, "_blank");
+    openRemotePage(result.url)
   });
 
 
