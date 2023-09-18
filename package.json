@@ -43,6 +43,7 @@
   },
   "scripts": {
     "start": "vite --port 3000",
+    "preview": "vite preview --port 3000",
     "build": "vite build",
     "ghbuild": "CI=false vite build",
     "prettier": "prettier --write .",

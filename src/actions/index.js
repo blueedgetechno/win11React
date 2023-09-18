@@ -24,6 +24,33 @@ export const refresh = (pl, menu) => {
   }
 };
 
+export const afterMath = (event) => {
+  var ess = [
+    ["START", "STARTHID"],
+    ["BAND", "BANDHIDE"],
+    ["PANE", "PANEHIDE"],
+    ["WIDG", "WIDGHIDE"],
+    ["CALN", "CALNHIDE"],
+    ["MENU", "MENUHIDE"],
+  ];
+
+  var actionType = "";
+  try {
+    actionType = event.target.dataset.action || "";
+  } catch (err) {}
+
+  var actionType0 = getComputedStyle(event.target).getPropertyValue(
+    "--prefix",
+  );
+
+  ess.forEach((item, i) => {
+    if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+      store.dispatch({
+        type: item[1],
+      });
+    }
+  });
+};
 export const changeIconSize = (size, menu) => {
   var tmpMenu = { ...menu };
   tmpMenu.menus.desk[0].opts[0].dot = false;

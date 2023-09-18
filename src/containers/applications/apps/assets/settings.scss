@@ -11,7 +11,21 @@
     min-width: 360px;
   }
 }
+.langSwitcherTile {
+  &::after {
+    display: none;
+  }
 
+  select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgb(238, 236, 235);
+    border-bottom: 1px solid rgb(212, 211, 210);
+    color: rgb(var(--txt_clr-rgb));
+    height: 32px;
+    padding-left: 8px;
+    border-radius: 6px;
+  }
+}
 .settingsApp .restWindow {
   font-size: 14px;
   height: 100%;
@@ -309,7 +323,6 @@
         border-radius: 6px;
       }
     }
-
     .updateTop {
       display: flex;
       width: min(100%, 1000px);

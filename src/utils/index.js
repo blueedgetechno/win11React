@@ -16,6 +16,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Visual Studio Code",
     "Browser",
     "Landing page",
+    "Time Manager",
     "About Us",
     "Discord",
     "Thinkmay Fanpage",

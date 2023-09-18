@@ -240,28 +240,28 @@ const defState = {
         action: "performApp",
         payload: "open",
       },
-      {
-        name: "Run as administrator",
-        action: "performApp",
-        payload: "open",
-        icon: "win/shield",
-      },
-      {
-        name: "Open file location",
-        dsb: true,
-      },
-      {
-        name: "Unpin from start",
-        dsb: true,
-      },
-      {
-        name: "Compress to Zip file",
-        dsb: true,
-      },
-      {
-        name: "Copy as path",
-        dsb: true,
-      },
+      //{
+      //  name: "Run as administrator",
+      //  action: "performApp",
+      //  payload: "open",
+      //  icon: "win/shield",
+      //},
+      //{
+      //  name: "Open file location",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Unpin from start",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Compress to Zip file",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Copy as path",
+      //  dsb: true,
+      //},
       {
         name: "Properties",
         dsb: true,
@@ -278,6 +278,11 @@ const defState = {
         name: "Delete",
         action: "delApp",
         payload: "delete",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
       },
     ],
     externalApp: [
@@ -363,20 +368,6 @@ const defState = {
         action: "DEACTIVATESESSION",
         payload: "connect",
       },
-      {
-        name: "Detail",
-        action: "VIEW_DETAIL",
-        payload: "detail",
-      },
-    ],
-    app: [
-      {
-        name: "Detail",
-        action: "VIEW_DETAIL",
-        payload: "detail",
-      },
-    ],
-    apps: [
       {
         name: "Detail",
         action: "VIEW_DETAIL",

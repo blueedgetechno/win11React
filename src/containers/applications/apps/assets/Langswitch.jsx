@@ -8,7 +8,7 @@ function LangSwitch() {
     setLanguageValue(i18next.language);
   }, []);
   return (
-    <div className="langSwitcher">
+    <div className="langSwitcher langSwitcherTile">
       <select
         value={languageValue}
         onChange={(e) => {

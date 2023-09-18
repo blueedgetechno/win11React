@@ -25,8 +25,9 @@ import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
+import { afterMath } from "./actions/index";
+import { AnalyticTrack } from "./lib/segment";
 import { logFEEvent } from "./utils/log_front_end.js";
-
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
 
@@ -38,33 +39,34 @@ function App() {
   ReactModal.setAppElement("#root");
   const dispatch = useDispatch();
 
-  const afterMath = (event) => {
-    var ess = [
-      ["START", "STARTHID"],
-      ["BAND", "BANDHIDE"],
-      ["PANE", "PANEHIDE"],
-      ["WIDG", "WIDGHIDE"],
-      ["CALN", "CALNHIDE"],
-      ["MENU", "MENUHIDE"],
-    ];
+  //const afterMath = (event) => {
+  //  var ess = [
+  //    ["START", "STARTHID"],
+  //    ["BAND", "BANDHIDE"],
+  //    ["PANE", "PANEHIDE"],
+  //    ["WIDG", "WIDGHIDE"],
+  //    ["CALN", "CALNHIDE"],
+  //    ["MENU", "MENUHIDE"],
+  //  ];
 
-    var actionType = "";
-    try {
-      actionType = event.target.dataset.action || "";
-    } catch (err) {}
+  //  var actionType = "";
+  //  try {
+  //    actionType = event.target.dataset.action || "";
+  //  } catch (err) {}
 
-    var actionType0 = getComputedStyle(event.target).getPropertyValue(
-      "--prefix",
-    );
+  //  var actionType0 = getComputedStyle(event.target).getPropertyValue(
+  //    "--prefix",
+  //  );
 
-    ess.forEach((item, i) => {
-      if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
-        dispatch({
-          type: item[1],
-        });
-      }
-    });
-  };
+  //  ess.forEach((item, i) => {
+  //    if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+  //      dispatch({
+  //        type: item[1],
+  //      });
+  //    }
+  //  });
+  //};
+
 
   window.oncontextmenu = (e) => {
     afterMath(e);
@@ -140,12 +142,12 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+        {/*{!wall.booted ? <BootScreen dir={wall.dir} /> : null}*/}
         {wall.locked || !user?.id ? <LockScreen dir={wall.dir} /> : null}
 
         <div className="appwrap">
           <Background />
-          {user.id ? (
+          {user.id? (
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />

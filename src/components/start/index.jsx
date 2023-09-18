@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Actions from "../../actions";
 import { getTreeValue } from "../../actions";
@@ -47,21 +47,49 @@ export const DesktopApp = () => {
     arr.apps = tmpApps;
     return arr;
   });
+  const [holding, setHolding] = useState(false);
+  const timeoutRef = useRef(null);
 
-  const hasNotReadyApp = useMemo(()=>{
-    return deskApps.apps.some(app => app.status =='NOT_READY')
-  },[deskApps.apps])
+  const handleTouchStart = (e) => {
+    Actions.afterMath(e)
+    timeoutRef.current = setTimeout(() => {
+      setHolding(true);
+      e.preventDefault();
+      // dispatch({ type: 'GARBAGE'});
+      var touch = e.touches[0] || e.changedTouches[0];
+ 
+      var data = {
+        top: touch.clientY,
+        left: touch.clientX,
+      };
+      data.menu = e.target.dataset.menu;
+      data.attr = e.target.attributes;
+      data.dataset = e.target.dataset;
+      dispatch({
+        type: "MENUSHOW",
+        payload: data,
+      });
+    }, 100); // 1000 milliseconds = 1 second
+  };
 
-  useEffect(()=>{
+  const handleTouchEnd = () => {
+    clearTimeout(timeoutRef.current);
+    //setHolding(false);
+  };
+  const hasNotReadyApp = useMemo(() => {
+    return deskApps.apps.some(app => app.status == 'NOT_READY')
+  }, [deskApps.apps])
 
-    const intervalFetchApp = async()=>{
+  useEffect(() => {
+
+    const intervalFetchApp = async () => {
       for (let index = 0; index < 10; index++) {
-          fetchApp()
-          await new Promise(r => setTimeout(r, 60 * 1000));
+        fetchApp()
+        await new Promise(r => setTimeout(r, 60 * 1000));
       }
     }
-    if(hasNotReadyApp) intervalFetchApp()
-  },[hasNotReadyApp])
+    if (hasNotReadyApp) intervalFetchApp()
+  }, [hasNotReadyApp])
 
   const dispatch = useDispatch();
   const handleDouble = (e) => {
@@ -92,6 +120,8 @@ export const DesktopApp = () => {
               data-id={app.id ?? "null"}
               data-name={app.name}
               onDoubleClick={handleDouble}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
               <Icon
                 className="dskIcon "
@@ -140,7 +170,7 @@ export const SidePane = () => {
   const dispatch = useDispatch();
 
   let [btlevel, setBtLevel] = useState("");
-  const childToParent = () => {};
+  const childToParent = () => { };
 
   const clickDispatch = (event) => {
     var action = {

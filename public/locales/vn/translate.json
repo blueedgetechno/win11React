@@ -40,5 +40,10 @@
     "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
     "installApp": "Tips: Khi có logo installing, đợi 1 vài phút cho đến khi logo game xuất hiện",
     "pauseApp" : "Tips: Chuột phải => start app khi muốn chơi lại tiến trình cũ"
+  },
+  "timemanager":{
+    "startAt": "Ngày bắt đầu",
+    "endAt": "Ngày hết hạn",
+    "time": "Thời gian sử dụng"
   }
 }
