@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import supabase from "../../supabase/createClient";
 import { handleLogOut } from "../../actions";
-import { AnalyticTrack, analytics } from "../../lib/segment";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -99,10 +98,7 @@ export const StartMenu = () => {
     }
     if (isTrack) {
       const iconName = event.target.dataset.name;
-      AnalyticTrack(`click app`, {
-        name: iconName,
-        timestamp: new Date(),
-      });
+      // AnalyticTrack(`click app`, {
     }
   };
 

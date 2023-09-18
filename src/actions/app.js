@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 import { sleep } from "../utils/sleep";
+import { openRemotePage } from "./remote";
 
 
 const formatEvent = (event) => {
@@ -63,16 +64,24 @@ const wrapper = async (func, appType) => {
 export const deleteStore = async (app) => {
   if (!isAdmin()) return;
 
-  const virtless_anon =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
+  const {data,error} = await supabase
+    .from('constant')
+    .select('value->virt')
+  if (error) 
+    throw error
 
-  const resp = await fetch(`https://dgckwjucklewsucocfgw.supabase.co/rest/v1/stores?id=eq.${app.id}`,
+  const url = data.at(0)?.virt.url;
+  const key = data.at(0)?.virt.anon_key;
+  if (url == undefined || key == undefined)
+    return
+  
+  const resp = await fetch(`${url}/rest/v1/stores?id=eq.${app.id}`,
   {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${virtless_anon}`,
-      apikey: virtless_anon,
+      Authorization: `Bearer ${key}`,
+      apikey: key,
       // "refer": "return=minimal"
     },
   }
@@ -109,7 +118,7 @@ export const openApp = async (appInput) =>
     }
     const result = await AccessApplication(input);
     
-    window.open(result.url, "_blank");
+    openRemotePage(result.url);
   });
 
 // Handle app
@@ -172,7 +181,7 @@ export const connectVolume = (e) =>
     }
 
     const result = await AccessApplication(input);
-    window.open(result.url, "_blank");
+    openRemotePage(result.url)
   });
 
 

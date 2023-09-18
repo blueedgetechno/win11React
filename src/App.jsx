@@ -135,7 +135,7 @@ function App() {
   const refSource = urlParams.get("ref") ?? null;
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-    AnalyticTrack(`source ${refSource}`);
+    // AnalyticTrack(`source ${refSource}`);
     window.history.replaceState({}, document.title, "/" + "");
   }, []);
 
