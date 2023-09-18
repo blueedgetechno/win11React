@@ -142,7 +142,7 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+        {/*{!wall.booted ? <BootScreen dir={wall.dir} /> : null}*/}
         {wall.locked || !user?.id ? <LockScreen dir={wall.dir} /> : null}
 
         <div className="appwrap">
