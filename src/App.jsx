@@ -26,7 +26,6 @@ import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
-import { AnalyticTrack } from "./lib/segment";
 import { logFEEvent } from "./utils/log_front_end.js";
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
