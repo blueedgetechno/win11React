@@ -179,7 +179,7 @@ export const StartApplication = async (storage_id) => {
   });
   if (error != null) {
     msg = error;
-    if (error === "run out of gpu stock") {
+    if (error === "failed fetch function update_by_volume: unable to launch") {
       msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
