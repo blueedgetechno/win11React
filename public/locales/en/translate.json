@@ -44,5 +44,8 @@
     "startAt": "Start at",
     "endAt": "End",
     "time": "Time used"
+  },
+  "store": {
+    "app_not_available": "App isn't ready"
   }
 }
