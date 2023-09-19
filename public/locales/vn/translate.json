@@ -45,5 +45,8 @@
     "startAt": "Ngày bắt đầu",
     "endAt": "Ngày hết hạn",
     "time": "Thời gian sử dụng"
+  },
+  "store": {
+    "app_not_available": "Đang hết máy có game TT"
   }
 }

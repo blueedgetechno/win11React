@@ -438,7 +438,7 @@ const DetailPage = ({ app }) => {
             </div>
           ))
         ) : ( <div className="instbtn mt-12 handcr" >
-              {`not available`}
+              {t("store.app_not_available")}
           </div>
         ) : (
           <div className="downbar mt-12 mb-8"></div>
