@@ -98,20 +98,25 @@ export async function formatAppRenderTree(data) {
       }
 
 
-      const icons = await (
-        await fetch(
-          `${url}/rest/v1/rpc/get_app_metadata_from_volume`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${key}`,
-              apikey: key,
+      let icons = JSON.parse(localStorage.getItem(`app_metadata_from_volume_${storage.id}`) ?? `[]`)
+      if (icons?.length == 0 || icons?.length == undefined) {
+        icons = await (
+          await fetch(
+            `${url}/rest/v1/rpc/get_app_metadata_from_volume`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${key}`,
+                apikey: key,
+              },
+              body: JSON.stringify({ deploy_as: `${storage.id}` }),
             },
-            body: JSON.stringify({ deploy_as: `${storage.id}` }),
-          },
-        )
-      ).json();
+          )
+        ).json();
+
+        localStorage.setItem(`app_metadata_from_volume_${storage.id}`,JSON.stringify(icons))
+      }
 
       const icon = icons.at(0) ?? {
         name: 'Game Pause',
