@@ -48,7 +48,7 @@ export const MicroStore = () => {
 
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
+    element.scrollTo({ top: (element.scrollHeight * 33) / 100 ,   behavior: "smooth", });
   }, []);
 
   const frontScroll = (e) => {
@@ -73,7 +73,7 @@ export const MicroStore = () => {
       setTab(mntab);
     }
   };
-
+  
   const app_click = async (data) => {
     setOpapp(data);
     setPage(2);
@@ -118,13 +118,12 @@ export const MicroStore = () => {
               payload={page == 0 && tab == "sthome"}
             />
             <Icon
-              fafa="faGamepad"
-              onClick={totab}
-              click="gamerib"
+              fafa="faThLarge"
+              onClick={()=>{setPage(1)}}
+              click="page1"
               width={20}
-              payload={page == 0 && tab == "gamerib"}
+              payload={page == 1}
             />
-
             {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
             {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
           </div>
@@ -135,6 +134,10 @@ export const MicroStore = () => {
             onScroll={frontScroll}
           >
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
+            {page == 1 ? (
+              <DownPage
+                action={app_click}/>
+            ) : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
@@ -203,40 +206,20 @@ const FrontPage = (props) => {
               return (
                 <div
                   key={i}
-                  className="ribcont rounded-2xl my-auto p-2 pb-2"
+                  className="ribcont rounded-md my-0 p-2 pb-2"
                   onClick={() => {
                     props.app_click(game);
                   }}
                 >
                   <Image
-                    className="mx-1 py-1 mb-2 rounded"
-                    w={120}
+                    className="mx-1 py-1 mb-6 rounded"
+                    w={100}
+                    h={100}
                     absolute={true}
                     src={game.icon}
                   />
-                  <div className="capitalize text-xs font-semibold">
+                  <div className="capitalize text-xs text-center font-semibold">
                     {game.name}
-                  </div>
-                  <div className="flex mt-2 items-center">
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon
-                      className={stars > 3 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <Icon
-                      className={stars > 4 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <div className="text-xss">{1}k</div>
-                  </div>
-                  <div className="text-xss mt-4 mb-1">
-                    <>
-                      {game.platform}
-                    </>
                   </div>
                 </div>
               );
@@ -261,39 +244,20 @@ const FrontPage = (props) => {
               return (
                 <div
                   key={i}
-                  className="ribcont rounded-2xl my-auto p-2 pb-2 wrapperLogo"
+                  className="my-0 ribcont rounded-md  p-3 wrapperLogo"
                   onClick={() => {
                     props.app_click(app);
                   }}
                 >
                   <Image
-                    className="mx-1 py-1 mb-2 rounded"
-                    // w={120}
+                    className="mx-4 mb-6 rounded"
+                    w={120}
                     h={100}
                     absolute={true}
                     src={app.icon}
                   />
-                  <div className="capitalize text-xs font-semibold">
+                  <div className="capitalize text-xs text-center font-semibold">
                     {app.name}
-                  </div>
-                  <div className="flex mt-2 items-center">
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon
-                      className={stars > 3 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <Icon
-                      className={stars > 4 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <div className="text-xss">{"1k"}</div>
-                  </div>
-                  <div className="text-xss mt-8">
-                    <>{t("store.free")}</>
                   </div>
                 </div>
               );
@@ -353,7 +317,7 @@ const DetailPage = ({ app }) => {
   }, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: 0});
+    element.scrollTo({ top: 0, behavior: "smooth"},);
   }, [])
   const dispatch = useDispatch();
 
@@ -567,3 +531,96 @@ const DetailPage = ({ app }) => {
     </div>
   );
 };
+
+const DownPage = ({ action }) => {
+  const [catg, setCatg] = useState("all");
+  const apps = useSelector((state) => state.globals.apps);
+  const games = useSelector((state) => state.globals.games);
+  const [searchtxt, setShText] = useState("");
+
+  const [storeApps, setStoreApps] = useState([...apps, ...games])
+  const handleSearchChange = (e) => {
+    setShText(e.target.value)
+  };
+  useLayoutEffect(() => {
+    const element = document.getElementById("storeScroll");
+    element.scrollTo({ top: 0, behavior: "smooth"},);
+  }, [])
+  useEffect(()=>{
+    if(catg =='app') {
+      setStoreApps(apps)
+      return
+    }
+    setStoreApps(games)
+
+  },[catg])
+  const renderSearchResult = () =>{
+    const keyword = searchtxt.toLowerCase();
+    const cloneApp = [...storeApps]
+
+    return cloneApp.map((app, index)=>{
+      const appName = app.name.toLowerCase()
+      if(appName.indexOf(keyword) > -1){
+        return <div
+              key={index}
+              className="ribcont p-4 pt-8 ltShad prtclk"
+              onClick={()=>{action(app)}}
+              data-action="page2"
+            >
+              <Image
+                className="mx-4 mb-6 rounded"
+                w={100}
+                h={100}
+                src={app.icon}
+                ext
+              />
+              <div className="capitalize text-xs text-center font-semibold">
+                {app.name}
+              </div>
+              
+            </div>
+      }
+    })
+  }
+  return (
+    <div id="storeScroll" className="pagecont w-full absolute top-0 box-border p-12">
+      <div className="flex justify-between">
+        <div className="flex items-center ">
+          <div
+            className="catbtn handcr"
+            value={catg == "all"}
+            onClick={() => setCatg("all")}
+          >
+            All
+          </div>
+          <div
+            className="catbtn handcr"
+            value={catg == "app"}
+            onClick={() => setCatg("app")}
+          >
+            Apps
+          </div>
+          <div
+            className="catbtn handcr"
+            value={catg == "game"}
+            onClick={() => setCatg("game")}
+          >
+            Games
+          </div>
+        </div>
+        <div className="relative srchbar right-0 mr-4 text-sm">
+            <Icon className="searchIcon" src="search" width={12} />
+            <input
+              type="text"
+              onChange={handleSearchChange}
+              value={searchtxt}
+              placeholder="Search"
+            />
+        </div>
+      </div>
+      <div className="appscont mt-8">
+        {renderSearchResult()}
+      </div>
+    </div>
+  );
+}
