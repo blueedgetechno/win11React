@@ -15,12 +15,13 @@ import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
+import { isMobile } from "../../../utils/isMobile";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
   return v / 11;
 };
-
+const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 export const MicroStore = () => {
   const wnapp = useSelector((state) => state.apps.store);
   const [tab, setTab] = useState("sthome");
@@ -48,7 +49,9 @@ export const MicroStore = () => {
 
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: (element.scrollHeight * 33) / 100 ,   behavior: "smooth", });
+    element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
+    
+    if(isMobile()) setPage(1)
   }, []);
 
   const frontScroll = (e) => {
@@ -200,7 +203,8 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-game.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {games &&
+           
+          {games.length > 0 ?
             games.map((game, i) => {
               var stars = 5;
               return (
@@ -223,7 +227,23 @@ const FrontPage = (props) => {
                   </div>
                 </div>
               );
-            })}
+            })
+          : listDraftApp.map(i=>(
+            <div
+                  key={i}
+                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                >
+                   <Image
+                    className="mx-1 rounded bg-slate-200"
+                    w={100}
+                    h={100}
+                    ext
+                  />
+                  <div className="capitalize text-xs text-center font-semibold">
+                  </div>
+            </div>
+          ))
+          }
         </div>
       </div>
 
@@ -543,12 +563,19 @@ const DownPage = ({ action }) => {
     setShText(e.target.value)
   };
   useLayoutEffect(() => {
+    setStoreApps([...apps, ...games])
     const element = document.getElementById("storeScroll");
     element.scrollTo({ top: 0, behavior: "smooth"},);
-  }, [])
+
+  }, [apps, games])
+
   useEffect(()=>{
     if(catg =='app') {
       setStoreApps(apps)
+      return
+    }
+    else if(catg =='all') {
+      setStoreApps([...apps, ...games])
       return
     }
     setStoreApps(games)
@@ -584,7 +611,7 @@ const DownPage = ({ action }) => {
   }
   return (
     <div id="storeScroll" className="pagecont w-full absolute top-0 box-border p-12">
-      <div className="flex justify-between">
+      <div className="flex flex-wrap gap-5 justify-between">
         <div className="flex items-center ">
           <div
             className="catbtn handcr"
@@ -619,7 +646,27 @@ const DownPage = ({ action }) => {
         </div>
       </div>
       <div className="appscont mt-8">
-        {renderSearchResult()}
+        {
+          storeApps.length > 0 ? renderSearchResult() :
+          listDraftApp.map(i=> (
+            <div
+              key={i}
+              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+              data-action="page2"
+            >
+                <Image
+                  className="mx-4 mb-6 rounded bg-slate-200"
+                  w={100}
+                  h={100}
+                  ext
+                />
+              <div className="capitalize text-xs text-center font-semibold">
+              </div>
+
+            </div>
+            ))
+          
+        }
       </div>
     </div>
   );

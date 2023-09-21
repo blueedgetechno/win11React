@@ -1,5 +1,6 @@
 import { openApp } from "../actions/app";
 import { allApps } from "../utils";
+import { isMobile } from "../utils/isMobile";
 
 var dev = "";
 if (import.meta.env.MODE == "development") {
@@ -17,7 +18,7 @@ for (var i = 0; i < allApps.length; i++) {
     //if (allApps[i].icon === "store" || allApps[i].icon === "timemanager") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
-    defState[allApps[i].icon].size = "mini";
+    defState[allApps[i].icon].size = isMobile() ? "full" : 'mini';
   }
 
   if (allApps[i].icon == dev) {
