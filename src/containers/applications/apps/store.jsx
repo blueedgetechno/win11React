@@ -15,6 +15,7 @@ import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
+import { isMobile } from "../../../utils/isMobile";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -48,7 +49,9 @@ export const MicroStore = () => {
 
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
+    element.scrollTo({ top: (element.scrollHeight * 33) / 100 ,   behavior: "smooth", });
+    
+    if(isMobile()) setPage(1)
   }, []);
 
   const frontScroll = (e) => {
@@ -567,3 +570,119 @@ const DetailPage = ({ app }) => {
     </div>
   );
 };
+
+const DownPage = ({ action }) => {
+  const [catg, setCatg] = useState("all");
+  const apps = useSelector((state) => state.globals.apps);
+  const games = useSelector((state) => state.globals.games);
+  const [searchtxt, setShText] = useState("");
+
+  const [storeApps, setStoreApps] = useState([...apps, ...games])
+  const handleSearchChange = (e) => {
+    setShText(e.target.value)
+  };
+  useLayoutEffect(() => {
+    setStoreApps([...apps, ...games])
+    const element = document.getElementById("storeScroll");
+    element.scrollTo({ top: 0, behavior: "smooth"},);
+
+  }, [apps, games])
+
+  useEffect(()=>{
+    if(catg =='app') {
+      setStoreApps(apps)
+      return
+    }
+    else if(catg =='all') {
+      setStoreApps([...apps, ...games])
+      return
+    }
+    setStoreApps(games)
+
+  },[catg])
+  const renderSearchResult = () =>{
+    const keyword = searchtxt.toLowerCase();
+    const cloneApp = [...storeApps]
+
+    return cloneApp.map((app, index)=>{
+      const appName = app.name.toLowerCase()
+      if(appName.indexOf(keyword) > -1){
+        return <div
+              key={index}
+              className="ribcont p-4 pt-8 ltShad prtclk"
+              onClick={()=>{action(app)}}
+              data-action="page2"
+            >
+              <Image
+                className="mx-4 mb-6 rounded"
+                w={100}
+                h={100}
+                src={app.icon}
+                ext
+              />
+              <div className="capitalize text-xs text-center font-semibold">
+                {app.name}
+              </div>
+              
+            </div>
+      }
+    })
+  }
+  return (
+    <div id="storeScroll" className="pagecont w-full absolute top-0 box-border p-12">
+      <div className="flex flex-wrap gap-5 justify-between">
+        <div className="flex items-center ">
+          <div
+            className="catbtn handcr"
+            value={catg == "all"}
+            onClick={() => setCatg("all")}
+          >
+            All
+          </div>
+          <div
+            className="catbtn handcr"
+            value={catg == "app"}
+            onClick={() => setCatg("app")}
+          >
+            Apps
+          </div>
+          <div
+            className="catbtn handcr"
+            value={catg == "game"}
+            onClick={() => setCatg("game")}
+          >
+            Games
+          </div>
+        </div>
+        <div className="relative srchbar right-0 mr-4 text-sm">
+            <Icon className="searchIcon" src="search" width={12} />
+            <input
+              type="text"
+              onChange={handleSearchChange}
+              value={searchtxt}
+              placeholder="Search"
+            />
+        </div>
+      </div>
+      <div className="appscont mt-8">
+        {
+          storeApps.length > 0 ? renderSearchResult() :
+          <div
+          className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+          data-action="page2"
+          >
+            <Image
+              className="mx-4 mb-6 rounded bg-slate-200"
+              w={100}
+              h={100}
+              ext
+            />
+          <div className="capitalize text-xs text-center font-semibold">
+          </div>
+
+        </div>
+        }
+      </div>
+    </div>
+  );
+}
