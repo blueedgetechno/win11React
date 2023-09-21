@@ -21,7 +21,7 @@ const emap = (v) => {
   v = Math.min(1 / v, 10);
   return v / 11;
 };
-
+const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 export const MicroStore = () => {
   const wnapp = useSelector((state) => state.apps.store);
   const [tab, setTab] = useState("sthome");
@@ -49,7 +49,7 @@ export const MicroStore = () => {
 
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: (element.scrollHeight * 33) / 100 ,   behavior: "smooth", });
+    element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
     
     if(isMobile()) setPage(1)
   }, []);
@@ -76,7 +76,7 @@ export const MicroStore = () => {
       setTab(mntab);
     }
   };
-
+  
   const app_click = async (data) => {
     setOpapp(data);
     setPage(2);
@@ -121,13 +121,12 @@ export const MicroStore = () => {
               payload={page == 0 && tab == "sthome"}
             />
             <Icon
-              fafa="faGamepad"
-              onClick={totab}
-              click="gamerib"
+              fafa="faThLarge"
+              onClick={()=>{setPage(1)}}
+              click="page1"
               width={20}
-              payload={page == 0 && tab == "gamerib"}
+              payload={page == 1}
             />
-
             {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
             {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
           </div>
@@ -138,6 +137,10 @@ export const MicroStore = () => {
             onScroll={frontScroll}
           >
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
+            {page == 1 ? (
+              <DownPage
+                action={app_click}/>
+            ) : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
@@ -200,50 +203,47 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-game.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-          {games &&
+           
+          {games.length > 0 ?
             games.map((game, i) => {
               var stars = 5;
               return (
                 <div
                   key={i}
-                  className="ribcont rounded-2xl my-auto p-2 pb-2"
+                  className="ribcont rounded-md my-0 p-2 pb-2"
                   onClick={() => {
                     props.app_click(game);
                   }}
                 >
                   <Image
-                    className="mx-1 py-1 mb-2 rounded"
-                    w={120}
+                    className="mx-1 py-1 mb-6 rounded"
+                    w={100}
+                    h={100}
                     absolute={true}
                     src={game.icon}
                   />
-                  <div className="capitalize text-xs font-semibold">
+                  <div className="capitalize text-xs text-center font-semibold">
                     {game.name}
-                  </div>
-                  <div className="flex mt-2 items-center">
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon
-                      className={stars > 3 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <Icon
-                      className={stars > 4 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <div className="text-xss">{1}k</div>
-                  </div>
-                  <div className="text-xss mt-4 mb-1">
-                    <>
-                      {game.platform}
-                    </>
                   </div>
                 </div>
               );
-            })}
+            })
+          : listDraftApp.map(i=>(
+            <div
+                  key={i}
+                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                >
+                   <Image
+                    className="mx-1 rounded bg-slate-200"
+                    w={100}
+                    h={100}
+                    ext
+                  />
+                  <div className="capitalize text-xs text-center font-semibold">
+                  </div>
+            </div>
+          ))
+          }
         </div>
       </div>
 
@@ -264,39 +264,20 @@ const FrontPage = (props) => {
               return (
                 <div
                   key={i}
-                  className="ribcont rounded-2xl my-auto p-2 pb-2 wrapperLogo"
+                  className="my-0 ribcont rounded-md  p-3 wrapperLogo"
                   onClick={() => {
                     props.app_click(app);
                   }}
                 >
                   <Image
-                    className="mx-1 py-1 mb-2 rounded"
-                    // w={120}
+                    className="mx-4 mb-6 rounded"
+                    w={120}
                     h={100}
                     absolute={true}
                     src={app.icon}
                   />
-                  <div className="capitalize text-xs font-semibold">
+                  <div className="capitalize text-xs text-center font-semibold">
                     {app.name}
-                  </div>
-                  <div className="flex mt-2 items-center">
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon className="bluestar" fafa="faStar" width={6} />
-                    <Icon
-                      className={stars > 3 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <Icon
-                      className={stars > 4 ? "bluestar" : ""}
-                      fafa="faStar"
-                      width={6}
-                    />
-                    <div className="text-xss">{"1k"}</div>
-                  </div>
-                  <div className="text-xss mt-8">
-                    <>{t("store.free")}</>
                   </div>
                 </div>
               );
@@ -356,7 +337,7 @@ const DetailPage = ({ app }) => {
   }, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: 0});
+    element.scrollTo({ top: 0, behavior: "smooth"},);
   }, [])
   const dispatch = useDispatch();
 
@@ -667,20 +648,24 @@ const DownPage = ({ action }) => {
       <div className="appscont mt-8">
         {
           storeApps.length > 0 ? renderSearchResult() :
-          <div
-          className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-          data-action="page2"
-          >
-            <Image
-              className="mx-4 mb-6 rounded bg-slate-200"
-              w={100}
-              h={100}
-              ext
-            />
-          <div className="capitalize text-xs text-center font-semibold">
-          </div>
+          listDraftApp.map(i=> (
+            <div
+              key={i}
+              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+              data-action="page2"
+            >
+                <Image
+                  className="mx-4 mb-6 rounded bg-slate-200"
+                  w={100}
+                  h={100}
+                  ext
+                />
+              <div className="capitalize text-xs text-center font-semibold">
+              </div>
 
-        </div>
+            </div>
+            ))
+          
         }
       </div>
     </div>

@@ -3,24 +3,18 @@ import icons from "./apps";
 var { taskbar, desktop, pinned, recent } = {
   taskbar: [
     "Settings",
-    "File Explorer",
-    "Browser",
-    "Terminal",
     "Store",
-    "Spotify",
+    "Discord",
   ],
   desktop: [
     "Worker Profile",
-    "Store",
     "Github",
-    "Visual Studio Code",
     "Browser",
-    "Landing page",
     "Time Manager",
-    "About Us",
+    "Landing page",
     "Discord",
     "Thinkmay Fanpage",
-    "Demo"
+    "Store",
   ],
   pinned: [
     "Browser",

@@ -149,7 +149,7 @@
 }
 .ribcont {
   background: var(--rib-bg);
-  margin: auto 6px;
+  margin: 0 6px;
   height: auto;
   width: 120px;
   transform-origin: center;
@@ -189,6 +189,7 @@
 .appscont {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .appscont .ribcont {
@@ -318,6 +319,13 @@
 
   .searchIcon {
     margin: 0 1em;
+  }
+
+  input {
+    width: 100%;
+    font-size: inherit;
+    background: inherit;
+    color: var(--med-dark);
   }
 }
 @keyframes downanim {
