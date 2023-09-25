@@ -127,7 +127,7 @@ export async function formatAppRenderTree(data) {
       // pause check by storage.data.lenghth > 0.
       const paused = storage.data.length == 0;
       return {
-        name: `${icon.name}`,
+        name: `${icon.name} ${storage.id}`,
         icon: icon.icon,
         action: "CLOUDAPP",
         payload: JSON.stringify({
