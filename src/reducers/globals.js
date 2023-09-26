@@ -170,30 +170,15 @@ const defState = {
   vendors: [
     {
       images: [
-        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png",
+        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/Wallpaper.png",
       ],
 
-      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/brightcloud.png",
-
+      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/Wallpaper.png",
       type: "vendor",
-
       metadata: {
-        href: "https://oneplay.in",
+        href: "https://thinkmay.net",
       },
-    },
-    {
-      images: [
-        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png",
-      ],
-
-      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/oneplay.png",
-
-      type: "vendor",
-
-      metadata: {
-        href: "https://oneplay.in",
-      },
-    },
+    }
   ],
 
   apps: [],

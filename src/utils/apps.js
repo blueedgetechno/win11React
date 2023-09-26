@@ -32,6 +32,19 @@ const apps = [
     pwa: true,
     full: true,
   },
+  {
+    name: "Landing page",
+    icon: "thinkmay",
+    type: "app",
+    action: gene_name(),
+    data: {
+      type: "IFrame",
+      url: "https://landing.thinkmay.net",
+    },
+    hide: true,
+    pwa: true,
+    full: false,
+  },
 
   {
     name: "Start",
@@ -86,6 +99,12 @@ const apps = [
     icon: "store",
     type: "app",
     action: "WNSTORE",
+  },
+  {
+    name: "Time Manager",
+    icon: "timemanager",
+    type: "app",
+    action: "TIMEMANAGER",
   },
   {
     name: "Recycle Bin",
@@ -342,6 +361,20 @@ const apps = [
     action: "EXTERNAL",
     payload: externalLink.FACEBOOK_LINK,
   },
+  {
+    name: "Demo",
+    icon: "https://www.gstatic.com/images/branding/product/1x/forms_512dp.png",
+    type: "app",
+    action: gene_name(),
+    data: {
+      type: "IFrame",
+      url: "https://forms.gle/ej7RPwGMWqJG3S7p7",
+    },
+    hide: true,
+    pwa: true,
+    full: true,
+  },
+
 ];
 
 for (let i = 0; i < installed.length; i++) {

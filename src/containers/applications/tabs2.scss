@@ -60,7 +60,19 @@ body[data-theme="dark"] .aboutApp {
     height: 500px;
   }
 }
+.timeApp{
+  max-width: 185px;
+  max-height: 280px;
+  min-width: 225px;
+  min-height: 270px;
 
+  &[data-size="mini"] {
+    top: 0%;
+    left: 75%;
+    width: 25%;
+    height: 50%;
+  }
+}
 .calcHis {
   display: none;
   transition: all ease-in-out 200ms;

@@ -32,6 +32,20 @@
     "NOT_READY": "Installing, wait 3-5' until game logo appears",
     "NOT_RUNNING": "Game is pasued or installing, run 'Start app' to open",
     "NOT_PAUSED": "Game is running or installing, try again!",
-    "PAUSED": "Game is pasued or installing, try again!"
+    "PAUSED": "Game is pasued or installing, try again!",
+    "NOT_PINGED": "Game is pasued, reload and run Start app!"
+  },
+  "info":{
+    "startApp":"It take a fews minutes. Please pause app when not using",
+    "installApp":"It take a fews minutes, wait until logo appears",
+    "pauseApp":"Tips, Right click => start app to play continuously"
+  },
+  "timemanager":{
+    "startAt": "Start at",
+    "endAt": "End",
+    "time": "Time used"
+  },
+  "store": {
+    "app_not_available": "App isn't ready"
   }
 }

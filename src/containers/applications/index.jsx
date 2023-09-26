@@ -17,6 +17,7 @@ export * from "./apps/settings";
 export * from "./apps/spotify";
 export * from "./apps/store";
 export * from "./apps/taskmanager";
+export * from "./apps/timemanager";
 export * from "./apps/terminal";
 export * from "./apps/whiteboard";
 

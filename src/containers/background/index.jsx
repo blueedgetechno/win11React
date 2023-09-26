@@ -29,7 +29,7 @@ export const BootScreen = (props) => {
       setTimeout(() => {
         console.log("blackout");
         setBlackOut(true);
-      }, 4000);
+      }, 2000);
     }
   }, [props.dir]);
 
@@ -41,8 +41,8 @@ export const BootScreen = (props) => {
             setBlackOut(false);
             setTimeout(() => {
               dispatch({ type: "WALLBOOTED" });
-            }, 4000);
-          }, 2000);
+            }, 2000);
+          }, 1000);
         }
       }
     }
@@ -101,10 +101,11 @@ export const LockScreen = (props) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: redirectTo,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
+          //redirectTo
+
         },
       },
     });

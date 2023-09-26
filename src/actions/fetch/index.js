@@ -81,7 +81,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
   if (error != null) throw error;
   return data;
 };
-const SupabaseFuncInvoke = async (funcName, options) => {
+export const SupabaseFuncInvoke = async (funcName, options) => {
   try {
     const credential = await getCredentialHeader();
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -168,7 +168,7 @@ export const DownloadApplication = async (app_template_id) => {
 
 export const StartApplication = async (storage_id) => {
   let msg;
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
@@ -179,13 +179,13 @@ export const StartApplication = async (storage_id) => {
   });
   if (error != null) {
     msg = error;
-    if (error === "run out of gpu stock") {
+    if (error === "failed fetch function update_by_volume: unable to launch") {
       msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
               </br>
               <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> Join 
+              </br> 
               ${directDiscordMsg} 
           <p>`;
   }
@@ -194,7 +194,7 @@ export const StartApplication = async (storage_id) => {
 };
 export const AccessApplication = async (input) => {
   const { storage_id, privateIp } = input
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
@@ -205,6 +205,13 @@ export const AccessApplication = async (input) => {
   });
   if (error == 'timeout 3 mins waiting for worker') {
     throw `<p> <b class='uppercase'>${error} at ${privateIp} 
+            </b>
+            </br> 
+              Screenshot and send it to admin
+          <p>`;
+  }
+  else if (error == 'worker not pinged') {
+    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
             </b>
             </br> 
               Screenshot and send it to admin
@@ -237,13 +244,35 @@ export const DeleteApplication = async (storage_id) => {
 };
 
 export const StopApplication = async (storage_id) => {
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     method: "POST",
     body: JSON.stringify({
       action: "STOP",
       storage_id: storage_id,
+    }),
+  });
+  if (error != null)
+    throw `<p> 
+              <b class='uppercase'>${error}. 
+              ${suggestMsg}
+              </b> 
+              </br> 
+              ${directDiscordMsg} 
+            <p>`;
+
+  return data;
+};
+
+export const StopVolume = async (volume_id) => {
+  const suggestMsg = i18next.t("error.suggest");
+
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "STOP_VOLUME",
+      volume_id: volume_id,
     }),
   });
   if (error != null)

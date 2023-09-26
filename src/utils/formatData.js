@@ -1,65 +1,63 @@
+import supabase from "../supabase/createClient";
+
 export function formatWorkerRenderTree(data) {
+  const tree = data.tree
   const newData = {
     Account: {
       type: "folder",
-      name: "Account",
-      info: {
-        size: "",
-        used: "",
+      name: "\\",
+      info: { 
+        ...tree.info,
         spid: "%worker%",
       },
       data: {},
     },
   };
 
-  data.tree.data.forEach((proxy) => {
+  if (tree.type != 'admin') {
+    newData.Account.data[tree.id] = RenderBranch(tree)
+  } else {
+    tree.data.forEach(x => {
+      const branch = RenderBranch(x)
+      if (branch == null)
+        return
+
+      newData.Account.data[x.id] = branch
+    })
+  }
+  return newData
+}
+
+function RenderBranch (tree) {
+  const folder = {}
+  AddNode(folder,tree)
+  return {
+    type: "folder",
+    data: folder,
+    info: {
+      ...tree.info,
+      // menu: "session",
+    },
+  };
+}
+
+
+function AddNode(folder,tree) {
+  tree.data.forEach((proxy) => {
     const proxy_name = `${proxy.type} ${proxy.id}`;
-    newData.Account.data[proxy_name] = {
-      type: "folder",
+    folder[proxy_name] = {
+      type: proxy.data.length > 0 
+        ? "folder"
+        : "file",
       data: {},
       info: {
         ...proxy.info,
-        menu: "proxy",
+        menu: proxy.type,
       },
     };
-    proxy.data.forEach((worker) => {
-      const worker_name = `${worker.type} ${worker.id}`;
-      newData.Account.data[proxy_name].data[worker_name] = {
-        type: "folder",
-        data: {},
-        info: {
-          ...worker.info,
-          menu: "worker",
-        },
-      };
 
-      worker.data.forEach((session) => {
-        const session_name = `${session.type} ${session.id}`;
-        newData.Account.data[proxy_name].data[worker_name].data[session_name] =
-        {
-          type: "folder",
-          data: {},
-          info: {
-            ...session.info,
-            menu: "session",
-          },
-        };
-        session.data.forEach((user_session) => {
-          newData.Account.data[proxy_name].data[worker_name].data[
-            session_name
-          ].data[`${user_session.type} ${user_session.id}`] = {
-            type: "file",
-            data: {},
-            info: {
-              ...user_session.info,
-              menu: "user",
-            },
-          };
-        });
-      });
-    });
-  });
-  return newData;
+    AddNode(folder[proxy_name].data,proxy)
+  })
 }
 
 // {
@@ -72,6 +70,17 @@ export function formatWorkerRenderTree(data) {
 // }
 
 export async function formatAppRenderTree(data) {
+  const constantFetch = await supabase
+    .from('constant')
+    .select('value->virt')
+  if (constantFetch.error) 
+    throw constantFetch.error
+
+  const url = constantFetch.data.at(0)?.virt.url;
+  const key = constantFetch.data.at(0)?.virt.anon_key;
+  if (url == undefined || key == undefined)
+    return
+
   return await Promise.all(
     data.tree.data.map(async (storage) => {
       if (storage.type == "pending") {
@@ -88,22 +97,26 @@ export async function formatAppRenderTree(data) {
         };
       }
 
-      const anon =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
-      const icons = await (
-        await fetch(
-          "https://dgckwjucklewsucocfgw.supabase.co/rest/v1/rpc/get_app_metadata_from_volume",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${anon}`,
-              apikey: anon,
+
+      let icons = JSON.parse(localStorage.getItem(`app_metadata_from_volume_${storage.id}`) ?? `[]`)
+      if (icons?.length == 0 || icons?.length == undefined) {
+        icons = await (
+          await fetch(
+            `${url}/rest/v1/rpc/get_app_metadata_from_volume`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${key}`,
+                apikey: key,
+              },
+              body: JSON.stringify({ deploy_as: `${storage.id}` }),
             },
-            body: JSON.stringify({ deploy_as: `${storage.id}` }),
-          },
-        )
-      ).json();
+          )
+        ).json();
+
+        localStorage.setItem(`app_metadata_from_volume_${storage.id}`,JSON.stringify(icons))
+      }
 
       const icon = icons.at(0) ?? {
         name: 'Game Pause',
@@ -114,7 +127,7 @@ export async function formatAppRenderTree(data) {
       // pause check by storage.data.lenghth > 0.
       const paused = storage.data.length == 0;
       return {
-        name: `${icon.name}`,
+        name: `${icon.name} ${storage.id}`,
         icon: icon.icon,
         action: "CLOUDAPP",
         payload: JSON.stringify({
@@ -122,6 +135,7 @@ export async function formatAppRenderTree(data) {
           storage_id: storage.id,
           additional: icon.metadata, // TODO
           privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
+          volume_id: storage?.info?.deploy_as ?? 0
 
         }),
         type: "externalApp",

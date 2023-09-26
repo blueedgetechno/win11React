@@ -14,7 +14,6 @@ import {
   viewDetail,
 } from "./worker";
 import { deleteApp, openApp } from "./app";
-import { AnalyticTrack } from "../lib/segment";
 import { fetchApp } from "./preload";
 
 export const refresh = (pl, menu) => {
@@ -25,6 +24,33 @@ export const refresh = (pl, menu) => {
   }
 };
 
+export const afterMath = (event) => {
+  var ess = [
+    ["START", "STARTHID"],
+    ["BAND", "BANDHIDE"],
+    ["PANE", "PANEHIDE"],
+    ["WIDG", "WIDGHIDE"],
+    ["CALN", "CALNHIDE"],
+    ["MENU", "MENUHIDE"],
+  ];
+
+  var actionType = "";
+  try {
+    actionType = event.target.dataset.action || "";
+  } catch (err) {}
+
+  var actionType0 = getComputedStyle(event.target).getPropertyValue(
+    "--prefix",
+  );
+
+  ess.forEach((item, i) => {
+    if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+      store.dispatch({
+        type: item[1],
+      });
+    }
+  });
+};
 export const changeIconSize = (size, menu) => {
   var tmpMenu = { ...menu };
   tmpMenu.menus.desk[0].opts[0].dot = false;
@@ -97,11 +123,7 @@ export const performApp = (act, menu) => {
   };
   // add analytic
   const appName = menu.dataset.name;
-  AnalyticTrack(`click app`, {
-    name: appName,
-    timestamp: new Date(),
-    action: data.type,
-  });
+  // AnalyticTrack(`click app`, {
 
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);
@@ -194,12 +216,12 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTWORKERSESSION") connectSession(event);
   else if (type === "VIEW_DETAIL") viewDetail(event);
   else if (type === "CLOUDAPP") console.log(event);
-  else if (type === "PAUSE_APP") {
-    ActionExternal.pauseApp(externalAppData);
-  } else if (type === "START_APP") {
-    ActionExternal.startApp(externalAppData);
-  } else if (type != type.toUpperCase())
-    // TODO
+
+  else if (type === "CONNECTVOLUMEWORKER")    ActionExternal.connectVolume(event);
+  else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
+  else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
+  else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
+  else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);
 

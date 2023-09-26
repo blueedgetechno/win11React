@@ -31,11 +31,27 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
-    session: {
+    worker_session: {
       width: "150px",
       secwid: "100px",
     },
-    user: {
+    user_session: {
+      width: "150px",
+      secwid: "100px",
+    },
+    volumes: {
+      width: "150px",
+      secwid: "100px",
+    },
+    volume: {
+      width: "150px",
+      secwid: "100px",
+    },
+    apps: {
+      width: "150px",
+      secwid: "100px",
+    },
+    app: {
       width: "150px",
       secwid: "100px",
     },
@@ -224,28 +240,28 @@ const defState = {
         action: "performApp",
         payload: "open",
       },
-      {
-        name: "Run as administrator",
-        action: "performApp",
-        payload: "open",
-        icon: "win/shield",
-      },
-      {
-        name: "Open file location",
-        dsb: true,
-      },
-      {
-        name: "Unpin from start",
-        dsb: true,
-      },
-      {
-        name: "Compress to Zip file",
-        dsb: true,
-      },
-      {
-        name: "Copy as path",
-        dsb: true,
-      },
+      //{
+      //  name: "Run as administrator",
+      //  action: "performApp",
+      //  payload: "open",
+      //  icon: "win/shield",
+      //},
+      //{
+      //  name: "Open file location",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Unpin from start",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Compress to Zip file",
+      //  dsb: true,
+      //},
+      //{
+      //  name: "Copy as path",
+      //  dsb: true,
+      //},
       {
         name: "Properties",
         dsb: true,
@@ -262,6 +278,11 @@ const defState = {
         name: "Delete",
         action: "delApp",
         payload: "delete",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
       },
     ],
     externalApp: [
@@ -332,7 +353,7 @@ const defState = {
         payload: "openmodal",
       },
     ],
-    session: [
+    worker_session: [
       {
         name: "Open",
         action: "FILEDIRWORKER",
@@ -353,7 +374,31 @@ const defState = {
         payload: "detail",
       },
     ],
-    user: [
+    volume: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+      {
+        name: "Connect",
+        action: "CONNECTVOLUMEWORKER",
+        payload: "connect",
+      },
+      {
+        name: "Stop",
+        action: "STOPVOLUME",
+        payload: "stop",
+      },
+    ],
+    volumes: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    user_session: [
       {
         name: "Detail",
         action: "VIEW_DETAIL",
