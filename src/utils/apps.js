@@ -107,6 +107,12 @@ const apps = [
     action: "TIMEMANAGER",
   },
   {
+    name: "FeedBack",
+    icon: "feedback",
+    type: "app",
+    action: "FEEDBACK",
+  },
+  {
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",

@@ -11,6 +11,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Github",
     "Browser",
     "Time Manager",
+    "FeedBack",
     "Landing page",
     "Discord",
     "Thinkmay Fanpage",
