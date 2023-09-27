@@ -3,10 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import supabase from "../../supabase/createClient";
 import { handleLogOut } from "../../actions";
+import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
+import { useTranslation } from "react-i18next";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const user = useSelector((state) => state.user);
+  const { t, i18n } = useTranslation();
+
   const start = useSelector((state) => {
     var arr = state.startmenu,
       ln = (6 - (arr.pnApps.length % 6)) % 6;
@@ -136,57 +140,33 @@ export const StartMenu = () => {
                     <Icon fafa="faChevronRight" width={8} />
                   </div>
                 </div>
-                <div className="pnApps">
-                  {start.pnApps.map((app, i) => {
-                    return app.empty ? (
-                      <div key={i} className="pnApp pnEmpty"></div>
-                    ) : (
-                      <div
-                        key={i}
-                        className="prtclk pnApp"
-                        value={app.action != null}
-                        onClick={clickDispatch}
-                        data-action={app.action}
-                        data-payload={app.payload || "full"}
-                        data-click={"track"}
-                        data-name={app.name}
-                      >
-                        <Icon className="pnIcon" src={app.icon} width={32} />
-                        <div className="appName">{app.name}</div>
-                      </div>
-                    );
-                  })}
-                </div>
+
               </div>
-              <div className="recApps win11Scroll">
-                <div className="stAcbar">
-                  <div className="gpname">Recommended</div>
-                  <div className="gpbtn none">
-                    <div>More</div>
-                    <Icon fafa="faChevronRight" width={8} />
+              <div className="windowScreen flex flex-col p-2" data-dock="true">
+                <div className="flex pt-2">
+                  <div className="flex pl-2 items-center">
+                    <div className=" font-semibold pb-1">{'userName'}</div>
                   </div>
                 </div>
-                <div className="reApps">
-                  {start.rcApps.slice(0, 6).map((app, i) => {
-                    return app.name ? (
-                      <div
-                        key={i}
-                        className="rnApp"
-                        value={app.action != null}
-                        onClick={clickDispatch}
-                        data-action={app.action}
-                        data-payload={app.payload || "full"}
-                        data-click={"track"}
-                        data-name={app.name}
-                      >
-                        <Icon className="pnIcon" src={app.icon} width={32} />
-                        <div className="acInfo">
-                          <div className="appName">{app.name}</div>
-                          <div className="timeUsed">{app.lastUsed}</div>
-                        </div>
-                      </div>
-                    ) : null;
-                  })}
+
+                <div className="w-full flex gap-4 justify-between mt-[18px] mb-[24px]">
+                  <span>Language</span>
+                  <LangSwitch />
+                </div>
+                <div className="restWindow h-full w-full flex-grow flex flex-col ">
+                  <div className="w-full flex gap-4 justify-between mt-1">
+                    <span>{t("timemanager.startAt")}:</span>
+                    <span>09-08-2023</span>
+                  </div>
+                  <div className="w-full flex gap-4 justify-between mt-1">
+                    <span>{t("timemanager.endAt")}:</span>
+                    <span>09-08-2023</span>
+                  </div>
+                  <hr className="my-[14px]" />
+                  <div className="w-full flex gap-4 justify-between mt-auto">
+                    <span>{t("timemanager.time")}:</span>
+                    <span>Test/100h</span>
+                  </div>
                 </div>
               </div>
             </div>

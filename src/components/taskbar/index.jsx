@@ -74,14 +74,14 @@ const Taskbar = () => {
                 icon="taskSearch"
               />
             ) : null}
-            {tasks.widgets ? (
+            {/*{tasks.widgets ? (
               <Icon
                 className="tsIcon widget"
                 src="widget"
                 width={24}
                 click="WIDGTOGG"
               />
-            ) : null}
+            ) : null}*/}
             {tasks.apps.map((task, i) => {
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z == apps.hz;

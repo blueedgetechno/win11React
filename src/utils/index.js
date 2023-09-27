@@ -2,7 +2,6 @@ import icons from "./apps";
 
 var { taskbar, desktop, pinned, recent } = {
   taskbar: [
-    "Settings",
     "Store",
     "Discord",
   ],
@@ -20,11 +19,9 @@ var { taskbar, desktop, pinned, recent } = {
   pinned: [
     "Browser",
     "Get Started",
-    "Task Manager",
+    "Time Manager",
     "Mail",
-    "Settings",
     "Store",
-    "Unescape",
     "Notepad",
     "Whiteboard",
     "Calculator",
