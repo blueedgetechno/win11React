@@ -154,12 +154,12 @@ export const WnTerminal = () => {
         cmdcont.style.color = color;
       } else {
         tmpStack.push(
-          "Set the color of the background and the text for the console."
+          "Set the color of the background and the text for the console.",
         );
         tmpStack.push("COLOR [arg]");
         tmpStack.push("arg\t\tSpecifies the color for the console output");
         tmpStack.push(
-          "The color attribute is a combination of the following values:"
+          "The color attribute is a combination of the following values:",
         );
         tmpStack.push("0\t\tBlack");
         tmpStack.push("1\t\tBlue");
@@ -217,7 +217,7 @@ export const WnTerminal = () => {
             })
             .replaceAll(":", ".") +
           "." +
-          Math.floor(Math.random() * 100)
+          Math.floor(Math.random() * 100),
       );
     } else if (type == "exit") {
       tmpStack = ["OS [Version 10.0.22000.51]", ""];
@@ -290,7 +290,7 @@ export const WnTerminal = () => {
       tmpStack.push("Postal: " + IP.postal);
     } else {
       tmpStack.push(
-        `'${type}' is not recognized as an internal or external command,`
+        `'${type}' is not recognized as an internal or external command,`,
       );
       tmpStack.push("operable program or batch file.");
       tmpStack.push("");

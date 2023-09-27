@@ -29,7 +29,7 @@ export const DScord = () => {
   useEffect(() => {
     if (url == null) {
       setUrl(
-        "https://e.widgetbot.io/channels/868499076432408627/868499076432408631"
+        "https://e.widgetbot.io/channels/868499076432408627/868499076432408631",
       );
       // setUrl("https://emerald.widgetbot.io/channels/299881420891881473/450428756855750666/?api=e2f9b64f-5292-43f5-a0d8-26fa43447eeb")
     }

@@ -210,7 +210,7 @@ export const StartMenu = () => {
                       <div className="ltName">
                         {i == 0 ? "#" : String.fromCharCode(i + 64)}
                       </div>
-                    </div>
+                    </div>,
                   );
 
                   ldx.forEach((app, j) => {
@@ -224,7 +224,7 @@ export const StartMenu = () => {
                       >
                         <Icon className="pnIcon" src={app.icon} width={24} />
                         <div className="appName">{app.name}</div>
-                      </div>
+                      </div>,
                     );
                   });
 

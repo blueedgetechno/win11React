@@ -326,7 +326,7 @@ export const Settings = () => {
                           );
                         default:
                           return console.log(
-                            `error - type ${e.type} not found`
+                            `error - type ${e.type} not found`,
                           );
                       }
                     })}
