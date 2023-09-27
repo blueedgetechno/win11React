@@ -150,11 +150,6 @@ const apps = [
     type: "app",
   },
   {
-    name: "Feedback",
-    icon: "feedback",
-    type: "app",
-  },
-  {
     name: "Get Started",
     icon: "getstarted",
     type: "app",

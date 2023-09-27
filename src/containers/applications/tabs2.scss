@@ -60,6 +60,32 @@ body[data-theme="dark"] .aboutApp {
     height: 500px;
   }
 }
+.feedbackApp{
+  max-width: 185px;
+  max-height: max-content;
+  min-width: 225px;
+  min-height: 270px;
+
+  &[data-size="mini"] {
+    top: 20%;
+    left: 50%;
+    width: 25%;
+    height: 50%;
+  }
+  .icon{
+    width: 25px;
+    height: 25px;
+    transition: linear  all 0.2s;
+    &[data-select="true"]{
+    scale: 1.8;
+
+    }
+  }
+  .icon:hover{
+    scale: 1.8;
+    
+  }
+}
 .timeApp{
   max-width: 185px;
   max-height: 280px;
