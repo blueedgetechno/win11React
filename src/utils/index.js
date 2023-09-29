@@ -3,7 +3,6 @@ import icons from "./apps";
 var { taskbar, desktop, pinned, recent } = {
   taskbar: [
     "Store",
-    "Discord",
   ],
   desktop: [
     "Worker Profile",
