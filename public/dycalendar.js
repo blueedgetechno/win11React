@@ -443,7 +443,7 @@
         year = parseInt(targetDomObject.getAttribute("data-year"));
         btn = targetDomObject.getAttribute("data-btn");
         option = JSON.parse(
-          targetDomObject.parentElement.getAttribute("data-option")
+          targetDomObject.parentElement.getAttribute("data-option"),
         );
 
         if (btn === "prev") {
@@ -475,7 +475,7 @@
         targetDomObject.classList.contains("dycalendar-span-month-year")
       ) {
         option = JSON.parse(
-          targetDomObject.parentElement.getAttribute("data-option")
+          targetDomObject.parentElement.getAttribute("data-option"),
         );
         dateObj = new Date();
 

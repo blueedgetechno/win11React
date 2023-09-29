@@ -128,7 +128,7 @@ export const SidePane = () => {
   function sliderBackground(elem, e) {
     elem.style.setProperty(
       "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
     );
   }
 

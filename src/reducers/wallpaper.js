@@ -86,11 +86,13 @@ const wallReducer = (state = defState, action) => {
         src = "";
 
       if (isIndex) {
-        wps = action.payload;
-        src = walls[action.payload];
+        wps = localStorage.getItem("wps");
+        src = walls[wps] ? walls[wps] : walls[0];
       } else {
+        const idx = walls.findIndex((item) => item === action.payload);
+        localStorage.setItem("wps", idx);
         src = action.payload;
-        wps = walls.indexOf(action.payload);
+        wps = walls[idx];
       }
 
       return {

@@ -1,7 +1,7 @@
 document.write(
   "<scr" +
     'ipt async src="https://www.googletagmanager.com/gtag/js?id=G-QNW5K71MZ0"></scr' +
-    "ipt>"
+    "ipt>",
 );
 
 //if (window.location.hostname == "win11.blueedge.me") {
