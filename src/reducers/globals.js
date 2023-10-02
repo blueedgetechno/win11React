@@ -170,10 +170,10 @@ const defState = {
   vendors: [
     {
       images: [
-        "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/Wallpaper.png",
+        "https://joijwboqwnujvyxudqez.supabase.co/storage/v1/object/public/public_store/store/logo/thinkmay%20screen.png",
       ],
 
-      icon: "https://dgckwjucklewsucocfgw.supabase.co/storage/v1/object/public/public_store/store/vendor/Wallpaper.png",
+      icon: "https://joijwboqwnujvyxudqez.supabase.co/storage/v1/object/public/public_store/store/logo/thinkmay.png",
       type: "vendor",
       metadata: {
         href: "https://thinkmay.net",
