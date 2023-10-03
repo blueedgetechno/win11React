@@ -226,6 +226,40 @@ export const AccessApplication = async (input) => {
             <p>`;
   return data;
 };
+export const ResetApplication = async (input) => {
+  const { storage_id, privateIp } = input
+  const suggestMsg = i18next.t("error.suggest");
+
+  const { data, error } = await SupabaseFuncInvoke("request_application", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "RESET",
+      storage_id: storage_id,
+    }),
+  });
+  if (error == 'timeout 3 mins waiting for worker') {
+    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
+            </b>
+            </br> 
+              Screenshot and send it to admin
+          <p>`;
+  }
+  else if (error == 'worker not pinged') {
+    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
+            </b>
+            </br> 
+              Screenshot and send it to admin
+          <p>`;
+  }
+  else if (error != null)
+    throw `<p> <b class='uppercase'>${error}. 
+              </b>
+               ${suggestMsg}
+              </br> 
+              ${directDiscordMsg} 
+            <p>`;
+  return data;
+};
 
 export const DeleteApplication = async (storage_id) => {
   const { data, error } = await supabase.functions.invoke(

@@ -5,6 +5,7 @@ import { fetchApp, fetchStore, fetchWorker } from "./preload";
 import supabase from "../supabase/createClient";
 import {
   AccessApplication,
+  ResetApplication,
   DeleteApplication,
   DownloadApplication,
   FetchUserApplication,
@@ -64,27 +65,27 @@ const wrapper = async (func, appType) => {
 export const deleteStore = async (app) => {
   if (!isAdmin()) return;
 
-  const {data,error} = await supabase
+  const { data, error } = await supabase
     .from('constant')
     .select('value->virt')
-  if (error) 
+  if (error)
     throw error
 
   const url = data.at(0)?.virt.url;
   const key = data.at(0)?.virt.anon_key;
   if (url == undefined || key == undefined)
     return
-  
+
   const resp = await fetch(`${url}/rest/v1/stores?id=eq.${app.id}`,
-  {
-    method: 'DELETE',
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
-      // "refer": "return=minimal"
-    },
-  }
+    {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+        apikey: key,
+        // "refer": "return=minimal"
+      },
+    }
   )
 
   console.log(resp)
@@ -92,7 +93,7 @@ export const deleteStore = async (app) => {
   if (resp.status != 204 || 200 || 201) throw await resp.text();
 
 
-  
+
   await log({
     error: null,
     type: "confirm",
@@ -117,16 +118,32 @@ export const openApp = async (appInput) =>
       privateIp: payload.privateIp
     }
     const result = await AccessApplication(input);
-    
+
     openRemotePage(result.url);
   });
+export const resetApp = async (appInput) =>
+  wrapper(async () => {
+    const payload = JSON.parse(appInput.payload);
 
+    if (payload.status == "NOT_READY")
+      throw (i18next.t("error.NOT_READY"));
+    else if (payload.status != "RUNNING")
+      throw (i18next.t("error.NOT_RUNNING"));
+
+    const input = {
+      storage_id: payload.storage_id,
+      privateIp: payload.privateIp
+    }
+    const result = await ResetApplication(input);
+
+    openRemotePage(result.url);
+  });
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
     await DownloadApplication(payload.app_template_id);
     await fetchApp();
-  },'installApp');
+  }, 'installApp');
 
 // desktop app
 export const startApp = async (appInput) =>
@@ -141,15 +158,15 @@ export const startApp = async (appInput) =>
           volume_id: payload.volume_id
         })
 
-      if (error) 
+      if (error)
         throw error
-      if (data == true) 
+      if (data == true)
         break
 
       await sleep(10 * 1000)
     }
     await fetchApp();
-  },'startApp');
+  }, 'startApp');
 
 // desktop app
 export const pauseApp = async (appInput) =>
@@ -161,7 +178,7 @@ export const pauseApp = async (appInput) =>
     await StopApplication(payload.storage_id);
     await sleep(15 * 1000)
     await fetchApp();
-  },'pauseApp');
+  }, 'pauseApp');
 
 export const deleteApp = (appInput) =>
   wrapper(async () => {
@@ -188,15 +205,15 @@ export const connectVolume = (e) =>
 export const stopVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
- 
+
     const storage = payload.info.storage
-    const volume  = payload.info.id
-    
-    if (storage != undefined) 
+    const volume = payload.info.id
+
+    if (storage != undefined)
       await StopApplication(storage);
-    else if (volume  != undefined)
+    else if (volume != undefined)
       await StopVolume(volume);
-    else 
+    else
       throw 'invalid request'
 
     await fetchWorker()
@@ -210,7 +227,7 @@ export const ReleaseApp = async (store) => {
       inputLabel: 'Message',
       inputPlaceholder: 'Type your description here...',
       inputAttributes: {
-          'aria-label': 'Type your description here'
+        'aria-label': 'Type your description here'
       },
       showCancelButton: false
     })
@@ -225,9 +242,10 @@ export const ReleaseApp = async (store) => {
       }),
     });
 
-    if (error) 
+    if (error)
       throw error
-  })}
+  })
+}
 
 export const PatchApp = async (app) => {
   wrapper(async () => {
@@ -251,7 +269,8 @@ export const PatchApp = async (app) => {
       }),
     });
 
-    if (error) 
+    if (error)
       throw error
-    
-  })}
+
+  })
+}

@@ -292,10 +292,8 @@ const defState = {
         payload: "open",
       },
       {
-        name: "Run as administrator",
-        action: "performApp",
-        payload: "open",
-        icon: "win/shield",
+        name: "Reset App",
+        action: "RESET_APP",
       },
       {
         name: "Start App",
@@ -307,11 +305,6 @@ const defState = {
       },
       {
         type: "hr",
-      },
-      {
-        name: "Delete shortcut",
-        action: "performApp",
-        payload: "delshort",
       },
       {
         name: "Delete",

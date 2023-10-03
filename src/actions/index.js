@@ -221,6 +221,7 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
   else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
   else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
+  else if (type === "RESET_APP")              ActionExternal.resetApp(externalAppData);
   else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);
