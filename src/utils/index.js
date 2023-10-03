@@ -8,7 +8,6 @@ var { taskbar, desktop, pinned, recent } = {
     "Worker Profile",
     "Github",
     "Browser",
-    "Time Manager",
     "FeedBack",
     "Landing page",
     "Discord",
@@ -18,7 +17,6 @@ var { taskbar, desktop, pinned, recent } = {
   pinned: [
     "Browser",
     "Get Started",
-    "Time Manager",
     "Mail",
     "Store",
     "Notepad",

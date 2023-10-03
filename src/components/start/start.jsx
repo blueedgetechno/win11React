@@ -9,11 +9,12 @@ import { useTranslation } from "react-i18next";
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const user = useSelector((state) => state.user);
+  const usageTime = user?.usageTime?.at(0)
   const { t, i18n } = useTranslation();
 
   const start = useSelector(state => state.startmenu)
   // const { signOut } = useAuth();
-  const thm  = useSelector(state => state.setting.person.theme) 
+  const thm = useSelector(state => state.setting.person.theme)
   var icon = thm == "light" ? "sun" : "moon";
 
   const dispatch = useDispatch();
@@ -56,7 +57,21 @@ export const StartMenu = () => {
     }
   };
 
+  const formatDate = (dateStr) => {
 
+    // Convert the date string to a JavaScript Date object.
+    const date = new Date(dateStr);
+
+    // Format the date object to the desired output format.
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      month: "numeric",
+      day: "numeric",
+      year: "numeric"
+    });
+
+    // Output the formatted date string.
+    return formattedDate
+  }
 
   return (
     <div
@@ -80,31 +95,31 @@ export const StartMenu = () => {
             <div className="w-full flex gap-4 justify-between mb-[24px]">
               <span>Theme</span>
               <div
-                  className="strBtn handcr prtclk"
-                  onClick={changeTheme}
-                >
-                  <Icon
-                    className="quickIcon"
-                    ui={true}
-                    src={icon}
-                    width={14}
-                    //invert={pnstates[idx] ? true : null}
-                  />
-                </div>
+                className="strBtn handcr prtclk"
+                onClick={() => { { changeTheme() } }}
+              >
+                <Icon
+                  className="quickIcon"
+                  ui={true}
+                  src={icon}
+                  width={14}
+                //invert={pnstates[idx] ? true : null}
+                />
+              </div>
             </div>
             <div className="restWindow h-full w-full flex-grow flex flex-col ">
               <div className="w-full flex gap-4 justify-between mt-1">
                 <span>{t("timemanager.startAt")}:</span>
-                <span>09-08-2023</span>
+                <span>{formatDate(usageTime?.start_time)}</span>
               </div>
               <div className="w-full flex gap-4 justify-between mt-1">
                 <span>{t("timemanager.endAt")}:</span>
-                <span>09-08-2023</span>
+                <span>{formatDate(usageTime?.end_time)}</span>
               </div>
               <hr className="my-[14px]" />
               <div className="w-full flex gap-4 justify-between mt-auto">
                 <span>{t("timemanager.time")}:</span>
-                <span>Test/100h</span>
+                <span>{usageTime?.total_time }/{usageTime?.package}</span>
               </div>
             </div>
           </div>
