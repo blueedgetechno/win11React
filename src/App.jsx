@@ -89,9 +89,9 @@ function App() {
 
   window.onclick = afterMath;
 
-  window.onload = (e) => {
-    dispatch({ type: "WALLBOOTED" });
-  };
+  //window.onload = (e) => {
+  //  dispatch({ type: "WALLBOOTED" });
+  //};
 
   useEffect(() => {
     if (!window.onstart) {
@@ -102,28 +102,38 @@ function App() {
         .catch((err) => {
           console.log(err.message);
         });
-
-      window.onstart = setTimeout(() => {
-        dispatch({
-          type: "WALLBOOTED",
-        });
-      }, 5000);
     }
-  });
+  },[]);
+
 
   const verifyUserInfo = React.useCallback(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error != null) throw error;
+
     //move to win11.thinkmay.net
     if (window.location.host == "win11.thinkmay.net") {
       logFEEvent(`source ${urlParams.get("ref") ?? "thinkmay"}`, data.user);
     }
     dispatch({
       type: "ADD_USER",
-      payload: data.user,
+      payload: data.user
     });
   }, [dispatch]);
 
+  const getUsageTime = async () =>{
+    if(!user.app_metadata?.greenlist ) return
+
+    const usageTime = await supabase.rpc('get_usage_time_user', {user_id: user.id})
+    const useTime = usageTime.data
+    if (usageTime.error != null) throw error;
+    dispatch({
+      type: "ADD_USER",
+      payload: {...user, usageTime: useTime}
+    });
+  }
+  useEffect(()=>{
+    getUsageTime()
+  },[user.id])
   useEffect(() => {
     verifyUserInfo();
   }, [verifyUserInfo]);
@@ -146,7 +156,7 @@ function App() {
 
         <div className="appwrap">
           <Background />
-          {user.id? (
+          {user.id ? (
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />
@@ -165,8 +175,8 @@ function App() {
                     }
                   })}
                 <StartMenu />
-                <BandPane />
-                <SidePane />
+                {/*<BandPane />*/}
+                {/*<SidePane />*/}
                 <WidPane />
                 <CalnWid />
               </div>
