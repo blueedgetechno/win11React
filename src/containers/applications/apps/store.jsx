@@ -135,7 +135,7 @@ export const MicroStore = () => {
             className="restWindow msfull win11Scroll"
             onScroll={frontScroll}
           >
-            {/*{page == 0 ? <FrontPage app_click={app_click} /> : null}*/}
+            {page == 0 ? <FrontPage app_click={app_click} /> : null}
             {page == 1 ? (
               <DownPage
                 action={app_click}/>
