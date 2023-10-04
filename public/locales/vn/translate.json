@@ -33,7 +33,8 @@
     "NOT_RUNNING": "Game đã được Paused hoặc đang tải xuống , chạy 'Start app' để mở game",
     "NOT_PAUSED": "Game đang chạy hoặc tải xuống, thử lại sau nhé!",
     "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!",
-    "NOT_PINGED": "Game is pasued, reload và start app lại nhé!"
+    "NOT_PINGED": "Game đã được pasued, reload và start app lại nhé!",
+    "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !"
 
   },
   "info": {
