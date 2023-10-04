@@ -5,11 +5,12 @@ import supabase from "../../supabase/createClient";
 import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
+import { isGreenList } from "../../utils/checking";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const user = useSelector((state) => state.user);
-  const usageTime = user?.usageTime?.at(0)
+  const usageTime = user?.usageTime?.at(0) ?? {}
   const { t, i18n } = useTranslation();
 
   const start = useSelector(state => state.startmenu)
@@ -82,9 +83,20 @@ export const StartMenu = () => {
     >
       <>
         <div className="stmenu p-[14px]">
-          <div className="pinnedApps text-center font-semibold pb-1">
-            {user.email ?? 'Admin'}
+          <div className="pinnedApps text-center font-semibold pb-1 flex items-center justify-center gap-2">
+            <span>{user.email ?? 'Admin'}</span>
+            {
+              isGreenList() ?
+                <Icon className="quickIcon"
+                  //ui={true} 
+                  src={'active'}
+                  width={14} />
+                : null
+            }
           </div>
+          <h6> 
+              {!isGreenList() ? t("timemanager.inActiveUser") : null}
+          </h6>
           <div className="h-full flex flex-col p-2" data-dock="true">
 
 
@@ -119,7 +131,7 @@ export const StartMenu = () => {
               <hr className="my-[14px]" />
               <div className="w-full flex gap-4 justify-between mt-auto">
                 <span>{t("timemanager.time")}:</span>
-                <span>{usageTime?.total_time }/{usageTime?.package}</span>
+                <span>{usageTime.total_time ? (usageTime?.total_time + "/" + usageTime?.package) : "Invalid"}</span>
               </div>
             </div>
           </div>

@@ -44,7 +44,8 @@
   "timemanager":{
     "startAt": "Ngày bắt đầu",
     "endAt": "Ngày hết hạn",
-    "time": "Thời gian sử dụng"
+    "time": "Thời gian sử dụng",
+    "inActiveUser": "Tài khoản chưa kích hoạt, truy cập fanpage để được hướng dẫn"
   },
   "store": {
     "app_not_available": "Đang hết máy có game TT"
