@@ -1,6 +1,6 @@
 import { openApp } from "../actions/app";
 import { allApps } from "../utils";
-import { isMobile } from "../utils/isMobile";
+import { isMobile } from "../utils/checking";
 
 var dev = "";
 if (import.meta.env.MODE == "development") {

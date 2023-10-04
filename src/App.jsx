@@ -27,6 +27,7 @@ import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { logFEEvent } from "./utils/log_front_end.js";
+import { isGreenList } from "./utils/checking";
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
 
@@ -121,7 +122,7 @@ function App() {
   }, [dispatch]);
 
   const getUsageTime = async () =>{
-    if(!user.app_metadata?.greenlist ) return
+    if(!isGreenList()) return
 
     const usageTime = await supabase.rpc('get_usage_time_user', {user_id: user.id})
     const useTime = usageTime.data
