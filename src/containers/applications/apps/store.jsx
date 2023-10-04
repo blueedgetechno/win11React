@@ -8,14 +8,13 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
-import { isAdmin } from "../../../utils/isAdmin";
 import { fetchStore } from "../../../actions/preload";
 import { logFEEvent } from "../../../utils/log_front_end.js";
 import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
-import { isMobile } from "../../../utils/isMobile";
+import { isAdmin, isMobile } from "../../../utils/checking";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -136,7 +135,7 @@ export const MicroStore = () => {
             className="restWindow msfull win11Scroll"
             onScroll={frontScroll}
           >
-            {page == 0 ? <FrontPage app_click={app_click} /> : null}
+            {/*{page == 0 ? <FrontPage app_click={app_click} /> : null}*/}
             {page == 1 ? (
               <DownPage
                 action={app_click}/>

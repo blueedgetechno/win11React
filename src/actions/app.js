@@ -1,5 +1,4 @@
 import store from "../reducers";
-import { isAdmin } from "../utils/isAdmin";
 import { log } from "../lib/log";
 import { fetchApp, fetchStore, fetchWorker } from "./preload";
 import supabase from "../supabase/createClient";
@@ -18,6 +17,7 @@ import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
+import { isAdmin } from "../utils/checking";
 
 
 const formatEvent = (event) => {
