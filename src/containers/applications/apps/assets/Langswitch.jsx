@@ -18,7 +18,7 @@ function LangSwitch() {
       >
         <option value="en">English</option>
         <option value="vn">Vietnamese</option>
-        <option value="da">Danish</option>
+        {/*<option value="da">Danish</option>
         <option value="de">German</option>
         <option value="es">Spanish</option>
         <option value="fr">French</option>
@@ -30,7 +30,7 @@ function LangSwitch() {
         <option value="ru">Russian</option>
         <option value="tr">Turkish</option>
         <option value="zh">Chinese</option>
-        <option value="si">Sinhala</option>
+        <option value="si">Sinhala</option>*/}
       </select>
     </div>
   );
