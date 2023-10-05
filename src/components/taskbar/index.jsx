@@ -41,6 +41,25 @@ const Taskbar = () => {
     dispatch({ type: "TASKPHIDE" });
   };
 
+  const [conectivityToggle, setConectivityToggle] = useState("wifi");
+  const sidepane = useSelector((state) => state.sidepane);
+
+  useEffect(() => {
+    const wifi = document.querySelector('[data-payload="network.wifi.state"]');
+    let wifiState = wifi.getAttribute('data-state');
+
+    if (sidepane.quicks[2].ui === false) {
+      setConectivityToggle("airplane");
+      wifiState = "false";
+    } else {
+      setConectivityToggle("wifi");
+      wifiState = "true";
+    }
+
+    // Update the data-state attribute of the wifi element
+    wifi.setAttribute('data-state', wifiState);
+  }, [sidepane.quicks[2].ui]);
+
   const clickDispatch = (event) => {
     var action = {
       type: event.target.dataset.action,
@@ -143,7 +162,7 @@ const Taskbar = () => {
             onClick={clickDispatch}
             data-action="PANETOGG"
           >
-            <Icon className="taskIcon" src="wifi" ui width={16} />
+            <Icon className="taskIcon" src={conectivityToggle} ui width={16} />
             <Icon
               className="taskIcon"
               src={"audio" + tasks.audio}

@@ -53,6 +53,10 @@ const paneReducer = (state = defState, action) => {
     var tmpState = { ...state };
     tmpState.quicks[4].src = action.payload;
     return tmpState;
+  } else if (action.type == "STNGTOGG" && action.payload === "network.airplane") {
+    var tmpState = { ...state };
+    tmpState.quicks[2].ui = !tmpState.quicks[2].ui;
+    return tmpState;
   } else if (action.type == "BANDTOGG") {
     return { ...state, banhide: !state.banhide };
   } else if (action.type == "BANDHIDE") {
