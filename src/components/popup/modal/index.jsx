@@ -37,7 +37,7 @@ const Modal = (props) => {
             />
           </button>
         </div>
-        <div className="selectText d-flex overflow-auto min-h-full p-5 pb-9">
+        <div className="selectText d-flex overflow-auto min-h-full">
           {props.children}
         </div>
       </ReactModal>
