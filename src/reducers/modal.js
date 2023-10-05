@@ -1,5 +1,5 @@
 const defData = {
-  type: "user_feedback",
+  type: "disable",
   data: {},
 };
 
