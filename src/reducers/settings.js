@@ -72,7 +72,20 @@ const settReducer = (state = defState, action) => {
       tmpState = changeVal(tmpState, action.payload.path, action.payload.value);
       break;
     case "SETTLOAD":
+      changed = true;
       tmpState = { ...action.payload };
+      break;
+    case "TOGGAIRPLNMD":
+      changed = true;
+      const airPlaneModeStatus = tmpState.network.airplane;
+      console.log(airPlaneModeStatus);
+      if (tmpState.network.wifi.state === true && !airPlaneModeStatus) {
+        tmpState = changeVal(tmpState, "network.wifi.state");
+      }
+      if (tmpState.devices.bluetooth === true && !airPlaneModeStatus) {
+        tmpState = changeVal(tmpState, "devices.bluetooth");
+      }
+      tmpState = changeVal(tmpState, "network.airplane");
   }
 
   if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));

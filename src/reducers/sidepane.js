@@ -19,7 +19,7 @@ const defState = {
       src: "airplane",
       name: "Flight Mode",
       state: "network.airplane",
-      action: "STNGTOGG",
+      action: "flightMode",
     },
     {
       ui: true,
