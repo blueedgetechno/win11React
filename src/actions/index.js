@@ -120,11 +120,11 @@ export const performApp = (act, menu) => {
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
+    name: menu.dataset?.name ?? 'Null',
   };
   // add analytic
   const appName = menu.dataset.name;
   // AnalyticTrack(`click app`, {
-
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);
     return;

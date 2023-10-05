@@ -106,6 +106,7 @@ export const deleteStore = async (app) => {
 // desktop app
 export const openApp = async (appInput) =>
   wrapper(async () => {
+    //appInput.name
     const payload = JSON.parse(appInput.payload);
 
     if (payload.status == "NOT_READY")
@@ -120,6 +121,11 @@ export const openApp = async (appInput) =>
     const result = await AccessApplication(input);
 
     openRemotePage(result.url);
+    const feedbackInput = {
+      game: appInput?.name ?? 'null',
+      session: result.url ?? 'null'
+    }
+    store.dispatch({ type: "USER_FEEDBACK", payload: feedbackInput })
   });
 export const resetApp = async (appInput) =>
   wrapper(async () => {

@@ -39,7 +39,9 @@
   "info":{
     "startApp":"It take a fews minutes. Please pause app when not using",
     "installApp":"It take a fews minutes, wait until logo appears",
-    "pauseApp":"Tips, Right click => start app to play continuously"
+    "pauseApp": "Tips, Right click => start app to play continuously",
+    "thanks": "Thanks you<3",
+    "thankParaphrase": "Your feedback helps us so much for improvement!, Luv <3"
   },
   "timemanager":{
     "startAt": "Start at",
