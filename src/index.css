@@ -276,10 +276,12 @@ a {
   flex-direction: column;
 
   position: absolute;
-  top: 10%;
-  right: 25%;
-  left: 25%;
-  bottom: 5%;
+  top: 50%;
+  left: 50%;
+  /* bottom: -50%; */
+  height: auto;
+  width: auto;
+  transform: translate(-50%, -50%);
   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
   color: black;

@@ -3,10 +3,10 @@ import ModalEditOrInsert from "./modal/admin";
 import ModalWorkerInfo from "./modal/worker";
 import { useSelector } from "react-redux";
 import ModalSelectVendor from "./modal/vendor";
+import { UserFeedBack } from "./modal/userFeedBack";
 
 const Popup = (props) => {
   const modalInfo = useSelector((state) => state.modal);
-
   return (
     <Modal isOpen={modalInfo.type != "disable"}>
       {modalInfo.type == "insert_store" ? (
@@ -17,7 +17,9 @@ const Popup = (props) => {
         <ModalSelectVendor storeID={modalInfo.data.storeID} />
       ) : modalInfo.type == "view_worker" ? (
         <ModalWorkerInfo data={modalInfo.data} />
-      ) : null}
+      ) : modalInfo.type == "user_feedback" ? (
+        <UserFeedBack data={modalInfo.data} />)
+       : null}
     </Modal>
   );
 };

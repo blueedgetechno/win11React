@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { ToolBar } from "../../../utils/general";
+import { detectBrowserAndOS } from "../../../utils/detectBrower";
+import { log } from "../../../lib/log";
+import i18next from "i18next";
 
 const listFeedBack = [{
   name: 'Terrible',
@@ -71,15 +74,16 @@ const listErr = [
     data: []
   }
 ]
-export const FeedBack = () => {
+export const UserFeedBack = (props) => {
+  const {game, session} = props.data
+  const dispatch = useDispatch()
   const [selector, setSelector] = useState({
     feeling: '',
     control:{
       choose: false
-    }
-     
+    },
+    text:"" 
   })
-  const wnapp = useSelector((state) => state.apps.feedback);
   const user = useSelector((state) => state.user);
   const userName = user?.email ?? "Admin";
   const { t, i18n } = useTranslation();
@@ -95,35 +99,60 @@ export const FeedBack = () => {
     })
 
   }
-  const submitFeedback = ()=>{
+  const submitFeedback = async()=>{
+	
+	let issues = {
+		feeling: selector.feeling,
+		detail: selector.text,
+		issue: []
+	}
+	for(const elm in selector){
+		if(selector[elm]?.choose){
+			issues.issue.push(elm)
+		}
 
-    console.log(selector);
-  }
+	}
+
+	// 	throw (i18next.t("error.NOT_RUNNING"));
+	const {browser, os} = detectBrowserAndOS()
+	await fetch('https://discord.com/api/webhooks/1158696317728600074/8QzsXoCsgY3oSTJvADvcRh3oeOel-Ofs6HK_aeJzD1nAMdwe2ppeI5bXO99rtVvfttOp',{
+		method: "POST",
+		headers : {'Content-type': 'application/json; charset=UTF-8'},
+		body: JSON.stringify({
+			content: `
+			Email: ${userName},
+			Session: ${session}
+			Game: ${game}
+			Os: ${os}
+			Browser: ${browser}
+			Feeling: ${issues.feeling}
+			Issue: ${issues.issue}
+			Detail: ${issues.detail}
+			`
+		})
+	})
+	dispatch({ type: "CLOSE_MODAL", payload: {} })
+
+	log({type: 'success', title: i18next.t("info.thanks"), content: i18next.t("info.thankParaphrase")})
+}
   const isSelector = (key) => {
     
     return {
       opacity: selector[key]?.choose ? 1 : 0.5
     }
   }
+
+  const handleInput = (value)=>{
+	setSelector(prev => ({...prev, text: value}))
+
+  }
   return (
     <div
-      className="calcApp floatTab dpShad feedbackApp"
-      data-size={wnapp.size =="full" ? 'mini' : wnapp.size }
-      id={wnapp.icon + "App"}
-      data-max={wnapp.max}
-      style={{
-        ...(wnapp.size == "cstm" ? wnapp.dim : null),
-        zIndex: wnapp.z,
-      }}
-      data-hide={wnapp.hide}
+      className="calcApp feedbackApp flex"
     >
-      <ToolBar
-        app={wnapp.action}
-        icon={wnapp.icon}
-        size={wnapp.size}
-        name="FeedBack"
-      />
-      <div className="windowScreen flex flex-col p-[12px]" data-dock="true">
+  
+      <div className="windowScreen flex flex-col p-[12px] pt-0" data-dock="true">
+		<h6 className="text-center mb-4 text-[14px]">Feedback</h6>
         <div className="flex p-2 items-center justify-between">
             {listFeedBack.map(icon => (
               <div style={{opacity: icon.value == selector.feeling ? 1 : 0.5}} onClick={()=>{handleSelectFeeling(icon.value)}} className="flex flex-col items-center">
@@ -164,7 +193,7 @@ export const FeedBack = () => {
         </div>
         <p className="text-[14px] mb-2">Chi Tiết:</p>
         <div className="border-solid border h-full rounded-md">
-          <textarea className="noteText" ></textarea>
+          <textarea  className="noteText" value={selector.text} onInput={(e)=>{handleInput(e.target.value)}}></textarea>
         </div>
         <button className="mt-4 mx-auto instbtn w-[120px] h-[40px]" onClick={()=>{submitFeedback()}}>Submit</button>
       </div>
