@@ -84,7 +84,6 @@ export const UserFeedBack = (props) => {
     },
     text:"" 
   })
-  const wnapp = useSelector((state) => state.apps.feedback);
   const user = useSelector((state) => state.user);
   const userName = user?.email ?? "Admin";
   const { t, i18n } = useTranslation();
