@@ -24,7 +24,7 @@ const defState = {
       secwid: "100px",
     },
     externalApp: {
-      width: "310px",
+      width: "190px",
       secwid: "200px",
     },
     worker: {
