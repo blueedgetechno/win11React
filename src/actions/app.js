@@ -104,9 +104,9 @@ export const deleteStore = async (app) => {
 };
 
 // desktop app
-export const openApp = async (appInput) =>
+export const openApp = async (appInput, type) =>
   wrapper(async () => {
-    //appInput.name
+    const appName = appInput?.name ?? 'null'
     const payload = JSON.parse(appInput.payload);
 
     if (payload.status == "NOT_READY")
@@ -116,13 +116,13 @@ export const openApp = async (appInput) =>
 
     const input = {
       storage_id: payload.storage_id,
-      privateIp: payload.privateIp
+      privateIp: payload.privateIp,
     }
     const result = await AccessApplication(input);
 
-    openRemotePage(result.url);
+    openRemotePage(result.url, appName, type);
     const feedbackInput = {
-      game: appInput?.name ?? 'null',
+      game: appName,
       session: result.url ?? 'null'
     }
     store.dispatch({ type: "USER_FEEDBACK", payload: feedbackInput })
@@ -130,6 +130,7 @@ export const openApp = async (appInput) =>
 export const resetApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const appName = appInput?.name ?? 'null'
 
     if (payload.status == "NOT_READY")
       throw (i18next.t("error.NOT_READY"));
@@ -142,7 +143,7 @@ export const resetApp = async (appInput) =>
     }
     const result = await ResetApplication(input);
 
-    openRemotePage(result.url);
+    openRemotePage(result.url, appName);
   });
 // Handle app
 export const installApp = (payload) =>
@@ -204,7 +205,7 @@ export const connectVolume = (e) =>
     }
 
     const result = await AccessApplication(input);
-    openRemotePage(result.url)
+    openRemotePage(result.url, '', 'new_tab')
   });
 
 

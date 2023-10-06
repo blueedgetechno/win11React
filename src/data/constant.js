@@ -14,3 +14,9 @@ export const externalLink = {
   FACEBOOK_LINK: "https://www.facebook.com/thinkonmay",
   MAILTO_ADDRESS: "mailto:huyhoangdo@contact.thinkmay.net",
 };
+
+export const scanCodeApps = {
+  "League of Legends": true,
+  "GTA V": true,
+  "Devil May Cry5": true,
+}

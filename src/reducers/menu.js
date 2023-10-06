@@ -24,7 +24,7 @@ const defState = {
       secwid: "100px",
     },
     externalApp: {
-      width: "310px",
+      width: "190px",
       secwid: "200px",
     },
     worker: {
@@ -288,8 +288,11 @@ const defState = {
     externalApp: [
       {
         name: "Open",
-        action: "performApp",
-        payload: "open",
+        action: "OPEN_APP",
+      },
+      {
+        name: "Open in new tab",
+        action: "OPEN_APP_NEWTAB",
       },
       {
         name: "Reset App",
