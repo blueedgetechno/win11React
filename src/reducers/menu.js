@@ -288,8 +288,11 @@ const defState = {
     externalApp: [
       {
         name: "Open",
-        action: "performApp",
-        payload: "open",
+        action: "OPEN_APP",
+      },
+      {
+        name: "Open in new tab",
+        action: "OPEN_APP_NEWTAB",
       },
       {
         name: "Reset App",

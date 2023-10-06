@@ -206,9 +206,9 @@ export const menuDispatch = async (event, menu) => {
   const externalAppData = {
     type: menu?.dataset?.action,
     payload: menu?.dataset?.payload,
+    name: menu?.dataset?.name
   };
-
-  if (!type) return;
+  if (!type) return;  
   if (type === "FILEDIRWORKER") openWorker(event);
   else if (type === "CREATESESSION") createSession(event);
   else if (type === "DEACTIVATESESSION") deactiveSession(event);
@@ -219,6 +219,7 @@ export const menuDispatch = async (event, menu) => {
 
   else if (type === "CONNECTVOLUMEWORKER")    ActionExternal.connectVolume(event);
   else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
+  else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
   else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
   else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
   else if (type === "RESET_APP")              ActionExternal.resetApp(externalAppData);
