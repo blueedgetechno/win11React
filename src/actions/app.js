@@ -130,6 +130,7 @@ export const openApp = async (appInput, type) =>
 export const resetApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const appName = appInput?.name ?? 'null'
 
     if (payload.status == "NOT_READY")
       throw (i18next.t("error.NOT_READY"));
@@ -142,7 +143,7 @@ export const resetApp = async (appInput) =>
     }
     const result = await ResetApplication(input);
 
-    openRemotePage(result.url);
+    openRemotePage(result.url, appName);
   });
 // Handle app
 export const installApp = (payload) =>
@@ -204,7 +205,7 @@ export const connectVolume = (e) =>
     }
 
     const result = await AccessApplication(input);
-    openRemotePage(result.url)
+    openRemotePage(result.url, '', 'new_tab')
   });
 
 

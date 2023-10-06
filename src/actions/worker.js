@@ -91,7 +91,7 @@ export const connectSession = (e) =>
   wrapper(async () => {
     const worker = formatEvent(e);
     if (!worker.info.url) return;
-    openRemotePage(worker.info.url)
+    openRemotePage(worker.info.url, '', 'new_tab')
   });
 
 export const connectWorker = (e) =>
@@ -108,7 +108,7 @@ export const connectWorker = (e) =>
     const res = await CreateWorkerSession(worker.info.worker_profile_id);
 
     log({ type: "close", });
-    openRemotePage(res.url)
+    openRemotePage(res.url, '', 'new_tab')
 
     await fetchWorker();
     return "success";
