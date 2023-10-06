@@ -219,7 +219,8 @@ export const menuDispatch = async (event, menu) => {
 
   else if (type === "CONNECTVOLUMEWORKER")    ActionExternal.connectVolume(event);
   else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
-  else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
+  else if (type === "OPEN_APP")               ActionExternal.openApp(externalAppData);
+  else if (type === "OPEN_APP_NEWTAB")        ActionExternal.openApp(externalAppData, 'new_tab');
   else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
   else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
   else if (type === "RESET_APP")              ActionExternal.resetApp(externalAppData);
