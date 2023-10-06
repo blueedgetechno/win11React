@@ -1,11 +1,13 @@
 import { taskApps } from "../utils";
 
+const alignment = localStorage.getItem("taskbar-align") || "center";
+
 const defState = {
   apps: taskApps,
   prev: false,
   prevApp: "",
   prevPos: 0,
-  align: "center",
+  align: alignment,
   search: true,
   widgets: true,
   audio: 3,
@@ -23,14 +25,17 @@ const taskReducer = (state = defState, action) => {
         align: "center",
       };
     case "TASKLEF":
+      localStorage.setItem("taskbar-align", "left");
       return {
         ...state,
         align: "left",
       };
     case "TASKTOG":
+      const alignment = state.align == "left" ? "center" : "left";
+      localStorage.setItem("taskbar-align", alignment);
       return {
         ...state,
-        align: state.align == "left" ? "center" : "left",
+        align: alignment,
       };
     case "TASKPSHOW":
       return {
