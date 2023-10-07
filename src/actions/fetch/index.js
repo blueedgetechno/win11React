@@ -15,15 +15,6 @@ const getCredentialHeader = async () => {
     access_token: access_token,
   };
 };
-const getUserId = async () => {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error != null) throw new Error("unauthorized");
-
-  return user?.id;
-};
 
 export const FetchAuthorizedWorkers = async () => {
   const { data, error } = await supabase.functions.invoke(

@@ -5,7 +5,6 @@ import { defaultDispatch } from "../../../actions/click";
 import { refeshWorker, openWorker } from "../../../actions/worker";
 import "./assets/fileexpo.scss";
 import { combineText } from "../../../utils/combineText";
-import supabase from "../../../supabase/createClient";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";
@@ -261,6 +260,7 @@ export const Worker = () => {
 
 const ContentArea = ({ searchtxt }) => {
   const files = useSelector((state) => state.worker);
+  const user = useSelector((state) => state.user);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   const [userInfo, setuserInfo] = useState(null);
@@ -276,17 +276,7 @@ const ContentArea = ({ searchtxt }) => {
   }, [selected]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error !== null) {
-        throw error;
-      }
-
-      setuserInfo({
-        email: data.user.email,
-      });
-    };
-    fetchProfile();
+    setuserInfo({ email: user.email, });
   }, []);
 
   const renderSubdata = (data) => {

@@ -1,8 +1,3 @@
-// const defUser = async () => {
-//   const { data, error } = await supabase.auth.getUser();
-//   return data;
-// };
-
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case "ADD_USER":
