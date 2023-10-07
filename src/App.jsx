@@ -76,13 +76,16 @@ function App() {
     if (isMobile()) 
       setShowtaskbar(false)
 
-    window.addEventListener('resize', () => {
-      if (isMobile()) 
-        setalignvert(window.innerWidth < window.innerHeight)
-    })
-
     ReactGA.pageview(window.location.pathname + window.location.search);
     window.history.replaceState({}, document.title, "/" + "");
+
+    const check = () => {
+      if (isMobile()) 
+        setalignvert(window.innerWidth < window.innerHeight)
+    }
+
+    const loop = setInterval(check,100)
+    return () => {clearInterval(loop)}
   },[]);
 
   return (
