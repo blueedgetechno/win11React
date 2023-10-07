@@ -3,9 +3,6 @@ import { allApps } from "../utils";
 import { isMobile } from "../utils/checking";
 
 var dev = "";
-if (import.meta.env.MODE == "development") {
-  dev = ""; // set the name (lowercase) of the app you are developing so that it will be opened on refresh
-}
 
 const defState = {};
 for (var i = 0; i < allApps.length; i++) {

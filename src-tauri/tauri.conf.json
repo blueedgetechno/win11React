@@ -23,7 +23,7 @@
       },
       "externalBin": [],
       "icon": ["icons/icon.ico"],
-      "identifier": "com.blueedgetechno.win11react",
+      "identifier": "com.thinkmay.virtualos",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -52,7 +52,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "win11react",
+        "title": "thinkmay",
         "width": 800
       }
     ]
