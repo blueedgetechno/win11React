@@ -31,6 +31,9 @@ function App() {
 
   const [showtaskbar,setShowtaskbar] = useState(true)
   const [lockscreen,setLockscreen] = useState(true)
+  const [initialAlignvert] = useState(window.innerWidth < window.innerHeight)
+  const [alignvert,setalignvert] = useState(initialAlignvert)
+
   ReactModal.setAppElement("#root");
   const dispatch = useDispatch();
 
@@ -54,6 +57,10 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (alignvert != initialAlignvert) 
+      window.location.reload() //TODO, softer reload
+  },[alignvert])
 
 
   useEffect(() => {
@@ -68,12 +75,15 @@ function App() {
 
     if (isMobile()) 
       setShowtaskbar(false)
-  },[]);
 
-  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (isMobile()) 
+        setalignvert(window.innerWidth < window.innerHeight)
+    })
+
     ReactGA.pageview(window.location.pathname + window.location.search);
     window.history.replaceState({}, document.title, "/" + "");
-  }, []);
+  },[]);
 
   return (
     <div className="App">
