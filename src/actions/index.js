@@ -1,4 +1,3 @@
-import axios from "axios";
 import store from "../reducers";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
@@ -194,7 +193,6 @@ export const handleLogOut = async () => {
   logging.close();
 
   store.dispatch({ type: "DELETE_USER" });
-  store.dispatch({ type: "WALLALOCK" });
 };
 
 export const menuDispatch = async (event, menu) => {

@@ -6,8 +6,6 @@ import "./back.scss";
 import supabase from "../../supabase/createClient";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
-  const dispatch = useDispatch();
-
   return (
     <div
       className="background"
@@ -18,38 +16,10 @@ export const Background = () => {
   );
 };
 
-export const BootScreen = (props) => {
-  const dispatch = useDispatch();
-  const wall = useSelector((state) => state.wallpaper);
-  const [blackout, setBlackOut] = useState(false);
-
-  useEffect(() => {
-    if (props.dir < 0) {
-      setTimeout(() => {
-        console.log("blackout");
-        setBlackOut(true);
-      }, 2000);
-    }
-  }, [props.dir]);
-
-  useEffect(() => {
-    if (props.dir < 0) {
-      if (blackout) {
-        if (wall.act == "restart") {
-          setTimeout(() => {
-            setBlackOut(false);
-            setTimeout(() => {
-              dispatch({ type: "WALLBOOTED" });
-            }, 2000);
-          }, 1000);
-        }
-      }
-    }
-  }, [blackout]);
-
+export const BootScreen = () => {
   return (
     <div className="bootscreen">
-      <div className={blackout ? "hidden" : ""}>
+      <div>
         <Image src="asset/bootlogo" w={180} />
         <div className="mt-48" id="loader">
           <svg
@@ -66,44 +36,30 @@ export const BootScreen = (props) => {
   );
 };
 
-export const LockScreen = (props) => {
-  const wall = useSelector((state) => state.wallpaper);
+export const LockScreen = () => {
   const [lock, setLock] = useState(false);
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
-  const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
-
+  const user     = useSelector((state) => state.user);
   const userName = useSelector((state) => state.setting.person.name);
 
-  const action = (e) => {
-    var act = e.target.dataset.action,
-      payload = e.target.dataset.payload;
-    const userType = e.target.dataset.user; //B2B or B2C. Change at: data-user
-    setLock(true);
-  };
+  const action = (e) => { setLock(true); };
 
   const proceed = async () => {
-    if (user.id) {
+    if (user.id) 
       setUnLock(true);
-      setTimeout(() => {
-        dispatch({ type: "WALLUNLOCK" });
-      }, 1000);
-      return;
-    }
-    // for dev: https://dev--virtos-win11.netlify.app/
+
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        redirectTo,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
-          //redirectTo
-
         },
       },
     });
@@ -112,19 +68,14 @@ export const LockScreen = (props) => {
     }
   };
 
-  const action2 = (e) => {
-    if (e.key == "Enter") proceed();
-  };
+
 
   return (
     <div
-      className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
+      className={"lockscreen slowfadein"}
       data-unlock={unlocked}
-      style={{
-        backgroundImage: `url(${`img/wallpaper/lock.jpg`})`,
-      }}
+      style={{ backgroundImage: `url(${`img/wallpaper/lock.jpg`})`, }}
       onClick={action}
-      //data-action="splash"
       data-blur={lock}
     >
       <div className="splashScreen mt-40" data-faded={lock}>
@@ -143,7 +94,10 @@ export const LockScreen = (props) => {
           })}
         </div>
       </div>
-      <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
+      <div className="fadeinScreen" 
+        data-faded={!lock} 
+        data-unlock={unlocked}
+      >
         <Image
           className="rounded-2xl overflow-hidden"
           src="img/asset/prof.png"

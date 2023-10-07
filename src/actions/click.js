@@ -1,6 +1,4 @@
-import axios from "axios";
 import store from "../reducers";
-import supabase from "../supabase/createClient";
 
 const formatEvent = (event) => {
   const action = {
