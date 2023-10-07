@@ -21,12 +21,15 @@ import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
+import { isMobile } from "./utils/checking";
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const apps = useSelector((state) => state.apps);
   const user = useSelector((state) => state.user);
+
+  const [showtaskbar,setShowtaskbar] = useState(true)
   const [lockscreen,setLockscreen] = useState(true)
   ReactModal.setAppElement("#root");
   const dispatch = useDispatch();
@@ -54,16 +57,17 @@ function App() {
 
 
   useEffect(() => {
-    if (!window.onstart) {
-      preload()
-        .then(() => {
-          console.log("Loaded");
-        })
-        .finally(async () => {
-          await new Promise(r => setTimeout(r,1000))
-          setLockscreen(false)
-        })
-    }
+    preload()
+      .then(() => {
+        console.log("Loaded");
+      })
+      .finally(async () => {
+        await new Promise(r => setTimeout(r,1000))
+        setLockscreen(false)
+      })
+
+    if (isMobile()) 
+      setShowtaskbar(false)
   },[]);
 
   useEffect(() => {
@@ -102,7 +106,11 @@ function App() {
                 <WidPane />
                 <CalnWid />
               </div>
-              <Taskbar />
+              {
+              showtaskbar 
+                ? <Taskbar />
+                : null
+              }
               <ActMenu />
               <Popup />
             </>
