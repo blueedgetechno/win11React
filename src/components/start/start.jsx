@@ -13,6 +13,7 @@ export const StartMenu = () => {
   const usageTime = user?.usageTime?.at(0) ?? {}
   const { t, i18n } = useTranslation();
 
+  console.log(user);
   const start = useSelector(state => state.startmenu)
   // const { signOut } = useAuth();
   const thm = useSelector(state => state.setting.person.theme)
@@ -121,17 +122,17 @@ export const StartMenu = () => {
             </div>
             <div className="restWindow h-full w-full flex-grow flex flex-col ">
               <div className="w-full flex gap-4 justify-between mt-1">
-                <span>{t("timemanager.startAt")}:</span>
+                <span className="text-left">{t("timemanager.startAt")}</span>
                 <span>{formatDate(usageTime?.start_time)}</span>
               </div>
               <div className="w-full flex gap-4 justify-between mt-1">
-                <span>{t("timemanager.endAt")}:</span>
+                <span className="text-left">{t("timemanager.endAt")}</span>
                 <span>{formatDate(usageTime?.end_time)}</span>
               </div>
               <hr className="my-[14px]" />
               <div className="w-full flex gap-4 justify-between mt-auto">
-                <span>{t("timemanager.time")}:</span>
-                <span>{usageTime.total_time ? (usageTime?.total_time + "/" + usageTime?.package) : "Invalid"}</span>
+                <span className="text-left">{t("timemanager.time")}</span>
+                <span>{usageTime.total_time ? (usageTime?.total_time.toFixed(1) + "/" + usageTime?.package) : "Invalid"}</span>
               </div>
             </div>
           </div>

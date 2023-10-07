@@ -199,7 +199,21 @@
     }
   }
 }
+.langSwitcherTile {
+  &::after {
+    display: none;
+  }
 
+  select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgb(238, 236, 235);
+    border-bottom: 1px solid rgb(212, 211, 210);
+    color: #000;
+    height: 32px;
+    padding-left: 8px;
+    border-radius: 6px;
+  }
+}
 body[data-theme="dark"] .getstarted {
   .inner_fill_setup {
     background: rgb(255 255 255 / 7.5%);

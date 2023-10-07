@@ -175,7 +175,7 @@ export const fetchStore = async () => {
 
 export const fetchUser = async () => {
   try { 
-    const {timestamp,payload} = JSON.parse(localStorage.getItem('USER')) 
+    const { timestamp, payload } = JSON.parse(localStorage.getItem('USER1')) 
     if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000) 
       throw new Error('outdated')
 
@@ -190,20 +190,21 @@ export const fetchUser = async () => {
   if (error != null) 
     return
 
-  let payload = {...user}
-  if(isGreenList()) {
+  let payload = { ...user }
+
+  if (user.app_metadata.greenlist == true) {
     const {data,error}= await supabase.rpc('get_usage_time_user', {user_id: user.id})
     if (error) 
       return
 
     payload = {...payload, usageTime: data}
-  }
 
+  }
   store.dispatch({
     type: "ADD_USER",
     payload
   });
-  localStorage.setItem('USER',JSON.stringify({
+  localStorage.setItem('USER1', JSON.stringify({
     timestamp: new Date().getTime(),
     payload,
   }))
