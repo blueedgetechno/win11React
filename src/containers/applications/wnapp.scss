@@ -53,15 +53,39 @@ body[data-theme="dark"] {
 .edgeBrowser {
   --bg0: #e7eaec;
   --bg1: #f7fafc;
+  --bg1-hover: #f7fafc70;
   --ipbar: #fefefe;
   --shd: rgba(80, 80, 80, 0.2);
   background: var(--bg0);
+
+  .fake_webpage{
+    background-color: var(--bg1-hover);
+    color: var(--dark-txt);
+    box-sizing: border-box;
+    padding: 2rem 0;
+
+    .title{
+      display: block;
+      font-size: 3em;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    img{
+      display: block;
+      padding: 1rem;
+      max-width: 800px;
+      width: calc(100% - 2rem);
+      margin: auto;
+    }
+  }
 }
 
 body[data-theme="dark"] .edgeBrowser {
   --bg0: #222228;
   --ipbar: #222228;
   --bg1: rgb(45, 45, 51);
+  --bg1-hover: #2d2d3370;
   --shd: rgba(0, 0, 0, 0.3);
 
   .edgenavicon {

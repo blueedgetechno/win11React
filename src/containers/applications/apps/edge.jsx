@@ -8,6 +8,7 @@ export const EdgeMenu = () => {
   const [ierror, setErr] = useState(true);
   const [isTyping, setTyping] = useState(false);
   const [hist, setHist] = useState(["https://bing.com", "https://bing.com"]);
+  const [actualTab, setActualTab] = useState("search");
   const dispatch = useDispatch();
 
   const iframes = {
@@ -94,6 +95,38 @@ export const EdgeMenu = () => {
     setErr(false);
   };
 
+  const pageDocument = () => {
+    if(actualTab === "search"){
+      return (
+        <LazyComponent show={!wnapp.hide}>              
+          <iframe
+            src={!isTyping ? url : hist[0]}
+            id="isite"
+            frameborder="0"
+            className="w-full h-full"
+            title="site"
+          ></iframe>
+        </LazyComponent>
+      )
+    } else {
+      return (
+        <div id="fsite" className="w-full h-full fake_webpage" >
+          <span className="title">Contributors</span>
+          <img src="https://contrib.rocks/image?repo=blueedgetechno/win11React" alt="Contributors" />
+        </div>
+      )
+    }
+  }
+
+  const updateTab = {
+    _search : () => {
+      setActualTab("search")
+    },
+    _contributors : () => {
+      setActualTab("contributors")
+    }
+  }
+
   useEffect(() => {
     if (wnapp.url) {
       setTyping(false);
@@ -124,8 +157,17 @@ export const EdgeMenu = () => {
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">
           <Icon src={wnapp.icon} width={14} margin="0 6px" />
-          <div className="btab">
-            <div>New Tab</div>
+          <div className={`btab ${actualTab === "search" ? "active" : ""}`} onClick={updateTab._search}>
+            <div>Search</div>
+            <Icon
+              fafa="faTimes"
+              click={wnapp.action}
+              payload="close"
+              width={10}
+            />
+          </div>
+          <div className={`btab ${actualTab === "contributors" ? "active" : ""}`} onClick={updateTab._contributors}>
+            <div>Contributors</div>
             <Icon
               fafa="faTimes"
               click={wnapp.action}
@@ -134,6 +176,7 @@ export const EdgeMenu = () => {
             />
           </div>
         </div>
+        
         <div className="restWindow flex-grow flex flex-col">
           <div className="addressBar w-full h-10 flex items-center">
             <Icon
@@ -217,15 +260,8 @@ export const EdgeMenu = () => {
             </div>
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
-            <LazyComponent show={!wnapp.hide}>
-              <iframe
-                src={!isTyping ? url : hist[0]}
-                id="isite"
-                frameborder="0"
-                className="w-full h-full"
-                title="site"
-              ></iframe>
-            </LazyComponent>
+
+            {pageDocument()}
 
             <div
               className={`bg-blue-100 w-64 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12 transition-all ${
