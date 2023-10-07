@@ -12,6 +12,10 @@ export const isGreenList = () => {
 	const user = store.getState().user;
 	return user?.app_metadata?.greenlist == true;
 }
+export const isWhiteList = () => {
+	const user = store.getState().user;
+	return user?.app_metadata?.whitelist == true;
+}
 
 export const isMobile = () => {
 	let check = false;

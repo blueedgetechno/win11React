@@ -1,77 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
 import "./index.css";
 import ReactGA from "react-ga";
 import { ErrorFallback } from "./error";
-
 import ActMenu from "./components/menu";
 import {
-  BandPane,
   CalnWid,
   DesktopApp,
-  SidePane,
   StartMenu,
   WidPane,
 } from "./components/start";
 import Taskbar from "./components/taskbar";
 import { Background } from "./containers/background";
-
 import * as Applications from "./containers/applications";
 import * as Drafts from "./containers/applications/draft";
-import supabase from "./supabase/createClient";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
-import { logFEEvent } from "./utils/log_front_end.js";
-import { isGreenList } from "./utils/checking";
 const TRACKING_ID = "G-C772WT3BD0";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const apps = useSelector((state) => state.apps);
-  const wall = useSelector((state) => state.wallpaper);
   const user = useSelector((state) => state.user);
-
+  const [lockscreen,setLockscreen] = useState(true)
   ReactModal.setAppElement("#root");
   const dispatch = useDispatch();
 
-  //const afterMath = (event) => {
-  //  var ess = [
-  //    ["START", "STARTHID"],
-  //    ["BAND", "BANDHIDE"],
-  //    ["PANE", "PANEHIDE"],
-  //    ["WIDG", "WIDGHIDE"],
-  //    ["CALN", "CALNHIDE"],
-  //    ["MENU", "MENUHIDE"],
-  //  ];
-
-  //  var actionType = "";
-  //  try {
-  //    actionType = event.target.dataset.action || "";
-  //  } catch (err) {}
-
-  //  var actionType0 = getComputedStyle(event.target).getPropertyValue(
-  //    "--prefix",
-  //  );
-
-  //  ess.forEach((item, i) => {
-  //    if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
-  //      dispatch({
-  //        type: item[1],
-  //      });
-  //    }
-  //  });
-  //};
-
-
+  window.onclick = afterMath;
   window.oncontextmenu = (e) => {
     afterMath(e);
     e.preventDefault();
-    // dispatch({ type: 'GARBAGE'});
     var data = {
       top: e.clientY,
       left: e.clientX,
@@ -88,11 +51,7 @@ function App() {
     }
   };
 
-  window.onclick = afterMath;
 
-  //window.onload = (e) => {
-  //  dispatch({ type: "WALLBOOTED" });
-  //};
 
   useEffect(() => {
     if (!window.onstart) {
@@ -100,64 +59,26 @@ function App() {
         .then(() => {
           console.log("Loaded");
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
+        .finally(async () => {
+          await new Promise(r => setTimeout(r,1000))
+          setLockscreen(false)
+        })
     }
   },[]);
 
-
-  const verifyUserInfo = React.useCallback(async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error != null) throw error;
-
-    //move to win11.thinkmay.net
-    if (window.location.host == "win11.thinkmay.net") {
-      logFEEvent(`source ${urlParams.get("ref") ?? "thinkmay"}`, data.user);
-    }
-    dispatch({
-      type: "ADD_USER",
-      payload: data.user
-    });
-  }, [dispatch]);
-
-  const getUsageTime = async () =>{
-    if(!isGreenList()) return
-
-    const usageTime = await supabase.rpc('get_usage_time_user', {user_id: user.id})
-    const useTime = usageTime.data
-    if (usageTime.error != null) throw error;
-    dispatch({
-      type: "ADD_USER",
-      payload: {...user, usageTime: useTime}
-    });
-  }
-  useEffect(()=>{
-    getUsageTime()
-  },[user.id])
-  useEffect(() => {
-    verifyUserInfo();
-  }, [verifyUserInfo]);
-
-  // get params
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const refSource = urlParams.get("ref") ?? null;
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-    // AnalyticTrack(`source ${refSource}`);
     window.history.replaceState({}, document.title, "/" + "");
   }, []);
 
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {/*{!wall.booted ? <BootScreen dir={wall.dir} /> : null}*/}
-        {wall.locked || !user?.id ? <LockScreen dir={wall.dir} /> : null}
-
+        {lockscreen ? <BootScreen/> : null}
+        {!user?.id  ? <LockScreen/> : null}
         <div className="appwrap">
           <Background />
-          {user.id ? (
+          {user?.id ? (
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />
@@ -165,15 +86,15 @@ function App() {
                   var WinApp = Applications[key];
                   return <WinApp key={idx} />;
                 })}
-
                 {Object.keys(apps)
                   .filter((x) => x != "hz")
                   .map((key) => apps[key])
                   .map((app, i) => {
-                    if (app.pwa) {
-                      var WinApp = Drafts[app.data.type];
-                      return <WinApp key={i} icon={app.icon} {...app.data} />;
-                    }
+                    if (!app.pwa) 
+                      return
+
+                    var WinApp = Drafts[app.data.type];
+                    return <WinApp key={i} icon={app.icon} {...app.data} />;
                   })}
                 <StartMenu />
                 {/*<BandPane />*/}
