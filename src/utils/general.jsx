@@ -24,6 +24,8 @@ String.prototype.count = function (c) {
 };
 
 export const Icon = (props) => {
+  const sidepane = useSelector((state) => state.sidepane);
+
   const dispatch = useDispatch();
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
   if (props.ext != null || (props.src && props.src.includes("http"))) {
@@ -38,6 +40,8 @@ export const Icon = (props) => {
   }
 
   const clickDispatch = (event) => {
+    if (!sidepane.banhide) dispatch({ type: "BANDHIDE" });
+
     var action = {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
