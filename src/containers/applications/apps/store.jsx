@@ -14,7 +14,7 @@ import { installApp } from "../../../actions/app";
 import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
-import { isAdmin, isMobile } from "../../../utils/checking";
+import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -342,6 +342,8 @@ const DetailPage = ({ app }) => {
 
   const download = async ({ id }) => {
     console.log(`download ${id}`);
+    if(!isGreenList()) 
+      return
     await installApp({ app_template_id: id });
   };
 
@@ -408,7 +410,10 @@ const DetailPage = ({ app }) => {
                 payload={x}
                 onClick={() => download(x)}
               >
-              {`${x.gpu} ${x.region}`}
+             
+              {
+                isGreenList() ? (`${x.gpu} ${x.region}`)  : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'
+              }
               </div>
               {
                 isAdmin() 
