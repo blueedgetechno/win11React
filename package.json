@@ -36,6 +36,7 @@
     "build": "vite build",
     "prettier": "prettier --write .",
     "tauri": "tauri",
+    "bundle": "@powershell mkdir ./src-tauri/target/package && @powershell Copy-Item -Path ../../worker/daemon/package/* -Destination  ./src-tauri/target/package/ -Recurse",
     "crowdin": "crowdin"
   },
   "browserslist": {
