@@ -19,4 +19,6 @@ export const scanCodeApps = {
   "League of Legends": true,
   "GTA V": true,
   "Devil May Cry5": true,
+  "Naraka": true,
+  "Resident Evil 4": true,
 }

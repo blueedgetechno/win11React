@@ -13,7 +13,6 @@ export const StartMenu = () => {
   const usageTime = user?.usageTime?.at(0) ?? {}
   const { t, i18n } = useTranslation();
 
-  console.log(user);
   const start = useSelector(state => state.startmenu)
   // const { signOut } = useAuth();
   const thm = useSelector(state => state.setting.person.theme)
