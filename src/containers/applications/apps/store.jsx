@@ -123,6 +123,13 @@ export const MicroStore = () => {
               width={20}
               payload={page == 1}
             />
+            <a href="" download>
+              <Icon
+                src='download'
+                ui={true}
+                width={20}
+              />
+            </a>
             {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
             {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
           </div>
