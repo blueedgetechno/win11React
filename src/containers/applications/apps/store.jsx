@@ -162,11 +162,6 @@ const FrontPage = (props) => {
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
-    let index = 0
-    setInterval(() => {
-      setCover(vendors[index % vendors.length].images[0]);
-      index++
-    },10 * 1000)
   }, []);
  
   return (
@@ -182,7 +177,8 @@ const FrontPage = (props) => {
                   key={i}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => {setCover(vendor.images[0])}}
+                  onMouseEnter={() => {setCover(vendor.images[0])}}
+                  href={vendor.metadata.href}
                 >
                   <Image
                     className="mx-1 dpShad rounded"
@@ -209,7 +205,6 @@ const FrontPage = (props) => {
            
           {games.length > 0 ?
             games.map((game, i) => {
-              var stars = 5;
               return (
                 <div
                   key={i}

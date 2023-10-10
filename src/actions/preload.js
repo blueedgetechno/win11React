@@ -131,7 +131,7 @@ export const fetchStore = async () => {
     return
 
   const resp = await fetch(
-    `${url}/rest/v1/stores?select=id,name,icon,type,created_at,metadata->description,metadata->screenshoots,metadata->feature,metadata->platform`,
+    `${url}/rest/v1/rpc/fetch_store`,
     {
       method: "GET",
       headers: {
@@ -141,11 +141,10 @@ export const fetchStore = async () => {
       },
     },
   );
-  if (resp.status != 200) throw await resp.text();
+  if (resp.status != 200) 
+    throw await resp.text();
   const data = await resp.json();
-  data.sort((a, b) => {
-    if (a.created_at < b.created_at) return -1;
-  });
+
   const content = {
     games: [],
     apps: [],
@@ -158,6 +157,7 @@ export const fetchStore = async () => {
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);
   }
 
+  console.log(content)
   store.dispatch({
     type: "UPDATEAPP",
     payload: content.apps,

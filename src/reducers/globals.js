@@ -170,13 +170,35 @@ const defState = {
   vendors: [
     {
       images: [
-        "https://supabase.thinkmay.net/storage/v1/object/public/public_store/store/logo/thinkmay_landing.png",
+        "/img/store/thinkmay.png"
       ],
 
       icon: "https://supabase.thinkmay.net/storage/v1/object/public/public_store/store/logo/thinkmay.png",
       type: "vendor",
       metadata: {
         href: "https://thinkmay.net",
+      },
+    },
+    {
+      images: [
+        "/img/store/brightcloud.png"
+      ],
+
+      icon: "https://supabase.thinkmay.net/storage/v1/object/public/public_store/store/logo/thinkmay.png",
+      type: "vendor",
+      metadata: {
+        href: "https://grupobright.com/",
+      },
+    },
+    {
+      images: [
+        "/img/store/truecloud.png"
+      ],
+
+      icon: "https://supabase.thinkmay.net/storage/v1/object/public/public_store/store/logo/thinkmay.png",
+      type: "vendor",
+      metadata: {
+        href: "https://jnvdaily.com/index.html",
       },
     }
   ],
