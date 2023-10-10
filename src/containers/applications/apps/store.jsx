@@ -123,7 +123,7 @@ export const MicroStore = () => {
               width={20}
               payload={page == 1}
             />
-            <a href="https://1drv.ms/u/s!AgihdMH_c8wqgooEqRFrs6YletQfBg?e=1Trivv" download>
+            <a href="https://github.com/thinkonmay/thinkmay/releases/download/1.0.0/thinkmay_0.3.0_x64_en-US.msi" download>
               <Icon
                 src='download'
                 ui={true}
