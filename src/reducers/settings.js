@@ -78,7 +78,6 @@ const settReducer = (state = defState, action) => {
     case "TOGGAIRPLNMD":
       changed = true;
       const airPlaneModeStatus = tmpState.network.airplane;
-      console.log(airPlaneModeStatus);
       if (tmpState.network.wifi.state === true && !airPlaneModeStatus) {
         tmpState = changeVal(tmpState, "network.wifi.state");
       }
