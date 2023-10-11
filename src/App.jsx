@@ -84,8 +84,8 @@ function App() {
         setalignvert(window.innerWidth < window.innerHeight)
     }
 
-    const loop = setInterval(check,100)
-    return () => {clearInterval(loop)}
+    //const loop = setInterval(check,100)
+    //return () => {clearInterval(loop)}
   },[]);
 
   return (
@@ -119,11 +119,13 @@ function App() {
                 <WidPane />
                 <CalnWid />
               </div>
-              {
+              {/*{
               showtaskbar 
                 ? <Taskbar />
                 : null
-              }
+              }*/}
+              <Taskbar />
+
               <ActMenu />
               <Popup />
             </>
