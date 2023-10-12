@@ -143,7 +143,8 @@ export const fetchStore = async () => {
   );
   if (resp.status != 200) 
     throw await resp.text();
-  const data = await resp.json().filter(e => e.hide != true);
+  const data = (await resp.json())
+    .filter(e => e.hide != true);
 
   const content = {
     games: [],
