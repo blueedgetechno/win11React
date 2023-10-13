@@ -24,7 +24,6 @@ var { taskbar, desktop, pinned, recent } = {
     "Calculator",
     "Spotify",
     "Twitter",
-    "File Explorer",
     "Terminal",
     "Github",
     "Discord",
