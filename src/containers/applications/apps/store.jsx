@@ -212,6 +212,7 @@ const FrontPage = (props) => {
                   onClick={() => {
                     props.app_click(game);
                   }}
+                  style={{background: game.steam_off ? "linear-gradient(to right, #f7e67b, #c8ae54)": ""}}
                 >
                   <Image
                     className="mx-1 py-1 mb-6 rounded"
@@ -222,6 +223,9 @@ const FrontPage = (props) => {
                   />
                   <div className="capitalize text-xs text-center font-semibold">
                     {game.name}
+                  </div>
+                  <div className="text-xs text-center font-regular">
+                    {game.steam_off ? "Steam Offline": ""}
                   </div>
                 </div>
               );
@@ -596,6 +600,7 @@ const DownPage = ({ action }) => {
               className="ribcont p-4 pt-8 ltShad prtclk"
               onClick={()=>{action(app)}}
               data-action="page2"
+              style={{background: app.steam_off ? "linear-gradient(to right, #f7e67b, #c8ae54)": ""}}
             >
               <Image
                 className="mx-4 mb-6 rounded"
@@ -606,6 +611,9 @@ const DownPage = ({ action }) => {
               />
               <div className="capitalize text-xs text-center font-semibold">
                 {app.name}
+              </div>
+              <div className="text-xs text-center font-regular">
+                {app.steam_off ? "Steam Offline": ""}
               </div>
               
             </div>
