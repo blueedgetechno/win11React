@@ -95,7 +95,6 @@ function App() {
         {!user?.id  ? <LockScreen/> : null}
         <div className="appwrap">
           <Background />
-          {user?.id ? (
             <>
               <div className="desktop" data-menu="desk">
                 <DesktopApp />
@@ -129,7 +128,6 @@ function App() {
               <ActMenu />
               <Popup />
             </>
-          ) : null}
         </div>
       </ErrorBoundary>
     </div>
