@@ -1,6 +1,6 @@
 const defState = {
-  id: ''
-}
+  id: "",
+};
 
 const userReducer = (state = defState, action) => {
   switch (action.type) {

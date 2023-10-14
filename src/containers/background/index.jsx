@@ -43,14 +43,15 @@ export const LockScreen = () => {
   const [passType, setType] = useState(1);
   const [forgot, setForget] = useState(false);
 
-  const user     = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const userName = useSelector((state) => state.setting.person.name);
 
-  const action = (e) => { setLock(true); };
+  const action = (e) => {
+    setLock(true);
+  };
 
   const proceed = async () => {
-    if (user.id) 
-      setUnLock(true);
+    if (user.id) setUnLock(true);
 
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { error } = await supabase.auth.signInWithOAuth({
@@ -68,13 +69,11 @@ export const LockScreen = () => {
     }
   };
 
-
-
   return (
     <div
       className={"lockscreen slowfadein"}
       data-unlock={unlocked}
-      style={{ backgroundImage: `url(${`img/wallpaper/lock.jpg`})`, }}
+      style={{ backgroundImage: `url(${`img/wallpaper/lock.jpg`})` }}
       onClick={action}
       data-blur={lock}
     >
@@ -94,10 +93,7 @@ export const LockScreen = () => {
           })}
         </div>
       </div>
-      <div className="fadeinScreen" 
-        data-faded={!lock} 
-        data-unlock={unlocked}
-      >
+      <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
         <Image
           className="rounded-2xl overflow-hidden"
           src="img/asset/prof.png"

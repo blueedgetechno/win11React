@@ -38,9 +38,7 @@ export const afterMath = (event) => {
     actionType = event.target.dataset.action || "";
   } catch (err) {}
 
-  var actionType0 = getComputedStyle(event.target).getPropertyValue(
-    "--prefix",
-  );
+  var actionType0 = getComputedStyle(event.target).getPropertyValue("--prefix");
 
   ess.forEach((item, i) => {
     if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
@@ -119,7 +117,7 @@ export const performApp = (act, menu) => {
   var data = {
     type: menu.dataset.action,
     payload: menu.dataset.payload,
-    name: menu.dataset?.name ?? 'Null',
+    name: menu.dataset?.name ?? "Null",
   };
   // add analytic
   const appName = menu.dataset.name;
@@ -204,9 +202,9 @@ export const menuDispatch = async (event, menu) => {
   const externalAppData = {
     type: menu?.dataset?.action,
     payload: menu?.dataset?.payload,
-    name: menu?.dataset?.name
+    name: menu?.dataset?.name,
   };
-  if (!type) return;  
+  if (!type) return;
   if (type === "FILEDIRWORKER") openWorker(event);
   else if (type === "CREATESESSION") createSession(event);
   else if (type === "DEACTIVATESESSION") deactiveSession(event);
@@ -214,14 +212,14 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTWORKERSESSION") connectSession(event);
   else if (type === "VIEW_DETAIL") viewDetail(event);
   else if (type === "CLOUDAPP") console.log(event);
-
-  else if (type === "CONNECTVOLUMEWORKER")    ActionExternal.connectVolume(event);
-  else if (type === "STOPVOLUME")             ActionExternal.stopVolume(event);
-  else if (type === "OPEN_APP")               ActionExternal.openApp(externalAppData);
-  else if (type === "OPEN_APP_NEWTAB")        ActionExternal.openApp(externalAppData, 'new_tab');
-  else if (type === "PAUSE_APP")              ActionExternal.pauseApp(externalAppData);
-  else if (type === "START_APP")              ActionExternal.startApp(externalAppData);
-  else if (type === "RESET_APP")              ActionExternal.resetApp(externalAppData);
+  else if (type === "CONNECTVOLUMEWORKER") ActionExternal.connectVolume(event);
+  else if (type === "STOPVOLUME") ActionExternal.stopVolume(event);
+  else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
+  else if (type === "OPEN_APP_NEWTAB")
+    ActionExternal.openApp(externalAppData, "new_tab");
+  else if (type === "PAUSE_APP") ActionExternal.pauseApp(externalAppData);
+  else if (type === "START_APP") ActionExternal.startApp(externalAppData);
+  else if (type === "RESET_APP") ActionExternal.resetApp(externalAppData);
   else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);

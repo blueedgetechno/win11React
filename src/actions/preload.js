@@ -8,7 +8,6 @@ import {
   formatAppRenderTree,
 } from "../utils/formatData";
 
-
 const loadSettings = async () => {
   let sett = JSON.parse("[]"); // TODO setting from database
 
@@ -28,20 +27,19 @@ const loadSettings = async () => {
 };
 
 export const fetchApp = async () => {
-	const user = store.getState()?.user;
-  if (!user?.id) 
-    return
+  const user = store.getState()?.user;
+  if (!user?.id) return;
 
-  try { 
-    const {timestamp,apps} = JSON.parse(localStorage.getItem('APP')) 
-    if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000) 
-      throw new Error('outdated')
+  try {
+    const { timestamp, apps } = JSON.parse(localStorage.getItem("APP"));
+    if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
+      throw new Error("outdated");
 
     store.dispatch({
       type: "DESKADD",
       payload: [...apps],
     });
-    return
+    return;
   } catch {}
 
   const data = await FetchUserApplication();
@@ -51,30 +49,31 @@ export const fetchApp = async () => {
     type: "DESKADD",
     payload: [...apps],
   });
-  localStorage.setItem('APP',JSON.stringify({
-    timestamp: new Date().getTime(),
-    apps,
-  }))
+  localStorage.setItem(
+    "APP",
+    JSON.stringify({
+      timestamp: new Date().getTime(),
+      apps,
+    }),
+  );
 };
 
 // TODO
 export const fetchWorker = async () => {
-	const user = store.getState()?.user;
-  if (!user?.id) 
-    return
-  if(!isWhiteList()) 
-    return
+  const user = store.getState()?.user;
+  if (!user?.id) return;
+  if (!isWhiteList()) return;
 
-  try { 
-    const {timestamp,payload} = JSON.parse(localStorage.getItem('WORKER')) 
-    if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000) 
-      throw new Error('outdated')
+  try {
+    const { timestamp, payload } = JSON.parse(localStorage.getItem("WORKER"));
+    if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
+      throw new Error("outdated");
 
     store.dispatch({
       type: "FILEUPDATEWORKER",
-      payload
+      payload,
     });
-    return
+    return;
   } catch {}
 
   const cpath = store.getState().worker.cpath ?? "Account";
@@ -84,29 +83,32 @@ export const fetchWorker = async () => {
   const payload = {
     data: dataFormat,
     oldCpath: cpath ?? oldCpath,
-  }
+  };
 
   store.dispatch({
     type: "FILEUPDATEWORKER",
-    payload
-  });
-  localStorage.setItem('WORKER',JSON.stringify({
-    timestamp: new Date().getTime(),
     payload,
-  }))
+  });
+  localStorage.setItem(
+    "WORKER",
+    JSON.stringify({
+      timestamp: new Date().getTime(),
+      payload,
+    }),
+  );
 };
 
 export const fetchStore = async () => {
-	const user = store.getState()?.user;
-  if (!user?.id) 
-    return
+  const user = store.getState()?.user;
+  if (!user?.id) return;
 
-  try { 
-    const {timestamp,games,apps} = JSON.parse(localStorage.getItem('STORE')) 
-    if (Math.abs(new Date().getTime() - timestamp) > 10 * 60 * 1000) 
-      throw new Error('outdated')
-    else if (games.length == 0 || apps.length == 0)
-      throw new Error('empty')
+  try {
+    const { timestamp, games, apps } = JSON.parse(
+      localStorage.getItem("STORE"),
+    );
+    if (Math.abs(new Date().getTime() - timestamp) > 10 * 60 * 1000)
+      throw new Error("outdated");
+    else if (games.length == 0 || apps.length == 0) throw new Error("empty");
 
     store.dispatch({
       type: "UPDATEAPP",
@@ -116,35 +118,26 @@ export const fetchStore = async () => {
       type: "UPDATEGAME",
       payload: games,
     });
-    return
+    return;
   } catch {}
 
-  const constantFetch = await supabase
-    .from('constant')
-    .select('value->virt')
-  if (constantFetch.error) 
-    throw constantFetch.error
+  const constantFetch = await supabase.from("constant").select("value->virt");
+  if (constantFetch.error) throw constantFetch.error;
 
   const url = constantFetch.data.at(0)?.virt.url;
   const key = constantFetch.data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined)
-    return
+  if (url == undefined || key == undefined) return;
 
-  const resp = await fetch(
-    `${url}/rest/v1/rpc/fetch_store`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-        apikey: key,
-      },
+  const resp = await fetch(`${url}/rest/v1/rpc/fetch_store`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${key}`,
+      apikey: key,
     },
-  );
-  if (resp.status != 200) 
-    throw await resp.text();
-  const data = (await resp.json())
-    .filter(e => e.hide != true);
+  });
+  if (resp.status != 200) throw await resp.text();
+  const data = (await resp.json()).filter((e) => e.hide != true);
 
   const content = {
     games: [],
@@ -158,7 +151,7 @@ export const fetchStore = async () => {
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);
   }
 
-  console.log(content)
+  console.log(content);
   store.dispatch({
     type: "UPDATEAPP",
     payload: content.apps,
@@ -167,58 +160,58 @@ export const fetchStore = async () => {
     type: "UPDATEGAME",
     payload: content.games,
   });
-  localStorage.setItem('STORE',JSON.stringify({
-    timestamp: new Date().getTime(),
-    ...content,
-  }))
+  localStorage.setItem(
+    "STORE",
+    JSON.stringify({
+      timestamp: new Date().getTime(),
+      ...content,
+    }),
+  );
 };
 
-
 export const fetchUser = async () => {
-  try { 
-    const { timestamp, payload } = JSON.parse(localStorage.getItem('USER1')) 
-    if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000) 
-      throw new Error('outdated')
+  try {
+    const { timestamp, payload } = JSON.parse(localStorage.getItem("USER1"));
+    if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
+      throw new Error("outdated");
 
     store.dispatch({
       type: "ADD_USER",
-      payload
+      payload,
     });
-    return
+    return;
   } catch {}
 
-  const { data:{user}, error } = await supabase.auth.getUser();
-  if (error != null) 
-    return
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (error != null) return;
 
-  let payload = { ...user }
+  let payload = { ...user };
 
   if (user.app_metadata.greenlist == true) {
-    const {data,error}= await supabase.rpc('get_usage_time_user', {user_id: user.id})
-    if (error) 
-      return
+    const { data, error } = await supabase.rpc("get_usage_time_user", {
+      user_id: user.id,
+    });
+    if (error) return;
 
-    payload = {...payload, usageTime: data}
-
+    payload = { ...payload, usageTime: data };
   }
   store.dispatch({
     type: "ADD_USER",
-    payload
-  });
-  localStorage.setItem('USER1', JSON.stringify({
-    timestamp: new Date().getTime(),
     payload,
-  }))
-}
+  });
+  localStorage.setItem(
+    "USER1",
+    JSON.stringify({
+      timestamp: new Date().getTime(),
+      payload,
+    }),
+  );
+};
 
 export const preload = async () => {
-  await Promise.all([
-    fetchUser(),
-    loadSettings(),
-  ]);
-  await Promise.all([
-    fetchWorker(),
-    fetchStore(),
-    fetchApp(),
-  ]);
+  await Promise.all([fetchUser(), loadSettings()]);
+  await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
 };

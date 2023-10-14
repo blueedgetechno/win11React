@@ -1,12 +1,12 @@
 import supabase from "../supabase/createClient";
 
 export function formatWorkerRenderTree(data) {
-  const tree = data.tree
+  const tree = data.tree;
   const newData = {
     Account: {
       type: "folder",
       name: "\\",
-      info: { 
+      info: {
         ...tree.info,
         spid: "%worker%",
       },
@@ -14,23 +14,22 @@ export function formatWorkerRenderTree(data) {
     },
   };
 
-  if (tree.type != 'admin') {
-    newData.Account.data[tree.id] = RenderBranch(tree)
+  if (tree.type != "admin") {
+    newData.Account.data[tree.id] = RenderBranch(tree);
   } else {
-    tree.data.forEach(x => {
-      const branch = RenderBranch(x)
-      if (branch == null)
-        return
+    tree.data.forEach((x) => {
+      const branch = RenderBranch(x);
+      if (branch == null) return;
 
-      newData.Account.data[x.id] = branch
-    })
+      newData.Account.data[x.id] = branch;
+    });
   }
-  return newData
+  return newData;
 }
 
-function RenderBranch (tree) {
-  const folder = {}
-  AddNode(folder,tree)
+function RenderBranch(tree) {
+  const folder = {};
+  AddNode(folder, tree);
   return {
     type: "folder",
     data: folder,
@@ -41,14 +40,11 @@ function RenderBranch (tree) {
   };
 }
 
-
-function AddNode(folder,tree) {
+function AddNode(folder, tree) {
   tree.data.forEach((proxy) => {
     const proxy_name = `${proxy.type} ${proxy.id}`;
     folder[proxy_name] = {
-      type: proxy.data.length > 0 
-        ? "folder"
-        : "file",
+      type: proxy.data.length > 0 ? "folder" : "file",
       data: {},
       info: {
         ...proxy.info,
@@ -56,8 +52,8 @@ function AddNode(folder,tree) {
       },
     };
 
-    AddNode(folder[proxy_name].data,proxy)
-  })
+    AddNode(folder[proxy_name].data, proxy);
+  });
 }
 
 // {
@@ -70,16 +66,12 @@ function AddNode(folder,tree) {
 // }
 
 export async function formatAppRenderTree(data) {
-  const constantFetch = await supabase
-    .from('constant')
-    .select('value->virt')
-  if (constantFetch.error) 
-    throw constantFetch.error
+  const constantFetch = await supabase.from("constant").select("value->virt");
+  if (constantFetch.error) throw constantFetch.error;
 
   const url = constantFetch.data.at(0)?.virt.url;
   const key = constantFetch.data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined)
-    return
+  if (url == undefined || key == undefined) return;
 
   return await Promise.all(
     data.tree.data.map(async (storage) => {
@@ -97,29 +89,30 @@ export async function formatAppRenderTree(data) {
         };
       }
 
-
-      let icons = JSON.parse(localStorage.getItem(`app_metadata_from_volume_${storage.id}`) ?? `[]`)
+      let icons = JSON.parse(
+        localStorage.getItem(`app_metadata_from_volume_${storage.id}`) ?? `[]`,
+      );
       if (icons?.length == 0 || icons?.length == undefined) {
         icons = await (
-          await fetch(
-            `${url}/rest/v1/rpc/get_app_metadata_from_volume`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${key}`,
-                apikey: key,
-              },
-              body: JSON.stringify({ deploy_as: `${storage.id}` }),
+          await fetch(`${url}/rest/v1/rpc/get_app_metadata_from_volume`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${key}`,
+              apikey: key,
             },
-          )
+            body: JSON.stringify({ deploy_as: `${storage.id}` }),
+          })
         ).json();
 
-        localStorage.setItem(`app_metadata_from_volume_${storage.id}`,JSON.stringify(icons))
+        localStorage.setItem(
+          `app_metadata_from_volume_${storage.id}`,
+          JSON.stringify(icons),
+        );
       }
 
       const icon = icons.at(0) ?? {
-        name: 'Game Pause',
+        name: "Game Pause",
         icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
       };
       // id in store. +  icon: url img, => view
@@ -135,8 +128,7 @@ export async function formatAppRenderTree(data) {
           storage_id: storage.id,
           additional: icon.metadata, // TODO
           privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
-          volume_id: storage?.info?.deploy_as ?? 0
-
+          volume_id: storage?.info?.deploy_as ?? 0,
         }),
         type: "externalApp",
         status: paused ? "PAUSED" : "RUNNING",

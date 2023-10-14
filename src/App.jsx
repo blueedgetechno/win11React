@@ -6,12 +6,7 @@ import "./index.css";
 import ReactGA from "react-ga";
 import { ErrorFallback } from "./error";
 import ActMenu from "./components/menu";
-import {
-  CalnWid,
-  DesktopApp,
-  StartMenu,
-  WidPane,
-} from "./components/start";
+import { CalnWid, DesktopApp, StartMenu, WidPane } from "./components/start";
 import Taskbar from "./components/taskbar";
 import { Background } from "./containers/background";
 import * as Applications from "./containers/applications";
@@ -29,10 +24,10 @@ function App() {
   const apps = useSelector((state) => state.apps);
   const user = useSelector((state) => state.user);
 
-  const [showtaskbar,setShowtaskbar] = useState(true)
-  const [lockscreen,setLockscreen] = useState(true)
-  const [initialAlignvert] = useState(window.innerWidth < window.innerHeight)
-  const [alignvert,setalignvert] = useState(initialAlignvert)
+  const [showtaskbar, setShowtaskbar] = useState(true);
+  const [lockscreen, setLockscreen] = useState(true);
+  const [initialAlignvert] = useState(window.innerWidth < window.innerHeight);
+  const [alignvert, setalignvert] = useState(initialAlignvert);
 
   ReactModal.setAppElement("#root");
   const dispatch = useDispatch();
@@ -58,10 +53,8 @@ function App() {
   };
 
   useEffect(() => {
-    if (alignvert != initialAlignvert) 
-      window.location.reload() //TODO, softer reload
-  },[alignvert])
-
+    if (alignvert != initialAlignvert) window.location.reload(); //TODO, softer reload
+  }, [alignvert]);
 
   useEffect(() => {
     preload()
@@ -69,65 +62,62 @@ function App() {
         console.log("Loaded");
       })
       .finally(async () => {
-        await new Promise(r => setTimeout(r,1000))
-        setLockscreen(false)
-      })
+        await new Promise((r) => setTimeout(r, 1000));
+        setLockscreen(false);
+      });
 
-    if (isMobile()) 
-      setShowtaskbar(false)
+    if (isMobile()) setShowtaskbar(false);
 
     ReactGA.pageview(window.location.pathname + window.location.search);
     window.history.replaceState({}, document.title, "/" + "");
 
     const check = () => {
-      if (isMobile()) 
-        setalignvert(window.innerWidth < window.innerHeight)
-    }
+      if (isMobile()) setalignvert(window.innerWidth < window.innerHeight);
+    };
 
     //const loop = setInterval(check,100)
     //return () => {clearInterval(loop)}
-  },[]);
+  }, []);
 
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {lockscreen ? <BootScreen/> : null}
-        {!user?.id  ? <LockScreen/> : null}
+        {lockscreen ? <BootScreen /> : null}
+        {!user?.id ? <LockScreen /> : null}
         <div className="appwrap">
           <Background />
-            <>
-              <div className="desktop" data-menu="desk">
-                <DesktopApp />
-                {Object.keys(Applications).map((key, idx) => {
-                  var WinApp = Applications[key];
-                  return <WinApp key={idx} />;
-                })}
-                {Object.keys(apps)
-                  .filter((x) => x != "hz")
-                  .map((key) => apps[key])
-                  .map((app, i) => {
-                    if (!app.pwa) 
-                      return
+          <>
+            <div className="desktop" data-menu="desk">
+              <DesktopApp />
+              {Object.keys(Applications).map((key, idx) => {
+                var WinApp = Applications[key];
+                return <WinApp key={idx} />;
+              })}
+              {Object.keys(apps)
+                .filter((x) => x != "hz")
+                .map((key) => apps[key])
+                .map((app, i) => {
+                  if (!app.pwa) return;
 
-                    var WinApp = Drafts[app.data.type];
-                    return <WinApp key={i} icon={app.icon} {...app.data} />;
-                  })}
-                <StartMenu />
-                {/*<BandPane />*/}
-                {/*<SidePane />*/}
-                <WidPane />
-                <CalnWid />
-              </div>
-              {/*{
+                  var WinApp = Drafts[app.data.type];
+                  return <WinApp key={i} icon={app.icon} {...app.data} />;
+                })}
+              <StartMenu />
+              {/*<BandPane />*/}
+              {/*<SidePane />*/}
+              <WidPane />
+              <CalnWid />
+            </div>
+            {/*{
               showtaskbar 
                 ? <Taskbar />
                 : null
               }*/}
-              <Taskbar />
+            <Taskbar />
 
-              <ActMenu />
-              <Popup />
-            </>
+            <ActMenu />
+            <Popup />
+          </>
         </div>
       </ErrorBoundary>
     </div>

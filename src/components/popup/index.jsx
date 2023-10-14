@@ -18,8 +18,8 @@ const Popup = (props) => {
       ) : modalInfo.type == "view_worker" ? (
         <ModalWorkerInfo data={modalInfo.data} />
       ) : modalInfo.type == "user_feedback" ? (
-        <UserFeedBack data={modalInfo.data} />)
-       : null}
+        <UserFeedBack data={modalInfo.data} />
+      ) : null}
     </Modal>
   );
 };

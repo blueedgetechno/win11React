@@ -116,7 +116,8 @@ const apps = [
     icon: "calculator",
     type: "app",
     action: "CALCUAPP",
-  }, {
+  },
+  {
     name: "Get Started",
     icon: "getstarted",
     type: "app",
@@ -175,7 +176,8 @@ const apps = [
     type: "app",
     action: "EXTERNAL",
     payload: externalLink.GITHUB_LINK,
-  }, {
+  },
+  {
     name: "Discord",
     icon: "discord",
     type: "app",
@@ -202,7 +204,6 @@ const apps = [
     pwa: true,
     full: true,
   },
-
 ];
 
 for (let i = 0; i < installed.length; i++) {

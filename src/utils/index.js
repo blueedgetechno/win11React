@@ -1,9 +1,7 @@
 import icons from "./apps";
 
 var { taskbar, desktop, pinned, recent } = {
-  taskbar: [
-    "Store",
-  ],
+  taskbar: ["Store"],
   desktop: [
     "Worker Profile",
     "Github",

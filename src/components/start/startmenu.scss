@@ -41,7 +41,7 @@
   --bg2: rgba(255, 255, 255, 0.9);
   --bg3: rgba(0, 0, 0, 0.033);
   --bg4: #aaa;
-  
+
   --roundRad: 8px;
 
   position: absolute;
@@ -89,10 +89,9 @@
   align-items: center;
   justify-content: center;
   border-bottom-color: rgba(0, 0, 0, 0.2);
-  background: var(--bg3);  
+  background: var(--bg3);
   border: solid 0.1px rgba(17, 17, 17, 0.1);
   transition: all 0.1s ease;
-
 }
 body[data-theme="dark"] .startMenu {
   //--bg1: rgba(36, 36, 36, 0.8);

@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
@@ -10,7 +6,7 @@ import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
 import { fetchStore } from "../../../actions/preload";
 import { installApp } from "../../../actions/app";
-import { PatchApp,ReleaseApp } from "../../../actions/app";
+import { PatchApp, ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
 import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
@@ -20,7 +16,7 @@ const emap = (v) => {
   v = Math.min(1 / v, 10);
   return v / 11;
 };
-const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const MicroStore = () => {
   const wnapp = useSelector((state) => state.apps.store);
   const [tab, setTab] = useState("sthome");
@@ -49,8 +45,8 @@ export const MicroStore = () => {
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
     element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
-    
-    if(isMobile()) setPage(1)
+
+    if (isMobile()) setPage(1);
   }, []);
 
   const frontScroll = (e) => {
@@ -75,7 +71,7 @@ export const MicroStore = () => {
       setTab(mntab);
     }
   };
-  
+
   const app_click = async (data) => {
     setOpapp(data);
     setPage(2);
@@ -119,20 +115,23 @@ export const MicroStore = () => {
             />
             <Icon
               fafa="faThLarge"
-              onClick={()=>{setPage(1)}}
+              onClick={() => {
+                setPage(1);
+              }}
               click="page1"
               width={20}
               payload={page == 1}
             />
-            <a href="https://github.com/thinkonmay/thinkmay/releases/download/1.0.0/thinkmay_0.3.0_x64_en-US.msi" download>
-              <Icon
-                src='download'
-                ui={true}
-                width={20}
-              />
+            <a
+              href="https://github.com/thinkonmay/thinkmay/releases/download/1.0.0/thinkmay_0.3.0_x64_en-US.msi"
+              download
+            >
+              <Icon src="download" ui={true} width={20} />
             </a>
             {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
-            {isAdmin() ? ( <Icon width={30} onClick={insertApp} ui={true} src={"new"} />) : null}
+            {isAdmin() ? (
+              <Icon width={30} onClick={insertApp} ui={true} src={"new"} />
+            ) : null}
           </div>
 
           <div
@@ -141,10 +140,7 @@ export const MicroStore = () => {
             onScroll={frontScroll}
           >
             {page == 0 ? <FrontPage app_click={app_click} /> : null}
-            {page == 1 ? (
-              <DownPage
-                action={app_click}/>
-            ) : null}
+            {page == 1 ? <DownPage action={app_click} /> : null}
             {page == 2 ? <DetailPage app={opapp} /> : null}
           </div>
         </LazyComponent>
@@ -164,7 +160,7 @@ const FrontPage = (props) => {
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
   }, []);
- 
+
   return (
     <div className="pagecont w-full absolute top-0">
       <Image id="sthome" className="frontPage w-full" src={cover} ext />
@@ -178,7 +174,9 @@ const FrontPage = (props) => {
                   key={i}
                   target="_blank"
                   rel="noreferrer"
-                  onMouseEnter={() => {setCover(vendor.images[0])}}
+                  onMouseEnter={() => {
+                    setCover(vendor.images[0]);
+                  }}
                   href={vendor.metadata.href}
                 >
                   <Image
@@ -203,50 +201,51 @@ const FrontPage = (props) => {
           <div className="text-xs mt-2">{t("store.featured-game.info")}</div>
         </div>
         <div className="flex w-max pr-8">
-           
-          {games.length > 0 ?
-            games.map((game, i) => {
-              return (
+          {games.length > 0
+            ? games.map((game, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="ribcont rounded-md my-0 p-2 pb-2"
+                    onClick={() => {
+                      props.app_click(game);
+                    }}
+                    style={{
+                      background: game.steam_off
+                        ? "linear-gradient(to right, #f7e67b, #c8ae54)"
+                        : "",
+                    }}
+                  >
+                    <Image
+                      className="mx-1 py-1 mb-6 rounded"
+                      w={100}
+                      h={100}
+                      absolute={true}
+                      src={game.icon}
+                    />
+                    <div className="capitalize text-xs text-center font-semibold">
+                      {game.name}
+                    </div>
+                    <div className="text-xs text-center font-regular">
+                      {game.steam_off ? "Steam Offline" : ""}
+                    </div>
+                  </div>
+                );
+              })
+            : listDraftApp.map((i) => (
                 <div
-                  key={i}
-                  className="ribcont rounded-md my-0 p-2 pb-2"
-                  onClick={() => {
-                    props.app_click(game);
-                  }}
-                  style={{background: game.steam_off ? "linear-gradient(to right, #f7e67b, #c8ae54)": ""}}
-                >
-                  <Image
-                    className="mx-1 py-1 mb-6 rounded"
-                    w={100}
-                    h={100}
-                    absolute={true}
-                    src={game.icon}
-                  />
-                  <div className="capitalize text-xs text-center font-semibold">
-                    {game.name}
-                  </div>
-                  <div className="text-xs text-center font-regular">
-                    {game.steam_off ? "Steam Offline": ""}
-                  </div>
-                </div>
-              );
-            })
-          : listDraftApp.map(i=>(
-            <div
                   key={i}
                   className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
                 >
-                   <Image
+                  <Image
                     className="mx-1 rounded bg-slate-200"
                     w={100}
                     h={100}
                     ext
                   />
-                  <div className="capitalize text-xs text-center font-semibold">
-                  </div>
-            </div>
-          ))
-          }
+                  <div className="capitalize text-xs text-center font-semibold"></div>
+                </div>
+              ))}
         </div>
       </div>
 
@@ -300,39 +299,33 @@ const DetailPage = ({ app }) => {
 
   useEffect(() => {
     (async () => {
-      const {data,error} = await supabase
-        .from('constant')
-        .select('value->virt')
-      if (error) 
-        throw error
+      const { data, error } = await supabase
+        .from("constant")
+        .select("value->virt");
+      if (error) throw error;
 
       const url = data.at(0)?.virt.url;
       const key = data.at(0)?.virt.anon_key;
-      if (url == undefined || key == undefined)
-        return
-        
-      const options = await (
-        await fetch(
-          `${url}/rest/v1/rpc/get_app_from_store`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${key}`,
-              apikey: key,
-            },
-            body: JSON.stringify({ store_id: `${app.id}` }),
-          },
-        )
-      ).json();
+      if (url == undefined || key == undefined) return;
 
+      const options = await (
+        await fetch(`${url}/rest/v1/rpc/get_app_from_store`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${key}`,
+            apikey: key,
+          },
+          body: JSON.stringify({ store_id: `${app.id}` }),
+        })
+      ).json();
 
       for (let index = 0; index < options.length; index++) {
         const option = options[index];
         for (let index = 0; index < option.available.length; index++) {
           if (option.available[index].available.gpus.includes(option.gpu)) {
-            SetOptions(old => [...old,option]);
-            return
+            SetOptions((old) => [...old, option]);
+            return;
           }
         }
       }
@@ -340,24 +333,26 @@ const DetailPage = ({ app }) => {
   }, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: 0, behavior: "smooth"},);
-  }, [])
+    element.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   const dispatch = useDispatch();
 
   const download = async ({ id }) => {
     console.log(`download ${id}`);
-    if(!isGreenList()) 
-      return
-    const vol_option = await VolumeOption()
-    await installApp({ app_template_id: id, 
-      availability: vol_option.availability, 
-      speed: vol_option.speed, 
-      safe: vol_option.safe});
+    if (!isGreenList()) return;
+    const vol_option = await VolumeOption();
+    await installApp({
+      app_template_id: id,
+      availability: vol_option.availability,
+      speed: vol_option.speed,
+      safe: vol_option.safe,
+    });
   };
 
-  async function VolumeOption() { // POC
+  async function VolumeOption() {
+    // POC
     await Swal.fire({
-      title: 'Select option volume',
+      title: "Select option volume",
       html: `
     <select id="vol_speed" name="Volume Speed" style >
         <option value="HOT">HOT</option>
@@ -372,17 +367,16 @@ const DetailPage = ({ app }) => {
     <input type="checkbox" id="cloud_save">
     <label for="cloud_save"> Cloud save?</label>
     `,
-      inputPlaceholder: 'Select a type volume',
+      inputPlaceholder: "Select a type volume",
       allowOutsideClick: false,
       showCancelButton: true,
+    });
 
-    })
+    const speed = document.getElementById("vol_speed").value;
+    const availability = document.getElementById("vol_availability").value;
+    const safe = document.getElementById("cloud_save").checked;
 
-    const speed = document.getElementById('vol_speed').value;
-    const availability = document.getElementById('vol_availability').value;
-    const safe = document.getElementById('cloud_save').checked;
-
-    return {availability, speed, safe}
+    return { availability, speed, safe };
   }
 
   const handleEdit = () => {
@@ -391,7 +385,6 @@ const DetailPage = ({ app }) => {
       payload: app,
     });
   };
-
 
   const DeleteButton = () => {
     return (
@@ -408,14 +401,15 @@ const DetailPage = ({ app }) => {
 
   const ReleaseAppButton = () => {
     return (
-      <div onClick={() => {
-        ReleaseApp(app)
-      }}>
+      <div
+        onClick={() => {
+          ReleaseApp(app);
+        }}
+      >
         <div className="instbtn mt-1 mb-8 handcr">Release</div>
       </div>
     );
   };
-
 
   const EditButton = () => {
     return (
@@ -439,33 +433,31 @@ const DetailPage = ({ app }) => {
               Checkout
             </a>
           </div>
-        ) : dstate == 0 ? 
-        Options.length > 0 
-        ? ( Options.map(x => (
-            <div key={x.id}>
-              <div
-                className="instbtn mt-12 handcr"
-                payload={x}
-                onClick={() => download(x)}
-              >
-             
-              {
-                isGreenList() ? (`${x.gpu} ${x.region}`)  : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'
-              }
-              </div>
-              {
-                isAdmin() 
-                ? <div onClick={() => PatchApp(x)}>
+        ) : dstate == 0 ? (
+          Options.length > 0 ? (
+            Options.map((x) => (
+              <div key={x.id}>
+                <div
+                  className="instbtn mt-12 handcr"
+                  payload={x}
+                  onClick={() => download(x)}
+                >
+                  {isGreenList()
+                    ? `${x.gpu} ${x.region}`
+                    : "Đang đóng demo ^^, Vui lòng liên hệ fanpage"}
+                </div>
+                {isAdmin() ? (
+                  <div onClick={() => PatchApp(x)}>
                     <div className="instbtn mb-8 handcr">Patch</div>
                   </div>
-                : null
-              }
-
-            </div>
-          ))
-        ) : ( <div className="instbtn mt-12 handcr" >
+                ) : null}
+              </div>
+            ))
+          ) : (
+            <div className="instbtn mt-12 handcr">
               {t("store.app_not_available")}
-          </div>
+            </div>
+          )
         ) : (
           <div className="downbar mt-12 mb-8"></div>
         )}
@@ -493,7 +485,6 @@ const DetailPage = ({ app }) => {
               <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
-              
             </>
           ) : null}
 
@@ -600,63 +591,70 @@ const DownPage = ({ action }) => {
   const games = useSelector((state) => state.globals.games);
   const [searchtxt, setShText] = useState("");
 
-  const [storeApps, setStoreApps] = useState([...apps, ...games])
+  const [storeApps, setStoreApps] = useState([...apps, ...games]);
   const handleSearchChange = (e) => {
-    setShText(e.target.value)
+    setShText(e.target.value);
   };
   useLayoutEffect(() => {
-    setStoreApps([...apps, ...games])
+    setStoreApps([...apps, ...games]);
     const element = document.getElementById("storeScroll");
-    element.scrollTo({ top: 0, behavior: "smooth"},);
+    element.scrollTo({ top: 0, behavior: "smooth" });
+  }, [apps, games]);
 
-  }, [apps, games])
-
-  useEffect(()=>{
-    if(catg =='app') {
-      setStoreApps(apps)
-      return
+  useEffect(() => {
+    if (catg == "app") {
+      setStoreApps(apps);
+      return;
+    } else if (catg == "all") {
+      setStoreApps([...apps, ...games]);
+      return;
     }
-    else if(catg =='all') {
-      setStoreApps([...apps, ...games])
-      return
-    }
-    setStoreApps(games)
-
-  },[catg])
-  const renderSearchResult = () =>{
+    setStoreApps(games);
+  }, [catg]);
+  const renderSearchResult = () => {
     const keyword = searchtxt.toLowerCase();
-    const cloneApp = [...storeApps]
+    const cloneApp = [...storeApps];
 
-    return cloneApp.map((app, index)=>{
-      const appName = app.name.toLowerCase()
-      if(appName.indexOf(keyword) > -1){
-        return <div
-              key={index}
-              className="ribcont p-4 pt-8 ltShad prtclk"
-              onClick={()=>{action(app)}}
-              data-action="page2"
-              style={{background: app.steam_off ? "linear-gradient(to right, #f7e67b, #c8ae54)": ""}}
-            >
-              <Image
-                className="mx-4 mb-6 rounded"
-                w={100}
-                h={100}
-                src={app.icon}
-                ext
-              />
-              <div className="capitalize text-xs text-center font-semibold">
-                {app.name}
-              </div>
-              <div className="text-xs text-center font-regular">
-                {app.steam_off ? "Steam Offline": ""}
-              </div>
-              
+    return cloneApp.map((app, index) => {
+      const appName = app.name.toLowerCase();
+      if (appName.indexOf(keyword) > -1) {
+        return (
+          <div
+            key={index}
+            className="ribcont p-4 pt-8 ltShad prtclk"
+            onClick={() => {
+              action(app);
+            }}
+            data-action="page2"
+            style={{
+              background: app.steam_off
+                ? "linear-gradient(to right, #f7e67b, #c8ae54)"
+                : "",
+            }}
+          >
+            <Image
+              className="mx-4 mb-6 rounded"
+              w={100}
+              h={100}
+              src={app.icon}
+              ext
+            />
+            <div className="capitalize text-xs text-center font-semibold">
+              {app.name}
             </div>
+            <div className="text-xs text-center font-regular">
+              {app.steam_off ? "Steam Offline" : ""}
+            </div>
+          </div>
+        );
       }
-    })
-  }
+    });
+  };
   return (
-    <div id="storeScroll" className="pagecont w-full absolute top-0 box-border p-12">
+    <div
+      id="storeScroll"
+      className="pagecont w-full absolute top-0 box-border p-12"
+    >
       <div className="flex flex-wrap gap-5 justify-between">
         <div className="flex items-center ">
           <div
@@ -682,38 +680,34 @@ const DownPage = ({ action }) => {
           </div>
         </div>
         <div className="relative srchbar right-0 mr-4 text-sm">
-            <Icon className="searchIcon" src="search" width={12} />
-            <input
-              type="text"
-              onChange={handleSearchChange}
-              value={searchtxt}
-              placeholder="Search"
-            />
+          <Icon className="searchIcon" src="search" width={12} />
+          <input
+            type="text"
+            onChange={handleSearchChange}
+            value={searchtxt}
+            placeholder="Search"
+          />
         </div>
       </div>
       <div className="appscont mt-8">
-        {
-          storeApps.length > 0 ? renderSearchResult() :
-          listDraftApp.map(i=> (
-            <div
-              key={i}
-              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-              data-action="page2"
-            >
+        {storeApps.length > 0
+          ? renderSearchResult()
+          : listDraftApp.map((i) => (
+              <div
+                key={i}
+                className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                data-action="page2"
+              >
                 <Image
                   className="mx-4 mb-6 rounded bg-slate-200"
                   w={100}
                   h={100}
                   ext
                 />
-              <div className="capitalize text-xs text-center font-semibold">
+                <div className="capitalize text-xs text-center font-semibold"></div>
               </div>
-
-            </div>
-            ))
-          
-        }
+            ))}
       </div>
     </div>
   );
-}
+};

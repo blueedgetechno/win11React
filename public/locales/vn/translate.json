@@ -35,7 +35,6 @@
     "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!",
     "NOT_PINGED": "Game đã được pasued, reload và start app lại nhé!",
     "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !"
-
   },
   "info": {
     "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
@@ -44,7 +43,7 @@
     "thanks": "Xin cảm ơn bạn ^^",
     "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3"
   },
-  "timemanager":{
+  "timemanager": {
     "startAt": "Ngày bắt đầu",
     "endAt": "Ngày hết hạn",
     "time": "Thời gian sử dụng",
