@@ -276,7 +276,7 @@ const ContentArea = ({ searchtxt }) => {
   }, [selected]);
 
   useEffect(() => {
-    setuserInfo({ email: user.email, });
+    setuserInfo({ email: user.email });
   }, []);
 
   const renderSubdata = (data) => {
@@ -352,18 +352,12 @@ const ContentArea = ({ searchtxt }) => {
     }
   };
 
-
   const renderIconName = (info) => {
-    if (info.state == 'STOPPED')
-      return 'worker_disconnect'
-    if (info.state == 'RUNNING')
-      return 'worker_connect'
-    if (info.menu == 'worker')
-      return 'thispc'
-    if (info.menu == 'proxy')
-      return 'onedrive'
-    else
-      return "folder3d";
+    if (info.state == "STOPPED") return "worker_disconnect";
+    if (info.state == "RUNNING") return "worker_connect";
+    if (info.menu == "worker") return "thispc";
+    if (info.menu == "proxy") return "onedrive";
+    else return "folder3d";
   };
 
   return (

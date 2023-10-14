@@ -67,7 +67,7 @@ const Taskbar = () => {
         <div className="tasksCont" data-menu="task" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
-           
+
             {tasks.apps.map((task, i) => {
               var isHidden = apps[task.icon].hide;
               var isActive = apps[task.icon].z == apps.hz;

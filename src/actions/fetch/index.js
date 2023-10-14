@@ -110,7 +110,12 @@ export const SupabaseFuncInvoke = async (funcName, options) => {
 };
 
 const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
-export const DownloadApplication = async (app_template_id) => {
+export const DownloadApplication = async (
+  app_template_id,
+  availability,
+  speed,
+  safe,
+) => {
   let msg;
   const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
   const { data, error } = await SupabaseFuncInvoke("request_application", {
@@ -118,6 +123,11 @@ export const DownloadApplication = async (app_template_id) => {
     body: JSON.stringify({
       action: "SETUP",
       app_template_id: app_template_id,
+      option: {
+        availability,
+        speed,
+        safe,
+      },
     }),
   });
   if (error != null) {
@@ -173,8 +183,7 @@ export const StartApplication = async (storage_id) => {
     console.log(error);
     if (error === "failed fetch function update_by_volume: unable to launch") {
       msg = i18next.t("error.run_out_of_gpu_stock");
-    }
-    else if (error.includes("locked")) {
+    } else if (error.includes("locked")) {
       msg = i18next.t("error.IS_LOCKED");
     }
     throw `<p> 
@@ -188,7 +197,7 @@ export const StartApplication = async (storage_id) => {
   return data;
 };
 export const AccessApplication = async (input) => {
-  const { storage_id, privateIp } = input
+  const { storage_id, privateIp } = input;
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
@@ -198,21 +207,19 @@ export const AccessApplication = async (input) => {
       storage_id: storage_id,
     }),
   });
-  if (error == 'timeout 3 mins waiting for worker') {
+  if (error == "timeout 3 mins waiting for worker") {
     throw `<p> <b class='uppercase'>${error} at ${privateIp} 
             </b>
             </br> 
               Screenshot and send it to admin
           <p>`;
-  }
-  else if (error == 'worker not pinged') {
+  } else if (error == "worker not pinged") {
     throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
             </b>
             </br> 
               Screenshot and send it to admin
           <p>`;
-  }
-  else if (error != null)
+  } else if (error != null)
     throw `<p> <b class='uppercase'>${error}. 
               </b>
                ${suggestMsg}
@@ -222,7 +229,7 @@ export const AccessApplication = async (input) => {
   return data;
 };
 export const ResetApplication = async (input) => {
-  const { storage_id, privateIp } = input
+  const { storage_id, privateIp } = input;
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
@@ -232,21 +239,19 @@ export const ResetApplication = async (input) => {
       storage_id: storage_id,
     }),
   });
-  if (error == 'timeout 3 mins waiting for worker') {
+  if (error == "timeout 3 mins waiting for worker") {
     throw `<p> <b class='uppercase'>${error} at ${privateIp} 
             </b>
             </br> 
               Screenshot and send it to admin
           <p>`;
-  }
-  else if (error == 'worker not pinged') {
+  } else if (error == "worker not pinged") {
     throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
             </b>
             </br> 
               Screenshot and send it to admin
           <p>`;
-  }
-  else if (error != null)
+  } else if (error != null)
     throw `<p> <b class='uppercase'>${error}. 
               </b>
                ${suggestMsg}

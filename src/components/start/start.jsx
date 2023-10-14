@@ -10,12 +10,12 @@ import { isGreenList } from "../../utils/checking";
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
   const user = useSelector((state) => state.user);
-  const usageTime = user?.usageTime?.at(0) ?? {}
+  const usageTime = user?.usageTime?.at(0) ?? {};
   const { t, i18n } = useTranslation();
 
-  const start = useSelector(state => state.startmenu)
+  const start = useSelector((state) => state.startmenu);
   // const { signOut } = useAuth();
-  const thm = useSelector(state => state.setting.person.theme)
+  const thm = useSelector((state) => state.setting.person.theme);
   var icon = thm == "light" ? "sun" : "moon";
 
   const dispatch = useDispatch();
@@ -59,7 +59,6 @@ export const StartMenu = () => {
   };
 
   const formatDate = (dateStr) => {
-
     // Convert the date string to a JavaScript Date object.
     const date = new Date(dateStr);
 
@@ -67,12 +66,12 @@ export const StartMenu = () => {
     const formattedDate = date.toLocaleDateString("en-GB", {
       month: "numeric",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
     });
 
     // Output the formatted date string.
-    return formattedDate
-  }
+    return formattedDate;
+  };
 
   return (
     <div
@@ -84,22 +83,18 @@ export const StartMenu = () => {
       <>
         <div className="stmenu p-[14px]">
           <div className="pinnedApps text-center font-semibold pb-1 flex items-center justify-center gap-2">
-            <span>{user.email ?? 'Admin'}</span>
-            {
-              isGreenList() ?
-                <Icon className="quickIcon"
-                  //ui={true} 
-                  src={'active'}
-                  width={14} />
-                : null
-            }
+            <span>{user.email ?? "Admin"}</span>
+            {isGreenList() ? (
+              <Icon
+                className="quickIcon"
+                //ui={true}
+                src={"active"}
+                width={14}
+              />
+            ) : null}
           </div>
-          <h6> 
-              {!isGreenList() ? t("timemanager.inActiveUser") : null}
-          </h6>
+          <h6>{!isGreenList() ? t("timemanager.inActiveUser") : null}</h6>
           <div className="h-full flex flex-col p-2" data-dock="true">
-
-
             <div className="w-full flex gap-4 justify-between my-[14px] ">
               <span>Language</span>
               <LangSwitch />
@@ -108,14 +103,18 @@ export const StartMenu = () => {
               <span>Theme</span>
               <div
                 className="strBtn handcr prtclk"
-                onClick={() => { { changeTheme() } }}
+                onClick={() => {
+                  {
+                    changeTheme();
+                  }
+                }}
               >
                 <Icon
                   className="quickIcon"
                   ui={true}
                   src={icon}
                   width={14}
-                //invert={pnstates[idx] ? true : null}
+                  //invert={pnstates[idx] ? true : null}
                 />
               </div>
             </div>
@@ -131,7 +130,13 @@ export const StartMenu = () => {
               <hr className="my-[14px]" />
               <div className="w-full flex gap-4 justify-between mt-auto">
                 <span className="text-left">{t("timemanager.time")}</span>
-                <span>{usageTime.total_time ? (usageTime?.total_time.toFixed(1) + "/" + usageTime?.package) : "Invalid"}</span>
+                <span>
+                  {usageTime.total_time
+                    ? usageTime?.total_time.toFixed(1) +
+                      "/" +
+                      usageTime?.package
+                    : "Invalid"}
+                </span>
               </div>
             </div>
           </div>

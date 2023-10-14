@@ -32,7 +32,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [ "./target/package/*" ],
+      "resources": ["./target/package/*"],
       "shortDescription": "",
       "targets": "all",
       "windows": {
