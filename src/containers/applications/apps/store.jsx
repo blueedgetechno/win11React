@@ -14,6 +14,7 @@ import { PatchApp,ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
 import supabase from "../../../supabase/createClient";
 import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
+import Swal from "sweetalert2";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -347,8 +348,42 @@ const DetailPage = ({ app }) => {
     console.log(`download ${id}`);
     if(!isGreenList()) 
       return
-    await installApp({ app_template_id: id });
+    const vol_option = await VolumeOption()
+    await installApp({ app_template_id: id, 
+      availability: vol_option.availability, 
+      speed: vol_option.speed, 
+      safe: vol_option.safe});
   };
+
+  async function VolumeOption() { // POC
+    await Swal.fire({
+      title: 'Select option volume',
+      html: `
+    <select id="vol_speed" name="Volume Speed" style >
+        <option value="HOT">HOT</option>
+        <option value="WARM">WARM</option>
+        <option value="COLD">COLD</option>
+    </select>
+      <select id="vol_availability" name="Volume Availibity" style >
+      <option value="LA">Low Availability</option>
+      <option value="MA">Medium Availability</option>
+      <option value="HA">High Availability</option>
+    </select>
+    <input type="checkbox" id="cloud_save">
+    <label for="cloud_save"> Cloud save?</label>
+    `,
+      inputPlaceholder: 'Select a type volume',
+      allowOutsideClick: false,
+      showCancelButton: true,
+
+    })
+
+    const speed = document.getElementById('vol_speed').value;
+    const availability = document.getElementById('vol_availability').value;
+    const safe = document.getElementById('cloud_save').checked;
+
+    return {availability, speed, safe}
+  }
 
   const handleEdit = () => {
     dispatch({

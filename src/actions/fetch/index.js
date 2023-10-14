@@ -110,7 +110,7 @@ export const SupabaseFuncInvoke = async (funcName, options) => {
 };
 
 const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
-export const DownloadApplication = async (app_template_id) => {
+export const DownloadApplication = async (app_template_id, availability, speed, safe) => {
   let msg;
   const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
   const { data, error } = await SupabaseFuncInvoke("request_application", {
@@ -118,6 +118,11 @@ export const DownloadApplication = async (app_template_id) => {
     body: JSON.stringify({
       action: "SETUP",
       app_template_id: app_template_id,
+      option: {
+        availability,
+        speed,
+        safe
+      }
     }),
   });
   if (error != null) {

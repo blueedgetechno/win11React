@@ -148,7 +148,12 @@ export const resetApp = async (appInput) =>
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
-    await DownloadApplication(payload.app_template_id);
+    await DownloadApplication(
+        payload.app_template_id,
+        payload.availability,
+        payload.speed,
+        payload.safe
+    );
     await fetchApp();
   }, 'installApp');
 
