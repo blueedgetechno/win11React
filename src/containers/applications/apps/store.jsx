@@ -354,15 +354,15 @@ const DetailPage = ({ app }) => {
     await Swal.fire({
       title: "Select option volume",
       html: `
-    <select id="vol_speed" name="Volume Speed" style >
+    <select id="vol_speed" name="Volume Speed" >
         <option value="HOT">HOT</option>
         <option value="WARM">WARM</option>
         <option value="COLD">COLD</option>
     </select>
-      <select id="vol_availability" name="Volume Availibity" style >
+      <select id="vol_availability" name="Volume Availibity" >
       <option value="LA">Low Availability</option>
       <option value="MA">Medium Availability</option>
-      <option value="HA">High Availability</option>
+      <option value="HA" selected="selected">High Availability</option>
     </select>
     <input type="checkbox" id="cloud_save">
     <label for="cloud_save"> Cloud save?</label>
