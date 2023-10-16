@@ -179,7 +179,7 @@ export const SidePane = () => {
       },
     });
     sliderBackground(bSlider, brgt);
-  };
+  }
 
   useEffect(() => {
     sidepane.quicks.map((item, i) => {
