@@ -129,6 +129,8 @@ export const SidePane = () => {
         Actions[action.type](action.payload);
       } else dispatch(action);
     }
+    // For battery saver
+    if (action.payload === "system.power.saver.state") setBrightness();
   };
 
   const vSlider = document.querySelector(".vSlider");
@@ -153,7 +155,21 @@ export const SidePane = () => {
   }
 
   const setBrightness = (e) => {
-    var brgt = e.target.value;
+    var brgt = document.getElementById("brightnessSlider").value;
+    if (!e) {
+      // Battery saver
+      const state = setting.system.power.saver.state;
+      const factor = state ? 0.7 : 100 / 70;
+      const newBrgt = brgt * factor;
+      setBrightnessValue(newBrgt);
+      document.getElementById("brightnessSlider").value = newBrgt;
+    } else {
+      // Brightness slider
+      setBrightnessValue(brgt);
+    }
+  };
+
+  function setBrightnessValue(brgt) {
     document.getElementById("brightoverlay").style.opacity = (100 - brgt) / 100;
     dispatch({
       type: "STNGSETV",
@@ -220,6 +236,7 @@ export const SidePane = () => {
         <div className="sliderCont">
           <Icon className="mx-2" src="brightness" ui width={20} />
           <input
+            id="brightnessSlider"
             className="sliders bSlider"
             onChange={setBrightness}
             type="range"
