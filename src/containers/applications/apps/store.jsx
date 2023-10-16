@@ -325,7 +325,7 @@ const DetailPage = ({ app }) => {
         for (let index = 0; index < option.available.length; index++) {
           if (option.available[index].available.gpus.includes(option.gpu)) {
             SetOptions((old) => [...old, option]);
-            return;
+            break
           }
         }
       }
