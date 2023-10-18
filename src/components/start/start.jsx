@@ -35,9 +35,9 @@ export const StartMenu = () => {
   }
   
   const subscribe = async (data, actions) => {
-    // console.log(data)
     return actions.subscription.create({
       plan_id: "P-9KT21680D73416030MTQCQHI",
+      custom_id: data.id
     });
   }
 
