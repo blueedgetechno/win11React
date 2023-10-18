@@ -4,7 +4,6 @@ import i18next from "i18next";
 
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
-import supabase from "../../../supabase/createClient";
 import {
   KeygenWithCatch,
   RegisterProxyWithCatch,

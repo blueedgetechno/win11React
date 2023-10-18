@@ -1,7 +1,7 @@
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchApp, fetchStore, fetchWorker } from "./preload";
-import supabase from "../supabase/createClient";
+import { supabase } from "../supabase/createClient";
 import {
   AccessApplication,
   ResetApplication,

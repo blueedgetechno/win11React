@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import { externalLink } from "../../data/constant";
-import supabase from "../../supabase/createClient";
+import { supabase } from "../../supabase/createClient";
 
 const getCredentialHeader = async () => {
   const {

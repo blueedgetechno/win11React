@@ -8,7 +8,7 @@ import { fetchStore } from "../../../actions/preload";
 import { installApp } from "../../../actions/app";
 import { PatchApp, ReleaseApp } from "../../../actions/app";
 import store from "../../../reducers";
-import supabase from "../../../supabase/createClient";
+import { supabase } from "../../../supabase/createClient";
 import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
 import Swal from "sweetalert2";
 

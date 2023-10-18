@@ -1,7 +1,7 @@
 import store from "../reducers";
 import { changeTheme } from "./";
 import { isGreenList, isWhiteList } from "../utils/checking";
-import supabase from "../supabase/createClient";
+import { supabase } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
   formatWorkerRenderTree,

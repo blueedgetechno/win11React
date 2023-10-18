@@ -1,7 +1,7 @@
 import store from "../reducers";
 import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
-import supabase from "../supabase/createClient";
+import { supabase } from "../supabase/createClient";
 import * as Actions from ".";
 import * as ActionExternal from "./app";
 import {

@@ -1,4 +1,4 @@
-import supabase from "../supabase/createClient";
+import { supabase } from "../supabase/createClient";
 
 export function formatWorkerRenderTree(data) {
   const tree = data.tree;

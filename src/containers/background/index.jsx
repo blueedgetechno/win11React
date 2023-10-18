@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import "./back.scss";
-import supabase from "../../supabase/createClient";
+import { supabase } from "../../supabase/createClient";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   return (
