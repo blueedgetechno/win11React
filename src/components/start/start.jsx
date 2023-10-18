@@ -34,7 +34,8 @@ export const StartMenu = () => {
     console.log(data,actions)
   }
   
-  const sub = async (data, actions) => {
+  const subscribe = async (data, actions) => {
+    // console.log(data)
     return actions.subscription.create({
       plan_id: "P-9KT21680D73416030MTQCQHI",
     });
@@ -118,27 +119,25 @@ export const StartMenu = () => {
           </div>
         </div>
 
-        <div className="items-center">
+        {user?.id ? <div className="items-center">
           <PayPalScriptProvider options={initialOptions}> {
             FUNDING_SOURCES.map(fundingSource=>{
               return(
                 <PayPalButtons
                   fundingSource={fundingSource}
                   key={fundingSource}
-                  
+                  createSubscription={async (data,actions) => subscribe(user,actions)}
+                  onApprove={payment}
                   style={{
                     layout: 'vertical',
                     shape: 'pill',
                     color: (fundingSource==FUNDING.PAYLATER) ? 'gold' : '',
                   }}
-                  // createOrder={order}
-                  createSubscription={sub}
-                  onApprove={payment}
                 />)
               })
             }
             </PayPalScriptProvider>
-        </div>
+        </div> : null}
         <div className="menuBar">
           <div
             className="flex prtclk items-center gap-2"
