@@ -6,6 +6,7 @@ import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
 import { isGreenList } from "../../utils/checking";
+import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";        
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -14,64 +15,39 @@ export const StartMenu = () => {
   const { t, i18n } = useTranslation();
 
   const start = useSelector((state) => state.startmenu);
-  // const { signOut } = useAuth();
   const thm = useSelector((state) => state.setting.person.theme);
   var icon = thm == "light" ? "sun" : "moon";
 
-  const dispatch = useDispatch();
-  const tabSw = (e) => {
-    setTab(e.target.innerText.trim());
-  };
+  const FUNDING_SOURCES = [
+    FUNDING.PAYPAL,
+    FUNDING.CARD,
+    FUNDING.PAYU
+  ];
+  
+  const initialOptions = {
+    "client-id": "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
+    "enable-funding": "",
+    "vault": true,
+  }
 
-  const clickDispatch = (event) => {
-    const isTrack = event.target.dataset.click == "track";
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    };
-
-    if (action.type) {
-      dispatch(action);
-    }
-
-    if (
-      action.type &&
-      (action.payload == "full" || action.type == "EDGELINK")
-    ) {
-      dispatch({
-        type: "STARTHID",
-      });
-    }
-
-    if (action.type == "STARTALPHA") {
-      var target = document.getElementById("char" + action.payload);
-      if (target) {
-        target.parentNode.scrollTop = target.offsetTop;
-      } else {
-        var target = document.getElementById("charA");
-        target.parentNode.scrollTop = 0;
-      }
-    }
-    if (isTrack) {
-      const iconName = event.target.dataset.name;
-      // AnalyticTrack(`click app`, {
-    }
-  };
+  const payment = async (data, actions) => { 
+    console.log(data,actions)
+  }
+  
+  const sub = async (data, actions) => {
+    return actions.subscription.create({
+      plan_id: "P-9KT21680D73416030MTQCQHI",
+    });
+  }
 
   const formatDate = (dateStr) => {
-    // Convert the date string to a JavaScript Date object.
-    const date = new Date(dateStr);
-
-    // Format the date object to the desired output format.
-    const formattedDate = date.toLocaleDateString("en-GB", {
+    return new Date(dateStr).toLocaleDateString("en-GB", {
       month: "numeric",
       day: "numeric",
       year: "numeric",
     });
-
-    // Output the formatted date string.
-    return formattedDate;
   };
+
 
   return (
     <div
@@ -140,6 +116,28 @@ export const StartMenu = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="items-center">
+          <PayPalScriptProvider options={initialOptions}> {
+            FUNDING_SOURCES.map(fundingSource=>{
+              return(
+                <PayPalButtons
+                  fundingSource={fundingSource}
+                  key={fundingSource}
+                  
+                  style={{
+                    layout: 'vertical',
+                    shape: 'pill',
+                    color: (fundingSource==FUNDING.PAYLATER) ? 'gold' : '',
+                  }}
+                  // createOrder={order}
+                  createSubscription={sub}
+                  onApprove={payment}
+                />)
+              })
+            }
+            </PayPalScriptProvider>
         </div>
         <div className="menuBar">
           <div
