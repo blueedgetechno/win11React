@@ -98,7 +98,13 @@ const apps = [
     name: "Payment",
     icon: "payment",
     type: "app",
-    action: "PMMODAL",
+    action: "PMAPP",
+  },
+  {
+    name: "Refund",
+    icon: "refund",
+    type: "app",
+    action: "RFAPP",
   },
   //{
   //  name: "Time Manager",
