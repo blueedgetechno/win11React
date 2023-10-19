@@ -13,7 +13,7 @@ export const StartMenu = () => {
   const user = useSelector((state) => state.user);
   const usageTime = user?.usageTime?.at(0) ?? {};
   const { t, i18n } = useTranslation();
-
+  const dispatch = useDispatch()
   const start = useSelector((state) => state.startmenu);
   const thm = useSelector((state) => state.setting.person.theme);
   var icon = thm == "light" ? "sun" : "moon";
@@ -119,7 +119,7 @@ export const StartMenu = () => {
           </div>
         </div>
 
-        {user?.id ? <div className="items-center">
+        {/*{user?.id ? <div className="items-center">
           <PayPalScriptProvider options={initialOptions}> {
             FUNDING_SOURCES.map(fundingSource=>{
               return(
@@ -137,7 +137,18 @@ export const StartMenu = () => {
               })
             }
             </PayPalScriptProvider>
-        </div> : null}
+        </div> : null}*/}
+        {user?.id ? 
+          <button className="instbtn" 
+            onClick={
+                ()=>{
+                  dispatch({type:"PMMODAL", payload: 'full'}); 
+                  dispatch({type:"STARTHID"})
+                }
+          }>
+            Thanh Toán
+            </button> :null}
+        
         <div className="menuBar">
           <div
             className="flex prtclk items-center gap-2"

@@ -95,11 +95,17 @@ const apps = [
     action: "WNSTORE",
   },
   {
-    name: "Time Manager",
-    icon: "timemanager",
+    name: "Payment",
+    icon: "payment",
     type: "app",
-    action: "TIMEMANAGER",
+    action: "PMMODAL",
   },
+  //{
+  //  name: "Time Manager",
+  //  icon: "timemanager",
+  //  type: "app",
+  //  action: "TIMEMANAGER",
+  //},
   //{
   //  name: "FeedBack",
   //  icon: "feedback",
