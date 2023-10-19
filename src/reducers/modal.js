@@ -15,6 +15,8 @@ const modalReducer = (state = defData, action) => {
       return { type: "insert_store", data: action.payload };
     case "USER_FEEDBACK":
       return { type: "user_feedback", data: action.payload };
+    case "PM_MODAL":
+      return { type: "pm_modal", data: {} };
     case "CLOSE_MODAL":
       return { type: "disable", data: {} };
     default:
