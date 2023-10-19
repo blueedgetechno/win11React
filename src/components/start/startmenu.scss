@@ -52,7 +52,7 @@
   max-width: 360px;
   width: 40%;
   min-width: 230px;
-  height: min(100% - 24px, 500px);
+  height: min(100% - 24px, 440px);
   left: 0;
   &[data-align="center"] {
     margin-left: auto;
@@ -184,7 +184,57 @@ body[data-theme="dark"] .paymentApp {
   --rib-bg: #2f2e30b8;
 
 }
+.refundApp{
+  --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: rgba(255, 255, 255, 0.9);
+  --bg3: rgba(0, 0, 0, 0.033);
+  --bg4: #aaa;
+  --rib-bg: #ffffffb8;
 
+  min-width: 550px;
+  height: 375px;
+  max-height: 375px;
+  max-width: 660px;
+  background: var(--fakeMica);
+  color: var(--dark-txt);
+  &[data-size="mini"] {
+    top: 4%;
+    left: 8%;
+    width: 320px;
+    height: 500px;
+  }
+  .windowScreen{
+    background: var(--bg1);
+  }
+  .nameFill{
+    min-width: 80px;
+
+  }
+  .row{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    .ip{
+      flex: 1;
+      height: 40px;
+      border-radius: 4px;
+      padding: 0 16px;
+    }
+  }
+  .br{
+    border-right: 2px solid;
+  }
+}
+
+body[data-theme="dark"] .refundApp {
+
+  --bg1: #1c1c1c;
+  --bg2: #242424;
+  --bg3: #313131;
+  --bg4: #444;
+  --rib-bg: #2f2e30b8;
+
+}
 .allCont,
 .stmenu {
   position: relative;

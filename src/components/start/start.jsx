@@ -6,7 +6,7 @@ import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
 import { isGreenList } from "../../utils/checking";
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";        
+import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -23,17 +23,17 @@ export const StartMenu = () => {
     FUNDING.CARD,
     FUNDING.PAYU
   ];
-  
+
   const initialOptions = {
     "client-id": "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
     "enable-funding": "",
     "vault": true,
   }
 
-  const payment = async (data, actions) => { 
-    console.log(data,actions)
+  const payment = async (data, actions) => {
+    console.log(data, actions)
   }
-  
+
   const subscribe = async (data, actions) => {
     return actions.subscription.create({
       plan_id: "P-9KT21680D73416030MTQCQHI",
@@ -59,7 +59,7 @@ export const StartMenu = () => {
     >
       <>
         <div className="stmenu p-[14px]">
-          <div className="pinnedApps text-center font-semibold pb-1 flex items-center justify-center gap-2">
+          <div className="pinnedApps mt-[16px] text-center font-semibold pb-1 flex items-center justify-center gap-2">
             <span>{user.email ?? "Admin"}</span>
             {isGreenList() ? (
               <Icon
@@ -91,11 +91,11 @@ export const StartMenu = () => {
                   ui={true}
                   src={icon}
                   width={14}
-                  //invert={pnstates[idx] ? true : null}
+                //invert={pnstates[idx] ? true : null}
                 />
               </div>
             </div>
-            <div className="restWindow h-full w-full flex-grow flex flex-col ">
+            <div className="restWindow w-full  flex flex-col ">
               <div className="w-full flex gap-4 justify-between mt-1">
                 <span className="text-left">{t("timemanager.startAt")}</span>
                 <span>{formatDate(usageTime?.start_time)}</span>
@@ -105,13 +105,13 @@ export const StartMenu = () => {
                 <span>{formatDate(usageTime?.end_time)}</span>
               </div>
               <hr className="my-[14px]" />
-              <div className="w-full flex gap-4 justify-between mt-auto">
+              <div className="w-full flex gap-4 justify-between mt-[14px]">
                 <span className="text-left">{t("timemanager.time")}</span>
                 <span>
                   {usageTime.total_time
                     ? usageTime?.total_time.toFixed(1) +
-                      "/" +
-                      usageTime?.package
+                    "/" +
+                    usageTime?.package
                     : "Invalid"}
                 </span>
               </div>
@@ -138,17 +138,29 @@ export const StartMenu = () => {
             }
             </PayPalScriptProvider>
         </div> : null}*/}
-        {user?.id ? 
-          <button className="instbtn" 
-            onClick={
-                ()=>{
-                  dispatch({type:"PMMODAL", payload: 'full'}); 
-                  dispatch({type:"STARTHID"})
+        {user?.id ?
+          <div className="flex gap-4 mt-4">
+            <button className="instbtn border-none !text-[14px] !p-3"
+              onClick={
+                () => {
+                  dispatch({ type: "PMAPP", payload: 'full' });
+                  dispatch({ type: "STARTHID" })
                 }
-          }>
-            Thanh Toán
-            </button> :null}
-        
+              }>
+              Thanh Toán
+            </button>
+            <button className="instbtn border-none !text-[14px] !p-3 !bg-red-500"
+              onClick={
+                () => {
+                  dispatch({ type: "RFAPP", payload: 'full' });
+                  dispatch({ type: "STARTHID" })
+                }
+              }>
+              Hủy Gói
+            </button>
+          </div>
+          : null}
+
         <div className="menuBar">
           <div
             className="flex prtclk items-center gap-2"
