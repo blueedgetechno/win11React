@@ -5,6 +5,7 @@ import "./assets/store.scss";
 import { useTranslation } from "react-i18next";
 
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+import { supabase } from "../../../supabase/createClient";
 
 const FUNDING_SOURCES = [
   FUNDING.PAYPAL,
@@ -16,44 +17,74 @@ const initialOptions = {
   "enable-funding": "",
   "vault": true,
 }
-const listSubs = [
-  {
-    type: 'trial',
-    title: 'Trial',
-    for: 'Week',
-    hours: 20,
-    gpu: 'RTX 3060ti',
-    ram: '16GB',
-    price: '75k'
-  },
-  {
-    type: 'start',
-    title: 'Start',
-    for: 'Month',
-    hours: 100,
-    gpu: 'RTX 3060ti',
-    ram: '16GB',
-    price: '250k'
-  },
-  {
-    type: 'standard',
-    title: 'Standard',
-    for: 'Month',
-    hours: 150,
-    gpu: 'RTX 3060ti',
-    ram: '16GB',
-    price: '300k'
-  }
-]
+
 export const PaymentApp = () => {
   const wnapp = useSelector((state) => state.apps.payment);
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
+
+  const [ListSubs,setListSubs] = useState([
+    {
+      name: 'week',
+      type: 'trial',
+      title: 'Trial',
+      for: 'Week',
+      hours: 20,
+      gpu: 'RTX 3060ti',
+      ram: '16GB',
+      price: '75k'
+    },
+    {
+      name: 'month',
+      type: 'start',
+      title: 'Start',
+      for: 'Month',
+      hours: 100,
+      gpu: 'RTX 3060ti',
+      ram: '16GB',
+      price: '250k'
+    },
+    {
+      name: 'month',
+      type: 'standard',
+      title: 'Standard',
+      for: 'Month',
+      hours: 150,
+      gpu: 'RTX 3060ti',
+      ram: '16GB',
+      price: '300k'
+    }
+  ]) 
+
+  useEffect(() => { setup() },[])
+  const setup = async () => {
+    const {data,error} = await supabase
+      .from('plans')
+      .select('name,metadata->paypal->>id')
+      .neq('metadata->paypal->>id',null)
+    if (error) 
+      throw error
+      
+    console.log(data)
+    setListSubs(ListSubs.map(sub => {
+      return {
+        ...sub,
+        plan_id : data.find(x => x.name == sub.name)?.id
+      }
+    }))
+  }
 
   const payment = async (data, actions) => {
     console.log(data, actions)
   }
+
+  const subscribe = async (user,plan_id, actions) => {
+    return actions.subscription.create({
+      plan_id: plan_id,
+      custom_id: user.id
+    });
+  }
+
 
   const handlePayment = ({type, price}) => {
     return () => {
@@ -84,8 +115,8 @@ export const PaymentApp = () => {
       {/*<div className="windowScreen flex flex-col p-2" data-dock="true">*/}
       <div>
         <div className="paymentModal">
-          {listSubs.map(sub => (
-            <div className="sub">
+          {ListSubs.map((sub,index) => (
+            <div key={index} className="sub">
               <p className="text-right">{sub.title}</p>
               <p className="pl-[25%] font-semibold text-[24px]">{sub.price}</p>
               <p className="pl-[30%] mb-[16px]">/{sub.for}</p>
@@ -98,14 +129,14 @@ export const PaymentApp = () => {
               <button className="mt-[24px] instbtn mx-auto handcr border-none h-[32px] !px-2" onClick={handlePayment({type: sub.type, price: sub.price})}>Chuyển Khoản</button>
               {user?.id ? <div className="items-center flex flex-col items-center mt-4">
                 <PayPalScriptProvider options={initialOptions}> {
-                  FUNDING_SOURCES.map(fundingSource => {
+                  FUNDING_SOURCES.map((fundingSource,index) => {
                     return (
                       <PayPalButtons
+                        key={index}
                         className="max-w-[120px] min-w-[80px] mx-auto paypalCtn"
                         fundingSource={fundingSource}
                         disableMaxWidth={false}
-                        key={fundingSource}
-                        createSubscription={async (data, actions) => subscribe(user, actions)}
+                        createSubscription={async (data, actions) => subscribe(user,sub.plan_id, actions)}
                         onApprove={payment}
                         style={{
                           layout: 'vertical',

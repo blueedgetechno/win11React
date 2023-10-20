@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
-import { supabase } from "../../supabase/createClient";
 import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
 import { isGreenList } from "../../utils/checking";
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -18,28 +16,6 @@ export const StartMenu = () => {
   const thm = useSelector((state) => state.setting.person.theme);
   var icon = thm == "light" ? "sun" : "moon";
 
-  const FUNDING_SOURCES = [
-    FUNDING.PAYPAL,
-    FUNDING.CARD,
-    FUNDING.PAYU
-  ];
-
-  const initialOptions = {
-    "client-id": "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
-    "enable-funding": "",
-    "vault": true,
-  }
-
-  const payment = async (data, actions) => {
-    console.log(data, actions)
-  }
-
-  const subscribe = async (data, actions) => {
-    return actions.subscription.create({
-      plan_id: "P-9KT21680D73416030MTQCQHI",
-      custom_id: data.id
-    });
-  }
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-GB", {
