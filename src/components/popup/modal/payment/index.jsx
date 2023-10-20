@@ -37,7 +37,7 @@ function PaymentModal({data}) {
 			<li>Để tiến hành thanh toán gói <strong>{type}</strong>, bạn hãy chuyển khoản số tiền <strong>{price}</strong>: kèm với <strong>email</strong> dùng trong Thinkmay.</li>
 			<li>Ví dụ: {userEmail || 'thienvanlea1@gmail.com'}</li>
 			<Image src="asset/payment" w={'100%'} />
-			<li>Sau đó <strong>chụp</strong> lại màn hình và <strong>gửi</strong> về cho fanpage để được kiểm tra và hướng dẫn.^^ </li>
+			<li>Sau đó <strong>chụp</strong> lại màn hình và <strong>gửi</strong> về cho <a className="underline" href="http://fb.com/thinkonmay" target="_blank" rel="noopener noreferrer">Fanpage</a> để được kiểm tra và hướng dẫn.^^ </li>
 			<li>Cảm ơn bạn đã sử dụng dịch vụ của Thinkmay.</li>
 
 		</ul>
