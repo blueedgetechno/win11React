@@ -161,6 +161,7 @@ body[data-theme="dark"] .startMenu {
       transition: all ease-in-out .2s;
       color: var(--dark-txt);
       
+      
     }
     .sub:nth-child(2){
       background: linear-gradient(to right, rgb(247, 230, 123), rgb(200, 174, 84));
@@ -175,6 +176,11 @@ body[data-theme="dark"] .startMenu {
   }
 }
 
+.paypalCtn > iframe > .paypal-button-container{
+  max-width: 120px;
+  min-width: 80px;
+  background: red;
+}
 body[data-theme="dark"] .paymentApp {
 
   --bg1: #1c1c1c;

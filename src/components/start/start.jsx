@@ -119,27 +119,9 @@ export const StartMenu = () => {
           </div>
         </div>
 
-        {/*{user?.id ? <div className="items-center">
-          <PayPalScriptProvider options={initialOptions}> {
-            FUNDING_SOURCES.map(fundingSource=>{
-              return(
-                <PayPalButtons
-                  fundingSource={fundingSource}
-                  key={fundingSource}
-                  createSubscription={async (data,actions) => subscribe(user,actions)}
-                  onApprove={payment}
-                  style={{
-                    layout: 'vertical',
-                    shape: 'pill',
-                    color: (fundingSource==FUNDING.PAYLATER) ? 'gold' : '',
-                  }}
-                />)
-              })
-            }
-            </PayPalScriptProvider>
-        </div> : null}*/}
+       
         {user?.id ?
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4 ml-auto mr-[24px]">
             <button className="instbtn border-none !text-[14px] !p-3"
               onClick={
                 () => {
