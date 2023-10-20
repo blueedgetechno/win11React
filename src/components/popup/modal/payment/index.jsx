@@ -1,3 +1,4 @@
+import { Image } from "../../../../utils/general";
 
 
 const listSubs = [
@@ -26,24 +27,20 @@ const listSubs = [
 		price: '300k'
 	}
 ]
-function PaymentModal() {
-
+function PaymentModal({data}) {
+	const {type, price, userEmail, userName} = data
+	console.log(data);
 	return (
-	<div className="paymentModal">
-		{listSubs.map(sub=>(
-			<div className="sub">
-				<p className="text-right">{sub.title}</p>
-				<p className="pl-[25%] font-semibold text-[24px]">{sub.price}</p>
-				<p className="pl-[30%] mb-[16px]">/{sub.for}</p>
-				<ul className="list-none flex flex-col gap-[8px] px-[8px]">
-					<li className="flex justify-between"> <span className="inline-block min-w-[30px]">GPU:</span> <span className="text-right">{sub.gpu}</span></li> 
-					<li className="flex justify-between"> <span className="inline-block min-w-[30px]">RAM:</span> <span className="text-right">{sub.ram}</span></li>
-					<li className="flex justify-between"> <span className="inline-block min-w-[30px]">Hours:</span> <span className="text-right">{sub.hours}</span></li>
-					<li className="text-[10px] mt-[-8px]">*giới hạn số giờ được sự dụng  trong 1 {sub.for}.</li>
-				</ul>
-				<button className="mt-[24px] instbtn mx-auto handcr border-none h-[32px]">Thanh Toan</button>
-			</div>
-		))}
+	<div className="w-[320px] h-[360px] p-6">
+		<ul className="list-none flex flex-col  gap-2 pb-4">
+			<li>Xin chào <strong>{userName}</strong>^^, cảm ơn bạn đã quan tâm tới dịch vụ Thinkmay. </li>
+			<li>Để tiến hành thanh toán gói <strong>{type}</strong>, bạn hãy chuyển khoản số tiền <strong>{price}</strong>: kèm với <strong>email</strong> dùng trong Thinkmay.</li>
+			<li>Ví dụ: {userEmail || 'thienvanlea1@gmail.com'}</li>
+			<Image src="asset/payment" w={'100%'} />
+			<li>Sau đó <strong>chụp</strong> lại màn hình và <strong>gửi</strong> về cho fanpage để được kiểm tra và hướng dẫn.^^ </li>
+			<li>Cảm ơn bạn đã sử dụng dịch vụ của Thinkmay.</li>
+
+		</ul>
 
 	</div>)
 }

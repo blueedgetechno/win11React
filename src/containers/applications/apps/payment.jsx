@@ -4,45 +4,63 @@ import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { useTranslation } from "react-i18next";
 
+import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 
+const FUNDING_SOURCES = [
+  FUNDING.PAYPAL,
+  FUNDING.CARD,
+  FUNDING.PAYU
+];
+const initialOptions = {
+  "client-id": "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
+  "enable-funding": "",
+  "vault": true,
+}
+const listSubs = [
+  {
+    type: 'trial',
+    title: 'Trial',
+    for: 'Week',
+    hours: 20,
+    gpu: 'RTX 3060ti',
+    ram: '16GB',
+    price: '75k'
+  },
+  {
+    type: 'start',
+    title: 'Start',
+    for: 'Month',
+    hours: 100,
+    gpu: 'RTX 3060ti',
+    ram: '16GB',
+    price: '250k'
+  },
+  {
+    type: 'standard',
+    title: 'Standard',
+    for: 'Month',
+    hours: 150,
+    gpu: 'RTX 3060ti',
+    ram: '16GB',
+    price: '300k'
+  }
+]
 export const PaymentApp = () => {
   const wnapp = useSelector((state) => state.apps.payment);
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  
-  const listSubs = [
-    {
-      type:'trial',
-      title: 'Trial',
-      for: 'Week',
-      hours: 20,
-      gpu: 'RTX 3060ti',
-      ram: '16GB',
-      price: '75k'
-    },
-    {
-      type:'start',
-      title: 'Start',
-      for: 'Month',
-      hours: 100,
-      gpu: 'RTX 3060ti',
-      ram: '16GB',
-      price: '250k'
-    },
-    {
-      type:'standard',
-      title: 'Standard',
-      for: 'Month',
-      hours: 150,
-      gpu: 'RTX 3060ti',
-      ram: '16GB',
-      price: '300k'
-    }
-  ]
-  const handlePayment = (subType)=>{
-    return ()=>{
-      console.log('Thanh toan cho goi:', subType);
+
+  const payment = async (data, actions) => {
+    console.log(data, actions)
+  }
+
+  const handlePayment = ({type, price}) => {
+    return () => {
+      console.log('Thanh toan cho goi:', type);
+      const userEmail = user?.email || 'admin@gmail.com'
+      const userName = user?.user_metadata.name || 'userEmail'
+      dispatch({type: 'PM_MODAL', payload:{type, price, userEmail, userName}})
     }
   }
   return (
@@ -77,7 +95,28 @@ export const PaymentApp = () => {
                 <li className="flex justify-between"> <span className="inline-block min-w-[30px]">Hours:</span> <span className="text-right">{sub.hours}</span></li>
                 <li className="text-[10px] mt-[-8px]">*giới hạn số giờ được sự dụng  trong 1 {sub.for}.</li>
               </ul>
-              <button className="mt-[24px] instbtn mx-auto handcr border-none h-[32px]" onClick={handlePayment(sub.type)}>Thanh Toán</button>
+              <button className="mt-[24px] instbtn mx-auto handcr border-none h-[32px] !px-2" onClick={handlePayment({type: sub.type, price: sub.price})}>Chuyển Khoản</button>
+              {user?.id ? <div className="items-center flex flex-col items-center mt-4">
+                <PayPalScriptProvider options={initialOptions}> {
+                  FUNDING_SOURCES.map(fundingSource => {
+                    return (
+                      <PayPalButtons
+                        className="max-w-[120px] min-w-[80px] mx-auto paypalCtn"
+                        fundingSource={fundingSource}
+                        disableMaxWidth={false}
+                        key={fundingSource}
+                        createSubscription={async (data, actions) => subscribe(user, actions)}
+                        onApprove={payment}
+                        style={{
+                          layout: 'vertical',
+                          shape: 'pill',
+                          color: (fundingSource == FUNDING.PAYLATER) ? 'gold' : '',
+                        }}
+                      />)
+                  })
+                }
+                </PayPalScriptProvider>
+              </div> : null}
             </div>
           ))}
 
