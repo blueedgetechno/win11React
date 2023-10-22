@@ -17,8 +17,8 @@ const getCredentialHeader = async () => {
 };
 
 export const FetchAuthorizedWorkers = async () => {
-  const { data, error } = await supabase.functions.invoke(
-    "worker_profile_fetch",
+  const { data, error } = await SupabaseFuncInvoke(
+    "worker_profile_render",
     {
       headers: await getCredentialHeader(),
       method: "POST",
@@ -29,7 +29,7 @@ export const FetchAuthorizedWorkers = async () => {
   return data;
 };
 export const FetchUserApplication = async () => {
-  const { data, error } = await supabase.functions.invoke(
+  const { data, error } = await SupabaseFuncInvoke(
     "user_application_fetch",
     {
       headers: await getCredentialHeader(),
@@ -42,7 +42,7 @@ export const FetchUserApplication = async () => {
 };
 
 export const DeactivateWorkerSession = async (worker_session_id) => {
-  const { data, error } = await supabase.functions.invoke(
+  const { data, error } = await SupabaseFuncInvoke(
     "worker_session_deactivate",
     {
       headers: await getCredentialHeader(),
@@ -57,7 +57,7 @@ export const DeactivateWorkerSession = async (worker_session_id) => {
 };
 
 export const CreateWorkerSession = async (worker_profile_id) => {
-  const { data, error } = await supabase.functions.invoke(
+  const { data, error } = await SupabaseFuncInvoke(
     "worker_session_create",
     {
       headers: await getCredentialHeader(),
@@ -77,7 +77,7 @@ export const SupabaseFuncInvoke = async (funcName, options) => {
     const credential = await getCredentialHeader();
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
-    const response = await fetch(`${supabaseURL}/functions/v1/${funcName}`, {
+    const response = await fetch(`${supabaseURL}/functions/v2/${funcName}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
@@ -262,7 +262,7 @@ export const ResetApplication = async (input) => {
 };
 
 export const DeleteApplication = async (storage_id) => {
-  const { data, error } = await supabase.functions.invoke(
+  const { data, error } = await SupabaseFuncInvoke(
     "request_application",
     {
       headers: await getCredentialHeader(),
@@ -363,7 +363,7 @@ export const RegisterProxy = async () => {
     public_ip: await (await fetch("https://api64.ipify.org")).text(),
   };
 
-  const { data, error } = await supabase.functions.invoke("proxy_register", {
+  const { data, error } = await SupabaseFuncInvoke("proxy_register", {
     body: JSON.stringify(body),
     headers: {
       access_token: (await supabase.auth.getSession()).data?.session
@@ -375,7 +375,7 @@ export const RegisterProxy = async () => {
 };
 
 export const Keygen = async () => {
-  const { data, error } = await supabase.functions.invoke("user_keygen", {
+  const { data, error } = await SupabaseFuncInvoke("user_keygen", {
     body: JSON.stringify({}),
     headers: {
       access_token: (await supabase.auth.getSession()).data?.session

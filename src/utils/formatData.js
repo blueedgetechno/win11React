@@ -14,16 +14,7 @@ export function formatWorkerRenderTree(data) {
     },
   };
 
-  if (tree.type != "admin") {
-    newData.Account.data[tree.id] = RenderBranch(tree);
-  } else {
-    tree.data.forEach((x) => {
-      const branch = RenderBranch(x);
-      if (branch == null) return;
-
-      newData.Account.data[x.id] = branch;
-    });
-  }
+  tree.data.forEach(x => newData.Account.data[`${x.type} ${x.id}`] = RenderBranch(x));
   return newData;
 }
 
