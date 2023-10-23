@@ -4,16 +4,16 @@ import { supabase } from "../supabase/createClient";
 
 export const isAdmin = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.admin == true;
+  return user?.admin == true;
 };
 
 export const isGreenList = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.greenlist == true;
+  return user?.greenlist == true;
 };
 export const isWhiteList = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.whitelist == true;
+  return user?.whitelist == true;
 };
 export const isAllowWorkerProfileFetch = async () => {
   const user = store.getState().user;

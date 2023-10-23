@@ -189,8 +189,37 @@ export const fetchUser = async () => {
   if (error != null) return;
 
   let payload = { ...user };
+  {
+    const { data, error } = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['week', 'month', 'fullstack', 'admin']
+    });
+    if (error) throw error;
 
-  if (user.app_metadata.greenlist == true) {
+    payload = {...payload, greenlist: data}
+  }
+
+  {
+    const { data, error} = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['fullstack', 'remote', 'admin']
+    });
+    if (error) throw error;
+
+    payload = {...payload, whitelist: data}
+  }
+
+  {
+    const { data, error} = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['admin']
+    });
+    if (error) throw error;
+
+    payload = {...payload, admin: data}
+  }
+
+  if (user?.greenlist == true) {
     const { data, error } = await supabase.rpc("get_usage_time_user", {
       user_id: user.id,
     });
