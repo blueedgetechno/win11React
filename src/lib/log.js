@@ -80,23 +80,47 @@ export const log = async ({
             <select name="sub" class="swal2-input" id="plan">
               <option value="week">Week</option>
               <option value="month">Month</option>
-              <option value="month">fullstack</option>
-              <option value="month">remote</option>
-              <option value="month">admin</option>
+              <option value="fullstack">Fullstack</option>
+              <option value="remote">Remote</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
           `,
         focusConfirm: false,
         preConfirm: () => {
-          return [
-            document.getElementById('email').value,
-            document.getElementById('sub').value
-          ]
+          return {
+            email: document.getElementById('email').value,
+            plan : document.getElementById('plan').value
+          }
         }
       })
-      console.log(formValues);
       return formValues
-      break;
+    break;
+    case "modifySub": 
+      const { value } = await Swal.fire({
+        title: 'Modify Subscription',
+        html:
+          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+          `
+          <div className="flex items-center mt-5 gap-2">
+            <span>Action</span>
+            <select name="action" class="swal2-input" id="action">
+              <option value="cancel">Cancel</option>
+              <option value="nenew">Renew</option>
+              <option value="upgrade">Upgrade</option>
+            </select>
+          </div>
+          `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            email:  document.getElementById('email').value,
+            action :  document.getElementById('action').value
+          }
+        }
+      })
+      return value
+    break;
     default:
       break;
   }

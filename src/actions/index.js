@@ -11,7 +11,8 @@ import {
   connectWorker,
   connectSession,
   viewDetail,
-  createSubscription
+  createSubscription,
+  modifySubscription
 } from "./worker";
 import { deleteApp, openApp } from "./app";
 import { fetchApp } from "./preload";
@@ -218,6 +219,7 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECTVOLUMEWORKER") ActionExternal.connectVolume(event);
   else if (type === "STOPVOLUME") ActionExternal.stopVolume(event);
   else if (type === "CREATE_SUB") createSubscription(event);
+  else if (type === "MODIFY_SUB") modifySubscription(event);
   else if (type === "RELEASE_APP") store.dispatch({ type: "ADMIN_INSERT_STORE", payload: { clusterId: '' } });
 
     //App menu action

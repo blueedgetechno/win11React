@@ -1,4 +1,4 @@
-import { CreateWorkerSession, DeactivateWorkerSession } from "./fetch";
+import { CreateWorkerSession, DeactivateWorkerSession, AddSubscription, ModifySubscription } from "./fetch";
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchWorker } from "./preload";
@@ -134,12 +134,38 @@ export const viewDetail = (e) => {
 };
 
 export const createSubscription = async (e) => {
+  wrapper(async () => {
   const formValues = await log({ type: 'createSub' })
-  console.log(formValues);
-  //const worker = formatEvent(e);
-  //if (!worker) return;
-  //store.dispatch({
-  //  type: "WORKER_PROFILE_MODAL",
-  //  payload: worker.info,
-  //});
+    if(formValues == undefined || formValues == null)
+      return;  
+      log({
+        type: "loading",
+        title: "Create new subscription",
+      });
+  
+      await AddSubscription(formValues.email, formValues.plan);
+  
+      log({ type: "close" });
+  
+      await fetchWorker();
+      return "success";
+    });
+};
+export const modifySubscription = async (e) => {
+  wrapper(async () => {
+    const formValues = await log({ type: 'modifySub' })
+      if(formValues == undefined || formValues == null)
+        return;  
+        log({
+          type: "loading",
+          title: "Create new subscription",
+        });
+    
+        await ModifySubscription(formValues.action, formValues.email);
+    
+        log({ type: "close" });
+    
+        await fetchWorker();
+        return "success";
+      });
 };

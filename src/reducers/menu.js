@@ -27,6 +27,10 @@ const defState = {
       width: "180px",
       secwid: "100px",
     },
+    subscription: {
+      width: "180px",
+      secwid: "100px",
+    },
     externalApp: {
       width: "190px",
       secwid: "200px",
@@ -376,6 +380,13 @@ const defState = {
         action: "VIEW_DETAIL",
         payload: "openmodal",
       },
+    ],
+    subscription: [
+      {
+        name: "Modify",
+        action: "MODIFY_SUB",
+        payload: "open"
+      }
     ],
     worker_session: [
       {
