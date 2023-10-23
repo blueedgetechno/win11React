@@ -29,7 +29,6 @@ const listSubs = [
 ]
 function PaymentModal({data}) {
 	const {type, price, userEmail, userName} = data
-	console.log(data);
 	return (
 	<div className="w-[320px] h-[360px] p-6">
 		<ul className="list-none flex flex-col  gap-2 pb-4">

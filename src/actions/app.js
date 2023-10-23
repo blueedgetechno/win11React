@@ -7,7 +7,6 @@ import {
   ResetApplication,
   DeleteApplication,
   DownloadApplication,
-  FetchUserApplication,
   StartApplication,
   StopApplication,
   StopVolume,
@@ -222,13 +221,10 @@ export const ReleaseApp = async (store) => {
     });
     Swal.close();
 
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "RELEASE",
-        store_id: store.id,
-        desc: text,
-      }),
+    const { error } = await SupabaseFuncInvoke("configure_application", {
+      action: "RELEASE",
+      store_id: store.id,
+      desc: text,
     });
 
     if (error) throw error;
@@ -248,13 +244,10 @@ export const PatchApp = async (app) => {
     });
     Swal.close();
 
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "PATCH",
-        app_id: app.id,
-        desc: text,
-      }),
+    const { error } = await SupabaseFuncInvoke("configure_application", {
+      action: "PATCH",
+      app_id: app.id,
+      desc: text,
     });
 
     if (error) throw error;

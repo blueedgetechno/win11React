@@ -17,97 +17,49 @@ const getCredentialHeader = async () => {
 };
 
 export const FetchAuthorizedWorkers = async () => {
-  const { data, error } = await SupabaseFuncInvoke(
-    "worker_profile_render",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({ use_case: "web" }),
-    },
-  );
+  const { data, error } = await SupabaseFuncInvoke("worker_profile_render");
   if (error != null) throw error;
   return data;
 };
 export const FetchUserApplication = async () => {
-  const { data, error } = await SupabaseFuncInvoke(
-    "user_application_fetch",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({}),
-    },
-  );
+  const { data, error } = await SupabaseFuncInvoke( "user_application_fetch" );
   if (error != null) throw error;
   return data;
 };
 
 export const DeactivateWorkerSession = async (worker_session_id) => {
-  const { data, error } = await SupabaseFuncInvoke(
-    "worker_session_deactivate",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        worker_session_id: worker_session_id,
-      }),
-    },
-  );
+  const { data, error } = await SupabaseFuncInvoke("worker_session_deactivate", {
+    worker_session_id: worker_session_id,
+  });
   if (error != null) throw error;
   return data;
 };
 
 export const CreateWorkerSession = async (worker_profile_id) => {
-  const { data, error } = await SupabaseFuncInvoke(
-    "worker_session_create",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        worker_id: worker_profile_id,
-        soudcard_name: null,
-        monitor_name: null,
-      }),
-    },
-  );
+  const { data, error } = await SupabaseFuncInvoke("worker_session_create", {
+    worker_id: worker_profile_id,
+  });
+
   if (error != null) throw error;
   return data;
 };
-export const SupabaseFuncInvoke = async (funcName, options) => {
-  try {
-    const credential = await getCredentialHeader();
-    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-    const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
-    const response = await fetch(`${supabaseURL}/functions/v2/${funcName}`, {
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${supabaseAnonKey}`,
-        Access_token: credential.access_token,
-      },
-    });
-    if (response.ok === false) {
-      const resText = await response.text();
-      return { data: null, error: resText };
-    }
-    let responseType = (response.headers.get("Content-Type") ?? "text/plain")
-      .split(";")[0]
-      .trim();
-    let data;
-    if (responseType === "application/json") {
-      data = await response.json();
-    } else if (responseType === "application/octet-stream") {
-      data = await response.blob();
-    } else if (responseType === "multipart/form-data") {
-      data = await response.formData();
-    } else {
-      // default to text
-      data = await response.text();
-    }
-    return { data, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+
+export const AddSubscription = async (worker_profile_id) => {
+  const { data, error } = await SupabaseFuncInvoke("add_subscription", {
+
+  });
+  if (error != null) throw error;
+  return data;
 };
+export const ModifySubscription = async (worker_profile_id) => {
+  const { data, error } = await SupabaseFuncInvoke("modify_subscription", {
+  });
+
+  if (error != null) throw error;
+  return data;
+};
+
+
 
 const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
 export const DownloadApplication = async (
@@ -119,16 +71,9 @@ export const DownloadApplication = async (
   let msg;
   const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
   const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "SETUP",
-      app_template_id: app_template_id,
-      option: {
-        availability,
-        speed,
-        safe,
-      },
-    }),
+    action: "SETUP",
+    app_template_id: app_template_id,
+    option: { availability, speed, safe, },
   });
   if (error != null) {
     msg = error;
@@ -172,11 +117,8 @@ export const StartApplication = async (storage_id) => {
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "START",
-      storage_id: storage_id,
-    }),
+    action: "START",
+    storage_id: storage_id,
   });
   if (error != null) {
     msg = error;
@@ -201,11 +143,8 @@ export const AccessApplication = async (input) => {
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "ACCESS",
-      storage_id: storage_id,
-    }),
+    action: "ACCESS",
+    storage_id: storage_id,
   });
   if (error == "timeout 3 mins waiting for worker") {
     throw `<p> <b class='uppercase'>${error} at ${privateIp} 
@@ -233,11 +172,8 @@ export const ResetApplication = async (input) => {
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "RESET",
-      storage_id: storage_id,
-    }),
+    action: "RESET",
+    storage_id: storage_id,
   });
   if (error == "timeout 3 mins waiting for worker") {
     throw `<p> <b class='uppercase'>${error} at ${privateIp} 
@@ -262,17 +198,10 @@ export const ResetApplication = async (input) => {
 };
 
 export const DeleteApplication = async (storage_id) => {
-  const { data, error } = await SupabaseFuncInvoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "DELETE",
-        storage_id: storage_id,
-      }),
-    },
-  );
+  const { data, error } = await SupabaseFuncInvoke( "request_application", {
+    action: "DELETE",
+    storage_id: storage_id,
+  });
   if (error != null) throw error;
   return data;
 };
@@ -281,11 +210,8 @@ export const StopApplication = async (storage_id) => {
   const suggestMsg = i18next.t("error.suggest");
 
   const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "STOP",
-      storage_id: storage_id,
-    }),
+    action: "STOP",
+    storage_id: storage_id,
   });
   if (error != null)
     throw `<p> 
@@ -302,12 +228,9 @@ export const StopApplication = async (storage_id) => {
 export const StopVolume = async (volume_id) => {
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "STOP_VOLUME",
-      volume_id: volume_id,
-    }),
+  const { data, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "STOP_VOLUME",
+    volume_id: volume_id,
   });
   if (error != null)
     throw `<p> 
@@ -358,30 +281,41 @@ export const FetchApplicationTemplates = async (id) => {
     .filter((x) => x != undefined);
 };
 
-export const RegisterProxy = async () => {
-  const body = {
-    public_ip: await (await fetch("https://api64.ipify.org")).text(),
-  };
 
-  const { data, error } = await SupabaseFuncInvoke("proxy_register", {
-    body: JSON.stringify(body),
-    headers: {
-      access_token: (await supabase.auth.getSession()).data?.session
-        ?.access_token,
-    },
-  });
-  if (error != null) throw error;
-  return data;
-};
-
-export const Keygen = async () => {
-  const { data, error } = await SupabaseFuncInvoke("user_keygen", {
-    body: JSON.stringify({}),
-    headers: {
-      access_token: (await supabase.auth.getSession()).data?.session
-        ?.access_token,
-    },
-  });
-  if (error != null) throw error;
-  return data;
+export const SupabaseFuncInvoke = async (funcName,body) => {
+  try {
+    const credential = await getCredentialHeader();
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
+    const response = await fetch(`${supabaseURL}/functions/v2/${funcName}`, {
+      body: JSON.stringify(body ?? {}),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        Access_token: credential.access_token,
+      },
+    });
+    if (response.ok === false) {
+      const resText = await response.text();
+      return { data: null, error: resText };
+    }
+    let responseType = (response.headers.get("Content-Type") ?? "text/plain")
+      .split(";")[0]
+      .trim();
+    let data;
+    if (responseType === "application/json") {
+      data = await response.json();
+    } else if (responseType === "application/octet-stream") {
+      data = await response.blob();
+    } else if (responseType === "multipart/form-data") {
+      data = await response.formData();
+    } else {
+      // default to text
+      data = await response.text();
+    }
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 };
