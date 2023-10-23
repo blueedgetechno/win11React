@@ -105,9 +105,9 @@ export const log = async ({
           <div className="flex items-center mt-5 gap-2">
             <span>Action</span>
             <select name="action" class="swal2-input" id="action">
-              <option value="cancel">Cancel</option>
-              <option value="nenew">Renew</option>
-              <option value="upgrade">Upgrade</option>
+              <option value="CANCEL">Cancel</option>
+              <option value="RENEW">Renew</option>
+              <option value="UPGRADE">Upgrade</option>
             </select>
           </div>
           `,
