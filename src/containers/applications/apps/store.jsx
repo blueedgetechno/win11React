@@ -340,12 +340,12 @@ const DetailPage = ({ app }) => {
   const download = async ({ id }) => {
     console.log(`download ${id}`);
     if (!isGreenList()) return;
-    const vol_option = await VolumeOption();
+    //const vol_option = await VolumeOption();
     await installApp({
       app_template_id: id,
-      availability: vol_option.availability,
-      speed: vol_option.speed,
-      safe: vol_option.safe,
+      availability: "HA",
+      speed: "HOT",
+      safe: false,
     });
   };
 
