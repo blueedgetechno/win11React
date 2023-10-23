@@ -289,6 +289,18 @@ const defState = {
         payload: "detail",
       },
     ],
+    apps: [
+      {
+        name: "Release App",
+        action: "RELEASE_APP",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
     externalApp: [
       {
         name: "Open",
