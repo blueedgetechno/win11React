@@ -4,7 +4,6 @@ import { log } from "../../../lib/log";
 import { Image } from "../../../utils/general";
 import { useDispatch } from "react-redux";
 import { fetchStore } from "../../../actions/preload";
-import { ReleaseApp } from "../../../actions/app";
 
 const ModalEditOrInsert = (props) => {
   const { modalType, appData } = props;
@@ -142,21 +141,7 @@ const ModalEditOrInsert = (props) => {
 
   async function handleInsertApp(newData) {
     const { name, icon, description, type, feature, screenshoots } = newData;
-    //action: "RELEASE",
-    //  store_id: store.id,
-    //  desc: text,
 
-    //  // speed, 
-    //  // availability    
-    //  // cluster_id: string
-    //  // hardware: {
-    //  //   gpu_model        : string
-    //  //   vcpus            : number
-    //  //   ram              : number
-
-    //  //   vdriver         ?: boolean
-    //  //   hidevm          ?: boolean
-    //  // }
     const constantFetch = await supabase.from("constant").select("value->virt");
     if (constantFetch.error) throw constantFetch.error;
 
@@ -184,10 +169,7 @@ const ModalEditOrInsert = (props) => {
       }),
     });
 
-    console.log(resp);
     if (resp.status != 200) throw await resp.text();
-    // need storeID after that fetch
-    await ReleaseApp() //id
   }
 
   const handleSubmitForm = async (event) => {
