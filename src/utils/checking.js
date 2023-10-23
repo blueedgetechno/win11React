@@ -1,5 +1,6 @@
 import { scanCodeApps } from "../data/constant";
 import store from "../reducers";
+import { supabase } from "../supabase/createClient";
 
 export const isAdmin = () => {
   const user = store.getState().user;
@@ -14,6 +15,14 @@ export const isWhiteList = () => {
   const user = store.getState().user;
   return user?.app_metadata?.whitelist == true;
 };
+export const isAllowWorkerProfileFetch = async () => {
+  const user = store.getState().user;
+  const { data, error } = await supabase.rpc("allow_worker_profile_fetch", {
+    user_id: user?.id
+  });
+  if (error) throw error;
+  return data;
+}
 
 export const isMobile = () => {
   let check = false;

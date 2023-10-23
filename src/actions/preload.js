@@ -1,6 +1,6 @@
 import store from "../reducers";
 import { changeTheme } from "./";
-import { isGreenList, isWhiteList } from "../utils/checking";
+import { isAllowWorkerProfileFetch } from "../utils/checking";
 import { supabase } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
@@ -62,7 +62,7 @@ export const fetchApp = async () => {
 export const fetchWorker = async () => {
   const user = store.getState()?.user;
   if (!user?.id) return;
-  if (!isWhiteList()) return;
+  if (!isAllowWorkerProfileFetch()) return;
 
   try {
     const { timestamp, payload } = JSON.parse(localStorage.getItem("WORKER"));
