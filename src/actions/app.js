@@ -208,24 +208,84 @@ export const stopVolume = (e) =>
     return "success";
   });
 
-export const ReleaseApp = async (store) => {
+export const ReleaseApp = async (event) => {
+  const apps = store.getState().globals.apps;
+  const games = store.getState().globals.games;
+  const storeApps = [...apps, ...games]
+  const selectorPlace = document.getElementById('storeId')
+  console.log(selectorPlace);
+  //storeApps.forEach(app => {
+  //  selectorPlace.appendChild(<option value={app.id}>{app.name}</option>)
+
+  //})
+
   wrapper(async () => {
-    const { value: text } = await Swal.fire({
-      input: "textarea",
-      inputLabel: "Message",
-      inputPlaceholder: "Type your description here...",
-      inputAttributes: {
-        "aria-label": "Type your description here",
+    const { value } = await Swal.fire({
+      html: `
+      <div class="flex flex-col ">
+      <label htmlFor="">
+        <span>Description</span>
+        <input class="swal2-input" type="text" placeholder="" name="desc" id="desc" />
+      </label>
+
+      <label htmlFor="">
+        <span>Store Id</span>
+        <input class="swal2-input" type="text" placeholder="" name="storeId" id="storeId" />
+
+      </label>
+
+
+    </div>
+    <div class="flex items-center justify-between">
+      <select id="vol_speed" class="h-[32px] text-[16px]" name="Volume Speed" >
+        <option value="HOT">HOT</option>
+        <option value="WARM">WARM</option>
+        <option value="COLD">COLD</option>
+      </select>
+      <select id="vol_availability" class="h-[32px] text-[16px]" name="Volume Availibity" >
+        <option value="LA">Low Availability</option>
+        <option value="MA">Medium Availability</option>
+        <option value="HA" selected="selected">High Availability</option>
+      </select>
+      
+        <label for="cloud_save"> <input type="checkbox" class="w-[24px]" id="cloud_save"> Cloud save?</label>
+    </div>
+      `,
+      //inputLabel: "Message",
+      //inputPlaceholder: "Type your description here...",
+      focusConfirm: false,
+      preConfirm: () => {
+        const vol_speed = Swal.getPopup().querySelector('#vol_speed').value
+        const vol_availability = Swal.getPopup().querySelector('#vol_availability').value
+        const cloud_save = Swal.getPopup().querySelector('#cloud_save').value
+        const desc = Swal.getPopup().querySelector('#desc').value
+        const storeId = Swal.getPopup().querySelector('#storeId').value
+        if (!vol_speed || !desc) {
+          Swal.showValidationMessage(`Please enter desc and storeId`)
+        }
+        return {
+          vol_speed,
+          vol_availability,
+          cloud_save,
+          desc,
+          storeId
+        }
       },
-      showCancelButton: false,
+      showCancelButton: true,
     });
+
+    const cluster_id = formatEvent(event)?.host?.info?.cluster_id
+
+    console.log(value, cluster_id);
+
     Swal.close();
 
+    return
     const { error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
       store_id: store.id,
       desc: text,
-
+      // desc
       // speed, 
       // availability    
       // cluster_id: string

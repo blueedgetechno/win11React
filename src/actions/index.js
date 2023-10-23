@@ -220,7 +220,7 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "STOPVOLUME") ActionExternal.stopVolume(event);
   else if (type === "CREATE_SUB") createSubscription(event);
   else if (type === "MODIFY_SUB") modifySubscription(event);
-  else if (type === "RELEASE_APP") store.dispatch({ type: "ADMIN_INSERT_STORE", payload: { clusterId: '' } });
+  else if (type === "RELEASE_APP") ActionExternal.ReleaseApp(event);
 
     //App menu action
   else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
