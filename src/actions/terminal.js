@@ -1,4 +1,7 @@
-import { Keygen, RegisterProxy } from "./fetch";
+//import {
+//  // Keygen,
+//  //RegisterProxy
+//} from "./fetch";
 
 const wrapper = async (func) => {
   try {
@@ -16,9 +19,12 @@ const wrapper = async (func) => {
 
 export const RegisterProxyWithCatch = () =>
   wrapper(async () => {
-    return await RegisterProxy();
+    return
+
+    await RegisterProxy();
   });
 export const KeygenWithCatch = () =>
   wrapper(async () => {
-    return await Keygen();
+    return 0
+    await Keygen();
   });
