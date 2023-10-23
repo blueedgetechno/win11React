@@ -44,15 +44,29 @@ export const CreateWorkerSession = async (worker_profile_id) => {
   return data;
 };
 
-export const AddSubscription = async (worker_profile_id) => {
+/**
+ * 
+ * @param {string} email 
+ * @param {'month' | 'week'} plan 
+ * @returns 
+ */
+export const AddSubscription = async (email,plan) => {
   const { data, error } = await SupabaseFuncInvoke("add_subscription", {
-
+    email, plan
   });
   if (error != null) throw error;
   return data;
 };
-export const ModifySubscription = async (worker_profile_id) => {
+
+/**
+ * 
+ * @param {'CANCEL' | 'RENEW' | 'UPGRADE'} action 
+ * @param {string} email 
+ * @returns 
+ */
+export const ModifySubscription = async (action,email) => {
   const { data, error } = await SupabaseFuncInvoke("modify_subscription", {
+    email,action
   });
 
   if (error != null) throw error;

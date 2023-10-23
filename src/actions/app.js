@@ -225,6 +225,18 @@ export const ReleaseApp = async (store) => {
       action: "RELEASE",
       store_id: store.id,
       desc: text,
+
+      // speed, 
+      // availability    
+      // cluster_id: string
+      // hardware: {
+      //   gpu_model        : string
+      //   vcpus            : number
+      //   ram              : number
+
+      //   vdriver         ?: boolean
+      //   hidevm          ?: boolean
+      // }
     });
 
     if (error) throw error;
