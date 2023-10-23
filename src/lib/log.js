@@ -68,13 +68,39 @@ export const log = async ({
     case "close":
       Swal.close();
       break;
+
+    case "createSub":
+      const { value: formValues } = await Swal.fire({
+        title: 'Multiple inputs',
+        html:
+          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+          `
+          <div className="flex items-center mt-5 gap-2">
+            <span>SUB</span>
+            <select name="sub" class="swal2-input" id="sub">
+              <option value="week">Week</option>
+              <option value="Month">Month</option>
+            </select>
+          </div>
+          `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return [
+            document.getElementById('email').value,
+            document.getElementById('sub').value
+          ]
+        }
+      })
+      console.log(formValues);
+      return formValues
+      break;
     default:
       break;
   }
 };
 
 export class Log {
-  constructor() {}
+  constructor() { }
   loading(title, content, time, icon) {
     Swal.fire({
       title: title ?? "Loading!",

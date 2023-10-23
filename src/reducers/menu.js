@@ -23,6 +23,10 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
+    subscriptions: {
+      width: "180px",
+      secwid: "100px",
+    },
     externalApp: {
       width: "190px",
       secwid: "200px",
@@ -341,6 +345,18 @@ const defState = {
       {
         name: "Open",
         action: "FILEDIRWORKER",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "openmodal",
+      },
+    ],
+    subscriptions: [
+      {
+        name: "New Subscription",
+        action: "CREATE_SUB",
         payload: "open",
       },
       {

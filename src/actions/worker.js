@@ -132,3 +132,14 @@ export const viewDetail = (e) => {
     payload: worker.info,
   });
 };
+
+export const createSubscription = async (e) => {
+  const formValues = await log({ type: 'createSub' })
+  console.log(formValues);
+  //const worker = formatEvent(e);
+  //if (!worker) return;
+  //store.dispatch({
+  //  type: "WORKER_PROFILE_MODAL",
+  //  payload: worker.info,
+  //});
+};
