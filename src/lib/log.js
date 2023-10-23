@@ -77,9 +77,12 @@ export const log = async ({
           `
           <div className="flex items-center mt-5 gap-2">
             <span>SUB</span>
-            <select name="sub" class="swal2-input" id="sub">
+            <select name="sub" class="swal2-input" id="plan">
               <option value="week">Week</option>
-              <option value="Month">Month</option>
+              <option value="month">Month</option>
+              <option value="month">fullstack</option>
+              <option value="month">remote</option>
+              <option value="month">admin</option>
             </select>
           </div>
           `,
