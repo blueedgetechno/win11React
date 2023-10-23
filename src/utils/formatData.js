@@ -2,19 +2,9 @@ import { supabase } from "../supabase/createClient";
 
 export function formatWorkerRenderTree(data) {
   const tree = data.tree;
-  const newData = {
-    Account: {
-      type: "folder",
-      name: "\\",
-      info: {
-        ...tree.info,
-        spid: "%worker%",
-      },
-      data: {},
-    },
-  };
-
-  tree.data.forEach(x => newData.Account.data[`${x.type} ${x.id}`] = RenderBranch(x));
+  const newData = { Account: RenderBranch(tree) };
+  newData.Account.info.spid = "%worker%"
+  newData.Account.name = tree.type
   return newData;
 }
 
