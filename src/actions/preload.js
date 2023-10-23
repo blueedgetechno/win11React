@@ -62,7 +62,7 @@ export const fetchApp = async () => {
 export const fetchWorker = async () => {
   const user = store.getState()?.user;
   if (!user?.id) return;
-  if (!isAllowWorkerProfileFetch()) return;
+  if (await !isAllowWorkerProfileFetch()) return;
 
   try {
     const { timestamp, payload } = JSON.parse(localStorage.getItem("WORKER"));
