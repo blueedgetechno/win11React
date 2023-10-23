@@ -17,8 +17,9 @@ export const isWhiteList = () => {
 };
 export const isAllowWorkerProfileFetch = async () => {
   const user = store.getState().user;
-  const { data, error } = await supabase.rpc("allow_worker_profile_fetch", {
-    user_id: user?.id
+  const { data, error } = await supabase.rpc("validate_user_access", {
+    user_account_id: user?.id,
+    plan_name: ['fullstack','remote','admin']
   });
   if (error) throw error;
   return data;
