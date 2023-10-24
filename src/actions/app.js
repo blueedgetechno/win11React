@@ -220,7 +220,7 @@ export const ReleaseApp = async (event) => {
   //})
 
   wrapper(async () => {
-    const { value } = await Swal.fire({
+    const { value: formValues } = await Swal.fire({
       html: `
       <div class="flex flex-col ">
       <label htmlFor="">
@@ -250,6 +250,22 @@ export const ReleaseApp = async (event) => {
       
         <label for="cloud_save"> <input type="checkbox" class="w-[24px]" id="cloud_save"> Cloud save?</label>
     </div>
+
+    <div class="flex flex-col gap-2 items-center justify-between">
+    <label htmlFor="">
+        <span>VCPU</span>
+        <input class="swal2-input placeholder="" type="number" name="vcpus" id="vcpus" />
+      </label>
+      <label htmlFor="">
+        <span>RAM</span>
+        <input class="swal2-input placeholder="" type="number" name="ram" id="ram" />
+      </label>
+      <label  <input type="checkbox" class="w-[24px]" id="hidevm"> HideVM</label>
+      <label  <input type="checkbox" class="w-[24px]" id="vdriver"> vdriver</label>
+
+
+
+  </div>
       `,
       //inputLabel: "Message",
       //inputPlaceholder: "Type your description here...",
@@ -257,9 +273,13 @@ export const ReleaseApp = async (event) => {
       preConfirm: () => {
         const vol_speed = Swal.getPopup().querySelector('#vol_speed').value
         const vol_availability = Swal.getPopup().querySelector('#vol_availability').value
-        const cloud_save = Swal.getPopup().querySelector('#cloud_save').value
+        const cloud_save = Swal.getPopup().querySelector('#cloud_save').checked
+        const store_id = Swal.getPopup().querySelector('#store_id').value
         const desc = Swal.getPopup().querySelector('#desc').value
-        const storeId = Swal.getPopup().querySelector('#storeId').value
+        const vcpus = Swal.getPopup().querySelector('#vcpus').value
+        const ram = Swal.getPopup().querySelector('#ram').value
+        const vdriver = Swal.getPopup().querySelector('#vdriver').checked
+        const hidevm = Swal.getPopup().querySelector('#hidevm').checked
         if (!vol_speed || !desc) {
           Swal.showValidationMessage(`Please enter desc and storeId`)
         }
@@ -268,7 +288,11 @@ export const ReleaseApp = async (event) => {
           vol_availability,
           cloud_save,
           desc,
-          storeId
+          store_id,
+          vcpus,
+          ram,
+          vdriver,
+          hidevm
         }
       },
       showCancelButton: true,
@@ -276,19 +300,17 @@ export const ReleaseApp = async (event) => {
 
     const cluster_id = formatEvent(event)?.host?.info?.cluster_id
 
-    console.log(value, cluster_id);
+    console.log(formValues, cluster_id);
 
     Swal.close();
-
-    return
     const { error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
-      store_id: store.id,
-      desc: text,
-      // desc
-      // speed, 
-      // availability    
-      // cluster_id: string
+      store_id: formValues.store_id,
+      desc: formValues.desc,
+      speed: formValues.vol_speed,
+      availability: formValues.vol_availability,
+      cloud_save: formValues.cloud_save,
+      cluster_id: cluster_id
       // hardware: {
       //   gpu_model        : string
       //   vcpus            : number
