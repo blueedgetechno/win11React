@@ -9,12 +9,12 @@ export const AboutWin = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   React.useLayoutEffect(() => {
-    const value = localStorage.getItem("openAboutThinkmay") ?? true;
+    const value = localStorage.getItem("openAboutThinkmay1") ?? true;
     setOpen(value);
   }, []);
   const action = () => {
     setOpen(false);
-    localStorage.setItem("openAboutThinkmay", false);
+    localStorage.setItem("openAboutThinkmay1", false);
     dispatch({ type: "DESKABOUT", payload: false });
   };
 
@@ -23,41 +23,18 @@ export const AboutWin = () => {
       {open === true || abOpen ? (
         <div className="aboutApp floatTab dpShad aboutAnimation">
           <div className="content p-6">
-            <div className="text-xl font-semibold">{t("about.title")}</div>
+            <div className="text-xl font-semibold">Hướng dẫn sử dụng^^</div>
             <code>
-              <strong>
-                {" "}
-                <a target="_blank" href={externalLink.INTRODUCE_MEMBER_LINK}>
-                  {" "}
-                  Thinkmay{" "}
-                </a>{" "}
-              </strong>
-              is an organization was born with the ultimate goal is to{" "}
-              <i className="font-bold">
-                {" "}
-                “change the way technology serve human and shape our knowledge
-                about the world”.{" "}
-              </i>
+              <strong>LƯU Ý: Đây là giao diện không phải RemotePC</strong>
             </code>
+            <p className="mt-[4px]">Để kết nối đến remote PC:</p>
             <br />
-            <br />
-            <p className="my-2">
-              About this <strong>dashboard</strong>
-            </p>
-            1. For cloud PC user:
-            <ul className="pl-5">
-              <li>
-                {" "}
-                Go to <strong>Store</strong> to explore our vendor's services
-              </li>
-            </ul>
-            2. For our cloud PC vendor:
-            <ul className="pl-5">
-              <li>
-                {" "}
-                Go to <strong>Worker Profile</strong> to see your worker status.
-              </li>
-            </ul>
+            <ul className="list-none flex flex-col gap-3" >
+              <li><strong>B1:</strong>  <strong>Install</strong> tựa game yêu thích trong Store, nhưng game màu vàng là được chơi free. </li>
+              <li><strong>B2:</strong>  Ra màn hình chính, đợi logo chuyển từ installing sang logo của game</li>
+              <li><strong>B3:</strong>  Để <strong>tắt máy</strong> và lưu lại data: Click <strong>Pause App</strong>(click chuột phải, hoặc giữ icon trên mobile) </li>  
+            </ul>        
+            <p className="mt-4 text-center">Bắt đầu thư giãn với tựa game yêu thích nào^^</p>
           </div>
           <div className="okbtn px-6 py-4">
             <div onClick={action}>{t("I got it")} </div>
