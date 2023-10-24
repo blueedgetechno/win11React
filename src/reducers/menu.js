@@ -170,7 +170,7 @@ const defState = {
         payload: "C:\\Users\\Blue\\Desktop",
       },
       {
-        name: "About Us",
+        name: "Guideline",
         action: "DESKABOUT",
         icon: "about",
         payload: true,
@@ -239,6 +239,7 @@ const defState = {
         name: "Open",
         action: "performApp",
         payload: "open",
+
       },
       //{
       //  name: "Run as administrator",
@@ -289,22 +290,30 @@ const defState = {
       {
         name: "Open",
         action: "OPEN_APP",
+
       },
       {
         name: "Open in new tab",
         action: "OPEN_APP_NEWTAB",
+        icon: 'newTab'
       },
       {
         name: "Reset App",
         action: "RESET_APP",
+        icon: 'reset'
+
       },
       {
         name: "Start App",
         action: "START_APP",
+        icon: 'start'
+
       },
       {
         name: "Pause App",
         action: "PAUSE_APP",
+        icon: 'shutdown'
+
       },
       {
         type: "hr",
@@ -312,6 +321,7 @@ const defState = {
       {
         name: "Delete",
         action: "delApp",
+        icon: 'delete',
         payload: "delete",
       },
     ],
