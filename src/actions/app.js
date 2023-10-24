@@ -220,7 +220,7 @@ export const ReleaseApp = async (event) => {
   //})
 
   wrapper(async () => {
-    const { value: formValues } = await Swal.fire({
+    const { value } = await Swal.fire({
       html: `
       <div class="flex flex-col ">
       <label htmlFor="">
@@ -243,26 +243,36 @@ export const ReleaseApp = async (event) => {
         <option value="COLD">COLD</option>
       </select>
       <select id="vol_availability" class="h-[32px] text-[16px]" name="Volume Availibity" >
-        <option value="LA">Low Availability</option>
+        <option value="LA" selected="selected">Low Availability</option>
         <option value="MA">Medium Availability</option>
-        <option value="HA" selected="selected">High Availability</option>
+        <option value="HA">High Availability</option>
       </select>
-      
-        <label for="cloud_save"> <input type="checkbox" class="w-[24px]" id="cloud_save"> Cloud save?</label>
+      <select id="gpu_model" class="h-[32px] text-[16px]" name="GPU Model">
+        <option value="RTX 3060 Ti" selected="selected">RTX 3060 Ti</option>
+        <option value="RTX 2060 Super">RTX 2060 Super</option>
+      </select>
+
     </div>
-
-    <div class="flex flex-col gap-2 items-center justify-between">
-    <label htmlFor="">
-        <span>VCPU</span>
-        <input class="swal2-input placeholder="" type="number" name="vcpus" id="vcpus" />
-      </label>
-      <label htmlFor="">
-        <span>RAM</span>
-        <input class="swal2-input placeholder="" type="number" name="ram" id="ram" />
-      </label>
-      <label> <input type="checkbox" class="w-[24px]" id="hidevm"> HideVM</label>
-      <label> <input type="checkbox" class="w-[24px]" id="vdriver"> vdriver</label>
-
+    <div class="flex items-center justify-around" style="padding: 16">
+        <select id="ram" class="h-[32px] text-[16px]" name="RAM">
+          <optgroup label="RAM">
+            <option value="8">8</option>
+            <option value="12" selected="selected">12</option>
+            <option value="16">16</option>
+          </optgroup>
+        </select>
+        <select id="vcpus" class="h-[32px] text-[16px]" name="VCPUS">
+          <optgroup label="VCPUS">
+            <option value="8">8</option>
+            <option value="12" selected="selected">12</option>
+            <option value="16">16</option>
+          </optgroup>
+        </select>
+    </div>
+    <div class="flex items-center justify-around">
+      <label for="hidevm"> <input type="checkbox" class="w-[24px]" id="hidevm" > Hide VM?</label>
+      <label for="vdriver"> <input type="checkbox" class="w-[24px]" id="vdriver" > Virtual Driver ?</label>
+    </div>
 
 
   </div>
@@ -273,7 +283,7 @@ export const ReleaseApp = async (event) => {
       preConfirm: () => {
         const vol_speed = Swal.getPopup().querySelector('#vol_speed').value
         const vol_availability = Swal.getPopup().querySelector('#vol_availability').value
-        const cloud_save = Swal.getPopup().querySelector('#cloud_save').checked
+        const gpu_model =  Swal.getPopup().querySelector('#gpu_model').value
         const desc = Swal.getPopup().querySelector('#desc').value
         const store_id = Swal.getPopup().querySelector('#store_id').value
         const vcpus = Swal.getPopup().querySelector('#vcpus').value
@@ -286,7 +296,7 @@ export const ReleaseApp = async (event) => {
         return {
           vol_speed,
           vol_availability,
-          cloud_save,
+          gpu_model,
           desc,
           store_id,
           vcpus,
@@ -300,28 +310,26 @@ export const ReleaseApp = async (event) => {
 
     const cluster_id = formatEvent(event)?.host?.info?.cluster_id
 
-    console.log(formValues, cluster_id);
-
-    Swal.close();
     const { error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
-      store_id: formValues.store_id,
-      desc: formValues.desc,
-      speed: formValues.vol_speed,
-      availability: formValues.vol_availability,
-      cloud_save: formValues.cloud_save,
-      cluster_id: cluster_id
-      // hardware: {
-      //   gpu_model        : string
-      //   vcpus            : number
-      //   ram              : number
-
-      //   vdriver         ?: boolean
-      //   hidevm          ?: boolean
-      // }
-    });
+      store_id: parseInt(value.store_id),
+      desc: value.desc,
+      speed: value.vol_speed, 
+      availability: value.vol_availability,    
+      cluster_id,
+      hardware: {
+        gpu_model        : value.gpu_model,
+        vcpus            : parseInt(value.vcpus),
+        ram              : parseInt(value.ram),
+        vdriver          : value.vdriver, 
+        hidevm           : value.hidevm
+    }});
 
     if (error) throw error;
+    
+    Swal.close();
+
+    return
   });
 };
 
