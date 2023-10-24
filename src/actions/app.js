@@ -249,7 +249,7 @@ export const ReleaseApp = async (event) => {
       </select>
       <select id="gpu_model" class="h-[32px] text-[16px]" name="GPU Model">
         <option value="RTX 3060 Ti" selected="selected">RTX 3060 Ti</option>
-        <option value="RTX 2060 Super">RTX 2060 Super</option>
+        <option value="RTX 2060 SUPER">RTX 2060 Super</option>
       </select>
 
     </div>
