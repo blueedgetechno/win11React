@@ -5,10 +5,11 @@ import { useSelector } from "react-redux";
 import ModalSelectVendor from "./modal/vendor";
 import { UserFeedBack } from "./modal/userFeedBack";
 import PaymentModal from "./modal/payment";
+import ReleaseAppModal from "./modal/release";
 
 const Popup = (props) => {
   const modalInfo = useSelector((state) => state.modal);
-  //const modalInfo ={type: 'payment'}
+  //const modalInfo ={type: 'release_app', data:''}
   return (
     <Modal isOpen={modalInfo.type != "disable"}>
       {modalInfo.type == "insert_store" ? (
@@ -23,6 +24,8 @@ const Popup = (props) => {
         <UserFeedBack data={modalInfo.data} />
       ) : modalInfo.type == "pm_modal" ? (
         <PaymentModal data={modalInfo.data} />
+      ) : modalInfo.type == "release_app" ? (
+        <ReleaseAppModal data={modalInfo.data} />
       ) : null}
     </Modal>
   );

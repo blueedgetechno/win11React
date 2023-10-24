@@ -311,11 +311,6 @@ const defState = {
     ],
     cluster: [
       {
-        name: "Release App",
-        action: "RELEASE_APP",
-        payload: "open",
-      },
-      {
         name: "Detail",
         action: "VIEW_DETAIL",
         payload: "detail",

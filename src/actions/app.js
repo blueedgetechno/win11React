@@ -18,7 +18,7 @@ import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
 
-const formatEvent = (event) => {
+export const formatEvent = (event) => {
   const pid = event.target.dataset.pid;
   const action = {
     type: event.target.dataset.action,
@@ -208,126 +208,48 @@ export const stopVolume = (e) =>
     return "success";
   });
 
-export const ReleaseApp = async (event) => {
-  const apps = store.getState().globals.apps;
-  const games = store.getState().globals.games;
-  const storeApps = [...apps, ...games]
-  const selectorPlace = document.getElementById('storeId')
-  console.log(selectorPlace);
-  //storeApps.forEach(app => {
-  //  selectorPlace.appendChild(<option value={app.id}>{app.name}</option>)
-
-  //})
-
+export const ReleaseApp = async ({ vol_speed,
+  vol_availability,
+  gpu_model,
+  desc,
+  store_id,
+  vcpus,
+  ram,
+  vdriver,
+  hidevm,
+  cluster_id,
+}) => {
   wrapper(async () => {
-    const { value } = await Swal.fire({
-      html: `
-      <div class="flex flex-col ">
-      <label htmlFor="">
-        <span>Description</span>
-        <input class="swal2-input" type="text" placeholder="" name="desc" id="desc" />
-      </label>
-
-      <label htmlFor="">
-        <span>Store Id</span>
-        <input class="swal2-input" type="text" placeholder="" name="storeId" id="store_id" />
-
-      </label>
-
-
-    </div>
-    <div class="flex items-center justify-between">
-      <select id="vol_speed" class="h-[32px] text-[16px]" name="Volume Speed" >
-        <option value="HOT">HOT</option>
-        <option value="WARM">WARM</option>
-        <option value="COLD">COLD</option>
-      </select>
-      <select id="vol_availability" class="h-[32px] text-[16px]" name="Volume Availibity" >
-        <option value="LA" selected="selected">Low Availability</option>
-        <option value="MA">Medium Availability</option>
-        <option value="HA">High Availability</option>
-      </select>
-      <select id="gpu_model" class="h-[32px] text-[16px]" name="GPU Model">
-        <option value="RTX 3060 Ti" selected="selected">RTX 3060 Ti</option>
-        <option value="RTX 2060 SUPER">RTX 2060 Super</option>
-      </select>
-
-    </div>
-    <div class="flex items-center justify-around" style="padding: 16">
-        <select id="ram" class="h-[32px] text-[16px]" name="RAM">
-          <optgroup label="RAM">
-            <option value="8">8</option>
-            <option value="12" selected="selected">12</option>
-            <option value="16">16</option>
-          </optgroup>
-        </select>
-        <select id="vcpus" class="h-[32px] text-[16px]" name="VCPUS">
-          <optgroup label="VCPUS">
-            <option value="8">8</option>
-            <option value="12" selected="selected">12</option>
-            <option value="16">16</option>
-          </optgroup>
-        </select>
-    </div>
-    <div class="flex items-center justify-around">
-      <label for="hidevm"> <input type="checkbox" class="w-[24px]" id="hidevm" > Hide VM?</label>
-      <label for="vdriver"> <input type="checkbox" class="w-[24px]" id="vdriver" > Virtual Driver ?</label>
-    </div>
-
-
-  </div>
-      `,
-      //inputLabel: "Message",
-      //inputPlaceholder: "Type your description here...",
-      focusConfirm: false,
-      preConfirm: () => {
-        const vol_speed = Swal.getPopup().querySelector('#vol_speed').value
-        const vol_availability = Swal.getPopup().querySelector('#vol_availability').value
-        const gpu_model =  Swal.getPopup().querySelector('#gpu_model').value
-        const desc = Swal.getPopup().querySelector('#desc').value
-        const store_id = Swal.getPopup().querySelector('#store_id').value
-        const vcpus = Swal.getPopup().querySelector('#vcpus').value
-        const ram = Swal.getPopup().querySelector('#ram').value
-        const vdriver = Swal.getPopup().querySelector('#vdriver').checked
-        const hidevm = Swal.getPopup().querySelector('#hidevm').checked
-        if (!vol_speed || !desc) {
-          Swal.showValidationMessage(`Please enter desc and storeId`)
-        }
-        return {
-          vol_speed,
-          vol_availability,
-          gpu_model,
-          desc,
-          store_id,
-          vcpus,
-          ram,
-          vdriver,
-          hidevm
-        }
-      },
-      showCancelButton: true,
-    });
-
-    const cluster_id = formatEvent(event)?.host?.info?.cluster_id
+    console.log(vol_availability,
+      gpu_model,
+      desc = '',
+      store_id,
+      vcpus,
+      ram,
+      vdriver,
+      hidevm,
+      cluster_id,);
+    if (desc.trim() == "") throw ('Description is not empty!')
 
     const { error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
-      store_id: parseInt(value.store_id),
-      desc: value.desc,
-      speed: value.vol_speed, 
-      availability: value.vol_availability,    
+      store_id: parseInt(store_id),
+      desc: desc,
+      speed: vol_speed,
+      availability: vol_availability,
       cluster_id,
       hardware: {
-        gpu_model        : value.gpu_model,
-        vcpus            : parseInt(value.vcpus),
-        ram              : parseInt(value.ram),
-        vdriver          : value.vdriver, 
-        hidevm           : value.hidevm
-    }});
+        gpu_model: gpu_model,
+        vcpus: parseInt(vcpus),
+        ram: parseInt(ram),
+        vdriver: vdriver,
+        hidevm: hidevm
+      }
+    });
 
     if (error) throw error;
-    
-    Swal.close();
+
+    store.dispatch({ type: "CLOSE_MODAL" })
 
     return
   });
