@@ -4,6 +4,7 @@ var { taskbar, desktop, pinned, recent } = {
   taskbar: ["Store"],
   desktop: [
     "Worker Profile",
+    "Guideline",
     "Github",
     "Browser",
     "FeedBack",
