@@ -230,7 +230,7 @@ export const ReleaseApp = async (event) => {
 
       <label htmlFor="">
         <span>Store Id</span>
-        <input class="swal2-input" type="text" placeholder="" name="storeId" id="storeId" />
+        <input class="swal2-input" type="text" placeholder="" name="storeId" id="store_id" />
 
       </label>
 
@@ -260,8 +260,8 @@ export const ReleaseApp = async (event) => {
         <span>RAM</span>
         <input class="swal2-input placeholder="" type="number" name="ram" id="ram" />
       </label>
-      <label  <input type="checkbox" class="w-[24px]" id="hidevm"> HideVM</label>
-      <label  <input type="checkbox" class="w-[24px]" id="vdriver"> vdriver</label>
+      <label> <input type="checkbox" class="w-[24px]" id="hidevm"> HideVM</label>
+      <label> <input type="checkbox" class="w-[24px]" id="vdriver"> vdriver</label>
 
 
 
@@ -274,8 +274,8 @@ export const ReleaseApp = async (event) => {
         const vol_speed = Swal.getPopup().querySelector('#vol_speed').value
         const vol_availability = Swal.getPopup().querySelector('#vol_availability').value
         const cloud_save = Swal.getPopup().querySelector('#cloud_save').checked
-        const store_id = Swal.getPopup().querySelector('#store_id').value
         const desc = Swal.getPopup().querySelector('#desc').value
+        const store_id = Swal.getPopup().querySelector('#store_id').value
         const vcpus = Swal.getPopup().querySelector('#vcpus').value
         const ram = Swal.getPopup().querySelector('#ram').value
         const vdriver = Swal.getPopup().querySelector('#vdriver').checked
