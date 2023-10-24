@@ -63,6 +63,10 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
+    cluster: {
+      width: "150px",
+      secwid: "100px",
+    },
   },
   menus: {
     desk: [
@@ -294,6 +298,18 @@ const defState = {
       },
     ],
     apps: [
+      {
+        name: "Release App",
+        action: "RELEASE_APP",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    cluster: [
       {
         name: "Release App",
         action: "RELEASE_APP",
