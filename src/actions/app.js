@@ -222,14 +222,14 @@ export const ReleaseApp = async ({ vol_speed,
   wrapper(async () => {
     console.log(vol_availability,
       gpu_model,
-      desc = '',
+      desc,
       store_id,
       vcpus,
       ram,
       vdriver,
       hidevm,
       cluster_id,);
-    if (desc.trim() == "") throw ('Description is not empty!')
+    if (desc == "") throw ('Description is not empty!')
 
     const { error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
