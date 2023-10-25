@@ -13,13 +13,15 @@ export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  //React.useLayoutEffect(() => {
-  //  const value = localStorage.getItem("openAboutThinkmay1") ?? true;
-  //  setOpen(value);
-  //}, []);
+  React.useLayoutEffect(() => {
+    const value = localStorage.getItem("openAboutThinkmay2") ?? true;
+    localStorage.removeItem("openAboutThinkmay")
+    localStorage.removeItem("openAboutThinkmay1")
+    setOpen(value);
+  }, []);
   const action = () => {
     setOpen(false);
-    localStorage.setItem("openAboutThinkmay1", false);
+    localStorage.setItem("openAboutThinkmay2", false);
     dispatch({ type: "DESKABOUT", payload: false });
   };
   const [currentSlide, setCurrentSlide] = useState(0)
