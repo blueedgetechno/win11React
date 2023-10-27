@@ -63,8 +63,7 @@ const Taskbar = () => {
   }, []);
 
   return (
-    <div className="taskbar">
-      <div className="taskcont">
+    <div className="taskbar" data-mobile={isMobile()}>
         <div className="tasksCont" data-menu="task" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
@@ -169,7 +168,6 @@ const Taskbar = () => {
           </div>
           <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
         </div>
-      </div>
     </div>
   );
 };

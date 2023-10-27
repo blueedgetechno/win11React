@@ -2,6 +2,7 @@
   --bg1: rgba(243, 243, 243, 0.85);
   --bg2: rgba(255, 255, 255, 0.67);
 
+  display: flex;
   position: absolute;
   width: 100vw;
   height: 48px;
@@ -11,6 +12,30 @@
   backdrop-filter: saturate(3) blur(20px);
   bottom: 0;
   z-index: 10000;
+
+  &[data-mobile="true"] {
+   
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 100vh;
+
+    .tsbar{
+      flex-direction: column;
+      justify-content: center;
+      .tsIcon {
+        margin: unset;
+      }
+    }
+    .taskright{
+      flex-direction: column;
+      height: auto;
+
+      .taskDate {
+        padding: 0;
+      }
+    }
+  }
 }
 
 body[data-theme="dark"] {
