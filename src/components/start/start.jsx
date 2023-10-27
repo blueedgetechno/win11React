@@ -119,7 +119,7 @@ export const StartMenu = () => {
           </div>
         </div>
 
-        {user?.id ? <div className="items-center">
+        {/*{user?.id ? <div className="items-center">
           <PayPalScriptProvider options={initialOptions}> {
             FUNDING_SOURCES.map(fundingSource=>{
               return(
@@ -137,7 +137,7 @@ export const StartMenu = () => {
               })
             }
             </PayPalScriptProvider>
-        </div> : null}
+        </div> : null}*/}
         <div className="menuBar">
           <div
             className="flex prtclk items-center gap-2"
