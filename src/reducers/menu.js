@@ -239,7 +239,6 @@ const defState = {
         name: "Open",
         action: "performApp",
         payload: "open",
-
       },
       //{
       //  name: "Run as administrator",
@@ -290,30 +289,26 @@ const defState = {
       {
         name: "Open",
         action: "OPEN_APP",
-
       },
       {
         name: "Open in new tab",
         action: "OPEN_APP_NEWTAB",
-        icon: 'newTab'
+        icon: "newTab",
       },
       {
         name: "Reset App",
         action: "RESET_APP",
-        icon: 'reset'
-
+        icon: "reset",
       },
       {
         name: "Start App",
         action: "START_APP",
-        icon: 'start'
-
+        icon: "start",
       },
       {
         name: "Pause App",
         action: "PAUSE_APP",
-        icon: 'shutdown'
-
+        icon: "shutdown",
       },
       {
         type: "hr",
@@ -321,7 +316,7 @@ const defState = {
       {
         name: "Delete",
         action: "delApp",
-        icon: 'delete',
+        icon: "delete",
         payload: "delete",
       },
     ],

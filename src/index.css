@@ -145,11 +145,9 @@ i[data-flip="true"] {
   height: calc(100vh - 48px);
   top: 0;
   overflow: hidden;
-
-  
 }
-.desktop[data-mobile="true"]{
-  width: calc(100vw - 48px); 
+.desktop[data-mobile="true"] {
+  width: calc(100vw - 48px);
   height: 100vh;
 }
 .dpShad {

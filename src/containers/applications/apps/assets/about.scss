@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-//  justify-content: center;
+  //  justify-content: center;
   padding: 24px;
   padding-top: 24px;
   font-size: 14px;
@@ -81,7 +81,7 @@
   padding: 10px 16px;
   padding-left: 18%;
   justify-content: space-between;
-	align-items: center;
+  align-items: center;
 }
 
 .dot {
@@ -127,9 +127,8 @@
   fill: rgba(255, 255, 255, 0.5);
 }
 
-.wrapper-img{
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 2px 0px 20px 4px #3f3434;
-
+.wrapper-img {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 2px 0px 20px 4px #3f3434;
 }
