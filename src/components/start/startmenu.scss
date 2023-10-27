@@ -64,7 +64,7 @@
   bottom: 12px;
   max-width: 360px;
   width: 40%;
-  min-width: 230px;
+  min-width: 270px;
   height: min(100% - 24px, 500px);
   left: 0;
   &[data-align="center"] {
@@ -77,7 +77,10 @@
   &[data-align="left"] {
     left: 8px;
   }
+  &[data-mobile="true"] {
+    height: min(100% - 24px, 400px);
 
+  }
   color: var(--dark-txt);
   background: var(--bg1);
   -webkit-backdrop-filter: blur(20px);
