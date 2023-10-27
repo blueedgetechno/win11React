@@ -145,8 +145,13 @@ i[data-flip="true"] {
   height: calc(100vh - 48px);
   top: 0;
   overflow: hidden;
-}
 
+  
+}
+.desktop[data-mobile="true"]{
+  width: calc(100vw - 48px); 
+  height: 100vh;
+}
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }

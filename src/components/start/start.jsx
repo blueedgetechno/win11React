@@ -5,7 +5,7 @@ import { supabase } from "../../supabase/createClient";
 import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
-import { isGreenList } from "../../utils/checking";
+import { isGreenList, isMobile } from "../../utils/checking";
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";        
 
 export const StartMenu = () => {
@@ -56,6 +56,7 @@ export const StartMenu = () => {
       data-hide={start.hide}
       style={{ "--prefix": "START" }}
       data-align={align}
+      data-mobile={isMobile()}
     >
       <>
         <div className="stmenu p-[14px]">

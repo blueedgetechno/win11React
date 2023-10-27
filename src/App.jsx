@@ -87,7 +87,7 @@ function App() {
         <div className="appwrap">
           <Background />
           <>
-            <div className="desktop" data-menu="desk">
+            <div className="desktop" data-menu="desk" data-mobile={isMobile()}> 
               <DesktopApp />
               {Object.keys(Applications).map((key, idx) => {
                 var WinApp = Applications[key];
