@@ -37,7 +37,7 @@
 }
 .strBtn {
   width: 6rem;
-  
+
   height: 2rem;
   border-radius: 4px;
   display: flex;
@@ -79,7 +79,6 @@
   }
   &[data-mobile="true"] {
     height: min(100% - 24px, 400px);
-
   }
   color: var(--dark-txt);
   background: var(--bg1);
