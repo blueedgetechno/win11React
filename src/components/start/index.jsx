@@ -101,7 +101,6 @@ export const BandPane = () => {
           width={17}
           click="Flappy Bird"
           payload="togg"
-          open="true"
           src="flappybird"
         />
         <Icon
