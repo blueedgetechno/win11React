@@ -2,8 +2,9 @@
   --bg1: #f3f3f3;
   --bg2: #fff;
 
-  top: calc(50% - 210px);
-  left: calc(50% - 14rem);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 360px;
   height: auto;
   color: var(--dark-txt);

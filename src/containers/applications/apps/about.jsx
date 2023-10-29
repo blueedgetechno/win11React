@@ -11,6 +11,7 @@ import './assets/about.scss'
 export const AboutWin = () => {
   const [open, setOpen] = useState(true);
   const { abOpen } = useSelector((state) => state.desktop);
+  const wnapp = useSelector((state) => state.apps.about);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   React.useLayoutEffect(() => {
@@ -20,9 +21,11 @@ export const AboutWin = () => {
     setOpen(value);
   }, []);
   const action = () => {
-    setOpen(false);
+    //setOpen(false);
     localStorage.setItem("openAboutThinkmay2", false);
-    dispatch({ type: "DESKABOUT", payload: false });
+    //dispatch({ type: "DESKABOUT", payload: false });
+    dispatch({ type: "ABOUT", payload: 'close'});
+
   };
   const [currentSlide, setCurrentSlide] = useState(0)
   const [loaded, setLoaded] = useState(false)
@@ -37,7 +40,7 @@ export const AboutWin = () => {
   })
   return (
     <>
-      {open === true || abOpen ? (
+      {open === true || !wnapp.hide ? (
         <div className="aboutApp floatTab dpShad aboutAnimation">
           <div className="text-xl font-semibold text-center my-4">Hướng dẫn sử dụng^^</div>
 
