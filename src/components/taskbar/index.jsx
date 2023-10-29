@@ -119,31 +119,34 @@ const Taskbar = () => {
         </div>
       </div>
       <div className="taskright">
-        {!isMobile() ? (
-          <>
-            <div
-              className="px-2 prtclk handcr hvlight flex"
-              onClick={clickDispatch}
-              data-action="BANDTOGG"
-            >
-              <Icon fafa="faChevronUp" width={10} />
-            </div>
-            <div
-              className="prtclk handcr my-1 px-1 hvlight flex rounded"
-              onClick={clickDispatch}
-              data-action="PANETOGG"
-            >
-              <Icon className="taskIcon" src="wifi" ui width={16} />
-              <Icon
-                className="taskIcon"
-                src={"audio" + tasks.audio}
-                ui
-                width={16}
-              />
-              <Battery />
-            </div>
-          </>
-        ) : null}
+        {
+          !isMobile() ? (
+            <>
+              <div
+                className="px-2 prtclk handcr hvlight flex"
+                onClick={clickDispatch}
+                data-action="BANDTOGG"
+              >
+                <Icon fafa="faChevronUp" width={10} />
+              </div>
+              <div
+                className="prtclk handcr my-1 px-1 hvlight flex rounded"
+                onClick={clickDispatch}
+                data-action="PANETOGG"
+              >
+                <Icon className="taskIcon" src="wifi" ui width={16} />
+                <Icon
+                  className="taskIcon"
+                  src={"audio" + tasks.audio}
+                  ui
+                  width={16}
+                />
+                <Battery />
+              </div>
+            </>
+          )
+            : null
+        }
         <div
           className="taskDate m-1 handcr prtclk rounded hvlight"
           onClick={clickDispatch}
@@ -163,59 +166,10 @@ const Taskbar = () => {
             })}
           </div>
         </div>
-        <div className="taskright">
-          {
-            !isMobile() ? (
-              <>
-                <div
-                  className="px-2 prtclk handcr hvlight flex"
-                  onClick={clickDispatch}
-                  data-action="BANDTOGG"
-                >
-                  <Icon fafa="faChevronUp" width={10} />
-                </div>
-                <div
-                  className="prtclk handcr my-1 px-1 hvlight flex rounded"
-                  onClick={clickDispatch}
-                  data-action="PANETOGG"
-                >
-                  <Icon className="taskIcon" src="wifi" ui width={16} />
-                  <Icon
-                    className="taskIcon"
-                    src={"audio" + tasks.audio}
-                    ui
-                    width={16}
-                  />
-                  <Battery />
-                </div>
-              </>
-            )
-              : null
-          }
-          <div
-            className="taskDate m-1 handcr prtclk rounded hvlight"
-            onClick={clickDispatch}
-            data-action="CALNTOGG"
-          >
-            <div>
-              {time.toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </div>
-            <div>
-              {time.toLocaleDateString("en-US", {
-                year: "2-digit",
-                month: "2-digit",
-                day: "numeric",
-              })}
-            </div>
-          </div>
-          {
-            isMobile() ? null :
-              <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
-          }
-        </div>
+        {
+          isMobile() ? null :
+            <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
+        }
       </div>
     </div>
   );
