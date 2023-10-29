@@ -44,6 +44,9 @@ body[data-theme="dark"] {
     --bg2: rgba(255, 255, 255, 0.1);
   }
 
+  .tsIconInvert{
+      filter: invert(1);
+  } 
   .taskIcon,
   .searchIcon img {
     filter: invert(1);
