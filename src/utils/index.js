@@ -34,6 +34,7 @@ var { taskbar, desktop, pinned, recent } = {
     "Notepad",
     "Whiteboard",
     "Calculator",
+    "flappybird",
     "Spotify",
     "Twitter",
     "File Explorer",

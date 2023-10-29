@@ -99,6 +99,14 @@ export const BandPane = () => {
         <Icon
           className="hvlight"
           width={17}
+          click="Flappy Bird"
+          payload="togg"
+          open="true"
+          src="flappybird"
+        />
+        <Icon
+          className="hvlight"
+          width={17}
           click="NOTEPAD"
           payload="togg"
           src="notepad"

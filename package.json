@@ -35,6 +35,7 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "sass": "^1.69.5",
+    "styled-components": "^6.1.0",
     "translation-check": "^1.0.3"
   },
   "scripts": {

@@ -103,6 +103,12 @@ const apps = [
     type: "app",
   },
   {
+    name: "Flappy Bird",
+    icon: "flappy",
+    type: "app",
+    action: "Flappy Bird",
+  },
+  {
     name: "Get Started",
     icon: "getstarted",
     type: "app",
