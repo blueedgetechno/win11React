@@ -166,7 +166,10 @@ const Taskbar = () => {
               })}
             </div>
           </div>
-          <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
+          {
+            isMobile() ? null :
+              <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
+          }
         </div>
     </div>
   );
