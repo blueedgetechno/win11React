@@ -25,13 +25,13 @@ export const StartMenu = () => {
     });
   };
 
-
   return (
     <div
       className="startMenu dpShad"
       data-hide={start.hide}
       style={{ "--prefix": "START" }}
       data-align={align}
+      data-mobile={isMobile()}
     >
       <>
         <div className="stmenu p-[14px]">

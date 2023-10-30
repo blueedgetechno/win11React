@@ -146,7 +146,10 @@ i[data-flip="true"] {
   top: 0;
   overflow: hidden;
 }
-
+.desktop[data-mobile="true"]{
+  width: calc(100vw - 52px); 
+  height: 100vh;
+}
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }

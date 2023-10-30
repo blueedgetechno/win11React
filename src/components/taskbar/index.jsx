@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../utils/general";
 import Battery from "../shared/Battery";
 import "./taskbar.scss";
+import { isMobile } from "../../utils/checking";
 
 const Taskbar = () => {
   const tasks = useSelector((state) => {
@@ -62,106 +63,113 @@ const Taskbar = () => {
   }, []);
 
   return (
-    <div className="taskbar">
-      <div className="taskcont">
-        <div className="tasksCont" data-menu="task" data-side={tasks.align}>
-          <div className="tsbar" onMouseOut={hidePrev}>
-            <Icon className="tsIcon" src="home" width={24} click="STARTOGG" />
+    <div className="taskbar" data-mobile={isMobile()}>
+      <div className="tasksCont" data-menu="task" data-side={tasks.align}>
+        <div className="tsbar" onMouseOut={hidePrev}>
+          <Icon className="tsIcon tsIconInvert" src="home" width={24} click="STARTOGG" />
 
-            {tasks.apps.map((task, i) => {
-              var isHidden = apps[task.icon].hide;
-              var isActive = apps[task.icon].z == apps.hz;
-              return (
-                <div
-                  key={i}
-                  onMouseOver={(!isActive && !isHidden && showPrev) || null}
-                  value={task.icon}
-                >
-                  <Icon
-                    className="tsIcon"
-                    width={24}
-                    open={isHidden ? null : true}
-                    click={task.action}
-                    active={isActive}
-                    payload="togg"
-                    src={task.icon}
-                    isTrack={true}
-                  />
-                </div>
-              );
+          {tasks.apps.map((task, i) => {
+            var isHidden = apps[task.icon].hide;
+            var isActive = apps[task.icon].z == apps.hz;
+            return (
+              <div
+                key={i}
+                onMouseOver={(!isActive && !isHidden && showPrev) || null}
+                value={task.icon}
+              >
+                <Icon
+                  className="tsIcon"
+                  width={24}
+                  open={isHidden ? null : true}
+                  click={task.action}
+                  active={isActive}
+                  payload="togg"
+                  src={task.icon}
+                  isTrack={true}
+                />
+              </div>
+            );
+          })}
+          {Object.keys(apps).map((key, i) => {
+            if (key != "hz") {
+              var isActive = apps[key].z == apps.hz;
+            }
+            return key != "hz" &&
+              key != "undefined" &&
+              !apps[key].task &&
+              !apps[key].hide ? (
+              <div
+                key={i}
+                onMouseOver={(!isActive && showPrev) || null}
+                value={apps[key].icon}
+              >
+                <Icon
+                  className="tsIcon"
+                  width={24}
+                  active={isActive}
+                  click={apps[key].action}
+                  payload="togg"
+                  open="true"
+                  src={apps[key].icon}
+                  isTrack={true}
+                />
+              </div>
+            ) : null;
+          })}
+        </div>
+      </div>
+      <div className="taskright">
+        {
+          !isMobile() ? (
+            <>
+              <div
+                className="px-2 prtclk handcr hvlight flex"
+                onClick={clickDispatch}
+                data-action="BANDTOGG"
+              >
+                <Icon fafa="faChevronUp" width={10} />
+              </div>
+              <div
+                className="prtclk handcr my-1 px-1 hvlight flex rounded"
+                onClick={clickDispatch}
+                data-action="PANETOGG"
+              >
+                <Icon className="taskIcon" src="wifi" ui width={16} />
+                <Icon
+                  className="taskIcon"
+                  src={"audio" + tasks.audio}
+                  ui
+                  width={16}
+                />
+                <Battery />
+              </div>
+            </>
+          )
+            : null
+        }
+        <div
+          className="taskDate m-1 handcr prtclk rounded hvlight"
+          onClick={clickDispatch}
+          data-action="CALNTOGG"
+        >
+          <div>
+            {time.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
             })}
-            {Object.keys(apps).map((key, i) => {
-              if (key != "hz") {
-                var isActive = apps[key].z == apps.hz;
-              }
-              return key != "hz" &&
-                key != "undefined" &&
-                !apps[key].task &&
-                !apps[key].hide ? (
-                <div
-                  key={i}
-                  onMouseOver={(!isActive && showPrev) || null}
-                  value={apps[key].icon}
-                >
-                  <Icon
-                    className="tsIcon"
-                    width={24}
-                    active={isActive}
-                    click={apps[key].action}
-                    payload="togg"
-                    open="true"
-                    src={apps[key].icon}
-                    isTrack={true}
-                  />
-                </div>
-              ) : null;
+          </div>
+          <div>
+            {time.toLocaleDateString("en-US", {
+              year: "2-digit",
+              month: "2-digit",
+              day: "numeric",
             })}
           </div>
         </div>
-        <div className="taskright">
-          <div
-            className="px-2 prtclk handcr hvlight flex"
-            onClick={clickDispatch}
-            data-action="BANDTOGG"
-          >
-            <Icon fafa="faChevronUp" width={10} />
-          </div>
-          <div
-            className="prtclk handcr my-1 px-1 hvlight flex rounded"
-            onClick={clickDispatch}
-            data-action="PANETOGG"
-          >
-            <Icon className="taskIcon" src="wifi" ui width={16} />
-            <Icon
-              className="taskIcon"
-              src={"audio" + tasks.audio}
-              ui
-              width={16}
-            />
-            <Battery />
-          </div>
-
-          <div
-            className="taskDate m-1 handcr prtclk rounded hvlight"
-            onClick={clickDispatch}
-            data-action="CALNTOGG"
-          >
-            <div>
-              {time.toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </div>
-            <div>
-              {time.toLocaleDateString("en-US", {
-                year: "2-digit",
-                month: "2-digit",
-                day: "numeric",
-              })}
-            </div>
-          </div>
-          <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
-        </div>
+        {
+          isMobile() ? null :
+            <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
+        }
       </div>
     </div>
   );

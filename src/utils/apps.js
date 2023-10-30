@@ -171,10 +171,10 @@ const apps = [
     payload: externalLink.MAILTO_ADDRESS,
   },
   {
-    name: "About Us",
+    name: "Guideline",
     icon: "about",
     type: "app",
-    action: "DESKABOUT",
+    action: "ABOUT",
   },
   {
     name: "Terminal",

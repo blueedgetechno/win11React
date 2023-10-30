@@ -37,7 +37,7 @@ const defState = {
   },
 };
 
-document.body.dataset.theme = defState.person.theme;
+//document.body.dataset.theme = defState.person.theme
 
 const changeVal = (obj, path, val = "togg") => {
   var tmp = obj;

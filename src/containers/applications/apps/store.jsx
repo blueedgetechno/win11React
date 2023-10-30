@@ -325,7 +325,7 @@ const DetailPage = ({ app }) => {
         for (let index = 0; index < option.available.length; index++) {
           if (option.available[index].available.gpus.includes(option.gpu)) {
             SetOptions((old) => [...old, option]);
-            break
+            break;
           }
         }
       }
@@ -340,12 +340,12 @@ const DetailPage = ({ app }) => {
   const download = async ({ id }) => {
     console.log(`download ${id}`);
     if (!isGreenList()) return;
-    const vol_option = await VolumeOption();
+    //const vol_option = await VolumeOption();
     await installApp({
       app_template_id: id,
-      availability: vol_option.availability,
-      speed: vol_option.speed,
-      safe: vol_option.safe,
+      availability: "HA",
+      speed: "HOT",
+      safe: false,
     });
   };
 
@@ -653,7 +653,7 @@ const DownPage = ({ action }) => {
   return (
     <div
       id="storeScroll"
-      className="pagecont w-full absolute top-0 box-border p-12"
+      className="pagecont w-full absolute top-0 box-border p-3 sm:p-12"
     >
       <div className="flex flex-wrap gap-5 justify-between">
         <div className="flex items-center ">
@@ -679,7 +679,7 @@ const DownPage = ({ action }) => {
             Games
           </div>
         </div>
-        <div className="relative srchbar right-0 mr-4 text-sm">
+        <div className="relative srchbar right-0 text-sm ">
           <Icon className="searchIcon" src="search" width={12} />
           <input
             type="text"
