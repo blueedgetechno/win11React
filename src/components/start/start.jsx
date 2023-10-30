@@ -4,7 +4,7 @@ import { Icon } from "../../utils/general";
 import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
-import { isGreenList } from "../../utils/checking";
+import { isGreenList, isMobile } from "../../utils/checking";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
