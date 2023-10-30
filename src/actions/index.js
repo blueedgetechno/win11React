@@ -174,7 +174,7 @@ export const changeTheme = () => {
   var thm = store.getState().setting.person.theme,
     thm = thm == "light" ? "dark" : "light";
   var icon = thm == "light" ? "sun" : "moon";
-
+  localStorage.setItem("theme", thm)
   document.body.dataset.theme = thm;
   store.dispatch({ type: "STNGTHEME", payload: thm });
   store.dispatch({ type: "PANETHEM", payload: icon });

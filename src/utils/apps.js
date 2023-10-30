@@ -162,7 +162,7 @@ const apps = [
     name: "Guideline",
     icon: "about",
     type: "app",
-    action: "DESKABOUT",
+    action: "ABOUT",
   },
   {
     name: "Terminal",

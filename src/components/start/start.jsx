@@ -6,7 +6,11 @@ import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
 import { isGreenList, isMobile } from "../../utils/checking";
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";        
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  FUNDING,
+} from "@paypal/react-paypal-js";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -18,28 +22,25 @@ export const StartMenu = () => {
   const thm = useSelector((state) => state.setting.person.theme);
   var icon = thm == "light" ? "sun" : "moon";
 
-  const FUNDING_SOURCES = [
-    FUNDING.PAYPAL,
-    FUNDING.CARD,
-    FUNDING.PAYU
-  ];
-  
-  const initialOptions = {
-    "client-id": "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
-    "enable-funding": "",
-    "vault": true,
-  }
+  const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 
-  const payment = async (data, actions) => { 
-    console.log(data,actions)
-  }
-  
+  const initialOptions = {
+    "client-id":
+      "AUGjxD_5EwowYxfVHGQSqtBsy0G7F05x850-iRLbbZZFTAZxYXn2ois63R1hZyA0ufbDch1I4lv9XUAZ",
+    "enable-funding": "",
+    vault: true,
+  };
+
+  const payment = async (data, actions) => {
+    console.log(data, actions);
+  };
+
   const subscribe = async (data, actions) => {
     return actions.subscription.create({
       plan_id: "P-13A532601X681342YMUYA4CQ",
-      custom_id: data.id
+      custom_id: data.id,
     });
-  }
+  };
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -48,7 +49,6 @@ export const StartMenu = () => {
       year: "numeric",
     });
   };
-
 
   return (
     <div

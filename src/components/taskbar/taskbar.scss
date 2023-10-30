@@ -14,22 +14,23 @@
   z-index: 10000;
 
   &[data-mobile="true"] {
-   
     top: 0;
     right: 0;
-    width: 48px;
+    width: 52px;
     height: 100vh;
 
-    .tsbar{
+    .tsbar {
       flex-direction: column;
       justify-content: center;
       .tsIcon {
         margin: unset;
       }
     }
-    .taskright{
+    .taskright {
       flex-direction: column;
       height: auto;
+      top: 12px;
+
 
       .taskDate {
         padding: 0;
@@ -44,6 +45,9 @@ body[data-theme="dark"] {
     --bg2: rgba(255, 255, 255, 0.1);
   }
 
+  .tsIconInvert{
+      filter: invert(1);
+  } 
   .taskIcon,
   .searchIcon img {
     filter: invert(1);
@@ -58,7 +62,7 @@ body[data-theme="dark"] {
 
 .taskright {
   position: absolute;
-  top: 12px;
+  top: 0;
   right: 0;
   width: auto;
   height: 100%;

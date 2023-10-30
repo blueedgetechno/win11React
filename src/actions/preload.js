@@ -9,21 +9,23 @@ import {
 } from "../utils/formatData";
 
 const loadSettings = async () => {
-  let sett = JSON.parse("[]"); // TODO setting from database
+  let thm = localStorage.getItem('theme')
+  thm = thm == "light" ? "light" : "dark";
+  var icon = thm == "light" ? "sun" : "moon";
 
-  if (sett.person == null) {
-    sett = JSON.parse(JSON.stringify(store.getState().setting));
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      sett.person.theme = "dark";
-    }
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    thm = "dark";
   }
 
-  if (sett.person.theme != "light") changeTheme();
+  document.body.dataset.theme = thm;
+  store.dispatch({ type: "STNGTHEME", payload: thm });
+  store.dispatch({ type: "PANETHEM", payload: icon });
+  store.dispatch({ type: "WALLSET", payload: thm == "light" ? 0 : 1 });
 
-  store.dispatch({ type: "SETTLOAD", payload: sett });
+
 };
 
 export const fetchApp = async () => {
