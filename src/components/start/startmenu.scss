@@ -177,6 +177,10 @@ body[data-theme="dark"] .startMenu {
       transform: translateY(-4px);
     }
   }
+
+  &[data-hide="true"]{
+    z-index: -1 !important;
+  }
 }
 
 .paypal-buttons{
