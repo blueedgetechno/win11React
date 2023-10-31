@@ -100,7 +100,7 @@ export const performApp = (act, menu) => {
       var app = Object.keys(apps).filter(
         (x) =>
           apps[x].action == data.type ||
-          (apps[x].payload == data.payload && apps[x].payload != null)
+          (apps[x].payload == data.payload && apps[x].payload != null),
       );
 
       app = apps[app];
@@ -263,4 +263,8 @@ export const handleFileOpen = (id) => {
       store.dispatch({ type: "FILEDIR", payload: item.id });
     }
   }
+};
+
+export const flightMode = () => {
+  store.dispatch({ type: "TOGGAIRPLNMD", payload: "" });
 };

@@ -6,10 +6,10 @@ export const AboutWin = () => {
   const { abOpen } = useSelector((state) => state.desktop);
   const { locked, booted } = useSelector((state) => state.wallpaper);
   const [open, setOpen] = useState(
-    true && import.meta.env.MODE != "development"
+    true && import.meta.env.MODE != "development",
   );
   const [timer, setTimer] = useState(
-    localStorage.getItem("closeAbout") == "true" ? 0 : 5
+    localStorage.getItem("closeAbout") == "true" ? 0 : 5,
   );
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();

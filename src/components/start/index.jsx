@@ -80,9 +80,29 @@ export const BandPane = () => {
       style={{ "--prefix": "BAND" }}
     >
       <div className="bandContainer">
-        <Icon className="hvlight" src="defender" width={17} />
-        <Icon className="hvlight" src="spotify" width={17} />
-        <Icon className="hvlight" src="teams" width={17} />
+        <Icon
+          className="hvlight"
+          width={17}
+          click="CALCUAPP"
+          payload="togg"
+          open="true"
+          src="calculator"
+        />
+        <Icon
+          className="hvlight"
+          width={17}
+          click="SPOTIFY"
+          payload="togg"
+          open="true"
+          src="spotify"
+        />
+        <Icon
+          className="hvlight"
+          width={17}
+          click="NOTEPAD"
+          payload="togg"
+          src="notepad"
+        />
       </div>
     </div>
   );
@@ -109,6 +129,8 @@ export const SidePane = () => {
         Actions[action.type](action.payload);
       } else dispatch(action);
     }
+    // For battery saver
+    if (action.payload === "system.power.saver.state") setBrightness();
   };
 
   const vSlider = document.querySelector(".vSlider");
@@ -128,12 +150,26 @@ export const SidePane = () => {
   function sliderBackground(elem, e) {
     elem.style.setProperty(
       "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
     );
   }
 
   const setBrightness = (e) => {
-    var brgt = e.target.value;
+    var brgt = document.getElementById("brightnessSlider").value;
+    if (!e) {
+      // Battery saver
+      const state = setting.system.power.saver.state;
+      const factor = state ? 0.7 : 100 / 70;
+      const newBrgt = brgt * factor;
+      setBrightnessValue(newBrgt);
+      document.getElementById("brightnessSlider").value = newBrgt;
+    } else {
+      // Brightness slider
+      setBrightnessValue(brgt);
+    }
+  };
+
+  function setBrightnessValue(brgt) {
     document.getElementById("brightoverlay").style.opacity = (100 - brgt) / 100;
     dispatch({
       type: "STNGSETV",
@@ -143,7 +179,7 @@ export const SidePane = () => {
       },
     });
     sliderBackground(bSlider, brgt);
-  };
+  }
 
   useEffect(() => {
     sidepane.quicks.map((item, i) => {
@@ -200,6 +236,7 @@ export const SidePane = () => {
         <div className="sliderCont">
           <Icon className="mx-2" src="brightness" ui width={20} />
           <input
+            id="brightnessSlider"
             className="sliders bSlider"
             onChange={setBrightness}
             type="range"

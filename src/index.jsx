@@ -17,5 +17,5 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
-  </Suspense>
+  </Suspense>,
 );
