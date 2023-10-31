@@ -40,13 +40,6 @@ function PaymentModal({data}) {
 			<li>Cảm ơn bạn đã sử dụng dịch vụ của Thinkmay.</li>
 
 		</ul>
-		<div className="flex gap-2">
-			<span>SUB</span>
-			<select name="" id="">
-				<option value="week">Week</option>
-				<option value="Month">Month</option>
-			</select>
-		</div>
 
 	</div>)
 }
