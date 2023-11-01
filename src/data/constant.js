@@ -25,3 +25,9 @@ export const scanCodeApps = {
   "Elden Ring": true,
   "God of War": true
 };
+
+export const localStorageKey = {
+  user: 'USER1',
+  store: 'STORE',
+  app: 'APP'
+}
