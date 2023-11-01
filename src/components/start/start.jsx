@@ -52,7 +52,7 @@ export const StartMenu = () => {
               <span>Language</span>
               <LangSwitch />
             </div>
-            <div className="w-full flex gap-4 justify-between mb-[24px]">
+            <div className="w-full flex gap-4 justify-between mb-[12px] md:mb-[24px] ">
               <span>Theme</span>
               <div
                 className="strBtn handcr prtclk"
@@ -81,7 +81,7 @@ export const StartMenu = () => {
                 <span>{formatDate(usageTime?.end_time)}</span>
               </div>
               <hr className="my-[14px]" />
-              <div className="w-full flex gap-4 justify-between mt-[14px]">
+              <div className="w-full flex gap-4 justify-between  mt-0 md:mt-[14px]">
                 <span className="text-left">{t("timemanager.time")}</span>
                 <span>
                   {usageTime.total_time
@@ -97,7 +97,7 @@ export const StartMenu = () => {
 
        
         {user?.id ?
-          <div className="flex gap-4 mt-4 ml-auto mr-[24px]">
+          <div className="flex gap-4 mt-0 mb-[8px] ml-auto mr-[14px] md:mt-4 md:mb-[24px]">
             <button className="instbtn border-none !text-[14px] !p-3"
               onClick={
                 () => {

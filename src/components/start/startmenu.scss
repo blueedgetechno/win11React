@@ -78,7 +78,11 @@
     left: 8px;
   }
   &[data-mobile="true"] {
-    height: min(100% - 24px, 400px);
+    height: min(100% - 24px, 450px);
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   color: var(--dark-txt);
   background: var(--bg1);
