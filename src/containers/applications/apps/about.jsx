@@ -21,7 +21,7 @@ export const AboutWin = () => {
     setOpen(value);
   }, []);
   const action = () => {
-    //setOpen(false);
+    setOpen(false);
     localStorage.setItem("openAboutThinkmay2", false);
     //dispatch({ type: "DESKABOUT", payload: false });
     dispatch({ type: "ABOUT", payload: 'close'});
