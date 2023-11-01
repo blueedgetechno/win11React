@@ -190,7 +190,7 @@ export const fetchUser = async () => {
   } = await supabase.auth.getUser();
   if (error != null) return;
 
-  let payload = { ...user };
+  let payloadUser = { ...user };
   {
     const { data, error } = await supabase.rpc("validate_user_access", {
       user_account_id: user?.id,
@@ -198,7 +198,9 @@ export const fetchUser = async () => {
     });
     if (error) throw error;
 
-    payload = {...payload, greenlist: data}
+    payloadUser = { ...payloadUser, greenlist: data }
+
+    console.log(payloadUser, 'payloadd');
   }
 
   {
@@ -208,7 +210,7 @@ export const fetchUser = async () => {
     });
     if (error) throw error;
 
-    payload = {...payload, whitelist: data}
+    payloadUser = { ...payloadUser, whitelist: data }
   }
 
   {
@@ -218,26 +220,26 @@ export const fetchUser = async () => {
     });
     if (error) throw error;
 
-    payload = {...payload, admin: data}
+    payloadUser = { ...payloadUser, admin: data }
   }
 
-  if (user?.greenlist == true) {
+  if (payloadUser?.greenlist == true) {
     const { data, error } = await supabase.rpc("get_usage_time_user", {
-      user_id: user.id,
+      user_id: payloadUser.id,
     });
     if (error) return;
 
-    payload = { ...payload, usageTime: data };
+    payloadUser = { ...payloadUser, usageTime: data };
   }
   store.dispatch({
     type: "ADD_USER",
-    payload,
+    payload: payloadUser,
   });
   localStorage.setItem(
     "USER1",
     JSON.stringify({
       timestamp: new Date().getTime(),
-      payload,
+      payload: payloadUser,
     }),
   );
 };
