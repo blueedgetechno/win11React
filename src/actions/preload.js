@@ -7,6 +7,7 @@ import {
   formatWorkerRenderTree,
   formatAppRenderTree,
 } from "../utils/formatData";
+import { localStorageKey } from "../data/constant";
 
 const loadSettings = async () => {
   let thm = localStorage.getItem('theme')
@@ -173,7 +174,7 @@ export const fetchStore = async () => {
 
 export const fetchUser = async () => {
   try {
-    const { timestamp, payload } = JSON.parse(localStorage.getItem("USER1"));
+    const { timestamp, payload } = JSON.parse(localStorage.getItem(localStorageKey.user));
     if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
       throw new Error("outdated");
 
@@ -236,7 +237,7 @@ export const fetchUser = async () => {
     payload: payloadUser,
   });
   localStorage.setItem(
-    "USER1",
+    localStorageKey.user,
     JSON.stringify({
       timestamp: new Date().getTime(),
       payload: payloadUser,
@@ -246,5 +247,9 @@ export const fetchUser = async () => {
 
 export const preload = async () => {
   await Promise.all([fetchUser(), loadSettings()]);
-  await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
+  await Promise.all([
+    fetchWorker(),
+    fetchStore(),
+    fetchApp()
+  ]);
 };
