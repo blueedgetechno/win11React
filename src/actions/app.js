@@ -119,7 +119,6 @@ export const resetApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     const appName = appInput?.name ?? "null";
-
     if (payload.status == "NOT_READY") throw i18next.t("error.NOT_READY");
     else if (payload.status != "RUNNING") throw i18next.t("error.NOT_RUNNING");
 
@@ -140,6 +139,7 @@ export const installApp = (payload) =>
       payload.speed,
       payload.safe,
     );
+    await sleep(60 * 1000);
     await fetchApp();
   }, "installApp");
 
@@ -170,7 +170,7 @@ export const pauseApp = async (appInput) =>
     if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
 
     await StopApplication(payload.storage_id);
-    await sleep(15 * 1000);
+    await sleep(60 * 1000);
     await fetchApp();
   }, "pauseApp");
 
@@ -178,6 +178,7 @@ export const deleteApp = (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
+    await sleep(40 * 1000);
     await fetchApp();
   });
 
