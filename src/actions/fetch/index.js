@@ -83,7 +83,7 @@ export const DownloadApplication = async (
   safe,
 ) => {
   let msg;
-  const suggestMsg = i18next.t("error.run_out_of_gpu_stock");
+  const suggestMsg = i18next.t("error.suggest");
   const { data, error } = await SupabaseFuncInvoke("request_application", {
     action: "SETUP",
     app_template_id: app_template_id,
@@ -91,7 +91,7 @@ export const DownloadApplication = async (
   });
   if (error != null) {
     msg = error;
-    if (error === "run out of gpu stock") {
+    if (error === "ran out of hardware") {
       msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
@@ -137,7 +137,7 @@ export const StartApplication = async (storage_id) => {
   if (error != null) {
     msg = error;
     console.log(error);
-    if (error === "failed fetch function update_by_volume: unable to launch") {
+    if (error.includes("ran out of hardware")) {
       msg = i18next.t("error.run_out_of_gpu_stock");
     } else if (error.includes("locked")) {
       msg = i18next.t("error.IS_LOCKED");
