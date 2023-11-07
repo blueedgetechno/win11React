@@ -141,12 +141,22 @@ export const startApp = async (appInput) =>
 
     await StartApplication(payload.storage_id);
     for (let i = 0; i < 100; i++) {
-      let { data, error } = await supabase.rpc("setup_status", {
-        volume_id: payload.volume_id,
-      });
+      {
+        let { data, error } = await supabase.rpc("setup_status", {
+          volume_id: payload.volume_id,
+        });
+        if (error) throw error;
+        if (data == true) break;
+      }
 
-      if (error) throw error;
-      if (data == true) break;
+      {
+        const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST',{
+          volume_id: payload.volume_id,
+        });
+        if (error) throw error;
+        else if (resource.at(0).desired_state == 'PAUSED') 
+          throw new Error('launch timeout'); // TODO
+      }
 
       await sleep(10 * 1000);
     }
