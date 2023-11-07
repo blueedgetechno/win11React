@@ -23,6 +23,9 @@ export function formatError(err = 'Something went wrong!', code = '0') {
 	if (err.includes('ran out of hardware') || err.includes('ran out of gpu')) {
 		msg = i18next.t("error.run_out_of_gpu_stock")
 	}
+	if (err.includes('is locked')) {
+		msg = i18next.t("error.IS_LOCKED")
+	}
 	const template = `<p> <b class='uppercase'>${msg}. </b>
 						${suggestMsg}
 						</br> 
