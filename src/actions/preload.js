@@ -1,7 +1,7 @@
 import store from "../reducers";
 import { changeTheme } from "./";
 import { isAllowWorkerProfileFetch } from "../utils/checking";
-import { supabase } from "../supabase/createClient";
+import { supabase, virtapi } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
   formatWorkerRenderTree,
@@ -124,31 +124,17 @@ export const fetchStore = async () => {
     return;
   } catch {}
 
-  const constantFetch = await supabase.from("constant").select("value->virt");
-  if (constantFetch.error) throw constantFetch.error;
-
-  const url = constantFetch.data.at(0)?.virt.url;
-  const key = constantFetch.data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined) return;
-
-  const resp = await fetch(`${url}/rest/v1/rpc/fetch_store`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
-    },
-  });
-  if (resp.status != 200) throw await resp.text();
-  const data = (await resp.json()).filter((e) => e.hide != true);
+  const {data,error} = await virtapi(`rpc/fetch_store`, "GET" );
+  if (error) throw error;
 
   const content = {
     games: [],
     apps: [],
   };
 
-  for (let index = 0; index < data.length; index++) {
-    const appOrGame = data[index];
+  const stores = data.filter((e) => e.hide != true);
+  for (let index = 0; index < stores.length; index++) {
+    const appOrGame = stores[index];
 
     if (appOrGame.type == "GAME") content.games.push(appOrGame);
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);

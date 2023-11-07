@@ -17,18 +17,18 @@ const getCredentialHeader = async () => {
 };
 
 export const FetchAuthorizedWorkers = async () => {
-  const { data, error } = await SupabaseFuncInvoke("worker_profile_render");
+  const { data, code, error } = await SupabaseFuncInvoke("worker_profile_render");
   if (error != null) throw error;
   return data;
 };
 export const FetchUserApplication = async () => {
-  const { data, error } = await SupabaseFuncInvoke( "user_application_fetch" );
+  const { data, code, error } = await SupabaseFuncInvoke( "user_application_fetch" );
   if (error != null) throw error;
   return data;
 };
 
 export const DeactivateWorkerSession = async (worker_session_id) => {
-  const { data, error } = await SupabaseFuncInvoke("worker_session_deactivate", {
+  const { data, code, error } = await SupabaseFuncInvoke("worker_session_deactivate", {
     worker_session_id: worker_session_id,
   });
   if (error != null) throw error;
@@ -36,7 +36,7 @@ export const DeactivateWorkerSession = async (worker_session_id) => {
 };
 
 export const CreateWorkerSession = async (worker_profile_id) => {
-  const { data, error } = await SupabaseFuncInvoke("worker_session_create", {
+  const { data, code, error } = await SupabaseFuncInvoke("worker_session_create", {
     worker_id: worker_profile_id,
   });
 
@@ -51,7 +51,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
  * @returns 
  */
 export const AddSubscription = async (email,plan) => {
-  const { data, error } = await SupabaseFuncInvoke("add_subscription", {
+  const { data, code, error } = await SupabaseFuncInvoke("add_subscription", {
     email, plan
   });
   if (error != null) throw error;
@@ -65,7 +65,7 @@ export const AddSubscription = async (email,plan) => {
  * @returns 
  */
 export const ModifySubscription = async (action,email) => {
-  const { data, error } = await SupabaseFuncInvoke("modify_subscription", {
+  const { data, code, error } = await SupabaseFuncInvoke("modify_subscription", {
     email,action
   });
 
@@ -84,7 +84,7 @@ export const DownloadApplication = async (
 ) => {
   let msg;
   const suggestMsg = i18next.t("error.suggest");
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
+  const { data,code, error } = await SupabaseFuncInvoke("launch_application", {
     action: "SETUP",
     app_template_id: app_template_id,
     option: { availability, speed, safe, },
@@ -130,7 +130,7 @@ export const StartApplication = async (storage_id) => {
   let msg;
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
+  const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "START",
     storage_id: storage_id,
   });
@@ -156,7 +156,7 @@ export const AccessApplication = async (input) => {
   const { storage_id, privateIp } = input;
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
     action: "ACCESS",
     storage_id: storage_id,
   });
@@ -185,7 +185,7 @@ export const ResetApplication = async (input) => {
   const { storage_id, privateIp } = input;
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
     action: "RESET",
     storage_id: storage_id,
   });
@@ -212,7 +212,7 @@ export const ResetApplication = async (input) => {
 };
 
 export const DeleteApplication = async (storage_id) => {
-  const { data, error } = await SupabaseFuncInvoke( "request_application", {
+  const { data, code, error } = await SupabaseFuncInvoke( "request_application", {
     action: "DELETE",
     storage_id: storage_id,
   });
@@ -223,7 +223,7 @@ export const DeleteApplication = async (storage_id) => {
 export const StopApplication = async (storage_id) => {
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
+  const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "STOP",
     storage_id: storage_id,
   });
@@ -242,7 +242,7 @@ export const StopApplication = async (storage_id) => {
 export const StopVolume = async (volume_id) => {
   const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("configure_application", {
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "STOP_VOLUME",
     volume_id: volume_id,
   });
@@ -311,23 +311,12 @@ export const SupabaseFuncInvoke = async (funcName,body) => {
       },
     });
     if (response.ok === false) {
-      const resText = await response.text();
-      return { data: null, error: resText };
+      const res = await response.json();
+      return { ...error,data: null };
     }
-    let responseType = (response.headers.get("Content-Type") ?? "text/plain")
-      .split(";")[0]
-      .trim();
-    let data;
-    if (responseType === "application/json") {
-      data = await response.json();
-    } else if (responseType === "application/octet-stream") {
-      data = await response.blob();
-    } else if (responseType === "multipart/form-data") {
-      data = await response.formData();
-    } else {
-      // default to text
-      data = await response.text();
-    }
+
+
+    const data = await response.json();
     return { data, error: null };
   } catch (error) {
     return { data: null, error };

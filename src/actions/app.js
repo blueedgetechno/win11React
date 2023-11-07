@@ -1,7 +1,7 @@
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchApp, fetchStore, fetchWorker } from "./preload";
-import { supabase } from "../supabase/createClient";
+import { supabase, virtapi } from "../supabase/createClient";
 import {
   AccessApplication,
   ResetApplication,
@@ -62,27 +62,11 @@ const wrapper = async (func, appType) => {
 export const deleteStore = async (app) => {
   if (!isAdmin()) return;
 
-  const { data, error } = await supabase.from("constant").select("value->virt");
-  if (error) throw error;
-
-  const url = data.at(0)?.virt.url;
-  const key = data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined) return;
-
-  const resp = await fetch(`${url}/rest/v1/stores?id=eq.${app.id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
-      // "refer": "return=minimal"
-    },
-  });
-
-  console.log(resp);
-
-  if (resp.status != 204 || 200 || 201) throw await resp.text();
-
+  const {error} = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
+  if (error) 
+    throw error
+    
+  
   await log({
     error: null,
     type: "confirm",
@@ -132,13 +116,52 @@ export const resetApp = async (appInput) =>
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
-    await DownloadApplication(
+    const result = await DownloadApplication(
       payload.app_template_id,
       payload.availability,
       payload.speed,
       payload.safe,
     );
-    await sleep(60 * 1000);
+
+    // TODO
+    for (let i = 0; i < 100; i++) {
+      const {data,error} = await virtapi(`rpc/fetch_resource_state`,'POST' , { id: result.resource_id });
+
+      if (error) 
+        throw error;
+      else if (data.length == 0)
+        throw new Error(`resource not found ${result}`)
+      else if (data.at(0).current_state == 'QUEUED')
+        throw new Error(`resource launch timeout ${result}`)
+      else if (data.at(0).current_state == 'RUNNING') ;
+
+      await sleep(10 * 1000);
+    }
+
+    const {data,error} = await virtapi(`rpc/binding_volume`,'POST' , { resource_id: result.resource_id });
+    if (error) 
+      throw error;
+
+    for (let i = 0; i < 100; i++) {
+      let pass = true
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        const {data,error} = await virtapi(`rpc/binding_storage`,'POST' , element);
+        if (error) 
+          throw error;
+
+        if (data.length == 0) 
+          throw new Error(`volume not found`)
+        else if (data.storage_id == null)
+          pass = false
+      }
+
+      if (pass) 
+        break
+
+      await sleep(10 * 1000);
+    }
+
     await fetchApp();
   }, "installApp");
 
@@ -232,7 +255,7 @@ export const ReleaseApp = async ({ vol_speed,
       cluster_id,);
     if (desc == "") throw ('Description is not empty!')
 
-    const { error } = await SupabaseFuncInvoke("configure_application", {
+    const { code,error } = await SupabaseFuncInvoke("configure_application", {
       action: "RELEASE",
       store_id: parseInt(store_id),
       desc: desc,
@@ -269,7 +292,7 @@ export const PatchApp = async (app) => {
     });
     Swal.close();
 
-    const { error } = await SupabaseFuncInvoke("configure_application", {
+    const { code,error } = await SupabaseFuncInvoke("configure_application", {
       action: "PATCH",
       app_id: app.id,
       desc: text,

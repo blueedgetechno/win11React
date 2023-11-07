@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../../supabase/createClient";
+import { supabase, virtapi } from "../../../supabase/createClient";
 import { log } from "../../../lib/log";
 import { Image } from "../../../utils/general";
 import { useDispatch } from "react-redux";
@@ -20,9 +20,6 @@ const ModalEditOrInsert = (props) => {
           icon: "",
         },
   );
-
-  const virtless_anon =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnY2t3anVja2xld3N1Y29jZmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODk2NzA5MTcsImV4cCI6MjAwNTI0NjkxN30.Ldcg3VJWf5fS5_SFmnfX2ZKHEfNoM9DPhoJFBStjjpA";
 
   const dispatch = useDispatch();
   const closeModal = async () => {
@@ -107,23 +104,7 @@ const ModalEditOrInsert = (props) => {
 
   async function handleUpdateApp(app) {
     const { id, name, icon, description, feature, screenshoots } = app;
-    const { data, error } = await supabase
-      .from("constant")
-      .select("value->virt");
-    if (error) throw error;
-
-    const url = data.at(0)?.virt.url;
-    const key = data.at(0)?.virt.anon_key;
-    if (url == undefined || key == undefined) return;
-
-    const resp = await fetch(`${url}/rest/v1/stores?id=eq.${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-        apikey: key,
-      },
-      body: JSON.stringify({
+    const {error} = await virtapi(`stores?id=eq.${id}`, "PATCH", {
         name: name,
         icon: icon,
         metadata: {
@@ -131,33 +112,16 @@ const ModalEditOrInsert = (props) => {
           feature: feature,
           screenshoots: screenshoots,
         },
-      }),
-    });
+      },
+    );
 
-    if (resp.status != 200) throw await resp.text();
-
-    if (requestDb.error) throw requestDb.error;
+    if (error) 
+      throw error
   }
 
   async function handleInsertApp(newData) {
     const { name, icon, description, type, feature, screenshoots } = newData;
-
-    const constantFetch = await supabase.from("constant").select("value->virt");
-    if (constantFetch.error) throw constantFetch.error;
-
-    const url = constantFetch.data.at(0)?.virt.url;
-    const key = constantFetch.data.at(0)?.virt.anon_key;
-    if (url == undefined || key == undefined) return;
-
-    const resp = await fetch(`${url}/rest/v1/stores`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-        apikey: key,
-        // "refer": "return=minimal"
-      },
-      body: JSON.stringify({
+    const resp = await virtapi(`stores`, "POST", {
         name: name,
         icon: icon,
         type: type,
@@ -166,7 +130,6 @@ const ModalEditOrInsert = (props) => {
           feature: feature,
           screenshoots: screenshoots,
         },
-      }),
     });
 
     if (resp.status != 200) throw await resp.text();
