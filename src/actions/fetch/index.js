@@ -312,7 +312,7 @@ export const SupabaseFuncInvoke = async (funcName,body) => {
     });
     if (response.ok === false) {
       const res = await response.json();
-      return { ...error,data: null };
+      return { error: res.message, code: res.code, data: null };
     }
 
 

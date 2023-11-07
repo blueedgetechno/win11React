@@ -131,9 +131,10 @@ export const installApp = (payload) =>
         throw error;
       else if (data.length == 0)
         throw new Error(`resource not found ${result}`)
-      else if (data.at(0).current_state == 'QUEUED')
-        throw new Error(`resource launch timeout ${result}`)
-      else if (data.at(0).current_state == 'RUNNING') ;
+      else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
+        throw new Error(`resource launch timeout ${result}`) //lanching timeout 
+      else if (data.at(0).current_state == 'RUNNING')
+        break;
 
       await sleep(10 * 1000);
     }
@@ -142,17 +143,18 @@ export const installApp = (payload) =>
     if (error) 
       throw error;
 
+    const elements = data
     for (let i = 0; i < 100; i++) {
       let pass = true
-      for (let index = 0; index < data.length; index++) {
-        const element = data[index];
+      for (let index = 0; index < elements.length; index++) {
+        const element = elements[index];
         const {data,error} = await virtapi(`rpc/binding_storage`,'POST' , element);
         if (error) 
           throw error;
 
         if (data.length == 0) 
           throw new Error(`volume not found`)
-        else if (data.storage_id == null)
+        else if (data.at(0).storage_id == null)
           pass = false
       }
 
