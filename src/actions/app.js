@@ -17,6 +17,7 @@ import i18next from "i18next";
 import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
+import { formatError } from "../utils/formatErr";
 
 export const formatEvent = (event) => {
   const pid = event.target.dataset.pid;
@@ -49,13 +50,19 @@ const wrapper = async (func, appType) => {
     });
 
     return result;
-  } catch (error) {
+  } catch (err) {
+
+    let contentErr = err
+    if (err?.error != undefined || err?.code != undefined) {
+      contentErr = formatError(err?.error, err?.code)
+    }
+
     await log({
       type: "error",
-      content: error,
+      content: contentErr,
     });
 
-    return error;
+    return err;
   }
 };
 
@@ -116,53 +123,12 @@ export const resetApp = async (appInput) =>
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
-    const result = await DownloadApplication(
+    await DownloadApplication(
       payload.app_template_id,
       payload.availability,
       payload.speed,
       payload.safe,
     );
-
-    // TODO
-    for (let i = 0; i < 100; i++) {
-      const {data,error} = await virtapi(`rpc/fetch_resource_state`,'POST' , { id: result.resource_id });
-
-      if (error) 
-        throw error;
-      else if (data.length == 0)
-        throw new Error(`resource not found ${result}`)
-      else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
-        throw new Error(`resource launch timeout ${result}`) //lanching timeout 
-      else if (data.at(0).current_state == 'RUNNING')
-        break;
-
-      await sleep(10 * 1000);
-    }
-
-    const {data,error} = await virtapi(`rpc/binding_volume`,'POST' , { resource_id: result.resource_id });
-    if (error) 
-      throw error;
-
-    const elements = data
-    for (let i = 0; i < 100; i++) {
-      let pass = true
-      for (let index = 0; index < elements.length; index++) {
-        const element = elements[index];
-        const {data,error} = await virtapi(`rpc/binding_storage`,'POST' , element);
-        if (error) 
-          throw error;
-
-        if (data.length == 0) 
-          throw new Error(`volume not found`)
-        else if (data.at(0).storage_id == null)
-          pass = false
-      }
-
-      if (pass) 
-        break
-
-      await sleep(10 * 1000);
-    }
 
     await fetchApp();
   }, "installApp");

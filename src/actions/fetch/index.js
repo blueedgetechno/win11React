@@ -1,6 +1,7 @@
 import i18next from "i18next";
 import { externalLink } from "../../data/constant";
-import { supabase } from "../../supabase/createClient";
+import { supabase, virtapi } from "../../supabase/createClient";
+import { sleep } from "../../utils/sleep";
 
 const getCredentialHeader = async () => {
   const {
@@ -75,139 +76,100 @@ export const ModifySubscription = async (action,email) => {
 
 
 
-const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
 export const DownloadApplication = async (
   app_template_id,
   availability,
   speed,
   safe,
 ) => {
-  let msg;
-  const suggestMsg = i18next.t("error.suggest");
-  const { data,code, error } = await SupabaseFuncInvoke("launch_application", {
+  const { data: result, code, error } = await SupabaseFuncInvoke("launch_application", {
     action: "SETUP",
     app_template_id: app_template_id,
     option: { availability, speed, safe, },
   });
   if (error != null) {
-    msg = error;
-    if (code === 1) {
-      msg = i18next.t("error.run_out_of_gpu_stock");
+    throw { error, code }
+  }
+  // TODO
+  for (let i = 0; i < 100; i++) {
+    const { data, error } = await virtapi(`rpc/fetch_resource_state`, 'POST', { id: result.resource_id });
+
+    if (error)
+      throw error;
+    else if (data.length == 0)
+      throw { error: 'Resource not found!', code: '5' } //resources not found
+    else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
+      throw { error: 'Installing timeout!', code: '6' } //lanching timeout 
+    else if (data.at(0).current_state == 'RUNNING')
+      break;
+
+    await sleep(10 * 1000);
+  }
+
+  const { data: bindingData, error: bindingError } = await virtapi(`rpc/binding_volume`, 'POST', { resource_id: result.resource_id });
+  if (bindingError)
+    throw error;
+
+  const elements = bindingData
+  for (let i = 0; i < 100; i++) {
+    let pass = true
+    for (let index = 0; index < elements.length; index++) {
+      const element = elements[index];
+      const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element);
+      if (error)
+        throw error;
+
+      if (data.length == 0)
+        throw new Error(`volume not found`)
+      else if (data.at(0).storage_id == null)
+        pass = false
     }
-    throw `<p> 
-              
-              </br>
-              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> 
-              ${directDiscordMsg} 
-          <p>`;
+
+    if (pass)
+      break
+
+    await sleep(10 * 1000);
   }
 
-  if (data.result == "NOT_ALLOW") {
-    msg = i18next.t("error.NOT_ALLOW");
 
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}</b> 
-              </br>               
-              ${directDiscordMsg} 
-
-          <p>`;
-  }
-  if (data.result == "ALREADY_DEPLOYED") {
-    msg = i18next.t("error.ALREADY_DEPLOYED");
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}</b> 
-              </br>  
-              ${directDiscordMsg} 
-          <p>`;
-  }
-  return data;
+  return result;
 };
 
 export const StartApplication = async (storage_id) => {
-  let msg;
-  const suggestMsg = i18next.t("error.suggest");
 
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "START",
     storage_id: storage_id,
   });
+  console.log(data, code, error, 'starrt app');
   if (error != null) {
-    msg = error;
-    console.log(error);
-    if (code == 1) {
-      msg = i18next.t("error.run_out_of_gpu_stock");
-    } else if (error.includes("locked")) {
-      msg = i18next.t("error.IS_LOCKED");
-    }
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> 
-              ${directDiscordMsg} 
-          <p>`;
+    throw { error, code }
   }
 
   return data;
 };
 export const AccessApplication = async (input) => {
   const { storage_id, privateIp } = input;
-  const suggestMsg = i18next.t("error.suggest");
 
   const { data, code, error } = await SupabaseFuncInvoke("access_application", {
     action: "ACCESS",
     storage_id: storage_id,
   });
-  if (error == "timeout 3 mins waiting for worker") {
-    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error == "worker not pinged") {
-    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error != null)
-    throw `<p> <b class='uppercase'>${error}. 
-              </b>
-               ${suggestMsg}
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+  if (error != null)
+    throw { error, code }
+
   return data;
 };
 export const ResetApplication = async (input) => {
   const { storage_id, privateIp } = input;
-  const suggestMsg = i18next.t("error.suggest");
 
   const { data, code, error } = await SupabaseFuncInvoke("access_application", {
     action: "RESET",
     storage_id: storage_id,
   });
-  if (error == "timeout 3 mins waiting for worker") {
-    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error == "worker not pinged") {
-    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error != null)
-    throw `<p> <b class='uppercase'>${error}. 
-              </b>
-               ${suggestMsg}
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+  if (error != null)
+    throw { error, code }
+
   return data;
 };
 
@@ -216,44 +178,32 @@ export const DeleteApplication = async (storage_id) => {
     action: "DELETE",
     storage_id: storage_id,
   });
-  if (error != null) throw error;
+  if (error != null)
+    throw { error, code };
   return data;
 };
 
 export const StopApplication = async (storage_id) => {
-  const suggestMsg = i18next.t("error.suggest");
 
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "STOP",
     storage_id: storage_id,
   });
   if (error != null)
-    throw `<p> 
-              <b class='uppercase'>${error}. 
-              ${suggestMsg}
-              </b> 
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+    throw { error, code };
 
   return data;
 };
 
 export const StopVolume = async (volume_id) => {
-  const suggestMsg = i18next.t("error.suggest");
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "STOP_VOLUME",
     volume_id: volume_id,
   });
   if (error != null)
-    throw `<p> 
-              <b class='uppercase'>${error}. 
-              ${suggestMsg}
-              </b> 
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+    throw { error, code };
+
 
   return data;
 };

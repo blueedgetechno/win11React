@@ -1,21 +1,35 @@
-export function formatError(err) {
-	let formated = "unknown"
-	err.includes('reference is not valid')
-	formated = "wrong reference key"
-	if (err.includes('timeout 1 minutes waiting for server session'))
-		formated = "worker is not running?"
-	if (err.includes(`error validate session`))
-		formated = "database error"
-	if (err.includes(`error insert user session`))
-		formated = "database error"
-	if (err.includes(`error update user session`))
-		formated = "database error"
-	if (err.includes(`error add relationship`))
-		formated = "database error"
-	if (err.includes(`error fetch worker config`))
-		formated = "database error"
-	if (err.includes(`error get worker session`))
-		formated = "database error"
+import i18next from "i18next";
+import { externalLink } from "../data/constant";
 
-	return formated
+export function formatError(err = 'Something went wrong!', code = '0') {
+
+	const suggestMsg = i18next.t("error.suggest");
+	const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
+
+	let msg
+
+	const CAUSES = {
+		"0": err,
+		"1": i18next.t("error.run_out_of_gpu_stock"),
+		"2": i18next.t("error.ALREADY_DEPLOYED"),
+		"3": "INVALID_AUTH_HEADER",
+		"4": "DATABASE_ERROR",
+		"5": i18next.t("error.NOT_FOUND"),
+		"6": i18next.t("error.TIME_OUT"),
+	}
+
+
+	msg = CAUSES[code] ?? err
+	if (err.includes('ran out of hardware')) {
+		msg = i18next.t("error.run_out_of_gpu_stock")
+	}
+	const template = `<p> <b class='uppercase'>${msg}. </b>
+						${suggestMsg}
+						</br> 
+						${directDiscordMsg} 
+					  <p>`
+
+
+
+	return template
 }
