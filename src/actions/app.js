@@ -170,7 +170,18 @@ export const pauseApp = async (appInput) =>
     if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
 
     await StopApplication(payload.storage_id);
-    await sleep(60 * 1000);
+    for (let i = 0; i < 100; i++) {
+      {
+        let { data, error } = await supabase.rpc("setup_status", {
+          volume_id: payload.volume_id,
+        });
+        if (error) throw error;
+        if (data == false) break;
+      }
+
+      await sleep(10 * 1000);
+    }
+
     await fetchApp();
   }, "pauseApp");
 
