@@ -91,7 +91,7 @@ export const DownloadApplication = async (
   });
   if (error != null) {
     msg = error;
-    if (error === "ran out of hardware") {
+    if (code === 1) {
       msg = i18next.t("error.run_out_of_gpu_stock");
     }
     throw `<p> 
@@ -137,7 +137,7 @@ export const StartApplication = async (storage_id) => {
   if (error != null) {
     msg = error;
     console.log(error);
-    if (error.includes("ran out of hardware")) {
+    if (code == 1) {
       msg = i18next.t("error.run_out_of_gpu_stock");
     } else if (error.includes("locked")) {
       msg = i18next.t("error.IS_LOCKED");
