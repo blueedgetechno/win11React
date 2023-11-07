@@ -14,15 +14,11 @@ export const AboutWin = () => {
   const wnapp = useSelector((state) => state.apps.about);
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  React.useLayoutEffect(() => {
-    const value = localStorage.getItem("openAboutThinkmay2") ?? true;
-    localStorage.removeItem("openAboutThinkmay");
-    localStorage.removeItem("openAboutThinkmay1");
-    setOpen(value);
-  }, []);
+
   const action = () => {
     setOpen(false);
-    localStorage.setItem("openAboutThinkmay2", false);
+    localStorage.setItem("openAboutThinkmay", false);
+    localStorage.removeItem("openAboutThinkmay2");
     //dispatch({ type: "DESKABOUT", payload: false });
     dispatch({ type: "ABOUT", payload: 'close'});
 
@@ -39,111 +35,114 @@ export const AboutWin = () => {
     },
   });
   return (
-    <>
-      {open === true || !wnapp.hide ? (
-        <div className="aboutApp floatTab dpShad aboutAnimation">
-          <div className="text-xl font-semibold text-center my-4">
-            Hướng dẫn sử dụng^^
+    <div
+    data-max={wnapp.max}
+    data-hide={wnapp.hide}
+    style={{
+    ...(wnapp.size == "cstm" ? wnapp.dim : null),
+    zIndex: wnapp.z,
+    }}
+    className="aboutApp floatTab dpShad aboutAnimation">
+      <div className="text-xl font-semibold text-center my-4">
+        Hướng dẫn sử dụng^^
+      </div>
+
+      <div className="navigation-wrapper">
+        <div ref={sliderRef} className="keen-slider">
+          <div className="keen-slider__slide number-slide1">
+            <strong className="text-[16px] mb-[8px] mb-[12px] text-center">
+              LƯU Ý: Đây là giao diện không phải RemotePC
+            </strong>
+            <p>
+              <strong>B1:</strong> <strong>Install</strong> tựa game yêu
+              thích trong Store, nhưng game màu vàng là được chơi free.{" "}
+            </p>
+
+            <div className="wrapper-img mt-[24px]">
+              <Image h={120} src="icon/b1" />
+            </div>
           </div>
-
-          <div className="navigation-wrapper">
-            <div ref={sliderRef} className="keen-slider">
-              <div className="keen-slider__slide number-slide1">
-                <strong className="text-[16px] mb-[8px] mb-[12px] text-center">
-                  LƯU Ý: Đây là giao diện không phải RemotePC
-                </strong>
-                <p>
-                  <strong>B1:</strong> <strong>Install</strong> tựa game yêu
-                  thích trong Store, nhưng game màu vàng là được chơi free.{" "}
-                </p>
-
-                <div className="wrapper-img mt-[24px]">
-                  <Image h={120} src="icon/b1" />
-                </div>
+          <div className="keen-slider__slide number-slide2">
+            <p>
+              <strong>B2:</strong> Ra màn hình chính, đợi logo chuyển từ
+              installing sang logo của game
+            </p>
+            <div className="flex items-center gap-2 mt-[32px]">
+              <div className="wrapper-img">
+                <Image w={110} h={110} src="icon/b2" />
               </div>
-              <div className="keen-slider__slide number-slide2">
-                <p>
-                  <strong>B2:</strong> Ra màn hình chính, đợi logo chuyển từ
-                  installing sang logo của game
-                </p>
-                <div className="flex items-center gap-2 mt-[32px]">
-                  <div className="wrapper-img">
-                    <Image w={110} h={110} src="icon/b2" />
-                  </div>
-                  <FaArrowRight />
-                  <div className="wrapper-img">
-                    <Image w={110} h={110} src="icon/b2-2" />
-                  </div>
-                </div>
-              </div>
-              <div className="keen-slider__slide number-slide4">
-                <p>
-                  <strong>B3:</strong> Để <strong>tắt máy</strong> và lưu lại
-                  data: Click <strong>Pause App</strong>(click chuột phải, hoặc
-                  giữ icon trên mobile){" "}
-                </p>
-
-                <div className="wrapper-img mt-[20px]">
-                  <Image h={160} w={160} src="icon/b3" />
-                </div>
-              </div>
-              <div className="keen-slider__slide number-slide5">
-                <p className="text-center text-[24px] mt-[50px]">
-                  Thư giãn với tựa game yêu thích nào^^
-                </p>
+              <FaArrowRight />
+              <div className="wrapper-img">
+                <Image w={110} h={110} src="icon/b2-2" />
               </div>
             </div>
-            {loaded && instanceRef.current && (
-              <>
-                <Arrow
-                  left
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.prev()
-                  }
-                  disabled={currentSlide === 0}
-                />
-
-                <Arrow
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.next()
-                  }
-                  disabled={
-                    currentSlide ===
-                    instanceRef.current.track.details.slides.length - 1
-                  }
-                />
-              </>
-            )}
           </div>
-          {loaded && instanceRef.current && (
-            <div className="dots ">
-              <div className="flex items-center">
-                {[
-                  ...Array(
-                    instanceRef.current.track.details.slides.length,
-                  ).keys(),
-                ].map((idx) => {
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        instanceRef.current?.moveToIdx(idx);
-                      }}
-                      className={
-                        "dot" + (currentSlide === idx ? " active" : "")
-                      }
-                    ></button>
-                  );
-                })}
-              </div>
-              <div className="okbtn">
-                <div onClick={action}>{t("I got it")} </div>
-              </div>
+          <div className="keen-slider__slide number-slide4">
+            <p>
+              <strong>B3:</strong> Để <strong>tắt máy</strong> và lưu lại
+              data: Click <strong>Pause App</strong>(click chuột phải, hoặc
+              giữ icon trên mobile){" "}
+            </p>
+
+            <div className="wrapper-img mt-[20px]">
+              <Image h={160} w={160} src="icon/b3" />
             </div>
-          )}
+          </div>
+          <div className="keen-slider__slide number-slide5">
+            <p className="text-center text-[24px] mt-[50px]">
+              Thư giãn với tựa game yêu thích nào^^
+            </p>
+          </div>
         </div>
-      ) : null}
-    </>
+        {loaded && instanceRef.current && (
+          <>
+            <Arrow
+              left
+              onClick={(e) =>
+                e.stopPropagation() || instanceRef.current?.prev()
+              }
+              disabled={currentSlide === 0}
+            />
+
+            <Arrow
+              onClick={(e) =>
+                e.stopPropagation() || instanceRef.current?.next()
+              }
+              disabled={
+                currentSlide ===
+                instanceRef.current.track.details.slides.length - 1
+              }
+            />
+          </>
+        )}
+      </div>
+      {loaded && instanceRef.current && (
+        <div className="dots ">
+          <div className="flex items-center">
+            {[
+              ...Array(
+                instanceRef.current.track.details.slides.length,
+              ).keys(),
+            ].map((idx) => {
+              return (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    instanceRef.current?.moveToIdx(idx);
+                  }}
+                  className={
+                    "dot" + (currentSlide === idx ? " active" : "")
+                  }
+                ></button>
+              );
+            })}
+          </div>
+          <div className="okbtn">
+            <div onClick={action}>{t("I got it")} </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 function Arrow(props) {
