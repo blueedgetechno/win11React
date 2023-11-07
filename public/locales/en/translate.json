@@ -34,7 +34,9 @@
     "NOT_PAUSED": "Game is running or installing, try again!",
     "PAUSED": "Game is pasued or installing, try again!",
     "NOT_PINGED": "Game is pasued, reload and run Start app!",
-    "IS_LOCKED": "Your data is uploading to cloud, please wait a fews minutes"
+    "IS_LOCKED": "Your data is uploading to cloud, please wait a fews minutes",
+    "NOT_FOUND": "Resources not found!",
+    "TIME_OUT": "Installing timeout!"
   },
   "info": {
     "startApp": "It take a fews minutes. Please pause app when not using",

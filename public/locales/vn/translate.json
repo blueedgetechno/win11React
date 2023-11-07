@@ -26,7 +26,7 @@
   "error": {
     "suggest": "Vui lòng thử lại sau ít phút",
     "unspecific": "Something went wrong.",
-    "ALREADY_DEPLOYED": "Bạn đã install 1 game rồi. Xoá game cũ trước khi tải game mới",
+    "ALREADY_DEPLOYED": "Bạn đã install đủ số game cho phép rồi. Xoá game cũ trước khi tải game mới",
     "NOT_ALLOW": "Tài khoản của bạn chưa đăng kí dịch vụ.",
     "run_out_of_gpu_stock": "Hệ thống đang hết máy, vui lòng liên hệ admin!",
     "NOT_READY": "Game đang tải xuống vui lòng đợi 3-5' cho đến khi logo game xuất hiện",
@@ -34,7 +34,9 @@
     "NOT_PAUSED": "Game đang chạy hoặc tải xuống, thử lại sau nhé!",
     "PAUSED": "Game đã được paused hoặc đang tải xuống, thử lại sau nhé!",
     "NOT_PINGED": "Game đã được pasued, reload và start app lại nhé!",
-    "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !"
+    "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !",
+    "NOT_FOUND": "Không tìm thấy app yêu cầu.",
+    "TIME_OUT": "Yêu cầu đã hết hạn."
   },
   "info": {
     "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
