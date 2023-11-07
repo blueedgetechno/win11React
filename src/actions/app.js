@@ -155,7 +155,7 @@ export const startApp = async (appInput) =>
         });
         if (error) throw error;
         else if (resource.at(0).desired_state == 'PAUSED') 
-          throw new Error('launch timeout'); // TODO
+          throw { error: "Timeout !", code: '6' }; // TODO
       }
 
       await sleep(10 * 1000);

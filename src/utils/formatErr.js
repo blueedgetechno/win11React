@@ -20,7 +20,7 @@ export function formatError(err = 'Something went wrong!', code = '0') {
 
 
 	msg = CAUSES[code] ?? err
-	if (err.includes('ran out of hardware')) {
+	if (err.includes('ran out of hardware') || err.includes('ran out of gpu')) {
 		msg = i18next.t("error.run_out_of_gpu_stock")
 	}
 	const template = `<p> <b class='uppercase'>${msg}. </b>
