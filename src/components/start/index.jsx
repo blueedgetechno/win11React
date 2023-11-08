@@ -262,7 +262,7 @@ export const SidePane = () => {
           <Battery pct />
         </div>
         <div className="text-white font-bold cursor-pointer px-3">
-          <IoSettingsOutline className="bg-[#ffffff14] rounded p-[10px]" />
+          <IoSettingsOutline className=" bg-transparent rounded p-[10px] hover:bg-[#ffffff14]" />
         </div>
       </div>
     </div>
