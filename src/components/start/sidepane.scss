@@ -195,6 +195,7 @@ body[data-theme="dark"] .bandpane {
     height: 3rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     .battery-sidepane {
       height: 100%;

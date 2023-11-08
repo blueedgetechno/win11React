@@ -7,7 +7,7 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-
+import { IoSettingsOutline } from "react-icons/io5";
 export * from "./start";
 export * from "./widget";
 
@@ -150,7 +150,7 @@ export const SidePane = () => {
   function sliderBackground(elem, e) {
     elem.style.setProperty(
       "--track-color",
-      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`,
+      `linear-gradient(90deg, var(--clrPrm) ${e - 3}%, #888888 ${e}%)`
     );
   }
 
@@ -260,6 +260,9 @@ export const SidePane = () => {
       <div className="p-1 bottomBar">
         <div className="px-3 battery-sidepane">
           <Battery pct />
+        </div>
+        <div className="text-white font-bold cursor-pointer px-3">
+          <IoSettingsOutline className="bg-[#ffffff14] rounded p-[10px]" />
         </div>
       </div>
     </div>
