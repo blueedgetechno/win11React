@@ -95,7 +95,7 @@ export const DownloadApplication = async (
     const { data, error } = await virtapi(`rpc/fetch_resource_state`, 'POST', { id: result.resource_id });
 
     if (error)
-      throw error;
+      throw { error, code: '0' };
     else if (data.length == 0)
       throw { error: 'Resource not found!', code: '5' } //resources not found
     else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
@@ -108,7 +108,7 @@ export const DownloadApplication = async (
 
   const { data: bindingData, error: bindingError } = await virtapi(`rpc/binding_volume`, 'POST', { resource_id: result.resource_id });
   if (bindingError)
-    throw error;
+    throw { error, code: '0' };
 
   const elements = bindingData
   for (let i = 0; i < 100; i++) {
@@ -117,10 +117,12 @@ export const DownloadApplication = async (
       const element = elements[index];
       const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element);
       if (error)
-        throw error;
+        throw { error, code: '0' };
+
 
       if (data.length == 0)
-        throw new Error(`volume not found`)
+        throw { error: 'Resource not found!', code: '5' };
+
       else if (data.at(0).storage_id == null)
         pass = false
     }
