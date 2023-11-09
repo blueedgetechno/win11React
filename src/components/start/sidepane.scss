@@ -207,6 +207,21 @@ body[data-theme="dark"] .bandpane {
         background: var(--bg4);
       }
     }
+
+    .animator {
+      animation: rotate 500ms ease-in-out;
+    }
+  }
+}
+@keyframes rotate {
+  0% {
+    rotate: (0deg);
+  }
+  50% {
+    rotate: calc(90deg + 10.5deg);
+  }
+  100% {
+    rotate: (0deg);
   }
 }
 body[data-theme="dark"] .sidePane {

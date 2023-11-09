@@ -114,7 +114,7 @@ export const SidePane = () => {
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
   const dispatch = useDispatch();
-
+  const [animClick, setAnimClick] = useState(false);
   let [btlevel, setBtLevel] = useState("");
   const childToParent = () => {};
 
@@ -202,6 +202,9 @@ export const SidePane = () => {
     setPnstate(tmp);
   }, [setting, sidepane]);
 
+  // useEffect(() => {
+  //   setAnimClick(false);
+  // }, [animClick]);
   return (
     <div
       className="sidePane dpShad"
@@ -257,12 +260,20 @@ export const SidePane = () => {
           />
         </div>
       </div>
-      <div className="p-1 bottomBar">
+      <div className="p-1 bottomBar px-2">
         <div className="px-3 battery-sidepane">
           <Battery pct />
         </div>
-        <div className="text-white font-bold cursor-pointer px-3">
-          <IoSettingsOutline className=" bg-transparent rounded p-[10px] hover:bg-[#ffffff14]" />
+        <div
+          className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit "
+          onClick={() => {
+            setAnimClick(true);
+            setTimeout(() => {
+              setAnimClick(false);
+            }, 500);
+          }}
+        >
+          <IoSettingsOutline className={`  ${animClick && "animator"}`} />
         </div>
       </div>
     </div>
