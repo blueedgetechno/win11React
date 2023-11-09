@@ -51,18 +51,11 @@ const wrapper = async (func, appType) => {
 
     return result;
   } catch (err) {
+    let errMsg = err?.error ?? err
+    contentErr = formatError(errMsg, err?.code)
 
-    let contentErr = err
-    if (err?.error != undefined || err?.code != undefined) {
-      contentErr = formatError(err?.error, err?.code)
-    }
+    return err
 
-    await log({
-      type: "error",
-      content: contentErr,
-    });
-
-    return err;
   }
 };
 
