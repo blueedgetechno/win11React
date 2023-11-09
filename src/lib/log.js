@@ -9,6 +9,9 @@ export const log = async ({
   confirmButtonText,
   confirmCallback,
 }) => {
+
+  //Swal.close()
+
   switch (type) {
     case "loading":
       Swal.fire({

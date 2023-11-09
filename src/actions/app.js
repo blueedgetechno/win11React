@@ -52,7 +52,7 @@ const wrapper = async (func, appType) => {
     return result;
   } catch (err) {
     let errMsg = err?.error ?? err
-    contentErr = formatError(errMsg, err?.code)
+    await formatError(errMsg, err?.code)
 
     return err
 
