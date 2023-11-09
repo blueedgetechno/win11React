@@ -234,8 +234,8 @@ export const fetchUser = async () => {
 export const preload = async () => {
   await Promise.all([fetchUser(), loadSettings()]);
   await Promise.all([
-    //fetchWorker(),
-    //fetchStore(),
-    //fetchApp()
+    fetchWorker(),
+    fetchStore(),
+    fetchApp()
   ]);
 };
