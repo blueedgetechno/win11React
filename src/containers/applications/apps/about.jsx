@@ -17,8 +17,9 @@ export const AboutWin = () => {
 
   const action = () => {
     setOpen(false);
-    localStorage.setItem("openAboutThinkmay", false);
+    localStorage.setItem("openAboutThinkmay3", false);
     localStorage.removeItem("openAboutThinkmay2");
+    localStorage.removeItem("openAboutThinkmay");
     //dispatch({ type: "DESKABOUT", payload: false });
     dispatch({ type: "ABOUT", payload: 'close'});
 
@@ -44,13 +45,14 @@ export const AboutWin = () => {
     }}
     className="aboutApp floatTab dpShad aboutAnimation">
       <div className="text-xl font-semibold text-center my-4">
-        Hướng dẫn sử dụng^^
+        {/*Hướng dẫn sử dụng^^*/}
+        THÔNG BÁO
       </div>
 
       <div className="navigation-wrapper">
         <div ref={sliderRef} className="keen-slider">
           <div className="keen-slider__slide number-slide1">
-            <strong className="text-[16px] mb-[8px] mb-[12px] text-center">
+            {/*<strong className="text-[16px] mb-[8px] mb-[12px] text-center">
               LƯU Ý: Đây là giao diện không phải RemotePC
             </strong>
             <p>
@@ -60,9 +62,17 @@ export const AboutWin = () => {
 
             <div className="wrapper-img mt-[24px]">
               <Image h={120} src="icon/b1" />
-            </div>
+            </div>*/}
+            <strong className="text-[20px] mb-[8px] mb-[12px] text-center">Phiên bản mới đã được update. Lưu Ý: </strong>
+            <p className="text-[17px] mb-4">
+              1. App đã cài tại <strong>https://dev-thinkmay.netlify.app/.</strong> thì <strong>không cần xóa</strong> đi, có thể start và chơi lại bình thường.
+            </p>
+            <p  className="text-[17px]">
+              2. App đã cài tại <strong>https://app.thinkmay.net</strong> trước khi có thông báo này, <strong>vui lòng xóa</strong> app và tải lại để tránh bị kẹt data.
+            </p>
+            
           </div>
-          <div className="keen-slider__slide number-slide2">
+          {/*<div className="keen-slider__slide number-slide2">
             <p>
               <strong>B2:</strong> Ra màn hình chính, đợi logo chuyển từ
               installing sang logo của game
@@ -92,9 +102,9 @@ export const AboutWin = () => {
             <p className="text-center text-[24px] mt-[50px]">
               Thư giãn với tựa game yêu thích nào^^
             </p>
-          </div>
+          </div>*/}
         </div>
-        {loaded && instanceRef.current && (
+        {/*{loaded && instanceRef.current && (
           <>
             <Arrow
               left
@@ -114,7 +124,7 @@ export const AboutWin = () => {
               }
             />
           </>
-        )}
+        )}*/}
       </div>
       {loaded && instanceRef.current && (
         <div className="dots ">
