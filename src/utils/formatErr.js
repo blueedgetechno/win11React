@@ -22,10 +22,9 @@ const listErr = [
 ]
 const includesErr = (err = '') => {
 	let errFormat = ''
-	console.log(err.toString());
 	for (let i = 0; i < listErr.length; i++) {
 
-		if (err?.toString()?.includes(listErr[i].msg)) {
+		if (JSON.stringify(err)?.includes(listErr[i].msg)) {
 			errFormat = i18next.t(listErr[i].text)
 			break;
 		}
@@ -54,7 +53,7 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 	}
 
 
-	msg = CAUSES[code] ?? err
+	msg = CAUSES[code] ?? JSON.stringify(err)
 
 	if (includesErr(err) != '') {
 		msg = includesErr(err)
