@@ -157,7 +157,7 @@ export const startApp = async (appInput) =>
 export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
-    const countErr = 0
+    let countErr = 0
     if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
 
     await StopApplication(payload.storage_id);

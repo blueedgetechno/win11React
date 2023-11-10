@@ -86,7 +86,7 @@ export const DownloadApplication = async (
   speed,
   safe,
 ) => {
-  const countErr = 0
+  let countErr = 0
   const { data: result, code, error } = await SupabaseFuncInvoke("launch_application", {
     action: "SETUP",
     app_template_id: app_template_id,
@@ -152,7 +152,7 @@ export const DownloadApplication = async (
 };
 
 export const StartApplication = async (storage_id, volume_id) => {
-  const countErr = 0
+  let countErr = 0
 
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "START",
