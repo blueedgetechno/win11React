@@ -157,6 +157,7 @@ export const startApp = async (appInput) =>
 export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const countErr = 0
     if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
 
     await StopApplication(payload.storage_id);
@@ -165,7 +166,13 @@ export const pauseApp = async (appInput) =>
         let { data, error } = await supabase.rpc("setup_status", {
           volume_id: payload.volume_id,
         });
-        if (error) throw error;
+        if (error) {
+          countErr++
+          if (countErr == 20) {
+            await fetchApp();
+            throw { error, code: '0' }
+          }
+        }
         if (data == false) break;
       }
 
