@@ -1,12 +1,13 @@
 import store from "../reducers";
 import { changeTheme } from "./";
-import { isGreenList, isWhiteList } from "../utils/checking";
-import { supabase } from "../supabase/createClient";
+import { isAllowWorkerProfileFetch } from "../utils/checking";
+import { supabase, virtapi } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
   formatWorkerRenderTree,
   formatAppRenderTree,
 } from "../utils/formatData";
+import { localStorageKey } from "../data/constant";
 
 const loadSettings = async () => {
   let thm = localStorage.getItem('theme')
@@ -64,7 +65,7 @@ export const fetchApp = async () => {
 export const fetchWorker = async () => {
   const user = store.getState()?.user;
   if (!user?.id) return;
-  if (!isWhiteList()) return;
+  if (await isAllowWorkerProfileFetch() == false) return;
 
   try {
     const { timestamp, payload } = JSON.parse(localStorage.getItem("WORKER"));
@@ -123,31 +124,17 @@ export const fetchStore = async () => {
     return;
   } catch {}
 
-  const constantFetch = await supabase.from("constant").select("value->virt");
-  if (constantFetch.error) throw constantFetch.error;
-
-  const url = constantFetch.data.at(0)?.virt.url;
-  const key = constantFetch.data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined) return;
-
-  const resp = await fetch(`${url}/rest/v1/rpc/fetch_store`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
-    },
-  });
-  if (resp.status != 200) throw await resp.text();
-  const data = (await resp.json()).filter((e) => e.hide != true);
+  const {data,error} = await virtapi(`rpc/fetch_store`, "GET" );
+  if (error) throw error;
 
   const content = {
     games: [],
     apps: [],
   };
 
-  for (let index = 0; index < data.length; index++) {
-    const appOrGame = data[index];
+  const stores = data.filter((e) => e.hide != true);
+  for (let index = 0; index < stores.length; index++) {
+    const appOrGame = stores[index];
 
     if (appOrGame.type == "GAME") content.games.push(appOrGame);
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);
@@ -173,7 +160,7 @@ export const fetchStore = async () => {
 
 export const fetchUser = async () => {
   try {
-    const { timestamp, payload } = JSON.parse(localStorage.getItem("USER1"));
+    const { timestamp, payload } = JSON.parse(localStorage.getItem(localStorageKey.user));
     if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
       throw new Error("outdated");
 
@@ -190,30 +177,65 @@ export const fetchUser = async () => {
   } = await supabase.auth.getUser();
   if (error != null) return;
 
-  let payload = { ...user };
+  let payloadUser = { ...user };
+  {
+    const { data, error } = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['week', 'month', 'fullstack', 'admin']
+    });
+    if (error) throw error;
 
-  if (user.app_metadata.greenlist == true) {
+    payloadUser = { ...payloadUser, greenlist: data }
+
+    console.log(payloadUser, 'payloadd');
+  }
+
+  {
+    const { data, error} = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['fullstack', 'remote', 'admin']
+    });
+    if (error) throw error;
+
+    payloadUser = { ...payloadUser, whitelist: data }
+  }
+
+  {
+    const { data, error} = await supabase.rpc("validate_user_access", {
+      user_account_id: user?.id,
+      plan_name: ['admin']
+    });
+    if (error) throw error;
+
+    payloadUser = { ...payloadUser, admin: data }
+  }
+
+  if (payloadUser?.greenlist == true) {
     const { data, error } = await supabase.rpc("get_usage_time_user", {
-      user_id: user.id,
+      user_id: payloadUser.id,
     });
     if (error) return;
 
-    payload = { ...payload, usageTime: data };
+    payloadUser = { ...payloadUser, usageTime: data };
   }
   store.dispatch({
     type: "ADD_USER",
-    payload,
+    payload: payloadUser,
   });
   localStorage.setItem(
-    "USER1",
+    localStorageKey.user,
     JSON.stringify({
       timestamp: new Date().getTime(),
-      payload,
+      payload: payloadUser,
     }),
   );
 };
 
 export const preload = async () => {
   await Promise.all([fetchUser(), loadSettings()]);
-  await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
+  await Promise.all([
+    fetchWorker(),
+    fetchStore(),
+    fetchApp()
+  ]);
 };

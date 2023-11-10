@@ -11,9 +11,12 @@ import {
   connectWorker,
   connectSession,
   viewDetail,
+  createSubscription,
+  modifySubscription
 } from "./worker";
 import { deleteApp, openApp } from "./app";
 import { fetchApp } from "./preload";
+//import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
   if (menu.menus.desk[0].opts[4].check) {
@@ -205,6 +208,7 @@ export const menuDispatch = async (event, menu) => {
     name: menu?.dataset?.name,
   };
   if (!type) return;
+  //Worker Menu action
   if (type === "FILEDIRWORKER") openWorker(event);
   else if (type === "CREATESESSION") createSession(event);
   else if (type === "DEACTIVATESESSION") deactiveSession(event);
@@ -214,6 +218,11 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CLOUDAPP") console.log(event);
   else if (type === "CONNECTVOLUMEWORKER") ActionExternal.connectVolume(event);
   else if (type === "STOPVOLUME") ActionExternal.stopVolume(event);
+  else if (type === "CREATE_SUB") createSubscription(event);
+  else if (type === "MODIFY_SUB") modifySubscription(event);
+  else if (type === "RELEASE_APP") store.dispatch({ type: 'ADMIN_RELEASE_APP', payload: { event } });
+
+    //App menu action
   else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
   else if (type === "OPEN_APP_NEWTAB")
     ActionExternal.openApp(externalAppData, "new_tab");

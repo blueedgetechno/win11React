@@ -1,6 +1,11 @@
 import i18next from "i18next";
 import { externalLink } from "../../data/constant";
-import { supabase } from "../../supabase/createClient";
+import { supabase, virtapi } from "../../supabase/createClient";
+import { sleep } from "../../utils/sleep";
+import { fetchApp } from "../preload";
+
+const COUNT_ERR_RPC = 10
+const TIME_SLEEP = 10 * 1000
 
 const getCredentialHeader = async () => {
   const {
@@ -17,306 +22,236 @@ const getCredentialHeader = async () => {
 };
 
 export const FetchAuthorizedWorkers = async () => {
-  const { data, error } = await supabase.functions.invoke(
-    "worker_profile_fetch",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({ use_case: "web" }),
-    },
-  );
+  const { data, code, error } = await SupabaseFuncInvoke("worker_profile_render");
   if (error != null) throw error;
   return data;
 };
 export const FetchUserApplication = async () => {
-  const { data, error } = await supabase.functions.invoke(
-    "user_application_fetch",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({}),
-    },
-  );
+  const { data, code, error } = await SupabaseFuncInvoke( "user_application_fetch" );
   if (error != null) throw error;
   return data;
 };
 
 export const DeactivateWorkerSession = async (worker_session_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "worker_session_deactivate",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        worker_session_id: worker_session_id,
-      }),
-    },
-  );
+  const { data, code, error } = await SupabaseFuncInvoke("worker_session_deactivate", {
+    worker_session_id: worker_session_id,
+  });
   if (error != null) throw error;
   return data;
 };
 
 export const CreateWorkerSession = async (worker_profile_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "worker_session_create",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        worker_id: worker_profile_id,
-        soudcard_name: null,
-        monitor_name: null,
-      }),
-    },
-  );
+  const { data, code, error } = await SupabaseFuncInvoke("worker_session_create", {
+    worker_id: worker_profile_id,
+  });
+
   if (error != null) throw error;
   return data;
 };
-export const SupabaseFuncInvoke = async (funcName, options) => {
-  try {
-    const credential = await getCredentialHeader();
-    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-    const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
-    const response = await fetch(`${supabaseURL}/functions/v1/${funcName}`, {
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${supabaseAnonKey}`,
-        Access_token: credential.access_token,
-      },
-    });
-    if (response.ok === false) {
-      const resText = await response.text();
-      return { data: null, error: resText };
-    }
-    let responseType = (response.headers.get("Content-Type") ?? "text/plain")
-      .split(";")[0]
-      .trim();
-    let data;
-    if (responseType === "application/json") {
-      data = await response.json();
-    } else if (responseType === "application/octet-stream") {
-      data = await response.blob();
-    } else if (responseType === "multipart/form-data") {
-      data = await response.formData();
-    } else {
-      // default to text
-      data = await response.text();
-    }
-    return { data, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+
+/**
+ * 
+ * @param {string} email 
+ * @param {'month' | 'week'} plan 
+ * @returns 
+ */
+export const AddSubscription = async (email,plan) => {
+  const { data, code, error } = await SupabaseFuncInvoke("add_subscription", {
+    email, plan
+  });
+  if (error != null) throw error;
+  return data;
 };
 
-const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
+/**
+ * 
+ * @param {'CANCEL' | 'RENEW' | 'UPGRADE'} action 
+ * @param {string} email 
+ * @returns 
+ */
+export const ModifySubscription = async (action,email) => {
+  const { data, code, error } = await SupabaseFuncInvoke("modify_subscription", {
+    email,action
+  });
+
+  if (error != null) throw error;
+  return data;
+};
+
+
+
 export const DownloadApplication = async (
   app_template_id,
   availability,
   speed,
   safe,
 ) => {
-  let msg;
-  const suggestMsg = i18next.t("error.suggest");
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "SETUP",
-      app_template_id: app_template_id,
-      option: {
-        availability,
-        speed,
-        safe,
-      },
-    }),
+  const countErr = 0
+  const { data: result, code, error } = await SupabaseFuncInvoke("launch_application", {
+    action: "SETUP",
+    app_template_id: app_template_id,
+    option: { availability, speed, safe, },
   });
   if (error != null) {
-    msg = error;
-    if (error === "ran out of hardware") {
-      msg = i18next.t("error.run_out_of_gpu_stock");
+    throw { error, code }
+  }
+  // TODO
+  for (let i = 0; i < 100; i++) {
+    const { data, error } = await virtapi(`rpc/fetch_resource_state`, 'POST', { id: result.resource_id });
+
+    if (error) {
+      countErr++
+      if (countErr == COUNT_ERR_RPC) {
+        throw { error, code: '0' };
+      }
     }
-    throw `<p> 
-              
-              </br>
-              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> 
-              ${directDiscordMsg} 
-          <p>`;
+    else if (data.length == 0)
+      throw { error: 'Resource not found!', code: '5' } //resources not found
+    else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
+      throw { error: 'Installing timeout!', code: '6' } //lanching timeout 
+    else if (data.at(0).current_state == 'RUNNING')
+      break;
+
+    await sleep(TIME_SLEEP);
   }
 
-  if (data.result == "NOT_ALLOW") {
-    msg = i18next.t("error.NOT_ALLOW");
+  const { data: bindingData, error: bindingError } = await virtapi(`rpc/binding_volume`, 'POST', { resource_id: result.resource_id });
+  if (bindingError)
+    throw { error, code: '0' };
 
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}</b> 
-              </br>               
-              ${directDiscordMsg} 
+  const elements = bindingData
+  const countBindingStorageErr = 0
+  for (let i = 0; i < 100; i++) {
+    let pass = true
+    for (let index = 0; index < elements.length; index++) {
+      const element = elements[index];
+      const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element);
+      if (error) {
+        countBindingStorageErr++
+        if (countBindingStorageErr == COUNT_ERR_RPC) {
+          throw { error, code: '0' };
+        }
+      }
 
-          <p>`;
+
+      if (data.length == 0)
+        throw { error: 'Resource not found!', code: '5' };
+
+      else if (data.at(0).storage_id == null)
+        pass = false
+    }
+
+    if (pass)
+      break
+
+    await sleep(TIME_SLEEP);
   }
-  if (data.result == "ALREADY_DEPLOYED") {
-    msg = i18next.t("error.ALREADY_DEPLOYED");
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}</b> 
-              </br>  
-              ${directDiscordMsg} 
-          <p>`;
-  }
-  return data;
+
+
+  return result;
 };
 
-export const StartApplication = async (storage_id) => {
-  let msg;
-  const suggestMsg = i18next.t("error.suggest");
+export const StartApplication = async (storage_id, volume_id) => {
+  const countErr = 0
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "START",
-      storage_id: storage_id,
-    }),
+  const { data, code, error } = await SupabaseFuncInvoke("request_application", {
+    action: "START",
+    storage_id: storage_id,
   });
-  if (error != null) {
-    msg = error;
-    console.log(error);
-    if (error.includes("ran out of hardware")) {
-      msg = i18next.t("error.run_out_of_gpu_stock");
-    } else if (error.includes("locked")) {
-      msg = i18next.t("error.IS_LOCKED");
-    }
-    throw `<p> 
-              </br>
-              <b class='uppercase'>${msg}. ${suggestMsg}</b> 
-              </br> 
-              ${directDiscordMsg} 
-          <p>`;
-  }
 
+  if (error != null) {
+    throw { error, code }
+  }
+  for (let i = 0; i < 100; i++) {
+    {
+      let { data, error } = await supabase.rpc("setup_status", {
+        volume_id,
+      });
+      if (error) {
+        countErr++
+      };
+      if (countErr == COUNT_ERR_RPC) {
+        await fetchApp();
+        throw { error, code: '0' }
+      }
+      if (data == true) break;
+    }
+
+    {
+      const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST', {
+        volume_id,
+      });
+      if (error) {
+        countErr++
+        if (countErr == COUNT_ERR_RPC) {
+          await fetchApp();
+          throw { error, code: '0' }
+        }
+      }
+      else if (resource.at(0).desired_state == 'PAUSED')
+        throw { error: "Timeout !", code: '6' }; // TODO
+    }
+
+    await sleep(TIME_SLEEP);
+  }
   return data;
 };
 export const AccessApplication = async (input) => {
   const { storage_id, privateIp } = input;
-  const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "ACCESS",
-      storage_id: storage_id,
-    }),
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+    action: "ACCESS",
+    storage_id: storage_id,
   });
-  if (error == "timeout 3 mins waiting for worker") {
-    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error == "worker not pinged") {
-    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error != null)
-    throw `<p> <b class='uppercase'>${error}. 
-              </b>
-               ${suggestMsg}
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+  if (error != null)
+    throw { error, code }
+
   return data;
 };
 export const ResetApplication = async (input) => {
   const { storage_id, privateIp } = input;
-  const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "RESET",
-      storage_id: storage_id,
-    }),
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+    action: "RESET",
+    storage_id: storage_id,
   });
-  if (error == "timeout 3 mins waiting for worker") {
-    throw `<p> <b class='uppercase'>${error} at ${privateIp} 
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error == "worker not pinged") {
-    throw `<p> <b class='uppercase'>${i18next.t("error.NOT_PINGED")}
-            </b>
-            </br> 
-              Screenshot and send it to admin
-          <p>`;
-  } else if (error != null)
-    throw `<p> <b class='uppercase'>${error}. 
-              </b>
-               ${suggestMsg}
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+  if (error != null)
+    throw { error, code }
+
   return data;
 };
 
 export const DeleteApplication = async (storage_id) => {
-  const { data, error } = await supabase.functions.invoke(
-    "request_application",
-    {
-      headers: await getCredentialHeader(),
-      method: "POST",
-      body: JSON.stringify({
-        action: "DELETE",
-        storage_id: storage_id,
-      }),
-    },
-  );
-  if (error != null) throw error;
+  const { data, code, error } = await SupabaseFuncInvoke( "request_application", {
+    action: "DELETE",
+    storage_id: storage_id,
+  });
+  if (error != null)
+    throw { error, code };
   return data;
 };
 
 export const StopApplication = async (storage_id) => {
-  const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "STOP",
-      storage_id: storage_id,
-    }),
+  const { data, code, error } = await SupabaseFuncInvoke("request_application", {
+    action: "STOP",
+    storage_id: storage_id,
   });
   if (error != null)
-    throw `<p> 
-              <b class='uppercase'>${error}. 
-              ${suggestMsg}
-              </b> 
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+    throw { error, code };
 
   return data;
 };
 
 export const StopVolume = async (volume_id) => {
-  const suggestMsg = i18next.t("error.suggest");
 
-  const { data, error } = await SupabaseFuncInvoke("request_application", {
-    method: "POST",
-    body: JSON.stringify({
-      action: "STOP_VOLUME",
-      volume_id: volume_id,
-    }),
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "STOP_VOLUME",
+    volume_id: volume_id,
   });
   if (error != null)
-    throw `<p> 
-              <b class='uppercase'>${error}. 
-              ${suggestMsg}
-              </b> 
-              </br> 
-              ${directDiscordMsg} 
-            <p>`;
+    throw { error, code };
+
 
   return data;
 };
@@ -358,30 +293,30 @@ export const FetchApplicationTemplates = async (id) => {
     .filter((x) => x != undefined);
 };
 
-export const RegisterProxy = async () => {
-  const body = {
-    public_ip: await (await fetch("https://api64.ipify.org")).text(),
-  };
 
-  const { data, error } = await supabase.functions.invoke("proxy_register", {
-    body: JSON.stringify(body),
-    headers: {
-      access_token: (await supabase.auth.getSession()).data?.session
-        ?.access_token,
-    },
-  });
-  if (error != null) throw error;
-  return data;
-};
+export const SupabaseFuncInvoke = async (funcName,body) => {
+  try {
+    const credential = await getCredentialHeader();
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
+    const response = await fetch(`${supabaseURL}/functions/v2/${funcName}`, {
+      body: JSON.stringify(body ?? {}),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        Access_token: credential.access_token,
+      },
+    });
+    if (response.ok === false) {
+      const res = await response.json();
+      return { error: res.message, code: res.code, data: null };
+    }
 
-export const Keygen = async () => {
-  const { data, error } = await supabase.functions.invoke("user_keygen", {
-    body: JSON.stringify({}),
-    headers: {
-      access_token: (await supabase.auth.getSession()).data?.session
-        ?.access_token,
-    },
-  });
-  if (error != null) throw error;
-  return data;
+
+    const data = await response.json();
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 };

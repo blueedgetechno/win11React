@@ -15,17 +15,32 @@ const defState = {
       secwid: "120px",
       ispace: false, // show the space for icons in menu
     },
-    app: {
+    application: {
       width: "310px",
       secwid: "200px",
-    },
-    proxy: {
-      width: "150px",
-      secwid: "100px",
     },
     externalApp: {
       width: "190px",
       secwid: "200px",
+    },
+
+    holder: {
+      width: "150px",
+      secwid: "100px",
+    },
+
+    subscriptions: {
+      width: "180px",
+      secwid: "100px",
+    },
+    subscription: {
+      width: "180px",
+      secwid: "100px",
+    },
+
+    proxy: {
+      width: "150px",
+      secwid: "100px",
     },
     worker: {
       width: "150px",
@@ -39,7 +54,8 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
-    volumes: {
+
+    cluster: {
       width: "150px",
       secwid: "100px",
     },
@@ -47,7 +63,7 @@ const defState = {
       width: "150px",
       secwid: "100px",
     },
-    apps: {
+    storage: {
       width: "150px",
       secwid: "100px",
     },
@@ -240,28 +256,6 @@ const defState = {
         action: "performApp",
         payload: "open",
       },
-      //{
-      //  name: "Run as administrator",
-      //  action: "performApp",
-      //  payload: "open",
-      //  icon: "win/shield",
-      //},
-      //{
-      //  name: "Open file location",
-      //  dsb: true,
-      //},
-      //{
-      //  name: "Unpin from start",
-      //  dsb: true,
-      //},
-      //{
-      //  name: "Compress to Zip file",
-      //  dsb: true,
-      //},
-      //{
-      //  name: "Copy as path",
-      //  dsb: true,
-      //},
       {
         name: "Properties",
         dsb: true,
@@ -278,13 +272,9 @@ const defState = {
         name: "Delete",
         action: "delApp",
         payload: "delete",
-      },
-      {
-        name: "Detail",
-        action: "VIEW_DETAIL",
-        payload: "detail",
-      },
+      }
     ],
+    holder: [],
     externalApp: [
       {
         name: "Open",
@@ -320,6 +310,41 @@ const defState = {
         payload: "delete",
       },
     ],
+
+
+    subscriptions: [
+      {
+        name: "New Subscription",
+        action: "CREATE_SUB",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "openmodal",
+      },
+    ],
+    subscription: [
+      {
+        name: "Modify",
+        action: "MODIFY_SUB",
+        payload: "open"
+      }
+    ],
+
+
+    proxy: [
+      {
+        name: "Open",
+        action: "FILEDIRWORKER",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "openmodal",
+      },
+    ],
     worker: [
       {
         name: "Open",
@@ -338,18 +363,6 @@ const defState = {
       },
       {
         name: "Detail Info",
-        action: "VIEW_DETAIL",
-        payload: "openmodal",
-      },
-    ],
-    proxy: [
-      {
-        name: "Open",
-        action: "FILEDIRWORKER",
-        payload: "open",
-      },
-      {
-        name: "Detail",
         action: "VIEW_DETAIL",
         payload: "openmodal",
       },
@@ -374,8 +387,36 @@ const defState = {
         action: "VIEW_DETAIL",
         payload: "detail",
       },
+    ],    
+    user_session: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
     ],
-    volume: [
+
+
+    cluster: [
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    application: [
+      {
+        name: "Release App",
+        action: "RELEASE_APP",
+        payload: "open",
+      },
+      {
+        name: "Detail",
+        action: "VIEW_DETAIL",
+        payload: "detail",
+      },
+    ],
+    storage: [
       {
         name: "Detail",
         action: "VIEW_DETAIL",
@@ -392,19 +433,12 @@ const defState = {
         payload: "stop",
       },
     ],
-    volumes: [
+    volume: [
       {
         name: "Detail",
         action: "VIEW_DETAIL",
         payload: "detail",
-      },
-    ],
-    user_session: [
-      {
-        name: "Detail",
-        action: "VIEW_DETAIL",
-        payload: "detail",
-      },
+      }
     ],
   },
 };

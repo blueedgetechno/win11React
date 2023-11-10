@@ -65,7 +65,7 @@
   max-width: 360px;
   width: 40%;
   min-width: 270px;
-  height: min(100% - 24px, 500px);
+  height: min(100% - 24px, 460px);
   left: 0;
   &[data-align="center"] {
     margin-left: auto;
@@ -78,7 +78,11 @@
     left: 8px;
   }
   &[data-mobile="true"] {
-    height: min(100% - 24px, 400px);
+    height: min(100% - 24px, 450px);
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   color: var(--dark-txt);
   background: var(--bg1);
@@ -111,7 +115,149 @@ body[data-theme="dark"] .startMenu {
     filter: brightness(4);
   }
 }
+.paymentApp{
+  --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: rgba(255, 255, 255, 0.9);
+  --bg3: rgba(0, 0, 0, 0.033);
+  --bg4: #aaa;
+  --rib-bg: #ffffffb8;
 
+  min-width: 550px;
+  height: 375px;
+  max-height: 375px;
+  max-width: 660px;
+  background: var(--bg1);
+  &[data-size="mini"] {
+    top: 4%;
+    left: 8%;
+    width: 320px;
+    height: 500px;
+  }
+  .paymentModal {
+  
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    
+    width: 100%;
+    height: 100%;
+    color: var(--dark-txt);
+    //background: var(--bg1);
+    background: linear-gradient(138deg,#060606 0%,rgb(117,3,146) 100%);
+    overflow: hidden;
+    box-sizing: border-box;
+  
+    
+    //&[data-size="mini"] {
+    //  top: 4%;
+    //  left: 8%;
+    //  width: 320px;
+    //  height: 500px;
+    //}
+    .sub{
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      padding: 24px 14px;  
+      background: var(--bg1);
+      height: auto;
+      -webkit-transform-origin: center;
+      transform-origin: center;
+      transition: all ease-in-out .2s;
+      color: var(--dark-txt);
+      
+      
+    }
+    .sub:nth-child(2){
+      background: linear-gradient(to right, rgb(247, 230, 123), rgb(200, 174, 84));
+      color: black;
+    }
+    .sub:hover{
+      -webkit-transform: scale(1.06);
+      transform: scale(1.06);
+      -webkit-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+  }
+
+  &[data-hide="true"]{
+    z-index: -1 !important;
+  }
+}
+
+.paypal-buttons{
+  min-width: 120px!important;
+  max-width: 120px;
+ 
+
+}
+.paypalCtn > iframe > .paypal-button-container{
+  max-width: 120px;
+  min-width: 80px;
+  background: red;
+}
+body[data-theme="dark"] .paymentApp {
+
+  --bg1: #1c1c1c;
+  --bg2: #242424;
+  --bg3: #313131;
+  --bg4: #444;
+  --rib-bg: #2f2e30b8;
+
+}
+.refundApp{
+  --bg1: rgba(242, 242, 242, 0.9);
+  --bg2: rgba(255, 255, 255, 0.9);
+  --bg3: rgba(0, 0, 0, 0.033);
+  --bg4: #aaa;
+  --rib-bg: #ffffffb8;
+
+  min-width: 550px;
+  height: 375px;
+  max-height: 375px;
+  max-width: 660px;
+  background: var(--fakeMica);
+  color: var(--dark-txt);
+  &[data-size="mini"] {
+    top: 4%;
+    left: 8%;
+    width: 320px;
+    height: 500px;
+  }
+  .windowScreen{
+    background: var(--bg1);
+  }
+  .nameFill{
+    min-width: 80px;
+
+  }
+  .row{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    .ip{
+      flex: 1;
+      height: 40px;
+      border-radius: 4px;
+      padding: 0 16px;
+    }
+  }
+  .br{
+    border-right: 2px solid;
+  }
+}
+
+body[data-theme="dark"] .refundApp {
+
+  --bg1: #1c1c1c;
+  --bg2: #242424;
+  --bg3: #313131;
+  --bg4: #444;
+  --rib-bg: #2f2e30b8;
+
+}
 .allCont,
 .stmenu {
   position: relative;

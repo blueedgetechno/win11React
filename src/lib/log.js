@@ -9,6 +9,9 @@ export const log = async ({
   confirmButtonText,
   confirmCallback,
 }) => {
+
+  //Swal.close()
+
   switch (type) {
     case "loading":
       Swal.fire({
@@ -68,13 +71,66 @@ export const log = async ({
     case "close":
       Swal.close();
       break;
+
+    case "createSub":
+      const { value: formValues } = await Swal.fire({
+        title: 'Multiple inputs',
+        html:
+          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+          `
+          <div className="flex items-center mt-5 gap-2">
+            <span>SUB</span>
+            <select name="sub" class="swal2-input" id="plan">
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="fullstack">Fullstack</option>
+              <option value="remote">Remote</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            email: document.getElementById('email').value,
+            plan : document.getElementById('plan').value
+          }
+        }
+      })
+      return formValues
+    break;
+    case "modifySub": 
+      const { value } = await Swal.fire({
+        title: 'Modify Subscription',
+        html:
+          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+          `
+          <div className="flex items-center mt-5 gap-2">
+            <span>Action</span>
+            <select name="action" class="swal2-input" id="action">
+              <option value="CANCEL">Cancel</option>
+              <option value="RENEW">Renew</option>
+              <option value="UPGRADE">Upgrade</option>
+            </select>
+          </div>
+          `,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            email:  document.getElementById('email').value,
+            action :  document.getElementById('action').value
+          }
+        }
+      })
+      return value
+    break;
     default:
       break;
   }
 };
 
 export class Log {
-  constructor() {}
+  constructor() { }
   loading(title, content, time, icon) {
     Swal.fire({
       title: title ?? "Loading!",

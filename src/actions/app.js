@@ -1,13 +1,12 @@
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchApp, fetchStore, fetchWorker } from "./preload";
-import { supabase } from "../supabase/createClient";
+import { supabase, virtapi } from "../supabase/createClient";
 import {
   AccessApplication,
   ResetApplication,
   DeleteApplication,
   DownloadApplication,
-  FetchUserApplication,
   StartApplication,
   StopApplication,
   StopVolume,
@@ -18,8 +17,9 @@ import i18next from "i18next";
 import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
+import { formatError } from "../utils/formatErr";
 
-const formatEvent = (event) => {
+export const formatEvent = (event) => {
   const pid = event.target.dataset.pid;
   const action = {
     type: event.target.dataset.action,
@@ -50,40 +50,23 @@ const wrapper = async (func, appType) => {
     });
 
     return result;
-  } catch (error) {
-    await log({
-      type: "error",
-      content: error,
-    });
+  } catch (err) {
+    let errMsg = err?.error ?? err
+    await formatError(errMsg, err?.code)
 
-    return error;
+    return err
+
   }
 };
 
 export const deleteStore = async (app) => {
   if (!isAdmin()) return;
 
-  const { data, error } = await supabase.from("constant").select("value->virt");
-  if (error) throw error;
-
-  const url = data.at(0)?.virt.url;
-  const key = data.at(0)?.virt.anon_key;
-  if (url == undefined || key == undefined) return;
-
-  const resp = await fetch(`${url}/rest/v1/stores?id=eq.${app.id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      apikey: key,
-      // "refer": "return=minimal"
-    },
-  });
-
-  console.log(resp);
-
-  if (resp.status != 204 || 200 || 201) throw await resp.text();
-
+  const {error} = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
+  if (error) 
+    throw error
+    
+  
   await log({
     error: null,
     type: "confirm",
@@ -139,7 +122,7 @@ export const installApp = (payload) =>
       payload.speed,
       payload.safe,
     );
-    await sleep(60 * 1000);
+
     await fetchApp();
   }, "installApp");
 
@@ -147,19 +130,26 @@ export const installApp = (payload) =>
 export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const appName = appInput?.name ?? "null";
+    const input = {
+      storage_id: payload.storage_id,
+      privateIp: payload.privateIp,
+    };
+
     if (payload.status != "PAUSED") throw i18next.t("error.NOT_PAUSED");
 
-    await StartApplication(payload.storage_id);
-    for (let i = 0; i < 100; i++) {
-      let { data, error } = await supabase.rpc("setup_status", {
-        volume_id: payload.volume_id,
-      });
+    await StartApplication(payload.storage_id, payload.volume_id);
 
-      if (error) throw error;
-      if (data == true) break;
+    // Open new tab
+    const remoteLink = await AccessApplication(input);
 
-      await sleep(10 * 1000);
-    }
+    openRemotePage(remoteLink.url, appName, 'new_tab');
+    const feedbackInput = {
+      game: appName,
+      session: remoteLink.url ?? "null",
+    };
+    store.dispatch({ type: "USER_FEEDBACK", payload: feedbackInput });
+
     await fetchApp();
   }, "startApp");
 
@@ -167,10 +157,28 @@ export const startApp = async (appInput) =>
 export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const countErr = 0
     if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
 
     await StopApplication(payload.storage_id);
-    await sleep(60 * 1000);
+    for (let i = 0; i < 100; i++) {
+      {
+        let { data, error } = await supabase.rpc("setup_status", {
+          volume_id: payload.volume_id,
+        });
+        if (error) {
+          countErr++
+          if (countErr == 20) {
+            await fetchApp();
+            throw { error, code: '0' }
+          }
+        }
+        if (data == false) break;
+      }
+
+      await sleep(10 * 1000);
+    }
+
     await fetchApp();
   }, "pauseApp");
 
@@ -210,29 +218,50 @@ export const stopVolume = (e) =>
     return "success";
   });
 
-export const ReleaseApp = async (store) => {
+export const ReleaseApp = async ({ vol_speed,
+  vol_availability,
+  gpu_model,
+  desc,
+  store_id,
+  vcpus,
+  ram,
+  vdriver,
+  hidevm,
+  cluster_id,
+}) => {
   wrapper(async () => {
-    const { value: text } = await Swal.fire({
-      input: "textarea",
-      inputLabel: "Message",
-      inputPlaceholder: "Type your description here...",
-      inputAttributes: {
-        "aria-label": "Type your description here",
-      },
-      showCancelButton: false,
-    });
-    Swal.close();
+    console.log(vol_availability,
+      gpu_model,
+      desc,
+      store_id,
+      vcpus,
+      ram,
+      vdriver,
+      hidevm,
+      cluster_id,);
+    if (desc == "") throw ('Description is not empty!')
 
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "RELEASE",
-        store_id: store.id,
-        desc: text,
-      }),
+    const { code,error } = await SupabaseFuncInvoke("configure_application", {
+      action: "RELEASE",
+      store_id: parseInt(store_id),
+      desc: desc,
+      speed: vol_speed,
+      availability: vol_availability,
+      cluster_id,
+      hardware: {
+        gpu_model: gpu_model,
+        vcpus: parseInt(vcpus),
+        ram: parseInt(ram),
+        vdriver: vdriver,
+        hidevm: hidevm
+      }
     });
 
     if (error) throw error;
+
+    store.dispatch({ type: "CLOSE_MODAL" })
+
+    return
   });
 };
 
@@ -249,13 +278,10 @@ export const PatchApp = async (app) => {
     });
     Swal.close();
 
-    const { data, error } = await SupabaseFuncInvoke("request_application", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "PATCH",
-        app_id: app.id,
-        desc: text,
-      }),
+    const { code,error } = await SupabaseFuncInvoke("configure_application", {
+      action: "PATCH",
+      app_id: app.id,
+      desc: text,
     });
 
     if (error) throw error;

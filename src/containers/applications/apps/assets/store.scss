@@ -231,7 +231,8 @@
 
 .instbtn {
   font-size: 0.8em;
-  padding: 4px 36px;
+  padding: 4px 0;
+  min-width: 80px;
   padding-bottom: 6px;
   background: #0067c0;
   border-radius: 4px;

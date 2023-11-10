@@ -1,19 +1,29 @@
 import { scanCodeApps } from "../data/constant";
 import store from "../reducers";
+import { supabase } from "../supabase/createClient";
 
 export const isAdmin = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.admin == true;
+  return user?.admin == true;
 };
 
 export const isGreenList = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.greenlist == true;
+  return user?.greenlist == true || user?.app_metadata?.greenlist == true;
 };
 export const isWhiteList = () => {
   const user = store.getState().user;
-  return user?.app_metadata?.whitelist == true;
+  return user?.whitelist == true;
 };
+export const isAllowWorkerProfileFetch = async () => {
+  const user = store.getState().user;
+  const { data, error } = await supabase.rpc("validate_user_access", {
+    user_account_id: user?.id,
+    plan_name: ['fullstack','remote','admin']
+  });
+  if (error) throw error;
+  return data;
+}
 
 export const isMobile = () => {
   let check = false;

@@ -1,3 +1,5 @@
+import { localStorageKey } from "../data/constant";
+
 const defState = {
   id: "",
 };
@@ -9,6 +11,7 @@ const userReducer = (state = defState, action) => {
     case "UPDATE_USER":
       return state;
     case "DELETE_USER":
+      localStorage.removeItem(localStorageKey.user)
       return {};
     default:
       return state;

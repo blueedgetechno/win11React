@@ -23,4 +23,11 @@ export const scanCodeApps = {
   "Resident Evil 4": true,
   "Red Dead Redemption 2": true,
   "Elden Ring": true,
+  "God of War": true
 };
+
+export const localStorageKey = {
+  user: 'USER1',
+  store: 'STORE',
+  app: 'APP'
+}
