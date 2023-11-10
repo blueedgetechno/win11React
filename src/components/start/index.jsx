@@ -205,6 +205,18 @@ export const SidePane = () => {
   // useEffect(() => {
   //   setAnimClick(false);
   // }, [animClick]);
+  const settngsClick = useSelector((state) => {
+    return state.taskbar.apps[0];
+  });
+
+  const actionsettingsClick = () => {
+    alert("clicked");
+    setAnimClick(true);
+    setTimeout(() => {
+      setAnimClick(false);
+    }, 500);
+    console.log(settngsClick);
+  };
   return (
     <div
       className="sidePane dpShad"
@@ -267,10 +279,7 @@ export const SidePane = () => {
         <div
           className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit "
           onClick={() => {
-            setAnimClick(true);
-            setTimeout(() => {
-              setAnimClick(false);
-            }, 500);
+            actionsettingsClick();
           }}
         >
           <IoSettingsOutline className={`  ${animClick && "animator"}`} />
