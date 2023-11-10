@@ -130,29 +130,26 @@ export const installApp = (payload) =>
 export const startApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
+    const appName = appInput?.name ?? "null";
+    const input = {
+      storage_id: payload.storage_id,
+      privateIp: payload.privateIp,
+    };
+
     if (payload.status != "PAUSED") throw i18next.t("error.NOT_PAUSED");
 
-    await StartApplication(payload.storage_id);
-    for (let i = 0; i < 100; i++) {
-      {
-        let { data, error } = await supabase.rpc("setup_status", {
-          volume_id: payload.volume_id,
-        });
-        if (error) throw error;
-        if (data == true) break;
-      }
+    await StartApplication(payload.storage_id, payload.volume_id);
 
-      {
-        const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST',{
-          volume_id: payload.volume_id,
-        });
-        if (error) throw error;
-        else if (resource.at(0).desired_state == 'PAUSED') 
-          throw { error: "Timeout !", code: '6' }; // TODO
-      }
+    // Open new tab
+    const remoteLink = await AccessApplication(input);
 
-      await sleep(10 * 1000);
-    }
+    openRemotePage(remoteLink.url, appName, 'new_tab');
+    const feedbackInput = {
+      game: appName,
+      session: remoteLink.url ?? "null",
+    };
+    store.dispatch({ type: "USER_FEEDBACK", payload: feedbackInput });
+
     await fetchApp();
   }, "startApp");
 
