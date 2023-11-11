@@ -67,7 +67,8 @@ const apps = [
   {
     name: "Blue",
     icon: "win/user",
-    type: "short",
+    type: "app",
+    action: "EXPLORER",
   },
   {
     name: "Alarms",
