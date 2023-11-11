@@ -35,7 +35,6 @@ export const log = async ({
         title: title ?? "Success!",
         text: content ?? "You've succeed",
         icon: icon ?? "success",
-        timer: 2000,
       });
       break;
 
