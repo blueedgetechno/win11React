@@ -320,12 +320,15 @@ const DetailPage = ({ app }) => {
   }, []);
   const dispatch = useDispatch();
 
-  const download = async ({ id }) => {
-    console.log(`download ${id}`);
+  const download = async ({id}, app) => {
+
+    console.log(id);
+
     if (!isGreenList()) return;
     //const vol_option = await VolumeOption();
     await installApp({
       app_template_id: id,
+      appName: app.name ?? 'null',
       availability: "HA",
       speed: "HOT",
       safe: false,
@@ -423,7 +426,7 @@ const DetailPage = ({ app }) => {
                 <div
                   className="instbtn mt-12 handcr"
                   payload={x}
-                  onClick={() => download(x)}
+                  onClick={() => download(x, app)}
                 >
                   {isGreenList()
                     ? `${x.gpu} ${x.region}`

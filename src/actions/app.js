@@ -116,12 +116,18 @@ export const resetApp = async (appInput) =>
 // Handle app
 export const installApp = (payload) =>
   wrapper(async () => {
-    await DownloadApplication(
+    const storageId = await DownloadApplication(
       payload.app_template_id,
       payload.availability,
       payload.speed,
       payload.safe,
     );
+    //const input = {
+    //  storage_id: storageId,
+    //  privateIp: '',
+    //};
+    //const remoteLink = await AccessApplication(input);
+    //openRemotePage(remoteLink.url, payload.appName, 'new_tab');
 
     await fetchApp();
   }, "installApp");

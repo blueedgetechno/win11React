@@ -79,7 +79,6 @@ export const ModifySubscription = async (action,email) => {
 };
 
 
-
 export const DownloadApplication = async (
   app_template_id,
   availability,
@@ -120,7 +119,9 @@ export const DownloadApplication = async (
     throw { error, code: '0' };
 
   const elements = bindingData
-  const countBindingStorageErr = 0
+  let countBindingStorageErr = 0
+  let storageId
+
   for (let i = 0; i < 100; i++) {
     let pass = true
     for (let index = 0; index < elements.length; index++) {
@@ -139,6 +140,8 @@ export const DownloadApplication = async (
 
       else if (data.at(0).storage_id == null)
         pass = false
+      else if (data.at(0).storage_id != null)
+        storageId = data.at(0).storage_id
     }
 
     if (pass)
@@ -148,7 +151,7 @@ export const DownloadApplication = async (
   }
 
 
-  return result;
+  return storageId;
 };
 
 export const StartApplication = async (storage_id, volume_id) => {
