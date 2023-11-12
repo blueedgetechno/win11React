@@ -43,7 +43,7 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 	let icon = code != 0 ? 'info' : 'error'
 
 	const CAUSES = {
-		"0": err,
+		"0": JSON.stringify(err),
 		"1": i18next.t("error.run_out_of_gpu_stock"),
 		"2": i18next.t("error.ALREADY_DEPLOYED"),
 		"3": "INVALID_AUTH_HEADER",
