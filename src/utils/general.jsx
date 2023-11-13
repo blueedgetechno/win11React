@@ -30,15 +30,18 @@ export const SettingsSide = (props) => {
     setAnimClick(true);
     setTimeout(() => {
       setAnimClick(false);
+      dispatch({
+        type: props.click,
+        payload: props.payload,
+      });
     }, 500);
-    dispatch({
-      type: props.click,
-      payload: props.payload,
-    });
   };
 
   return (
-    <div className="fancy" onClick={clickDisp}>
+    <div
+      className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit"
+      onClick={clickDisp}
+    >
       <IoSettingsOutline className={`  ${animClick && "animator"}`} />
     </div>
   );

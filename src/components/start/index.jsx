@@ -270,10 +270,9 @@ export const SidePane = () => {
         <div className="px-3 battery-sidepane">
           <Battery pct />
         </div>
-        <div className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit ">
-          {/* <IoSettingsOutline className={`  ${animClick && "animator"}`} /> */}
+        <>
           <SettingsSide click="SETTINGS" payload="togg" />
-        </div>
+        </>
       </div>
     </div>
   );
