@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-
+import { IoSettingsOutline } from "react-icons/io5";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
@@ -24,8 +24,13 @@ String.prototype.count = function (c) {
 };
 
 export const SettingsSide = (props) => {
+  const [animClick, setAnimClick] = useState(false);
   const dispatch = useDispatch();
   const clickDisp = () => {
+    setAnimClick(true);
+    setTimeout(() => {
+      setAnimClick(false);
+    }, 500);
     dispatch({
       type: props.click,
       payload: props.payload,
@@ -34,7 +39,7 @@ export const SettingsSide = (props) => {
 
   return (
     <div className="fancy" onClick={clickDisp}>
-      <div>settings</div>
+      <IoSettingsOutline className={`  ${animClick && "animator"}`} />
     </div>
   );
 };

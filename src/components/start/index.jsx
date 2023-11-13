@@ -7,7 +7,6 @@ import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
-import { IoSettingsOutline } from "react-icons/io5";
 import { SettingsSide } from "../../utils/general";
 export * from "./start";
 export * from "./widget";
@@ -115,7 +114,6 @@ export const SidePane = () => {
   const tasks = useSelector((state) => state.taskbar);
   const [pnstates, setPnstate] = useState([]);
   const dispatch = useDispatch();
-  const [animClick, setAnimClick] = useState(false);
   let [btlevel, setBtLevel] = useState("");
   const childToParent = () => {};
 
@@ -206,17 +204,13 @@ export const SidePane = () => {
   // useEffect(() => {
   //   setAnimClick(false);
   // }, [animClick]);
-  const settngsClick = useSelector((state) => {
-    return state.taskbar.apps[0].action;
-  });
 
-  const actionsettingsClick = () => {
-    setAnimClick(true);
-    setTimeout(() => {
-      setAnimClick(false);
-    }, 500);
-    settngsClick;
-  };
+  // const actionsettingsClick = () => {
+  //   setAnimClick(true);
+  //   setTimeout(() => {
+  //     setAnimClick(false);
+  //   }, 500);
+  // };
   return (
     <div
       className="sidePane dpShad"
@@ -276,12 +270,7 @@ export const SidePane = () => {
         <div className="px-3 battery-sidepane">
           <Battery pct />
         </div>
-        <div
-          className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit "
-          onClick={() => {
-            actionsettingsClick();
-          }}
-        >
+        <div className="px-[12px] bg-transparent rounded  py-[10px] hover:bg-[#ffffff14] text-white font-bold cursor-inherit ">
           {/* <IoSettingsOutline className={`  ${animClick && "animator"}`} /> */}
           <SettingsSide click="SETTINGS" payload="togg" />
         </div>
