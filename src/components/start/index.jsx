@@ -201,20 +201,6 @@ export const SidePane = () => {
     setPnstate(tmp);
   }, [setting, sidepane]);
 
-  // useEffect(() => {
-  //   setAnimClick(false);
-  // }, [animClick]);
-
-  // const actionsettingsClick = () => {
-  //   setAnimClick(true);
-  //   setTimeout(() => {
-  //     setAnimClick(false);
-  //   }, 500);
-  // };
-  // const [panel, panelHide] = useState(true);
-  // if (panel) {
-  //   return <div>banhide</div>;
-  // }
   return (
     <div
       className="sidePane dpShad"
@@ -275,6 +261,7 @@ export const SidePane = () => {
           <Battery pct />
         </div>
         <>
+          {/* new settings icon return function created in general.jsx */}
           <SettingsSide click="SETTINGS" payload="togg" />
         </>
       </div>

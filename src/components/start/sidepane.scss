@@ -188,7 +188,7 @@ body[data-theme="dark"] .bandpane {
       }
     }
   }
-
+  // also added new sass codes here -just flex-basis
   .bottomBar {
     box-sizing: border-box;
     border-top: 1px solid var(--bg4);
@@ -207,12 +207,14 @@ body[data-theme="dark"] .bandpane {
         background: var(--bg4);
       }
     }
-
+    // settings-icon animation when clicked
     .animator {
       animation: rotate 500ms ease-in-out;
     }
   }
 }
+
+// actual css animation code
 @keyframes rotate {
   0% {
     rotate: (0deg);

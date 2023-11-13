@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+// imported new react-icon gear-icon
 import { IoSettingsOutline } from "react-icons/io5";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
@@ -22,14 +23,12 @@ String.prototype.count = function (c) {
   for (i; i < this.length; i++) if (this[i] == c) result++;
   return result;
 };
-
+//new function that returns setting icon at the sidepane with functionalities
 export const SettingsSide = (props) => {
   const [animClick, setAnimClick] = useState(false);
-  // const [panelHide, setPanelHide] = useState(false);
   const dispatch = useDispatch();
   const clickDisp = () => {
     setAnimClick(true);
-    // setPanelHide(true);
     setTimeout(() => {
       setAnimClick(false);
       dispatch({
