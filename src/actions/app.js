@@ -223,6 +223,62 @@ export const stopVolume = (e) =>
     await fetchWorker();
     return "success";
   });
+export const deleteVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await StopVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const connectStorage = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const input = {
+      storage_id: payload.info.storage,
+      privateIp: "unknown",
+    };
+
+    const result = await AccessApplication(input);
+    openRemotePage(result.url, "", "new_tab");
+  });
+
+export const stopStorage = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await StopVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+export const deleteStorage = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await StopVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
 
 export const ReleaseApp = async ({ vol_speed,
   vol_availability,

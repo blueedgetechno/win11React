@@ -3,7 +3,22 @@ import "sweetalert2/src/sweetalert2.scss";
 import { log, Log } from "../lib/log";
 import { supabase } from "../supabase/createClient";
 import * as Actions from ".";
-import * as ActionExternal from "./app";
+import {
+  resetApp,
+
+  connectStorage,
+  stopStorage,
+  deleteStorage,
+  connectVolume,
+  stopVolume,
+  deleteVolume,
+
+  startApp,
+  pauseApp,
+  openApp,
+  deleteApp,
+
+} from "./app"
 import {
   openWorker,
   createSession,
@@ -14,7 +29,6 @@ import {
   createSubscription,
   modifySubscription
 } from "./worker";
-import { deleteApp, openApp } from "./app";
 import { fetchApp } from "./preload";
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
@@ -209,26 +223,34 @@ export const menuDispatch = async (event, menu) => {
   };
   if (!type) return;
   //Worker Menu action
-  if (type === "FILEDIRWORKER") openWorker(event);
-  else if (type === "CREATESESSION") createSession(event);
-  else if (type === "DEACTIVATESESSION") deactiveSession(event);
-  else if (type === "CONNECTWORKER") connectWorker(event);
-  else if (type === "CONNECTWORKERSESSION") connectSession(event);
-  else if (type === "VIEW_DETAIL") viewDetail(event);
-  else if (type === "CLOUDAPP") console.log(event);
-  else if (type === "CONNECTVOLUMEWORKER") ActionExternal.connectVolume(event);
-  else if (type === "STOPVOLUME") ActionExternal.stopVolume(event);
-  else if (type === "CREATE_SUB") createSubscription(event);
-  else if (type === "MODIFY_SUB") modifySubscription(event);
-  else if (type === "RELEASE_APP") store.dispatch({ type: 'ADMIN_RELEASE_APP', payload: { event } });
+       if (type === "FILEDIRWORKER")            openWorker(event);
+  else if (type === "CREATESESSION")            createSession(event);
+  else if (type === "DEACTIVATESESSION")        deactiveSession(event);
+  else if (type === "CONNECTWORKER")            connectWorker(event);
+  else if (type === "CONNECTWORKERSESSION")     connectSession(event);
 
-    //App menu action
-  else if (type === "OPEN_APP") ActionExternal.openApp(externalAppData);
-  else if (type === "OPEN_APP_NEWTAB")
-    ActionExternal.openApp(externalAppData, "new_tab");
-  else if (type === "PAUSE_APP") ActionExternal.pauseApp(externalAppData);
-  else if (type === "START_APP") ActionExternal.startApp(externalAppData);
-  else if (type === "RESET_APP") ActionExternal.resetApp(externalAppData);
+  else if (type === "VIEW_DETAIL")              viewDetail(event);
+
+  else if (type === "CREATE_SUB")               createSubscription(event);
+  else if (type === "MODIFY_SUB")               modifySubscription(event);
+
+  else if (type === "CONNECT_STORAGE")          connectStorage(event);
+  else if (type === "STOP_STORAGE")             stopStorage(event);
+  else if (type === "DELETE_STORAGE")           deleteStorage(event);
+
+  else if (type === "CONNECT_VOLUME")           connectVolume(event);
+  else if (type === "STOP_VOLUME")              stopVolume(event);
+  else if (type === "DELETE_VOLUME")            deleteVolume(event);
+
+  else if (type === "PAUSE_APP")                pauseApp(externalAppData);
+  else if (type === "START_APP")                startApp(externalAppData);
+  else if (type === "RESET_APP")                resetApp(externalAppData);
+
+  else if (type === "OPEN_APP")                 openApp(externalAppData);
+  else if (type === "OPEN_APP_NEWTAB")          openApp(externalAppData, "new_tab");
+
+  else if (type === "RELEASE_APP")              store.dispatch({ type: 'ADMIN_RELEASE_APP', payload: { event } });
+  else if (type === "CLOUDAPP")                 console.log(event);
   else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);
   else store.dispatch(action);
