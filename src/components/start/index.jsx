@@ -211,6 +211,10 @@ export const SidePane = () => {
   //     setAnimClick(false);
   //   }, 500);
   // };
+  // const [panel, panelHide] = useState(true);
+  // if (panel) {
+  //   return <div>banhide</div>;
+  // }
   return (
     <div
       className="sidePane dpShad"

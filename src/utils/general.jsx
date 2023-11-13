@@ -25,14 +25,20 @@ String.prototype.count = function (c) {
 
 export const SettingsSide = (props) => {
   const [animClick, setAnimClick] = useState(false);
+  // const [panelHide, setPanelHide] = useState(false);
   const dispatch = useDispatch();
   const clickDisp = () => {
     setAnimClick(true);
+    // setPanelHide(true);
     setTimeout(() => {
       setAnimClick(false);
       dispatch({
         type: props.click,
         payload: props.payload,
+      });
+
+      dispatch({
+        type: "PANEHIDE",
       });
     }, 500);
   };
