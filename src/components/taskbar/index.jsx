@@ -90,9 +90,6 @@ const Taskbar = () => {
                   key={i}
                   onMouseOver={(!isActive && !isHidden && showPrev) || null}
                   value={task.icon}
-                  onClick={() => {
-                    console.log(task);
-                  }}
                 >
                   <Icon
                     className="tsIcon"
