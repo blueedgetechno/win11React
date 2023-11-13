@@ -191,7 +191,7 @@ export const StartApplication = async (storage_id, volume_id) => {
           throw { error, code: '0' }
         }
       }
-      else if (resource.at(0).desired_state == 'PAUSED')
+      else if (resource.at(0).desired_state == 'PAUSED' || resource.at(0).desired_state == 'STOPPED')
         throw { error: "Timeout !", code: '6' }; // TODO
     }
 
