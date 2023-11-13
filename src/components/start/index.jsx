@@ -8,6 +8,7 @@ import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
 import { IoSettingsOutline } from "react-icons/io5";
+import { SettingsSide } from "../../utils/general";
 export * from "./start";
 export * from "./widget";
 
@@ -206,16 +207,15 @@ export const SidePane = () => {
   //   setAnimClick(false);
   // }, [animClick]);
   const settngsClick = useSelector((state) => {
-    return state.taskbar.apps[0];
+    return state.taskbar.apps[0].action;
   });
 
   const actionsettingsClick = () => {
-    alert("clicked");
     setAnimClick(true);
     setTimeout(() => {
       setAnimClick(false);
     }, 500);
-    console.log(settngsClick);
+    settngsClick;
   };
   return (
     <div
@@ -282,7 +282,8 @@ export const SidePane = () => {
             actionsettingsClick();
           }}
         >
-          <IoSettingsOutline className={`  ${animClick && "animator"}`} />
+          {/* <IoSettingsOutline className={`  ${animClick && "animator"}`} /> */}
+          <SettingsSide click="SETTINGS" payload="togg" />
         </div>
       </div>
     </div>
@@ -329,7 +330,7 @@ export const CalnWid = () => {
         </div>
         <div className="collapser p-2 m-4 rounded" onClick={collapseToggler}>
           {collapse === "" ? (
-            <Icon fafa="faChevronDown" />
+            <Icon src="faChevronDown" />
           ) : (
             <Icon fafa="faChevronUp" />
           )}

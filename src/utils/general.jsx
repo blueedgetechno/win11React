@@ -23,6 +23,21 @@ String.prototype.count = function (c) {
   return result;
 };
 
+export const SettingsSide = (props) => {
+  const dispatch = useDispatch();
+  const clickDisp = () => {
+    dispatch({
+      type: props.click,
+      payload: props.payload,
+    });
+  };
+
+  return (
+    <div className="fancy" onClick={clickDisp}>
+      <div>settings</div>
+    </div>
+  );
+};
 export const Icon = (props) => {
   const sidepane = useSelector((state) => state.sidepane);
 
@@ -41,7 +56,6 @@ export const Icon = (props) => {
 
   const clickDispatch = (event) => {
     if (!sidepane.banhide) dispatch({ type: "BANDHIDE" });
-
     var action = {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
