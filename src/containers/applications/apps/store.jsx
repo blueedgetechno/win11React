@@ -297,23 +297,13 @@ const DetailPage = ({ app }) => {
   const { t, i18n } = useTranslation();
   const [Options, SetOptions] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const {data,error} = await virtapi(`rpc/get_app_from_store`,"POST", { store_id: `${app.id}` })
-      if (error) 
-        throw error
+  useEffect(() => { (async () => {
+    const {data,error} = await virtapi(`rpc/get_app_from_store`,"POST", { store_id: `${app.id}` })
+    if (error) 
+      throw error
 
-      for (let index = 0; index < data.length; index++) {
-        const option = data[index];
-        for (let index = 0; index < option.available.length; index++) {
-          if (option.available[index].available.gpus.includes(option.gpu)) {
-            SetOptions((old) => [...old, option]);
-            break;
-          }
-        }
-      }
-    })();
-  }, []);
+    SetOptions((old) => [...old, ...data]);
+  })()}, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
     element.scrollTo({ top: 0, behavior: "smooth" });
