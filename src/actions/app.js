@@ -10,6 +10,10 @@ import {
   StartApplication,
   StopApplication,
   StopVolume,
+  DeleteVolume,
+  ForkVolume,
+  MigrateVolume,
+  SetDefaultOsVolume,
 } from "./fetch";
 import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
@@ -204,7 +208,7 @@ export const connectVolume = (e) =>
       storage_id: payload.info.storage,
       privateIp: "unknown",
     };
-
+    // TODO: DAT add volumne Id to access
     const result = await AccessApplication(input);
     openRemotePage(result.url, "", "new_tab");
   });
@@ -231,7 +235,52 @@ export const deleteVolume = (e) =>
     const volume = payload.info.id;
 
     if (storage != undefined) await StopApplication(storage);
-    else if (volume != undefined) await StopVolume(volume);
+    else if (volume != undefined) await DeleteVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const forkVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+    const cluster_id = payload.info.id;
+
+    if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const migrateVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const volume = payload.info.id;
+    const cluster_id = payload.info.id;
+    console.log(volume);
+    //return
+
+    if (volume != undefined && cluster_id != undefined) await MigrateVolume(volume, cluster_id);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const setDefaultOsVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const volume = payload.info.id;
+    const cluster_id = payload.info.id;
+
+    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id);
     else throw "invalid request";
 
     await fetchWorker();

@@ -25,7 +25,7 @@ const ModalWorkerInfo = (info) => {
     return list;
   };
 
-  return <div className="p-5">{renderDetailWorker(info)}</div>;
+  return <div className="p-5 h-[70vh]">{renderDetailWorker(info)}</div>;
 };
 
 export default ModalWorkerInfo;

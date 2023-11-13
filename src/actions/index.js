@@ -17,6 +17,9 @@ import {
   pauseApp,
   openApp,
   deleteApp,
+  migrateVolume,
+  forkVolume,
+  setDefaultOsVolume,
 
 } from "./app"
 import {
@@ -241,6 +244,10 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "CONNECT_VOLUME")           connectVolume(event);
   else if (type === "STOP_VOLUME")              stopVolume(event);
   else if (type === "DELETE_VOLUME")            deleteVolume(event);
+
+else if (type === "FORK_VOLUME")                forkVolume(event);
+else if (type === "MIGRATE_VOLUME")             migrateVolume(event);
+else if (type === "SET_DEFAULT_OS")             setDefaultOsVolume(event);
 
   else if (type === "PAUSE_APP")                pauseApp(externalAppData);
   else if (type === "START_APP")                startApp(externalAppData);
