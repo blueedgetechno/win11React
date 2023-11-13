@@ -5,19 +5,23 @@ import { log } from "../lib/log";
 const listErr = [
 	{
 		msg: 'ran out of hardware',
-		text: "error.run_out_of_gpu_stock"
+		text: ["error.run_out_of_gpu_stock", "error.suggest"]
 	},
 	{
 		msg: 'ran out of gpu',
-		text: "error.run_out_of_gpu_stock"
+		text: ["error.run_out_of_gpu_stock", "error.suggest"]
 	},
 	{
 		msg: 'is locked',
-		text: "error.IS_LOCKED"
+		text: ["error.IS_LOCKED", "error.suggest"]
+	},
+	{
+		msg: 'worker not pinged',
+		text: ["error.NOT_PINGED"]
 	},
 	{
 		msg: 'cluster not exist or not active', //TODO
-		text: "Server is down!"
+		text: ["Server is down!", "error.suggest"]
 	}
 ]
 const includesErr = (err = '') => {
@@ -25,13 +29,15 @@ const includesErr = (err = '') => {
 	for (let i = 0; i < listErr.length; i++) {
 
 		if (JSON.stringify(err)?.includes(listErr[i].msg)) {
-			errFormat = i18next.t(listErr[i].text)
+			listErr[i].text.forEach(txt => {
+				errFormat += i18next.t(txt) + " "
+			});
 			break;
 		}
 
 	}
 
-	console.log(errFormat);
+	console.log(errFormat,);
 	return errFormat
 }
 export async function formatError(err = 'Something went wrong!', code = '0') {
@@ -50,6 +56,9 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 		"4": "DATABASE_ERROR",
 		"5": i18next.t("error.NOT_FOUND"),
 		"6": i18next.t("error.TIME_OUT"),
+		"999": JSON.stringify(err), //Frontend Err
+
+
 	}
 
 
@@ -60,7 +69,6 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 		icon = 'info'
 	}
 	const template = `<p> <b class='uppercase'>${msg}. </b>
-						${suggestMsg}
 						</br> 
 						${directDiscordMsg} 
 					  <p>`
@@ -69,7 +77,7 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 	await log({
 		type: "error",
 		icon: icon,
-		title: icon == 'info' ? '' : icon,
+		title: icon == 'info' ? 'Notice:' : icon,
 		content: template,
 	});
 

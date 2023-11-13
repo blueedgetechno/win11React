@@ -82,8 +82,8 @@ export const openApp = async (appInput, type) =>
     const appName = appInput?.name ?? "null";
     const payload = JSON.parse(appInput.payload);
 
-    if (payload.status == "NOT_READY") throw i18next.t("error.NOT_READY");
-    else if (payload.status != "RUNNING") throw i18next.t("error.NOT_RUNNING");
+    if (payload.status == "NOT_READY") throw { error: i18next.t("error.NOT_READY"), code: '999' };
+    else if (payload.status != "RUNNING") throw { error: i18next.t("error.NOT_RUNNING"), code: '999' };
 
     const input = {
       storage_id: payload.storage_id,
@@ -102,8 +102,8 @@ export const resetApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     const appName = appInput?.name ?? "null";
-    if (payload.status == "NOT_READY") throw i18next.t("error.NOT_READY");
-    else if (payload.status != "RUNNING") throw i18next.t("error.NOT_RUNNING");
+    if (payload.status == "NOT_READY") throw { error: i18next.t("error.NOT_READY"), code: '999' };
+    else if (payload.status != "RUNNING") throw { error: i18next.t("error.NOT_RUNNING"), code: '999' };
 
     const input = {
       storage_id: payload.storage_id,
@@ -142,7 +142,7 @@ export const startApp = async (appInput) =>
       privateIp: payload.privateIp,
     };
 
-    if (payload.status != "PAUSED") throw i18next.t("error.NOT_PAUSED");
+    if (payload.status != "PAUSED") throw { error: i18next.t("error.NOT_PAUSED"), code: '999' }
 
     await StartApplication(payload.storage_id, payload.volume_id);
 
@@ -164,7 +164,7 @@ export const pauseApp = async (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     let countErr = 0
-    if (payload.status != "RUNNING") throw i18next.t("error.PAUSED");
+    if (payload.status != "RUNNING") throw { error: i18next.t("error.PAUSED"), code: '999' };
 
     await StopApplication(payload.storage_id);
     for (let i = 0; i < 100; i++) {

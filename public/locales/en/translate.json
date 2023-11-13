@@ -28,7 +28,7 @@
     "unspecific": "Something went wrong.",
     "ALREADY_DEPLOYED": "You've installed 1 game",
     "NOT_ALLOW": "Your account doesn't register our services",
-    "run_out_of_gpu_stock": "We've run out of Gpu stock, please contact with us",
+    "run_out_of_gpu_stock": "We've run out of Gpu stock",
     "NOT_READY": "Installing, wait 3-5' until game logo appears",
     "NOT_RUNNING": "Game is pasued or installing, run 'Start app' to open",
     "NOT_PAUSED": "Game is running or installing, try again!",

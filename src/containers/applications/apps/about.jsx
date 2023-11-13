@@ -58,6 +58,9 @@ export const AboutWin = () => {
             <p>
               <strong>B1:</strong> <strong>Install</strong> tựa game yêu
               thích trong Store, nhưng game màu vàng là được chơi free.{" "}
+              <div>
+                Được install tối data 3 game, và chạy 1 game cùng thời điểm. 
+              </div>
             </p>
 
             <div className="wrapper-img mt-[24px]">
