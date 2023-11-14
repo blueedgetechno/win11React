@@ -143,7 +143,7 @@ export const createSubscription = async (e) => {
         title: "Create new subscription",
       });
   
-      await AddSubscription(formValues.email, formValues.plan);
+      await AddSubscription(formValues.email, formValues.plan, formValues.free);
   
       log({ type: "close" });
   

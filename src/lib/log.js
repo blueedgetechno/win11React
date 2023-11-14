@@ -80,6 +80,7 @@ export const log = async ({
           <div className="flex items-center mt-5 gap-2">
             <span>SUB</span>
             <select name="sub" class="swal2-input" id="plan">
+              <option value="day">Day</option>
               <option value="week">Week</option>
               <option value="month">Month</option>
               <option value="fullstack">Fullstack</option>
@@ -87,12 +88,16 @@ export const log = async ({
               <option value="admin">Admin</option>
             </select>
           </div>
+        <div className="flex items-center justify-around">
+          <label className="flex items-center gap-2" htmlFor="free_sub"> <input type="checkbox" className="h-[20px] w-[20px]" id="free_sub" name="free_sub" /> <span>Free Subscription ?</span></label>
+        </div>
           `,
         focusConfirm: false,
         preConfirm: () => {
           return {
             email: document.getElementById('email').value,
-            plan : document.getElementById('plan').value
+            plan : document.getElementById('plan').value,
+            free: document.querySelector('#free_sub').checked
           }
         }
       })

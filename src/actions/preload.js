@@ -181,7 +181,7 @@ export const fetchUser = async () => {
   {
     const { data, error } = await supabase.rpc("validate_user_access", {
       user_account_id: user?.id,
-      plan_name: ['week', 'month', 'fullstack', 'admin']
+      plan_name: ['day','week', 'month', 'fullstack', 'admin']
     });
     if (error) throw error;
 
