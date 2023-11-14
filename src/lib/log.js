@@ -137,6 +137,48 @@ export const log = async ({
       })
       return migrateForm
       break;
+    case "forkVolume":
+      const { value: forkVolume } = await Swal.fire({
+        title: 'Multiple inputs',
+        html:
+          `   
+            <div>
+              <select id="gpu_model_fork" defaultValue={"RTX 3060 Ti"} class="h-[32px] text-[16px]" name="gpu_model">
+                <option value="RTX 3060 Ti" >RTX 3060 Ti</option>
+                <option value="RTX 2060 SUPER">RTX 2060 Super</option>
+              </select>
+              <label htmlFor="ram">
+                Ram:
+                <select id="ram_fork" defaultValue={"12"} class="ml-2 h-[32px] text-[16px]" name="ram">
+                  <optgroup label="RAM">
+                    <option value="8">8</option>
+                    <option value="12" >12</option>
+                    <option value="16">16</option>
+                  </optgroup>
+                </select>
+              </label>
+              <label htmlFor="">
+                VCPUS:
+                <select id="vcpus_fork" defaultValue={"12"} class="ml-2 h-[32px] text-[16px]" name="vcpus">
+                  <optgroup label="VCPUS">
+                    <option value="8">8</option>
+                    <option value="12" >12</option>
+                    <option value="16">16</option>
+                  </optgroup>
+                </select>
+              </label>
+            </div>` ,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            gpu_model: document.getElementById('gpu_model_fork').value,
+            vcpus: document.getElementById('vcpus_fork').value,
+            ram: document.getElementById('ram_fork').value
+          }
+        }
+      })
+      return forkVolume
+      break;
     
     default:
       break;

@@ -245,11 +245,20 @@ export const deleteVolume = (e) =>
 
 export const forkVolume = (e) =>
   wrapper(async () => {
+
+    const { gpu_model, vcpus, ram } = await log({ type: 'forkVolume' })
+    if (gpu_model == undefined || vcpus == undefined || ram == undefined)
+      return;
     const payload = formatEvent(e);
 
     const volume = payload.info.id;
     const cluster_id = payload.info.cluster_id;
 
+
+    //META DATA
+
+
+    console.log(gpu_model, vcpus, ram);
     if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id);
     else throw "invalid request";
 
