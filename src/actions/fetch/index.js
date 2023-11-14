@@ -211,6 +211,17 @@ export const AccessApplication = async (input) => {
 
   return data;
 };
+export const AccessVolume = async (volume_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+    action: "ACCESS",
+    volume_id,
+  });
+  if (error != null)
+    throw { error, code }
+
+  return data;
+};
 export const ResetApplication = async (input) => {
   const { storage_id, privateIp } = input;
 

@@ -14,6 +14,7 @@ import {
   ForkVolume,
   MigrateVolume,
   SetDefaultOsVolume,
+  AccessVolume,
 } from "./fetch";
 import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
@@ -203,13 +204,10 @@ export const deleteApp = (appInput) =>
 export const connectVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
+    const volume_id = payload.info.id;
 
-    const input = {
-      storage_id: payload.info.storage,
-      privateIp: "unknown",
-    };
     // TODO: DAT add volumne Id to access
-    const result = await AccessApplication(input);
+    const result = await AccessVolume(volume_id);
     openRemotePage(result.url, "", "new_tab");
   });
 
