@@ -138,10 +138,10 @@ export const createSubscription = async (e) => {
   const formValues = await log({ type: 'createSub' })
     if(formValues == undefined || formValues == null)
       return;  
-      log({
-        type: "loading",
-        title: "Create new subscription",
-      });
+    log({
+      type: "loading",
+      title: "Create new subscription",
+    });
   
       await AddSubscription(formValues.email, formValues.plan);
   

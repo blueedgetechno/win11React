@@ -97,7 +97,7 @@ export const log = async ({
         }
       })
       return formValues
-    break;
+      break;
     case "modifySub": 
       const { value } = await Swal.fire({
         title: 'Modify Subscription',
@@ -123,6 +123,21 @@ export const log = async ({
       })
       return value
     break;
+    case "migrateVolume":
+      const { value: migrateForm  } = await Swal.fire({
+        title: 'Multiple inputs',
+        html:
+          '<div className="flex items-center gap-2"><span>CLuster Id</span><input id="cluster_id" class="swal2-input"/></div>' ,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            cluster_id: document.getElementById('cluster_id').value
+          }
+        }
+      })
+      return migrateForm
+      break;
+    
     default:
       break;
   }
