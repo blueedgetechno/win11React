@@ -207,8 +207,11 @@ export const connectVolume = (e) =>
     const volume_id = payload.info.id;
 
     // TODO: DAT add volumne Id to access
-    const result = await AccessVolume(volume_id);
-    openRemotePage(result.url, "", "new_tab");
+    const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+      volume_id: payload.info.id,
+      action: "ACCESS",
+    });
+    openRemotePage(data.url, "", "new_tab");
   });
 
 export const stopVolume = (e) =>
