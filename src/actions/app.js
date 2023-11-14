@@ -247,9 +247,8 @@ export const forkVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
 
-    const storage = payload.info.storage;
     const volume = payload.info.id;
-    const cluster_id = payload.info.id;
+    const cluster_id = payload.info.cluster_id;
 
     if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id);
     else throw "invalid request";
@@ -260,12 +259,10 @@ export const forkVolume = (e) =>
 
 export const migrateVolume = (e) =>
   wrapper(async () => {
+    // TODO
     const payload = formatEvent(e);
 
     const volume = payload.info.id;
-    const cluster_id = payload.info.id;
-    console.log(volume);
-    //return
 
     if (volume != undefined && cluster_id != undefined) await MigrateVolume(volume, cluster_id);
     else throw "invalid request";
