@@ -398,7 +398,7 @@ const ContentArea = ({ searchtxt }) => {
           <>
             <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
               {subInfo?.info?.menu == "worker" ||
-              subInfo?.info?.menu == "session" ? (
+                subInfo?.info?.menu == "session" ? (
                 <Image src={`icon/win/${renderIconName(subInfo?.info)}`} />
               ) : null}
 
@@ -411,7 +411,7 @@ const ContentArea = ({ searchtxt }) => {
   );
 };
 
-const NavPane = ({}) => {
+const NavPane = ({ }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -424,7 +424,7 @@ const NavPane = ({}) => {
   );
 };
 
-const Ribbon = ({}) => {
+const Ribbon = ({ }) => {
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -457,7 +457,55 @@ const Ribbon = ({}) => {
             margin="0 6px"
           />
         </div>
+
+
+        {filter('volume')?.map(i => (
+          <>
+            <label htmlFor="">{i.field}</label>
+            <select className="h-[40px]" name="" id="">
+              {
+                i.options?.map(x => (
+                  <option value={x}>{x}</option>
+                ))
+              }
+            </select>
+
+          </>
+        ))}
       </div>
     </div>
   );
 };
+
+
+const listFilter = {
+  holder: [
+    {
+      field: 'class',
+      options: ['COLD|HA']
+    },
+    {
+      field: 'type',
+      options: [
+        'OS',
+        'MODIFICATION'
+      ]
+    },
+    {
+      field: 'status',
+      options: [
+        'RUNNING',
+        'STOPPED'
+      ]
+    }
+  ]
+
+}
+
+
+const filter = (type) => {
+
+  const filterField = listFilter[type]
+
+  return filterField
+}
