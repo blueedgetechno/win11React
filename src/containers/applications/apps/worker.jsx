@@ -433,6 +433,7 @@ const ContentArea = ({ searchtxt, data }) => {
                   onClick={handleClick}
                   onDoubleClick={handleDouble}
                   data-menu={item.info.menu}
+                  title={item.name}
                 >
                   <Image src={`icon/win/${renderIconName(item.info)}`} />
                   <span>{item.name}</span>
