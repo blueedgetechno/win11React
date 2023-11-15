@@ -123,6 +123,28 @@ export const log = async ({
       })
       return value
     break;
+    case "adjustSub":
+    let created_at = new Date(content.created_at).toISOString().split('T')[0];
+    let ends_at = new Date(content.ends_at).toISOString().split('T')[0];
+      return await Swal.fire({
+        title: 'Adjsut Subscription',
+        html:
+        `<form">
+          <label for="created_sub">Start Time</label>
+          <input type="date" id="created_sub" name="created_sub" value=${created_at}>
+          <label for="end_sub">End Time</label>
+          <input type="date" id="end_sub" name="end_sub" value=${ends_at}>
+        </form>`,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            email: content.email,
+            created_at: document.getElementById('created_sub').value,
+            ends_at: document.getElementById('end_sub').value,
+          }
+        }
+      })
+    break;
     case "migrateVolume":
       const { value: migrateForm  } = await Swal.fire({
         title: 'Multiple inputs',

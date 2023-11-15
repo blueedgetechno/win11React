@@ -78,6 +78,25 @@ export const ModifySubscription = async (action,email) => {
   return data;
 };
 
+/**
+ * 
+ * @param {string} email 
+ * @param {string|datetime} created_at 
+ * @param {string|datetime} ends_at 
+ * @returns 
+ */
+
+export const AdjustSubscription = async (email, created_at, ends_at) => {
+  const { data, error } = await SupabaseFuncInvoke("modify_subscription", {
+    email,
+    action: 'ADJUST',
+    created_at,
+    ends_at
+  })
+  if (error != null) throw error;
+  return data;
+}
+
 
 export const DownloadApplication = async (
   app_template_id,
