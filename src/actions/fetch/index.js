@@ -55,9 +55,9 @@ export const CreateWorkerSession = async (worker_profile_id) => {
  * @param {'month' | 'week'} plan 
  * @returns 
  */
-export const AddSubscription = async (email,plan) => {
+export const AddSubscription = async (email,plan,free) => {
   const { data, code, error } = await SupabaseFuncInvoke("add_subscription", {
-    email, plan
+    email, plan, free
   });
   if (error != null) throw error;
   return data;
