@@ -245,6 +245,7 @@ export const deleteVolume = (e) =>
 
 export const forkVolume = (e) =>
   wrapper(async () => {
+    const description = await log({ type: 'description' })
 
     const { gpu_model, vcpus, ram } = await log({ type: 'forkVolume' })
     if (gpu_model == undefined || vcpus == undefined || ram == undefined)
@@ -290,11 +291,10 @@ export const migrateVolume = (e) =>
 export const setDefaultOsVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
-    const description = await log({ type: 'description' })
     const volume = payload.info.id;
     const cluster_id = payload.info.cluster_id;
 
-    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id, description);
+    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id);
     else throw "invalid request";
 
     await fetchWorker();
