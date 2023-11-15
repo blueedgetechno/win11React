@@ -122,7 +122,7 @@ const filterProxyName = (proxy) => {
       proxyName = proxy.id
       break;
     case "storage":
-      proxyName = proxy.info.owner
+      proxyName = `${proxy.info.owner} ${proxy.id}`
       break;
     default:
       break;
