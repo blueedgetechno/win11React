@@ -127,7 +127,7 @@ export const log = async ({
     let created_at = new Date(content.created_at).toISOString().split('T')[0];
     let ends_at = new Date(content.ends_at).toISOString().split('T')[0];
       return await Swal.fire({
-        title: 'Adjsut Subscription',
+        title: 'Adjust Subscription',
         html:
         `<form">
           <label for="created_sub">Start Time</label>
