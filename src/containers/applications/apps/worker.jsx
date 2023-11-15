@@ -98,9 +98,19 @@ export const Worker = () => {
   const wnapp = useSelector((state) => state.apps.worker);
   const files = useSelector((state) => state.worker);
   const fdata = files.data.getId(files.cdir);
+
+  const [contentData, setContentData] = useState(fdata)
   const [cpath, setPath] = useState(files.cpath);
   const [searchtxt, setShText] = useState("");
+  const [filters, setFilters] = useState({}); //{status: '',}
   const dispatch = useDispatch();
+
+
+  const filterType = fdata?.info?.menu
+
+  useEffect(() => {
+    setContentData(fdata?.data)
+  }, [fdata])
 
   const handleChange = (e) => setPath(e.target.value);
   const handleSearchChange = (e) => setShText(e.target.value);
@@ -157,6 +167,48 @@ export const Worker = () => {
     setShText("");
   }, [files.cpath]);
 
+  const changeFilter = (key, value) => {
+
+    if (value == '') {
+      setFilters(prev => {
+        const { [key]: value, ...rest } = prev
+
+        console.log(rest);
+        return rest
+      })
+      return
+    }
+
+    setFilters(prev => ({ ...prev, [key]: value }))
+  }
+
+  useEffect(() => {
+    let cloneData = fdata?.data
+    for (let key in filters) {
+      if(key == 'sort' && filters[key] =='oldest'){  
+        cloneData.sort((a, b) => {
+          return Date.parse(a.info.created_at) - Date.parse(b.info.created_at)
+        })
+      }
+      else if(key == 'sort' && filters[key] =='newest'){  
+        cloneData.sort((a, b) => {
+          return Date.parse(b.info.created_at) - Date.parse(a.info.created_at)
+        })
+
+      }
+
+      else{
+        cloneData = cloneData.filter(prev => prev.info[key] == filters[key])
+      }  
+    }
+    setContentData(cloneData)
+  }, [filters])
+
+console.log(filters);
+  const resetFilter = () => {
+    setContentData(fdata.data)
+    setFilters({})
+  }
   return (
     <div
       className="msfiles floatTab dpShad"
@@ -176,7 +228,7 @@ export const Worker = () => {
         name={wnapp.name}
       />
       <div className="windowScreen flex flex-col">
-        <Ribbon />
+        <Ribbon type={filterType} changeFilter={changeFilter} filters={filters} resetFilter={resetFilter} />
         <div className="restWindow flex-grow flex flex-col">
           <div className="sec1">
             <Icon
@@ -227,7 +279,7 @@ export const Worker = () => {
           </div>
           <div className="sec2">
             <NavPane />
-            <ContentArea searchtxt={searchtxt} />
+            <ContentArea searchtxt={searchtxt} data={contentData} />
           </div>
           <div className="sec3">
             <div className="item-count text-xs">
@@ -258,13 +310,13 @@ export const Worker = () => {
   );
 };
 
-const ContentArea = ({ searchtxt }) => {
+const ContentArea = ({ searchtxt, data }) => {
   const files = useSelector((state) => state.worker);
   const user = useSelector((state) => state.user);
   const special = useSelector((state) => state.worker.data.special);
   const [selected, setSelect] = useState("null");
   const [userInfo, setuserInfo] = useState(null);
-  const fdata = files.data.getId(files.cdir);
+  //const fdata = files.data.getId(files.cdir);
   const subInfo = React.useMemo(() => {
     if (selected == null) {
       return {
@@ -369,7 +421,7 @@ const ContentArea = ({ searchtxt }) => {
     >
       <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
-          {fdata?.data.map((item, i) => {
+          {data?.length > 0 && data.map((item, i) => {
             return (
               item.name.includes(searchtxt) && (
                 <div
@@ -389,7 +441,7 @@ const ContentArea = ({ searchtxt }) => {
             );
           })}
         </div>
-        {fdata?.data?.length == 0 ? (
+        {data?.length == 0 ? (
           <span className="text-xs mx-auto">This folder is empty.</span>
         ) : null}
       </div>
@@ -411,7 +463,7 @@ const ContentArea = ({ searchtxt }) => {
   );
 };
 
-const NavPane = ({ }) => {
+const NavPane = ({ type, changeFilter }) => {
   const files = useSelector((state) => state.worker);
   const special = useSelector((state) => state.worker.data.special);
 
@@ -424,7 +476,10 @@ const NavPane = ({ }) => {
   );
 };
 
-const Ribbon = ({ }) => {
+const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
+  const handleChangeFilter = (key, value) => {
+    changeFilter(key, value)
+  }
   return (
     <div className="msribbon flex">
       <div className="ribsec">
@@ -432,13 +487,6 @@ const Ribbon = ({ }) => {
           <Icon src="new" ui width={18} margin="0 6px" />
           <span>New</span>
         </div>
-      </div>
-      <div className="ribsec">
-        <Icon src="cut" ui width={18} margin="0 6px" />
-        <Icon src="copy" ui width={18} margin="0 6px" />
-        <Icon src="paste" ui width={18} margin="0 6px" />
-        <Icon src="rename" ui width={18} margin="0 6px" />
-        <Icon src="share" ui width={18} margin="0 6px" />
       </div>
       <div className="ribsec">
         <div className="drdwcont flex">
@@ -459,19 +507,44 @@ const Ribbon = ({ }) => {
         </div>
 
 
-        {filter('volume')?.map(i => (
-          <>
-            <label htmlFor="">{i.field}</label>
-            <select className="h-[40px]" name="" id="">
-              {
-                i.options?.map(x => (
-                  <option value={x}>{x}</option>
-                ))
-              }
-            </select>
 
-          </>
-        ))}
+      </div>
+      <div className="ml-[45px] flex gap-5 items-center">
+        {
+
+          filter(type) && (<>
+            <div className="flex items-center gap-2">
+              <label className="uppercase font-[500]" htmlFor="">Create at</label>
+
+              <select onChange={(e) => handleChangeFilter('sort', e.target.value)} className="h-[40px] p-2" name="" id="">
+                <option value={''}> X </option>
+                <option value={'oldest'}> Oldest </option>
+                <option value={'newest'}> Newest </option>
+
+              </select>
+
+            </div>
+            {
+              filter(type)?.map(i => (
+                <div className="flex items-center gap-2">
+                  <label className="uppercase font-[500]" htmlFor="">{i.field}</label>
+                  <select value={filters[i.field] ?? ''} onChange={(e) => handleChangeFilter(i.field, e.target.value)} className="h-[40px] p-2" name="" id="">
+                    {
+                      i.options?.map(x => (
+                        <option value={x}>{x || 'X'} </option>
+                      ))
+                    }
+                  </select>
+
+                </div>
+              ))
+            }
+            <button className="instbtn h-[40px]" onClick={() => { resetFilter() }}> Reset</button>
+          </>)
+
+
+        }
+
       </div>
     </div>
   );
@@ -481,21 +554,29 @@ const Ribbon = ({ }) => {
 const listFilter = {
   holder: [
     {
-      field: 'class',
-      options: ['COLD|HA']
+      field: 'volume_class',
+      options: [
+        '',
+        'LA|COLD'
+
+      ]
     },
     {
       field: 'type',
       options: [
+        '',
+        'APP',
         'OS',
-        'MODIFICATION'
+        'MODIFICATION',
+
       ]
     },
     {
-      field: 'status',
+      field: 'state',
       options: [
+        '',
         'RUNNING',
-        'STOPPED'
+        'STOPPED',
       ]
     }
   ]
