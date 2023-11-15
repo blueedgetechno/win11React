@@ -71,6 +71,19 @@ export const log = async ({
       Swal.close();
       break;
 
+    case "description":
+      const { value: description } = await Swal.fire({
+        input: "textarea",
+        inputLabel: "Message",
+        inputPlaceholder: "Type your description here...",
+        inputAttributes: {
+          "aria-label": "Type your description here",
+        },
+        showCancelButton: true,
+        focusConfirm: false,
+      });
+      return description;
+
     case "createSub":
       const { value: formValues } = await Swal.fire({
         title: 'Multiple inputs',

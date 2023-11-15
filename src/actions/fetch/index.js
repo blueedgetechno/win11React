@@ -334,12 +334,13 @@ export const MigrateVolume = async (volume_id, cluster_id) => {
 
   return data;
 };
-export const SetDefaultOsVolume = async (volume_id, cluster_id) => {
+export const SetDefaultOsVolume = async (volume_id, cluster_id, description) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "SET_DEFAULT_OS",
     volume_id: volume_id,
-    cluster_id: cluster_id
+    cluster_id: cluster_id,
+    description
   });
   if (error != null)
     throw { error, code };

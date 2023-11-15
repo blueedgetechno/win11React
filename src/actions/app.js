@@ -290,11 +290,11 @@ export const migrateVolume = (e) =>
 export const setDefaultOsVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
-
+    const description = await log({ type: 'description' })
     const volume = payload.info.id;
-    const cluster_id = payload.info.id;
+    const cluster_id = payload.info.cluster_id;
 
-    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id);
+    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id, description);
     else throw "invalid request";
 
     await fetchWorker();
