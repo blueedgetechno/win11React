@@ -290,7 +290,7 @@ export const StopVolume = async (volume_id) => {
 };
 
 //TODO
-export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram) => {
+export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram, description) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "FORK",
@@ -300,7 +300,8 @@ export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram) =
       gpu_model,
       vcpus: parseInt(vcpus),
       ram: parseInt(ram),
-    }
+    },
+    description
   });
   if (error != null)
     throw { error, code };

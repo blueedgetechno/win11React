@@ -183,6 +183,7 @@ export const log = async ({
         html:
           `   
             <div>
+              <div className="flex items-center gap-2"><span>Description</span><input id="description_fork" class="swal2-input"/></div>
               <select id="gpu_model_fork" defaultValue={"RTX 3060 Ti"} class="h-[32px] text-[16px]" name="gpu_model">
                 <option value="RTX 3060 Ti" >RTX 3060 Ti</option>
                 <option value="RTX 2060 SUPER">RTX 2060 Super</option>
@@ -213,7 +214,8 @@ export const log = async ({
           return {
             gpu_model: document.getElementById('gpu_model_fork').value,
             vcpus: document.getElementById('vcpus_fork').value,
-            ram: document.getElementById('ram_fork').value
+            ram: document.getElementById('ram_fork').value,
+            description: document.getElementById('description_fork').value
           }
         }
       })
