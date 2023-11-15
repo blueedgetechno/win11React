@@ -259,7 +259,7 @@ export const forkVolume = (e) =>
 
 
     console.log(gpu_model, vcpus, ram);
-    if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id);
+    if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id, gpu_model, vcpus, ram);
     else throw "invalid request";
 
     await fetchWorker();
