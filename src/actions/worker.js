@@ -3,6 +3,8 @@ import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchWorker } from "./preload";
 import { openRemotePage } from "./remote";
+import { AdjustSubscription } from "./fetch/index.js";
+import { supabase } from "../supabase/createClient.js";
 
 const wrapper = async (func) => {
   try {
@@ -169,3 +171,48 @@ export const modifySubscription = async (e) => {
         return "success";
       });
 };
+export const adjustSubscription =  async (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+    const subscription = await supabase
+      .from('subscriptions')
+      .select('id, created_at, ends_at')
+      .eq('account_id', payload.info.account_id)
+      .order('created_at', {ascending: false})
+      .limit(1)
+
+    if (subscription.error) 
+      return subscription.error.message
+    if (subscription.data.length == 0)
+      return "Not found any subscription"
+
+    const sub = subscription.data[0]
+    const formValues = (await log({ 
+      type: 'adjustSub', 
+      content: {
+        email: payload.info.email,
+        created_at: sub.created_at, 
+        ends_at: sub.ends_at
+      }
+    })).value
+    if(formValues == undefined || null)
+      return;
+      log({
+        type: "loading",
+        title: "Adjusting the subscription"
+      })
+
+      console.log(formValues);
+
+      await AdjustSubscription(
+        formValues.email, 
+        new Date(formValues.created_at), 
+        new Date(formValues.ends_at)
+      )
+
+          
+      log({ type: "close" });
+  
+      await fetchWorker();
+      return "success";
+  })

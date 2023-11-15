@@ -329,6 +329,11 @@ const defState = {
         name: "Modify",
         action: "MODIFY_SUB",
         payload: "open"
+      },
+      {
+        name: "Ajdust",
+        action: "ADJUST_SUB",
+        payload: "open"
       }
     ],
 

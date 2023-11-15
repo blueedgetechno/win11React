@@ -33,6 +33,7 @@ import {
   modifySubscription
 } from "./worker";
 import { fetchApp } from "./preload";
+import { adjustSubscription } from "./worker.js";
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
@@ -236,6 +237,7 @@ export const menuDispatch = async (event, menu) => {
 
   else if (type === "CREATE_SUB")               createSubscription(event);
   else if (type === "MODIFY_SUB")               modifySubscription(event);
+  else if (type === "ADJUST_SUB")               adjustSubscription(event);
 
   else if (type === "CONNECT_STORAGE")          connectStorage(event);
   else if (type === "STOP_STORAGE")             stopStorage(event);
