@@ -211,6 +211,17 @@ export const AccessApplication = async (input) => {
 
   return data;
 };
+export const AccessVolume = async (volume_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+    action: "ACCESS",
+    volume_id,
+  });
+  if (error != null)
+    throw { error, code }
+
+  return data;
+};
 export const ResetApplication = async (input) => {
   const { storage_id, privateIp } = input;
 
@@ -249,7 +260,7 @@ export const StopApplication = async (storage_id) => {
 export const StopVolume = async (volume_id) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
-    action: "STOP_VOLUME",
+    action: "STOP",
     volume_id: volume_id,
   });
   if (error != null)
@@ -259,6 +270,59 @@ export const StopVolume = async (volume_id) => {
   return data;
 };
 
+//TODO
+export const ForkVolume = async (volume_id, cluster_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "FORK",
+    volume_id: volume_id,
+    cluster_id: cluster_id,
+  });
+  if (error != null)
+    throw { error, code };
+
+
+  return data;
+};
+
+export const DeleteVolume = async (volume_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "DELETE",
+    volume_id: volume_id,
+  });
+  if (error != null)
+    throw { error, code };
+
+
+  return data;
+};
+export const MigrateVolume = async (volume_id, cluster_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "MIGRATE",
+    volume_id: volume_id,
+    cluster_id: cluster_id
+  });
+  if (error != null)
+    throw { error, code };
+
+
+  return data;
+};
+export const SetDefaultOsVolume = async (volume_id, cluster_id) => {
+
+  const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
+    action: "SET_DEFAULT_OS",
+    volume_id: volume_id,
+    cluster_id: cluster_id
+  });
+  if (error != null)
+    throw { error, code };
+
+
+  return data;
+};
 export const FetchApplicationTemplates = async (id) => {
   const session = await supabase.auth.getSession();
   if (session.error != null) return session.error;

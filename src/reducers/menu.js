@@ -424,13 +424,18 @@ const defState = {
       },
       {
         name: "Connect",
-        action: "CONNECTVOLUMEWORKER",
+        action: "CONNECT_STORAGE",
         payload: "connect",
       },
       {
         name: "Stop",
-        action: "STOPVOLUME",
+        action: "STOP_STORAGE",
         payload: "stop",
+      },
+      {
+        name: "Delete",
+        action: "DELETE_STORAGE",
+        payload: "delete",
       },
     ],
     volume: [
@@ -438,7 +443,37 @@ const defState = {
         name: "Detail",
         action: "VIEW_DETAIL",
         payload: "detail",
-      }
+      },
+      {
+        name: "Connect",
+        action: "CONNECT_VOLUME",
+        payload: "connect",
+      },
+      {
+        name: "Stop",
+        action: "STOP_VOLUME",
+        payload: "stop",
+      },
+      {
+        name: "Fork",
+        action: "FORK_VOLUME",
+        payload: "fork",
+      },
+      {
+        name: "Migrate",
+        action: "MIGRATE_VOLUME",
+        payload: "fork",
+      },
+      {
+        name: "Set default os",
+        action: "SET_DEFAULT_OS",
+        payload: "default",
+      },
+      {
+        name: "Delete",
+        action: "DELETE_VOLUME",
+        payload: "delete",
+      },
     ],
   },
 };

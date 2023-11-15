@@ -23,7 +23,8 @@ function RenderBranch(tree) {
 
 function AddNode(folder, tree) {
   tree.data.forEach((proxy) => {
-    const proxy_name = `${proxy.type} ${proxy.id}`;
+    const proxy_name = filterProxyName(proxy)
+
     folder[proxy_name] = {
       type: proxy.data.length > 0 ? "folder" : "file",
       data: {},
@@ -104,4 +105,28 @@ export async function formatAppRenderTree(data) {
       };
     }),
   );
+}
+
+const filterProxyName = (proxy) => {
+  let proxyName = `${proxy.type} ${proxy.id}`
+
+  switch (proxy.type) {
+    case "subscription":
+      proxyName = proxy.info.email
+      break;
+
+    case "application":
+      proxyName = proxy.id
+      break;
+    case "volume":
+      proxyName = proxy.id
+      break;
+    case "storage":
+      proxyName = proxy.info.owner
+      break;
+    default:
+      break;
+  }
+
+  return proxyName
 }

@@ -10,6 +10,11 @@ import {
   StartApplication,
   StopApplication,
   StopVolume,
+  DeleteVolume,
+  ForkVolume,
+  MigrateVolume,
+  SetDefaultOsVolume,
+  AccessVolume,
 } from "./fetch";
 import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
@@ -199,6 +204,106 @@ export const deleteApp = (appInput) =>
 export const connectVolume = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
+    const volume_id = payload.info.id;
+
+    // TODO: DAT add volumne Id to access
+    const { data, code, error } = await SupabaseFuncInvoke("access_application", {
+      volume_id: payload.info.id,
+      action: "ACCESS",
+    });
+    openRemotePage(data.url, "", "new_tab");
+  });
+
+export const stopVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await StopVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+export const deleteVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await DeleteVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const forkVolume = (e) =>
+  wrapper(async () => {
+
+    const { gpu_model, vcpus, ram } = await log({ type: 'forkVolume' })
+    if (gpu_model == undefined || vcpus == undefined || ram == undefined)
+      return;
+    const payload = formatEvent(e);
+
+    const volume = payload.info.id;
+    const cluster_id = payload.info.cluster_id;
+
+
+    //META DATA
+
+
+    console.log(gpu_model, vcpus, ram);
+    if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const migrateVolume = (e) =>
+  wrapper(async () => {
+
+    const { cluster_id } = await log({ type: 'migrateVolume' })
+    if (cluster_id == undefined || cluster_id == undefined)
+      return;
+
+
+    console.log(cluster_id, 'cluster_id');
+    const payload = formatEvent(e);
+
+    const volume = payload.info.id;
+    console.log(volume, 'volume_id');
+
+    if (volume != undefined && cluster_id != undefined) await MigrateVolume(volume, cluster_id);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const setDefaultOsVolume = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const volume = payload.info.id;
+    const cluster_id = payload.info.id;
+
+    if (volume != undefined && cluster_id != undefined) await SetDefaultOsVolume(volume, cluster_id);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+
+export const connectStorage = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
 
     const input = {
       storage_id: payload.info.storage,
@@ -209,7 +314,21 @@ export const connectVolume = (e) =>
     openRemotePage(result.url, "", "new_tab");
   });
 
-export const stopVolume = (e) =>
+export const stopStorage = (e) =>
+  wrapper(async () => {
+    const payload = formatEvent(e);
+
+    const storage = payload.info.storage;
+    const volume = payload.info.id;
+
+    if (storage != undefined) await StopApplication(storage);
+    else if (volume != undefined) await StopVolume(volume);
+    else throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+  });
+export const deleteStorage = (e) =>
   wrapper(async () => {
     const payload = formatEvent(e);
 
