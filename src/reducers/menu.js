@@ -416,6 +416,11 @@ const defState = {
         payload: "open",
       },
       {
+        name: "Patch App",
+        action: "PATCH_APP",
+        payload: "patch"
+      },
+      {
         name: "Detail",
         action: "VIEW_DETAIL",
         payload: "detail",

@@ -289,7 +289,6 @@ export const StopVolume = async (volume_id) => {
   return data;
 };
 
-//TODO
 export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram, description) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
@@ -309,6 +308,20 @@ export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram, d
 
   return data;
 };
+
+export const PatchApp = async (app_id, desc, cluster_id) => {
+  
+  const { data, code, error } = await SupabaseFuncInvoke('configure_application', {
+    action: "PATCH",
+    app_id: app_id,
+    desc,
+    cluster_id
+  })
+  if (error != null)
+    throw { error, code};
+
+  return data;
+}
 
 export const DeleteVolume = async (volume_id) => {
 

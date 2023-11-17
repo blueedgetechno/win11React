@@ -19,6 +19,7 @@ import {
   deleteApp,
   migrateVolume,
   forkVolume,
+  patchApp,
   setDefaultOsVolume,
 
 } from "./app"
@@ -259,6 +260,7 @@ export const menuDispatch = async (event, menu) => {
   else if (type === "OPEN_APP_NEWTAB")          openApp(externalAppData, "new_tab");
 
   else if (type === "RELEASE_APP")              store.dispatch({ type: 'ADMIN_RELEASE_APP', payload: { event } });
+  else if (type === "PATCH_APP")                patchApp(event);
   else if (type === "CLOUDAPP")                 console.log(event);
   else if (type != type.toUpperCase())
     Actions[action.type](action.payload, menu);

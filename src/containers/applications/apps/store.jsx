@@ -5,7 +5,6 @@ import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
 import { fetchStore } from "../../../actions/preload";
 import { installApp } from "../../../actions/app";
-import { PatchApp, ReleaseApp } from "../../../actions/app";
 import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
 import { virtapi } from "../../../supabase/createClient";
 
@@ -375,18 +374,6 @@ const DetailPage = ({ app }) => {
     );
   };
 
-  const ReleaseAppButton = () => {
-    return (
-      <div
-        onClick={() => {
-          ReleaseApp(app);
-        }}
-      >
-        <div className="instbtn mt-1 mb-8 handcr">Release</div>
-      </div>
-    );
-  };
-
   const EditButton = () => {
     return (
       <div onClick={handleEdit}>
@@ -422,11 +409,6 @@ const DetailPage = ({ app }) => {
                     ? `${x.gpu} ${x.region}`
                     : "Đang đóng demo ^^, Vui lòng liên hệ fanpage"}
                 </div>
-                {isAdmin() ? (
-                  <div onClick={() => PatchApp(x)}>
-                    <div className="instbtn mb-8 handcr">Patch</div>
-                  </div>
-                ) : null}
               </div>
             ))
           ) : (
@@ -458,7 +440,6 @@ const DetailPage = ({ app }) => {
 
           {isAdmin() && app.type != "vendor" ? (
             <>
-              <ReleaseAppButton />
               <EditButton />
               <DeleteButton />
             </>
