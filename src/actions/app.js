@@ -14,7 +14,7 @@ import {
   ForkVolume,
   MigrateVolume,
   SetDefaultOsVolume,
-  AccessVolume,
+  PatchApp,
 } from "./fetch";
 import Swal from "sweetalert2";
 import { SupabaseFuncInvoke } from "./fetch";
@@ -395,7 +395,7 @@ export const ReleaseApp = async ({ vol_speed,
   });
 };
 
-export const PatchApp = async (app) => {
+export const patchApp = async (app) => {
   wrapper(async () => {
     const { value: text } = await Swal.fire({
       input: "textarea",
@@ -408,13 +408,18 @@ export const PatchApp = async (app) => {
     });
     Swal.close();
 
-    const { code,error } = await SupabaseFuncInvoke("configure_application", {
-      action: "PATCH",
-      app_id: app.id,
-      desc: text,
-    });
+    const payload = formatEvent(app);
+    const app_id = payload.info.id;
+    const cluster_id = payload.info.cluster_id
 
-    if (error) throw error;
+    if (app_id != undefined && cluster_id != undefined) 
+      await PatchApp(app_id, text, cluster_id);
+    else 
+      throw "invalid request";
+
+    await fetchWorker();
+    return "success";
+
   });
 };
 
