@@ -36,7 +36,7 @@
     "NOT_PINGED": "Game đã được pasued, reload và start app lại nhé!",
     "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !",
     "NOT_FOUND": "Không tìm thấy app yêu cầu.",
-    "TIME_OUT": "Yêu cầu đã hết hạn."
+    "TIME_OUT": "Yêu cầu đã hết hạn. KHÔNG gửi lại yêu cầu để tránh lỗi data. RELOAD lại sau mỗi 1-2' cho đến khi game lên. Nếu quá 10' hãy báo lỗi cho page."
   },
   "info": {
     "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
