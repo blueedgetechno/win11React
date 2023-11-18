@@ -34,6 +34,7 @@ import {
 } from "./worker";
 import { fetchApp } from "./preload";
 import { adjustSubscription } from "./worker.js";
+import { localStorageKey } from "../data/constant.js";
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
@@ -266,3 +267,32 @@ export const menuDispatch = async (event, menu) => {
 
   store.dispatch({ type: "MENUHIDE" });
 };
+
+//Cache user request & show when reload
+
+
+export const cacheRequest = ({ action, appName, callback = '' }) => {
+
+  const cache = {
+    action,
+    appName,
+    callback
+  }
+
+  localStorage.setItem(localStorageKey.request, JSON.stringify(cache))
+}
+
+
+export const getCacheData = () => {
+
+  const data = JSON.parse(localStorage.getItem(localStorageKey.request))
+
+  return data
+}
+
+
+export const dispatchOutSide = (action, payload) => {
+
+  store.dispatch({ type: action, payload })
+
+}
