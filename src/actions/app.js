@@ -23,6 +23,8 @@ import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
 import { formatError } from "../utils/formatErr";
+import { localStorageKey } from "../data/constant";
+import { cacheRequest } from ".";
 
 export const formatEvent = (event) => {
   const pid = event.target.dataset.pid;
@@ -148,6 +150,10 @@ export const startApp = async (appInput) =>
     };
 
     if (payload.status != "PAUSED") throw { error: i18next.t("error.NOT_PAUSED"), code: '999' }
+
+    //await sleep(15000)
+    //cacheRequest({ action: 'START', appName, })
+    //return
 
     await StartApplication(payload.storage_id, payload.volume_id);
 
@@ -411,3 +417,15 @@ export const PatchApp = async (app) => {
     if (error) throw error;
   });
 };
+
+
+
+
+export const showCacheRequest = async () => {
+  //wrapper(async () => {
+  const { action, appName, ...rest } = JSON.parse(localStorage.getItem(localStorageKey.request))
+
+  const content = `Đang ${action} ${appName}`
+  await log({ type: 'loading', content: content })
+  //});
+}
