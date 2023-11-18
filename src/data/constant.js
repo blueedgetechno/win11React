@@ -29,5 +29,6 @@ export const scanCodeApps = {
 export const localStorageKey = {
   user: 'USER1',
   store: 'STORE',
-  app: 'APP'
+  app: 'APP',
+  request: 'REQUESTCACHE'
 }
