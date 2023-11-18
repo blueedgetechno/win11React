@@ -6,6 +6,7 @@ const Modal = (props) => {
   const theme = useSelector((state) => state.setting.person.theme);
   const dispatch = useDispatch();
   const closeModal = () => {
+    if(type == 'notify') return
     dispatch({
       type: "CLOSE_MODAL",
     });
