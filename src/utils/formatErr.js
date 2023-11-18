@@ -22,6 +22,10 @@ const listErr = [
 	{
 		msg: 'cluster not exist or not active', //TODO
 		text: ["Server is down!", "error.suggest"]
+	},
+	{
+		msg: 'timeout', //TODO
+		text: ["error.TIME_OUT"]
 	}
 ]
 const includesErr = (err = '') => {
