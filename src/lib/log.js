@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { dispatchOutSide } from "../actions";
 
 export const log = async ({
   type,
@@ -11,17 +12,20 @@ export const log = async ({
 }) => {
 
   //Swal.close()
+  dispatchOutSide('CLOSE_MODAL', '')
 
   switch (type) {
     case "loading":
-      Swal.fire({
-        title: title ?? "Loading",
-        text: content ?? "Take a breath ^^",
-        icon: icon ?? "info",
-        showCancelButton: false,
-        showConfirmButton: false,
-        allowOutsideClick: false,
-      });
+      //Swal.fire({
+      //  title: title ?? "Loading",
+      //  text: content ?? "Take a breath ^^",
+      //  icon: icon ?? "info",
+      //  showCancelButton: false,
+      //  showConfirmButton: false,
+      //  allowOutsideClick: true,
+      //});
+
+      dispatchOutSide('NOTIFY', '')
       break;
     case "error":
       Swal.fire({
