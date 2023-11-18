@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 
 const Modal = (props) => {
-  const { isOpen } = props;
+  const { isOpen, type } = props;
   const theme = useSelector((state) => state.setting.person.theme);
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -21,7 +21,7 @@ const Modal = (props) => {
         overlayClassName="fixed inset-0"
         //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
       >
-        <div
+       {type !='notify'?  <div
           style={{ background: theme == "dark" ? "rgb(255 255 255 / 5%)" : "" }}
           className="flex flex-col bg-[#eff4f9]"
         >
@@ -36,7 +36,7 @@ const Modal = (props) => {
               alt=""
             />
           </button>
-        </div>
+        </div> : null}
         <div className="selectText d-flex overflow-auto min-h-full">
           {props.children}
         </div>

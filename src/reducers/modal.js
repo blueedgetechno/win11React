@@ -19,6 +19,8 @@ const modalReducer = (state = defData, action) => {
       return { type: "pm_modal", data: action.payload };
     case "ADMIN_RELEASE_APP":
       return { type: "release_app", data: action.payload };
+    case "NOTIFY":
+      return { type: "notify", data: action.payload };
     case "CLOSE_MODAL":
       return { type: "disable", data: {} };
     default:

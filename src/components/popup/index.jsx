@@ -6,12 +6,15 @@ import ModalSelectVendor from "./modal/vendor";
 import { UserFeedBack } from "./modal/userFeedBack";
 import PaymentModal from "./modal/payment";
 import ReleaseAppModal from "./modal/release";
+import Notify from "./modal/notify";
 
+
+import "./index.scss"
 const Popup = (props) => {
   const modalInfo = useSelector((state) => state.modal);
-  //const modalInfo ={type: 'release_app', data:''}
+  //const modalInfo ={type: 'notify', data:''}
   return (
-    <Modal isOpen={modalInfo.type != "disable"}>
+    <Modal type={modalInfo?.type} isOpen={modalInfo.type != "disable"}>
       {modalInfo.type == "insert_store" ? (
         <ModalEditOrInsert modalType={"insert"} appData={modalInfo.data} />
       ) : modalInfo.type == "edit_store" ? (
@@ -26,6 +29,8 @@ const Popup = (props) => {
         <PaymentModal data={modalInfo.data} />
       ) : modalInfo.type == "release_app" ? (
         <ReleaseAppModal data={modalInfo.data} />
+      ) : modalInfo.type == "notify" ? (
+        <Notify data={modalInfo.data} />
       ) : null}
     </Modal>
   );
