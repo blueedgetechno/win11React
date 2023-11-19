@@ -6,9 +6,20 @@ import { TbLoaderQuarter } from "react-icons/tb";
 import { TbLoader3 } from "react-icons/tb";
 
 function Notify({data}) {
-	const {title, content, type} = data
+	const {	title, content, type, 
+			showProtip = true, 
+			showLoadingProcess = true,
+			loadingProcessMs = 8* 1000,
+			loadingPercent = 0
+		} = data
 
 
+	console.log({	title, content, type, 
+		showProtip , 
+		showLoadingProcess ,
+		loadingProcessMs ,
+		loadingPercent ,
+	});
 	return ( 
 
 		<div className="w-[330px] h-auto p-[14px]">
@@ -16,9 +27,10 @@ function Notify({data}) {
 			<TbLoader3 className="animate-spin" />
 
 			</div>
-			<p className="text-center text-[1.2rem] mb-[24px]">Please wait...</p>
-			<LoadingProgressBar></LoadingProgressBar>
-			<Protip></Protip>
+			<p className="text-center text-[1.2rem] mb-[24px]">{title ?? 'Please wait...'}</p>
+			{/*<p>{content}</p>*/}
+			{showLoadingProcess ? <LoadingProgressBar percent={loadingPercent}/> : ''}
+			{showProtip ? <Protip></Protip> : ''}
 		</div>
 
 	 );
@@ -39,17 +51,22 @@ const Loading = () =>{
 	}
 
 
-const LoadingProgressBar = () => {
-	const [loading, setLoading] = useState(0);
+const LoadingProgressBar = ({percent=0}) => {
+	const [loading, setLoading] = useState(percent);
 	
+	useEffect(()=>{
+		setLoading(percent)
+	},[percent])
 	useEffect(() => {
 		const interval = setInterval(() => {
 		const randomNumber = Math.floor(Math.random() * 5) + 1
-		setLoading((prevLoading) => (prevLoading < 94 ? prevLoading + randomNumber : 99));
+		if(percent != 100) {
+			setLoading((prevLoading) => (prevLoading < 94 ? prevLoading + randomNumber : 99));
+		}
 		}, 8 * 1000);
 	
-		return () => clearInterval(interval);
-	}, []);
+		return () =>(clearInterval(interval)) 
+	}, [percent]);
 	
 	return (
 		<div className="loading-container !relative">
@@ -76,12 +93,14 @@ const Protip = () =>{
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCurrentTip((prev) => (prev < listTip.length -1 ? prev + 1 : 0));
-		}, 15000);
+			
+			const randomNumber = Math.floor(Math.random() * 3) 
+
+			setCurrentTip(randomNumber);
+		}, 15 * 1000);
 	
 		return () => clearInterval(interval);
 	}, []);
-	console.log(currentTip);
 	return(
 		<div className="mt-[14px]">
 			<strong>Pro tip:</strong>

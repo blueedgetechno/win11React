@@ -41,14 +41,23 @@ export const formatEvent = (event) => {
 
 const wrapper = async (func, appType) => {
   let content = "It took about 5 minutes, take a break🧐";
+  let showLoadingProcess = false;
   if (appType == "startApp") content = i18next.t("info.startApp");
   if (appType == "installApp") content = i18next.t("info.installApp");
   if (appType == "pauseApp") content = i18next.t("info.pauseApp");
 
+  if (appType == "startApp" ||
+    appType == "installApp" ||
+    appType == "pauseApp") {
+    showLoadingProcess = true
+  }
+
+  console.log(showLoadingProcess);
   try {
     log({
       type: "loading",
       content: content,
+      showLoadingProcess
     });
     const result = await func();
     await log({

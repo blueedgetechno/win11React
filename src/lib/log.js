@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { dispatchOutSide } from "../actions";
+import { sleep } from "../utils/sleep";
 
 export const log = async ({
   type,
@@ -9,6 +10,7 @@ export const log = async ({
   time,
   confirmButtonText,
   confirmCallback,
+  showLoadingProcess = false
 }) => {
 
   //Swal.close()
@@ -25,7 +27,7 @@ export const log = async ({
       //  allowOutsideClick: true,
       //});
 
-      dispatchOutSide('NOTIFY', '')
+      dispatchOutSide('NOTIFY', { title, content, showLoadingProcess })
       break;
     case "error":
       Swal.fire({
@@ -35,11 +37,14 @@ export const log = async ({
       });
       break;
     case "success":
+      dispatchOutSide('NOTIFY', { loadingPercent: 100, showLoadingProcess })
+      await sleep(400)
       Swal.fire({
         title: title ?? "Success!",
         text: content ?? "You've succeed",
         icon: icon ?? "success",
       });
+      dispatchOutSide('CLOSE_MODAL', '')
       break;
 
     case "confirm":
