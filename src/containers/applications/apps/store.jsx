@@ -10,6 +10,8 @@ import { virtapi } from "../../../supabase/createClient";
 
 import Swal from "sweetalert2";
 import "./assets/store.scss";
+import { supabase } from "../../../supabase/createClient.js";
+import { isWhiteList } from "../../../utils/checking.js";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -295,13 +297,35 @@ const DetailPage = ({ app }) => {
   const [dstate, setDown] = useState(0);
   const { t, i18n } = useTranslation();
   const [Options, SetOptions] = useState([]);
+  const user = useSelector((state) => state.user);
+
+  const region = [
+    'Hà Nội',
+    'India'
+  ]
 
   useEffect(() => { (async () => {
+    const subscription = await supabase.from("subscriptions").select("account_id, metadata").eq("account_id", user.id)
+    let user_region;
+  
+    switch(subscription.data.at(0).metadata){
+      case '{}': // thinkmay internal user
+        user_region = region[0]
+      break;
+      case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}':
+        user_region = region[1]
+      break;
+    }
+  
     const {data,error} = await virtapi(`rpc/get_app_from_store`,"POST", { store_id: `${app.id}` })
     if (error) 
       throw error
-
-    SetOptions((old) => [...old, ...data]);
+  
+    for (let i = 0; i < data.length; i++){
+      const option = data[i]
+      if (isWhiteList() || user_region == option.region)
+        SetOptions((old) => [...old, option])
+    }
   })()}, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
