@@ -185,37 +185,41 @@ export const StartApplication = async (storage_id, volume_id) => {
     throw { error, code }
   }
   for (let i = 0; i < 100; i++) {
-    {
-      let { data, error } = await supabase.rpc("setup_status", {
-        volume_id,
-      });
-      if (error) {
-        countErr++
-      };
+    const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST', {
+      volume_id,
+    });
+    if (error) {
+      countErr++
       if (countErr == COUNT_ERR_RPC) {
         await fetchApp();
         throw { error, code: '0' }
       }
-      if (data == true) break;
     }
-
-    {
-      const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST', {
-        volume_id,
-      });
-      if (error) {
-        countErr++
-        if (countErr == COUNT_ERR_RPC) {
-          await fetchApp();
-          throw { error, code: '0' }
-        }
-      }
-      else if (resource.at(0).desired_state == 'PAUSED' || resource.at(0).desired_state == 'STOPPED')
-        throw { error: "Timeout !", code: '6' }; // TODO
-    }
+    else if (resource.at(0).desired_state == 'PAUSED' || resource.at(0).desired_state == 'STOPPED')
+      throw { error: "Timeout !", code: '6' }; // TODO
 
     await sleep(TIME_SLEEP);
   }
+
+
+  for (let i = 0; i < 100; i++) {
+    let { data, error } = await supabase.rpc("setup_status", {
+      volume_id,
+    });
+    if (error) {
+      countErr++
+    };
+
+    if (countErr == COUNT_ERR_RPC) {
+      await fetchApp();
+      throw { error, code: '0' }
+    }
+    if (data == true) break;
+
+    await sleep(TIME_SLEEP);
+  }
+
+
   return data;
 };
 export const AccessApplication = async (input) => {
