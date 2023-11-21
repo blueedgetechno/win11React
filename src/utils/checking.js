@@ -9,7 +9,8 @@ export const isAdmin = () => {
 
 export const isGreenList = () => {
   const user = store.getState().user;
-  return user?.greenlist == true || user?.app_metadata?.greenlist == true;
+  //return user?.greenlist == true || user?.app_metadata?.greenlist == true;
+  return user?.greenlist == true
 };
 export const isWhiteList = () => {
   const user = store.getState().user;
