@@ -308,7 +308,7 @@ const DetailPage = ({ app }) => {
     const subscription = await supabase.from("subscriptions").select("account_id, metadata").eq("account_id", user.id)
     let user_region;
   
-    switch(subscription.data.at(0).metadata){
+    switch(JSON.stringify(subscription.data.at(0).metadata).toString()){
       case '{}': // thinkmay internal user
         user_region = region[0]
       break;
@@ -316,7 +316,7 @@ const DetailPage = ({ app }) => {
         user_region = region[1]
       break;
     }
-  
+
     const {data,error} = await virtapi(`rpc/get_app_from_store`,"POST", { store_id: `${app.id}` })
     if (error) 
       throw error
