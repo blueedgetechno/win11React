@@ -9,9 +9,9 @@
   "about.understand": "Ok, I understand",
   "about.contact": "contact",
   "store.featured-app": "Cloud PC",
-  "store.featured-app.info": "Data visualization, 3D Rendering,... any heavy workload run on cloud",
+  "store.featured-app.info": "Một lựa chọn hợp ví cho những ai có nhu cầu làm việc cần máy tính cấu hình cao",
   "store.featured-game": "Cloud Gaming-VN",
-  "store.featured-game.info": "AAA gaming from your browser without download",
+  "store.featured-game.info": "Chiến game AAA ngay trên trình duyệt, mọi lúc mọi nơi.",
   "store.free": "FREE",
   "store.owned": "Owned",
   "store.rent": "Rent",
@@ -39,7 +39,7 @@
     "TIME_OUT": "Yêu cầu đã hết hạn. KHÔNG gửi lại yêu cầu để tránh lỗi data. RELOAD lại sau mỗi 1-2' cho đến khi game lên. Nếu quá 10' hãy báo lỗi cho page."
   },
   "info": {
-    "startApp": "Vui lòng đợi 1 vài phút. Khi muốn tắt máy: Chuột phải => pause app",
+    "startApp": "Khi muốn tắt máy và được lưu data: Chuột phải => pause app",
     "installApp": "Tips: Khi có logo installing, đợi 1 vài phút cho đến khi logo game xuất hiện",
     "pauseApp": "Tips: Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!",
     "thanks": "Xin cảm ơn bạn ^^",
@@ -52,6 +52,9 @@
     "inActiveUser": "Tài khoản chưa kích hoạt, truy cập fanpage để được hướng dẫn"
   },
   "store": {
-    "app_not_available": "Đang hết máy có game TT"
+    "app_not_available": "Đang hết máy TT"
+  },
+  "app": {
+    "guideline": "Hướng dẫn"
   }
 }

@@ -53,5 +53,8 @@
   },
   "store": {
     "app_not_available": "App isn't ready"
+  },
+  "app": {
+    "guideline": "Guideline"
   }
 }
