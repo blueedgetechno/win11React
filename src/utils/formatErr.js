@@ -41,7 +41,6 @@ const includesErr = (err = '') => {
 
 	}
 
-	console.log(errFormat,);
 	return errFormat
 }
 export async function formatError(err = 'Something went wrong!', code = '0') {

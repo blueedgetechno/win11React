@@ -173,7 +173,6 @@ export const Worker = () => {
       setFilters(prev => {
         const { [key]: value, ...rest } = prev
 
-        console.log(rest);
         return rest
       })
       return
@@ -204,7 +203,6 @@ export const Worker = () => {
     setContentData(cloneData)
   }, [filters])
 
-console.log(filters);
   const resetFilter = () => {
     setContentData(fdata.data)
     setFilters({})
