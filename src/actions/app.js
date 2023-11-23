@@ -193,9 +193,7 @@ export const pauseApp = async (appInput) =>
         throw { error, code: '0' }
       }
 
-      const { data, error } = await supabase.rpc("setup_status", {
-        volume_id: payload.volume_id,
-      });
+      const { data, error } = await supabase.rpc("setup_status", { storage_id: payload.storage_id, });
 
       if (error) 
         countErr++

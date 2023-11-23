@@ -156,9 +156,7 @@ export const StartApplication = async (storage_id, volume_id) => {
       throw { error, code: '0' }
     }
 
-    const { data, error } = await supabase.rpc("setup_status", {
-      volume_id,
-    });
+    const { data, error } = await supabase.rpc("setup_status", { storage_id, });
 
     if (error) 
       countErr++
