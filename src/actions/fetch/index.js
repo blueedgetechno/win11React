@@ -119,7 +119,10 @@ export const DownloadApplication = async (
     if (countBindingStorageErr == COUNT_ERR_RPC)
       throw { error, code: '0' };
 
-    const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element.volume_ids.at(0));
+    const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', {
+      volume_id: element.volume_ids.at(0)
+    });
+
     if (error)
       countBindingStorageErr++
     else if (data.length == 0)
