@@ -104,7 +104,6 @@ export const DownloadApplication = async (
   speed,
   safe,
 ) => {
-  let countErr = 0
   const { data: result, code, error } = await SupabaseFuncInvoke("launch_application", {
     action: "SETUP",
     app_template_id: app_template_id,
@@ -113,58 +112,22 @@ export const DownloadApplication = async (
   if (error != null) {
     throw { error, code }
   }
-  // TODO
-  for (let i = 0; i < 100; i++) {
-    const { data, error } = await virtapi(`rpc/fetch_resource_state`, 'POST', { id: result.resource_id });
 
-    if (error) {
-      countErr++
-      if (countErr == COUNT_ERR_RPC) {
-        throw { error, code: '0' };
-      }
-    }
-    else if (data.length == 0)
-      throw { error: 'Resource not found!', code: '5' } //resources not found
-    else if (data.at(0).current_state == 'QUEUED' && data.at(0).previous_state != 'NULL')
-      throw { error: 'Installing timeout!', code: '6' } //lanching timeout 
-    else if (data.at(0).current_state == 'RUNNING')
-      break;
-
-    await sleep(TIME_SLEEP);
-  }
-
-  const { data: bindingData, error: bindingError } = await virtapi(`rpc/binding_volume`, 'POST', { resource_id: result.resource_id });
-  if (bindingError)
-    throw { error, code: '0' };
-
-  const elements = bindingData
+  let storageId = 0
   let countBindingStorageErr = 0
-  let storageId
-
   for (let i = 0; i < 100; i++) {
-    let pass = true
-    for (let index = 0; index < elements.length; index++) {
-      const element = elements[index];
-      const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element);
-      if (error) {
-        countBindingStorageErr++
-        if (countBindingStorageErr == COUNT_ERR_RPC) {
-          throw { error, code: '0' };
-        }
-      }
+    if (countBindingStorageErr == COUNT_ERR_RPC)
+      throw { error, code: '0' };
 
-
-      if (data.length == 0)
-        throw { error: 'Resource not found!', code: '5' };
-
-      else if (data.at(0).storage_id == null)
-        pass = false
-      else if (data.at(0).storage_id != null)
-        storageId = data.at(0).storage_id
-    }
-
-    if (pass)
+    const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', element.volume_ids.at(0));
+    if (error)
+      countBindingStorageErr++
+    else if (data.length == 0)
+      throw { error: 'Resource not found!', code: '5' };
+    else if (data.at(0).storage_id != null) {
+      storageId = data.at(0).storage_id
       break
+    }
 
     await sleep(TIME_SLEEP);
   }
@@ -174,8 +137,6 @@ export const DownloadApplication = async (
 };
 
 export const StartApplication = async (storage_id, volume_id) => {
-  let countErr = 0
-
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "START",
     storage_id: storage_id,
@@ -184,37 +145,22 @@ export const StartApplication = async (storage_id, volume_id) => {
   if (error != null) {
     throw { error, code }
   }
+
+  let countErr = 0
   for (let i = 0; i < 100; i++) {
-    const { data: resource, error } = await virtapi("rpc/binding_resource", 'POST', {
-      volume_id,
-    });
-    if (error) {
-      countErr++
-      if (countErr == COUNT_ERR_RPC) {
-        await fetchApp();
-        throw { error, code: '0' }
-      }
-    }
-    else if (resource.at(0).desired_state == 'PAUSED' || resource.at(0).desired_state == 'STOPPED')
-      throw { error: "Timeout !", code: '6' }; // TODO
-
-    await sleep(TIME_SLEEP);
-  }
-
-
-  for (let i = 0; i < 100; i++) {
-    let { data, error } = await supabase.rpc("setup_status", {
-      volume_id,
-    });
-    if (error) {
-      countErr++
-    };
-
-    if (countErr == COUNT_ERR_RPC) {
+    if (countErr >= COUNT_ERR_RPC) {
       await fetchApp();
       throw { error, code: '0' }
     }
-    if (data == true) break;
+
+    const { data, error } = await supabase.rpc("setup_status", {
+      volume_id,
+    });
+
+    if (error) 
+      countErr++
+    else if (data == true) 
+      break;
 
     await sleep(TIME_SLEEP);
   }
