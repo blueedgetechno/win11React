@@ -185,28 +185,7 @@ export const fetchUser = async () => {
     });
     if (error) throw error;
 
-    const block_user = await supabase
-      .from('subscriptions')
-      .select('plan_id, metadata')
-      .eq('account_id', user.id)
-      .order('id', {ascending: false})
-      .limit(1)
-
-      console.log(block_user);
-
-    if (JSON.stringify(block_user.data.at(0).metadata).toString() == '{}'){
-      if (block_user.data.at(0).plan_id == '58b48d7b-887a-49e4-a21c-80cf89c34157' 
-      || block_user.data.at(0).plan_id == '64039314-c4f0-4be1-bf8e-b9e0206d70af'){
-        console.log("block this user" + block_user.data.at(0).plan_id);
-      }
-      else {
-        payloadUser = { ...payloadUser, greenlist: data }
-      }
-    } else {
-      payloadUser = { ...payloadUser, greenlist: data }
-    }
-
-
+    payloadUser = { ...payloadUser, greenlist: data }
     console.log(payloadUser, 'payloadd');
   }
 
