@@ -5,7 +5,10 @@ function LangSwitch() {
   const [languageValue, setLanguageValue] = React.useState("");
 
   React.useLayoutEffect(() => {
-    setLanguageValue(i18next.language);
+    const localLng = localStorage.getItem('language') ?? i18next.language
+    setLanguageValue(localLng);
+    i18next.changeLanguage(localLng);
+
   }, []);
   return (
     <div className="langSwitcher langSwitcherTile">
@@ -13,6 +16,7 @@ function LangSwitch() {
         value={languageValue}
         onChange={(e) => {
           i18next.changeLanguage(e.target.value);
+          localStorage.setItem('language', e.target.value)
           setLanguageValue(e.target.value);
         }}
       >
