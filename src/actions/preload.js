@@ -186,7 +186,6 @@ export const fetchUser = async () => {
     if (error) throw error;
 
     payloadUser = { ...payloadUser, greenlist: data }
-
     console.log(payloadUser, 'payloadd');
   }
 

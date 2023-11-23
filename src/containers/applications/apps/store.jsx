@@ -312,7 +312,7 @@ const DetailPage = ({ app }) => {
       case '{}': // thinkmay internal user
         user_region = region[0]
       break;
-      case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}':
+      case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
         user_region = region[1]
       break;
     }

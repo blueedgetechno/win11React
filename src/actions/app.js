@@ -188,19 +188,17 @@ export const pauseApp = async (appInput) =>
 
     await StopApplication(payload.storage_id);
     for (let i = 0; i < 100; i++) {
-      {
-        let { data, error } = await supabase.rpc("setup_status", {
-          volume_id: payload.volume_id,
-        });
-        if (error) {
-          countErr++
-          if (countErr == 20) {
-            await fetchApp();
-            throw { error, code: '0' }
-          }
-        }
-        if (data == false) break;
+      if (countErr >= 20) {
+        await fetchApp();
+        throw { error, code: '0' }
       }
+
+      const { data, error } = await supabase.rpc("setup_status", { storage_id: payload.storage_id, });
+
+      if (error) 
+        countErr++
+      else if (data == false) 
+        break;
 
       await sleep(10 * 1000);
     }
