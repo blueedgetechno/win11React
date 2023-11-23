@@ -120,7 +120,7 @@ export const DownloadApplication = async (
       throw { error, code: '0' };
 
     const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', {
-      volume_id: element.volume_ids.at(0)
+      volume_id: result.volume_ids.at(0)
     });
 
     if (error)
