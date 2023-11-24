@@ -63,7 +63,7 @@ const LoadingProgressBar = ({percent=0}) => {
 		if(percent != 100) {
 			setLoading((prevLoading) => (prevLoading < 94 ? prevLoading + randomNumber : 99));
 		}
-		}, 8 * 1000);
+		}, 3.5 * 1000);
 	
 		return () =>(clearInterval(interval)) 
 	}, [percent]);
@@ -97,7 +97,7 @@ const Protip = () =>{
 			const randomNumber = Math.floor(Math.random() * 3) 
 
 			setCurrentTip(randomNumber);
-		}, 15 * 1000);
+		}, 5 * 1000);
 	
 		return () => clearInterval(interval);
 	}, []);

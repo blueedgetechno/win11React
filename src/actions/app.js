@@ -210,7 +210,7 @@ export const deleteApp = (appInput) =>
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
-    await sleep(40 * 1000);
+    await sleep(25 * 1000);
     await fetchApp();
   });
 
