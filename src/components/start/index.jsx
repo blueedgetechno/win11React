@@ -96,6 +96,7 @@ export const DesktopApp = () => {
     const action = {
       type: e.target.dataset.action,
       payload: e.target.dataset.payload,
+      name: e.target.dataset.name
     };
 
     const appName = e.target.dataset.name;
