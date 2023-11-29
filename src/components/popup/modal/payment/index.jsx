@@ -2,14 +2,14 @@ import { Image } from "../../../../utils/general";
 
 
 const listSubs = [
-	{
-		title:'Trial',
-		for: 'Week',
-		hours: 20,
-		gpu: 'RTX 3060ti',
-		ram: '16GB',
-		price:'75k'
-	},
+	//{
+	//	title:'Trial',
+	//	for: 'Week',
+	//	hours: 20,
+	//	gpu: 'RTX 3060ti',
+	//	ram: '16GB',
+	//	price:'75k'
+	//},
 	{
 		title:'Start',
 		for: 'Month',
@@ -24,13 +24,13 @@ const listSubs = [
 		hours: 150,
 		gpu: 'RTX 3060ti',
 		ram: '16GB',
-		price: '300k'
+		price: '330k'
 	}
 ]
 function PaymentModal({data}) {
 	const {type, price, userEmail, userName} = data
 	return (
-	<div className="w-[320px] h-[360px] p-6">
+	<div className="w-[320px] h-[360px] p-6 md:w-[500px] md:h-[750px]">
 		<ul className="list-none flex flex-col  gap-2 pb-4">
 			<li>Xin chào <strong>{userName}</strong>^^, cảm ơn bạn đã quan tâm tới dịch vụ Thinkmay. </li>
 			<li>Để tiến hành thanh toán gói <strong>{type}</strong>, bạn hãy chuyển khoản số tiền <strong>{price}</strong>: kèm với <strong>email</strong> dùng trong Thinkmay.</li>
