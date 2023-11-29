@@ -34,6 +34,7 @@
   min-height: 100vh;
   z-index: 1;
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -58,16 +59,31 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    -webkit-backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(25px);
     background: rgba(0, 0, 0, 0.1);
   }
 }
 
+//.bottomInfoLeft {
+//  position: absolute;
+//  bottom: 24px;
+//  right: 24px;
+//}
 .bottomInfo {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
+  bottom: 0px;
+  width: 100%;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+@media (1px <= width <= 660px) {
+  .bottomInfo{
+    top: 0px;
+  }
 }
 
 .splashScreen {
@@ -86,7 +102,7 @@
 
 .fadeinScreen {
   position: absolute;
-  top: 25%;
+  top: 8%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,9 +123,11 @@
 
   .signInBtn {
     background: rgba(255, 255, 255, 0.2);
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 500;
+    height: 48px;
     padding: 4px 36px 6px;
-    color: #fff;
+    color: #f9f9f9;
     border: 2px solid transparent;
     border-radius: 50px;
 
@@ -178,4 +196,11 @@
     stroke-dasharray: 0.01px, 43.97px;
     transform: rotate(1080deg);
   }
+}
+
+
+.ctn-logo{
+
+  background: rgb(144,144,144);
+  background: linear-gradient(224deg, rgb(56 56 56 / 33%) 0%, rgb(255 255 255 / 33%) 100%);
 }

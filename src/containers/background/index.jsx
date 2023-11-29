@@ -4,6 +4,7 @@ import Battery from "../../components/shared/Battery";
 import { Icon, Image } from "../../utils/general";
 import "./back.scss";
 import { supabase } from "../../supabase/createClient";
+import { externalLink } from "../../data/constant";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   return (
@@ -73,7 +74,7 @@ export const LockScreen = () => {
     <div
       className={"lockscreen slowfadein"}
       data-unlock={unlocked}
-      style={{ backgroundImage: `url(${`img/wallpaper/lock.jpg`})` }}
+      style={{ backgroundImage: `url(${`img/wallpaper/lock.png`})` }}
       onClick={action}
       data-blur={lock}
     >
@@ -92,20 +93,25 @@ export const LockScreen = () => {
             day: "numeric",
           })}
         </div>
+       
       </div>
+      
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
-        <Image
-          className="rounded-2xl overflow-hidden"
-          src="img/asset/prof.png"
-          w={200}
-          ext
-        />
+        <div className="w-[200px] h-[200px] ctn-logo rounded-full p-4">
+          <Image
+            className="rounded-2xl overflow-hidden"
+            src="img/asset/prof.png"
+            w={'inherit'}
+            ext
+          />
+        </div>
         <div className="mt-2 text-2xl font-medium text-gray-200">
-          {user?.email ?? userName}
+          {user?.email ?? ''}
         </div>
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
-          {user.id ? " Enter" : "Sign In with GG"}
+          {user.id ? " Enter" : "Continue with Google"}
         </div>
+        
         {/*<div>
           <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
@@ -126,9 +132,24 @@ export const LockScreen = () => {
             click="passkey" payload={passType==1}/>
         </div>*/}
       </div>
-      <div className="bottomInfo flex">
-        <Icon className="mx-2" src="wifi" ui width={16} invert />
-        <Battery invert />
+
+      <div className="bottomInfo">
+        <div className="bottomInfoRight">
+          <p>Community:</p>
+          <div className="flex gap-2 mt-2">
+            <a target="_blank" href={externalLink.DISCORD_LINK}><Icon src='discord' width={40} /></a>
+            <a target="_blank" href={externalLink.FACEBOOK_LINK}><Icon src='facebook' width={40} /></a>
+          </div>
+        </div>
+       {
+        !lock ?  <p className="italic">
+        Click to start
+      </p> : ''
+       }
+        <div className="bottomInfoLeft flex">
+          <Icon className="mx-2" src="wifi" ui width={16} invert />
+          <Battery invert />
+        </div>
       </div>
     </div>
   );
