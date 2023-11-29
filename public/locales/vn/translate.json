@@ -28,7 +28,7 @@
     "unspecific": "Something went wrong.",
     "ALREADY_DEPLOYED": "Được install 3 game và 1 game chạy cùng 1 thời điểm. Xoá hoặc paused game cũ trước khi install/start game mới",
     "NOT_ALLOW": "Tài khoản chưa đăng kí dịch vụ.",
-    "run_out_of_gpu_stock": "Hệ thống đang hết máy!",
+    "run_out_of_gpu_stock": "Hệ thống đang hết máy có game!",
     "NOT_READY": "Game đang tải xuống vui lòng đợi 3-5' cho đến khi logo game xuất hiện",
     "NOT_RUNNING": "Game đã được PAUSED, chạy 'Start app' để mở game",
     "NOT_PAUSED": "Game đang chạy",
@@ -52,7 +52,7 @@
     "inActiveUser": "Tài khoản chưa kích hoạt, truy cập fanpage để được hướng dẫn"
   },
   "store": {
-    "app_not_available": "Đang hết máy TT"
+    "app_not_available": "Đang hết máy có game!"
   },
   "app": {
     "guideline": "Hướng dẫn"
