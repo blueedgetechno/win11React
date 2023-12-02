@@ -3,7 +3,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
 import "./index.css";
-import ReactGA from "react-ga";
 import { ErrorFallback } from "./error";
 import ActMenu from "./components/menu";
 import { CalnWid, DesktopApp, StartMenu, WidPane } from "./components/start";
@@ -17,8 +16,10 @@ import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
-const TRACKING_ID = "G-L7NHJK1G8T";
-ReactGA.initialize(TRACKING_ID);
+import { sprig } from '@sprig-technologies/sprig-browser';
+export const Sprig = sprig.configure({
+  environmentId: 'xiHaeLiRpUl-',
+})
 
 function App() {
   const apps = useSelector((state) => state.apps);
@@ -68,7 +69,6 @@ function App() {
 
     if (isMobile()) setShowtaskbar(false);
 
-    ReactGA.pageview(window.location.pathname + window.location.search);
     window.history.replaceState({}, document.title, "/" + "");
 
     const check = () => {
