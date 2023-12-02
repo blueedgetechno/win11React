@@ -17,7 +17,7 @@ import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
-const TRACKING_ID = "G-C772WT3BD0";
+const TRACKING_ID = "G-L7NHJK1G8T";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
