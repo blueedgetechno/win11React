@@ -1,7 +1,7 @@
 {
   "name": "win11react",
   "description": "Win11 made in React",
-  "repository": "https://github.com/blueedgetechno/win11React",
+  "repository": "https://github.com/thinkonmay/thinkmay",
   "version": "0.1.1",
   "private": true,
   "dependencies": {
@@ -10,11 +10,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@paypal/react-paypal-js": "^8.1.3",
-    "@sprig-technologies/sprig-browser": "^2.24.11",
     "@supabase/supabase-js": "^2.24.0",
-    "@tauri-apps/api": "^1.3.0",
     "daisyui": "^2.52.0",
-    "esbuild": "^0.19.5",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
     "i18next-http-backend": "^1.4.5",
@@ -35,12 +32,7 @@
   },
   "scripts": {
     "start": "vite --port 3000",
-    "preview": "vite preview --port 3000",
-    "build": "vite build",
-    "prettier": "prettier --write .",
-    "tauri": "tauri",
-    "bundle": "@powershell mkdir ./src-tauri/target/package && @powershell Copy-Item -Path ../../worker/daemon/package/* -Destination  ./src-tauri/target/package/ -Recurse",
-    "crowdin": "crowdin"
+    "build": "vite build"
   },
   "browserslist": {
     "production": [
@@ -55,11 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.1",
     "@vitejs/plugin-react": "2.0.0",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.24",
-    "prettier": "^2.8.8",
     "tailwindcss": "^3.3.2",
     "vite": "^3.2.7",
     "vite-plugin-pwa": "^0.12.8"

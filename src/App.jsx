@@ -16,10 +16,6 @@ import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
-import { sprig } from '@sprig-technologies/sprig-browser';
-export const Sprig = sprig.configure({
-  environmentId: 'xiHaeLiRpUl-',
-})
 
 function App() {
   const apps = useSelector((state) => state.apps);
@@ -103,18 +99,10 @@ function App() {
                   return <WinApp key={i} icon={app.icon} {...app.data} />;
                 })}
               <StartMenu />
-              {/*<BandPane />*/}
-              {/*<SidePane />*/}
               <WidPane />
               <CalnWid />
             </div>
-            {/*{
-              showtaskbar 
-                ? <Taskbar />
-                : null
-              }*/}
             <Taskbar />
-
             <ActMenu />
             <Popup />
           </>
