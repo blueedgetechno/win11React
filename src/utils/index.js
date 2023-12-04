@@ -5,10 +5,8 @@ var { taskbar, desktop, pinned, recent } = {
   desktop: [
     "Worker Profile",
     "Guideline",
-    "Github",
     "Browser",
     "FeedBack",
-    "Landing page",
     "Discord",
     "Thinkmay Fanpage",
     "Store",

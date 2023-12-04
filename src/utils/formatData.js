@@ -53,7 +53,7 @@ export async function formatAppRenderTree(data) {
       if (storage.type == "pending") {
         return {
           name: `Installing`,
-          icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
+          icon: "win/down",
           action: "CLOUDAPP",
           payload: JSON.stringify({
             storage_id: null,
@@ -83,7 +83,7 @@ export async function formatAppRenderTree(data) {
 
       const icon = icons.at(0) ?? {
         name: "Game Pause",
-        icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
+        icon: "win/down",
       };
       // id in store. +  icon: url img, => view
       // metatada: Meta in store.
