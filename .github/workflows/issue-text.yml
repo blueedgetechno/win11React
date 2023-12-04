@@ -30,7 +30,7 @@ jobs:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
 
       - name: Set Browser Labels
-        uses: redhat-plumbers-in-action/advanced-issue-labeler@v2
+        uses: redhat-plumbers-in-action/advanced-issue-labeler@v3
         with:
           issue-form: ${{ steps.issue-parser.outputs.jsonString }}
           section: browsers
