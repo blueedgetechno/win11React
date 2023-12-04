@@ -276,7 +276,6 @@ export const WnTerminal = () => {
 
     if (type.length > 0) tmpStack.push("");
 
-    // AnalyticTrack(`terminal`, {
     setStack(tmpStack);
   };
 

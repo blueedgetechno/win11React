@@ -66,7 +66,6 @@ export const PaymentApp = () => {
     if (error) 
       throw error
       
-    console.log(data)
     setListSubs(ListSubs.map(sub => {
       return {
         ...sub,

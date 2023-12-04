@@ -143,9 +143,8 @@ export const performApp = (act, menu) => {
     payload: menu.dataset.payload,
     name: menu.dataset?.name ?? "Null",
   };
-  // add analytic
-  const appName = menu.dataset.name;
-  // AnalyticTrack(`click app`, {
+
+  UserEvents({content:`click app ${menu.dataset.name}`})
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);
     return;

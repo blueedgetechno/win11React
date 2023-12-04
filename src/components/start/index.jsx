@@ -12,6 +12,7 @@ import { AiOutlineCloudDownload } from "react-icons/ai";
 import { fetchApp } from "../../actions/preload";
 export * from "./start";
 export * from "./widget";
+import { UserEvents } from "../../actions/analytics";
 
 export const DesktopApp = () => {
   const user = useSelector((state) => state.user);
@@ -99,8 +100,7 @@ export const DesktopApp = () => {
       name: e.target.dataset.name
     };
 
-    const appName = e.target.dataset.name;
-    // AnalyticTrack(`click app`, {
+    UserEvents({content:`click app ${e.target.dataset.name}`})
     dispatch(action);
   };
 
@@ -229,7 +229,6 @@ export const SidePane = () => {
   });
 
   useEffect(() => {
-    // console.log("ok")
     var tmp = [];
     for (var i = 0; i < sidepane.quicks.length; i++) {
       var val = getTreeValue(setting, sidepane.quicks[i].state);

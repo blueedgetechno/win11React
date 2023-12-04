@@ -54,12 +54,6 @@ export const Icon = (props) => {
     } else {
       dispatch(action);
     }
-    if (props.isTrack) {
-      const iconName = props.name ?? props.src;
-      const eventName = props.payload === "close" ? `close icon` : `click icon`;
-
-      
-    }
   };
 
   if (props.fafa != null) {
@@ -201,12 +195,6 @@ export const Image = (props) => {
 
     if (action.type) {
       dispatch(action);
-
-      if (props.isTrack) {
-        const imgName = props.src || props.name || "unknow";
-
-        // AnalyticTrack(`click ${props.type ?? "app"}`, {
-      }
     }
   };
 

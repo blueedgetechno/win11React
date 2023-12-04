@@ -85,7 +85,6 @@ const Taskbar = () => {
                   active={isActive}
                   payload="togg"
                   src={task.icon}
-                  isTrack={true}
                 />
               </div>
             );
@@ -111,7 +110,6 @@ const Taskbar = () => {
                   payload="togg"
                   open="true"
                   src={apps[key].icon}
-                  isTrack={true}
                 />
               </div>
             ) : null;
