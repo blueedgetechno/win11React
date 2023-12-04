@@ -14,12 +14,6 @@ function Notify({data}) {
 		} = data
 
 
-	console.log({	title, content, type, 
-		showProtip , 
-		showLoadingProcess ,
-		loadingProcessMs ,
-		loadingPercent ,
-	});
 	return ( 
 
 		<div className="w-[330px] h-auto p-[14px]">

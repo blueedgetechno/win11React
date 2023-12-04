@@ -8,6 +8,7 @@ import {
   formatAppRenderTree,
 } from "../utils/formatData";
 import { localStorageKey } from "../data/constant";
+import { UserEvents } from "./analytics";
 
 const loadSettings = async () => {
   let thm = localStorage.getItem('theme')
@@ -140,7 +141,6 @@ export const fetchStore = async () => {
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);
   }
 
-  console.log(content);
   store.dispatch({
     type: "UPDATEAPP",
     payload: content.apps,
@@ -168,6 +168,8 @@ export const fetchUser = async () => {
       type: "ADD_USER",
       payload,
     });
+
+    UserEvents({content: `update user email ${payload.value.email}`})
     return;
   } catch {}
 
@@ -186,7 +188,6 @@ export const fetchUser = async () => {
     if (error) throw error;
 
     payloadUser = { ...payloadUser, greenlist: data }
-    console.log(payloadUser, 'payloadd');
   }
 
   {

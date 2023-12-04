@@ -16,6 +16,7 @@ import Popup from "./components/popup";
 import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
+import { UserSession } from "./actions/analytics";
 
 function App() {
   const apps = useSelector((state) => state.apps);
@@ -54,6 +55,8 @@ function App() {
   }, [alignvert]);
 
   useEffect(() => {
+    UserSession()
+    
     preload()
       .then(() => {
         console.log("Loaded");

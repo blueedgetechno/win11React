@@ -7,6 +7,7 @@ import { fetchStore } from "../../../actions/preload";
 import { installApp } from "../../../actions/app";
 import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
 import { virtapi } from "../../../supabase/createClient";
+import { UserEvents } from "../../../actions/analytics.js";
 
 import Swal from "sweetalert2";
 import "./assets/store.scss";
@@ -335,8 +336,7 @@ const DetailPage = ({ app }) => {
 
   const download = async ({id}, app) => {
 
-    console.log(id);
-
+    UserEvents({content: `user download app`})
     if (!isGreenList()) return;
     //const vol_option = await VolumeOption();
     await installApp({

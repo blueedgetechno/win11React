@@ -34,7 +34,6 @@ const formatEvent = (event) => {
     ...store.getState().worker.data.getId(pid),
   };
 
-  console.log(action);
   return action;
 };
 
@@ -201,8 +200,6 @@ export const adjustSubscription =  async (e) =>
         type: "loading",
         title: "Adjusting the subscription"
       })
-
-      console.log(formValues);
 
       await AdjustSubscription(
         formValues.email, 

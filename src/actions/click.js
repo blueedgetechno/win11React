@@ -7,8 +7,6 @@ const formatEvent = (event) => {
     pid: event.target.dataset.pid,
   };
 
-  console.log(action);
-
   return action;
 };
 

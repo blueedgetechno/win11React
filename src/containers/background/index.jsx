@@ -5,6 +5,7 @@ import { Icon, Image } from "../../utils/general";
 import "./back.scss";
 import { supabase } from "../../supabase/createClient";
 import { externalLink } from "../../data/constant";
+import { UserEvents } from "../../actions/analytics";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   return (
@@ -54,6 +55,8 @@ export const LockScreen = () => {
   const proceed = async () => {
     if (user.id) setUnLock(true);
 
+
+    await UserEvents({content: `user attemp to login`})
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

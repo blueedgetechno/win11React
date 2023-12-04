@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
 import "./assets/store.scss";
 import { useTranslation } from "react-i18next";
+import { UserEvents } from "../../../actions/analytics";
 
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 import { supabase } from "../../../supabase/createClient";
@@ -88,7 +89,7 @@ export const PaymentApp = () => {
 
   const handlePayment = ({type, price}) => {
     return () => {
-      console.log('Thanh toan cho goi:', type);
+      UserEvents({content: `user pay for ${type}, ${price}`})
       const userEmail = user?.email || 'admin@gmail.com'
       const userName = user?.user_metadata.name || 'userEmail'
       dispatch({type: 'PM_MODAL', payload:{type, price, userEmail, userName}})

@@ -17,7 +17,6 @@ function ReleaseAppModal({ data }) {
 
 	const handleSubmitForm = (e) => {
 		e.preventDefault()
-		console.log(e);
 
 		const vol_speed = document.querySelector('#vol_speed').value
 		const vol_availability = document.querySelector('#vol_availability').value

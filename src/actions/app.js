@@ -24,7 +24,6 @@ import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
 import { formatError } from "../utils/formatErr";
 import { localStorageKey } from "../data/constant";
-import { cacheRequest } from ".";
 
 export const formatEvent = (event) => {
   const pid = event.target.dataset.pid;
@@ -35,7 +34,6 @@ export const formatEvent = (event) => {
     ...store.getState().worker.data.getId(pid),
   };
 
-  console.log(action);
   return action;
 };
 
@@ -52,7 +50,6 @@ const wrapper = async (func, appType) => {
     showLoadingProcess = true
   }
 
-  console.log(showLoadingProcess);
   try {
     log({
       type: "loading",
@@ -268,10 +265,6 @@ export const forkVolume = (e) =>
     const cluster_id = payload.info.cluster_id;
 
 
-    //META DATA
-
-
-    console.log(gpu_model, vcpus, ram);
     if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id, gpu_model, vcpus, ram, description);
     else throw "invalid request";
 
@@ -287,11 +280,9 @@ export const migrateVolume = (e) =>
       return;
 
 
-    console.log(cluster_id, 'cluster_id');
     const payload = formatEvent(e);
 
     const volume = payload.info.id;
-    console.log(volume, 'volume_id');
 
     if (volume != undefined && cluster_id != undefined) await MigrateVolume(volume, cluster_id);
     else throw "invalid request";
@@ -367,15 +358,6 @@ export const ReleaseApp = async ({ vol_speed,
   cluster_id,
 }) => {
   wrapper(async () => {
-    console.log(vol_availability,
-      gpu_model,
-      desc,
-      store_id,
-      vcpus,
-      ram,
-      vdriver,
-      hidevm,
-      cluster_id,);
     if (desc == "") throw ('Description is not empty!')
 
     const { code,error } = await SupabaseFuncInvoke("configure_application", {

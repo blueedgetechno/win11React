@@ -36,6 +36,7 @@ import {
 import { fetchApp } from "./preload";
 import { adjustSubscription } from "./worker.js";
 import { localStorageKey } from "../data/constant.js";
+import { UserEvents } from "./analytics.js";
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
@@ -211,12 +212,14 @@ export const handleLogOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) logging.error();
 
-  logging.close();
+  logging.close()
 
   store.dispatch({ type: "DELETE_USER" });
 };
 
 export const menuDispatch = async (event, menu) => {
+
+
   const type = event.target.dataset.action;
   const action = {
     type: event.target.dataset.action,
@@ -227,6 +230,8 @@ export const menuDispatch = async (event, menu) => {
     payload: menu?.dataset?.payload,
     name: menu?.dataset?.name,
   };
+
+  await UserEvents({content:`user ${type}`})
   if (!type) return;
   //Worker Menu action
        if (type === "FILEDIRWORKER")            openWorker(event);
