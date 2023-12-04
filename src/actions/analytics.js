@@ -63,8 +63,9 @@ export async function UserEvents({content}) {
 export async function UserSession(email) {
     const session = crypto.randomUUID()
     localStorage.setItem('SESSION_ID',session)
-    const location = await(await fetch(`http://ip-api.com/json/${(await (await fetch('https://icanhazip.com/')).text()).split('\n').at(0)}`)).json()
-
+    let location = {}
+    try { location = await(await fetch(`http://ip-api.com/json/${(await (await fetch('https://icanhazip.com/')).text()).split('\n').at(0)}`)).json() } 
+    catch {}
 
     await createClient(sb.url,sb.key)
         .from('generic_events')
