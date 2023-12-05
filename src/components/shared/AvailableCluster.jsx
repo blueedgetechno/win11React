@@ -1,37 +1,49 @@
 import React from 'react';
 import { hasAvailableCluster } from '../../utils/checking';
 import './index.scss'
+import { useSelector } from 'react-redux';
+
+import { isGreenList, isMobile } from "../../utils/checking";
+
 function AvailableCluster() {
 	const [availableCluster, setAvailableCluster] = React.useState(false)
-	
+	const user = useSelector((state) => state.user);
 
-	React.useEffect(()=>{
-		const interval = setInterval(()=>{
+	React.useEffect(() => {
+		if (!isGreenList) return
+		const interval = setInterval(() => {
 			setAvailableCluster(hasAvailableCluster)
-		},30*1000)
-		
-		return()=>{
+		}, 30 * 1000)
+
+		return () => {
 			clearInterval(interval)
 		}
-	},[])
+	}, [])
 
-	
+	isGreenList
 
 	return (
-		<div className="clusterInfo">
+		<>
 			{
-				availableCluster ? (
-					<><div className="pointer green">
+				isGreenList() ?
+					<div className="clusterInfo">
+						{
+							availableCluster ? (
+								<><div className="pointer green">
+								</div>
+									<span className="text-[16px]">Còn máy</span></>
+							) : (
+								<>
+									<div className="pointer orange">
+									</div>
+									<span className="text-[16px]">Đang hết máy</span></>
+							)
+						}
 					</div>
-						<span className="text-[16px]">Còn máy</span></>
-				) : (
-					<>
-						<div className="pointer orange">
-						</div>
-						<span className="text-[16px]">Đang hết máy</span></>
-				)
+					: null
 			}
-		</div>
+
+		</>
 	);
 }
 
