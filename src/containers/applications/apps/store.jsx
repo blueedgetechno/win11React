@@ -425,7 +425,7 @@ const DetailPage = ({ app }) => {
             Options.map((x) => (
               <div key={x.id}>
                 <div
-                  className="instbtn mt-12 handcr"
+                  className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
                   payload={x}
                   onClick={() => download(x, app)}
                 >
@@ -436,7 +436,7 @@ const DetailPage = ({ app }) => {
               </div>
             ))
           ) : (
-            <div className="instbtn mt-12 handcr">
+            <div className="instbtn mt-12 handcr !px-[16px] !py-[14px]">
               {t("store.app_not_available")}
             </div>
           )
