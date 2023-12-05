@@ -20,8 +20,6 @@ function AvailableCluster() {
 		}
 	}, [])
 
-	isGreenList
-
 	return (
 		<>
 			{
