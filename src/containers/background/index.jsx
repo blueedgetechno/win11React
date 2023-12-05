@@ -47,16 +47,21 @@ export const LockScreen = () => {
 
   const user = useSelector((state) => state.user);
   const userName = useSelector((state) => state.setting.person.name);
-
+  const dispatch = useDispatch()
   const action = (e) => {
     setLock(true);
   };
 
   const proceed = async () => {
-    if (user.id) setUnLock(true);
+    if (user.id) {
+      setUnLock(true)
+      dispatch({ type: "WALLUNLOCK" });
+
+      return
+    };
 
 
-    await UserEvents({content: `user attemp to login`})
+    await UserEvents({ content: `user attemp to login` })
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -96,9 +101,9 @@ export const LockScreen = () => {
             day: "numeric",
           })}
         </div>
-       
+
       </div>
-      
+
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
         <div className="w-[200px] h-[200px] ctn-logo rounded-full p-4">
           <Image
@@ -114,7 +119,7 @@ export const LockScreen = () => {
         <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
           {user.id ? " Enter" : "Continue with Google"}
         </div>
-        
+
         {/*<div>
           <input type={passType?"text":"password"} value={password} onChange={action}
               data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
@@ -144,14 +149,16 @@ export const LockScreen = () => {
             <a target="_blank" href={externalLink.FACEBOOK_LINK}><Icon src='facebook' width={40} /></a>
           </div>
         </div>
-       {
-        !lock ?  <p className="italic">
-        Click to start
-      </p> : ''
-       }
+        {
+          !lock ? <p className="italic mt-[80px]">
+            Click to start
+          </p> : ''
+        }
         <div className="bottomInfoLeft flex">
           <Icon className="mx-2" src="wifi" ui width={16} invert />
           <Battery invert />
+         
+
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Icon } from "../../utils/general";
 import Battery from "../shared/Battery";
 import "./taskbar.scss";
 import { isMobile } from "../../utils/checking";
+import AvailableCluster from "../shared/AvailableCluster";
 
 const Taskbar = () => {
   const tasks = useSelector((state) => {
@@ -64,6 +65,7 @@ const Taskbar = () => {
 
   return (
     <div className="taskbar" data-mobile={isMobile()}>
+
       <div className="tasksCont" data-menu="task" data-side={tasks.align}>
         <div className="tsbar" onMouseOut={hidePrev}>
           <Icon className="tsIcon tsIconInvert" src="home" width={24} click="STARTOGG" />
@@ -117,7 +119,7 @@ const Taskbar = () => {
         </div>
       </div>
       <div className="taskright">
-        {
+        {/*{
           !isMobile() ? (
             <>
               <div
@@ -144,7 +146,7 @@ const Taskbar = () => {
             </>
           )
             : null
-        }
+        }*/}
         <div
           className="taskDate m-1 handcr prtclk rounded hvlight"
           onClick={clickDispatch}
@@ -163,11 +165,9 @@ const Taskbar = () => {
               day: "numeric",
             })}
           </div>
+
         </div>
-        {
-          isMobile() ? null :
-            <Icon className="graybd my-4" ui width={6} click="SHOWDSK" pr />
-        }
+
       </div>
     </div>
   );

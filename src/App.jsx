@@ -17,10 +17,12 @@ import { preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
 import { UserSession } from "./actions/analytics";
+import AvailableCluster from "./components/shared/AvailableCluster";
 
 function App() {
   const apps = useSelector((state) => state.apps);
   const user = useSelector((state) => state.user);
+  const wall = useSelector((state) => state.wallpaper);
 
   const [showtaskbar, setShowtaskbar] = useState(true);
   const [lockscreen, setLockscreen] = useState(true);
@@ -56,7 +58,7 @@ function App() {
 
   useEffect(() => {
     UserSession()
-    
+
     preload()
       .then(() => {
         console.log("Loaded");
@@ -82,8 +84,8 @@ function App() {
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {lockscreen ? <BootScreen /> : null}
-        {!user?.id ? <LockScreen /> : null}
-        <div className="appwrap">
+        {!user?.id || wall?.locked ? <LockScreen /> : null}
+        <div className="appwrap ">
           <Background />
           <>
             <div className="desktop" data-menu="desk" data-mobile={isMobile()}>
@@ -108,8 +110,11 @@ function App() {
             <Taskbar />
             <ActMenu />
             <Popup />
+
+
           </>
         </div>
+        <AvailableCluster />
       </ErrorBoundary>
     </div>
   );

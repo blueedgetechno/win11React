@@ -1,6 +1,6 @@
 import { scanCodeApps } from "../data/constant";
 import store from "../reducers";
-import { supabase } from "../supabase/createClient";
+import { supabase, virtapi } from "../supabase/createClient";
 
 export const isAdmin = () => {
   const user = store.getState().user;
@@ -45,3 +45,9 @@ export const isMobile = () => {
 export const isScanCodeApp = (name = "") => {
   return Object.keys(scanCodeApps).some((app) => name.includes(app));
 };
+
+export const hasAvailableCluster = async () => {
+  const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
+  console.log(data);
+  return data.total > 0
+}

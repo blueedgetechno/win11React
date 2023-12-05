@@ -26,11 +26,19 @@ const defState = {
   themes: themes,
   wps: wps,
   src: walls[wps],
+  locked: true,
   act: "",
 };
 
 const wallReducer = (state = defState, action) => {
   switch (action.type) {
+    case "WALLUNLOCK":
+      localStorage.setItem("locked", false);
+      return {
+        ...state,
+        locked: false,
+        dir: 0,
+      };
     case "WALLNEXT":
       var twps = (state.wps + 1) % walls.length;
       return {
