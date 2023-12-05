@@ -25,6 +25,15 @@ export const StartMenu = () => {
     });
   };
 
+  const checkPackage = () =>{
+    const packages = {
+      week :'20h',
+      month: '100h',
+  
+    }
+
+    return packages[usageTime?.package] ?? usageTime?.package
+  }
   return (
     <div
       className="startMenu dpShad"
@@ -87,7 +96,7 @@ export const StartMenu = () => {
                   {usageTime.total_time
                     ? usageTime?.total_time.toFixed(1) +
                     "/" +
-                    usageTime?.package
+                    checkPackage()+'/'+usageTime?.package
                     : "Invalid"}
                 </span>
               </div>
