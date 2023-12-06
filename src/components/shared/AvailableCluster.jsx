@@ -11,10 +11,19 @@ function AvailableCluster({isBootScreen}) {
 
 	React.useEffect(() => {
 		if (!isGreenList) return
-		setAvailableCluster(hasAvailableCluster)
+		
+		const firstCheck = async () =>{
+			const checking = await hasAvailableCluster()
 
-		const interval = setInterval(() => {
-			setAvailableCluster(hasAvailableCluster)
+			console.log(checking);
+			setAvailableCluster(checking)
+		}
+		firstCheck()
+		const interval = setInterval( async () => {
+			const checking = await hasAvailableCluster()
+			console.log(checking, 'interval');
+
+			setAvailableCluster(checking)
 		}, 30 * 1000)
 
 		return () => {
