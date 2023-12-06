@@ -114,7 +114,7 @@ function App() {
 
           </>
         </div>
-        <AvailableCluster />
+        <AvailableCluster isBootScreen={lockscreen}/>
       </ErrorBoundary>
     </div>
   );

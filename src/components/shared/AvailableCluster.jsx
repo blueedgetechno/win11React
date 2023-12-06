@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux';
 
 import { isGreenList, isMobile } from "../../utils/checking";
 
-function AvailableCluster() {
+function AvailableCluster({isBootScreen}) {
 	const [availableCluster, setAvailableCluster] = React.useState(false)
 	const user = useSelector((state) => state.user);
 
 	React.useEffect(() => {
 		if (!isGreenList) return
+		setAvailableCluster(hasAvailableCluster)
+
 		const interval = setInterval(() => {
 			setAvailableCluster(hasAvailableCluster)
 		}, 30 * 1000)
@@ -23,7 +25,7 @@ function AvailableCluster() {
 	return (
 		<>
 			{
-				isGreenList() ?
+				!isBootScreen && isGreenList() ?
 					<div className="clusterInfo">
 						{
 							availableCluster ? (
