@@ -1,6 +1,6 @@
 import store from "../reducers";
 import { changeTheme } from "./";
-import { isAllowWorkerProfileFetch } from "../utils/checking";
+import { isAllowWorkerProfileFetch, isGreenList } from "../utils/checking";
 import { supabase, virtapi } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../utils/formatData";
 import { localStorageKey } from "../data/constant";
 import { UserEvents } from "./analytics";
+import { sleep } from "../utils/sleep";
 
 const loadSettings = async () => {
   let thm = localStorage.getItem('theme')
@@ -230,6 +231,24 @@ export const fetchUser = async () => {
     }),
   );
 };
+
+export const checkAvailableCluster = async () => {
+  let checking = false
+  if (!isGreenList) return
+
+  while (true) {
+    const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
+    checking = data.at(0).total > 1
+
+    store.dispatch({
+      type: "UPDATE_CLUSTER_STATUS",
+      payload: checking,
+    });
+
+    await sleep(30 * 1000)
+  }
+
+}
 
 export const preload = async () => {
   await Promise.all([fetchUser(), loadSettings()]);

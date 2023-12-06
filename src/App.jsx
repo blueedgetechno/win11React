@@ -13,7 +13,7 @@ import * as Drafts from "./containers/applications/draft";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import Popup from "./components/popup";
-import { preload } from "./actions/preload";
+import { checkAvailableCluster, preload } from "./actions/preload";
 import { afterMath } from "./actions/index";
 import { isMobile } from "./utils/checking";
 import { UserSession } from "./actions/analytics";
@@ -68,6 +68,8 @@ function App() {
         setLockscreen(false);
       });
 
+    
+    checkAvailableCluster()
     if (isMobile()) setShowtaskbar(false);
 
     window.history.replaceState({}, document.title, "/" + "");
