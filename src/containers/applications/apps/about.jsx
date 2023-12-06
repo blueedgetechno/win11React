@@ -54,13 +54,13 @@ export const AboutWin = () => {
             <strong className="text-[16px] mb-[8px] mb-[12px] text-center">
               LƯU Ý: Đây là giao diện không phải RemotePC
             </strong>
-            <p>
+            <div>
               <strong>B1:</strong> <strong>Install</strong> tựa game yêu
               thích trong Store, nhưng game màu vàng là được chơi free.{" "}
               <div>
                 Được install tối data 3 game, và chạy 1 game cùng thời điểm. 
               </div>
-            </p>
+            </div>
 
             <div className="wrapper-img mt-[24px]">
               <Image h={120} src="icon/b1" />
