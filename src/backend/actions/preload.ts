@@ -237,3 +237,21 @@ export const preload = async () => {
     fetchApp()
   ]);
 };
+
+export const checkAvailableCluster = async () => {
+  let checking = false
+  // if (!isGreenList) return
+
+  while (true) {
+    const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
+    checking = data.at(0).total > 0
+
+    store.dispatch({
+      type: "UPDATE_CLUSTER_STATUS",
+      payload: checking,
+    });
+
+    // await sleep(30 * 1000)
+  }
+
+}

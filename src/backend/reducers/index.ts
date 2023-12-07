@@ -12,6 +12,8 @@ import userReducer from "./user";
 import paramsReducer from "./params";
 import workerReducer from "./worker";
 import modalReducer from "./modal";
+import sidepaneReducer from "./sidepane";
+import widpaneReducer from "./widpane";
 
 const allReducers = combineReducers({
   params: paramsReducer,
@@ -26,6 +28,8 @@ const allReducers = combineReducers({
   setting: settReducer,
   worker: workerReducer,
   modal: modalReducer,
+  sidepane: sidepaneReducer,
+  widpane: widpaneReducer,
 });
 
 var store = createStore(allReducers);

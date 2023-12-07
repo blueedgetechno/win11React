@@ -1,36 +1,11 @@
 import React from 'react';
-import { hasAvailableCluster } from '../../backend/utils/checking';
 import './index.scss'
 import { useSelector } from 'react-redux';
 
 import { isGreenList, isMobile } from "../../backend/utils/checking";
 
 function AvailableCluster({isBootScreen}) {
-	//const [availableCluster, setAvailableCluster] = React.useState(false)
-	const user = useSelector((state) => state.user);
 	const availableCluster = useSelector((state) => state.globals.hasAvailableCluster);
-
-	//React.useEffect(() => {
-	//	if (!isGreenList) return
-		
-	//	const firstCheck = async () =>{
-	//		const checking = await hasAvailableCluster()
-
-	//		console.log(checking);
-	//		setAvailableCluster(checking)
-	//	}
-	//	firstCheck()
-	//	const interval = setInterval( async () => {
-	//		const checking = await hasAvailableCluster()
-	//		console.log(checking, 'interval');
-
-	//		setAvailableCluster(checking)
-	//	}, 30 * 1000)
-
-	//	return () => {
-	//		clearInterval(interval)
-	//	}
-	//}, [])
 
 	return (
 		<>
