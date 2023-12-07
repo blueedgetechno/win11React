@@ -1,6 +1,6 @@
 import store from "../reducers";
-import { changeTheme } from "./";
-import { isAllowWorkerProfileFetch, isGreenList } from "../utils/checking";
+import { changeTheme } from ".";
+import { isAllowWorkerProfileFetch } from "../utils/checking";
 import { supabase, virtapi } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";
 import {
@@ -8,8 +8,6 @@ import {
   formatAppRenderTree,
 } from "../utils/formatData";
 import { localStorageKey } from "../data/constant";
-import { UserEvents } from "./analytics";
-import { sleep } from "../utils/sleep";
 
 const loadSettings = async () => {
   let thm = localStorage.getItem('theme')
@@ -134,7 +132,7 @@ export const fetchStore = async () => {
     apps: [],
   };
 
-  const stores = data.filter((e) => e.hide != true);
+  const stores = data.filter((e:any) => e.hide != true);
   for (let index = 0; index < stores.length; index++) {
     const appOrGame = stores[index];
 
@@ -142,6 +140,7 @@ export const fetchStore = async () => {
     else if (appOrGame.type == "APP") content.apps.push(appOrGame);
   }
 
+  console.log(content);
   store.dispatch({
     type: "UPDATEAPP",
     payload: content.apps,
@@ -169,8 +168,6 @@ export const fetchUser = async () => {
       type: "ADD_USER",
       payload,
     });
-
-    UserEvents({content: `update user email ${payload.value.email}`})
     return;
   } catch {}
 
@@ -189,6 +186,7 @@ export const fetchUser = async () => {
     if (error) throw error;
 
     payloadUser = { ...payloadUser, greenlist: data }
+    console.log(payloadUser, 'payloadd');
   }
 
   {
@@ -231,24 +229,6 @@ export const fetchUser = async () => {
     }),
   );
 };
-
-export const checkAvailableCluster = async () => {
-  let checking = false
-  if (!isGreenList) return
-
-  while (true) {
-    const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
-    checking = data.at(0).total > 0
-
-    store.dispatch({
-      type: "UPDATE_CLUSTER_STATUS",
-      payload: checking,
-    });
-
-    await sleep(30 * 1000)
-  }
-
-}
 
 export const preload = async () => {
   await Promise.all([fetchUser(), loadSettings()]);

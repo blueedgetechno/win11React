@@ -55,7 +55,7 @@ export const CreateWorkerSession = async (worker_profile_id) => {
  * @param {'month' | 'week'} plan 
  * @returns 
  */
-export const AddSubscription = async (email,plan,free) => {
+export const AddSubscription = async (email:string,plan:string,free:string) => {
   const { data, code, error } = await SupabaseFuncInvoke("add_subscription", {
     email, plan, free
   });
@@ -69,7 +69,7 @@ export const AddSubscription = async (email,plan,free) => {
  * @param {string} email 
  * @returns 
  */
-export const ModifySubscription = async (action,email) => {
+export const ModifySubscription = async (action:string,email:string) => {
   const { data, code, error } = await SupabaseFuncInvoke("modify_subscription", {
     email,action
   });
@@ -86,7 +86,7 @@ export const ModifySubscription = async (action,email) => {
  * @returns 
  */
 
-export const AdjustSubscription = async (email, created_at, ends_at) => {
+export const AdjustSubscription = async (email:string, created_at:string, ends_at:string) => {
   const { data, error } = await SupabaseFuncInvoke("modify_subscription", {
     email,
     action: 'ADJUST',
@@ -99,10 +99,10 @@ export const AdjustSubscription = async (email, created_at, ends_at) => {
 
 
 export const DownloadApplication = async (
-  app_template_id,
-  availability,
-  speed,
-  safe,
+  app_template_id : string,
+  availability : string,
+  speed : string,
+  safe : string,
 ) => {
   const { data: result, code, error } = await SupabaseFuncInvoke("launch_application", {
     action: "SETUP",
@@ -117,7 +117,7 @@ export const DownloadApplication = async (
   let countBindingStorageErr = 0
   for (let i = 0; i < 100; i++) {
     if (countBindingStorageErr == COUNT_ERR_RPC)
-      throw { error, code: '0' };
+      throw { error: null , code: '0' };
 
     const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', {
       volume_id: result.volume_ids.at(0)
@@ -139,7 +139,7 @@ export const DownloadApplication = async (
   return storageId;
 };
 
-export const StartApplication = async (storage_id, volume_id) => {
+export const StartApplication = async (storage_id:string, volume_id?:string) => {
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "START",
     storage_id: storage_id,
@@ -153,7 +153,7 @@ export const StartApplication = async (storage_id, volume_id) => {
   for (let i = 0; i < 100; i++) {
     if (countErr >= COUNT_ERR_RPC) {
       await fetchApp();
-      throw { error, code: '0' }
+      throw { error: null, code: '0' }
     }
 
     const { data, error } = await supabase.rpc("setup_status", { storage_id, });
@@ -181,7 +181,7 @@ export const AccessApplication = async (input) => {
 
   return data;
 };
-export const AccessVolume = async (volume_id) => {
+export const AccessVolume = async (volume_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("access_application", {
     action: "ACCESS",
@@ -192,7 +192,7 @@ export const AccessVolume = async (volume_id) => {
 
   return data;
 };
-export const ResetApplication = async (input) => {
+export const ResetApplication = async (input:any) => {
   const { storage_id, privateIp } = input;
 
   const { data, code, error } = await SupabaseFuncInvoke("access_application", {
@@ -205,7 +205,7 @@ export const ResetApplication = async (input) => {
   return data;
 };
 
-export const DeleteApplication = async (storage_id) => {
+export const DeleteApplication = async (storage_id:string) => {
   const { data, code, error } = await SupabaseFuncInvoke( "request_application", {
     action: "DELETE",
     storage_id: storage_id,
@@ -215,7 +215,7 @@ export const DeleteApplication = async (storage_id) => {
   return data;
 };
 
-export const StopApplication = async (storage_id) => {
+export const StopApplication = async (storage_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("request_application", {
     action: "STOP",
@@ -227,7 +227,7 @@ export const StopApplication = async (storage_id) => {
   return data;
 };
 
-export const StopVolume = async (volume_id) => {
+export const StopVolume = async (volume_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "STOP",
@@ -240,7 +240,13 @@ export const StopVolume = async (volume_id) => {
   return data;
 };
 
-export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram, description) => {
+export const ForkVolume = async (
+  volume_id : string, 
+  cluster_id : string, 
+  gpu_model : string, 
+  vcpus : string, 
+  ram : string, 
+  description : string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "FORK",
@@ -260,7 +266,7 @@ export const ForkVolume = async (volume_id, cluster_id, gpu_model, vcpus, ram, d
   return data;
 };
 
-export const PatchApp = async (app_id, desc, cluster_id) => {
+export const PatchApp = async (app_id:number, desc:string, cluster_id:string) => {
   
   const { data, code, error } = await SupabaseFuncInvoke('configure_application', {
     action: "PATCH",
@@ -274,7 +280,7 @@ export const PatchApp = async (app_id, desc, cluster_id) => {
   return data;
 }
 
-export const DeleteVolume = async (volume_id) => {
+export const DeleteVolume = async (volume_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "DELETE",
@@ -286,7 +292,7 @@ export const DeleteVolume = async (volume_id) => {
 
   return data;
 };
-export const MigrateVolume = async (volume_id, cluster_id) => {
+export const MigrateVolume = async (volume_id:string, cluster_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "MIGRATE",
@@ -299,7 +305,7 @@ export const MigrateVolume = async (volume_id, cluster_id) => {
 
   return data;
 };
-export const SetDefaultOsVolume = async (volume_id, cluster_id) => {
+export const SetDefaultOsVolume = async (volume_id:string, cluster_id:string) => {
 
   const { data, code, error } = await SupabaseFuncInvoke("configure_application", {
     action: "SET_DEFAULT_OS",
@@ -312,7 +318,7 @@ export const SetDefaultOsVolume = async (volume_id, cluster_id) => {
 
   return data;
 };
-export const FetchApplicationTemplates = async (id) => {
+export const FetchApplicationTemplates = async (id:number) => {
   const session = await supabase.auth.getSession();
   if (session.error != null) return session.error;
 
@@ -350,7 +356,7 @@ export const FetchApplicationTemplates = async (id) => {
 };
 
 
-export const SupabaseFuncInvoke = async (funcName,body) => {
+export const SupabaseFuncInvoke = async (funcName:string,body?:any) => {
   try {
     const credential = await getCredentialHeader();
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;

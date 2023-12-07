@@ -8,7 +8,7 @@ import { sleep } from "../utils/sleep";
  * @param {'current_tab' | 'new_tab'} type 'current_tab' 
  * @returns 
  */
-export function openRemotePage(url, appName, type = "current_tab") {
+export function openRemotePage(url:string, appName:string, type = "current_tab") {
   const open = `${url}&turn=true&no_stretch=true&page=${appName}&scancode=${isScanCodeApp(
     appName,
   )}`;

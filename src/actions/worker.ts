@@ -1,8 +1,8 @@
-import { CreateWorkerSession, DeactivateWorkerSession, AddSubscription, ModifySubscription } from "./fetch";
-import store from "../reducers";
-import { log } from "../lib/log";
-import { fetchWorker } from "./preload";
-import { openRemotePage } from "./remote";
+import { CreateWorkerSession, DeactivateWorkerSession, AddSubscription, ModifySubscription } from "./fetch/index.js";
+import store from "../reducers/index.js";
+import { log } from "../lib/log.js";
+import { fetchWorker } from "./preload.js";
+import { openRemotePage } from "./remote.js";
 import { AdjustSubscription } from "./fetch/index.js";
 import { supabase } from "../supabase/createClient.js";
 
@@ -25,7 +25,7 @@ const wrapper = async (func) => {
   }
 };
 
-const formatEvent = (event) => {
+const formatEvent = (event:any) => {
   const pid = event.target.dataset.pid;
   const action = {
     type: event.target.dataset.action,
@@ -34,6 +34,7 @@ const formatEvent = (event) => {
     ...store.getState().worker.data.getId(pid),
   };
 
+  console.log(action);
   return action;
 };
 
@@ -45,7 +46,7 @@ export const refeshWorker = () =>
     return "success";
   });
 
-export const createSession = (e) =>
+export const createSession = (e:any) =>
   wrapper(async () => {
     const worker = formatEvent(e);
 
@@ -67,7 +68,7 @@ export const createSession = (e) =>
     return "success";
   });
 
-export const deactiveSession = (e) =>
+export const deactiveSession = (e:any) =>
   wrapper(async () => {
     const worker = formatEvent(e);
     if (!worker) return;
@@ -88,14 +89,14 @@ export const deactiveSession = (e) =>
   });
 
 //TODO: have bug when navigate(-1) after fetch data.
-export const connectSession = (e) =>
+export const connectSession = (e:any) =>
   wrapper(async () => {
     const worker = formatEvent(e);
     if (!worker.info.url) return;
     openRemotePage(worker.info.url, "", "new_tab");
   });
 
-export const connectWorker = (e) =>
+export const connectWorker = (e:any) =>
   wrapper(async () => {
     const worker = formatEvent(e);
     if (!worker) return;
@@ -114,7 +115,7 @@ export const connectWorker = (e) =>
     return "success";
   });
 
-export const openWorker = (e) => {
+export const openWorker = (e:any) => {
   const worker = formatEvent(e);
   if (worker == null) return;
   else if (worker.type == "file") return;
@@ -125,7 +126,7 @@ export const openWorker = (e) => {
   });
 };
 
-export const viewDetail = (e) => {
+export const viewDetail = (e:any) => {
   const worker = formatEvent(e);
   if (!worker) return;
   store.dispatch({
@@ -134,7 +135,7 @@ export const viewDetail = (e) => {
   });
 };
 
-export const createSubscription = async (e) => {
+export const createSubscription = async (e:any) => {
   wrapper(async () => {
   const formValues = await log({ type: 'createSub' })
     if(formValues == undefined || formValues == null)
@@ -152,7 +153,7 @@ export const createSubscription = async (e) => {
       return "success";
     });
 };
-export const modifySubscription = async (e) => {
+export const modifySubscription = async (e:any) => {
   wrapper(async () => {
     const formValues = await log({ type: 'modifySub' })
       if(formValues == undefined || formValues == null)
@@ -170,7 +171,7 @@ export const modifySubscription = async (e) => {
         return "success";
       });
 };
-export const adjustSubscription =  async (e) =>
+export const adjustSubscription =  async (e:any) =>
   wrapper(async () => {
     const payload = formatEvent(e);
     const subscription = await supabase
@@ -200,6 +201,8 @@ export const adjustSubscription =  async (e) =>
         type: "loading",
         title: "Adjusting the subscription"
       })
+
+      console.log(formValues);
 
       await AdjustSubscription(
         formValues.email, 

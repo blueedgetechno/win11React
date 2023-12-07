@@ -24,9 +24,10 @@ import { openRemotePage } from "./remote";
 import { isAdmin } from "../utils/checking";
 import { formatError } from "../utils/formatErr";
 import { localStorageKey } from "../data/constant";
+import { Action } from "../reducers/type";
 
-export const formatEvent = (event) => {
-  const pid = event.target.dataset.pid;
+export const formatEvent = (event: Event) => {
+  const pid = event.target?.dataset.pid;
   const action = {
     type: event.target.dataset.action,
     payload: event.target.dataset.payload,
@@ -34,10 +35,11 @@ export const formatEvent = (event) => {
     ...store.getState().worker.data.getId(pid),
   };
 
+  console.log(action);
   return action;
 };
 
-const wrapper = async (func, appType) => {
+const wrapper = async (func:any, appType?:string) => {
   let content = "It took about 5 minutes, take a break🧐";
   let showLoadingProcess = false;
   if (appType == "startApp") content = i18next.t("info.startApp");
@@ -50,6 +52,7 @@ const wrapper = async (func, appType) => {
     showLoadingProcess = true
   }
 
+  console.log(showLoadingProcess);
   try {
     log({
       type: "loading",
@@ -90,7 +93,7 @@ export const deleteStore = async (app) => {
 };
 
 // desktop app
-export const openApp = async (appInput, type) =>
+export const openApp = async (appInput:Action, type?:string) =>
   wrapper(async () => {
     const appName = appInput?.name ?? "null";
     const payload = JSON.parse(appInput.payload);
@@ -111,7 +114,7 @@ export const openApp = async (appInput, type) =>
     };
     store.dispatch({ type: "USER_FEEDBACK", payload: feedbackInput });
   });
-export const resetApp = async (appInput) =>
+export const resetApp = async (appInput:Action) => 
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     const appName = appInput?.name ?? "null";
@@ -146,7 +149,7 @@ export const installApp = (payload) =>
   }, "installApp");
 
 // desktop app
-export const startApp = async (appInput) =>
+export const startApp = async (appInput:Action) => 
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     const appName = appInput?.name ?? "null";
@@ -177,7 +180,7 @@ export const startApp = async (appInput) =>
   }, "startApp");
 
 // desktop app
-export const pauseApp = async (appInput) =>
+export const pauseApp = async (appInput:Action) => 
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     let countErr = 0
@@ -187,7 +190,7 @@ export const pauseApp = async (appInput) =>
     for (let i = 0; i < 100; i++) {
       if (countErr >= 20) {
         await fetchApp();
-        throw { error, code: '0' }
+        throw { error:'unknown', code: '0' }
       }
 
       const { data, error } = await supabase.rpc("setup_status", { storage_id: payload.storage_id, });
@@ -203,7 +206,7 @@ export const pauseApp = async (appInput) =>
     await fetchApp();
   }, "pauseApp");
 
-export const deleteApp = (appInput) =>
+export const deleteApp = (appInput:Action) => 
   wrapper(async () => {
     const payload = JSON.parse(appInput.payload);
     await DeleteApplication(payload.storage_id);
@@ -211,7 +214,7 @@ export const deleteApp = (appInput) =>
     await fetchApp();
   });
 
-export const connectVolume = (e) =>
+export const connectVolume = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
     const volume_id = payload.info.id;
@@ -224,7 +227,7 @@ export const connectVolume = (e) =>
     openRemotePage(data.url, "", "new_tab");
   });
 
-export const stopVolume = (e) =>
+export const stopVolume = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
 
@@ -238,7 +241,7 @@ export const stopVolume = (e) =>
     await fetchWorker();
     return "success";
   });
-export const deleteVolume = (e) =>
+export const deleteVolume = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
 
@@ -253,7 +256,7 @@ export const deleteVolume = (e) =>
     return "success";
   });
 
-export const forkVolume = (e) =>
+export const forkVolume = (e:Event) => 
   wrapper(async () => {
 
     const { gpu_model, vcpus, ram, description } = await log({ type: 'forkVolume' })
@@ -265,6 +268,10 @@ export const forkVolume = (e) =>
     const cluster_id = payload.info.cluster_id;
 
 
+    //META DATA
+
+
+    console.log(gpu_model, vcpus, ram);
     if (volume != undefined && cluster_id != undefined) await ForkVolume(volume, cluster_id, gpu_model, vcpus, ram, description);
     else throw "invalid request";
 
@@ -272,7 +279,7 @@ export const forkVolume = (e) =>
     return "success";
   });
 
-export const migrateVolume = (e) =>
+export const migrateVolume = (e:Event) => 
   wrapper(async () => {
 
     const { cluster_id } = await log({ type: 'migrateVolume' })
@@ -280,9 +287,11 @@ export const migrateVolume = (e) =>
       return;
 
 
+    console.log(cluster_id, 'cluster_id');
     const payload = formatEvent(e);
 
     const volume = payload.info.id;
+    console.log(volume, 'volume_id');
 
     if (volume != undefined && cluster_id != undefined) await MigrateVolume(volume, cluster_id);
     else throw "invalid request";
@@ -291,7 +300,7 @@ export const migrateVolume = (e) =>
     return "success";
   });
 
-export const setDefaultOsVolume = (e) =>
+export const setDefaultOsVolume = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
     const volume = payload.info.id;
@@ -304,7 +313,7 @@ export const setDefaultOsVolume = (e) =>
     return "success";
   });
 
-export const connectStorage = (e) =>
+export const connectStorage = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
 
@@ -317,7 +326,7 @@ export const connectStorage = (e) =>
     openRemotePage(result.url, "", "new_tab");
   });
 
-export const stopStorage = (e) =>
+export const stopStorage = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
 
@@ -331,7 +340,7 @@ export const stopStorage = (e) =>
     await fetchWorker();
     return "success";
   });
-export const deleteStorage = (e) =>
+export const deleteStorage = (e:Event) => 
   wrapper(async () => {
     const payload = formatEvent(e);
 
@@ -356,8 +365,17 @@ export const ReleaseApp = async ({ vol_speed,
   vdriver,
   hidevm,
   cluster_id,
-}) => {
+} : any) => {
   wrapper(async () => {
+    console.log(vol_availability,
+      gpu_model,
+      desc,
+      store_id,
+      vcpus,
+      ram,
+      vdriver,
+      hidevm,
+      cluster_id,);
     if (desc == "") throw ('Description is not empty!')
 
     const { code,error } = await SupabaseFuncInvoke("configure_application", {
@@ -417,7 +435,7 @@ export const patchApp = async (app) => {
 
 export const showCacheRequest = async () => {
   //wrapper(async () => {
-  const { action, appName, ...rest } = JSON.parse(localStorage.getItem(localStorageKey.request))
+  const { action, appName, ...rest } = JSON.parse(localStorage.getItem(localStorageKey.request) as string)
 
   const content = `Đang ${action} ${appName}`
   await log({ type: 'loading', content: content })

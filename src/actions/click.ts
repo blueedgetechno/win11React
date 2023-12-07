@@ -1,16 +1,18 @@
 import store from "../reducers";
 
-const formatEvent = (event) => {
+const formatEvent = (event: Event) => {
   const action = {
-    type: event.target.dataset.action,
-    payload: event.target.dataset.payload,
-    pid: event.target.dataset.pid,
+    type     : event.target?.dataset?.action,
+    payload  : event.target?.dataset?.payload,
+    pid      : event.target?.dataset?.pid,
   };
+
+  console.log(action);
 
   return action;
 };
 
-export const defaultDispatch = (event) => {
+export const defaultDispatch = (event: any) => {
   const action = formatEvent(event);
 
   if (!action.type) return;
@@ -19,7 +21,7 @@ export const defaultDispatch = (event) => {
 };
 
 // mostly file explorer
-export const handleFileOpen = (e) => {
+export const handleFileOpen = (e: Event) => {
   const action = formatEvent(e);
 
   // handle double click open

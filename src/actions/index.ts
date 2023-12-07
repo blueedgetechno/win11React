@@ -1,8 +1,8 @@
-import store from "../reducers";
+import store from "../reducers/index.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { log, Log } from "../lib/log";
-import { supabase } from "../supabase/createClient";
-import * as Actions from ".";
+import { log, Log } from "../lib/log.js";
+import { supabase } from "../supabase/createClient.js";
+import * as Actions from "./index.js";
 import {
   resetApp,
 
@@ -22,7 +22,7 @@ import {
   patchApp,
   setDefaultOsVolume,
 
-} from "./app"
+} from "./app.js"
 import {
   openWorker,
   createSession,
@@ -32,11 +32,10 @@ import {
   viewDetail,
   createSubscription,
   modifySubscription
-} from "./worker";
-import { fetchApp } from "./preload";
+} from "./worker.js";
+import { fetchApp } from "./preload.js";
 import { adjustSubscription } from "./worker.js";
 import { localStorageKey } from "../data/constant.js";
-import { UserEvents } from "./analytics.js";
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
@@ -47,7 +46,7 @@ export const refresh = (pl, menu) => {
   }
 };
 
-export const afterMath = (event) => {
+export const afterMath = (event:any) => {
   var ess = [
     ["START", "STARTHID"],
     ["BAND", "BANDHIDE"],
@@ -143,8 +142,9 @@ export const performApp = (act, menu) => {
     payload: menu.dataset.payload,
     name: menu.dataset?.name ?? "Null",
   };
-
-  UserEvents({content:`click app ${menu.dataset.name}`})
+  // add analytic
+  const appName = menu.dataset.name;
+  // AnalyticTrack(`click app`, {
   if (menu.dataset.action == "CLOUDAPP") {
     openApp(data);
     return;
@@ -211,14 +211,12 @@ export const handleLogOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) logging.error();
 
-  logging.close()
+  logging.close();
 
   store.dispatch({ type: "DELETE_USER" });
 };
 
 export const menuDispatch = async (event, menu) => {
-
-
   const type = event.target.dataset.action;
   const action = {
     type: event.target.dataset.action,
@@ -229,8 +227,6 @@ export const menuDispatch = async (event, menu) => {
     payload: menu?.dataset?.payload,
     name: menu?.dataset?.name,
   };
-
-  await UserEvents({content:`user ${type}`})
   if (!type) return;
   //Worker Menu action
        if (type === "FILEDIRWORKER")            openWorker(event);
