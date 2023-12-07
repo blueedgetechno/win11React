@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { installApp } from '../../../backend/actions/app';
 import { FetchApplicationTemplates } from '../../../backend/actions/fetch';
 import { combineText } from '../../../backend/utils/combineText';
-import { installApp } from '../../../backend/actions/app';
 
 const ModalSelectVendor = (props) => {
     const { storeID } = props;

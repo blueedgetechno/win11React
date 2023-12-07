@@ -1,4 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
+
+
 export function getOS() {
     let OSName = 'unknown';
 
@@ -7,6 +9,7 @@ export function getOS() {
     if (navigator.userAgent.indexOf('Linux') != -1) OSName = 'Linux';
     if (navigator.userAgent.indexOf('Android') != -1) OSName = 'Android';
     if (navigator.userAgent.indexOf('like Mac') != -1) OSName = 'iOS';
+
 
     return OSName;
 }
@@ -72,7 +75,7 @@ export async function UserSession(email) {
                 .split('\n')
                 .at(0) ?? '';
         location = await (await fetch(`http://ip-api.com/json/${ip}`)).json();
-    } catch {}
+    } catch { }
 
     await createClient(sb.url, sb.key)
         .from('generic_events')

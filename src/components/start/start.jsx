@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Icon } from '../../backend/utils/general';
-import { changeTheme, handleLogOut } from '../../backend/actions';
-import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTheme, handleLogOut } from '../../backend/actions';
 import { isGreenList, isMobile } from '../../backend/utils/checking';
+import { Icon } from '../../backend/utils/general';
+import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 
 export const StartMenu = () => {
     const { align } = useSelector((state) => state.taskbar);
@@ -76,7 +76,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                    //invert={pnstates[idx] ? true : null}
+                                //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>
@@ -101,10 +101,10 @@ export const StartMenu = () => {
                                 <span>
                                     {usageTime.total_time
                                         ? usageTime?.total_time.toFixed(1) +
-                                          '/' +
-                                          checkPackage() +
-                                          '/' +
-                                          usageTime?.package
+                                        '/' +
+                                        checkPackage() +
+                                        '/' +
+                                        usageTime?.package
                                         : 'Invalid'}
                                 </span>
                             </div>

@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon } from '../../backend/utils/general';
-import Battery from '../shared/Battery';
-import './taskbar.scss';
 import { isMobile } from '../../backend/utils/checking';
-import AvailableCluster from '../shared/AvailableCluster';
+import { Icon } from '../../backend/utils/general';
+import './taskbar.scss';
 
 const Taskbar = () => {
     const tasks = useSelector((state) => {

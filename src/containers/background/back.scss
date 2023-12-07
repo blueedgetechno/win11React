@@ -80,8 +80,9 @@
   align-items: center;
   padding: 12px 24px;
 }
-@media (1px <= width <= 660px) {
-  .bottomInfo{
+
+@media (1px <=width <=660px) {
+  .bottomInfo {
     top: 0px;
     height: max-content;
   }
@@ -172,6 +173,7 @@
   align-items: center;
   justify-content: center;
 }
+
 // https://docs.microsoft.com/en-us/fluent-ui/web-components/components/progress-ring
 
 .progressRing circle {
@@ -189,10 +191,12 @@
     stroke-dasharray: 0.01px, 43.97px;
     transform: rotate(0deg);
   }
+
   50% {
     stroke-dasharray: 21.99px, 21.99px;
     transform: rotate(450deg);
   }
+
   100% {
     stroke-dasharray: 0.01px, 43.97px;
     transform: rotate(1080deg);
@@ -200,8 +204,8 @@
 }
 
 
-.ctn-logo{
+.ctn-logo {
 
-  background: rgb(144,144,144);
+  background: rgb(144, 144, 144);
   background: linear-gradient(224deg, rgb(56 56 56 / 33%) 0%, rgb(255 255 255 / 33%) 100%);
 }

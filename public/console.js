@@ -4,14 +4,14 @@ window.pythonRunner = new BrythonRunner({
             window.pythonResult = content;
             window.pythonErr = 0;
         },
-        flush() {}
+        flush() { }
     },
     stderr: {
         write(content) {
             window.pythonResult = content;
             window.pythonErr = 1;
         },
-        flush() {}
+        flush() { }
     },
     stdin: {
         async readline() {
@@ -20,5 +20,5 @@ window.pythonRunner = new BrythonRunner({
             return userInput;
         }
     },
-    onInit() {}
+    onInit() { }
 });

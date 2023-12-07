@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Icon, Image, ToolBar } from '../../../backend/utils/general';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { defaultDispatch } from '../../../backend/actions/click';
-import { refeshWorker, openWorker } from '../../../backend/actions/worker';
-import './assets/fileexpo.scss';
+import { openWorker, refeshWorker } from '../../../backend/actions/worker';
 import { combineText } from '../../../backend/utils/combineText';
+import { Icon, Image, ToolBar } from '../../../backend/utils/general';
+import './assets/fileexpo.scss';
 
 const NavTitle = (props) => {
     var src = props.icon || 'folder';
@@ -480,7 +480,7 @@ const ContentArea = ({ searchtxt, data }) => {
                     <>
                         <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
                             {subInfo?.info?.menu == 'worker' ||
-                            subInfo?.info?.menu == 'session' ? (
+                                subInfo?.info?.menu == 'session' ? (
                                 <Image
                                     src={`icon/win/${renderIconName(
                                         subInfo?.info

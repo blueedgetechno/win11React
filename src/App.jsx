@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import './i18nextConf';
-import './index.css';
-import { ErrorFallback } from './error';
+import { UserSession } from './backend/actions/analytics';
+import { afterMath } from './backend/actions/index';
+import { checkAvailableCluster, preload } from './backend/actions/preload';
+import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
+import Popup from './components/popup';
+import AvailableCluster from './components/shared/AvailableCluster';
 import { CalnWid, DesktopApp, StartMenu, WidPane } from './components/start';
 import Taskbar from './components/taskbar';
-import { Background } from './containers/background';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft';
-import { LockScreen, BootScreen } from './containers/background';
-import ReactModal from 'react-modal';
-import Popup from './components/popup';
-import { checkAvailableCluster, preload } from './backend/actions/preload';
-import { afterMath } from './backend/actions/index';
-import { isMobile } from './backend/utils/checking';
-import { UserSession } from './backend/actions/analytics';
-import AvailableCluster from './components/shared/AvailableCluster';
+import { Background, BootScreen, LockScreen } from './containers/background';
+import { ErrorFallback } from './error';
+import './i18nextConf';
+import './index.css';
 
 function App() {
     const apps = useSelector((state) => state.apps);

@@ -1,12 +1,12 @@
-import Modal from './modal/index';
-import ModalEditOrInsert from './modal/admin';
-import ModalWorkerInfo from './modal/worker';
 import { useSelector } from 'react-redux';
-import ModalSelectVendor from './modal/vendor';
-import { UserFeedBack } from './modal/userFeedBack';
+import ModalEditOrInsert from './modal/admin';
+import Modal from './modal/index';
+import Notify from './modal/notify';
 import PaymentModal from './modal/payment';
 import ReleaseAppModal from './modal/release';
-import Notify from './modal/notify';
+import { UserFeedBack } from './modal/userFeedBack';
+import ModalSelectVendor from './modal/vendor';
+import ModalWorkerInfo from './modal/worker';
 
 import './index.scss';
 const Popup = (props) => {

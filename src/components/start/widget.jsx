@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon, LazyComponent } from '../../backend/utils/general';
 import './widget.scss';
 
@@ -150,18 +150,16 @@ export const WidPane = () => {
                                 <div
                                     className="short1 ltShad"
                                     style={{
-                                        '--afterBack': `url(${
-                                            widget.data.event.pages[0]
-                                                .thumbnail &&
+                                        '--afterBack': `url(${widget.data.event.pages[0]
+                                            .thumbnail &&
                                             widget.data.event.pages[0].thumbnail
                                                 .source
-                                        })`,
-                                        backgroundImage: `url(${
-                                            widget.data.event.pages[0]
-                                                .thumbnail &&
+                                            })`,
+                                        backgroundImage: `url(${widget.data.event.pages[0]
+                                            .thumbnail &&
                                             widget.data.event.pages[0].thumbnail
                                                 .source
-                                        })`
+                                            })`
                                     }}
                                 >
                                     <div className="shName">

@@ -51,6 +51,7 @@
 
     &[data-payload="close"]:hover {
       background: rgba(255, 0, 0, 0.8);
+
       img {
         filter: invert(1);
       }
@@ -92,6 +93,7 @@
   .snapper {
     background: #e0e0e0;
     border: solid 1px #999;
+
     &:hover {
       background: #0067c0;
       border: solid 1px #0067c0;
@@ -104,6 +106,7 @@
     .snapper {
       background: #4e4e4e;
       border: solid 1px #777;
+
       &:hover {
         background: #4cc2ff;
         border: solid 1px #4cc2ff;
@@ -217,6 +220,7 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"] {
     .snapper {
       background: #4e4e4e;
       border: solid 1px #777;
+
       &:hover {
         background: var(--clrPrm);
         border: solid 1px var(--clrPrm);
@@ -312,6 +316,7 @@ body[data-theme="dark"] .toolbar[data-noinvert="false"] {
           var(--scroll);
       }
     }
+
     &:horizontal {
       &:hover {
         background:

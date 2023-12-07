@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon, ToolBar } from '../../../backend/utils/general';
+import LangSwitch from './assets/Langswitch';
 import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';
-import { useState } from 'react';
-import LangSwitch from './assets/Langswitch';
-import { useTranslation } from 'react-i18next';
 
 export const Getstarted = () => {
     const wnapp = useSelector((state) => state.apps.getstarted);

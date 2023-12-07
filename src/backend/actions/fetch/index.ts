@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-import { externalLink } from '../../data/constant';
 import { supabase, virtapi } from '../../supabase/createClient';
 import { sleep } from '../../utils/sleep';
 import { fetchApp } from '../preload';

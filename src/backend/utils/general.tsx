@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector, useDispatch } from 'react-redux';
-import './general.scss';
-import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import * as FaRegIcons from '@fortawesome/free-regular-svg-icons';
-import * as AllIcons from './icons';
+import * as FaIcons from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Reducer } from '../reducers/type';
+import './general.scss';
+import * as AllIcons from './icons';
 
 export const Icon = (
     props: {
@@ -126,7 +126,7 @@ export const Icon = (
             >
                 {props.className == 'tsIcon' ? (
                     <div
-                        onClick={props.click != null ? clickDispatch : () => {}}
+                        onClick={props.click != null ? clickDispatch : () => { }}
                         style={{ width: props.width, height: props.width }}
                         data-action={props.click}
                         data-payload={props.payload}
@@ -159,7 +159,7 @@ export const Icon = (
                     <img
                         width={props.width}
                         height={props.height}
-                        onClick={props.click != null ? clickDispatch : () => {}}
+                        onClick={props.click != null ? clickDispatch : () => { }}
                         data-action={props.click}
                         data-payload={props.payload}
                         data-click={props.click != null}

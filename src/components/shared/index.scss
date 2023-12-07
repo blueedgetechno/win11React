@@ -1,35 +1,36 @@
+.clusterInfo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 16px;
 
-.clusterInfo{
-	display: flex;
-	gap: 8px;
-	align-items: center;
-	padding: 16px;
+  position: fixed;
+  z-index: 2;
+  top: 29px;
+  right: 55px;
+  background: #008280;
+  ;
+  border-radius: 8px;
 
-	position: fixed;
-	z-index: 2;
-	top: 29px;
-	right: 55px;
-	background: #008280;;
-	border-radius: 8px;
-
-	color: white;
-	font-weight: 500;
+  color: white;
+  font-weight: 500;
 }
 
-.pointer{
-    width: 18px;
-    height: 18px;
-    background:currentColor ;
-    box-shadow: 0px 0px 10px 4px currentColor;
-    border-radius: 100%;
+.pointer {
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  box-shadow: 0px 0px 10px 4px currentColor;
+  border-radius: 100%;
 
-    &.green{
-      color: #70FE63;
-      
-    }
-    &.orange{
-      color: #ce7b3d;
-
-    }
+  &.green {
+    color: #70FE63;
 
   }
+
+  &.orange {
+    color: #ce7b3d;
+
+  }
+
+}

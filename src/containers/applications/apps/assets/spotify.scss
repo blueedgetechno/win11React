@@ -332,6 +332,7 @@
 
 .scard,
 .topcard {
+
   .fplay,
   .fpause {
     width: 40px;
@@ -495,6 +496,7 @@
 
 .alsongs {
   box-sizing: border-box;
+
   .hr {
     height: 1px;
     background: #333;
@@ -508,10 +510,8 @@
   align-items: center;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(
-      20px,
-      1fr
-    );
+  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(20px,
+      1fr);
   padding: 8px;
   letter-spacing: 1px;
   border-radius: 4px;
@@ -541,6 +541,7 @@
 
   .scolsong {
     max-width: 100%;
+
     &[data-play="true"] {
       margin-left: 16px;
       max-width: calc(100% - 56px);

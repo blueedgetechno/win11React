@@ -1,38 +1,38 @@
-import store from '../reducers/index.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import { log, Log } from '../lib/log.js';
-import { supabase } from '../supabase/createClient.js';
-import * as Actions from './index.js';
-import {
-    resetApp,
-    connectStorage,
-    stopStorage,
-    deleteStorage,
-    connectVolume,
-    stopVolume,
-    deleteVolume,
-    startApp,
-    pauseApp,
-    openApp,
-    deleteApp,
-    migrateVolume,
-    forkVolume,
-    patchApp,
-    setDefaultOsVolume
-} from './app.js';
-import {
-    openWorker,
-    createSession,
-    deactiveSession,
-    connectWorker,
-    connectSession,
-    viewDetail,
-    createSubscription,
-    modifySubscription
-} from './worker.js';
-import { fetchApp } from './preload.js';
-import { adjustSubscription } from './worker.js';
 import { localStorageKey } from '../data/constant.js';
+import { Log } from '../lib/log.js';
+import store from '../reducers/index.js';
+import { supabase } from '../supabase/createClient.js';
+import {
+    connectStorage,
+    connectVolume,
+    deleteApp,
+    deleteStorage,
+    deleteVolume,
+    forkVolume,
+    migrateVolume,
+    openApp,
+    patchApp,
+    pauseApp,
+    resetApp,
+    setDefaultOsVolume,
+    startApp,
+    stopStorage,
+    stopVolume
+} from './app.js';
+import * as Actions from './index.js';
+import { fetchApp } from './preload.js';
+import {
+    adjustSubscription,
+    connectSession,
+    connectWorker,
+    createSession,
+    createSubscription,
+    deactiveSession,
+    modifySubscription,
+    openWorker,
+    viewDetail
+} from './worker.js';
 //import { createSubscription } from "react-redux/es/utils/Subscription";
 
 export const refresh = (pl, menu) => {
@@ -56,7 +56,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'

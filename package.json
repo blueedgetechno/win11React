@@ -5,10 +5,9 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "pretty": "prettier --write \"./**/*.{jsx,ts,js,tsx}\"" ,
+    "pretty": "prettier --write \"./**/*.{jsx,ts,js,tsx}\"",
     "start": "vite --port 3000",
     "build": "vite build"
-
   },
   "browserslist": {
     "production": [

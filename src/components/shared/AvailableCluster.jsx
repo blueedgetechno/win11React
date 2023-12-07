@@ -1,8 +1,8 @@
 import React from 'react';
-import './index.scss';
 import { useSelector } from 'react-redux';
+import './index.scss';
 
-import { isGreenList, isMobile } from '../../backend/utils/checking';
+import { isGreenList } from '../../backend/utils/checking';
 
 function AvailableCluster({ isBootScreen }) {
     const availableCluster = useSelector(

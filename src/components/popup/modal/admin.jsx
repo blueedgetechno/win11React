@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { supabase, virtapi } from '../../../backend/supabase/createClient';
-import { log } from '../../../backend/lib/log';
-import { Image } from '../../../backend/utils/general';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchStore } from '../../../backend/actions/preload';
+import { log } from '../../../backend/lib/log';
+import { supabase, virtapi } from '../../../backend/supabase/createClient';
+import { Image } from '../../../backend/utils/general';
 
 const ModalEditOrInsert = (props) => {
     const { modalType, appData } = props;
@@ -11,14 +11,14 @@ const ModalEditOrInsert = (props) => {
         modalType == 'edit'
             ? appData
             : {
-                  id: '',
-                  name: '',
-                  type: '',
-                  description: '',
-                  feature: '',
-                  screenshoots: [],
-                  icon: ''
-              }
+                id: '',
+                name: '',
+                type: '',
+                description: '',
+                feature: '',
+                screenshoots: [],
+                icon: ''
+            }
     );
 
     const dispatch = useDispatch();

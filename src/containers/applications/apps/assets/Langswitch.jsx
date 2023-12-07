@@ -1,5 +1,5 @@
-import React from 'react';
 import i18next from 'i18next';
+import React from 'react';
 
 function LangSwitch() {
     const [languageValue, setLanguageValue] = React.useState('');

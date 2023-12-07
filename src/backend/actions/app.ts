@@ -1,30 +1,30 @@
-import store from '../reducers';
+import i18next from 'i18next';
+import Swal from 'sweetalert2';
+import { localStorageKey } from '../data/constant';
 import { log } from '../lib/log';
-import { fetchApp, fetchStore, fetchWorker } from './preload';
+import store from '../reducers';
+import { Action } from '../reducers/type';
 import { supabase, virtapi } from '../supabase/createClient';
+import { isAdmin } from '../utils/checking';
+import { formatError } from '../utils/formatErr';
+import { sleep } from '../utils/sleep';
 import {
     AccessApplication,
-    ResetApplication,
     DeleteApplication,
+    DeleteVolume,
     DownloadApplication,
+    ForkVolume,
+    MigrateVolume,
+    PatchApp,
+    ResetApplication,
+    SetDefaultOsVolume,
     StartApplication,
     StopApplication,
     StopVolume,
-    DeleteVolume,
-    ForkVolume,
-    MigrateVolume,
-    SetDefaultOsVolume,
-    PatchApp
+    SupabaseFuncInvoke
 } from './fetch';
-import Swal from 'sweetalert2';
-import { SupabaseFuncInvoke } from './fetch';
-import i18next from 'i18next';
-import { sleep } from '../utils/sleep';
+import { fetchApp, fetchStore, fetchWorker } from './preload';
 import { openRemotePage } from './remote';
-import { isAdmin } from '../utils/checking';
-import { formatError } from '../utils/formatErr';
-import { localStorageKey } from '../data/constant';
-import { Action } from '../reducers/type';
 
 export const formatEvent = (event: Event) => {
     const pid = event.target?.dataset.pid;

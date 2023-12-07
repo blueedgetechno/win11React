@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserEvents } from '../../../backend/actions/analytics';
 import {
-    Icon,
-    Image,
-    ToolBar,
-    LazyComponent
+    ToolBar
 } from '../../../backend/utils/general';
 import './assets/store.scss';
-import { useTranslation } from 'react-i18next';
-import { UserEvents } from '../../../backend/actions/analytics';
 
 import {
-    PayPalScriptProvider,
+    FUNDING,
     PayPalButtons,
-    FUNDING
+    PayPalScriptProvider
 } from '@paypal/react-paypal-js';
 import { supabase } from '../../../backend/supabase/createClient';
 
@@ -207,7 +203,7 @@ export const PaymentApp = () => {
                                                             shape: 'pill',
                                                             color:
                                                                 fundingSource ==
-                                                                FUNDING.PAYLATER
+                                                                    FUNDING.PAYLATER
                                                                     ? 'gold'
                                                                     : ''
                                                         }}

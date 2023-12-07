@@ -7,11 +7,11 @@ import './wnapp.scss';
 export * from './apps/about';
 //export * from "./apps/discord";
 export * from './apps/edge';
-export * from './apps/worker';
 export * from './apps/getstarted';
 export * from './apps/payment';
-export * from './apps/store';
 export * from './apps/refund';
+export * from './apps/store';
+export * from './apps/worker';
 
 export const ScreenPreview = () => {
     const tasks = useSelector((state) => state.taskbar);

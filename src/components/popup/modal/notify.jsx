@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
-import { TbLoaderQuarter } from 'react-icons/tb';
 
 import { TbLoader3 } from 'react-icons/tb';
 

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { externalLink } from '../../../backend/data/constant';
-import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
+import { useKeenSlider } from 'keen-slider/react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { Image } from '../../../backend/utils/general';
-import { FaArrowRight } from 'react-icons/fa';
 
 import './assets/about.scss';
 export const AboutWin = () => {
@@ -124,7 +122,7 @@ export const AboutWin = () => {
                                 currentSlide ===
                                 instanceRef.current.track.details.slides
                                     .length -
-                                    1
+                                1
                             }
                         />
                     </>
@@ -165,9 +163,8 @@ function Arrow(props) {
     return (
         <svg
             onClick={props.onClick}
-            className={`arrow ${
-                props.left ? 'arrow--left' : 'arrow--right'
-            } ${disabeld}`}
+            className={`arrow ${props.left ? 'arrow--left' : 'arrow--right'
+                } ${disabeld}`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
         >

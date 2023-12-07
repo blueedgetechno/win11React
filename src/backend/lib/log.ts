@@ -261,7 +261,7 @@ export const log = async ({
 };
 
 export class Log {
-    constructor() {}
+    constructor() { }
     loading(title?: any, content?: any, time?: any, icon?: any) {
         Swal.fire({
             title: title ?? 'Loading!',

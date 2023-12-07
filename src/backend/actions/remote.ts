@@ -1,5 +1,4 @@
 import { isScanCodeApp } from '../utils/checking';
-import { sleep } from '../utils/sleep';
 
 /**
  *
