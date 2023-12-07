@@ -111,7 +111,7 @@ export const Icon = (props) => {
             >
                 {props.className == 'tsIcon' ? (
                     <div
-                        onClick={props.click != null ? clickDispatch : () => { }}
+                        onClick={props.click != null ? clickDispatch : () => {}}
                         style={{ width: props.width, height: props.width }}
                         data-action={props.click}
                         data-payload={props.payload}
@@ -144,7 +144,7 @@ export const Icon = (props) => {
                     <img
                         width={props.width}
                         height={props.height}
-                        onClick={props.click != null ? clickDispatch : () => { }}
+                        onClick={props.click != null ? clickDispatch : () => {}}
                         data-action={props.click}
                         data-payload={props.payload}
                         data-click={props.click != null}

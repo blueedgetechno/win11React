@@ -20,7 +20,7 @@ const Modal = (props) => {
                 contentLabel="Example Modal"
                 className="modalContent "
                 overlayClassName="fixed inset-0"
-            //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
+                //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
             >
                 {type != 'notify' ? (
                     <div

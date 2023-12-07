@@ -31,9 +31,8 @@ export const fetchApp = async () => {
     if (!user?.id) return;
 
     try {
-        const cache = localStorage.getItem('APP')
-        if (cache == null)
-            throw ''
+        const cache = localStorage.getItem('APP');
+        if (cache == null) throw '';
 
         const { timestamp, apps } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
@@ -44,7 +43,7 @@ export const fetchApp = async () => {
             payload: [...apps]
         });
         return;
-    } catch { }
+    } catch {}
 
     const data = await FetchUserApplication();
     const apps = (await formatAppRenderTree(data)).filter(
@@ -71,9 +70,8 @@ export const fetchWorker = async () => {
     if ((await isAllowWorkerProfileFetch()) == false) return;
 
     try {
-        const cache = localStorage.getItem('WORKER')
-        if (!cache)
-            throw ''
+        const cache = localStorage.getItem('WORKER');
+        if (!cache) throw '';
         const { timestamp, payload } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
@@ -83,7 +81,7 @@ export const fetchWorker = async () => {
             payload
         });
         return;
-    } catch { }
+    } catch {}
 
     const cpath = store.getState().worker.cpath ?? 'Account';
 
@@ -112,9 +110,8 @@ export const fetchStore = async () => {
     if (!user?.id) return;
 
     try {
-        const cache = localStorage.getItem('STORE')
-        if (!cache)
-            throw ''
+        const cache = localStorage.getItem('STORE');
+        if (!cache) throw '';
 
         const { timestamp, games, apps } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 60 * 1000)
@@ -131,15 +128,14 @@ export const fetchStore = async () => {
             payload: games
         });
         return;
-    } catch { }
+    } catch {}
 
     const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
     if (error) throw error;
 
     const content: {
-        games: any[],
-        apps: any[]
-
+        games: any[];
+        apps: any[];
     } = {
         games: [],
         apps: []
@@ -149,10 +145,8 @@ export const fetchStore = async () => {
     for (let index = 0; index < stores.length; index++) {
         const appOrGame = stores[index];
 
-        if (appOrGame.type == 'GAME')
-            content.games.push(appOrGame);
-        else if (appOrGame.type == 'APP')
-            content.apps.push(appOrGame);
+        if (appOrGame.type == 'GAME') content.games.push(appOrGame);
+        else if (appOrGame.type == 'APP') content.apps.push(appOrGame);
     }
 
     store.dispatch({
@@ -174,9 +168,8 @@ export const fetchStore = async () => {
 
 export const fetchUser = async () => {
     try {
-        const cache = localStorage.getItem(localStorageKey.user)
-        if (!cache)
-            throw ''
+        const cache = localStorage.getItem(localStorageKey.user);
+        if (!cache) throw '';
 
         const { timestamp, payload } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
@@ -187,7 +180,7 @@ export const fetchUser = async () => {
             payload
         });
         return;
-    } catch { }
+    } catch {}
 
     const {
         data: { user },
@@ -258,11 +251,7 @@ export const checkAvailableCluster = async () => {
     // if (!isGreenList) return
 
     while (true) {
-        const { data } = await virtapi(
-            'rpc/attachable_clusters',
-            'POST',
-            {}
-        );
+        const { data } = await virtapi('rpc/attachable_clusters', 'POST', {});
         checking = data.at(0).total > 0;
 
         store.dispatch({

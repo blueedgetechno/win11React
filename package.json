@@ -9,18 +9,6 @@
     "start": "vite --port 3000",
     "build": "tsc && vite build"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "dependencies": {
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",

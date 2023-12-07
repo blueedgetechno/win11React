@@ -38,7 +38,7 @@ export const refresh = async (_: any, menu: any) => {
     if (menu.menus.desk[0].opts[4].check) {
         store.dispatch({ type: 'DESKHIDE', payload: {} });
         await fetchApp();
-        store.dispatch({ type: 'DESKSHOW', payload: {} })
+        store.dispatch({ type: 'DESKSHOW', payload: {} });
     }
 };
 
@@ -55,7 +55,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -169,7 +169,7 @@ export const delDefaultApp = () => {
     // TODO
 };
 
-export const delApp = ({ }, menu: any) => {
+export const delApp = ({}, menu: any) => {
     var data = {
         type: menu.dataset.action,
         payload: menu.dataset.payload
@@ -274,7 +274,7 @@ export const cacheRequest = ({ action, appName, callback = '' }: any) => {
 };
 
 export const getCacheData = () => {
-    const cache = localStorage.getItem(localStorageKey.request)
+    const cache = localStorage.getItem(localStorageKey.request);
     const data = JSON.parse(cache ?? '');
 
     return data;

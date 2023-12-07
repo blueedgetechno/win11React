@@ -44,7 +44,6 @@ const includesErr = (err = '') => {
 export async function formatError(err = 'Something went wrong!', code = '0') {
     const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
 
-
     const CAUSES = {
         '0': JSON.stringify(err),
         '1': i18next.t('error.run_out_of_gpu_stock'),
@@ -57,7 +56,8 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
     };
 
     let icon = code != '0' ? 'info' : 'error';
-    let msg = (CAUSES as any as [string,string])[code as any] ?? JSON.stringify(err);
+    let msg =
+        (CAUSES as any as [string, string])[code as any] ?? JSON.stringify(err);
     if (includesErr(err) != '') {
         msg = includesErr(err);
         icon = 'info';

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../../backend/actions/analytics';
-import {
-    ToolBar
-} from '../../../components/shared/general';
+import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 import {
@@ -203,7 +201,7 @@ export const PaymentApp = () => {
                                                             shape: 'pill',
                                                             color:
                                                                 fundingSource ==
-                                                                    FUNDING.PAYLATER
+                                                                FUNDING.PAYLATER
                                                                     ? 'gold'
                                                                     : ''
                                                         }}

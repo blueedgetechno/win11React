@@ -27,7 +27,7 @@ const allReducers = combineReducers({
     setting: settReducer,
     worker: workerReducer,
     modal: modalReducer,
-    sidepane: sidepaneReducer,
+    sidepane: sidepaneReducer
 });
 
 var store = createStore(allReducers);

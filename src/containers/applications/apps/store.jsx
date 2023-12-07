@@ -221,51 +221,51 @@ const FrontPage = (props) => {
                 <div className="flex w-max pr-8">
                     {games.length > 0
                         ? games.map((game, i) => {
-                            return (
-                                <div
-                                    key={i}
-                                    className="ribcont rounded-md my-0 p-2 pb-2"
-                                    onClick={() => {
-                                        props.app_click(game);
-                                    }}
-                                    style={{
-                                        background: game.steam_off
-                                            ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
-                                            : ''
-                                    }}
-                                >
-                                    <Image
-                                        className="mx-1 py-1 mb-6 rounded"
-                                        w={100}
-                                        h={100}
-                                        absolute={true}
-                                        src={game.icon}
-                                    />
-                                    <div className="capitalize text-xs text-center font-semibold">
-                                        {game.name}
-                                    </div>
-                                    <div className="text-xs text-center font-regular">
-                                        {game.steam_off
-                                            ? 'Steam Offline'
-                                            : ''}
-                                    </div>
-                                </div>
-                            );
-                        })
+                              return (
+                                  <div
+                                      key={i}
+                                      className="ribcont rounded-md my-0 p-2 pb-2"
+                                      onClick={() => {
+                                          props.app_click(game);
+                                      }}
+                                      style={{
+                                          background: game.steam_off
+                                              ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
+                                              : ''
+                                      }}
+                                  >
+                                      <Image
+                                          className="mx-1 py-1 mb-6 rounded"
+                                          w={100}
+                                          h={100}
+                                          absolute={true}
+                                          src={game.icon}
+                                      />
+                                      <div className="capitalize text-xs text-center font-semibold">
+                                          {game.name}
+                                      </div>
+                                      <div className="text-xs text-center font-regular">
+                                          {game.steam_off
+                                              ? 'Steam Offline'
+                                              : ''}
+                                      </div>
+                                  </div>
+                              );
+                          })
                         : listDraftApp.map((i) => (
-                            <div
-                                key={i}
-                                className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
-                            >
-                                <Image
-                                    className="mx-1 rounded bg-slate-200"
-                                    w={100}
-                                    h={100}
-                                    ext
-                                />
-                                <div className="capitalize text-xs text-center font-semibold"></div>
-                            </div>
-                        ))}
+                              <div
+                                  key={i}
+                                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                              >
+                                  <Image
+                                      className="mx-1 rounded bg-slate-200"
+                                      w={100}
+                                      h={100}
+                                      ext
+                                  />
+                                  <div className="capitalize text-xs text-center font-semibold"></div>
+                              </div>
+                          ))}
                 </div>
             </div>
 
@@ -331,7 +331,7 @@ const DetailPage = ({ app }) => {
             let user_region;
 
             switch (
-            JSON.stringify(subscription.data.at(0).metadata).toString()
+                JSON.stringify(subscription.data.at(0).metadata).toString()
             ) {
                 case '{}': // thinkmay internal user
                     user_region = region[0];
@@ -586,7 +586,7 @@ const DetailPage = ({ app }) => {
                                                         emap(
                                                             Math.abs(stars - x)
                                                         ) *
-                                                        100 +
+                                                            100 +
                                                         '%',
                                                     padding: '3px 0'
                                                 }}
@@ -720,20 +720,20 @@ const DownPage = ({ action }) => {
                 {storeApps.length > 0
                     ? renderSearchResult()
                     : listDraftApp.map((i) => (
-                        <div
-                            key={i}
-                            className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-                            data-action="page2"
-                        >
-                            <Image
-                                className="mx-4 mb-6 rounded bg-slate-200"
-                                w={100}
-                                h={100}
-                                ext
-                            />
-                            <div className="capitalize text-xs text-center font-semibold"></div>
-                        </div>
-                    ))}
+                          <div
+                              key={i}
+                              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                              data-action="page2"
+                          >
+                              <Image
+                                  className="mx-4 mb-6 rounded bg-slate-200"
+                                  w={100}
+                                  h={100}
+                                  ext
+                              />
+                              <div className="capitalize text-xs text-center font-semibold"></div>
+                          </div>
+                      ))}
             </div>
         </div>
     );

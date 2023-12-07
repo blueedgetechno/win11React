@@ -1,5 +1,5 @@
 export const combineText = (input: string): string => {
-    const result : string[] = [];
+    const result: string[] = [];
 
     const textSplited = input.split('_');
     textSplited.forEach((text) => {

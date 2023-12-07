@@ -10,9 +10,9 @@ export const ActMenu = () => {
     const { abpos, isLeft } = useSelector((state) => {
         var acount = state.menus.menus[state.menus.opts].length;
         var tmpos = {
-            top: state.menus.top,
-            left: state.menus.left
-        },
+                top: state.menus.top,
+                left: state.menus.left
+            },
             tmpleft = false;
 
         var wnwidth = window.innerWidth,

@@ -19,7 +19,7 @@ import {
     SetDefaultOsVolume,
     StartApplication,
     StopApplication,
-    StopVolume,
+    StopVolume
 } from './fetch';
 import { SupabaseFuncInvoke, supabase, virtapi } from './fetch/createClient';
 import { fetchApp, fetchStore, fetchWorker } from './preload';
@@ -67,7 +67,7 @@ const wrapper = async (func: any, appType?: string) => {
 
         return result;
     } catch (er) {
-        const err = er as any
+        const err = er as any;
         let errMsg = err?.error ?? err;
         await formatError(errMsg, err?.code);
 
@@ -213,13 +213,10 @@ export const connectVolume = (e: Event) =>
         const payload = formatEvent(e);
 
         // TODO: DAT add volumne Id to access
-        const { data } = await SupabaseFuncInvoke(
-            'access_application',
-            {
-                volume_id: payload.info.id,
-                action: 'ACCESS'
-            }
-        );
+        const { data } = await SupabaseFuncInvoke('access_application', {
+            volume_id: payload.info.id,
+            action: 'ACCESS'
+        });
         openRemotePage(data.url, '', 'new_tab');
     });
 
@@ -383,24 +380,21 @@ export const ReleaseApp = async ({
         );
         if (desc == '') throw 'Description is not empty!';
 
-        const { error } = await SupabaseFuncInvoke(
-            'configure_application',
-            {
-                action: 'RELEASE',
-                store_id: parseInt(store_id),
-                desc: desc,
-                speed: vol_speed,
-                availability: vol_availability,
-                cluster_id,
-                hardware: {
-                    gpu_model: gpu_model,
-                    vcpus: parseInt(vcpus),
-                    ram: parseInt(ram),
-                    vdriver: vdriver,
-                    hidevm: hidevm
-                }
+        const { error } = await SupabaseFuncInvoke('configure_application', {
+            action: 'RELEASE',
+            store_id: parseInt(store_id),
+            desc: desc,
+            speed: vol_speed,
+            availability: vol_availability,
+            cluster_id,
+            hardware: {
+                gpu_model: gpu_model,
+                vcpus: parseInt(vcpus),
+                ram: parseInt(ram),
+                vdriver: vdriver,
+                hidevm: hidevm
             }
-        );
+        });
 
         if (error) throw error;
 

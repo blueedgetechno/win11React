@@ -7,7 +7,7 @@ type WorkerType = {
     hid: number;
     view: number;
     data: Bin;
-    cpath: string
+    cpath: string;
 };
 
 const defState: WorkerType = {

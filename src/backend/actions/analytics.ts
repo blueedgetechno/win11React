@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
 
-
 export function getOS() {
     let OSName = 'unknown';
 
@@ -9,7 +8,6 @@ export function getOS() {
     if (navigator.userAgent.indexOf('Linux') != -1) OSName = 'Linux';
     if (navigator.userAgent.indexOf('Android') != -1) OSName = 'Android';
     if (navigator.userAgent.indexOf('like Mac') != -1) OSName = 'iOS';
-
 
     return OSName;
 }
@@ -38,7 +36,13 @@ const sb = {
     key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjk0MDE5NjAwLAogICJleHAiOiAxODUxODcyNDAwCn0.EpUhNso-BMFvAJLjYbomIddyFfN--u-zCf0Swj9Ac6E'
 };
 
-export async function ContactUS({ email, content }:{email:string,content:string}) {
+export async function ContactUS({
+    email,
+    content
+}: {
+    email: string;
+    content: string;
+}) {
     await createClient(sb.url, sb.key)
         .from('generic_events')
         .insert({
@@ -48,7 +52,7 @@ export async function ContactUS({ email, content }:{email:string,content:string}
         });
 }
 
-export async function UserEvents(content:string) {
+export async function UserEvents(content: string) {
     const session = localStorage.getItem('SESSION_ID');
 
     await createClient(sb.url, sb.key)
@@ -63,7 +67,7 @@ export async function UserEvents(content:string) {
         });
 }
 
-export async function UserSession(email:string) {
+export async function UserSession(email: string) {
     const session = crypto.randomUUID();
     localStorage.setItem('SESSION_ID', session);
     let location = {};
@@ -75,7 +79,7 @@ export async function UserSession(email:string) {
                 .split('\n')
                 .at(0) ?? '';
         location = await (await fetch(`http://ip-api.com/json/${ip}`)).json();
-    } catch { }
+    } catch {}
 
     await createClient(sb.url, sb.key)
         .from('generic_events')

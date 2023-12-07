@@ -36,9 +36,7 @@ export const virtapi = async (rpc: string, method?: string, body?: any) => {
 
 const getCredentialHeader = async () => {
     const {
-        data: {
-            session
-        },
+        data: { session },
         error
     } = await supabase.auth.getSession();
     if (error != null) throw new Error('unauthorized');
@@ -57,8 +55,8 @@ export const SupabaseFuncInvoke = async (funcName: string, body?: any) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${supabaseKey}`,
-                    'access_token': credential.access_token ?? ''
+                    Authorization: `Bearer ${supabaseKey}`,
+                    access_token: credential.access_token ?? ''
                 }
             }
         );

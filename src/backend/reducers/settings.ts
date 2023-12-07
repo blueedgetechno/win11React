@@ -1,4 +1,4 @@
-import { Action } from "./type";
+import { Action } from './type';
 
 const defState = {
     system: {
@@ -39,7 +39,7 @@ const defState = {
 
 //document.body.dataset.theme = defState.person.theme
 
-const changeVal = (obj:any, pathin:string, val = 'togg') => {
+const changeVal = (obj: any, pathin: string, val = 'togg') => {
     var tmp = obj;
     const path = pathin.split('.');
     for (var i = 0; i < path.length - 1; i++) {

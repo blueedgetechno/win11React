@@ -1,4 +1,4 @@
-import { Action } from "./type";
+import { Action } from './type';
 
 const defState = {
     quicks: [

@@ -76,7 +76,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                //invert={pnstates[idx] ? true : null}
+                                    //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>
@@ -101,10 +101,10 @@ export const StartMenu = () => {
                                 <span>
                                     {usageTime.total_time
                                         ? usageTime?.total_time.toFixed(1) +
-                                        '/' +
-                                        checkPackage() +
-                                        '/' +
-                                        usageTime?.package
+                                          '/' +
+                                          checkPackage() +
+                                          '/' +
+                                          usageTime?.package
                                         : 'Invalid'}
                                 </span>
                             </div>

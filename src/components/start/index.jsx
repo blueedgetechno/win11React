@@ -172,7 +172,7 @@ export const SidePane = () => {
     const dispatch = useDispatch();
 
     let [btlevel, setBtLevel] = useState('');
-    const childToParent = () => { };
+    const childToParent = () => {};
 
     const clickDispatch = (event) => {
         var action = {

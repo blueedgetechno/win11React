@@ -57,8 +57,7 @@ export const createSession = (e: any) =>
 
         if (!worker) return;
 
-        const { worker_profile_id, isActive } =
-            worker.info;
+        const { worker_profile_id, isActive } = worker.info;
 
         if (!worker_profile_id || isActive) return;
 

@@ -5,19 +5,13 @@ import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
 
-
-
 export const FetchAuthorizedWorkers = async () => {
-    const { data, error } = await SupabaseFuncInvoke(
-        'worker_profile_render'
-    );
+    const { data, error } = await SupabaseFuncInvoke('worker_profile_render');
     if (error != null) throw error;
     return data;
 };
 export const FetchUserApplication = async () => {
-    const { data, error } = await SupabaseFuncInvoke(
-        'user_application_fetch'
-    );
+    const { data, error } = await SupabaseFuncInvoke('user_application_fetch');
     if (error != null) throw error;
     return data;
 };
@@ -34,12 +28,9 @@ export const DeactivateWorkerSession = async (worker_session_id: string) => {
 };
 
 export const CreateWorkerSession = async (worker_profile_id: string) => {
-    const { data, error } = await SupabaseFuncInvoke(
-        'worker_session_create',
-        {
-            worker_id: worker_profile_id
-        }
-    );
+    const { data, error } = await SupabaseFuncInvoke('worker_session_create', {
+        worker_id: worker_profile_id
+    });
 
     if (error != null) throw error;
     return data;
@@ -72,13 +63,10 @@ export const AddSubscription = async (
  * @returns
  */
 export const ModifySubscription = async (action: string, email: string) => {
-    const { data, error } = await SupabaseFuncInvoke(
-        'modify_subscription',
-        {
-            email,
-            action
-        }
-    );
+    const { data, error } = await SupabaseFuncInvoke('modify_subscription', {
+        email,
+        action
+    });
 
     if (error != null) throw error;
     return data;
@@ -150,9 +138,7 @@ export const DownloadApplication = async (
     return storageId;
 };
 
-export const StartApplication = async (
-    storage_id: string,
-) => {
+export const StartApplication = async (storage_id: string) => {
     const { data, code, error } = await SupabaseFuncInvoke(
         'request_application',
         {
@@ -386,4 +372,3 @@ export const FetchApplicationTemplates = async (id: number) => {
         })
         .filter((x) => x != undefined);
 };
-
