@@ -1,125 +1,131 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "../../backend/utils/general";
-import Battery from "../shared/Battery";
-import "./taskbar.scss";
-import { isMobile } from "../../backend/utils/checking";
-import AvailableCluster from "../shared/AvailableCluster";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Icon } from '../../backend/utils/general';
+import Battery from '../shared/Battery';
+import './taskbar.scss';
+import { isMobile } from '../../backend/utils/checking';
+import AvailableCluster from '../shared/AvailableCluster';
 
 const Taskbar = () => {
-  const tasks = useSelector((state) => {
-    return state.taskbar;
-  });
-  const apps = useSelector((state) => {
-    var tmpApps = { ...state.apps };
-    for (var i = 0; i < state.taskbar.apps.length; i++) {
-      tmpApps[state.taskbar.apps[i].icon].task = true;
-    }
-    return tmpApps;
-  });
-  const dispatch = useDispatch();
-
-  const showPrev = (event) => {
-    var ele = event.target;
-    while (ele && ele.getAttribute("value") == null) {
-      ele = ele.parentElement;
-    }
-
-    var appPrev = ele.getAttribute("value");
-    var xpos = window.scrollX + ele.getBoundingClientRect().left;
-
-    var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
-
-    dispatch({
-      type: "TASKPSHOW",
-      payload: {
-        app: appPrev,
-        pos: offsetx,
-      },
+    const tasks = useSelector((state) => {
+        return state.taskbar;
     });
-  };
+    const apps = useSelector((state) => {
+        var tmpApps = { ...state.apps };
+        for (var i = 0; i < state.taskbar.apps.length; i++) {
+            tmpApps[state.taskbar.apps[i].icon].task = true;
+        }
+        return tmpApps;
+    });
+    const dispatch = useDispatch();
 
-  const hidePrev = () => {
-    dispatch({ type: "TASKPHIDE" });
-  };
+    const showPrev = (event) => {
+        var ele = event.target;
+        while (ele && ele.getAttribute('value') == null) {
+            ele = ele.parentElement;
+        }
 
-  const clickDispatch = (event) => {
-    var action = {
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
+        var appPrev = ele.getAttribute('value');
+        var xpos = window.scrollX + ele.getBoundingClientRect().left;
+
+        var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
+
+        dispatch({
+            type: 'TASKPSHOW',
+            payload: {
+                app: appPrev,
+                pos: offsetx
+            }
+        });
     };
 
-    if (action.type) {
-      dispatch(action);
-    }
-  };
+    const hidePrev = () => {
+        dispatch({ type: 'TASKPHIDE' });
+    };
 
-  const [time, setTime] = useState(new Date());
+    const clickDispatch = (event) => {
+        var action = {
+            type: event.target.dataset.action,
+            payload: event.target.dataset.payload
+        };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+        if (action.type) {
+            dispatch(action);
+        }
+    };
 
-  return (
-    <div className="taskbar" data-mobile={isMobile()}>
+    const [time, setTime] = useState(new Date());
 
-      <div className="tasksCont" data-menu="task" data-side={tasks.align}>
-        <div className="tsbar" onMouseOut={hidePrev}>
-          <Icon className="tsIcon tsIconInvert" src="home" width={24} click="STARTOGG" />
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTime(new Date());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
-          {tasks.apps.map((task, i) => {
-            var isHidden = apps[task.icon].hide;
-            var isActive = apps[task.icon].z == apps.hz;
-            return (
-              <div
-                key={i}
-                onMouseOver={(!isActive && !isHidden && showPrev) || null}
-                value={task.icon}
-              >
-                <Icon
-                  className="tsIcon"
-                  width={24}
-                  open={isHidden ? null : true}
-                  click={task.action}
-                  active={isActive}
-                  payload="togg"
-                  src={task.icon}
-                />
-              </div>
-            );
-          })}
-          {Object.keys(apps).map((key, i) => {
-            if (key != "hz") {
-              var isActive = apps[key].z == apps.hz;
-            }
-            return key != "hz" &&
-              key != "undefined" &&
-              !apps[key].task &&
-              !apps[key].hide ? (
-              <div
-                key={i}
-                onMouseOver={(!isActive && showPrev) || null}
-                value={apps[key].icon}
-              >
-                <Icon
-                  className="tsIcon"
-                  width={24}
-                  active={isActive}
-                  click={apps[key].action}
-                  payload="togg"
-                  open="true"
-                  src={apps[key].icon}
-                />
-              </div>
-            ) : null;
-          })}
-        </div>
-      </div>
-      <div className="taskright">
-        {/*{
+    return (
+        <div className="taskbar" data-mobile={isMobile()}>
+            <div className="tasksCont" data-menu="task" data-side={tasks.align}>
+                <div className="tsbar" onMouseOut={hidePrev}>
+                    <Icon
+                        className="tsIcon tsIconInvert"
+                        src="home"
+                        width={24}
+                        click="STARTOGG"
+                    />
+
+                    {tasks.apps.map((task, i) => {
+                        var isHidden = apps[task.icon].hide;
+                        var isActive = apps[task.icon].z == apps.hz;
+                        return (
+                            <div
+                                key={i}
+                                onMouseOver={
+                                    (!isActive && !isHidden && showPrev) || null
+                                }
+                                value={task.icon}
+                            >
+                                <Icon
+                                    className="tsIcon"
+                                    width={24}
+                                    open={isHidden ? null : true}
+                                    click={task.action}
+                                    active={isActive}
+                                    payload="togg"
+                                    src={task.icon}
+                                />
+                            </div>
+                        );
+                    })}
+                    {Object.keys(apps).map((key, i) => {
+                        if (key != 'hz') {
+                            var isActive = apps[key].z == apps.hz;
+                        }
+                        return key != 'hz' &&
+                            key != 'undefined' &&
+                            !apps[key].task &&
+                            !apps[key].hide ? (
+                            <div
+                                key={i}
+                                onMouseOver={(!isActive && showPrev) || null}
+                                value={apps[key].icon}
+                            >
+                                <Icon
+                                    className="tsIcon"
+                                    width={24}
+                                    active={isActive}
+                                    click={apps[key].action}
+                                    payload="togg"
+                                    open="true"
+                                    src={apps[key].icon}
+                                />
+                            </div>
+                        ) : null;
+                    })}
+                </div>
+            </div>
+            <div className="taskright">
+                {/*{
           !isMobile() ? (
             <>
               <div
@@ -147,30 +153,28 @@ const Taskbar = () => {
           )
             : null
         }*/}
-        <div
-          className="taskDate m-1 handcr prtclk rounded hvlight"
-          onClick={clickDispatch}
-          data-action="CALNTOGG"
-        >
-          <div>
-            {time.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "numeric",
-            })}
-          </div>
-          <div>
-            {time.toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "2-digit",
-              day: "numeric",
-            })}
-          </div>
-
+                <div
+                    className="taskDate m-1 handcr prtclk rounded hvlight"
+                    onClick={clickDispatch}
+                    data-action="CALNTOGG"
+                >
+                    <div>
+                        {time.toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        })}
+                    </div>
+                    <div>
+                        {time.toLocaleDateString('en-US', {
+                            year: '2-digit',
+                            month: '2-digit',
+                            day: 'numeric'
+                        })}
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Taskbar;

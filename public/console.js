@@ -1,24 +1,24 @@
 window.pythonRunner = new BrythonRunner({
-  stdout: {
-    write(content) {
-      window.pythonResult = content;
-      window.pythonErr = 0;
+    stdout: {
+        write(content) {
+            window.pythonResult = content;
+            window.pythonErr = 0;
+        },
+        flush() {}
     },
-    flush() {},
-  },
-  stderr: {
-    write(content) {
-      window.pythonResult = content;
-      window.pythonErr = 1;
+    stderr: {
+        write(content) {
+            window.pythonResult = content;
+            window.pythonErr = 1;
+        },
+        flush() {}
     },
-    flush() {},
-  },
-  stdin: {
-    async readline() {
-      var userInput = prompt();
-      console.log("Received StdIn: " + userInput);
-      return userInput;
+    stdin: {
+        async readline() {
+            var userInput = prompt();
+            console.log('Received StdIn: ' + userInput);
+            return userInput;
+        }
     },
-  },
-  onInit() {},
+    onInit() {}
 });

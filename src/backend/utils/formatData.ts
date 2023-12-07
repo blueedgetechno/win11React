@@ -1,41 +1,41 @@
-import { virtapi } from "../supabase/createClient";
+import { virtapi } from '../supabase/createClient';
 
-export function formatWorkerRenderTree(data:any) {
-  const tree = data.tree;
-  const newData = { Account: RenderBranch(tree) } as {Account:any};
-  newData.Account.info.spid = "%worker%"
-  newData.Account.name = tree.type
-  return newData;
+export function formatWorkerRenderTree(data: any) {
+    const tree = data.tree;
+    const newData = { Account: RenderBranch(tree) } as { Account: any };
+    newData.Account.info.spid = '%worker%';
+    newData.Account.name = tree.type;
+    return newData;
 }
 
-function RenderBranch(tree:any) {
-  const folder = {};
-  AddNode(folder, tree);
-  return {
-    type: "folder",
-    data: folder,
-    info: {
-      ...tree.info,
-      // menu: "session",
-    },
-  };
-}
-
-function AddNode(folder:any, tree:any) {
-  tree.data.forEach((proxy:any) => {
-    const proxy_name = filterProxyName(proxy)
-
-    folder[proxy_name] = {
-      type: proxy.data.length > 0 ? "folder" : "file",
-      data: {},
-      info: {
-        ...proxy.info,
-        menu: proxy.type,
-      },
+function RenderBranch(tree: any) {
+    const folder = {};
+    AddNode(folder, tree);
+    return {
+        type: 'folder',
+        data: folder,
+        info: {
+            ...tree.info
+            // menu: "session",
+        }
     };
+}
 
-    AddNode(folder[proxy_name].data, proxy);
-  });
+function AddNode(folder: any, tree: any) {
+    tree.data.forEach((proxy: any) => {
+        const proxy_name = filterProxyName(proxy);
+
+        folder[proxy_name] = {
+            type: proxy.data.length > 0 ? 'folder' : 'file',
+            data: {},
+            info: {
+                ...proxy.info,
+                menu: proxy.type
+            }
+        };
+
+        AddNode(folder[proxy_name].data, proxy);
+    });
 }
 
 // {
@@ -47,86 +47,91 @@ function AddNode(folder:any, tree:any) {
 //   }
 // }
 
-export async function formatAppRenderTree(data:any) {
-  return await Promise.all(
-    data.tree.data.map(async (storage:any) => {
-      if (storage.type == "pending") {
-        return {
-          name: `Installing`,
-          icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
-          action: "CLOUDAPP",
-          payload: JSON.stringify({
-            storage_id: null,
-            status: "NOT_READY",
-            additional: {},
-          }),
-          status: "NOT_READY",
-        };
-      }
+export async function formatAppRenderTree(data: any) {
+    return await Promise.all(
+        data.tree.data.map(async (storage: any) => {
+            if (storage.type == 'pending') {
+                return {
+                    name: `Installing`,
+                    icon: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png',
+                    action: 'CLOUDAPP',
+                    payload: JSON.stringify({
+                        storage_id: null,
+                        status: 'NOT_READY',
+                        additional: {}
+                    }),
+                    status: 'NOT_READY'
+                };
+            }
 
-      let icons = JSON.parse(
-        localStorage.getItem(`app_metadata_from_volume_${storage.id}`) ?? `[]`,
-      );
-      if (icons?.length == 0 || icons?.length == undefined) {
-        const {data,error} = await virtapi(`rpc/get_app_metadata_from_volume`, 'POST' ,{
-            deploy_as: `${storage.id}` 
-          })
-        if (error) 
-          return
+            let icons = JSON.parse(
+                localStorage.getItem(
+                    `app_metadata_from_volume_${storage.id}`
+                ) ?? `[]`
+            );
+            if (icons?.length == 0 || icons?.length == undefined) {
+                const { data, error } = await virtapi(
+                    `rpc/get_app_metadata_from_volume`,
+                    'POST',
+                    {
+                        deploy_as: `${storage.id}`
+                    }
+                );
+                if (error) return;
 
-        icons = data;
-        localStorage.setItem(
-          `app_metadata_from_volume_${storage.id}`,
-          JSON.stringify(icons),
-        );
-      }
+                icons = data;
+                localStorage.setItem(
+                    `app_metadata_from_volume_${storage.id}`,
+                    JSON.stringify(icons)
+                );
+            }
 
-      const icon = icons.at(0) ?? {
-        name: "Game Pause",
-        icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
-      };
-      // id in store. +  icon: url img, => view
-      // metatada: Meta in store.
-      // pause check by storage.data.lenghth > 0.
-      const paused = storage.data.length == 0;
-      return {
-        name: `${icon.name} ${storage.id}`,
-        icon: icon.icon,
-        action: "CLOUDAPP",
-        payload: JSON.stringify({
-          status: paused ? "PAUSED" : "RUNNING",
-          storage_id: storage.id,
-          additional: icon.metadata, // TODO
-          privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
-          volume_id: storage?.info?.deploy_as ?? 0,
-        }),
-        type: "externalApp",
-        status: paused ? "PAUSED" : "RUNNING",
-      };
-    }),
-  );
+            const icon = icons.at(0) ?? {
+                name: 'Game Pause',
+                icon: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png'
+            };
+            // id in store. +  icon: url img, => view
+            // metatada: Meta in store.
+            // pause check by storage.data.lenghth > 0.
+            const paused = storage.data.length == 0;
+            return {
+                name: `${icon.name} ${storage.id}`,
+                icon: icon.icon,
+                action: 'CLOUDAPP',
+                payload: JSON.stringify({
+                    status: paused ? 'PAUSED' : 'RUNNING',
+                    storage_id: storage.id,
+                    additional: icon.metadata, // TODO
+                    privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
+                    volume_id: storage?.info?.deploy_as ?? 0
+                }),
+                type: 'externalApp',
+                status: paused ? 'PAUSED' : 'RUNNING'
+            };
+        })
+    );
 }
 
-const filterProxyName = (proxy:any) => {
-  let proxyName = `${proxy.type} ${proxy.id}`
+const filterProxyName = (proxy: any) => {
+    let proxyName = `${proxy.type} ${proxy.id}`;
 
-  switch (proxy.type) {
-    case "subscription":
-      proxyName = proxy.info.email
-      break;
+    switch (proxy.type) {
+        case 'subscription':
+            proxyName = proxy.info.email;
+            break;
 
-    case "application":
-      proxyName = proxy.id
-      break;
-    case "volume":
-      proxyName = proxy.id
-      break;
-    case "storage":
-      proxyName = `${proxy.info.owner} ${proxy.id}`
-      break;
-    default:
-      break;
-  }
+        case 'application':
+            proxyName = proxy.id;
+            break;
+        case 'volume':
+            proxyName = proxy.id;
+            break;
+        case 'storage':
+            proxyName = `${proxy.info.owner} ${proxy.id}`;
+            break;
+        default:
+            break;
+    }
 
-  return proxyName
-}
+    return proxyName;
+};

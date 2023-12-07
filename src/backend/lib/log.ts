@@ -1,117 +1,118 @@
-import Swal from "sweetalert2";
-import { dispatchOutSide } from "../actions";
-import { sleep } from "../utils/sleep";
-
+import Swal from 'sweetalert2';
+import { dispatchOutSide } from '../actions';
+import { sleep } from '../utils/sleep';
 
 type LogData = {
-  type ?: any,
-  error ?: any,
-  title ?: any,
-  content ?: any,
-  icon ?: any,
-  time ?: any,
-  confirmButtonText ?: any,
-  confirmCallback ?: any,
-  showLoadingProcess  ?: any
-}
+    type?: any;
+    error?: any;
+    title?: any;
+    content?: any;
+    icon?: any;
+    time?: any;
+    confirmButtonText?: any;
+    confirmCallback?: any;
+    showLoadingProcess?: any;
+};
 
 export const log = async ({
-  type,
-  title,
-  content,
-  icon,
-  time,
-  confirmButtonText,
-  confirmCallback,
-  showLoadingProcess = false
+    type,
+    title,
+    content,
+    icon,
+    time,
+    confirmButtonText,
+    confirmCallback,
+    showLoadingProcess = false
 }: LogData) => {
+    //Swal.close()
+    dispatchOutSide('CLOSE_MODAL', '');
 
-  //Swal.close()
-  dispatchOutSide('CLOSE_MODAL', '')
+    switch (type) {
+        case 'loading':
+            //Swal.fire({
+            //  title: title ?? "Loading",
+            //  text: content ?? "Take a breath ^^",
+            //  icon: icon ?? "info",
+            //  showCancelButton: false,
+            //  showConfirmButton: false,
+            //  allowOutsideClick: true,
+            //});
 
-  switch (type) {
-    case "loading":
-      //Swal.fire({
-      //  title: title ?? "Loading",
-      //  text: content ?? "Take a breath ^^",
-      //  icon: icon ?? "info",
-      //  showCancelButton: false,
-      //  showConfirmButton: false,
-      //  allowOutsideClick: true,
-      //});
+            dispatchOutSide('NOTIFY', { title, content, showLoadingProcess });
+            break;
+        case 'error':
+            Swal.fire({
+                title: title ?? 'Error !!',
+                html: content ?? 'Some thing went wrong!!',
+                icon: icon ?? 'error'
+            });
+            break;
+        case 'success':
+            dispatchOutSide('NOTIFY', {
+                loadingPercent: 100,
+                showLoadingProcess
+            });
+            await sleep(400);
+            Swal.fire({
+                title: title ?? 'Success!',
+                text: content ?? "You've succeed",
+                icon: icon ?? 'success'
+            });
+            dispatchOutSide('CLOSE_MODAL', '');
+            break;
 
-      dispatchOutSide('NOTIFY', { title, content, showLoadingProcess })
-      break;
-    case "error":
-      Swal.fire({
-        title: title ?? "Error !!",
-        html: content ?? "Some thing went wrong!!",
-        icon: icon ?? "error",
-      });
-      break;
-    case "success":
-      dispatchOutSide('NOTIFY', { loadingPercent: 100, showLoadingProcess })
-      await sleep(400)
-      Swal.fire({
-        title: title ?? "Success!",
-        text: content ?? "You've succeed",
-        icon: icon ?? "success",
-      });
-      dispatchOutSide('CLOSE_MODAL', '')
-      break;
+        case 'confirm':
+            const result = await Swal.fire({
+                title: title ?? 'Are you sure?',
+                text: content ?? "You won't be able to revert this!",
+                icon: icon ?? 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: confirmButtonText ?? 'Yes, do it!'
+            });
 
-    case "confirm":
-      const result = await Swal.fire({
-        title: title ?? "Are you sure?",
-        text: content ?? "You won't be able to revert this!",
-        icon: icon ?? "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: confirmButtonText ?? "Yes, do it!",
-      });
+            if (!result.isConfirmed) break;
 
-      if (!result.isConfirmed) break;
+            const { error } = await confirmCallback();
+            if (error) {
+                await Swal.fire({
+                    title: 'Error!',
+                    text: error,
+                    icon: 'error'
+                });
+            } else {
+                await Swal.fire({
+                    title: 'Success!',
+                    text: "You've succeed",
+                    icon: 'success'
+                });
+            }
 
-      const { error } = await confirmCallback();
-      if (error) {
-        await Swal.fire({
-          title: "Error!",
-          text: error,
-          icon: "error",
-        });
-      } else {
-        await Swal.fire({
-          title: "Success!",
-          text: "You've succeed",
-          icon: "success",
-        });
-      }
+            break;
+        case 'close':
+            Swal.close();
+            break;
 
-      break;
-    case "close":
-      Swal.close();
-      break;
+        case 'description':
+            const { value: description } = await Swal.fire({
+                input: 'textarea',
+                inputLabel: 'Message',
+                inputPlaceholder: 'Type your description here...',
+                inputAttributes: {
+                    'aria-label': 'Type your description here'
+                },
+                showCancelButton: true,
+                focusConfirm: false
+            });
+            return description;
 
-    case "description":
-      const { value: description } = await Swal.fire({
-        input: "textarea",
-        inputLabel: "Message",
-        inputPlaceholder: "Type your description here...",
-        inputAttributes: {
-          "aria-label": "Type your description here",
-        },
-        showCancelButton: true,
-        focusConfirm: false,
-      });
-      return description;
-
-    case "createSub":
-      const { value: formValues } = await Swal.fire({
-        title: 'Multiple inputs',
-        html:
-          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
-          `
+        case 'createSub':
+            const { value: formValues } = await Swal.fire({
+                title: 'Multiple inputs',
+                html:
+                    '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+                    `
           <div className="flex items-center mt-5 gap-2">
             <span>SUB</span>
             <select name="sub" class="swal2-input" id="plan">
@@ -127,23 +128,24 @@ export const log = async ({
           <label className="flex items-center gap-2" htmlFor="free_sub"> <input type="checkbox" className="h-[20px] w-[20px]" id="free_sub" name="free_sub" /> <span>Free Subscription ?</span></label>
         </div>
           `,
-        focusConfirm: false,
-        preConfirm: () => {
-          return {
-            email: (document.getElementById('email') as any).value,
-            plan : (document.getElementById('plan') as any).value,
-            free: (document.querySelector('#free_sub') as any).checked
-          }
-        }
-      })
-      return formValues
-      break;
-    case "modifySub": 
-      const { value } = await Swal.fire({
-        title: 'Modify Subscription',
-        html:
-          '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
-          `
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        email: (document.getElementById('email') as any).value,
+                        plan: (document.getElementById('plan') as any).value,
+                        free: (document.querySelector('#free_sub') as any)
+                            .checked
+                    };
+                }
+            });
+            return formValues;
+            break;
+        case 'modifySub':
+            const { value } = await Swal.fire({
+                title: 'Modify Subscription',
+                html:
+                    '<div className="flex items-center gap-2"><span>Email</span><input id="email" class="swal2-input"/></div>' +
+                    `
           <div className="flex items-center mt-5 gap-2">
             <span>Action</span>
             <select name="action" class="swal2-input" id="action">
@@ -153,57 +155,61 @@ export const log = async ({
             </select>
           </div>
           `,
-        focusConfirm: false,
-        preConfirm: () => {
-          return {
-            email:  (document.getElementById('email') as any).value,
-            action :  (document.getElementById('action') as any).value
-          }
-        }
-      })
-      return value
-    break;
-    case "adjustSub":
-    let created_at = new Date(content.created_at).toISOString().split('T')[0];
-    let ends_at = new Date(content.ends_at).toISOString().split('T')[0];
-      return await Swal.fire({
-        title: 'Adjust Subscription',
-        html:
-        `<form">
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        email: (document.getElementById('email') as any).value,
+                        action: (document.getElementById('action') as any).value
+                    };
+                }
+            });
+            return value;
+            break;
+        case 'adjustSub':
+            let created_at = new Date(content.created_at)
+                .toISOString()
+                .split('T')[0];
+            let ends_at = new Date(content.ends_at).toISOString().split('T')[0];
+            return await Swal.fire({
+                title: 'Adjust Subscription',
+                html: `<form">
           <label for="created_sub">Start Time</label>
           <input type="date" id="created_sub" name="created_sub" value=${created_at}>
           <label for="end_sub">End Time</label>
           <input type="date" id="end_sub" name="end_sub" value=${ends_at}>
         </form>`,
-        focusConfirm: false,
-        preConfirm: () => {
-          return {
-            email: content.email,
-            created_at: (document.getElementById('created_sub') as any).value,
-            ends_at: (document.getElementById('end_sub') as any).value,
-          }
-        }
-      })
-    break;
-    case "migrateVolume":
-      const { value: migrateForm  } = await Swal.fire({
-        title: 'Multiple inputs',
-        html:
-          '<div className="flex items-center gap-2"><span>CLuster Id</span><input id="cluster_id" class="swal2-input"/></div>' ,
-        focusConfirm: false,
-        preConfirm: () => {
-          return {
-            cluster_id: (document.getElementById('cluster_id') as any).value
-          }
-        }
-      })
-      return migrateForm
-      break;
-    case "forkVolume":
-      const { value: forkVolume } = await Swal.fire({
-        title: 'Multiple inputs',
-        html:
-          `   
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        email: content.email,
+                        created_at: (
+                            document.getElementById('created_sub') as any
+                        ).value,
+                        ends_at: (document.getElementById('end_sub') as any)
+                            .value
+                    };
+                }
+            });
+            break;
+        case 'migrateVolume':
+            const { value: migrateForm } = await Swal.fire({
+                title: 'Multiple inputs',
+                html: '<div className="flex items-center gap-2"><span>CLuster Id</span><input id="cluster_id" class="swal2-input"/></div>',
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        cluster_id: (
+                            document.getElementById('cluster_id') as any
+                        ).value
+                    };
+                }
+            });
+            return migrateForm;
+            break;
+        case 'forkVolume':
+            const { value: forkVolume } = await Swal.fire({
+                title: 'Multiple inputs',
+                html: `   
             <div>
               <div className="flex items-center gap-2"><span>Description</span><input id="description_fork" class="swal2-input"/></div>
               <select id="gpu_model_fork" defaultValue={"RTX 3060 Ti"} class="h-[32px] text-[16px]" name="gpu_model">
@@ -230,54 +236,59 @@ export const log = async ({
                   </optgroup>
                 </select>
               </label>
-            </div>` ,
-        focusConfirm: false,
-        preConfirm: () => {
-          return {
-            gpu_model:       (document.getElementById('gpu_model_fork') as any).value,
-            vcpus:           (document.getElementById('vcpus_fork') as any).value,
-            ram:             (document.getElementById('ram_fork') as any).value,
-            description:     (document.getElementById('description_fork') as any).value
-          }
-        }
-      })
-      return forkVolume
-      break;
-    
-    default:
-      break;
-  }
+            </div>`,
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        gpu_model: (
+                            document.getElementById('gpu_model_fork') as any
+                        ).value,
+                        vcpus: (document.getElementById('vcpus_fork') as any)
+                            .value,
+                        ram: (document.getElementById('ram_fork') as any).value,
+                        description: (
+                            document.getElementById('description_fork') as any
+                        ).value
+                    };
+                }
+            });
+            return forkVolume;
+            break;
+
+        default:
+            break;
+    }
 };
 
 export class Log {
-  constructor() { }
-  loading(title?: any, content?: any, time?: any, icon?: any) {
-    Swal.fire({
-      title: title ?? "Loading!",
-      text: content ?? "Take a breath ^^",
-      icon: icon ?? "info",
-      timer: time,
-      showCancelButton: false,
-      showConfirmButton: false,
-    });
-  }
-  error(title?: any, content?: any, icon?: any, time?: any) {
-    Swal.fire({
-      title: title ?? "Error!!",
-      text: content ?? "Something went wrong:(",
-      icon: icon ?? "error",
-      timer: time,
-    });
-  }
-  success(title?: any, content?: any, icon?: any, time?: any) {
-    Swal.fire({
-      title: title ?? "Success!",
-      text: content ?? "Nice try!",
-      icon: icon ?? "success",
-      timer: time,
-    });
-  }
-  close() {
-    Swal.close();
-  }
+    constructor() {}
+    loading(title?: any, content?: any, time?: any, icon?: any) {
+        Swal.fire({
+            title: title ?? 'Loading!',
+            text: content ?? 'Take a breath ^^',
+            icon: icon ?? 'info',
+            timer: time,
+            showCancelButton: false,
+            showConfirmButton: false
+        });
+    }
+    error(title?: any, content?: any, icon?: any, time?: any) {
+        Swal.fire({
+            title: title ?? 'Error!!',
+            text: content ?? 'Something went wrong:(',
+            icon: icon ?? 'error',
+            timer: time
+        });
+    }
+    success(title?: any, content?: any, icon?: any, time?: any) {
+        Swal.fire({
+            title: title ?? 'Success!',
+            text: content ?? 'Nice try!',
+            icon: icon ?? 'success',
+            timer: time
+        });
+    }
+    close() {
+        Swal.close();
+    }
 }
