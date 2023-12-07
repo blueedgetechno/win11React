@@ -44,12 +44,10 @@ const includesErr = (err = '') => {
 	return errFormat
 }
 export async function formatError(err = 'Something went wrong!', code = '0') {
-
-	const suggestMsg = i18next.t("error.suggest");
 	const directDiscordMsg = ` Join <a target='_blank' href=${externalLink.DISCORD_LINK}>Thinkmay Discord</a> for support.`;
 
 	let msg
-	let icon = code != 0 ? 'info' : 'error'
+	let icon = code != '0' ? 'info' : 'error'
 
 	const CAUSES = {
 		"0": JSON.stringify(err),
@@ -60,8 +58,6 @@ export async function formatError(err = 'Something went wrong!', code = '0') {
 		"5": i18next.t("error.NOT_FOUND"),
 		"6": i18next.t("error.TIME_OUT"),
 		"999": JSON.stringify(err), //Frontend Err
-
-
 	}
 
 

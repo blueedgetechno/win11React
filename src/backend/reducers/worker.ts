@@ -1,18 +1,27 @@
 import { Bin } from "../utils/bin";
+import { Action } from "./type";
 
-const defState = {
+type WorkerType = {
+  cdir: string
+  hist: any[]
+  hid: number
+  view: number
+  data: Bin 
+}
+
+const defState : WorkerType = {
   cdir: "%user%",
   hist: [],
   hid: 0,
   view: 1,
+  data: new Bin()
 };
 
 defState.hist.push(defState.cdir);
-defState.data = new Bin();
 defState.data.parse({});
 
-const workerReducer = (state = defState, action) => {
-  var tmp = { ...state };
+const workerReducer = (state = defState, action:Action) => {
+  var tmp = { ...state } as WorkerType;
   var navHist = false;
   if (action.type === "FILEDIRWORKER") {
     tmp.cdir = action.payload;

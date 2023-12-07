@@ -1,20 +1,39 @@
-String.prototype.strip = function (c) {
+function strip (str:string,c:string) {
   var i = 0,
-    j = this.length - 1;
-  while (this[i] === c) i++;
-  while (this[j] === c) j--;
-  return this.slice(i, j + 1);
+    j = str.length - 1;
+  while (str[i] === c) i++;
+  while (str[j] === c) j--;
+  return str.slice(i, j + 1);
 };
 
-String.prototype.count = function (c) {
+function count (str:string,c:string) {
   var result = 0,
     i = 0;
-  for (i; i < this.length; i++) if (this[i] == c) result++;
+  for (i; i < str.length; i++) if (str[i] == c) result++;
   return result;
 };
 
+export type ItemInitializer = { 
+  type : string, 
+  name : string, 
+  info : any, 
+  data : any, 
+  host : any
+}
 export class Item {
-  constructor({ type, name, info, data, host }) {
+  public type   : string
+  public name   : string
+  public info   : any
+  public data   : any
+  public host   : any
+  public id     : string
+  constructor({
+    type, 
+    name, 
+    info, 
+    data, 
+    host 
+  }: ItemInitializer) {
     this.type = type || "folder";
     this.name = name;
     this.info = info || {};
@@ -36,31 +55,34 @@ export class Item {
     return this.data;
   }
 
-  setData(data) {
+  setData(data:any) {
     this.data = data;
   }
 }
 
 export class Bin {
+  public tree : any[];
+  public lookup : any;
+  public special : any;
   constructor() {
     this.tree = [];
     this.lookup = {};
     this.special = {};
   }
 
-  setSpecial(spid, id) {
+  setSpecial(spid:string, id:string) {
     this.special[spid] = id;
   }
 
-  setId(id, item) {
+  setId(id:string, item:any) {
     this.lookup[id] = item;
   }
 
-  getId(id) {
+  getId(id:string) {
     return this.lookup[id];
   }
 
-  getPath(id) {
+  getPath(id:string) {
     var cpath = "";
     var curr = this.getId(id);
 
@@ -68,15 +90,15 @@ export class Bin {
       cpath = curr.name + "\\" + cpath;
       curr = curr.host;
     }
-    return cpath.count("\\") > 1 ? cpath.strip("\\") : cpath;
+    return count(cpath,"\\") > 1 ? strip(cpath,"\\") : cpath;
   }
 
-  parsePath(cpath) {
-    if (cpath.includes("%")) {
-      return this.special[cpath.trim()];
+  parsePath(cpathi:string) {
+    if (cpathi.includes("%")) {
+      return this.special[cpathi.trim()];
     }
 
-    cpath = cpath
+    const cpath = cpathi
       .split("\\")
       .filter((x) => x !== "")
       .map((x) => x.trim().toLowerCase());
@@ -117,11 +139,13 @@ export class Bin {
     return pid;
   }
 
-  parseFolder(data, name, host = null) {
+  parseFolder(data:any, name?:string, host?: any) {
+    host = host ?? null
     var item = new Item({
       type: data.type,
       name: data.name || name,
       info: data.info,
+      data: {},
       host: host,
     });
 
@@ -147,7 +171,7 @@ export class Bin {
     return item;
   }
 
-  parse(data) {
+  parse(data:any) {
     var drives = Object.keys(data);
     var tree = [];
 

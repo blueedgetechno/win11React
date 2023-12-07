@@ -2,6 +2,19 @@ import Swal from "sweetalert2";
 import { dispatchOutSide } from "../actions";
 import { sleep } from "../utils/sleep";
 
+
+type LogData = {
+  type ?: any,
+  error ?: any,
+  title ?: any,
+  content ?: any,
+  icon ?: any,
+  time ?: any,
+  confirmButtonText ?: any,
+  confirmCallback ?: any,
+  showLoadingProcess  ?: any
+}
+
 export const log = async ({
   type,
   title,
@@ -11,7 +24,7 @@ export const log = async ({
   confirmButtonText,
   confirmCallback,
   showLoadingProcess = false
-}) => {
+}: LogData) => {
 
   //Swal.close()
   dispatchOutSide('CLOSE_MODAL', '')
@@ -117,9 +130,9 @@ export const log = async ({
         focusConfirm: false,
         preConfirm: () => {
           return {
-            email: document.getElementById('email').value,
-            plan : document.getElementById('plan').value,
-            free: document.querySelector('#free_sub').checked
+            email: (document.getElementById('email') as any).value,
+            plan : (document.getElementById('plan') as any).value,
+            free: (document.querySelector('#free_sub') as any).checked
           }
         }
       })
@@ -143,8 +156,8 @@ export const log = async ({
         focusConfirm: false,
         preConfirm: () => {
           return {
-            email:  document.getElementById('email').value,
-            action :  document.getElementById('action').value
+            email:  (document.getElementById('email') as any).value,
+            action :  (document.getElementById('action') as any).value
           }
         }
       })
@@ -166,8 +179,8 @@ export const log = async ({
         preConfirm: () => {
           return {
             email: content.email,
-            created_at: document.getElementById('created_sub').value,
-            ends_at: document.getElementById('end_sub').value,
+            created_at: (document.getElementById('created_sub') as any).value,
+            ends_at: (document.getElementById('end_sub') as any).value,
           }
         }
       })
@@ -180,7 +193,7 @@ export const log = async ({
         focusConfirm: false,
         preConfirm: () => {
           return {
-            cluster_id: document.getElementById('cluster_id').value
+            cluster_id: (document.getElementById('cluster_id') as any).value
           }
         }
       })
@@ -221,10 +234,10 @@ export const log = async ({
         focusConfirm: false,
         preConfirm: () => {
           return {
-            gpu_model: document.getElementById('gpu_model_fork').value,
-            vcpus: document.getElementById('vcpus_fork').value,
-            ram: document.getElementById('ram_fork').value,
-            description: document.getElementById('description_fork').value
+            gpu_model:       (document.getElementById('gpu_model_fork') as any).value,
+            vcpus:           (document.getElementById('vcpus_fork') as any).value,
+            ram:             (document.getElementById('ram_fork') as any).value,
+            description:     (document.getElementById('description_fork') as any).value
           }
         }
       })
@@ -238,7 +251,7 @@ export const log = async ({
 
 export class Log {
   constructor() { }
-  loading(title, content, time, icon) {
+  loading(title?: any, content?: any, time?: any, icon?: any) {
     Swal.fire({
       title: title ?? "Loading!",
       text: content ?? "Take a breath ^^",
@@ -248,7 +261,7 @@ export class Log {
       showConfirmButton: false,
     });
   }
-  error(title, content, icon, time) {
+  error(title?: any, content?: any, icon?: any, time?: any) {
     Swal.fire({
       title: title ?? "Error!!",
       text: content ?? "Something went wrong:(",
@@ -256,7 +269,7 @@ export class Log {
       timer: time,
     });
   }
-  success(title, content, icon, time) {
+  success(title?: any, content?: any, icon?: any, time?: any) {
     Swal.fire({
       title: title ?? "Success!",
       text: content ?? "Nice try!",

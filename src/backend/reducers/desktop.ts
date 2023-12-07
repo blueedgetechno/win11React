@@ -9,7 +9,7 @@ const defState = {
 };
 
 // TODO database store desktop
-const deskReducer = (state = defState, action) => {
+const deskReducer = (state = defState,action:Action) => {
   switch (action.type) {
     case "DESKREM":
       var arr = state.apps.filter((x) => x.name != action.payload);

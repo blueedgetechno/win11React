@@ -1,4 +1,5 @@
 import { pinnedApps, recentApps } from "../utils";
+import { Action } from "./type";
 
 const defState = {
   pnApps: pinnedApps,
@@ -17,7 +18,7 @@ const defState = {
   ],
 };
 
-const menuReducer = (state = defState, action) => {
+const menuReducer = (state = defState,action:Action) => {
   switch (action.type) {
     case "STARTSHW":
       return {

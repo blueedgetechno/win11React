@@ -1,4 +1,4 @@
-import { desktopApps } from "../utils";
+import { Action } from "./type";
 
 const defState = {
   system: {
@@ -56,7 +56,7 @@ const changeVal = (obj, path, val = "togg") => {
 };
 
 // TODO setting in db
-const settReducer = (state = defState, action) => {
+const settReducer = (state = defState,action:Action) => {
   var tmpState = { ...state };
 
   switch (action.type) {

@@ -199,17 +199,13 @@ const defState = {
 
   apps: [],
   games: [],
-  hasAvailableCluster: false
 };
 
-const globalReducer = (state = defState, action) => {
+const globalReducer = (state = defState,action:Action) => {
   if (action.type === "UPDATEGAME") {
     state.games = action.payload;
   } else if (action.type === "UPDATEAPP") {
     state.apps = action.payload;
-  }
-  else if (action.type === "UPDATE_CLUSTER_STATUS") {
-    state.hasAvailableCluster = action.payload;
   }
 
   return state;

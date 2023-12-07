@@ -1,4 +1,5 @@
 var wps = 0;
+import { Action } from "./type";
 const walls = [
   "default/img0.jpg",
   "dark/img0.jpg",
@@ -26,19 +27,11 @@ const defState = {
   themes: themes,
   wps: wps,
   src: walls[wps],
-  locked: true,
   act: "",
 };
 
-const wallReducer = (state = defState, action) => {
+const wallReducer = (state = defState,action:Action) => {
   switch (action.type) {
-    case "WALLUNLOCK":
-      localStorage.setItem("locked", false);
-      return {
-        ...state,
-        locked: false,
-        dir: 0,
-      };
     case "WALLNEXT":
       var twps = (state.wps + 1) % walls.length;
       return {

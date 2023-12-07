@@ -3,7 +3,7 @@ import { externalLink } from "../data/constant";
 export const gene_name = () =>
   Math.random().toString(36).substring(2, 10).toUpperCase();
 
-let installed = [];
+let installed : any[] = [];
 const apps = [
   {
     name: "Visual Studio Code",

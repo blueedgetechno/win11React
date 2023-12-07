@@ -488,7 +488,8 @@ const defState = {
   },
 };
 
-const menusReducer = (state = defState, action) => {
+import { Action } from "./type";
+const menusReducer = (state = defState,action:Action) => {
   var tmpState = {
     ...state,
   };

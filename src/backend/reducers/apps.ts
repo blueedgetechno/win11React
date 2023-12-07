@@ -4,7 +4,7 @@ import { isMobile } from "../utils/checking";
 
 var dev = "";
 
-const defState = {};
+const defState = {} as any;
 const openGuideline = localStorage.getItem("openAboutThinkmay") ?? 'true';
 
 for (var i = 0; i < allApps.length; i++) {
@@ -36,8 +36,8 @@ for (var i = 0; i < allApps.length; i++) {
 
 defState.hz = 2;
 
-const appReducer = (state = defState, action) => {
-  var tmpState = { ...state };
+const appReducer = (state = defState,action:Action) => {
+  var tmpState = { ...state } as any;
   if (action.type == "EDGELINK") {
     var obj = { ...tmpState["edge"] };
     if (action.payload && action.payload.startsWith("http")) {

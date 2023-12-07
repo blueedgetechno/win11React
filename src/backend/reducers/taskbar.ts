@@ -1,4 +1,5 @@
 import { taskApps } from "../utils";
+import { Action } from "./type";
 
 const defState = {
   apps: taskApps,
@@ -11,7 +12,7 @@ const defState = {
   audio: 3,
 };
 
-const taskReducer = (state = defState, action) => {
+const taskReducer = (state = defState,action:Action) => {
   switch (action.type) {
     case "TASKADD":
       return state;

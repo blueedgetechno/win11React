@@ -1,14 +1,14 @@
 import { virtapi } from "../supabase/createClient";
 
-export function formatWorkerRenderTree(data) {
+export function formatWorkerRenderTree(data:any) {
   const tree = data.tree;
-  const newData = { Account: RenderBranch(tree) };
+  const newData = { Account: RenderBranch(tree) } as {Account:any};
   newData.Account.info.spid = "%worker%"
   newData.Account.name = tree.type
   return newData;
 }
 
-function RenderBranch(tree) {
+function RenderBranch(tree:any) {
   const folder = {};
   AddNode(folder, tree);
   return {
@@ -21,8 +21,8 @@ function RenderBranch(tree) {
   };
 }
 
-function AddNode(folder, tree) {
-  tree.data.forEach((proxy) => {
+function AddNode(folder:any, tree:any) {
+  tree.data.forEach((proxy:any) => {
     const proxy_name = filterProxyName(proxy)
 
     folder[proxy_name] = {
@@ -47,13 +47,13 @@ function AddNode(folder, tree) {
 //   }
 // }
 
-export async function formatAppRenderTree(data) {
+export async function formatAppRenderTree(data:any) {
   return await Promise.all(
-    data.tree.data.map(async (storage) => {
+    data.tree.data.map(async (storage:any) => {
       if (storage.type == "pending") {
         return {
           name: `Installing`,
-          icon: "win/down",
+          icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
           action: "CLOUDAPP",
           payload: JSON.stringify({
             storage_id: null,
@@ -83,7 +83,7 @@ export async function formatAppRenderTree(data) {
 
       const icon = icons.at(0) ?? {
         name: "Game Pause",
-        icon: "win/down",
+        icon: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png",
       };
       // id in store. +  icon: url img, => view
       // metatada: Meta in store.
@@ -107,7 +107,7 @@ export async function formatAppRenderTree(data) {
   );
 }
 
-const filterProxyName = (proxy) => {
+const filterProxyName = (proxy:any) => {
   let proxyName = `${proxy.type} ${proxy.id}`
 
   switch (proxy.type) {

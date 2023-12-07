@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import "./general.scss";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
+import { Reducer } from "../reducers/type";
 
-String.prototype.strip = function (c) {
-  var i = 0,
-    j = this.length - 1;
-  while (this[i] === c) i++;
-  while (this[j] === c) j--;
-  return this.slice(i, j + 1);
-};
 
-String.prototype.count = function (c) {
-  var result = 0,
-    i = 0;
-  for (i; i < this.length; i++) if (this[i] == c) result++;
-  return result;
-};
-
-export const Icon = (props) => {
+export const Icon = (props:{
+  ext: string,
+  src:string,
+  fafa: string,
+  ui:string,
+  onClick:any,
+  pr:any,
+  isTrack:any,
+  func:any,
+  name:string,
+  icon:string,
+  payload:string
+}&any) => {
   const dispatch = useDispatch();
   var src = `img/icon/${props.ui != null ? "ui/" : ""}${props.src}.png`;
 
@@ -42,7 +39,7 @@ export const Icon = (props) => {
     }
   }
 
-  const clickDispatch = (event) => {
+  const clickDispatch = (event:any) => {
     var action = {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
@@ -53,6 +50,10 @@ export const Icon = (props) => {
       func();
     } else {
       dispatch(action);
+    }
+    if (props.isTrack) {
+      // const iconName = props.name ?? props.src;
+      // const eventName = props.payload === "close" ? `close icon` : `click icon`;
     }
   };
 
@@ -118,7 +119,7 @@ export const Icon = (props) => {
       >
         {props.className == "tsIcon" ? (
           <div
-            onClick={props.click != null ? clickDispatch : null}
+            onClick={props.click != null ? clickDispatch : () => {}}
             style={{ width: props.width, height: props.width }}
             data-action={props.click}
             data-payload={props.payload}
@@ -147,7 +148,7 @@ export const Icon = (props) => {
           <img
             width={props.width}
             height={props.height}
-            onClick={props.click != null ? clickDispatch : null}
+            onClick={props.click != null ? clickDispatch : ()=>{}}
             data-action={props.click}
             data-payload={props.payload}
             data-click={props.click != null}
@@ -166,7 +167,7 @@ export const Icon = (props) => {
   }
 };
 
-export const Image = (props) => {
+export const Image = (props:any) => {
   const dispatch = useDispatch();
 
   let src = props.absolute
@@ -181,13 +182,13 @@ export const Image = (props) => {
     src = props.src;
   }
 
-  const errorHandler = (e) => {
+  const errorHandler = (e:any) => {
     if (props.err) {
       e.currentTarget.src = props.err;
     }
   };
 
-  const clickDispatch = (event) => {
+  const clickDispatch = (event:any) => {
     var action = {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
@@ -195,6 +196,12 @@ export const Image = (props) => {
 
     if (action.type) {
       dispatch(action);
+
+      if (props.isTrack) {
+        // const imgName = props.src || props.name || "unknow";
+
+        // AnalyticTrack(`click ${props.type ?? "app"}`, {
+      }
     }
   };
 
@@ -213,7 +220,7 @@ export const Image = (props) => {
     >
       {!props.back ? (
         props.lazy ? (
-          <LazyLoadImage
+          <Image
             width={props.w}
             height={props.h}
             data-free={props.free != null}
@@ -229,7 +236,7 @@ export const Image = (props) => {
             height={props.h}
             data-free={props.free != null}
             data-var={props.var}
-            loading={props.lazy ? "lazy" : null}
+            loading={props.lazy ? "lazy" : undefined}
             src={src}
             alt=""
             onError={errorHandler}
@@ -240,14 +247,12 @@ export const Image = (props) => {
   );
 };
 
-export const SnapScreen = (props) => {
+export const SnapScreen = (props:any) => {
   const dispatch = useDispatch();
   const [delay, setDelay] = useState(false);
-  const lays = useSelector((state) => state.globals.lays);
+  const lays = useSelector<Reducer,any>((state) => state.globals.lays);
 
-  const vr = "var(--radii)";
-
-  const clickDispatch = (event) => {
+  const clickDispatch = (event:any) => {
     var action = {
       type: event.currentTarget.dataset.action,
       payload: event.currentTarget.dataset.payload,
@@ -272,10 +277,10 @@ export const SnapScreen = (props) => {
 
   return props.snap || delay ? (
     <div className="snapcont mdShad" data-dark={props.invert != null}>
-      {lays.map((x, i) => {
+      {lays.map((x:any[], i:number) => {
         return (
           <div key={i} className="snapLay">
-            {x.map((y, j) => (
+            {x.map((y:{br:number,dim:any}, j:number) => (
               <div
                 key={j}
                 className="snapper"
@@ -298,7 +303,7 @@ export const SnapScreen = (props) => {
   ) : null;
 };
 
-export const ToolBar = (props) => {
+export const ToolBar = (props:any) => {
   const dispatch = useDispatch();
   const [snap, setSnap] = useState(false);
 
@@ -320,11 +325,11 @@ export const ToolBar = (props) => {
   var posP = [0, 0],
     dimP = [0, 0],
     posM = [0, 0],
-    wnapp = {},
+    wnapp = {} as any,
     op = 0,
     vec = [0, 0];
 
-  const toolDrag = (e) => {
+  const toolDrag = (e:any) => {
     e = e || window.event;
     e.preventDefault();
     posM = [e.clientY, e.clientX];
@@ -347,8 +352,8 @@ export const ToolBar = (props) => {
       wnapp.classList.add("z9900");
       posP = [wnapp.offsetTop, wnapp.offsetLeft];
       dimP = [
-        parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
-        parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
+        parseFloat(getComputedStyle(wnapp).height.replace("px", "")),
+        parseFloat(getComputedStyle(wnapp).width.replace("px", "")),
       ];
     }
 
@@ -356,17 +361,17 @@ export const ToolBar = (props) => {
     document.onmousemove = eleDrag;
   };
 
-  const setPos = (pos0, pos1) => {
+  const setPos = (pos0:number, pos1:number) => {
     wnapp.style.top = pos0 + "px";
     wnapp.style.left = pos1 + "px";
   };
 
-  const setDim = (dim0, dim1) => {
+  const setDim = (dim0:number, dim1:number) => {
     wnapp.style.height = dim0 + "px";
     wnapp.style.width = dim1 + "px";
   };
 
-  const eleDrag = (e) => {
+  const eleDrag = (e:any) => {
     e = e || window.event;
     e.preventDefault();
 
@@ -463,7 +468,6 @@ export const ToolBar = (props) => {
               snap={snap}
               closeSnap={closeSnap}
             />
-            {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
           </div>
           <Icon
             className="closeBtn"
@@ -541,7 +545,7 @@ export const ToolBar = (props) => {
   );
 };
 
-export const LazyComponent = ({ show, children }) => {
+export const LazyComponent = ({ show, children }:any) => {
   const [loaded, setLoad] = useState(false);
 
   useEffect(() => {

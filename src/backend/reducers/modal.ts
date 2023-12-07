@@ -3,7 +3,8 @@ const defData = {
   data: {},
 };
 
-const modalReducer = (state = defData, action) => {
+import { Action } from "./type";
+const modalReducer = (state = defData,action:Action) => {
   switch (action.type) {
     case "WORKER_PROFILE_MODAL":
       return { type: "view_worker", data: action.payload };

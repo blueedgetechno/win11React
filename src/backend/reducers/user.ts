@@ -1,10 +1,11 @@
 import { localStorageKey } from "../data/constant";
+import { Action } from "./type";
 
 const defState = {
   id: "",
 };
 
-const userReducer = (state = defState, action) => {
+const userReducer = (state = defState,action:Action) => {
   switch (action.type) {
     case "ADD_USER":
       return { ...action.payload };
