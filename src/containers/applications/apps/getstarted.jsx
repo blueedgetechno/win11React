@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, ToolBar } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../backend/utils/general";
 import countries from "./assets/countrylist.json";
 import "./assets/getstarted.scss";
 import { useState } from "react";

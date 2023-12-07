@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { ToolBar } from "../../utils/general";
+import { ToolBar } from "../../backend/utils/general";
 
 export const IFrame = (props) => {
   const wnapp = useSelector((state) => state.apps[props.icon]);

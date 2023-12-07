@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { menuDispatch } from "../../actions";
-import { Icon } from "../../utils/general";
+import { menuDispatch } from "../../backend/actions";
+import { Icon } from "../../backend/utils/general";
 import "./menu.scss";
 
 export const ActMenu = () => {

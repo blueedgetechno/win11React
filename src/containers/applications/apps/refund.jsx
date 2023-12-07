@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
+import { Icon, Image, ToolBar, LazyComponent } from "../../../backend/utils/general";
 import "./assets/store.scss";
 import { useTranslation } from "react-i18next";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, LazyComponent } from "../../utils/general";
+import { Icon, LazyComponent } from "../../backend/utils/general";
 import "./widget.scss";
 
 export const WidPane = () => {

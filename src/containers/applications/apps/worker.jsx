@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar } from "../../../utils/general";
-import { defaultDispatch } from "../../../actions/click";
-import { refeshWorker, openWorker } from "../../../actions/worker";
+import { Icon, Image, ToolBar } from "../../../backend/utils/general";
+import { defaultDispatch } from "../../../backend/actions/click";
+import { refeshWorker, openWorker } from "../../../backend/actions/worker";
 import "./assets/fileexpo.scss";
-import { combineText } from "../../../utils/combineText";
+import { combineText } from "../../../backend/utils/combineText";
 
 const NavTitle = (props) => {
   var src = props.icon || "folder";

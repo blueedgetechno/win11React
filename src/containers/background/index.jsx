@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Battery from "../../components/shared/Battery";
-import { Icon, Image } from "../../utils/general";
+import { Icon, Image } from "../../backend/utils/general";
 import "./back.scss";
-import { supabase } from "../../supabase/createClient";
-import { externalLink } from "../../data/constant";
-import { UserEvents } from "../../actions/analytics";
+import { supabase } from "../../backend/supabase/createClient";
+import { externalLink } from "../../backend/data/constant";
+import { UserEvents } from "../../backend/actions/analytics";
 export const Background = () => {
   const wall = useSelector((state) => state.wallpaper);
   return (

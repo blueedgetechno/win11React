@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon } from "../../utils/general";
-import { changeTheme, handleLogOut } from "../../actions";
+import { Icon } from "../../backend/utils/general";
+import { changeTheme, handleLogOut } from "../../backend/actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
-import { isGreenList, isMobile } from "../../utils/checking";
+import { isGreenList, isMobile } from "../../backend/utils/checking";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);

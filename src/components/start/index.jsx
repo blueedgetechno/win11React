@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as Actions from "../../actions";
-import { getTreeValue } from "../../actions";
-import { Icon } from "../../utils/general";
+import * as Actions from "../../backend/actions";
+import { getTreeValue } from "../../backend/actions";
+import { Icon } from "../../backend/utils/general";
 import Battery from "../shared/Battery";
 import "./searchpane.scss";
 import "./sidepane.scss";
 import "./startmenu.scss";
 import { PiPauseBold } from "react-icons/pi";
 import { AiOutlineCloudDownload } from "react-icons/ai";
-import { fetchApp } from "../../actions/preload";
+import { fetchApp } from "../../backend/actions/preload";
 export * from "./start";
 export * from "./widget";
-import { UserEvents } from "../../actions/analytics";
+import { UserEvents } from "../../backend/actions/analytics";
 
 export const DesktopApp = () => {
   const user = useSelector((state) => state.user);

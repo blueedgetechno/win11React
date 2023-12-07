@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { externalLink } from "../../../data/constant";
+import { externalLink } from "../../../backend/data/constant";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { Image } from "../../../utils/general";
+import { Image } from "../../../backend/utils/general";
 import { FaArrowRight } from "react-icons/fa";
 
 import "./assets/about.scss";

@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import store from "./reducers";
+import store from "./backend/reducers";
 import { Provider } from "react-redux";
 
 // Sentry.init({

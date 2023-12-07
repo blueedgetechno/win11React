@@ -1,5 +1,4 @@
 import store from "../reducers";
-import { changeTheme } from ".";
 import { isAllowWorkerProfileFetch } from "../utils/checking";
 import { supabase, virtapi } from "../supabase/createClient";
 import { FetchAuthorizedWorkers, FetchUserApplication } from "./fetch";

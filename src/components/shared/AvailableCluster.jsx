@@ -1,9 +1,9 @@
 import React from 'react';
-import { hasAvailableCluster } from '../../utils/checking';
+import { hasAvailableCluster } from '../../backend/utils/checking';
 import './index.scss'
 import { useSelector } from 'react-redux';
 
-import { isGreenList, isMobile } from "../../utils/checking";
+import { isGreenList, isMobile } from "../../backend/utils/checking";
 
 function AvailableCluster({isBootScreen}) {
 	//const [availableCluster, setAvailableCluster] = React.useState(false)

@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
-import { deleteStore } from "../../../actions/app";
+import { Icon, Image, ToolBar, LazyComponent } from "../../../backend/utils/general";
+import { deleteStore } from "../../../backend/actions/app";
 import { useTranslation } from "react-i18next";
-import { fetchStore } from "../../../actions/preload";
-import { installApp } from "../../../actions/app";
-import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
-import { virtapi } from "../../../supabase/createClient";
-import { UserEvents } from "../../../actions/analytics.js";
+import { fetchStore } from "../../../backend/actions/preload";
+import { installApp } from "../../../backend/actions/app";
+import { isAdmin, isGreenList, isMobile } from "../../../backend/utils/checking";
+import { virtapi } from "../../../backend/supabase/createClient";
+import { UserEvents } from "../../../backend/actions/analytics";
 
 import Swal from "sweetalert2";
 import "./assets/store.scss";
-import { supabase } from "../../../supabase/createClient.js";
-import { isWhiteList } from "../../../utils/checking.js";
+import { supabase } from "../../../backend/supabase/createClient";
+import { isWhiteList } from "../../../backend/utils/checking";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);

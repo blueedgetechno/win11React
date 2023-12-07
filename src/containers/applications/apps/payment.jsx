@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Image, ToolBar, LazyComponent } from "../../../utils/general";
+import { Icon, Image, ToolBar, LazyComponent } from "../../../backend/utils/general";
 import "./assets/store.scss";
 import { useTranslation } from "react-i18next";
-import { UserEvents } from "../../../actions/analytics";
+import { UserEvents } from "../../../backend/actions/analytics";
 
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
-import { supabase } from "../../../supabase/createClient";
+import { supabase } from "../../../backend/supabase/createClient";
 
 const FUNDING_SOURCES = [
   FUNDING.PAYPAL,

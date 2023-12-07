@@ -13,10 +13,10 @@ import * as Drafts from "./containers/applications/draft";
 import { LockScreen, BootScreen } from "./containers/background";
 import ReactModal from "react-modal";
 import Popup from "./components/popup";
-import { checkAvailableCluster, preload } from "./actions/preload";
-import { afterMath } from "./actions/index";
-import { isMobile } from "./utils/checking";
-import { UserSession } from "./actions/analytics";
+import { checkAvailableCluster, preload } from "./backend/actions/preload";
+import { afterMath } from "./backend/actions/index";
+import { isMobile } from "./backend/utils/checking";
+import { UserSession } from "./backend/actions/analytics";
 import AvailableCluster from "./components/shared/AvailableCluster";
 
 function App() {

@@ -1,4 +1,4 @@
-import { combineText } from "../../../utils/combineText";
+import { combineText } from "../../../backend/utils/combineText";
 
 const ModalWorkerInfo = (info) => {
   const renderDetailWorker = (data) => {
