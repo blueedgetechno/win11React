@@ -238,7 +238,7 @@ export const checkAvailableCluster = async () => {
 
   while (true) {
     const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
-    checking = data.at(0).total > 1
+    checking = data.at(0).total > 0
 
     store.dispatch({
       type: "UPDATE_CLUSTER_STATUS",
