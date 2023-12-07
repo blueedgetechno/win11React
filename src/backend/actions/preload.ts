@@ -1,12 +1,12 @@
 import { localStorageKey } from '../data/constant';
 import store from '../reducers';
-import { supabase, virtapi } from '../supabase/createClient';
 import { isAllowWorkerProfileFetch } from '../utils/checking';
 import {
     formatAppRenderTree,
     formatWorkerRenderTree
 } from '../utils/formatData';
 import { FetchAuthorizedWorkers, FetchUserApplication } from './fetch';
+import { supabase, virtapi } from './fetch/createClient';
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -31,7 +31,11 @@ export const fetchApp = async () => {
     if (!user?.id) return;
 
     try {
-        const { timestamp, apps } = JSON.parse(localStorage.getItem('APP'));
+        const cache = localStorage.getItem('APP')
+        if (cache == null)
+            throw ''
+
+        const { timestamp, apps } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
@@ -67,9 +71,10 @@ export const fetchWorker = async () => {
     if ((await isAllowWorkerProfileFetch()) == false) return;
 
     try {
-        const { timestamp, payload } = JSON.parse(
-            localStorage.getItem('WORKER')
-        );
+        const cache = localStorage.getItem('WORKER')
+        if (!cache)
+            throw ''
+        const { timestamp, payload } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
@@ -86,7 +91,7 @@ export const fetchWorker = async () => {
     const dataFormat = formatWorkerRenderTree(res);
     const payload = {
         data: dataFormat,
-        oldCpath: cpath ?? oldCpath
+        oldCpath: cpath
     };
 
     store.dispatch({
@@ -107,9 +112,11 @@ export const fetchStore = async () => {
     if (!user?.id) return;
 
     try {
-        const { timestamp, games, apps } = JSON.parse(
-            localStorage.getItem('STORE')
-        );
+        const cache = localStorage.getItem('STORE')
+        if (!cache)
+            throw ''
+
+        const { timestamp, games, apps } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 60 * 1000)
             throw new Error('outdated');
         else if (games.length == 0 || apps.length == 0)
@@ -129,7 +136,11 @@ export const fetchStore = async () => {
     const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
     if (error) throw error;
 
-    const content = {
+    const content: {
+        games: any[],
+        apps: any[]
+
+    } = {
         games: [],
         apps: []
     };
@@ -138,11 +149,12 @@ export const fetchStore = async () => {
     for (let index = 0; index < stores.length; index++) {
         const appOrGame = stores[index];
 
-        if (appOrGame.type == 'GAME') content.games.push(appOrGame);
-        else if (appOrGame.type == 'APP') content.apps.push(appOrGame);
+        if (appOrGame.type == 'GAME')
+            content.games.push(appOrGame);
+        else if (appOrGame.type == 'APP')
+            content.apps.push(appOrGame);
     }
 
-    console.log(content);
     store.dispatch({
         type: 'UPDATEAPP',
         payload: content.apps
@@ -162,9 +174,11 @@ export const fetchStore = async () => {
 
 export const fetchUser = async () => {
     try {
-        const { timestamp, payload } = JSON.parse(
-            localStorage.getItem(localStorageKey.user)
-        );
+        const cache = localStorage.getItem(localStorageKey.user)
+        if (!cache)
+            throw ''
+
+        const { timestamp, payload } = JSON.parse(cache);
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
             throw new Error('outdated');
 
@@ -181,7 +195,7 @@ export const fetchUser = async () => {
     } = await supabase.auth.getUser();
     if (error != null) return;
 
-    let payloadUser = { ...user };
+    let payloadUser: any = { ...user };
     {
         const { data, error } = await supabase.rpc('validate_user_access', {
             user_account_id: user?.id,
@@ -244,7 +258,7 @@ export const checkAvailableCluster = async () => {
     // if (!isGreenList) return
 
     while (true) {
-        const { data, error } = await virtapi(
+        const { data } = await virtapi(
             'rpc/attachable_clusters',
             'POST',
             {}

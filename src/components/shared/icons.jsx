@@ -1,6 +1,6 @@
 'use babel';
 
-export const home = (props: any) => {
+export const home = (props) => {
     return (
         <svg viewBox="0 0 512 512" width={24} height={24} {...props}>
             <path
@@ -11,7 +11,7 @@ export const home = (props: any) => {
     );
 };
 
-export const shuffle = (props: any) => {
+export const shuffle = (props) => {
     return (
         <svg viewBox="0 0 16 16" height={16} width={16} {...props}>
             <path d="M4.5 6.8l.7-.8C4.1 4.7 2.5 4 .9 4v1c1.3 0 2.6.6 3.5 1.6l.1.2zm7.5 4.7c-1.2 0-2.3-.5-3.2-1.3l-.6.8c1 1 2.4 1.5 3.8 1.5V14l3.5-2-3.5-2v1.5zm0-6V7l3.5-2L12 3v1.5c-1.6 0-3.2.7-4.2 2l-3.4 3.9c-.9 1-2.2 1.6-3.5 1.6v1c1.6 0 3.2-.7 4.2-2l3.4-3.9c.9-1 2.2-1.6 3.5-1.6z" />
@@ -19,7 +19,7 @@ export const shuffle = (props: any) => {
     );
 };
 
-export const previous = (props: any) => {
+export const previous = (props) => {
     return (
         <svg height={16} width={16} viewBox="0 0 16 16" {...props}>
             <path d="M13 2.5L5 7.119V3H3v10h2V8.881l8 4.619z" />
@@ -27,7 +27,7 @@ export const previous = (props: any) => {
     );
 };
 
-export const next = (props: any) => {
+export const next = (props) => {
     return (
         <svg height={16} width={16} viewBox="0 0 16 16" {...props}>
             <path d="M11 3v4.119L3 2.5v11l8-4.619V13h2V3z" />
@@ -35,7 +35,7 @@ export const next = (props: any) => {
     );
 };
 
-export const repeat = (props: any) => {
+export const repeat = (props) => {
     return (
         <svg height={16} width={16} viewBox="0 0 16 16" {...props}>
             <path d="M5.5 5H10v1.5l3.5-2-3.5-2V4H5.5C3 4 1 6 1 8.5c0 .6.1 1.2.4 1.8l.9-.5C2.1 9.4 2 9 2 8.5 2 6.6 3.6 5 5.5 5zm9.1 1.7l-.9.5c.2.4.3.8.3 1.3 0 1.9-1.6 3.5-3.5 3.5H6v-1.5l-3.5 2 3.5 2V13h4.5C13 13 15 11 15 8.5c0-.6-.1-1.2-.4-1.8z" />
@@ -43,7 +43,7 @@ export const repeat = (props: any) => {
     );
 };
 
-export const play = (props: any) => {
+export const play = (props) => {
     return (
         <svg height={16} width={16} viewBox="0 0 16 16" {...props}>
             <path d="M4.018 14L14.41 8 4.018 2z" />
@@ -51,7 +51,7 @@ export const play = (props: any) => {
     );
 };
 
-export const pause = (props: any) => {
+export const pause = (props) => {
     return (
         <svg height={16} width={16} viewBox="0 0 16 16" {...props}>
             <path fill="none" d="M0 0h16v16H0z" />
@@ -60,7 +60,7 @@ export const pause = (props: any) => {
     );
 };
 
-export const search = (props: any) => {
+export const search = (props) => {
     return (
         <svg
             height={24}
@@ -77,7 +77,7 @@ export const search = (props: any) => {
     );
 };
 
-export const camera = (props: any) => {
+export const camera = (props) => {
     return (
         <svg
             height={24}
@@ -95,7 +95,7 @@ export const camera = (props: any) => {
     );
 };
 
-export const view = (props: any) => {
+export const view = (props) => {
     return (
         <svg fill="none" strokeWidth="1.5" viewBox="0 0 24 24" {...props}>
             <path
@@ -106,7 +106,7 @@ export const view = (props: any) => {
     );
 };
 
-export const sort = (props: any) => {
+export const sort = (props) => {
     return (
         <svg viewBox="0 0 416 330" {...props}>
             <path
@@ -123,7 +123,7 @@ export const sort = (props: any) => {
     );
 };
 
-export const refresh = (props: any) => {
+export const refresh = (props) => {
     return (
         <svg viewBox="0 0 64 64" {...props}>
             <path
@@ -135,7 +135,7 @@ export const refresh = (props: any) => {
     );
 };
 
-export const New = (props: any) => {
+export const New = (props) => {
     return (
         <svg viewBox="0 0 500 500" {...props}>
             <path
@@ -152,7 +152,7 @@ export const New = (props: any) => {
     );
 };
 
-export const display = (props: any) => {
+export const display = (props) => {
     return (
         <svg viewBox="0 0 500 500" {...props}>
             <path
@@ -169,7 +169,7 @@ export const display = (props: any) => {
     );
 };
 
-export const personalize = (props: any) => {
+export const personalize = (props) => {
     return (
         <svg viewBox="0 0 500 500" {...props}>
             <path
@@ -186,7 +186,7 @@ export const personalize = (props: any) => {
     );
 };
 
-export const terminal = (props: any) => {
+export const terminal = (props) => {
     return (
         <svg
             width="48"
@@ -460,7 +460,7 @@ export const terminal = (props: any) => {
     );
 };
 
-export const info = (props: any) => {
+export const info = (props) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
             <path
@@ -494,7 +494,7 @@ export const taskSearch = () => {
     );
 };
 
-export const share = (props: any) => {
+export const share = (props) => {
     return (
         <svg viewBox="0 0 64 64" {...props}>
             <path

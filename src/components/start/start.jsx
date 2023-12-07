@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTheme, handleLogOut } from '../../backend/actions';
 import { isGreenList, isMobile } from '../../backend/utils/checking';
-import { Icon } from '../../backend/utils/general';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
+import { Icon } from '../shared/general';
 
 export const StartMenu = () => {
     const { align } = useSelector((state) => state.taskbar);

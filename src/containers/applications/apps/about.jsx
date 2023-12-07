@@ -3,7 +3,7 @@ import { useKeenSlider } from 'keen-slider/react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Image } from '../../../backend/utils/general';
+import { Image } from '../../../components/shared/general';
 
 import './assets/about.scss';
 export const AboutWin = () => {

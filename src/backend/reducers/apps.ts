@@ -1,6 +1,7 @@
 import { openApp } from '../actions/app';
 import { allApps } from '../utils';
 import { isMobile } from '../utils/checking';
+import { Action } from './type';
 
 var dev = '';
 

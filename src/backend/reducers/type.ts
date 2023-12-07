@@ -6,7 +6,6 @@ export type Reducer = {
     desktop: any;
     startmenu: any;
     sidepane: any;
-    widpane: any;
     apps: any;
     menus: any;
     globals: any;
@@ -18,6 +17,7 @@ export type Reducer = {
 
 export type Action = {
     type: string;
-    name: string;
+    name?: string;
+    dim?: string;
     payload: any;
 };

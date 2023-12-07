@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isMobile } from '../../backend/utils/checking';
-import { Icon } from '../../backend/utils/general';
+import { Icon } from '../shared/general';
 import './taskbar.scss';
 
 const Taskbar = () => {

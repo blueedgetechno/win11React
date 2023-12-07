@@ -4,7 +4,6 @@ import { localStorageKey } from '../data/constant';
 import { log } from '../lib/log';
 import store from '../reducers';
 import { Action } from '../reducers/type';
-import { supabase, virtapi } from '../supabase/createClient';
 import { isAdmin } from '../utils/checking';
 import { formatError } from '../utils/formatErr';
 import { sleep } from '../utils/sleep';
@@ -21,18 +20,17 @@ import {
     StartApplication,
     StopApplication,
     StopVolume,
-    SupabaseFuncInvoke
 } from './fetch';
+import { SupabaseFuncInvoke, supabase, virtapi } from './fetch/createClient';
 import { fetchApp, fetchStore, fetchWorker } from './preload';
 import { openRemotePage } from './remote';
 
 export const formatEvent = (event: Event) => {
-    const pid = event.target?.dataset.pid;
     const action = {
-        type: event.target.dataset.action,
-        payload: event.target.dataset.payload,
-        pid: event.target.dataset.pid,
-        ...store.getState().worker.data.getId(pid)
+        type: (event.target as any).dataset.action,
+        payload: (event.target as any).dataset.payload,
+        pid: (event.target as any).dataset.pid,
+        ...store.getState().worker.data.getId((event.target as any).dataset.pid)
     };
 
     console.log(action);
@@ -68,7 +66,8 @@ const wrapper = async (func: any, appType?: string) => {
         });
 
         return result;
-    } catch (err) {
+    } catch (er) {
+        const err = er as any
         let errMsg = err?.error ?? err;
         await formatError(errMsg, err?.code);
 
@@ -76,7 +75,7 @@ const wrapper = async (func: any, appType?: string) => {
     }
 };
 
-export const deleteStore = async (app) => {
+export const deleteStore = async (app: any) => {
     if (!isAdmin()) return;
 
     const { error } = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
@@ -133,20 +132,14 @@ export const resetApp = async (appInput: Action) =>
         openRemotePage(result.url, appName);
     });
 // Handle app
-export const installApp = (payload) =>
+export const installApp = (payload: any) =>
     wrapper(async () => {
-        const storageId = await DownloadApplication(
+        await DownloadApplication(
             payload.app_template_id,
             payload.availability,
             payload.speed,
             payload.safe
         );
-        //const input = {
-        //  storage_id: storageId,
-        //  privateIp: '',
-        //};
-        //const remoteLink = await AccessApplication(input);
-        //openRemotePage(remoteLink.url, payload.appName, 'new_tab');
 
         await fetchApp();
     }, 'installApp');
@@ -164,11 +157,7 @@ export const startApp = async (appInput: Action) =>
         if (payload.status != 'PAUSED')
             throw { error: i18next.t('error.NOT_PAUSED'), code: '999' };
 
-        //await sleep(15000)
-        //cacheRequest({ action: 'START', appName, })
-        //return
-
-        await StartApplication(payload.storage_id, payload.volume_id);
+        await StartApplication(payload.storage_id);
 
         // Open new tab
         const remoteLink = await AccessApplication(input);
@@ -222,10 +211,9 @@ export const deleteApp = (appInput: Action) =>
 export const connectVolume = (e: Event) =>
     wrapper(async () => {
         const payload = formatEvent(e);
-        const volume_id = payload.info.id;
 
         // TODO: DAT add volumne Id to access
-        const { data, code, error } = await SupabaseFuncInvoke(
+        const { data } = await SupabaseFuncInvoke(
             'access_application',
             {
                 volume_id: payload.info.id,
@@ -395,7 +383,7 @@ export const ReleaseApp = async ({
         );
         if (desc == '') throw 'Description is not empty!';
 
-        const { code, error } = await SupabaseFuncInvoke(
+        const { error } = await SupabaseFuncInvoke(
             'configure_application',
             {
                 action: 'RELEASE',
@@ -416,13 +404,13 @@ export const ReleaseApp = async ({
 
         if (error) throw error;
 
-        store.dispatch({ type: 'CLOSE_MODAL' });
+        store.dispatch({ type: 'CLOSE_MODAL', payload: {} });
 
         return;
     });
 };
 
-export const patchApp = async (app) => {
+export const patchApp = async (app: any) => {
     wrapper(async () => {
         const { value: text } = await Swal.fire({
             input: 'textarea',
@@ -450,7 +438,7 @@ export const patchApp = async (app) => {
 
 export const showCacheRequest = async () => {
     //wrapper(async () => {
-    const { action, appName, ...rest } = JSON.parse(
+    const { action, appName } = JSON.parse(
         localStorage.getItem(localStorageKey.request) as string
     );
 

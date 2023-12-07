@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { defaultDispatch } from '../../../backend/actions/click';
 import { openWorker, refeshWorker } from '../../../backend/actions/worker';
 import { combineText } from '../../../backend/utils/combineText';
-import { Icon, Image, ToolBar } from '../../../backend/utils/general';
+import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
 
 const NavTitle = (props) => {

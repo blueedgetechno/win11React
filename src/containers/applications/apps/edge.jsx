@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon, LazyComponent, ToolBar } from '../../../backend/utils/general';
+import { Icon, LazyComponent, ToolBar } from '../../../components/shared/general';
 
 export const EdgeMenu = () => {
     const wnapp = useSelector((state) => state.apps.edge);

@@ -6,13 +6,12 @@ import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import { UserEvents } from '../../backend/actions/analytics';
 import { fetchApp } from '../../backend/actions/preload';
-import { Icon } from '../../backend/utils/general';
 import Battery from '../shared/Battery';
+import { Icon } from '../shared/general';
 import './searchpane.scss';
 import './sidepane.scss';
 import './startmenu.scss';
 export * from './start';
-export * from './widget';
 
 export const DesktopApp = () => {
     const user = useSelector((state) => state.user);

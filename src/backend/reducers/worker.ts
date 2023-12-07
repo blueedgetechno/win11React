@@ -7,6 +7,7 @@ type WorkerType = {
     hid: number;
     view: number;
     data: Bin;
+    cpath: string
 };
 
 const defState: WorkerType = {
@@ -14,7 +15,8 @@ const defState: WorkerType = {
     hist: [],
     hid: 0,
     view: 1,
-    data: new Bin()
+    data: new Bin(),
+    cpath: ''
 };
 
 defState.hist.push(defState.cdir);
@@ -64,7 +66,7 @@ const workerReducer = (state = defState, action: Action) => {
     if (tmp.cdir?.includes('%')) {
         if (tmp.data.special[tmp.cdir] != null) {
             tmp.cdir = tmp.data.special[tmp.cdir];
-            tmp[tmp.hid] = tmp.cdir;
+            tmp.hist[tmp.hid] = tmp.cdir;
         }
     }
 

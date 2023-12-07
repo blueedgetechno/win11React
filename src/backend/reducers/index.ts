@@ -6,13 +6,12 @@ import globalReducer from './globals';
 import menusReducer from './menu';
 import modalReducer from './modal';
 import paramsReducer from './params';
-import settReducer from './settings';
+import settReducer from './settings.js';
 import sidepaneReducer from './sidepane';
 import menuReducer from './startmenu';
 import taskReducer from './taskbar';
 import userReducer from './user';
 import wallReducer from './wallpaper';
-import widpaneReducer from './widpane';
 import workerReducer from './worker';
 
 const allReducers = combineReducers({
@@ -29,7 +28,6 @@ const allReducers = combineReducers({
     worker: workerReducer,
     modal: modalReducer,
     sidepane: sidepaneReducer,
-    widpane: widpaneReducer
 });
 
 var store = createStore(allReducers);

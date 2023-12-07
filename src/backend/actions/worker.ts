@@ -1,17 +1,17 @@
-import { log } from '../lib/log.js';
-import store from '../reducers/index.js';
-import { supabase } from '../supabase/createClient.js';
+import { log } from '../lib/log';
+import store from '../reducers/index';
+import { supabase } from './fetch/createClient';
 import {
     AddSubscription,
     AdjustSubscription,
     CreateWorkerSession,
     DeactivateWorkerSession,
     ModifySubscription
-} from './fetch/index.js';
-import { fetchWorker } from './preload.js';
-import { openRemotePage } from './remote.js';
+} from './fetch/index';
+import { fetchWorker } from './preload';
+import { openRemotePage } from './remote';
 
-const wrapper = async (func) => {
+const wrapper = async (func: () => Promise<any>) => {
     try {
         const result = await func();
         await log({
@@ -57,7 +57,7 @@ export const createSession = (e: any) =>
 
         if (!worker) return;
 
-        const { worker_profile_id, media_device, last_check, isActive } =
+        const { worker_profile_id, isActive } =
             worker.info;
 
         if (!worker_profile_id || isActive) return;
@@ -66,7 +66,7 @@ export const createSession = (e: any) =>
             type: 'loading'
         });
 
-        const res = await CreateWorkerSession(worker_profile_id, media_device);
+        const res = await CreateWorkerSession(worker_profile_id);
         if (res instanceof Error) throw res;
 
         await fetchWorker();
@@ -140,7 +140,7 @@ export const viewDetail = (e: any) => {
     });
 };
 
-export const createSubscription = async (e: any) => {
+export const createSubscription = async () => {
     wrapper(async () => {
         const formValues = await log({ type: 'createSub' });
         if (formValues == undefined || formValues == null) return;
@@ -161,7 +161,7 @@ export const createSubscription = async (e: any) => {
         return 'success';
     });
 };
-export const modifySubscription = async (e: any) => {
+export const modifySubscription = async () => {
     wrapper(async () => {
         const formValues = await log({ type: 'modifySub' });
         if (formValues == undefined || formValues == null) return;
@@ -212,8 +212,8 @@ export const adjustSubscription = async (e: any) =>
 
         await AdjustSubscription(
             formValues.email,
-            new Date(formValues.created_at),
-            new Date(formValues.ends_at)
+            new Date(formValues.created_at).toISOString(),
+            new Date(formValues.ends_at).toISOString()
         );
 
         log({ type: 'close' });

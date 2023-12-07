@@ -38,7 +38,7 @@ const sb = {
     key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjk0MDE5NjAwLAogICJleHAiOiAxODUxODcyNDAwCn0.EpUhNso-BMFvAJLjYbomIddyFfN--u-zCf0Swj9Ac6E'
 };
 
-export async function ContactUS({ email, content }) {
+export async function ContactUS({ email, content }:{email:string,content:string}) {
     await createClient(sb.url, sb.key)
         .from('generic_events')
         .insert({
@@ -48,7 +48,7 @@ export async function ContactUS({ email, content }) {
         });
 }
 
-export async function UserEvents({ content }) {
+export async function UserEvents(content:string) {
     const session = localStorage.getItem('SESSION_ID');
 
     await createClient(sb.url, sb.key)
@@ -63,7 +63,7 @@ export async function UserEvents({ content }) {
         });
 }
 
-export async function UserSession(email) {
+export async function UserSession(email:string) {
     const session = crypto.randomUUID();
     localStorage.setItem('SESSION_ID', session);
     let location = {};

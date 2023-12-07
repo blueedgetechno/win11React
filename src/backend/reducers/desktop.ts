@@ -1,4 +1,5 @@
 import { desktopApps } from '../utils';
+import { Action } from './type';
 
 const defState = {
     apps: desktopApps,

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../../backend/actions/analytics';
 import { deleteStore, installApp } from '../../../backend/actions/app';
+import { virtapi } from '../../../backend/actions/fetch/createClient';
 import { fetchStore } from '../../../backend/actions/preload';
-import { virtapi } from '../../../backend/supabase/createClient';
 import {
     isAdmin,
     isGreenList,
@@ -15,10 +15,10 @@ import {
     Image,
     LazyComponent,
     ToolBar
-} from '../../../backend/utils/general';
+} from '../../../components/shared/general';
 
 import Swal from 'sweetalert2';
-import { supabase } from '../../../backend/supabase/createClient';
+import { supabase } from '../../../backend/actions/fetch/createClient';
 import { isWhiteList } from '../../../backend/utils/checking';
 import './assets/store.scss';
 

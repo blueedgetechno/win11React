@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { supabase, virtapi } from '../../../backend/actions/fetch/createClient';
 import { fetchStore } from '../../../backend/actions/preload';
 import { log } from '../../../backend/lib/log';
-import { supabase, virtapi } from '../../../backend/supabase/createClient';
-import { Image } from '../../../backend/utils/general';
+import { Image } from '../../shared/general';
 
 const ModalEditOrInsert = (props) => {
     const { modalType, appData } = props;

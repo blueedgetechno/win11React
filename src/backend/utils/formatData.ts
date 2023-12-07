@@ -1,4 +1,4 @@
-import { virtapi } from '../supabase/createClient';
+import { virtapi } from '../actions/fetch/createClient';
 
 export function formatWorkerRenderTree(data: any) {
     const tree = data.tree;

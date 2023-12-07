@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../../backend/actions/analytics';
 import {
     ToolBar
-} from '../../../backend/utils/general';
+} from '../../../components/shared/general';
 import './assets/store.scss';
 
 import {
@@ -11,7 +11,7 @@ import {
     PayPalButtons,
     PayPalScriptProvider
 } from '@paypal/react-paypal-js';
-import { supabase } from '../../../backend/supabase/createClient';
+import { supabase } from '../../../backend/actions/fetch/createClient';
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {

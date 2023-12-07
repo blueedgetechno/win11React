@@ -2,9 +2,9 @@ import store from '../reducers';
 
 const formatEvent = (event: Event) => {
     const action = {
-        type: event.target?.dataset?.action,
-        payload: event.target?.dataset?.payload,
-        pid: event.target?.dataset?.pid
+        type:   (event.target as any)?.dataset?.action,
+        payload:(event.target as any)?.dataset?.payload,
+        pid:    (event.target as any)?.dataset?.pid
     };
 
     console.log(action);
@@ -20,15 +20,3 @@ export const defaultDispatch = (event: any) => {
     store.dispatch(action);
 };
 
-// mostly file explorer
-export const handleFileOpen = (e: Event) => {
-    const action = formatEvent(e);
-
-    // handle double click open
-    const item = store.getState().files.data.getId(action.pid);
-    if (item != null) {
-        if (item.type == 'folder') {
-            store.dispatch({ type: 'FILEDIR', payload: item.id });
-        }
-    }
-};

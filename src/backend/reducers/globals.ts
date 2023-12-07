@@ -1,3 +1,5 @@
+import { Action } from "./type";
+
 const defState = {
     lays: [
         [

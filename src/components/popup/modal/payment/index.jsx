@@ -1,4 +1,4 @@
-import { Image } from '../../../../backend/utils/general';
+import { Image } from '../../../shared/general';
 
 const listSubs = [
     //{

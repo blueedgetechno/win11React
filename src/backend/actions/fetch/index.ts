@@ -1,41 +1,29 @@
-import { supabase, virtapi } from '../../supabase/createClient';
 import { sleep } from '../../utils/sleep';
 import { fetchApp } from '../preload';
+import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
 
-const getCredentialHeader = async () => {
-    const {
-        data: {
-            session: { access_token }
-        },
-        error
-    } = await supabase.auth.getSession();
-    if (error != null) throw new Error('unauthorized');
 
-    return {
-        access_token: access_token
-    };
-};
 
 export const FetchAuthorizedWorkers = async () => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const { data, error } = await SupabaseFuncInvoke(
         'worker_profile_render'
     );
     if (error != null) throw error;
     return data;
 };
 export const FetchUserApplication = async () => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const { data, error } = await SupabaseFuncInvoke(
         'user_application_fetch'
     );
     if (error != null) throw error;
     return data;
 };
 
-export const DeactivateWorkerSession = async (worker_session_id) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+export const DeactivateWorkerSession = async (worker_session_id: string) => {
+    const { data, error } = await SupabaseFuncInvoke(
         'worker_session_deactivate',
         {
             worker_session_id: worker_session_id
@@ -45,8 +33,8 @@ export const DeactivateWorkerSession = async (worker_session_id) => {
     return data;
 };
 
-export const CreateWorkerSession = async (worker_profile_id) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+export const CreateWorkerSession = async (worker_profile_id: string) => {
+    const { data, error } = await SupabaseFuncInvoke(
         'worker_session_create',
         {
             worker_id: worker_profile_id
@@ -68,7 +56,7 @@ export const AddSubscription = async (
     plan: string,
     free: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke('add_subscription', {
+    const { data, error } = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,
         free
@@ -84,7 +72,7 @@ export const AddSubscription = async (
  * @returns
  */
 export const ModifySubscription = async (action: string, email: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const { data, error } = await SupabaseFuncInvoke(
         'modify_subscription',
         {
             email,
@@ -164,7 +152,6 @@ export const DownloadApplication = async (
 
 export const StartApplication = async (
     storage_id: string,
-    volume_id?: string
 ) => {
     const { data, code, error } = await SupabaseFuncInvoke(
         'request_application',
@@ -197,8 +184,8 @@ export const StartApplication = async (
 
     return data;
 };
-export const AccessApplication = async (input) => {
-    const { storage_id, privateIp } = input;
+export const AccessApplication = async (input: any) => {
+    const { storage_id } = input;
 
     const { data, code, error } = await SupabaseFuncInvoke(
         'access_application',
@@ -224,7 +211,7 @@ export const AccessVolume = async (volume_id: string) => {
     return data;
 };
 export const ResetApplication = async (input: any) => {
-    const { storage_id, privateIp } = input;
+    const { storage_id } = input;
 
     const { data, code, error } = await SupabaseFuncInvoke(
         'access_application',
@@ -400,31 +387,3 @@ export const FetchApplicationTemplates = async (id: number) => {
         .filter((x) => x != undefined);
 };
 
-export const SupabaseFuncInvoke = async (funcName: string, body?: any) => {
-    try {
-        const credential = await getCredentialHeader();
-        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
-        const response = await fetch(
-            `${supabaseURL}/functions/v2/${funcName}`,
-            {
-                body: JSON.stringify(body ?? {}),
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${supabaseAnonKey}`,
-                    Access_token: credential.access_token
-                }
-            }
-        );
-        if (response.ok === false) {
-            const res = await response.json();
-            return { error: res.message, code: res.code, data: null };
-        }
-
-        const data = await response.json();
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
-};

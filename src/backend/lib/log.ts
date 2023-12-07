@@ -19,7 +19,6 @@ export const log = async ({
     title,
     content,
     icon,
-    time,
     confirmButtonText,
     confirmCallback,
     showLoadingProcess = false

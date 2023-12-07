@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon, ToolBar } from '../../../backend/utils/general';
+import { Icon, ToolBar } from '../../../components/shared/general';
 import LangSwitch from './assets/Langswitch';
 import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';

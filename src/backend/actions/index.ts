@@ -1,8 +1,7 @@
 import 'sweetalert2/src/sweetalert2.scss';
-import { localStorageKey } from '../data/constant.js';
-import { Log } from '../lib/log.js';
-import store from '../reducers/index.js';
-import { supabase } from '../supabase/createClient.js';
+import { localStorageKey } from '../data/constant';
+import { Log } from '../lib/log';
+import store from '../reducers/index';
 import {
     connectStorage,
     connectVolume,
@@ -19,9 +18,10 @@ import {
     startApp,
     stopStorage,
     stopVolume
-} from './app.js';
-import * as Actions from './index.js';
-import { fetchApp } from './preload.js';
+} from './app';
+import { supabase } from './fetch/createClient';
+import * as Actions from './index';
+import { fetchApp } from './preload';
 import {
     adjustSubscription,
     connectSession,
@@ -32,14 +32,13 @@ import {
     modifySubscription,
     openWorker,
     viewDetail
-} from './worker.js';
-//import { createSubscription } from "react-redux/es/utils/Subscription";
+} from './worker';
 
-export const refresh = (pl, menu) => {
+export const refresh = async (_: any, menu: any) => {
     if (menu.menus.desk[0].opts[4].check) {
-        store.dispatch({ type: 'DESKHIDE' });
-        setTimeout(() => store.dispatch({ type: 'DESKSHOW' }), 100);
-        fetchApp();
+        store.dispatch({ type: 'DESKHIDE', payload: {} });
+        await fetchApp();
+        store.dispatch({ type: 'DESKSHOW', payload: {} })
     }
 };
 
@@ -62,18 +61,16 @@ export const afterMath = (event: any) => {
         '--prefix'
     );
 
-    ess.forEach((item, i) => {
+    ess.forEach((item) => {
         if (
             !actionType.startsWith(item[0]) &&
             !actionType0.startsWith(item[0])
         ) {
-            store.dispatch({
-                type: item[1]
-            });
+            store.dispatch({ type: item[1], payload: {} });
         }
     });
 };
-export const changeIconSize = (size, menu) => {
+export const changeIconSize = (size: string, menu: any) => {
     var tmpMenu = { ...menu };
     tmpMenu.menus.desk[0].opts[0].dot = false;
     tmpMenu.menus.desk[0].opts[1].dot = false;
@@ -95,15 +92,15 @@ export const changeIconSize = (size, menu) => {
     store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-export const deskHide = (payload, menu) => {
+export const deskHide = (_: {}, menu: any) => {
     var tmpMenu = { ...menu };
     tmpMenu.menus.desk[0].opts[4].check ^= 1;
 
-    store.dispatch({ type: 'DESKTOGG' });
+    store.dispatch({ type: 'DESKTOGG', payload: {} });
     store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-export const changeSort = (sort, menu) => {
+export const changeSort = (sort: string, menu: any) => {
     var tmpMenu = { ...menu };
     tmpMenu.menus.desk[1].opts[0].dot = false;
     tmpMenu.menus.desk[1].opts[1].dot = false;
@@ -121,7 +118,7 @@ export const changeSort = (sort, menu) => {
     store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-export const changeTaskAlign = (align, menu) => {
+export const changeTaskAlign = (align: string, menu: any) => {
     var tmpMenu = { ...menu };
     if (tmpMenu.menus.task[0].opts[align == 'left' ? 0 : 1].dot) return;
 
@@ -134,19 +131,17 @@ export const changeTaskAlign = (align, menu) => {
         tmpMenu.menus.task[0].opts[1].dot = true;
     }
 
-    store.dispatch({ type: 'TASKTOG' });
+    store.dispatch({ type: 'TASKTOG', payload: {} });
     store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-export const performApp = (act, menu) => {
+export const performApp = (act: string, menu: any) => {
     var data = {
         type: menu.dataset.action,
         payload: menu.dataset.payload,
         name: menu.dataset?.name ?? 'Null'
     };
     // add analytic
-    const appName = menu.dataset.name;
-    // AnalyticTrack(`click app`, {
     if (menu.dataset.action == 'CLOUDAPP') {
         openApp(data);
         return;
@@ -162,9 +157,9 @@ export const performApp = (act, menu) => {
                     (apps[x].payload == data.payload && apps[x].payload != null)
             );
 
-            app = apps[app];
-            if (app) {
-                store.dispatch({ type: 'DESKREM', payload: app.name });
+            const ap = (apps as [string, any])[app as any];
+            if (ap) {
+                store.dispatch({ type: 'DESKREM', payload: ap.name });
             }
         }
     }
@@ -174,7 +169,7 @@ export const delDefaultApp = () => {
     // TODO
 };
 
-export const delApp = (event, menu) => {
+export const delApp = ({ }, menu: any) => {
     var data = {
         type: menu.dataset.action,
         payload: menu.dataset.payload
@@ -183,7 +178,7 @@ export const delApp = (event, menu) => {
     deleteApp(data);
 };
 
-export const getTreeValue = (obj, path) => {
+export const getTreeValue = (obj: any, path: any) => {
     if (path == null) return false;
 
     var tdir = { ...obj };
@@ -215,20 +210,21 @@ export const handleLogOut = async () => {
 
     logging.close();
 
-    store.dispatch({ type: 'DELETE_USER' });
+    store.dispatch({ type: 'DELETE_USER', payload: {} });
 };
 
-export const menuDispatch = async (event, menu) => {
-    const type = event.target.dataset.action;
+export const menuDispatch = async (event: Event, menu: any) => {
     const action = {
-        type: event.target.dataset.action,
-        payload: event.target.dataset.payload
+        type: (event.target as any).dataset.action,
+        payload: (event.target as any).dataset.payload
     };
     const externalAppData = {
         type: menu?.dataset?.action,
         payload: menu?.dataset?.payload,
         name: menu?.dataset?.name
     };
+
+    const type = (event.target as any).dataset.action;
     if (!type) return;
     //Worker Menu action
     if (type === 'FILEDIRWORKER') openWorker(event);
@@ -237,8 +233,8 @@ export const menuDispatch = async (event, menu) => {
     else if (type === 'CONNECTWORKER') connectWorker(event);
     else if (type === 'CONNECTWORKERSESSION') connectSession(event);
     else if (type === 'VIEW_DETAIL') viewDetail(event);
-    else if (type === 'CREATE_SUB') createSubscription(event);
-    else if (type === 'MODIFY_SUB') modifySubscription(event);
+    else if (type === 'CREATE_SUB') createSubscription();
+    else if (type === 'MODIFY_SUB') modifySubscription();
     else if (type === 'ADJUST_SUB') adjustSubscription(event);
     else if (type === 'CONNECT_STORAGE') connectStorage(event);
     else if (type === 'STOP_STORAGE') stopStorage(event);
@@ -259,15 +255,15 @@ export const menuDispatch = async (event, menu) => {
     else if (type === 'PATCH_APP') patchApp(event);
     else if (type === 'CLOUDAPP') console.log(event);
     else if (type != type.toUpperCase())
-        Actions[action.type](action.payload, menu);
+        (Actions as any as [string, any])[action.type](action.payload, menu);
     else store.dispatch(action);
 
-    store.dispatch({ type: 'MENUHIDE' });
+    store.dispatch({ type: 'MENUHIDE', payload: {} });
 };
 
 //Cache user request & show when reload
 
-export const cacheRequest = ({ action, appName, callback = '' }) => {
+export const cacheRequest = ({ action, appName, callback = '' }: any) => {
     const cache = {
         action,
         appName,
@@ -278,11 +274,12 @@ export const cacheRequest = ({ action, appName, callback = '' }) => {
 };
 
 export const getCacheData = () => {
-    const data = JSON.parse(localStorage.getItem(localStorageKey.request));
+    const cache = localStorage.getItem(localStorageKey.request)
+    const data = JSON.parse(cache ?? '');
 
     return data;
 };
 
-export const dispatchOutSide = (action, payload) => {
+export const dispatchOutSide = (action: string, payload: any) => {
     store.dispatch({ type: action, payload });
 };

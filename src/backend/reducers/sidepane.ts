@@ -1,3 +1,5 @@
+import { Action } from "./type";
+
 const defState = {
     quicks: [
         {
@@ -48,7 +50,7 @@ const defState = {
     calhide: true
 };
 
-const paneReducer = (state = defState, action) => {
+const paneReducer = (state = defState, action: Action) => {
     if (action.type == 'PANETHEM') {
         var tmpState = { ...state };
         tmpState.quicks[4].src = action.payload;

@@ -9,7 +9,7 @@ import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './components/popup';
 import AvailableCluster from './components/shared/AvailableCluster';
-import { CalnWid, DesktopApp, StartMenu, WidPane } from './components/start';
+import { CalnWid, DesktopApp, StartMenu } from './components/start';
 import Taskbar from './components/taskbar';
 import * as Applications from './containers/applications';
 import * as Drafts from './containers/applications/draft';
@@ -115,7 +115,6 @@ function App() {
                                     );
                                 })}
                             <StartMenu />
-                            <WidPane />
                             <CalnWid />
                         </div>
                         <Taskbar />

@@ -3,25 +3,10 @@ import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Reducer } from '../reducers/type';
 import './general.scss';
 import * as AllIcons from './icons';
 
-export const Icon = (
-    props: {
-        ext: string;
-        src: string;
-        fafa: string;
-        ui: string;
-        onClick: any;
-        pr: any;
-        isTrack: any;
-        func: any;
-        name: string;
-        icon: string;
-        payload: string;
-    } & any
-) => {
+export const Icon = (props) => {
     const dispatch = useDispatch();
     var src = `img/icon/${props.ui != null ? 'ui/' : ''}${props.src}.png`;
 
@@ -40,7 +25,7 @@ export const Icon = (
         }
     }
 
-    const clickDispatch = (event: any) => {
+    const clickDispatch = (event) => {
         var action = {
             type: event.currentTarget.dataset.action,
             payload: event.currentTarget.dataset.payload
@@ -178,7 +163,7 @@ export const Icon = (
     }
 };
 
-export const Image = (props: any) => {
+export const Image = (props) => {
     const dispatch = useDispatch();
 
     let src = props.absolute
@@ -193,13 +178,13 @@ export const Image = (props: any) => {
         src = props.src;
     }
 
-    const errorHandler = (e: any) => {
+    const errorHandler = (e) => {
         if (props.err) {
             e.currentTarget.src = props.err;
         }
     };
 
-    const clickDispatch = (event: any) => {
+    const clickDispatch = (event) => {
         var action = {
             type: event.currentTarget.dataset.action,
             payload: event.currentTarget.dataset.payload
@@ -257,12 +242,12 @@ export const Image = (props: any) => {
     );
 };
 
-export const SnapScreen = (props: any) => {
+export const SnapScreen = (props) => {
     const dispatch = useDispatch();
     const [delay, setDelay] = useState(false);
-    const lays = useSelector<Reducer, any>((state) => state.globals.lays);
+    const lays = useSelector((state) => state.globals.lays);
 
-    const clickDispatch = (event: any) => {
+    const clickDispatch = (event) => {
         var action = {
             type: event.currentTarget.dataset.action,
             payload: event.currentTarget.dataset.payload,
@@ -287,10 +272,10 @@ export const SnapScreen = (props: any) => {
 
     return props.snap || delay ? (
         <div className="snapcont mdShad" data-dark={props.invert != null}>
-            {lays.map((x: any[], i: number) => {
+            {lays.map((x, i) => {
                 return (
                     <div key={i} className="snapLay">
-                        {x.map((y: { br: number; dim: any }, j: number) => (
+                        {x.map((y, j) => (
                             <div
                                 key={j}
                                 className="snapper"
@@ -314,7 +299,7 @@ export const SnapScreen = (props: any) => {
     ) : null;
 };
 
-export const ToolBar = (props: any) => {
+export const ToolBar = (props) => {
     const dispatch = useDispatch();
     const [snap, setSnap] = useState(false);
 
@@ -336,11 +321,11 @@ export const ToolBar = (props: any) => {
     var posP = [0, 0],
         dimP = [0, 0],
         posM = [0, 0],
-        wnapp = {} as any,
+        wnapp = {},
         op = 0,
         vec = [0, 0];
 
-    const toolDrag = (e: any) => {
+    const toolDrag = (e) => {
         e = e || window.event;
         e.preventDefault();
         posM = [e.clientY, e.clientX];
@@ -372,17 +357,17 @@ export const ToolBar = (props: any) => {
         document.onmousemove = eleDrag;
     };
 
-    const setPos = (pos0: number, pos1: number) => {
+    const setPos = (pos0, pos1) => {
         wnapp.style.top = pos0 + 'px';
         wnapp.style.left = pos1 + 'px';
     };
 
-    const setDim = (dim0: number, dim1: number) => {
+    const setDim = (dim0, dim1) => {
         wnapp.style.height = dim0 + 'px';
         wnapp.style.width = dim1 + 'px';
     };
 
-    const eleDrag = (e: any) => {
+    const eleDrag = (e) => {
         e = e || window.event;
         e.preventDefault();
 
@@ -556,7 +541,7 @@ export const ToolBar = (props: any) => {
     );
 };
 
-export const LazyComponent = ({ show, children }: any) => {
+export const LazyComponent = ({ show, children }) => {
     const [loaded, setLoad] = useState(false);
 
     useEffect(() => {
