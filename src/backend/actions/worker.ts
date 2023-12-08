@@ -1,4 +1,4 @@
-import store from '../reducers/index';
+import store, { appDispatch, popup_worker_profile } from '../reducers/index';
 import { log } from '../utils/log';
 import { supabase } from './fetch/createClient';
 import {
@@ -124,7 +124,7 @@ export const openWorker = (e: any) => {
     if (worker == null) return;
     else if (worker.type == 'file') return;
 
-    store.dispatch({
+    appDispatch({
         type: 'FILEDIRWORKER',
         payload: worker.id
     });
@@ -133,10 +133,7 @@ export const openWorker = (e: any) => {
 export const viewDetail = (e: any) => {
     const worker = formatEvent(e);
     if (!worker) return;
-    store.dispatch({
-        type: 'WORKER_PROFILE_MODAL',
-        payload: worker.info
-    });
+    appDispatch(popup_worker_profile(worker.info));
 };
 
 export const createSubscription = async () => {

@@ -1,6 +1,6 @@
-import { Action } from './type';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const defState = {
+const initialState = {
     quicks: [
         {
             ui: true,
@@ -50,26 +50,27 @@ const defState = {
     calhide: true
 };
 
-const paneReducer = (state = defState, action: Action) => {
-    if (action.type == 'PANETHEM') {
-        var tmpState = { ...state };
-        tmpState.quicks[4].src = action.payload;
-        return tmpState;
-    } else if (action.type == 'BANDTOGG') {
-        return { ...state, banhide: !state.banhide };
-    } else if (action.type == 'BANDHIDE') {
-        return { ...state, banhide: true };
-    } else if (action.type == 'PANETOGG') {
-        return { ...state, hide: !state.hide };
-    } else if (action.type == 'PANEHIDE') {
-        return { ...state, hide: true };
-    } else if (action.type == 'CALNTOGG') {
-        return { ...state, calhide: !state.calhide };
-    } else if (action.type == 'CALNHIDE') {
-        return { ...state, calhide: true };
-    } else {
-        return state;
+export const sidepaneSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        sidepane_panethem: (state, action: PayloadAction<any>) => {
+            state.quicks[4].src = action.payload;
+        },
+        sidepane_bandtogg: (state, action: PayloadAction<any>) => {
+            state.banhide = !state.banhide;
+        },
+        sidepane_bandhide: (state, action: PayloadAction<any>) => {
+            state.hide = !state.hide;
+        },
+        sidepane_panehide: (state, action: PayloadAction<any>) => {
+            state.hide = true;
+        },
+        sidepane_calntogg: (state, action: PayloadAction<any>) => {
+            state.calhide = !state.calhide;
+        },
+        sidepane_calnhide: (state, action: PayloadAction<any>) => {
+            state.calhide = true;
+        }
     }
-};
-
-export default paneReducer;
+});

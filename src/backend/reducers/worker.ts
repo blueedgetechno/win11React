@@ -1,5 +1,4 @@
 import { Bin } from '../utils/bin';
-import { Action } from './type';
 
 type WorkerType = {
     cdir: string;
@@ -10,7 +9,7 @@ type WorkerType = {
     cpath: string;
 };
 
-const defState: WorkerType = {
+const initialState: WorkerType = {
     cdir: '%user%',
     hist: [],
     hid: 0,
@@ -19,43 +18,10 @@ const defState: WorkerType = {
     cpath: ''
 };
 
-defState.hist.push(defState.cdir);
-defState.data.parse({});
+initialState.hist.push(initialState.cdir);
+initialState.data.parse({});
 
-const workerReducer = (state = defState, action: Action) => {
-    var tmp = { ...state } as WorkerType;
-    var navHist = false;
-    if (action.type === 'FILEDIRWORKER') {
-        tmp.cdir = action.payload;
-    } else if (action.type === 'FILEPATHWORKER') {
-        var pathid = tmp.data.parsePath(action.payload);
-        if (pathid) tmp.cdir = pathid;
-    } else if (action.type === 'FILEBACKWORKER') {
-        var item = tmp.data.getId(tmp.cdir);
-        if (item.host) {
-            tmp.cdir = item.host.id;
-        }
-    } else if (action.type === 'FILEVIEWWORKER') {
-        tmp.view = action.payload;
-    } else if (action.type === 'FILEPREVWORKER') {
-        tmp.hid--;
-        if (tmp.hid < 0) tmp.hid = 0;
-        navHist = true;
-    } else if (action.type === 'FILENEXTWORKER') {
-        tmp.hid++;
-        if (tmp.hid > tmp.hist.length - 1) tmp.hid = tmp.hist.length - 1;
-        navHist = true;
-    } else if (action.type === 'FILEUPDATEWORKER') {
-        const { data, oldCpath } = action.payload;
-        tmp.data = new Bin();
-        tmp.data.parse(data);
-        var pathid = tmp.data.parsePath(oldCpath);
-        tmp.cdir = pathid ?? '%worker%';
-        defState.hist = [];
-        tmp.hid = 0;
-        tmp.view = 1;
-    }
-
+function format(tmp: WorkerType, navHist = false): WorkerType {
     if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
         tmp.hist.splice(tmp.hid + 1);
         tmp.hist.push(tmp.cdir);
@@ -72,6 +38,49 @@ const workerReducer = (state = defState, action: Action) => {
 
     tmp.cpath = tmp.data.getPath(tmp.cdir);
     return tmp;
-};
+}
 
-export default workerReducer;
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+export const workerSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        worker_dir: (state, action: PayloadAction<any>) => {
+            state.cdir = action.payload;
+        },
+        worker_path: (state, action: PayloadAction<any>) => {
+            const pathid = state.data.parsePath(action.payload);
+            if (pathid) state.cdir = pathid;
+        },
+        worker_back: (state, action: PayloadAction<any>) => {
+            const item = state.data.getId(state.cdir);
+            if (item.host) state.cdir = item.host.id;
+        },
+        worker_view: (state, action: PayloadAction<any>) => {
+            state.view = action.payload;
+        },
+        worker_prev: (state, action: PayloadAction<any>) => {
+            state.hid++;
+            if (state.hid < 0) state.hid = 0;
+            state = format(state, true);
+        },
+        worker_next: (state, action: PayloadAction<any>) => {
+            state.hid--;
+            if (state.hid > state.hist.length - 1)
+                state.hid = state.hist.length - 1;
+            state = format(state, true);
+        },
+        worker_update: (state, action: PayloadAction<any>) => {
+            const { data, oldCpath } = action.payload;
+            state.data = new Bin();
+            state.data.parse(data);
+
+            const pathid = state.data.parsePath(oldCpath);
+            state.cdir = pathid ?? '%worker%';
+            initialState.hist = [];
+            state.hid = 0;
+            state.view = 1;
+        }
+    }
+});
+

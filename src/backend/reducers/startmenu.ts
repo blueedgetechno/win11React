@@ -1,7 +1,7 @@
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { pinnedApps, recentApps } from '../utils';
-import { Action } from './type';
 
-const defState = {
+const initialState = {
     pnApps: pinnedApps,
     rcApps: recentApps,
     hide: true,
@@ -18,62 +18,67 @@ const defState = {
     ]
 };
 
-const menuReducer = (state = defState, action: Action) => {
-    switch (action.type) {
-        case 'STARTSHW':
-            return {
+export const menuSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        startshw: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 menu: true,
                 hide: false,
                 pwctrl: false
             };
-        case 'STARTHID':
-            return {
+        },
+        starthid: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 hide: true,
                 showAll: false,
                 pwctrl: false
             };
-        case 'STARTOGG':
-            return {
+        },
+        startogg: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 hide: !(state.hide || !state.menu),
                 menu: true,
                 alpha: false,
                 curAlpha: 'A',
                 pwctrl: false,
-                showAll: state.menu && state.showAll ? true : null
+                showAll: state.menu && state.showAll ? true : false
             };
-        case 'STARTALL':
-            return {
+        },
+        startall: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 showAll: !state.showAll,
                 alpha: false,
                 pwctrl: false,
                 curAlpha: 'A'
             };
-        case 'STARTALPHA':
-            return {
+        },
+        startalpha: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 alpha: !state.alpha,
                 pwctrl: false,
                 curAlpha: action.payload || 'A'
             };
-        case 'STARTSRC':
-            return {
+        },
+        startsrc: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 hide: !(state.hide || state.menu),
                 menu: false,
                 pwctrl: false
             };
-        case 'STARTPWC':
-            return {
+        },
+        startpwc: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 pwctrl: true
             };
-        default:
-            return state;
+        }
     }
-};
-
-export default menuReducer;
+});

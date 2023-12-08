@@ -11,14 +11,14 @@ const ModalEditOrInsert = (props) => {
         modalType == 'edit'
             ? appData
             : {
-                id: '',
-                name: '',
-                type: '',
-                description: '',
-                feature: '',
-                screenshoots: [],
-                icon: ''
-            }
+                  id: '',
+                  name: '',
+                  type: '',
+                  description: '',
+                  feature: '',
+                  screenshoots: [],
+                  icon: ''
+              }
     );
 
     const dispatch = useDispatch();

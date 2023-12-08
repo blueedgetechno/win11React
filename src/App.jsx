@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
 import { UserSession } from './backend/actions/analytics';
 import { afterMath } from './backend/actions/index';
 import { checkAvailableCluster, preload } from './backend/actions/preload';
+import { useAppSelector } from './backend/reducers';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './components/popup';
 import AvailableCluster from './components/shared/AvailableCluster';
-import { CalnWid, DesktopApp, StartMenu } from './components/start';
+import {
+    BandPane,
+    CalnWid,
+    DesktopApp,
+    SidePane,
+    StartMenu
+} from './components/start';
 import Taskbar from './components/taskbar';
-import * as Applications from './containers/applications';
-import * as Drafts from './containers/applications/draft';
-import { Background, BootScreen, LockScreen } from './containers/background';
+import { BootScreen, LockScreen } from './containers/background';
+import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
-import { Remote } from './containers/remote';
 
 function App() {
-    const apps = useSelector((state) => state.apps);
-    const user = useSelector((state) => state.user);
-    const wall = useSelector((state) => state.wallpaper);
+    const apps = useAppSelector((state) => state.apps);
+    const user = useAppSelector((state) => state.user);
+    const wall = useAppSelector((state) => state.wallpaper);
 
     const [showtaskbar, setShowtaskbar] = useState(true);
     const [lockscreen, setLockscreen] = useState(true);
@@ -58,13 +62,11 @@ function App() {
 
     useEffect(() => {
         window.onbeforeunload = (e) => {
-            const text = 'Are you sure (｡◕‿‿◕｡)'
+            const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
-            if (e)
-                e.returnValue = text
+            if (e) e.returnValue = text;
             return text;
         };
-
 
         UserSession();
         checkAvailableCluster();
@@ -105,7 +107,7 @@ function App() {
                             data-mobile={isMobile()}
                         >
                             <DesktopApp />
-                            {Object.keys(Applications).map((key, idx) => {
+                            {/* {Object.keys(Applications).map((key, idx) => {
                                 var WinApp = Applications[key];
                                 return <WinApp key={idx} />;
                             })}
@@ -123,10 +125,12 @@ function App() {
                                             {...app.data}
                                         />
                                     );
-                                })}
+                                })} */}
                             <StartMenu />
                             <CalnWid />
                         </div>
+                        <BandPane />
+                        <SidePane />
                         <Taskbar />
                         <ActMenu />
                         <Popup />

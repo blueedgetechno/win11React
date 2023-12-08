@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import Swal from 'sweetalert2';
-import store from '../reducers';
-import { Action } from '../reducers/type';
+import store, { appDispatch } from '../reducers';
 import { isAdmin } from '../utils/checking';
 import { localStorageKey } from '../utils/constant';
 import { formatError } from '../utils/formatErr';
@@ -91,7 +90,7 @@ export const deleteStore = async (app: any) => {
 };
 
 // desktop app
-export const openApp = async (appInput: Action, type?: string) =>
+export const openApp = async (appInput, type?: string) =>
     wrapper(async () => {
         const appName = appInput?.name ?? 'null';
         const payload = JSON.parse(appInput.payload);
@@ -112,9 +111,9 @@ export const openApp = async (appInput: Action, type?: string) =>
             game: appName,
             session: result.url ?? 'null'
         };
-        store.dispatch({ type: 'USER_FEEDBACK', payload: feedbackInput });
+        appDispatch({ type: 'USER_FEEDBACK', payload: feedbackInput });
     });
-export const resetApp = async (appInput: Action) =>
+export const resetApp = async (appInput) =>
     wrapper(async () => {
         const payload = JSON.parse(appInput.payload);
         const appName = appInput?.name ?? 'null';
@@ -145,7 +144,7 @@ export const installApp = (payload: any) =>
     }, 'installApp');
 
 // desktop app
-export const startApp = async (appInput: Action) =>
+export const startApp = async (appInput) =>
     wrapper(async () => {
         const payload = JSON.parse(appInput.payload);
         const appName = appInput?.name ?? 'null';
@@ -167,13 +166,13 @@ export const startApp = async (appInput: Action) =>
             game: appName,
             session: remoteLink.url ?? 'null'
         };
-        store.dispatch({ type: 'USER_FEEDBACK', payload: feedbackInput });
+        appDispatch({ type: 'USER_FEEDBACK', payload: feedbackInput });
 
         await fetchApp();
     }, 'startApp');
 
 // desktop app
-export const pauseApp = async (appInput: Action) =>
+export const pauseApp = async (appInput) =>
     wrapper(async () => {
         const payload = JSON.parse(appInput.payload);
         let countErr = 0;
@@ -200,7 +199,7 @@ export const pauseApp = async (appInput: Action) =>
         await fetchApp();
     }, 'pauseApp');
 
-export const deleteApp = (appInput: Action) =>
+export const deleteApp = (appInput) =>
     wrapper(async () => {
         const payload = JSON.parse(appInput.payload);
         await DeleteApplication(payload.storage_id);
@@ -398,7 +397,7 @@ export const ReleaseApp = async ({
 
         if (error) throw error;
 
-        store.dispatch({ type: 'CLOSE_MODAL', payload: {} });
+        appDispatch({ type: 'CLOSE_MODAL', payload: {} });
 
         return;
     });

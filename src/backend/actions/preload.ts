@@ -1,4 +1,4 @@
-import store from '../reducers';
+import store, { appDispatch } from '../reducers';
 import { isAllowWorkerProfileFetch } from '../utils/checking';
 import { localStorageKey } from '../utils/constant';
 import {
@@ -21,9 +21,9 @@ const loadSettings = async () => {
     }
 
     document.body.dataset.theme = thm;
-    store.dispatch({ type: 'STNGTHEME', payload: thm });
-    store.dispatch({ type: 'PANETHEM', payload: icon });
-    store.dispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
+    appDispatch({ type: 'STNGTHEME', payload: thm });
+    appDispatch({ type: 'PANETHEM', payload: icon });
+    appDispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
 };
 
 export const fetchApp = async () => {
@@ -38,7 +38,7 @@ export const fetchApp = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
-        store.dispatch({
+        appDispatch({
             type: 'DESKADD',
             payload: [...apps]
         });
@@ -50,7 +50,7 @@ export const fetchApp = async () => {
         (x) => x !== undefined
     );
 
-    store.dispatch({
+    appDispatch({
         type: 'DESKADD',
         payload: [...apps]
     });
@@ -76,7 +76,7 @@ export const fetchWorker = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
-        store.dispatch({
+        appDispatch({
             type: 'FILEUPDATEWORKER',
             payload
         });
@@ -92,7 +92,7 @@ export const fetchWorker = async () => {
         oldCpath: cpath
     };
 
-    store.dispatch({
+    appDispatch({
         type: 'FILEUPDATEWORKER',
         payload
     });
@@ -119,11 +119,11 @@ export const fetchStore = async () => {
         else if (games.length == 0 || apps.length == 0)
             throw new Error('empty');
 
-        store.dispatch({
+        appDispatch({
             type: 'UPDATEAPP',
             payload: apps
         });
-        store.dispatch({
+        appDispatch({
             type: 'UPDATEGAME',
             payload: games
         });
@@ -149,11 +149,11 @@ export const fetchStore = async () => {
         else if (appOrGame.type == 'APP') content.apps.push(appOrGame);
     }
 
-    store.dispatch({
+    appDispatch({
         type: 'UPDATEAPP',
         payload: content.apps
     });
-    store.dispatch({
+    appDispatch({
         type: 'UPDATEGAME',
         payload: content.games
     });
@@ -175,7 +175,7 @@ export const fetchUser = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
             throw new Error('outdated');
 
-        store.dispatch({
+        appDispatch({
             type: 'ADD_USER',
             payload
         });
@@ -228,7 +228,7 @@ export const fetchUser = async () => {
 
         payloadUser = { ...payloadUser, usageTime: data };
     }
-    store.dispatch({
+    appDispatch({
         type: 'ADD_USER',
         payload: payloadUser
     });
@@ -254,10 +254,11 @@ export const checkAvailableCluster = async () => {
         const { data } = await virtapi('rpc/attachable_clusters', 'POST', {});
         checking = data.at(0).total > 0;
 
-        store.dispatch({
-            type: 'UPDATE_CLUSTER_STATUS',
-            payload: checking
-        });
+        // appDispatch({
+        //     type: 'UPDATE_CLUSTER_STATUS',
+        //     payload: checking
+        // });
+
 
         // await sleep(30 * 1000)
     }

@@ -53,12 +53,6 @@ const apps = [
         action: 'STARTMENU'
     },
     {
-        name: 'Search',
-        icon: 'search',
-        type: 'action',
-        action: 'SEARCHMENU'
-    },
-    {
         name: 'Settings',
         icon: 'settings',
         type: 'app',

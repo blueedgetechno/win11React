@@ -1,6 +1,6 @@
-import { Action } from './type';
 
-const defState = {
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+const initialState = {
     system: {
         power: {
             saver: {
@@ -37,7 +37,7 @@ const defState = {
     }
 };
 
-//document.body.dataset.theme = defState.person.theme
+//document.body.dataset.theme = initialState.person.theme
 
 const changeVal = (obj: any, pathin: string, val = 'togg') => {
     var tmp = obj;
@@ -56,28 +56,21 @@ const changeVal = (obj: any, pathin: string, val = 'togg') => {
 };
 
 // TODO setting in db
-const settReducer = (state = defState, action: Action) => {
-    var tmpState = { ...state };
-
-    switch (action.type) {
-        case 'STNGTHEME':
-            tmpState.person.theme = action.payload;
-            break;
-        case 'STNGTOGG':
-            tmpState = changeVal(tmpState, action.payload);
-            break;
-        case 'STNGSETV':
-            tmpState = changeVal(
-                tmpState,
-                action.payload.path,
-                action.payload.value
-            );
-            break;
-        case 'SETTLOAD':
-            tmpState = { ...action.payload };
+export const settSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        stngtheme: (state, action: PayloadAction<any>) => {
+            state.person.theme = action.payload;
+        },
+        stngtogg: (state, action: PayloadAction<any>) => {
+            state = changeVal(state, action.payload);
+        },
+        stngsetv: (state, action: PayloadAction<any>) => {
+            state = changeVal(state, action.payload.path, action.payload.value);
+        },
+        stngload: (state, action: PayloadAction<any>) => {
+            state = { ...action.payload };
+        }
     }
-
-    return tmpState;
-};
-
-export default settReducer;
+});

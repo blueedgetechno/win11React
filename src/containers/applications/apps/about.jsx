@@ -7,18 +7,14 @@ import { Image } from '../../../components/shared/general';
 
 import './assets/about.scss';
 export const AboutWin = () => {
-    const [open, setOpen] = useState(true);
-    const { abOpen } = useSelector((state) => state.desktop);
     const wnapp = useSelector((state) => state.apps.about);
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
 
     const action = () => {
-        setOpen(false);
         localStorage.setItem('openAboutThinkmay', false);
         localStorage.removeItem('openAboutThinkmay2');
         localStorage.removeItem('openAboutThinkmay3');
-        //dispatch({ type: "DESKABOUT", payload: false });
         dispatch({ type: 'ABOUT', payload: 'close' });
     };
     const [currentSlide, setCurrentSlide] = useState(0);

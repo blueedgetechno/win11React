@@ -1,5 +1,6 @@
 import 'sweetalert2/src/sweetalert2.scss';
-import store from '../reducers/index';
+import '../reducers/index';
+import store, { appDispatch, desk_sort, menu_chng, menu_hide, popup_admin_release_app } from '../reducers/index';
 import { localStorageKey } from '../utils/constant';
 import { Log } from '../utils/log';
 import {
@@ -36,9 +37,9 @@ import {
 
 export const refresh = async (_: any, menu: any) => {
     if (menu.menus.desk[0].opts[4].check) {
-        store.dispatch({ type: 'DESKHIDE', payload: {} });
+        appDispatch({ type: 'DESKHIDE', payload: {} });
         await fetchApp();
-        store.dispatch({ type: 'DESKSHOW', payload: {} });
+        appDispatch({ type: 'DESKSHOW', payload: {} });
     }
 };
 
@@ -66,7 +67,7 @@ export const afterMath = (event: any) => {
             !actionType.startsWith(item[0]) &&
             !actionType0.startsWith(item[0])
         ) {
-            store.dispatch({ type: item[1], payload: {} });
+            appDispatch({ type: item[1], payload: {} });
         }
     });
 };
@@ -88,16 +89,8 @@ export const changeIconSize = (size: string, menu: any) => {
     }
 
     // refresh("", tmpMenu);
-    store.dispatch({ type: 'DESKSIZE', payload: isize });
-    store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
-};
-
-export const deskHide = (_: {}, menu: any) => {
-    var tmpMenu = { ...menu };
-    tmpMenu.menus.desk[0].opts[4].check ^= 1;
-
-    store.dispatch({ type: 'DESKTOGG', payload: {} });
-    store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
+    appDispatch({ type: 'DESKSIZE', payload: isize });
+    appDispatch(menu_chng({}));
 };
 
 export const changeSort = (sort: string, menu: any) => {
@@ -113,9 +106,8 @@ export const changeSort = (sort: string, menu: any) => {
         tmpMenu.menus.desk[1].opts[2].dot = true;
     }
 
-    // refresh("", tmpMenu);
-    store.dispatch({ type: 'DESKSORT', payload: sort });
-    store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
+    appDispatch(desk_sort(sort));
+    appDispatch(menu_chng(tmpMenu));
 };
 
 export const changeTaskAlign = (align: string, menu: any) => {
@@ -131,8 +123,8 @@ export const changeTaskAlign = (align: string, menu: any) => {
         tmpMenu.menus.task[0].opts[1].dot = true;
     }
 
-    store.dispatch({ type: 'TASKTOG', payload: {} });
-    store.dispatch({ type: 'MENUCHNG', payload: tmpMenu });
+    appDispatch({ type: 'TASKTOG', payload: {} });
+    appDispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
 export const performApp = (act: string, menu: any) => {
@@ -147,7 +139,7 @@ export const performApp = (act: string, menu: any) => {
         return;
     }
     if (act == 'open') {
-        if (data.type) store.dispatch(data);
+        if (data.type) appDispatch(data);
     } else if (act == 'delshort') {
         if (data.type) {
             var apps = store.getState().apps;
@@ -159,7 +151,7 @@ export const performApp = (act: string, menu: any) => {
 
             const ap = (apps as [string, any])[app as any];
             if (ap) {
-                store.dispatch({ type: 'DESKREM', payload: ap.name });
+                appDispatch({ type: 'DESKREM', payload: ap.name });
             }
         }
     }
@@ -196,9 +188,9 @@ export const changeTheme = () => {
     var icon = thm == 'light' ? 'sun' : 'moon';
     localStorage.setItem('theme', thm);
     document.body.dataset.theme = thm;
-    store.dispatch({ type: 'STNGTHEME', payload: thm });
-    store.dispatch({ type: 'PANETHEM', payload: icon });
-    store.dispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
+    appDispatch({ type: 'STNGTHEME', payload: thm });
+    appDispatch({ type: 'PANETHEM', payload: icon });
+    appDispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
 };
 
 export const handleLogOut = async () => {
@@ -210,7 +202,7 @@ export const handleLogOut = async () => {
 
     logging.close();
 
-    store.dispatch({ type: 'DELETE_USER', payload: {} });
+    appDispatch({ type: 'DELETE_USER', payload: {} });
 };
 
 export const menuDispatch = async (event: Event, menu: any) => {
@@ -250,15 +242,12 @@ export const menuDispatch = async (event: Event, menu: any) => {
     else if (type === 'RESET_APP') resetApp(externalAppData);
     else if (type === 'OPEN_APP') openApp(externalAppData);
     else if (type === 'OPEN_APP_NEWTAB') openApp(externalAppData, 'new_tab');
-    else if (type === 'RELEASE_APP')
-        store.dispatch({ type: 'ADMIN_RELEASE_APP', payload: { event } });
+    else if (type === 'RELEASE_APP') appDispatch(popup_admin_release_app(event));
     else if (type === 'PATCH_APP') patchApp(event);
-    else if (type === 'CLOUDAPP') console.log(event);
-    else if (type != type.toUpperCase())
-        (Actions as any as [string, any])[action.type](action.payload, menu);
-    else store.dispatch(action);
+    else if (type  != type.toUpperCase()) (Actions as any as [string, any])[action.type](action.payload, menu);
+    else appDispatch(action);
 
-    store.dispatch({ type: 'MENUHIDE', payload: {} });
+    appDispatch(menu_hide({}));
 };
 
 //Cache user request & show when reload
@@ -281,5 +270,5 @@ export const getCacheData = () => {
 };
 
 export const dispatchOutSide = (action: string, payload: any) => {
-    store.dispatch({ type: action, payload });
+    appDispatch({ type: action, payload });
 };

@@ -1,6 +1,4 @@
-import { Action } from './type';
-
-const defState = {
+const initialState = {
     lays: [
         [
             {
@@ -203,14 +201,16 @@ const defState = {
     games: []
 };
 
-const globalReducer = (state = defState, action: Action) => {
-    if (action.type === 'UPDATEGAME') {
-        state.games = action.payload;
-    } else if (action.type === 'UPDATEAPP') {
-        state.apps = action.payload;
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+export const globalSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        updategame: (state, action: PayloadAction<any>) => {
+            state.games = action.payload;
+        },
+        updateapp: (state, action: PayloadAction<any>) => {
+            state.apps = action.payload;
+        }
     }
-
-    return state;
-};
-
-export default globalReducer;
+});

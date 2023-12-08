@@ -1,6 +1,6 @@
-import { Action } from './type';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const defParams = {
+const initialState = {
     signaling: '',
     token: '',
     fps: '',
@@ -10,15 +10,12 @@ const defParams = {
     loggingClientUrl: ''
 };
 
-const paramsReducer = (state = defParams, action: Action) => {
-    //const key = action.payload.key
-    //const value = action.payload.value
-    switch (action.type) {
-        case 'UPDATE_PARAM':
-            return { ...state, ...action.payload };
-        default:
-            return state;
+export const paramsSlice = createSlice({
+    name: 'params',
+    initialState,
+    reducers: {
+        update: (state, action: PayloadAction<any>) => {
+            state = { ...state, ...action.payload };
+        }
     }
-};
-
-export default paramsReducer;
+});

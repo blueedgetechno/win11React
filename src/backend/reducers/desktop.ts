@@ -1,7 +1,7 @@
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { desktopApps } from '../utils';
-import { Action } from './type';
 
-const defState = {
+const initialState = {
     apps: desktopApps,
     hide: false,
     size: 1,
@@ -9,50 +9,28 @@ const defState = {
     abOpen: false
 };
 
-// TODO database store desktop
-const deskReducer = (state = defState, action: Action) => {
-    switch (action.type) {
-        case 'DESKREM':
-            var arr = state.apps.filter((x) => x.name != action.payload);
-            return { ...state, apps: arr };
-        case 'DESKADD':
-            return {
-                ...state,
-                apps: [...desktopApps, ...action.payload]
-            };
-        case 'DESKHIDE':
-            return {
-                ...state,
-                hide: true
-            };
-        case 'DESKSHOW':
-            return {
-                ...state,
-                hide: false
-            };
-        case 'DESKTOGG':
-            return {
-                ...state,
-                hide: !state.hide
-            };
-        case 'DESKSIZE':
-            return {
-                ...state,
-                size: action.payload
-            };
-        case 'DESKSORT':
-            return {
-                ...state,
-                sort: action.payload || 'none'
-            };
-        case 'DESKABOUT':
-            return {
-                ...state,
-                abOpen: action.payload
-            };
-        default:
-            return state;
+export const deskSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        desk_remove: (state, action: PayloadAction<any>) => {
+            const arr = state.apps.filter((x) => x.name != action.payload);
+            state = { ...state, apps: arr };
+        },
+        desk_add: (state, action: PayloadAction<any>) => {
+            state = { ...state, apps: [...desktopApps, ...action.payload] };
+        },
+        desk_hide: (state, action: PayloadAction<any>) => {
+            state = { ...state, hide: true };
+        },
+        desk_show: (state, action: PayloadAction<any>) => {
+            state = { ...state, hide: false };
+        },
+        desk_size: (state, action: PayloadAction<any>) => {
+            state = { ...state, size: action.payload };
+        },
+        desk_sort: (state, action: PayloadAction<any>) => {
+            state = { ...state, sort: action.payload || 'none' };
+        }
     }
-};
-
-export default deskReducer;
+});

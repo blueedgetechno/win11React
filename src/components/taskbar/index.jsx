@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isMobile } from '../../backend/utils/checking';
 import { Icon } from '../shared/general';
+import Battery from '../../components/shared/Battery';
 import './taskbar.scss';
 
 const Taskbar = () => {
@@ -123,34 +124,29 @@ const Taskbar = () => {
                 </div>
             </div>
             <div className="taskright">
-                {/*{
-          !isMobile() ? (
-            <>
-              <div
-                className="px-2 prtclk handcr hvlight flex"
-                onClick={clickDispatch}
-                data-action="BANDTOGG"
-              >
-                <Icon fafa="faChevronUp" width={10} />
-              </div>
-              <div
-                className="prtclk handcr my-1 px-1 hvlight flex rounded"
-                onClick={clickDispatch}
-                data-action="PANETOGG"
-              >
-                <Icon className="taskIcon" src="wifi" ui width={16} />
-                <Icon
-                  className="taskIcon"
-                  src={"audio" + tasks.audio}
-                  ui
-                  width={16}
-                />
-                <Battery />
-              </div>
-            </>
-          )
-            : null
-        }*/}
+                <>
+                    <div
+                        className="px-2 prtclk handcr hvlight flex"
+                        onClick={clickDispatch}
+                        data-action="BANDTOGG"
+                    >
+                        <Icon fafa="faChevronUp" width={10} />
+                    </div>
+                    <div
+                        className="prtclk handcr my-1 px-1 hvlight flex rounded"
+                        onClick={clickDispatch}
+                        data-action="PANETOGG"
+                    >
+                        <Icon className="taskIcon" src="wifi" ui width={16} />
+                        <Icon
+                            className="taskIcon"
+                            src={'audio' + tasks.audio}
+                            ui
+                            width={16}
+                        />
+                        <Battery />
+                    </div>
+                </>
                 <div
                     className="taskDate m-1 handcr prtclk rounded hvlight"
                     onClick={clickDispatch}

@@ -1,7 +1,7 @@
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { taskApps } from '../utils';
-import { Action } from './type';
 
-const defState = {
+const initialState = {
     apps: taskApps,
     prev: false,
     prevApp: '',
@@ -12,57 +12,36 @@ const defState = {
     audio: 3
 };
 
-const taskReducer = (state = defState, action: Action) => {
-    switch (action.type) {
-        case 'TASKADD':
-            return state;
-        case 'TASKREM':
-            return state;
-        case 'TASKCEN':
-            return {
-                ...state,
-                align: 'center'
-            };
-        case 'TASKLEF':
-            return {
-                ...state,
-                align: 'left'
-            };
-        case 'TASKTOG':
-            return {
+export const taskSlice = createSlice({
+    name: 'task',
+    initialState,
+    reducers: {
+        task_toggle: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 align: state.align == 'left' ? 'center' : 'left'
             };
-        case 'TASKPSHOW':
-            return {
+        },
+        task_show: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 prev: true,
                 prevApp: (action.payload && action.payload.app) || 'store',
                 prevPos: (action.payload && action.payload.pos) || 50
             };
-        case 'TASKPHIDE':
-            return {
+        },
+        task_hide: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 prev: false
             };
-        case 'TASKSRCH':
-            return {
-                ...state,
-                search: action.payload == 'true'
-            };
-        case 'TASKWIDG':
-            return {
-                ...state,
-                widgets: action.payload == 'true'
-            };
-        case 'TASKAUDO':
-            return {
+        },
+        task_audo: (state, action: PayloadAction<any>) => {
+            state = {
                 ...state,
                 audio: action.payload
             };
-        default:
-            return state;
+        }
     }
-};
+});
 
-export default taskReducer;

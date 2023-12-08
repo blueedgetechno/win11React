@@ -1,4 +1,4 @@
-const defState = {
+const initialState = {
     hide: true,
     top: 80,
     left: 360,
@@ -94,14 +94,6 @@ const defState = {
                         action: 'changeIconSize',
                         payload: 'small',
                         dot: true
-                    },
-                    {
-                        type: 'hr'
-                    },
-                    {
-                        name: 'Show desktop icons',
-                        action: 'deskHide',
-                        check: true
                     }
                 ]
             },
@@ -186,9 +178,8 @@ const defState = {
             },
             {
                 name: 'Guideline',
-                action: 'DESKABOUT',
-                icon: 'about',
-                payload: true
+                action: 'ABOUT',
+                icon: 'about'
             }
         ],
         task: [
@@ -205,39 +196,6 @@ const defState = {
                         action: 'changeTaskAlign',
                         payload: 'center',
                         dot: true
-                    }
-                ]
-            },
-            {
-                type: 'hr'
-            },
-            {
-                name: 'Search',
-                opts: [
-                    {
-                        name: 'Show',
-                        action: 'TASKSRCH',
-                        payload: true
-                    },
-                    {
-                        name: 'Hide',
-                        action: 'TASKSRCH',
-                        payload: false
-                    }
-                ]
-            },
-            {
-                name: 'Widgets',
-                opts: [
-                    {
-                        name: 'Show',
-                        action: 'TASKWIDG',
-                        payload: true
-                    },
-                    {
-                        name: 'Hide',
-                        action: 'TASKWIDG',
-                        payload: false
                     }
                 ]
             },
@@ -484,27 +442,26 @@ const defState = {
     }
 };
 
-import { Action } from './type';
-const menusReducer = (state = defState, action: Action) => {
-    var tmpState = {
-        ...state
-    };
-    if (action.type == 'MENUHIDE') {
-        tmpState.hide = true;
-    } else if (action.type == 'MENUSHOW') {
-        tmpState.hide = false;
-        tmpState.top = (action.payload && action.payload.top) || 272;
-        tmpState.left = (action.payload && action.payload.left) || 430;
-        tmpState.opts = (action.payload && action.payload.menu) || 'desk';
-        tmpState.attr = action.payload && action.payload.attr;
-        tmpState.dataset = action.payload && action.payload.dataset;
-    } else if (action.type == 'MENUCHNG') {
-        tmpState = {
-            ...action.payload
-        };
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+export const menusSlice = createSlice({
+    name: 'desk',
+    initialState,
+    reducers: {
+        menu_hide: (state, action: PayloadAction<any>) => {
+            state.hide = true;
+        },
+        menu_show: (state, action: PayloadAction<any>) => {
+            state.hide = false;
+            state.top = (action.payload && action.payload.top) || 272;
+            state.left = (action.payload && action.payload.left) || 430;
+            state.opts = (action.payload && action.payload.menu) || 'desk';
+            state.attr = action.payload && action.payload.attr;
+            state.dataset = action.payload && action.payload.dataset;
+        },
+        menu_chng: (state, action: PayloadAction<any>) => {
+            state = { ...action.payload };
+        }
     }
 
-    return tmpState;
-};
+})
 
-export default menusReducer;

@@ -1,5 +1,5 @@
 var wps = 0;
-import { Action } from './type';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 const walls = [
     'default/img0.jpg',
     'dark/img0.jpg',
@@ -23,24 +23,27 @@ const walls = [
 
 const themes = ['default', 'dark', 'ThemeA', 'ThemeB', 'ThemeD', 'ThemeC'];
 
-const defState = {
+const initialState = {
     themes: themes,
     wps: wps,
     src: walls[wps],
     act: ''
 };
 
-const wallReducer = (state = defState, action: Action) => {
-    switch (action.type) {
-        case 'WALLNEXT':
-            var twps = (state.wps + 1) % walls.length;
-            return {
+export const wallSlice = createSlice({
+    name: 'wall',
+    initialState,
+    reducers: {
+        wall_next: (state, action: PayloadAction<any>) => {
+            const twps = (state.wps + 1) % walls.length;
+            state = {
                 ...state,
                 wps: twps,
                 src: walls[twps]
             };
-        case 'WALLSET':
-            var isIndex = !Number.isNaN(parseInt(action.payload)),
+        },
+        wall_set: (state, action: PayloadAction<any>) => {
+            let isIndex = !Number.isNaN(parseInt(action.payload)),
                 wps = 0,
                 src = '';
 
@@ -52,14 +55,7 @@ const wallReducer = (state = defState, action: Action) => {
                 wps = walls.indexOf(action.payload);
             }
 
-            return {
-                ...state,
-                wps: wps,
-                src: src
-            };
-        default:
-            return state;
+            state = { ...state, wps: wps, src: src };
+        }
     }
-};
-
-export default wallReducer;
+});
