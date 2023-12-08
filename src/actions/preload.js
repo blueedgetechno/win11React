@@ -134,7 +134,23 @@ export const fetchStore = async () => {
     apps: [],
   };
 
-  const stores = data.filter((e) => e.hide != true);
+  let stores = [];
+
+  for (let index = 0; index < data.length; index++){
+    const appStore = data[index];
+    const volume = await virtapi('rpc/fetch_volume_class', "POST", {
+      volume_id: appStore.volume_ids[0]
+    })
+    if (volume.error){
+      // Not found volume_class
+    } else {
+      appStore.volume_class = volume.data[0].volume_class
+    }
+    stores.push(appStore)
+  }
+  
+  stores = data.filter((e) => e.hide != true)
+
   for (let index = 0; index < stores.length; index++) {
     const appOrGame = stores[index];
 

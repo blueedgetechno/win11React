@@ -43,7 +43,9 @@
     "installApp": "Tips: Khi có logo installing, đợi 1 vài phút cho đến khi logo game xuất hiện",
     "pauseApp": "Tips: Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!",
     "thanks": "Xin cảm ơn bạn ^^",
-    "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3"
+    "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3",
+    "LA": "Hàng chờ cao",
+    "withoutAcc": "Hộ trợ tài khoản"
   },
   "timemanager": {
     "startAt": "Ngày bắt đầu",
