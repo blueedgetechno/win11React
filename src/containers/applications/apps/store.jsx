@@ -158,11 +158,24 @@ const FrontPage = (props) => {
 
   const { t, i18n } = useTranslation();
 
+  console.log(games, apps);
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
   }, []);
 
+  const CheckAppPriority = (volume_class = '') => {
+    let priority = ''
+    if (volume_class.includes('LA')) {
+      priority = "LA"
+    }
+    else if (volume_class.includes('HA')) {
+      priority = ''
+    }
+
+    return (<span>{priority == 'LA' ? t("info.LA") : ''}</span>)
+
+  }
   return (
     <div className="pagecont w-full absolute top-0">
       <Image id="sthome" className="frontPage w-full" src={cover} ext />
@@ -205,49 +218,54 @@ const FrontPage = (props) => {
         <div className="flex w-max pr-8">
           {games.length > 0
             ? games.map((game, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="ribcont rounded-md my-0 p-2 pb-2"
-                    onClick={() => {
-                      props.app_click(game);
-                    }}
-                    style={{
-                      background: game.steam_off
-                        ? "linear-gradient(to right, #f7e67b, #c8ae54)"
-                        : "",
-                    }}
-                  >
-                    <Image
-                      className="mx-1 py-1 mb-6 rounded"
-                      w={100}
-                      h={100}
-                      absolute={true}
-                      src={game.icon}
-                    />
-                    <div className="capitalize text-xs text-center font-semibold">
-                      {game.name}
-                    </div>
-                    <div className="text-xs text-center font-regular">
-                      {game.steam_off ? "Steam Offline" : ""}
-                    </div>
-                  </div>
-                );
-              })
-            : listDraftApp.map((i) => (
+              return (
                 <div
                   key={i}
-                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                  className="ribcont rounded-md my-0 p-2 pb-2"
+                  onClick={() => {
+                    props.app_click(game);
+                  }}
+                  style={{
+                    background: game.steam_off
+                      ? "linear-gradient(to right, #f7e67b, #c8ae54)"
+                      : "",
+                  }}
                 >
                   <Image
-                    className="mx-1 rounded bg-slate-200"
+                    className="mx-1 py-1 mb-3 rounded"
                     w={100}
                     h={100}
-                    ext
+                    absolute={true}
+                    src={game.icon}
                   />
-                  <div className="capitalize text-xs text-center font-semibold"></div>
+                  <div className="capitalize text-xs text-center font-semibold">
+                    {game.name}
+                  </div>
+                  <div className="text-[11px] text-center font-regular">
+                    {game.steam_off ? `(${ t("info.withoutAcc")})` : ""}
+                  </div>
+                  <div className="text-[11px] text-center font-regular">
+                    {CheckAppPriority(game.volume_class)}
+                  </div>
+
+
                 </div>
-              ))}
+              );
+            })
+            : listDraftApp.map((i) => (
+              <div
+                key={i}
+                className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+              >
+                <Image
+                  className="mx-1 rounded bg-slate-200"
+                  w={100}
+                  h={100}
+                  ext
+                />
+                <div className="capitalize text-xs text-center font-semibold"></div>
+              </div>
+            ))}
         </div>
       </div>
 
@@ -283,6 +301,9 @@ const FrontPage = (props) => {
                   <div className="capitalize text-xs text-center font-semibold">
                     {app.name}
                   </div>
+                  <div className="text-[11px] text-center font-regular">
+                    {CheckAppPriority(app.volume_class)}
+                  </div>
                 </div>
               );
             })}
@@ -305,38 +326,40 @@ const DetailPage = ({ app }) => {
     'India'
   ]
 
-  useEffect(() => { (async () => {
-    const subscription = await supabase.from("subscriptions").select("account_id, metadata").eq("account_id", user.id)
-    let user_region;
-  
-    switch(JSON.stringify(subscription.data.at(0).metadata).toString()){
-      case '{}': // thinkmay internal user
-        user_region = region[0]
-      break;
-      case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
-        user_region = region[1]
-      break;
-    }
+  useEffect(() => {
+    (async () => {
+      const subscription = await supabase.from("subscriptions").select("account_id, metadata").eq("account_id", user.id)
+      let user_region;
 
-    const {data,error} = await virtapi(`rpc/get_app_from_store`,"POST", { store_id: `${app.id}` })
-    if (error) 
-      throw error
-  
-    for (let i = 0; i < data.length; i++){
-      const option = data[i]
-      if (isWhiteList() || user_region == option.region)
-        SetOptions((old) => [...old, option])
-    }
-  })()}, []);
+      switch (JSON.stringify(subscription.data.at(0).metadata).toString()) {
+        case '{}': // thinkmay internal user
+          user_region = region[0]
+          break;
+        case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
+          user_region = region[1]
+          break;
+      }
+
+      const { data, error } = await virtapi(`rpc/get_app_from_store`, "POST", { store_id: `${app.id}` })
+      if (error)
+        throw error
+
+      for (let i = 0; i < data.length; i++) {
+        const option = data[i]
+        if (isWhiteList() || user_region == option.region)
+          SetOptions((old) => [...old, option])
+      }
+    })()
+  }, []);
   useLayoutEffect(() => {
     const element = document.getElementById("storeScroll");
     element.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   const dispatch = useDispatch();
 
-  const download = async ({id}, app) => {
+  const download = async ({ id }, app) => {
 
-    UserEvents({content: `user download app`})
+    UserEvents({ content: `user download app` })
     if (!isGreenList()) return;
     //const vol_option = await VolumeOption();
     await installApp({
@@ -674,20 +697,20 @@ const DownPage = ({ action }) => {
         {storeApps.length > 0
           ? renderSearchResult()
           : listDraftApp.map((i) => (
-              <div
-                key={i}
-                className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-                data-action="page2"
-              >
-                <Image
-                  className="mx-4 mb-6 rounded bg-slate-200"
-                  w={100}
-                  h={100}
-                  ext
-                />
-                <div className="capitalize text-xs text-center font-semibold"></div>
-              </div>
-            ))}
+            <div
+              key={i}
+              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+              data-action="page2"
+            >
+              <Image
+                className="mx-4 mb-6 rounded bg-slate-200"
+                w={100}
+                h={100}
+                ext
+              />
+              <div className="capitalize text-xs text-center font-semibold"></div>
+            </div>
+          ))}
       </div>
     </div>
   );
