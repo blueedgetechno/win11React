@@ -1,6 +1,6 @@
 import { supabase } from '../actions/fetch/createClient';
-import { scanCodeApps } from '../data/constant';
 import store from '../reducers';
+import { scanCodeApps } from './constant';
 
 export const isAdmin = () => {
     const user = store.getState().user;

@@ -1,5 +1,5 @@
-import { log } from '../lib/log';
 import store from '../reducers/index';
+import { log } from '../utils/log';
 import { supabase } from './fetch/createClient';
 import {
     AddSubscription,

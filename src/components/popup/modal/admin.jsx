@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { supabase, virtapi } from '../../../backend/actions/fetch/createClient';
 import { fetchStore } from '../../../backend/actions/preload';
-import { log } from '../../../backend/lib/log';
+import { log } from '../../../backend/utils/log';
 import { Image } from '../../shared/general';
 
 const ModalEditOrInsert = (props) => {
@@ -11,14 +11,14 @@ const ModalEditOrInsert = (props) => {
         modalType == 'edit'
             ? appData
             : {
-                  id: '',
-                  name: '',
-                  type: '',
-                  description: '',
-                  feature: '',
-                  screenshoots: [],
-                  icon: ''
-              }
+                id: '',
+                name: '',
+                type: '',
+                description: '',
+                feature: '',
+                screenshoots: [],
+                icon: ''
+            }
     );
 
     const dispatch = useDispatch();

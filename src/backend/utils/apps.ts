@@ -1,4 +1,4 @@
-import { externalLink } from '../data/constant';
+import { externalLink } from './constant';
 
 export const gene_name = () =>
     Math.random().toString(36).substring(2, 10).toUpperCase();

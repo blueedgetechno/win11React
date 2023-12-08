@@ -180,8 +180,7 @@ const defState = {
                 action: 'WALLNEXT'
             },
             {
-                name: 'Open in Terminal',
-                icon: 'terminal',
+                name: 'Fullscreen',
                 action: 'OPENTERM',
                 payload: 'C:\\Users\\Blue\\Desktop'
             },

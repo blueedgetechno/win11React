@@ -1,11 +1,11 @@
 import i18next from 'i18next';
 import Swal from 'sweetalert2';
-import { localStorageKey } from '../data/constant';
-import { log } from '../lib/log';
 import store from '../reducers';
 import { Action } from '../reducers/type';
 import { isAdmin } from '../utils/checking';
+import { localStorageKey } from '../utils/constant';
 import { formatError } from '../utils/formatErr';
+import { log } from '../utils/log';
 import { sleep } from '../utils/sleep';
 import {
     AccessApplication,

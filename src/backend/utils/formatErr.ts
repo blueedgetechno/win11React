@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import { externalLink } from '../data/constant';
-import { log } from '../lib/log';
+import { externalLink } from './constant';
+import { log } from './log';
 
 const listErr = [
     {

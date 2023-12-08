@@ -1,6 +1,6 @@
-import { localStorageKey } from '../data/constant';
 import store from '../reducers';
 import { isAllowWorkerProfileFetch } from '../utils/checking';
+import { localStorageKey } from '../utils/constant';
 import {
     formatAppRenderTree,
     formatWorkerRenderTree
@@ -43,7 +43,7 @@ export const fetchApp = async () => {
             payload: [...apps]
         });
         return;
-    } catch {}
+    } catch { }
 
     const data = await FetchUserApplication();
     const apps = (await formatAppRenderTree(data)).filter(
@@ -81,7 +81,7 @@ export const fetchWorker = async () => {
             payload
         });
         return;
-    } catch {}
+    } catch { }
 
     const cpath = store.getState().worker.cpath ?? 'Account';
 
@@ -128,7 +128,7 @@ export const fetchStore = async () => {
             payload: games
         });
         return;
-    } catch {}
+    } catch { }
 
     const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
     if (error) throw error;
@@ -180,7 +180,7 @@ export const fetchUser = async () => {
             payload
         });
         return;
-    } catch {}
+    } catch { }
 
     const {
         data: { user },

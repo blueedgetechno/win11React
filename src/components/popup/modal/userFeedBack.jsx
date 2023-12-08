@@ -2,8 +2,8 @@ import i18next from 'i18next';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { log } from '../../../backend/lib/log';
 import { detectBrowserAndOS } from '../../../backend/utils/detectBrower';
+import { log } from '../../../backend/utils/log';
 
 const listFeedBack = [
     {

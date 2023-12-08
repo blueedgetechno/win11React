@@ -1,4 +1,4 @@
-import { localStorageKey } from '../data/constant';
+import { localStorageKey } from '../utils/constant';
 import { Action } from './type';
 
 const defState = {

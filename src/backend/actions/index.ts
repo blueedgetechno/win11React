@@ -1,7 +1,7 @@
 import 'sweetalert2/src/sweetalert2.scss';
-import { localStorageKey } from '../data/constant';
-import { Log } from '../lib/log';
 import store from '../reducers/index';
+import { localStorageKey } from '../utils/constant';
+import { Log } from '../utils/log';
 import {
     connectStorage,
     connectVolume,
@@ -55,7 +55,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -169,7 +169,7 @@ export const delDefaultApp = () => {
     // TODO
 };
 
-export const delApp = ({}, menu: any) => {
+export const delApp = ({ }, menu: any) => {
     var data = {
         type: menu.dataset.action,
         payload: menu.dataset.payload

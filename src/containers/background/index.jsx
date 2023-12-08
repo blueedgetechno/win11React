@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../backend/actions/analytics';
 import { supabase } from '../../backend/actions/fetch/createClient';
-import { externalLink } from '../../backend/data/constant';
+import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
 import './back.scss';
@@ -41,14 +41,10 @@ export const BootScreen = () => {
 export const LockScreen = () => {
     const [lock, setLock] = useState(false);
     const [unlocked, setUnLock] = useState(false);
-    const [password, setPass] = useState('');
-    const [passType, setType] = useState(1);
-    const [forgot, setForget] = useState(false);
 
     const user = useSelector((state) => state.user);
-    const userName = useSelector((state) => state.setting.person.name);
     const dispatch = useDispatch();
-    const action = (e) => {
+    const action = () => {
         setLock(true);
     };
 
@@ -124,26 +120,6 @@ export const LockScreen = () => {
                 >
                     {user.id ? ' Enter' : 'Continue with Google'}
                 </div>
-
-                {/*<div>
-          <input type={passType?"text":"password"} value={password} onChange={action}
-              data-action="inpass" onKeyDown={action2} placeholder={passType?"Password":"PIN"}/>
-          <Icon className="-ml-6 handcr" fafa="faArrowRight" width={14}
-            color="rgba(170, 170, 170, 0.6)" onClick={proceed}/>
-        </div>
-        <div className="text-xs text-gray-400 mt-4 handcr"
-          onClick={proceed}>
-          {!forgot?`I forgot my ${passType?"password":"pin"}`:"Not my problem"}
-        </div>
-        <div className="text-xs text-gray-400 mt-6">
-          Sign-in options
-        </div>
-        <div className="lockOpt flex">
-          <Icon src="pinlock" onClick={action} ui width={36}
-            click="pinlock" payload={passType==0}/>
-          <Icon src="passkey" onClick={action} ui width={36}
-            click="passkey" payload={passType==1}/>
-        </div>*/}
             </div>
 
             <div className="bottomInfo">

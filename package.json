@@ -9,6 +9,7 @@
     "build": "prettier --write \"./**/*.{jsx,ts,js,tsx}\" && tsc && vite build"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",
     "i18next-browser-languagedetector": "^7.2.0",

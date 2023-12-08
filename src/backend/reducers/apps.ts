@@ -1,4 +1,5 @@
 import { openApp } from '../actions/app';
+import { requestFullscreen } from '../../../core/utils/screen'
 import { allApps } from '../utils';
 import { isMobile } from '../utils/checking';
 import { Action } from './type';
@@ -77,16 +78,17 @@ const appReducer = (state = defState, action: Action) => {
     } else if (action.type === 'CLOUDAPP') {
         openApp(action);
     } else if (action.type == 'OPENTERM') {
-        var obj = { ...tmpState['terminal'] };
-        obj.dir = action.payload;
+        requestFullscreen()
+        // var obj = { ...tmpState['terminal'] };
+        // obj.dir = action.payload;
 
-        obj.size = 'full';
-        obj.hide = false;
-        obj.max = true;
-        tmpState.hz += 1;
-        obj.z = tmpState.hz;
-        tmpState['terminal'] = obj;
-        return tmpState;
+        // obj.size = 'full';
+        // obj.hide = false;
+        // obj.max = true;
+        // tmpState.hz += 1;
+        // obj.z = tmpState.hz;
+        // tmpState['terminal'] = obj;
+        // return tmpState;
     } else if (action.type == 'ADDAPP') {
         tmpState[action.payload.icon] = action.payload;
         tmpState[action.payload.icon].size = 'full';

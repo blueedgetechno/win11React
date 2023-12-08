@@ -17,6 +17,7 @@ import { Background, BootScreen, LockScreen } from './containers/background';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
+import { Remote } from './containers/remote';
 
 function App() {
     const apps = useSelector((state) => state.apps);
@@ -56,7 +57,17 @@ function App() {
     }, [alignvert]);
 
     useEffect(() => {
+        window.onbeforeunload = (e) => {
+            const text = 'Are you sure (｡◕‿‿◕｡)'
+            e = e || window.event;
+            if (e)
+                e.returnValue = text
+            return text;
+        };
+
+
         UserSession();
+        checkAvailableCluster();
 
         preload()
             .then(() => {
@@ -67,16 +78,14 @@ function App() {
                 setLockscreen(false);
             });
 
-        checkAvailableCluster();
         if (isMobile()) setShowtaskbar(false);
 
         window.history.replaceState({}, document.title, '/' + '');
 
-        const check = () => {
-            if (isMobile())
-                setalignvert(window.innerWidth < window.innerHeight);
-        };
-
+        // const check = () => {
+        //     if (isMobile())
+        //         setalignvert(window.innerWidth < window.innerHeight);
+        // };
         //const loop = setInterval(check,100)
         //return () => {clearInterval(loop)}
     }, []);
@@ -87,7 +96,8 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {!user?.id || wall?.locked ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    <Background />
+                    {/* <Background /> */}
+                    <Remote />
                     <>
                         <div
                             className="desktop"
