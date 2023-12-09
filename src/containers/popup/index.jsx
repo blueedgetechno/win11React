@@ -1,6 +1,6 @@
 import { appDispatch, popup_close, useAppSelector } from '../../backend/reducers';
 import './index.scss';
-import * as modals from '.';
+import * as modals from './modal';
 import ReactModal from 'react-modal';
 
 const Popup = () => {

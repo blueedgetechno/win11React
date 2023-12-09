@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { fetchStore } from '../../../backend/actions/background';
-import { supabase } from '../../../backend/actions/fetch/createClient';
+import { supabase } from '../../../backend/reducers/fetch/createClient';
 import { appDispatch } from '../../../backend/reducers';
 import { log } from '../../../backend/utils/log';
-import { Image } from '../../shared/general';
+import { Image } from '../../../components/shared/general';
 
 const ModalEditOrInsert = (props) => {
     const { modalType, appData } = props;
