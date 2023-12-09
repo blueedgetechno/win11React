@@ -1,5 +1,5 @@
 import React from 'react';
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
@@ -10,7 +10,7 @@ export const RefundApp = () => {
         <div
             className="refundApp floatTab dpShad"
             data-size={wnapp.size == 'full' ? 'mini' : wnapp.size}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
             data-max={wnapp.max}
             style={{
                 ...(wnapp.size == 'cstm' ? wnapp.dim : null),
@@ -20,7 +20,7 @@ export const RefundApp = () => {
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name="Payment"
             />

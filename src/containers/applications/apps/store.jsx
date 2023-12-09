@@ -98,11 +98,11 @@ export const MicroStore = () => {
                 zIndex: wnapp.z
             }}
             data-hide={wnapp.hide}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name="Store"
             />
@@ -192,7 +192,7 @@ const FrontPage = (props) => {
                                         h={100}
                                         absolute={true}
                                         src={vendor?.images[0]}
-                                        err={vendor.icon}
+                                        err={vendor.id}
                                     />
                                 </a>
                             );
@@ -231,7 +231,7 @@ const FrontPage = (props) => {
                                         w={100}
                                         h={100}
                                         absolute={true}
-                                        src={game.icon}
+                                        src={game.id}
                                     />
                                     <div className="capitalize text-xs text-center font-semibold">
                                         {game.name}
@@ -290,7 +290,7 @@ const FrontPage = (props) => {
                                         w={120}
                                         h={100}
                                         absolute={true}
-                                        src={app.icon}
+                                        src={app.id}
                                     />
                                     <div className="capitalize text-xs text-center font-semibold">
                                         {app.name}
@@ -439,7 +439,7 @@ const DetailPage = ({ app }) => {
                     className="rounded"
                     ext
                     h={100}
-                    src={app?.icon}
+                    src={app?.id}
                     err="img/asset/bootlogo.png"
                 />
                 <div className="flex flex-col items-center text-center relative">
@@ -622,7 +622,7 @@ const DownPage = ({ action }) => {
                             className="mx-4 mb-6 rounded"
                             w={100}
                             h={100}
-                            src={app.icon}
+                            src={app.id}
                             ext
                         />
                         <div className="capitalize text-xs text-center font-semibold">

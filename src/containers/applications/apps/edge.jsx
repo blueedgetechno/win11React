@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { appDispatch } from '../../../backend/reducers';
 import {
     Icon,
     LazyComponent,
     ToolBar
 } from '../../../components/shared/general';
+import { useAppSelector } from '../../../backend/reducers';
 
 export const EdgeMenu = () => {
     const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'edge'));
+    // const wnapp = {
+    //     id: 'browser',
+    //     size: 99,
+    //     hide: false,
+    //     max: false,
+    //     z: 99,
+    //     name: 'Browser'
+    // }
     const [url, setUrl] = useState('https://www.google.com/?igu=1');
     const [ierror, setErr] = useState(true);
     const [isTyping, setTyping] = useState(false);
@@ -17,9 +26,6 @@ export const EdgeMenu = () => {
     const iframes = {
         'https://www.google.com/webhp?igu=1': 'Google',
         'https://bing.com': 'Bing',
-        //"https://www.youtube.com/embed/m0EHSoZzHEA": "Youtube",
-        //"https://blueedge.me": "blueedge",
-        //"https://andrewstech.me": "\nandrewstech",
         'https://thinkmay.net/': 'Inception'
     };
 
@@ -111,18 +117,18 @@ export const EdgeMenu = () => {
                 zIndex: wnapp.z
             }}
             data-hide={wnapp.hide}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name="Browser"
                 float
             />
             <div className="windowScreen flex flex-col">
                 <div className="overTool flex">
-                    <Icon src={wnapp.icon} width={14} margin="0 6px" />
+                    <Icon src={wnapp.id} width={14} margin="0 6px" />
                     <div className="btab">
                         <div>New Tab</div>
                         <Icon

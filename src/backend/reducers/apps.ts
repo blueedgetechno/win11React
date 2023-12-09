@@ -3,6 +3,7 @@ import { allApps } from '../utils';
 import { AccessApplication, DeleteApplication, DownloadApplication, FetchUserApplication, ResetApplication, StartApplication, StopApplication } from './fetch';
 import { formatAppRenderTree } from './fetch/formatData';
 import { BuilderHelper, CacheRequest } from './helper';
+import { appDispatch, desk_add } from '.';
 
 
 
@@ -10,12 +11,15 @@ export const appsAsync = {
     fetch_app: createAsyncThunk(
         'fetch_app',
         async (): Promise<any[]> => {
-            return await CacheRequest('apps', 30, async () => {
+            const result = await CacheRequest('apps', 30, async () => {
                 const data = await FetchUserApplication();
                 return (await formatAppRenderTree(data)).filter(
                     (x) => x !== undefined
                 );
             })
+
+            appDispatch(desk_add(result.map(x => x.id)))
+            return result
         }
     ),
 
@@ -164,36 +168,41 @@ export const appSlice = createSlice({
                 return
             }
 
-            const tmpState = { ...state }
-            if (obj.z != tmpState.hz) {
-                obj.hide = false;
-                if (!obj.max) {
-                    tmpState.hz += 1;
-                    obj.z = tmpState.hz;
-                    obj.max = true;
-                } else {
-                    obj.z = -1;
-                    obj.max = false;
-                }
-            } else {
-                obj.max = !obj.max;
-                obj.hide = false;
-                if (obj.max) {
-                    tmpState.hz += 1;
-                    obj.z = tmpState.hz;
-                } else {
-                    obj.z = -1;
-                    tmpState.hz -= 1;
-                }
-            }
+            obj.hide = false
+            obj.size = 'full'
+            obj.max = true
+            obj.z = 999
+            state.hz = obj.z
+            // console.log({...obj})
+            // if (obj.z != state.hz) {
+            //     obj.hide = false;
+            //     if (!obj.max) {
+            //         state.hz += 1;
+            //         obj.z = state.hz;
+            //         obj.max = true;
+            //     } else {
+            //         obj.z = -1;
+            //         obj.max = false;
+            //     }
+            // } else {
+            //     obj.max = !obj.max;
+            //     obj.hide = false;
+            //     if (obj.max) {
+            //         state.hz += 1;
+            //         obj.z = state.hz;
+            //     } else {
+            //         obj.z = -1;
+            //         state.hz -= 1;
+            //     }
+            // }
 
 
-            obj.max = false;
-            obj.hide = false;
-            if (obj.z == tmpState.hz) {
-                tmpState.hz -= 1;
-            }
-            obj.z = -1;
+            // obj.max = false;
+            // obj.hide = false;
+            // if (obj.z == state.hz) {
+            //     state.hz -= 1;
+            // }
+            // obj.z = -1;
         }
 
         // } else if (action.payload == "close") {
@@ -268,6 +277,7 @@ export const appSlice = createSlice({
                 }
             });
 
+            
             state.apps = [...initialState.apps, ...app]
         })
     }

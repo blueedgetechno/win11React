@@ -107,25 +107,11 @@ function App() {
                             <DesktopApp />
                             {Object.keys(Applications).map((key, idx) => {
                                 var WinApp = Applications[key];
-                                return key != 'Worker' && key != 'PaymentApp'
-                                    ? <WinApp key={idx} />
-                                    : null
-                            })}
-                            {/* {Object.keys(apps)
-                                .filter((x) => x != 'hz')
-                                .map((key) => apps[key])
-                                .map((app, i) => {
-                                    if (!app.pwa) return;
+                                if (key == 'Worker')
+                                    return null
 
-                                    var WinApp = Drafts[app.data.type];
-                                    return (
-                                        <WinApp
-                                            key={i}
-                                            icon={app.icon}
-                                            {...app.data}
-                                        />
-                                    );
-                                })} */}
+                                return <WinApp key={idx} />
+                            })}
                             <StartMenu />
                             <CalnWid />
                         </div>

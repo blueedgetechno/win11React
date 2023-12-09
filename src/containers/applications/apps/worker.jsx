@@ -8,7 +8,8 @@ import './assets/fileexpo.scss';
 export const Worker = () => {
     const wnapp = useAppSelector((state) => state.apps.worker);
     const files = useAppSelector((state) => state.worker);
-    const fdata = files.data.getId(files.cdir);
+    // const fdata = files.data.getId(files.cdir);
+    const fdata = {}
 
     const [contentData, setContentData] = useState(fdata);
     const [cpath, setPath] = useState(files.cpath);
@@ -58,7 +59,7 @@ export const Worker = () => {
             <div key={index++} className="dirCont flex items-center">
                 <Icon
                     className="pr-1 pb-px"
-                    src={'win/' + fdata?.info?.icon + '-sm'}
+                    src={'win/' + fdata?.info?.id + '-sm'}
                     width={16}
                 />
                 <Icon className="dirchev" fafa="faChevronRight" width={8} />
@@ -130,11 +131,11 @@ export const Worker = () => {
                 zIndex: wnapp.z
             }}
             data-hide={wnapp.hide}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name={wnapp.name}
             />
@@ -243,7 +244,7 @@ const ContentArea = ({ searchtxt, data }) => {
                 info: userInfo
             };
         }
-        const res = files.data.getId(selected);
+        // const res = files.data.getId(selected);
         return res;
     }, [selected]);
 

@@ -64,6 +64,15 @@ export const workerAsync = {
                 return formatWorkerRenderTree(res);
             })
         }
+    ),
+    stop_volume: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            return await CacheRequest('worker', 30, async () => {
+                const res = await FetchAuthorizedWorkers();
+                return formatWorkerRenderTree(res);
+            })
+        }
     )
 }
 export const stopVolume = (e: Event) =>

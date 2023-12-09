@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAppSelector,useDispatch } from "../../../backend/reducers";
+import { useAppSelector, useDispatch } from "../../../backend/reducers";
 // import { useDispatch, useAppSelector } from "react-redux";
 // import { changeTheme } from "../../../actions";
 // import { Image, ToolBar } from "../../../utils/general";
@@ -55,11 +55,11 @@ export const Settings = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
-      id={wnapp.icon + "App"}
+      id={wnapp.id + "App"}
     >
       <ToolBar
         app={wnapp.action}
-        icon={wnapp.icon}
+        icon={wnapp.id}
         size={wnapp.size}
         name="Settings"
       />
@@ -318,7 +318,7 @@ export const Settings = () => {
                         case "tile thin-blue":
                           return (
                             <div key={e.name} className={e.type}>
-                              <span className="settingsIcon">{e.icon}</span>
+                              <span className="settingsIcon">{e.id}</span>
                               <div>
                                 <p>{e.name}</p>
                                 <p className="tile_desc">{e.desc}</p>

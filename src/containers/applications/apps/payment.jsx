@@ -91,7 +91,7 @@ export const PaymentApp = () => {
         <div
             className="paymentApp floatTab dpShad"
             data-size={wnapp.size == 'full' ? 'mini' : wnapp.size}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
             data-max={wnapp.max}
             style={{
                 ...(wnapp.size == 'cstm' ? wnapp.dim : null),
@@ -101,7 +101,7 @@ export const PaymentApp = () => {
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name="Payment"
             />

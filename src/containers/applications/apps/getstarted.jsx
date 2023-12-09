@@ -18,8 +18,8 @@ export const Getstarted = () => {
     const changUserName = (e) => {
         var newName = e.target.value;
         dispatch(setting_setv({
-                path: 'person.name',
-                value: newName
+            path: 'person.name',
+            value: newName
         }));
     };
 
@@ -33,11 +33,11 @@ export const Getstarted = () => {
                 zIndex: wnapp.z
             }}
             data-hide={wnapp.hide}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name="Get Started"
             />

@@ -3,7 +3,7 @@ import { useAppSelector } from '../../backend/reducers';
 import { ToolBar } from '../../components/shared/general';
 
 export const IFrame = (props) => {
-    const wnapp = useAppSelector((state) => state.apps[props.icon]);
+    const wnapp = useAppSelector((state) => state.apps[props.id]);
     if (!wnapp) return null;
     var data = wnapp.data;
 
@@ -20,11 +20,11 @@ export const IFrame = (props) => {
                 zIndex: wnapp.z
             }}
             data-hide={wnapp.hide}
-            id={wnapp.icon + 'App'}
+            id={wnapp.id + 'App'}
         >
             <ToolBar
                 app={wnapp.action}
-                icon={wnapp.icon}
+                icon={wnapp.id}
                 size={wnapp.size}
                 name={wnapp.name}
                 invert={data.invert == true ? true : null}
