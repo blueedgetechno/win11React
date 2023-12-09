@@ -242,7 +242,7 @@ const FrontPage = (props) => {
                     {game.name}
                   </div>
                   <div className="text-[11px] text-center font-regular">
-                    {game.steam_off ? `(${ t("info.withoutAcc")})` : ""}
+                    {game.steam_off ? `(${t("info.withoutAcc")})` : ""}
                   </div>
                   <div className="text-[11px] text-center font-regular">
                     {CheckAppPriority(game.volume_class)}
@@ -594,6 +594,7 @@ const DownPage = ({ action }) => {
   const apps = useSelector((state) => state.globals.apps);
   const games = useSelector((state) => state.globals.games);
   const [searchtxt, setShText] = useState("");
+  const { t, i18n } = useTranslation();
 
   const [storeApps, setStoreApps] = useState([...apps, ...games]);
   const handleSearchChange = (e) => {
@@ -615,6 +616,18 @@ const DownPage = ({ action }) => {
     }
     setStoreApps(games);
   }, [catg]);
+  const CheckAppPriority = (volume_class = '') => {
+    let priority = ''
+    if (volume_class.includes('LA')) {
+      priority = "LA"
+    }
+    else if (volume_class.includes('HA')) {
+      priority = ''
+    }
+
+    return (<span>{priority == 'LA' ? t("info.LA") : ''}</span>)
+
+  }
   const renderSearchResult = () => {
     const keyword = searchtxt.toLowerCase();
     const cloneApp = [...storeApps];
@@ -646,8 +659,11 @@ const DownPage = ({ action }) => {
             <div className="capitalize text-xs text-center font-semibold">
               {app.name}
             </div>
-            <div className="text-xs text-center font-regular">
-              {app.steam_off ? "Steam Offline" : ""}
+            <div className="text-[11px] text-center font-regular">
+              {app.steam_off ? `(${t("info.withoutAcc")})` : ""}
+            </div>
+            <div className="text-[11px] text-center font-regular">
+              {CheckAppPriority(app.volume_class)}
             </div>
           </div>
         );
