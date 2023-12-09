@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { changeTheme } from '../../backend/actions';
 import { useAppSelector } from '../../backend/reducers';
-import { isGreenList, isMobile } from '../../backend/utils/checking';
+import { isMobile, validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
@@ -50,7 +50,7 @@ export const StartMenu = () => {
                 <div className="stmenu p-[14px]">
                     <div className="pinnedApps mt-[16px] text-center font-semibold pb-1 flex items-center justify-center gap-2">
                         <span>{user.email ?? 'Admin'}</span>
-                        {isGreenList() ? (
+                        {validate_user_access('month', 'week', 'admin') ? (
                             <Icon
                                 className="quickIcon"
                                 //ui={true}
@@ -60,7 +60,7 @@ export const StartMenu = () => {
                         ) : null}
                     </div>
                     <h6>
-                        {!isGreenList() ? t('timemanager.inActiveUser') : null}
+                        {!validate_user_access('month', 'week', 'admin') ? t('timemanager.inActiveUser') : null}
                     </h6>
                     <div className="h-full flex flex-col p-2" data-dock="true">
                         <div className="w-full flex gap-4 justify-between my-[14px] ">

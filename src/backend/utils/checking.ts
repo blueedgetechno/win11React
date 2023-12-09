@@ -2,9 +2,9 @@ import { store } from '../reducers';
 import { scanCodeApps } from './constant';
 
 
-export const validate_user_access = (plan: string) => {
+export const validate_user_access = (...plans: string[]) => {
     const user = store.getState().user;
-    return user.plans.includes(plan)
+    return plans.every(x =>user.plans.includes(x))
 };
 
 export const isMobile = () => {

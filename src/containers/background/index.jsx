@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { UserEvents } from '../../backend/actions/fetch/analytics';
-import { supabase } from '../../backend/actions/fetch/createClient';
+import { supabase } from '../../backend/reducers/fetch/createClient';
 import { appDispatch, useAppSelector } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
@@ -56,7 +55,6 @@ export const LockScreen = () => {
             return;
         }
 
-        await UserEvents({ content: `user attemp to login` });
         const redirectTo = import.meta.env.VITE_REDIRECT_TO;
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',

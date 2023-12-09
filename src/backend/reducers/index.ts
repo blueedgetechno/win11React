@@ -92,7 +92,7 @@ export const {
     sidepane_panethem
 } = sidepaneSlice.actions;
 
-export const { fetch_app } = appsAsync
+export const { fetch_app,install_app, } = appsAsync
 export const { fetch_worker } = workerAsync
 export const { fetch_store } = storeAsync
 export const { fetch_user } = userAsync

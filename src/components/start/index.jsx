@@ -3,7 +3,6 @@ import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
-import { UserEvents } from '../../backend/actions/fetch/analytics';
 import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
@@ -54,7 +53,6 @@ export const DesktopApp = () => {
             name: e.target.dataset.name
         };
 
-        UserEvents({ content: `click app ${e.target.dataset.name}` });
         dispatch_generic(action)
     };
 

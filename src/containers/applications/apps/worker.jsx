@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { openWorker, refeshWorker } from '../../../backend/actions/worker';
 import { appDispatch, menu_hide, useAppSelector } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';

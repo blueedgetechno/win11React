@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 
 import { useAppSelector } from '../../backend/reducers';
-import { isGreenList } from '../../backend/utils/checking';
+import { validate_user_access } from '../../backend/utils/checking';
 
 function AvailableCluster({ isBootScreen }) {
     const availableCluster = useAppSelector(
@@ -11,7 +11,7 @@ function AvailableCluster({ isBootScreen }) {
 
     return (
         <>
-            {!isBootScreen && isGreenList() ? (
+            {!isBootScreen && validate_user_access('month', 'week', 'admin') ? (
                 <div className="clusterInfo">
                     {availableCluster ? (
                         <>

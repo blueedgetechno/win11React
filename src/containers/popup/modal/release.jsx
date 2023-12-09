@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from 'react';
-import { ReleaseApp } from '../../../backend/actions/app';
 import { useAppSelector } from '../../../backend/reducers';
 // import { formatEvent } from '../../../backend/utils/worker';
 
@@ -28,18 +27,18 @@ function ReleaseAppModal({ data }) {
         // const cluster_id =
         //     formatEvent(data?.event)?.host?.info?.cluster_id ?? '';
 
-        ReleaseApp({
-            vol_speed,
-            vol_availability,
-            gpu_model,
-            desc,
-            store_id,
-            vcpus,
-            ram,
-            vdriver,
-            hidevm,
-            cluster_id
-        });
+        // appDispatch({
+        //     vol_speed,
+        //     vol_availability,
+        //     gpu_model,
+        //     desc,
+        //     store_id,
+        //     vcpus,
+        //     ram,
+        //     vdriver,
+        //     hidevm,
+        //     cluster_id
+        // });
     };
     return (
         <form

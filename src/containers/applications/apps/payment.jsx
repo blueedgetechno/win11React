@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { UserEvents } from '../../../backend/actions/fetch/analytics';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
@@ -9,7 +8,7 @@ import {
     PayPalButtons,
     PayPalScriptProvider
 } from '@paypal/react-paypal-js';
-import { supabase } from '../../../backend/actions/fetch/createClient';
+import { supabase } from '../../../backend/reducers/fetch/createClient';
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {
@@ -80,7 +79,6 @@ export const PaymentApp = () => {
 
     const handlePayment = ({ type, price }) => {
         return () => {
-            UserEvents({ content: `user pay for ${type}, ${price}` });
             const userEmail = user?.email || 'admin@gmail.com';
             const userName = user?.user_metadata.name || 'userEmail';
             dispatch({

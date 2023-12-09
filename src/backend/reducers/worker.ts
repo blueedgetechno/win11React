@@ -51,7 +51,7 @@ function format(tmp: WorkerType, navHist = false): WorkerType {
 
 
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { FetchAuthorizedWorkers } from '../actions/fetch';
+import { FetchAuthorizedWorkers } from './fetch';
 import { formatWorkerRenderTree } from './fetch/formatData';
 import { BuilderHelper, CacheRequest } from './helper';
 

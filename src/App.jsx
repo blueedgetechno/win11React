@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
 import { preload } from './backend/actions/background';
-import { UserSession } from './backend/actions/fetch/analytics';
+import { UserSession } from './backend/reducers/fetch/analytics';
 import { afterMath } from './backend/actions/index';
 import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
-import Popup from './components/popup';
+import Popup from './containers/popup';
 import {
     BandPane,
     CalnWid,

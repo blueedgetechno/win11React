@@ -1,13 +1,14 @@
 import { appDispatch, popup_close, useAppSelector } from '../../backend/reducers';
 import './index.scss';
-import * as modals from './modal';
+import * as modals from '.';
+import ReactModal from 'react-modal';
 
 const Popup = () => {
     const popup = useAppSelector((state) => state.popup);
     return (
         <ReactModal
             isOpen={popup.active != undefined}
-            onRequestClose={appDispatch(popup_close())}
+            onRequestClose={() => appDispatch(popup_close())}
             contentLabel="Example Modal"
             className="modalContent "
             overlayClassName="fixed inset-0"

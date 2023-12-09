@@ -221,9 +221,6 @@ export const storeAsync = {
     )
 }
 export const deleteStore = async (app: any) => {
-    if (!isAdmin()) 
-        return;
-
     const { error } = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
     if (error) throw error;
 

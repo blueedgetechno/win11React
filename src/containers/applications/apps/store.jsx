@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { deleteStore, installApp } from '../../../backend/actions/app';
 import { fetchStore } from '../../../backend/actions/background';
-import { UserEvents } from '../../../backend/actions/fetch/analytics';
 import {
-    isAdmin,
-    isGreenList
+    validate_user_access
 } from '../../../backend/utils/checking';
 import {
     Icon,
@@ -15,7 +12,7 @@ import {
 } from '../../../components/shared/general';
 
 import Swal from 'sweetalert2';
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { appDispatch, install_app, useAppSelector } from '../../../backend/reducers';
 import './assets/store.scss';
 
 const emap = (v) => {
@@ -135,7 +132,7 @@ export const MicroStore = () => {
                             <Icon src="download" ui={true} width={20} />
                         </a>
                         {/* <Icon onClick={() => {}} width={30} ui={true} src={"nvidia"} /> */}
-                        {isAdmin() ? (
+                        {validate_user_access('admin') ? (
                             <Icon
                                 width={30}
                                 onClick={insertApp}
@@ -324,16 +321,16 @@ const DetailPage = ({ app }) => {
     // const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
-        UserEvents({ content: `user download app` });
-        if (!isGreenList()) return;
-        //const vol_option = await VolumeOption();
-        await installApp({
+        if (!validate_user_access('month', 'week', 'admin'))
+            return;
+
+        appDispatch(install_app({
             app_template_id: id,
             appName: app.name ?? 'null',
             availability: 'HA',
             speed: 'HOT',
             safe: false
-        });
+        }));
     };
 
     async function VolumeOption() {
@@ -377,7 +374,7 @@ const DetailPage = ({ app }) => {
         return (
             <div
                 onClick={async () => {
-                    await deleteStore(app);
+                    // await deleteStore(app);
                     await fetchStore();
                 }}
             >
@@ -417,7 +414,7 @@ const DetailPage = ({ app }) => {
                                     payload={x}
                                     onClick={() => download(x, app)}
                                 >
-                                    {isGreenList()
+                                    {validate_user_access(['month', 'week', 'admin'])
                                         ? `${x.gpu} ${x.region}`
                                         : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
                                 </div>
@@ -452,7 +449,7 @@ const DetailPage = ({ app }) => {
                     <div className="text-xs text-blue-500">{app?.type}</div>
                     <GotoButton />
 
-                    {isAdmin() && app.type != 'vendor' ? (
+                    {validate_user_access('admin') && app.type != 'vendor' ? (
                         <>
                             <EditButton />
                             <DeleteButton />
