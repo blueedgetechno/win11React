@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { appDispatch, useAppSelector } from '../../backend/reducers';
+import { appDispatch, task_hide, task_show, useAppSelector } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
 import Battery from '../../components/shared/Battery';
 import { Icon } from '../shared/general';
@@ -7,13 +7,9 @@ import './taskbar.scss';
 
 const Taskbar = () => {
     const tasks = useAppSelector((state) => state.taskbar);
-    const apps = useAppSelector((state) => {
-        var tmpApps = { ...state.apps };
-        for (var i = 0; i < state.taskbar.apps.length; i++) {
-            // tmpApps[state.taskbar.apps[i].icon].task = true;
-        }
-        return tmpApps;
-    });
+    const apps = useAppSelector((state) => 
+        state.apps.apps.filter(x => state.taskbar.apps.includes(x.id))
+    );
     const dispatch = appDispatch;
 
     const showPrev = (event) => {
@@ -27,17 +23,14 @@ const Taskbar = () => {
 
         var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
 
-        dispatch({
-            type: 'TASKPSHOW',
-            payload: {
-                app: appPrev,
-                pos: offsetx
-            }
-        });
+        dispatch(task_show({
+            app: appPrev,
+            pos: offsetx
+        }));
     };
 
     const hidePrev = () => {
-        dispatch({ type: 'TASKPHIDE' });
+        dispatch(task_hide());
     };
 
     const clickDispatch = (event) => {
@@ -71,28 +64,28 @@ const Taskbar = () => {
                         className="tsIcon tsIconInvert"
                         src="home"
                         width={24}
-                        click="startogg"
+                        click="startmenu/startogg"
                     />
 
-                    {tasks.apps.map((task, i) => {
-                        var isHidden = apps[task.icon].hide;
-                        var isActive = apps[task.icon].z == apps.hz;
+                    {apps.map((task, i) => {
+                        var isHidden = task.hide;
+                        var isActive = task.z == apps.hz;
                         return (
                             <div
                                 key={i}
                                 onMouseOver={
                                     (!isActive && !isHidden && showPrev) || null
                                 }
-                                value={task.icon}
+                                value={task.id}
                             >
                                 <Icon
                                     className="tsIcon"
                                     width={24}
                                     open={isHidden ? null : true}
-                                    click={task.action}
+                                    click="apps/app_toggle"
                                     active={isActive}
-                                    payload="togg"
-                                    src={task.icon}
+                                    payload={task.id}
+                                    src={task.id}
                                 />
                             </div>
                         );

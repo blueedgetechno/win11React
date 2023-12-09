@@ -1,17 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { changeTheme, handleLogOut } from '../../backend/actions';
-import { appDispatch, useAppSelector } from '../../backend/reducers';
+import { useAppSelector } from '../../backend/reducers';
 import { isGreenList, isMobile } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
 export const StartMenu = () => {
+    const { t, i18n } = useTranslation();
+
     const { align } = useAppSelector((state) => state.taskbar);
     const user = useAppSelector((state) => state.user);
-    const usageTime = user?.usageTime?.at(0) ?? {};
-    const { t, i18n } = useTranslation();
-    const dispatch = appDispatch;
     const start = useAppSelector((state) => state.startmenu);
     const thm = useAppSelector((state) => state.setting.person.theme);
     var icon = thm == 'light' ? 'sun' : 'moon';
@@ -24,14 +23,21 @@ export const StartMenu = () => {
         });
     };
 
+    const usageTime  = undefined
+    const total_time = undefined
     const checkPackage = () => {
         const packages = {
             week: '20h',
             month: '100h'
         };
 
+        const usageTime = user?.usageTime?.at(0);
+        if (usageTime == undefined)
+            return
+            
         return packages[usageTime?.package] ?? usageTime?.package;
     };
+
     return (
         <div
             className="startMenu dpShad"
@@ -65,11 +71,7 @@ export const StartMenu = () => {
                             <span>Theme</span>
                             <div
                                 className="strBtn handcr prtclk"
-                                onClick={() => {
-                                    {
-                                        changeTheme();
-                                    }
-                                }}
+                                onClick={changeTheme}
                             >
                                 <Icon
                                     className="quickIcon"
@@ -99,7 +101,7 @@ export const StartMenu = () => {
                                     {t('timemanager.time')}
                                 </span>
                                 <span>
-                                    {usageTime.total_time
+                                    {usageTime?.total_time
                                         ? usageTime?.total_time.toFixed(1) +
                                         '/' +
                                         checkPackage() +
@@ -111,29 +113,6 @@ export const StartMenu = () => {
                         </div>
                     </div>
                 </div>
-
-                {user?.id ? (
-                    <div className="flex gap-4 mt-0 mb-[8px] ml-auto mr-[14px] md:mt-4 md:mb-[24px]">
-                        <button
-                            className="instbtn border-none !text-[14px] !p-3"
-                            onClick={() => {
-                                dispatch({ type: 'PMAPP', payload: 'full' });
-                                dispatch({ type: 'STARTHID' });
-                            }}
-                        >
-                            Thanh Toán
-                        </button>
-                        <button
-                            className="instbtn border-none !text-[14px] !p-3 !bg-red-500"
-                            onClick={() => {
-                                dispatch({ type: 'RFAPP', payload: 'full' });
-                                dispatch({ type: 'STARTHID' });
-                            }}
-                        >
-                            Hủy Gói
-                        </button>
-                    </div>
-                ) : null}
 
                 <div className="menuBar">
                     <div

@@ -1,4 +1,4 @@
-import { appDispatch, desk_add, setting_theme, sidepane_panethem, store, updateapp, updategame, user_add, wall_set, worker_update } from '../reducers';
+import { appDispatch, app_add, desk_add, setting_theme, sidepane_panethem, store, updateapp, updategame, user_add, wall_set, worker_update } from '../reducers';
 import { isAllowWorkerProfileFetch } from '../utils/checking';
 import { localStorageKey } from '../utils/constant';
 import {
@@ -7,6 +7,8 @@ import {
 } from '../utils/formatData';
 import { FetchAuthorizedWorkers, FetchUserApplication } from './fetch';
 import { supabase, virtapi } from './fetch/createClient';
+
+const CACHE_PERIOD = 30 * 60 * 1000
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -35,10 +37,11 @@ export const fetchApp = async () => {
         if (cache == null) throw '';
 
         const { timestamp, apps } = JSON.parse(cache);
-        if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
+        if (Math.abs(new Date().getTime() - timestamp) > CACHE_PERIOD)
             throw new Error('outdated');
 
-        appDispatch(desk_add(apps))
+        appDispatch(app_add(apps))
+        appDispatch(desk_add(apps.map((x:any) => x.id)))
         return;
     } catch { }
 
@@ -48,7 +51,8 @@ export const fetchApp = async () => {
     );
 
         
-    appDispatch(desk_add(apps))
+    appDispatch(app_add(apps))
+    appDispatch(desk_add(apps.map((x:any) => x.id)))
     localStorage.setItem(
         'APP',
         JSON.stringify({
@@ -68,7 +72,7 @@ export const fetchWorker = async () => {
         const cache = localStorage.getItem('WORKER');
         if (!cache) throw '';
         const { timestamp, payload } = JSON.parse(cache);
-        if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
+        if (Math.abs(new Date().getTime() - timestamp) > CACHE_PERIOD)
             throw new Error('outdated');
 
         
@@ -104,7 +108,7 @@ export const fetchStore = async () => {
         if (!cache) throw '';
 
         const { timestamp, games, apps } = JSON.parse(cache);
-        if (Math.abs(new Date().getTime() - timestamp) > 10 * 60 * 1000)
+        if (Math.abs(new Date().getTime() - timestamp) > 10 * CACHE_PERIOD)
             throw new Error('outdated');
         else if (games.length == 0 || apps.length == 0)
             throw new Error('empty');
@@ -150,7 +154,7 @@ export const fetchUser = async () => {
         if (!cache) throw '';
 
         const { timestamp, payload } = JSON.parse(cache);
-        if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
+        if (Math.abs(new Date().getTime() - timestamp) > CACHE_PERIOD)
             throw new Error('outdated');
 
         appDispatch(user_add(payload));
@@ -172,7 +176,6 @@ export const fetchUser = async () => {
         if (error) throw error;
 
         payloadUser = { ...payloadUser, greenlist: data };
-        console.log(payloadUser, 'payloadd');
     }
 
     {

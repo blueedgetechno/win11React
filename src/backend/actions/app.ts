@@ -23,6 +23,7 @@ import {
 import { SupabaseFuncInvoke, supabase, virtapi } from './fetch/createClient';
 import { fetchApp, fetchStore, fetchWorker } from './preload';
 import { openRemotePage } from './remote';
+import { formatEvent } from '../utils/worker';
 
 
 

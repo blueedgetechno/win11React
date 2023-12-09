@@ -7,7 +7,7 @@ import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';
 
 export const Getstarted = () => {
-    const wnapp = useAppSelector((state) => state.apps.getstarted);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'getstarted'));
     const dispatch = appDispatch;
     const tasks = useAppSelector((state) => state.taskbar);
     const { t } = useTranslation();

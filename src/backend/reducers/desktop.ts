@@ -14,9 +14,9 @@ export const deskSlice = createSlice({
     initialState,
     reducers: {
         desk_remove: (state, action: PayloadAction<any>) => {
-            state.apps = state.apps.filter((x) => x.name != action.payload);
+            state.apps = state.apps.filter((x) => x != action.payload);
         },
-        desk_add: (state, action: PayloadAction<any[]>) => {
+        desk_add: (state, action: PayloadAction<string[]>) => {
             state.apps = [...desktopApps,...action.payload]
         },
         desk_hide: (state) => {

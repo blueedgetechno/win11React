@@ -7,7 +7,7 @@ import { Image } from '../../../components/shared/general';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import './assets/about.scss';
 export const AboutWin = () => {
-    const wnapp = useAppSelector((state) => state.apps.about);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'about'));
     const dispatch = appDispatch;
     const { t, i18n } = useTranslation();
 

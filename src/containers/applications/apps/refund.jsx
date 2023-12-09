@@ -4,37 +4,8 @@ import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 export const RefundApp = () => {
-    const wnapp = useAppSelector((state) => state.apps.refund);
-    const user = useAppSelector((state) => state.user);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'refund'));
 
-    const dispatch = appDispatch;
-
-    const listSubs = [
-        {
-            title: 'Trial',
-            for: 'Week',
-            hours: 20,
-            gpu: 'RTX 3060ti',
-            ram: '16GB',
-            price: '75k'
-        },
-        {
-            title: 'Start',
-            for: 'Month',
-            hours: 100,
-            gpu: 'RTX 3060ti',
-            ram: '16GB',
-            price: '250k'
-        },
-        {
-            title: 'Standard',
-            for: 'Month',
-            hours: 150,
-            gpu: 'RTX 3060ti',
-            ram: '16GB',
-            price: '300k'
-        }
-    ];
     return (
         <div
             className="refundApp floatTab dpShad"

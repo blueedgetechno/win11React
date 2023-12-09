@@ -15,12 +15,12 @@ import { workerSlice } from './worker';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 const middleware: ThunkMiddleware = () =>
-  next =>
-  action => {
-    console.log(action)
-    // Otherwise, pass the action down the middleware chain as usual
-    return next(action)
-  }
+    next =>
+        action => {
+            console.log(action)
+            // Otherwise, pass the action down the middleware chain as usual
+            return next(action)
+        }
 
 export const store = configureStore({
     devTools: true,
@@ -67,7 +67,7 @@ export const {
     startshw,
     startsrc
 } = menuSlice.actions;
-export const { app_add, app_del, app_external, app_showdesk, app_url } =
+export const { app_toggle,app_add, app_external, app_showdesk, app_url } =
     appSlice.actions;
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
 export const { updateapp, updategame } = globalSlice.actions;
@@ -101,7 +101,6 @@ export const {
     sidepane_panethem
 } = sidepaneSlice.actions;
 
-import { dispatch_generic as _dispatch_generic } from './generic.js';
-export const dispatch_generic = _dispatch_generic
-
-
+export const dispatch_generic = async ({type,payload}:{type: string,payload:any}) => {
+    store.dispatch({type,payload})
+}

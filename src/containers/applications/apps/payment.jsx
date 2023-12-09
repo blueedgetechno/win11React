@@ -20,21 +20,11 @@ const initialOptions = {
 };
 
 export const PaymentApp = () => {
-    const wnapp = useAppSelector((state) => state.apps.payment);
+    const wnapp = useAppSelector((state) => state.apps.apps.filter(x => x.id == 'payment'));
     const user = useAppSelector((state) => state.user);
     const dispatch = appDispatch;
 
     const [ListSubs, setListSubs] = useState([
-        //{
-        //  name: 'week',
-        //  type: 'trial',
-        //  title: 'Trial',
-        //  for: 'Week',
-        //  hours: 20,
-        //  gpu: 'RTX 3060ti',
-        //  ram: '16GB',
-        //  price: '75k'
-        //},
         {
             name: 'month',
             type: 'start',

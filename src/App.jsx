@@ -108,11 +108,14 @@ function App() {
                             data-mobile={isMobile()}
                         >
                             <DesktopApp />
-                            {/* {Object.keys(Applications).map((key, idx) => {
+                            {Object.keys(Applications).map((key, idx) => {
+                                console.log(key)
                                 var WinApp = Applications[key];
-                                return <WinApp key={idx} />;
+                                return key != 'Worker' && key != 'PaymentApp'
+                                ? <WinApp key={idx} />
+                                : null
                             })}
-                            {Object.keys(apps)
+                            {/* {Object.keys(apps)
                                 .filter((x) => x != 'hz')
                                 .map((key) => apps[key])
                                 .map((app, i) => {

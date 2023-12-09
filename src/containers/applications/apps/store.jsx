@@ -29,11 +29,10 @@ const emap = (v) => {
 };
 const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const MicroStore = () => {
-    const wnapp = useAppSelector((state) => state.apps.store);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'store'));
     const [tab, setTab] = useState('sthome');
     const [page, setPage] = useState(0);
     const [opapp, setOpapp] = useState({});
-    const user = useAppSelector((state) => state.user);
 
     const totab = (e) => {
         var x = e.target && e.target.dataset.action;
@@ -54,12 +53,12 @@ export const MicroStore = () => {
         }
     };
 
-    useLayoutEffect(() => {
-        const element = document.getElementById('storeScroll');
-        element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
+    // useLayoutEffect(() => {
+    //     const element = document.getElementById('storeScroll');
+    //     element.scrollTo({ top: (element.scrollHeight * 33) / 100 });
 
-        if (isMobile()) setPage(1);
-    }, []);
+    //     if (isMobile()) setPage(1);
+    // }, []);
 
     const frontScroll = (e) => {
         if (page == 0) {
@@ -89,7 +88,7 @@ export const MicroStore = () => {
         setPage(2);
     };
 
-    const dispatch = appDispatch();
+    const dispatch = appDispatch;
     const insertApp = () => {
         dispatch({
             type: 'ADMIN_INSERT_STORE',
@@ -356,11 +355,11 @@ const DetailPage = ({ app }) => {
             }
         })();
     }, []);
-    useLayoutEffect(() => {
-        const element = document.getElementById('storeScroll');
-        element.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
-    const dispatch = appDispatch();
+    // useLayoutEffect(() => {
+    //     const element = document.getElementById('storeScroll');
+    //     element.scrollTo({ top: 0, behavior: 'smooth' });
+    // }, []);
+    // const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
         UserEvents({ content: `user download app` });
@@ -623,11 +622,11 @@ const DownPage = ({ action }) => {
     const handleSearchChange = (e) => {
         setShText(e.target.value);
     };
-    useLayoutEffect(() => {
-        setStoreApps([...apps, ...games]);
-        const element = document.getElementById('storeScroll');
-        element.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [apps, games]);
+    // useLayoutEffect(() => {
+    //     setStoreApps([...apps, ...games]);
+    //     const element = document.getElementById('storeScroll');
+    //     element.scrollTo({ top: 0, behavior: 'smooth' });
+    // }, [apps, games]);
 
     useEffect(() => {
         if (catg == 'app') {

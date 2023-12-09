@@ -7,7 +7,7 @@ import {
 } from '../../../components/shared/general';
 
 export const EdgeMenu = () => {
-    const wnapp = useAppSelector((state) => state.apps.edge);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'edge'));
     const [url, setUrl] = useState('https://www.google.com/?igu=1');
     const [ierror, setErr] = useState(true);
     const [isTyping, setTyping] = useState(false);

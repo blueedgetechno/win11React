@@ -7,7 +7,6 @@ import './general.scss';
 import * as AllIcons from './icons';
 
 export const Icon = (props) => {
-    const dispatch = appDispatch;
     var src = `img/icon/${props.ui != null ? 'ui/' : ''}${props.src}.png`;
 
     if (src == undefined || src.includes('undefined')) {
@@ -26,18 +25,10 @@ export const Icon = (props) => {
     }
 
     const clickDispatch = (event) => {
-        var action = {
+        dispatch_generic({
             type: event.currentTarget.dataset.action,
             payload: event.currentTarget.dataset.payload
-        };
-
-        if (action.type === 'FUNC') {
-            const func = props.func;
-            func();
-        }
-
-
-        dispatch_generic(action)
+        })
     };
 
     if (props.fafa != null) {

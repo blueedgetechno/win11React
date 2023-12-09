@@ -331,7 +331,6 @@ const ContentArea = ({ searchtxt, data }) => {
     const user = useAppSelector((state) => state.user);
     const [selected, setSelect] = useState('null');
     const [userInfo, setuserInfo] = useState(null);
-    //const fdata = files.data.getId(files.cdir);
     const subInfo = React.useMemo(() => {
         if (selected == null) {
             return {

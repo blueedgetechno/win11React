@@ -4,7 +4,6 @@ import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import { UserEvents } from '../../backend/actions/analytics';
-import { fetchApp } from '../../backend/actions/preload';
 import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
@@ -14,41 +13,12 @@ import './startmenu.scss';
 export * from './start';
 
 export const DesktopApp = () => {
-    const deskApps = useAppSelector((state) => {
-        var arr = { ...state.desktop };
-        var tmpApps = [...arr.apps];
-
-        if (arr.sort == 'name') {
-            tmpApps.sort((a, b) =>
-                a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-            );
-        } else if (arr.sort == 'size') {
-            tmpApps.sort((a, b) => {
-                var anm = a.name,
-                    bnm = b.name;
-
-                return anm[bnm.charCodeAt(0) % anm.length] >
-                    bnm[anm.charCodeAt(0) % bnm.length]
-                    ? 1
-                    : -1;
-            });
-        } else if (arr.sort == 'date') {
-            tmpApps.sort((a, b) => {
-                var anm = a.name,
-                    bnm = b.name;
-                var anml = anm.length,
-                    bnml = bnm.length;
-
-                return anm[(bnml * 13) % anm.length] >
-                    bnm[(anml * 17) % bnm.length]
-                    ? 1
-                    : -1;
-            });
-        }
-
-        arr.apps = tmpApps;
-        return arr;
-    });
+    const deskApps = useAppSelector((state) => 
+        state.apps.apps.filter(x => state.desktop.apps.includes(x.id))
+    );
+    const desk = useAppSelector((state) => 
+        state.desktop
+    );
     const [holding, setHolding] = useState(false);
     const timeoutRef = useRef(null);
 
@@ -65,7 +35,7 @@ export const DesktopApp = () => {
                 left: touch.clientX
             };
             data.menu = e.target.dataset.menu;
-            data.dataset = {...e.target.dataset};
+            data.dataset = { ...e.target.dataset };
             dispatch(menu_show(data));
         }, 100); // 1000 milliseconds = 1 second
     };
@@ -74,19 +44,6 @@ export const DesktopApp = () => {
         clearTimeout(timeoutRef.current);
         //setHolding(false);
     };
-    const hasNotReadyApp = useMemo(() => {
-        return deskApps.apps.some((app) => app.status == 'NOT_READY');
-    }, [deskApps.apps]);
-
-    useEffect(() => {
-        const intervalFetchApp = async () => {
-            for (let index = 0; index < 10; index++) {
-                fetchApp();
-                await new Promise((r) => setTimeout(r, 60 * 1000));
-            }
-        };
-        if (hasNotReadyApp) intervalFetchApp();
-    }, [hasNotReadyApp]);
 
     const dispatch = appDispatch;
     const handleDouble = (e) => {
@@ -103,10 +60,9 @@ export const DesktopApp = () => {
 
     return (
         <div className="desktopCont">
-            {!deskApps.hide &&
-                deskApps.apps.map((app, i) => {
+            {!desk.hide &&
+                deskApps.map((app, i) => {
                     return (
-                        // to allow it to be focusable (:focus)
                         <div
                             key={i}
                             className="dskApp prtclk relative"
@@ -123,9 +79,9 @@ export const DesktopApp = () => {
                             <Icon
                                 className="dskIcon "
                                 click={'null'}
-                                src={app.icon}
+                                src={app.id}
                                 pr
-                                width={Math.round(deskApps.size * 36)}
+                                width={Math.round(desk.size * 36)}
                             />
 
                             <div className="appName">{app.name}</div>
