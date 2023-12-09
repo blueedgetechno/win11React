@@ -15,9 +15,9 @@ const initialState: WorkerType = {
     hid: 0,
     view: 1,
     data: {
-        tree : [],
-        lookup : {},
-        special : {}
+        tree: [],
+        lookup: {},
+        special: {}
     },
     cpath: ''
 };
@@ -51,16 +51,15 @@ function format(tmp: WorkerType, navHist = false): WorkerType {
 
 
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BuilderHelper, CacheRequest } from './helper';
 import { FetchAuthorizedWorkers } from '../actions/fetch';
-import { formatWorkerRenderTree } from '../utils/formatData';
-import { RootState } from '.';
+import { formatWorkerRenderTree } from './fetch/formatData';
+import { BuilderHelper, CacheRequest } from './helper';
 
 export const workerAsync = {
-    fetch_worker : createAsyncThunk(
+    fetch_worker: createAsyncThunk(
         'fetch_worker',
-        async (arg,{getState}) : Promise<any> => {
-            return await CacheRequest('worker',30, async () => {
+        async (arg, { getState }): Promise<any> => {
+            return await CacheRequest('worker', 30, async () => {
                 const res = await FetchAuthorizedWorkers();
                 return formatWorkerRenderTree(res);
             })
@@ -450,9 +449,9 @@ export const workerSlice = createSlice({
         worker_update: (state, action: PayloadAction<any>) => {
             // const { data, oldCpath } = action.payload;
             state.data = {
-                tree : [],
-                lookup : {},
-                special : {}
+                tree: [],
+                lookup: {},
+                special: {}
             };
 
             // state.data.parse(data);
@@ -464,7 +463,7 @@ export const workerSlice = createSlice({
         }
     },
     extraReducers: build => {
-        BuilderHelper('fetch_worker',build,workerAsync.fetch_worker,(state,action) => {
+        BuilderHelper('fetch_worker', build, workerAsync.fetch_worker, (state, action) => {
 
         })
     }

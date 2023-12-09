@@ -1,5 +1,5 @@
 import { ThunkMiddleware, configureStore } from '@reduxjs/toolkit';
-import { appSlice,appsAsync } from './apps';
+import { appSlice, appsAsync } from './apps';
 import { deskSlice } from './desktop';
 import { globalSlice, storeAsync } from './globals';
 import { menusSlice } from './menu';
@@ -35,7 +35,7 @@ export const store = configureStore({
         globals: globalSlice.reducer,
         setting: settSlice.reducer,
         worker: workerSlice.reducer,
-        modal: popupSlice.reducer,
+        popup: popupSlice.reducer,
         sidepane: sidepaneSlice.reducer
     }
 });
@@ -45,7 +45,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const { user_delete, user_add } = userSlice.actions;
+export const { user_delete } = userSlice.actions;
 export const { wall_next, wall_set } = wallSlice.actions;
 export const { task_audo, task_hide, task_show, task_toggle } =
     taskSlice.actions;
@@ -66,7 +66,7 @@ export const {
     startshw,
     startsrc
 } = menuSlice.actions;
-export const { app_toggle,app_add, app_external, app_showdesk, app_url } =
+export const { app_toggle, app_add, app_external, app_showdesk, app_url } =
     appSlice.actions;
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
 export const { setting_load, setting_setv, setting_theme, setting_togg } = settSlice.actions;
@@ -80,15 +80,8 @@ export const {
     worker_view
 } = workerSlice.actions;
 export const {
-    popup_worker_profile,
-    popup_admin_insert_store,
-    popup_admin_release_app,
-    popup_admin_update_store,
     popup_close,
-    popup_notify,
-    popup_pm,
-    popup_user_fe,
-    popup_vendor_select
+    popup_open
 } = popupSlice.actions;
 export const {
     sidepane_bandhide,
@@ -99,11 +92,11 @@ export const {
     sidepane_panethem
 } = sidepaneSlice.actions;
 
-export const {fetch_app} = appsAsync 
-export const {fetch_worker} = workerAsync
-export const {fetch_store} = storeAsync
-export const {fetch_user} = userAsync
+export const { fetch_app } = appsAsync
+export const { fetch_worker } = workerAsync
+export const { fetch_store } = storeAsync
+export const { fetch_user } = userAsync
 
-export const dispatch_generic = async ({type,payload}:{type: string,payload:any}) => {
-    store.dispatch({type,payload})
+export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
+    store.dispatch({ type, payload })
 }

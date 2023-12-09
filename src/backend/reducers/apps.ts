@@ -1,8 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { allApps } from '../utils';
-import { formatAppRenderTree } from '../utils/formatData';
-import { openRemotePage } from '../utils/remote';
 import { AccessApplication, DeleteApplication, DownloadApplication, FetchUserApplication, ResetApplication, StartApplication, StopApplication } from './fetch';
+import { formatAppRenderTree } from './fetch/formatData';
 import { BuilderHelper, CacheRequest } from './helper';
 
 

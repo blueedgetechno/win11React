@@ -1,5 +1,10 @@
-const initialState = {
-    type: 'disable',
+type Data = {
+    active?: string
+    type?: string,
+    data: any
+}
+
+const initialState : Data = {
     data: {}
 };
 
@@ -8,14 +13,14 @@ export const modalSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
-        popup_worker_profile: (state, action: PayloadAction<any>) => {},
-        popup_vendor_select: (state, action: PayloadAction<any>) => {},
-        popup_user_fe: (state, action: PayloadAction<any>) => {},
-        popup_pm: (state, action: PayloadAction<any>) => {},
-        popup_close: (state, action: PayloadAction<any>) => {},
-        popup_admin_update_store: (state, action: PayloadAction<any>) => {},
-        popup_admin_insert_store: (state, action: PayloadAction<any>) => {},
-        popup_admin_release_app: (state, action: PayloadAction<any>) => {},
-        popup_notify: (state, action: PayloadAction<any>) => {}
+        popup_open: (state, action: PayloadAction<Data>) => {
+            state.active = action.payload.active
+            state.type = action.payload.type
+            state.data = action.payload.data
+        },
+        popup_close: (state) => {
+            state.active = undefined
+            state.type = undefined
+        }
     }
 });

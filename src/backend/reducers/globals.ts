@@ -1,3 +1,8 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { BuilderHelper, CacheRequest } from './helper';
+import { virtapi } from './fetch/createClient';
+
+
 const initialState = {
     lays: [
         [
@@ -201,10 +206,6 @@ const initialState = {
     games: [] as any[]
 };
 
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { virtapi } from '../actions/fetch/createClient';
-import { BuilderHelper, CacheRequest } from './helper';
-
 
 export const storeAsync = {
     fetch_store: createAsyncThunk(
@@ -220,7 +221,8 @@ export const storeAsync = {
     )
 }
 export const deleteStore = async (app: any) => {
-    if (!isAdmin()) return;
+    if (!isAdmin()) 
+        return;
 
     const { error } = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
     if (error) throw error;

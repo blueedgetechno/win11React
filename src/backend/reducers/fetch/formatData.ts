@@ -1,4 +1,4 @@
-import { virtapi } from '../actions/fetch/createClient';
+import { virtapi } from "./createClient";
 
 export function formatWorkerRenderTree(data: any) {
     const tree = data.tree;

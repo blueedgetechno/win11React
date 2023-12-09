@@ -1,5 +1,4 @@
 import { sleep } from '../../utils/sleep';
-import { fetchApp } from '../preload';
 import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
