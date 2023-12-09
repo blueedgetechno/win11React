@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import { UserEvents } from '../../../backend/actions/analytics';
 import { deleteStore, installApp } from '../../../backend/actions/app';
 import { virtapi } from '../../../backend/actions/fetch/createClient';
@@ -19,6 +19,7 @@ import {
 
 import Swal from 'sweetalert2';
 import { supabase } from '../../../backend/actions/fetch/createClient';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { isWhiteList } from '../../../backend/utils/checking';
 import './assets/store.scss';
 
@@ -28,11 +29,11 @@ const emap = (v) => {
 };
 const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const MicroStore = () => {
-    const wnapp = useSelector((state) => state.apps.store);
+    const wnapp = useAppSelector((state) => state.apps.store);
     const [tab, setTab] = useState('sthome');
     const [page, setPage] = useState(0);
     const [opapp, setOpapp] = useState({});
-    const user = useSelector((state) => state.user);
+    const user = useAppSelector((state) => state.user);
 
     const totab = (e) => {
         var x = e.target && e.target.dataset.action;
@@ -88,7 +89,7 @@ export const MicroStore = () => {
         setPage(2);
     };
 
-    const dispatch = useDispatch();
+    const dispatch = appDispatch();
     const insertApp = () => {
         dispatch({
             type: 'ADMIN_INSERT_STORE',
@@ -166,9 +167,9 @@ export const MicroStore = () => {
 };
 
 const FrontPage = (props) => {
-    const vendors = useSelector((state) => state.globals.vendors);
-    const apps = useSelector((state) => state.globals.apps);
-    const games = useSelector((state) => state.globals.games);
+    const vendors = useAppSelector((state) => state.globals.vendors);
+    const apps = useAppSelector((state) => state.globals.apps);
+    const games = useAppSelector((state) => state.globals.games);
 
     const { t, i18n } = useTranslation();
 
@@ -221,51 +222,51 @@ const FrontPage = (props) => {
                 <div className="flex w-max pr-8">
                     {games.length > 0
                         ? games.map((game, i) => {
-                              return (
-                                  <div
-                                      key={i}
-                                      className="ribcont rounded-md my-0 p-2 pb-2"
-                                      onClick={() => {
-                                          props.app_click(game);
-                                      }}
-                                      style={{
-                                          background: game.steam_off
-                                              ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
-                                              : ''
-                                      }}
-                                  >
-                                      <Image
-                                          className="mx-1 py-1 mb-6 rounded"
-                                          w={100}
-                                          h={100}
-                                          absolute={true}
-                                          src={game.icon}
-                                      />
-                                      <div className="capitalize text-xs text-center font-semibold">
-                                          {game.name}
-                                      </div>
-                                      <div className="text-xs text-center font-regular">
-                                          {game.steam_off
-                                              ? 'Steam Offline'
-                                              : ''}
-                                      </div>
-                                  </div>
-                              );
-                          })
+                            return (
+                                <div
+                                    key={i}
+                                    className="ribcont rounded-md my-0 p-2 pb-2"
+                                    onClick={() => {
+                                        props.app_click(game);
+                                    }}
+                                    style={{
+                                        background: game.steam_off
+                                            ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
+                                            : ''
+                                    }}
+                                >
+                                    <Image
+                                        className="mx-1 py-1 mb-6 rounded"
+                                        w={100}
+                                        h={100}
+                                        absolute={true}
+                                        src={game.icon}
+                                    />
+                                    <div className="capitalize text-xs text-center font-semibold">
+                                        {game.name}
+                                    </div>
+                                    <div className="text-xs text-center font-regular">
+                                        {game.steam_off
+                                            ? 'Steam Offline'
+                                            : ''}
+                                    </div>
+                                </div>
+                            );
+                        })
                         : listDraftApp.map((i) => (
-                              <div
-                                  key={i}
-                                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
-                              >
-                                  <Image
-                                      className="mx-1 rounded bg-slate-200"
-                                      w={100}
-                                      h={100}
-                                      ext
-                                  />
-                                  <div className="capitalize text-xs text-center font-semibold"></div>
-                              </div>
-                          ))}
+                            <div
+                                key={i}
+                                className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                            >
+                                <Image
+                                    className="mx-1 rounded bg-slate-200"
+                                    w={100}
+                                    h={100}
+                                    ext
+                                />
+                                <div className="capitalize text-xs text-center font-semibold"></div>
+                            </div>
+                        ))}
                 </div>
             </div>
 
@@ -318,7 +319,7 @@ const DetailPage = ({ app }) => {
     const [dstate, setDown] = useState(0);
     const { t, i18n } = useTranslation();
     const [Options, SetOptions] = useState([]);
-    const user = useSelector((state) => state.user);
+    const user = useAppSelector((state) => state.user);
 
     const region = ['Hà Nội', 'India'];
 
@@ -331,7 +332,7 @@ const DetailPage = ({ app }) => {
             let user_region;
 
             switch (
-                JSON.stringify(subscription.data.at(0).metadata).toString()
+            JSON.stringify(subscription.data.at(0).metadata).toString()
             ) {
                 case '{}': // thinkmay internal user
                     user_region = region[0];
@@ -359,7 +360,7 @@ const DetailPage = ({ app }) => {
         const element = document.getElementById('storeScroll');
         element.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
-    const dispatch = useDispatch();
+    const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
         UserEvents({ content: `user download app` });
@@ -586,7 +587,7 @@ const DetailPage = ({ app }) => {
                                                         emap(
                                                             Math.abs(stars - x)
                                                         ) *
-                                                            100 +
+                                                        100 +
                                                         '%',
                                                     padding: '3px 0'
                                                 }}
@@ -614,8 +615,8 @@ const DetailPage = ({ app }) => {
 
 const DownPage = ({ action }) => {
     const [catg, setCatg] = useState('all');
-    const apps = useSelector((state) => state.globals.apps);
-    const games = useSelector((state) => state.globals.games);
+    const apps = useAppSelector((state) => state.globals.apps);
+    const games = useAppSelector((state) => state.globals.games);
     const [searchtxt, setShText] = useState('');
 
     const [storeApps, setStoreApps] = useState([...apps, ...games]);
@@ -720,20 +721,20 @@ const DownPage = ({ action }) => {
                 {storeApps.length > 0
                     ? renderSearchResult()
                     : listDraftApp.map((i) => (
-                          <div
-                              key={i}
-                              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-                              data-action="page2"
-                          >
-                              <Image
-                                  className="mx-4 mb-6 rounded bg-slate-200"
-                                  w={100}
-                                  h={100}
-                                  ext
-                              />
-                              <div className="capitalize text-xs text-center font-semibold"></div>
-                          </div>
-                      ))}
+                        <div
+                            key={i}
+                            className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                            data-action="page2"
+                        >
+                            <Image
+                                className="mx-4 mb-6 rounded bg-slate-200"
+                                w={100}
+                                h={100}
+                                ext
+                            />
+                            <div className="capitalize text-xs text-center font-semibold"></div>
+                        </div>
+                    ))}
             </div>
         </div>
     );

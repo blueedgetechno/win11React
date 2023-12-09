@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import {
     Icon,
     LazyComponent,
@@ -7,12 +7,12 @@ import {
 } from '../../../components/shared/general';
 
 export const EdgeMenu = () => {
-    const wnapp = useSelector((state) => state.apps.edge);
+    const wnapp = useAppSelector((state) => state.apps.edge);
     const [url, setUrl] = useState('https://www.google.com/?igu=1');
     const [ierror, setErr] = useState(true);
     const [isTyping, setTyping] = useState(false);
     const [hist, setHist] = useState(['https://bing.com', 'https://bing.com']);
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     const iframes = {
         'https://www.google.com/webhp?igu=1': 'Google',
@@ -206,7 +206,7 @@ export const EdgeMenu = () => {
                                             src={
                                                 iframes[mark][0] != '\n'
                                                     ? new URL(mark).origin +
-                                                      '/favicon.ico'
+                                                    '/favicon.ico'
                                                     : favicons[mark]
                                             }
                                         />
@@ -230,11 +230,10 @@ export const EdgeMenu = () => {
                         </LazyComponent>
 
                         <div
-                            className={`bg-blue-100 w-64 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12 transition-all ${
-                                ierror
-                                    ? 'opacity-100'
-                                    : 'opacity-0 pointer-events-none'
-                            }`}
+                            className={`bg-blue-100 w-64 rounded dpShad p-2 absolute bottom-0 right-0 my-4 mx-12 transition-all ${ierror
+                                ? 'opacity-100'
+                                : 'opacity-0 pointer-events-none'
+                                }`}
                         >
                             <div
                                 className="absolute bg-red-400 m-1 text-red-900 text-xs px-1 font-bold handcr top-0 right-0 rounded hover:bg-red-500"

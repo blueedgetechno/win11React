@@ -1,13 +1,13 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 export const RefundApp = () => {
-    const wnapp = useSelector((state) => state.apps.refund);
-    const user = useSelector((state) => state.user);
+    const wnapp = useAppSelector((state) => state.apps.refund);
+    const user = useAppSelector((state) => state.user);
 
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     const listSubs = [
         {

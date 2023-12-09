@@ -14,23 +14,22 @@ export const deskSlice = createSlice({
     initialState,
     reducers: {
         desk_remove: (state, action: PayloadAction<any>) => {
-            const arr = state.apps.filter((x) => x.name != action.payload);
-            state = { ...state, apps: arr };
+            state.apps = state.apps.filter((x) => x.name != action.payload);
         },
-        desk_add: (state, action: PayloadAction<any>) => {
-            state = { ...state, apps: [...desktopApps, ...action.payload] };
+        desk_add: (state, action: PayloadAction<any[]>) => {
+            state.apps = [...desktopApps,...action.payload]
         },
-        desk_hide: (state, action: PayloadAction<any>) => {
-            state = { ...state, hide: true };
+        desk_hide: (state) => {
+            state.hide= true ;
         },
-        desk_show: (state, action: PayloadAction<any>) => {
-            state = { ...state, hide: false };
+        desk_show: (state) => {
+            state.hide= false;
         },
-        desk_size: (state, action: PayloadAction<any>) => {
-            state = { ...state, size: action.payload };
+        desk_size: (state, action: PayloadAction<number>) => {
+            state.size= action.payload ;
         },
         desk_sort: (state, action: PayloadAction<any>) => {
-            state = { ...state, sort: action.payload || 'none' };
+            state.sort= action.payload || 'none' ;
         }
     }
 });

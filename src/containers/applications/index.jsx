@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../backend/reducers';
 import './tabs.scss';
 import './tabs2.scss';
 import './wnapp.scss';
@@ -14,7 +14,7 @@ export * from './apps/store';
 export * from './apps/worker';
 
 export const ScreenPreview = () => {
-    const tasks = useSelector((state) => state.taskbar);
+    const tasks = useAppSelector((state) => state.taskbar);
 
     return (
         <div className="prevCont" style={{ left: tasks.prevPos + '%' }}>

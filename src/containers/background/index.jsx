@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../backend/actions/analytics';
 import { supabase } from '../../backend/actions/fetch/createClient';
+import { appDispatch, useAppSelector } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
 import './back.scss';
 export const Background = () => {
-    const wall = useSelector((state) => state.wallpaper);
+    const wall = useAppSelector((state) => state.wallpaper);
     return (
         <div
             className="background"
@@ -42,8 +42,8 @@ export const LockScreen = () => {
     const [lock, setLock] = useState(false);
     const [unlocked, setUnLock] = useState(false);
 
-    const user = useSelector((state) => state.user);
-    const dispatch = useDispatch();
+    const user = useAppSelector((state) => state.user);
+    const dispatch = appDispatch;
     const action = () => {
         setLock(true);
     };

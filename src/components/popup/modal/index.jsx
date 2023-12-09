@@ -1,10 +1,10 @@
 import ReactModal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 
 const Modal = (props) => {
     const { isOpen, type } = props;
-    const theme = useSelector((state) => state.setting.person.theme);
-    const dispatch = useDispatch();
+    const theme = useAppSelector((state) => state.setting.person.theme);
+    const dispatch = appDispatch;
     const closeModal = () => {
         if (type == 'notify') return;
         dispatch({
@@ -20,7 +20,7 @@ const Modal = (props) => {
                 contentLabel="Example Modal"
                 className="modalContent "
                 overlayClassName="fixed inset-0"
-                //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
+            //className='d-flex absolute inset-[40px] border-2 border-gray-200 rounded-md outline-none bg-slate-200 overflow-auto'
             >
                 {type != 'notify' ? (
                     <div

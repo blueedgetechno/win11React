@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import Swal from 'sweetalert2';
-import store, { appDispatch } from '../reducers';
+import { appDispatch } from '../reducers';
 import { isAdmin } from '../utils/checking';
 import { localStorageKey } from '../utils/constant';
 import { formatError } from '../utils/formatErr';
@@ -24,17 +24,7 @@ import { SupabaseFuncInvoke, supabase, virtapi } from './fetch/createClient';
 import { fetchApp, fetchStore, fetchWorker } from './preload';
 import { openRemotePage } from './remote';
 
-export const formatEvent = (event: Event) => {
-    const action = {
-        type: (event.target as any).dataset.action,
-        payload: (event.target as any).dataset.payload,
-        pid: (event.target as any).dataset.pid,
-        ...store.getState().worker.data.getId((event.target as any).dataset.pid)
-    };
 
-    console.log(action);
-    return action;
-};
 
 const wrapper = async (func: any, appType?: string) => {
     let content = 'It took about 5 minutes, take a break🧐';

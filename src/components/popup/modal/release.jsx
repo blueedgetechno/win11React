@@ -1,10 +1,11 @@
 import { useLayoutEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { ReleaseApp, formatEvent } from '../../../backend/actions/app';
+import { ReleaseApp } from '../../../backend/actions/app';
+import { useAppSelector } from '../../../backend/reducers';
+import { formatEvent } from '../../../backend/utils/worker';
 
 function ReleaseAppModal({ data }) {
-    const apps = useSelector((state) => state.globals.apps);
-    const games = useSelector((state) => state.globals.games);
+    const apps = useAppSelector((state) => state.globals.apps);
+    const games = useAppSelector((state) => state.globals.games);
 
     const [storeApps, setStoreApps] = useState([...apps, ...games]);
     useLayoutEffect(() => {

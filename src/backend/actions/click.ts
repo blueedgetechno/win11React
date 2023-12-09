@@ -1,4 +1,4 @@
-import store from '../reducers';
+import * as actions from '../reducers';
 
 const formatEvent = (event: Event) => {
     const action = {
@@ -17,5 +17,5 @@ export const defaultDispatch = (event: any) => {
 
     if (!action.type) return;
 
-    store.dispatch(action);
+    actions.dispatch_generic(action)
 };

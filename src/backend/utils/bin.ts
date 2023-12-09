@@ -54,125 +54,125 @@ export class Item {
     }
 }
 
-export class Bin {
-    public tree: any[];
-    public lookup: any;
-    public special: any;
-    constructor() {
-        this.tree = [];
-        this.lookup = {};
-        this.special = {};
-    }
+export type Bin = {
+    tree: any[];
+    lookup: any;
+    special: any;
+    // constructor() {
+    //     this.tree = [];
+    //     this.lookup = {};
+    //     this.special = {};
+    // }
 
-    setSpecial(spid: string, id: string) {
-        this.special[spid] = id;
-    }
+    // setSpecial(spid: string, id: string) {
+    //     this.special[spid] = id;
+    // }
 
-    setId(id: string, item: any) {
-        this.lookup[id] = item;
-    }
+    // setId(id: string, item: any) {
+    //     this.lookup[id] = item;
+    // }
 
-    getId(id: string) {
-        return this.lookup[id];
-    }
+    // getId(id: string) {
+    //     return this.lookup[id];
+    // }
 
-    getPath(id: string) {
-        var cpath = '';
-        var curr = this.getId(id);
+    // getPath(id: string) {
+    //     var cpath = '';
+    //     var curr = this.getId(id);
 
-        while (curr) {
-            cpath = curr.name + '\\' + cpath;
-            curr = curr.host;
-        }
-        return count(cpath, '\\') > 1 ? strip(cpath, '\\') : cpath;
-    }
+    //     while (curr) {
+    //         cpath = curr.name + '\\' + cpath;
+    //         curr = curr.host;
+    //     }
+    //     return count(cpath, '\\') > 1 ? strip(cpath, '\\') : cpath;
+    // }
 
-    parsePath(cpathi: string) {
-        if (cpathi.includes('%')) {
-            return this.special[cpathi.trim()];
-        }
+    // parsePath(cpathi: string) {
+    //     if (cpathi.includes('%')) {
+    //         return this.special[cpathi.trim()];
+    //     }
 
-        const cpath = cpathi
-            .split('\\')
-            .filter((x) => x !== '')
-            .map((x) => x.trim().toLowerCase());
-        if (cpath.length === 0) return null;
+    //     const cpath = cpathi
+    //         .split('\\')
+    //         .filter((x) => x !== '')
+    //         .map((x) => x.trim().toLowerCase());
+    //     if (cpath.length === 0) return null;
 
-        var pid = null,
-            curr = null;
-        for (var i = 0; i < this.tree.length; i++) {
-            if (this.tree[i].name.toLowerCase() === cpath[0]) {
-                curr = this.tree[i];
-                break;
-            }
-        }
+    //     var pid = null,
+    //         curr = null;
+    //     for (var i = 0; i < this.tree.length; i++) {
+    //         if (this.tree[i].name.toLowerCase() === cpath[0]) {
+    //             curr = this.tree[i];
+    //             break;
+    //         }
+    //     }
 
-        if (curr) {
-            var i = 1,
-                l = cpath.length;
-            while (curr.type === 'folder' && i < l) {
-                var res = true;
-                for (var j = 0; j < curr.data.length; j++) {
-                    if (curr.data[j].name.toLowerCase() === cpath[i]) {
-                        i += 1;
-                        if (curr.data[j].type === 'folder') {
-                            res = false;
-                            curr = curr.data[j];
-                        }
+    //     if (curr) {
+    //         var i = 1,
+    //             l = cpath.length;
+    //         while (curr.type === 'folder' && i < l) {
+    //             var res = true;
+    //             for (var j = 0; j < curr.data.length; j++) {
+    //                 if (curr.data[j].name.toLowerCase() === cpath[i]) {
+    //                     i += 1;
+    //                     if (curr.data[j].type === 'folder') {
+    //                         res = false;
+    //                         curr = curr.data[j];
+    //                     }
 
-                        break;
-                    }
-                }
+    //                     break;
+    //                 }
+    //             }
 
-                if (res) break;
-            }
+    //             if (res) break;
+    //         }
 
-            if (i === l) pid = curr.id;
-        }
+    //         if (i === l) pid = curr.id;
+    //     }
 
-        return pid;
-    }
+    //     return pid;
+    // }
 
-    parseFolder(data: any, name?: string, host?: any) {
-        host = host ?? null;
-        var item = new Item({
-            type: data.type,
-            name: data.name || name,
-            info: data.info,
-            data: {},
-            host: host
-        });
+    // parseFolder(data: any, name?: string, host?: any) {
+    //     host = host ?? null;
+    //     var item = new Item({
+    //         type: data.type,
+    //         name: data.name || name,
+    //         info: data.info,
+    //         data: {},
+    //         host: host
+    //     });
 
-        this.setId(item.id, item);
+    //     this.setId(item.id, item);
 
-        if (data.info && data.info.spid) {
-            this.setSpecial(data.info.spid, item.id);
-        }
+    //     if (data.info && data.info.spid) {
+    //         this.setSpecial(data.info.spid, item.id);
+    //     }
 
-        if (item.type !== 'folder') {
-            item.setData(data.data);
-        } else {
-            var fdata = [];
-            if (data.data) {
-                for (const key of Object.keys(data.data)) {
-                    fdata.push(this.parseFolder(data.data[key], key, item));
-                }
-            }
+    //     if (item.type !== 'folder') {
+    //         item.setData(data.data);
+    //     } else {
+    //         var fdata = [];
+    //         if (data.data) {
+    //             for (const key of Object.keys(data.data)) {
+    //                 fdata.push(this.parseFolder(data.data[key], key, item));
+    //             }
+    //         }
 
-            item.setData(fdata);
-        }
+    //         item.setData(fdata);
+    //     }
 
-        return item;
-    }
+    //     return item;
+    // }
 
-    parse(data: any) {
-        var drives = Object.keys(data);
-        var tree = [];
+    // parse(data: any) {
+    //     var drives = Object.keys(data);
+    //     var tree = [];
 
-        for (var i = 0; i < drives.length; i++) {
-            tree.push(this.parseFolder(data[drives[i]]));
-        }
+    //     for (var i = 0; i < drives.length; i++) {
+    //         tree.push(this.parseFolder(data[drives[i]]));
+    //     }
 
-        this.tree = tree;
-    }
+    //     this.tree = tree;
+    // }
 }

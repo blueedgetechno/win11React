@@ -14,12 +14,16 @@ const initialState: WorkerType = {
     hist: [],
     hid: 0,
     view: 1,
-    data: new Bin(),
+    data: {
+        tree : [],
+        lookup : {},
+        special : {}
+    },
     cpath: ''
 };
 
 initialState.hist.push(initialState.cdir);
-initialState.data.parse({});
+// initialState.data.parse({});
 
 function format(tmp: WorkerType, navHist = false): WorkerType {
     if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
@@ -36,25 +40,25 @@ function format(tmp: WorkerType, navHist = false): WorkerType {
         }
     }
 
-    tmp.cpath = tmp.data.getPath(tmp.cdir);
+    // tmp.cpath = tmp.data.getPath(tmp.cdir);
     return tmp;
 }
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export const workerSlice = createSlice({
-    name: 'desk',
+    name: 'worker',
     initialState,
     reducers: {
         worker_dir: (state, action: PayloadAction<any>) => {
             state.cdir = action.payload;
         },
         worker_path: (state, action: PayloadAction<any>) => {
-            const pathid = state.data.parsePath(action.payload);
-            if (pathid) state.cdir = pathid;
+            // const pathid = state.data.parsePath(action.payload);
+            // if (pathid) state.cdir = pathid;
         },
         worker_back: (state, action: PayloadAction<any>) => {
-            const item = state.data.getId(state.cdir);
-            if (item.host) state.cdir = item.host.id;
+            // const item = state.data.getId(state.cdir);
+            // if (item.host) state.cdir = item.host.id;
         },
         worker_view: (state, action: PayloadAction<any>) => {
             state.view = action.payload;
@@ -71,16 +75,19 @@ export const workerSlice = createSlice({
             state = format(state, true);
         },
         worker_update: (state, action: PayloadAction<any>) => {
-            const { data, oldCpath } = action.payload;
-            state.data = new Bin();
-            state.data.parse(data);
+            // const { data, oldCpath } = action.payload;
+            state.data = {
+                tree : [],
+                lookup : {},
+                special : {}
+            };
 
-            const pathid = state.data.parsePath(oldCpath);
-            state.cdir = pathid ?? '%worker%';
-            initialState.hist = [];
-            state.hid = 0;
-            state.view = 1;
+            // state.data.parse(data);
+            // const pathid = state.data.parsePath(oldCpath);
+            // state.cdir = pathid ?? '%worker%';
+            // state.hist = [];
+            // state.hid = 0;
+            // state.view = 1;
         }
     }
 });
-

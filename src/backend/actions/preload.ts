@@ -1,4 +1,4 @@
-import store, { appDispatch } from '../reducers';
+import { appDispatch, desk_add, setting_theme, sidepane_panethem, store, updateapp, updategame, user_add, wall_set, worker_update } from '../reducers';
 import { isAllowWorkerProfileFetch } from '../utils/checking';
 import { localStorageKey } from '../utils/constant';
 import {
@@ -21,9 +21,9 @@ const loadSettings = async () => {
     }
 
     document.body.dataset.theme = thm;
-    appDispatch({ type: 'STNGTHEME', payload: thm });
-    appDispatch({ type: 'PANETHEM', payload: icon });
-    appDispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
+    appDispatch(setting_theme(thm))
+    appDispatch(sidepane_panethem(icon))
+    appDispatch(wall_set(thm == 'light' ? 0 : 1))
 };
 
 export const fetchApp = async () => {
@@ -38,10 +38,7 @@ export const fetchApp = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
-        appDispatch({
-            type: 'DESKADD',
-            payload: [...apps]
-        });
+        appDispatch(desk_add(apps))
         return;
     } catch { }
 
@@ -50,10 +47,8 @@ export const fetchApp = async () => {
         (x) => x !== undefined
     );
 
-    appDispatch({
-        type: 'DESKADD',
-        payload: [...apps]
-    });
+        
+    appDispatch(desk_add(apps))
     localStorage.setItem(
         'APP',
         JSON.stringify({
@@ -76,10 +71,8 @@ export const fetchWorker = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 30 * 1000)
             throw new Error('outdated');
 
-        appDispatch({
-            type: 'FILEUPDATEWORKER',
-            payload
-        });
+        
+        appDispatch(worker_update(payload))
         return;
     } catch { }
 
@@ -92,10 +85,7 @@ export const fetchWorker = async () => {
         oldCpath: cpath
     };
 
-    appDispatch({
-        type: 'FILEUPDATEWORKER',
-        payload
-    });
+    appDispatch(worker_update(payload))
     localStorage.setItem(
         'WORKER',
         JSON.stringify({
@@ -119,14 +109,8 @@ export const fetchStore = async () => {
         else if (games.length == 0 || apps.length == 0)
             throw new Error('empty');
 
-        appDispatch({
-            type: 'UPDATEAPP',
-            payload: apps
-        });
-        appDispatch({
-            type: 'UPDATEGAME',
-            payload: games
-        });
+        appDispatch(updateapp(apps))
+        appDispatch(updategame(games))
         return;
     } catch { }
 
@@ -149,14 +133,8 @@ export const fetchStore = async () => {
         else if (appOrGame.type == 'APP') content.apps.push(appOrGame);
     }
 
-    appDispatch({
-        type: 'UPDATEAPP',
-        payload: content.apps
-    });
-    appDispatch({
-        type: 'UPDATEGAME',
-        payload: content.games
-    });
+    appDispatch(updateapp(content.apps))
+    appDispatch(updategame(content.games))
     localStorage.setItem(
         'STORE',
         JSON.stringify({
@@ -175,10 +153,7 @@ export const fetchUser = async () => {
         if (Math.abs(new Date().getTime() - timestamp) > 10 * 1000)
             throw new Error('outdated');
 
-        appDispatch({
-            type: 'ADD_USER',
-            payload
-        });
+        appDispatch(user_add(payload));
         return;
     } catch { }
 
@@ -228,10 +203,7 @@ export const fetchUser = async () => {
 
         payloadUser = { ...payloadUser, usageTime: data };
     }
-    appDispatch({
-        type: 'ADD_USER',
-        payload: payloadUser
-    });
+    appDispatch(user_add(payloadUser));
     localStorage.setItem(
         localStorageKey.user,
         JSON.stringify({
@@ -242,7 +214,9 @@ export const fetchUser = async () => {
 };
 
 export const preload = async () => {
-    await Promise.all([fetchUser(), loadSettings()]);
+    await Promise.all([fetchUser(),
+    loadSettings()
+    ]);
     await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
 };
 
@@ -258,7 +232,6 @@ export const checkAvailableCluster = async () => {
         //     type: 'UPDATE_CLUSTER_STATUS',
         //     payload: checking
         // });
-
 
         // await sleep(30 * 1000)
     }

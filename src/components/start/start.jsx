@@ -1,19 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { changeTheme, handleLogOut } from '../../backend/actions';
+import { appDispatch, useAppSelector } from '../../backend/reducers';
 import { isGreenList, isMobile } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
 export const StartMenu = () => {
-    const { align } = useSelector((state) => state.taskbar);
-    const user = useSelector((state) => state.user);
+    const { align } = useAppSelector((state) => state.taskbar);
+    const user = useAppSelector((state) => state.user);
     const usageTime = user?.usageTime?.at(0) ?? {};
     const { t, i18n } = useTranslation();
-    const dispatch = useDispatch();
-    const start = useSelector((state) => state.startmenu);
-    const thm = useSelector((state) => state.setting.person.theme);
+    const dispatch = appDispatch;
+    const start = useAppSelector((state) => state.startmenu);
+    const thm = useAppSelector((state) => state.setting.person.theme);
     var icon = thm == 'light' ? 'sun' : 'moon';
 
     const formatDate = (dateStr) => {
@@ -76,7 +76,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                    //invert={pnstates[idx] ? true : null}
+                                //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>
@@ -101,10 +101,10 @@ export const StartMenu = () => {
                                 <span>
                                     {usageTime.total_time
                                         ? usageTime?.total_time.toFixed(1) +
-                                          '/' +
-                                          checkPackage() +
-                                          '/' +
-                                          usageTime?.package
+                                        '/' +
+                                        checkPackage() +
+                                        '/' +
+                                        usageTime?.package
                                         : 'Invalid'}
                                 </span>
                             </div>

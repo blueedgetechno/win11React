@@ -3,8 +3,8 @@ const initialState = {
     top: 80,
     left: 360,
     opts: 'desk',
-    attr: null,
-    dataset: null,
+    attr: {},
+    dataset: {},
     data: {
         desk: {
             width: '310px',
@@ -444,7 +444,7 @@ const initialState = {
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export const menusSlice = createSlice({
-    name: 'desk',
+    name: 'menu',
     initialState,
     reducers: {
         menu_hide: (state, action: PayloadAction<any>) => {
@@ -452,16 +452,13 @@ export const menusSlice = createSlice({
         },
         menu_show: (state, action: PayloadAction<any>) => {
             state.hide = false;
-            state.top = (action.payload && action.payload.top) || 272;
-            state.left = (action.payload && action.payload.left) || 430;
-            state.opts = (action.payload && action.payload.menu) || 'desk';
-            state.attr = action.payload && action.payload.attr;
-            state.dataset = action.payload && action.payload.dataset;
+            state.top =     action.payload.top || 272;
+            state.left =    action.payload.left || 430;
+            state.opts =    action.payload.menu || 'desk';
+            state.dataset = action.payload.dataset;
         },
         menu_chng: (state, action: PayloadAction<any>) => {
             state = { ...action.payload };
         }
     }
-
-})
-
+});

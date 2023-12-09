@@ -1,25 +1,24 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, setting_setv, setting_theme, useAppSelector } from '../../backend/reducers';
 import './battery.scss';
 
 const Battery = ({ pct, invert }) => {
     // var divtitle = "Battery status: " + level + "% " + (charging ? "available (plugged in)" : "remaining");
 
-    const dispatch = useDispatch();
-    const btLevel = useSelector((state) => state.setting.system.power.battery);
+    const dispatch = appDispatch;
+    const btLevel = useAppSelector(
+        (state) => state.setting.system.power.battery
+    );
 
     const updateBatteryStatus = (bt) => {
         let level = bt.level * 100 || 100;
         if (bt.charging) {
             level = -level;
         }
-        dispatch({
-            type: 'STNGSETV',
-            payload: {
-                path: 'system.power.battery',
-                value: level
-            }
-        });
+        dispatch(setting_setv({ 
+            path: 'system.power.battery',
+            value: level
+        }));
     };
 
     useEffect(() => {

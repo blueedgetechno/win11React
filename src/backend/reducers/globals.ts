@@ -197,20 +197,22 @@ const initialState = {
         }
     ],
 
-    apps: [],
-    games: []
+    apps: [] as any[],
+    games: [] as any[]
 };
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export const globalSlice = createSlice({
-    name: 'desk',
+    name: 'global',
     initialState,
     reducers: {
-        updategame: (state, action: PayloadAction<any>) => {
-            state.games = action.payload;
+        updategame: (state, action: PayloadAction<any[]>) => {
+            state.games = []
+            state.games.push(...action.payload)
         },
-        updateapp: (state, action: PayloadAction<any>) => {
-            state.apps = action.payload;
+        updateapp: (state, action: PayloadAction<any[]>) => {
+            state.apps = []
+            state.apps.push(...action.payload);
         }
     }
 });

@@ -9,12 +9,11 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        use_add: (state, action: PayloadAction<any>) => {
-            state = { ...action.payload };
+        user_add: (state, action: PayloadAction<any>) => {
+            state.id = action.payload.id
         },
         user_delete: () => {
             localStorage.removeItem(localStorageKey.user);
         }
     }
 });
-

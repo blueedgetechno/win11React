@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { detectBrowserAndOS } from '../../../backend/utils/detectBrower';
 import { log } from '../../../backend/utils/log';
 
@@ -78,7 +78,7 @@ const listErr = [
 ];
 export const UserFeedBack = (props) => {
     const { game, session } = props.data;
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const [selector, setSelector] = useState({
         feeling: '',
         control: {
@@ -86,7 +86,7 @@ export const UserFeedBack = (props) => {
         },
         text: ''
     });
-    const user = useSelector((state) => state.user);
+    const user = useAppSelector((state) => state.user);
     const userName = user?.email ?? 'Admin';
     const { t, i18n } = useTranslation();
 

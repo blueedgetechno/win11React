@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import './index.scss';
 
+import { useAppSelector } from '../../backend/reducers';
 import { isGreenList } from '../../backend/utils/checking';
 
 function AvailableCluster({ isBootScreen }) {
-    const availableCluster = useSelector(
+    const availableCluster = useAppSelector(
         (state) => state.globals.hasAvailableCluster
     );
 

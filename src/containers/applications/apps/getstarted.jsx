@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, setting_setv, useAppSelector } from '../../../backend/reducers';
 import { Icon, ToolBar } from '../../../components/shared/general';
 import LangSwitch from './assets/Langswitch';
 import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';
 
 export const Getstarted = () => {
-    const wnapp = useSelector((state) => state.apps.getstarted);
-    const dispatch = useDispatch();
-    const tasks = useSelector((state) => state.taskbar);
+    const wnapp = useAppSelector((state) => state.apps.getstarted);
+    const dispatch = appDispatch;
+    const tasks = useAppSelector((state) => state.taskbar);
     const { t } = useTranslation();
 
     const [pageNo, setPageNo] = useState(1);
@@ -17,13 +17,10 @@ export const Getstarted = () => {
 
     const changUserName = (e) => {
         var newName = e.target.value;
-        dispatch({
-            type: 'STNGSETV',
-            payload: {
+        dispatch(setting_setv({
                 path: 'person.name',
                 value: newName
-            }
-        });
+        }));
     };
 
     return (

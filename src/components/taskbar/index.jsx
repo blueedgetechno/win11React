@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, useAppSelector } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
-import { Icon } from '../shared/general';
 import Battery from '../../components/shared/Battery';
+import { Icon } from '../shared/general';
 import './taskbar.scss';
 
 const Taskbar = () => {
-    const tasks = useSelector((state) => {
-        return state.taskbar;
-    });
-    const apps = useSelector((state) => {
+    const tasks = useAppSelector((state) => state.taskbar);
+    const apps = useAppSelector((state) => {
         var tmpApps = { ...state.apps };
         for (var i = 0; i < state.taskbar.apps.length; i++) {
-            tmpApps[state.taskbar.apps[i].icon].task = true;
+            // tmpApps[state.taskbar.apps[i].icon].task = true;
         }
         return tmpApps;
     });
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     const showPrev = (event) => {
         var ele = event.target;
@@ -48,9 +46,12 @@ const Taskbar = () => {
             payload: event.target.dataset.payload
         };
 
-        if (action.type) {
-            dispatch(action);
+        if (!action.type) {
+            return
         }
+
+        console.log(action)
+        dispatch_generic(action)
     };
 
     const [time, setTime] = useState(new Date());
@@ -70,7 +71,7 @@ const Taskbar = () => {
                         className="tsIcon tsIconInvert"
                         src="home"
                         width={24}
-                        click="STARTOGG"
+                        click="startogg"
                     />
 
                     {tasks.apps.map((task, i) => {

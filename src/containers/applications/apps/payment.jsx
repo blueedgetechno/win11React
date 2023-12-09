@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { UserEvents } from '../../../backend/actions/analytics';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
@@ -20,9 +20,9 @@ const initialOptions = {
 };
 
 export const PaymentApp = () => {
-    const wnapp = useSelector((state) => state.apps.payment);
-    const user = useSelector((state) => state.user);
-    const dispatch = useDispatch();
+    const wnapp = useAppSelector((state) => state.apps.payment);
+    const user = useAppSelector((state) => state.user);
+    const dispatch = appDispatch;
 
     const [ListSubs, setListSubs] = useState([
         //{

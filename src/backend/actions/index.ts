@@ -1,6 +1,17 @@
 import 'sweetalert2/src/sweetalert2.scss';
 import '../reducers/index';
-import store, { appDispatch, desk_sort, menu_chng, menu_hide, popup_admin_release_app } from '../reducers/index';
+import {
+    store,
+    appDispatch,
+    desk_sort,
+    menu_chng,
+    menu_hide,
+    popup_admin_release_app,
+    desk_hide,
+    desk_show,
+    desk_size,
+    user_delete
+} from '../reducers/index';
 import { localStorageKey } from '../utils/constant';
 import { Log } from '../utils/log';
 import {
@@ -36,11 +47,9 @@ import {
 } from './worker';
 
 export const refresh = async (_: any, menu: any) => {
-    if (menu.menus.desk[0].opts[4].check) {
-        appDispatch({ type: 'DESKHIDE', payload: {} });
-        await fetchApp();
-        appDispatch({ type: 'DESKSHOW', payload: {} });
-    }
+    appDispatch(desk_hide())
+    await fetchApp();
+    appDispatch(desk_show())
 };
 
 export const afterMath = (event: any) => {
@@ -56,7 +65,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -67,7 +76,7 @@ export const afterMath = (event: any) => {
             !actionType.startsWith(item[0]) &&
             !actionType0.startsWith(item[0])
         ) {
-            appDispatch({ type: item[1], payload: {} });
+            // appDispatch({ type: item[1], payload: {} });
         }
     });
 };
@@ -89,7 +98,7 @@ export const changeIconSize = (size: string, menu: any) => {
     }
 
     // refresh("", tmpMenu);
-    appDispatch({ type: 'DESKSIZE', payload: isize });
+    appDispatch(desk_size(isize))
     appDispatch(menu_chng({}));
 };
 
@@ -161,7 +170,7 @@ export const delDefaultApp = () => {
     // TODO
 };
 
-export const delApp = ({ }, menu: any) => {
+export const delApp = ({}, menu: any) => {
     var data = {
         type: menu.dataset.action,
         payload: menu.dataset.payload
@@ -202,7 +211,7 @@ export const handleLogOut = async () => {
 
     logging.close();
 
-    appDispatch({ type: 'DELETE_USER', payload: {} });
+    appDispatch(user_delete())
 };
 
 export const menuDispatch = async (event: Event, menu: any) => {
@@ -242,9 +251,11 @@ export const menuDispatch = async (event: Event, menu: any) => {
     else if (type === 'RESET_APP') resetApp(externalAppData);
     else if (type === 'OPEN_APP') openApp(externalAppData);
     else if (type === 'OPEN_APP_NEWTAB') openApp(externalAppData, 'new_tab');
-    else if (type === 'RELEASE_APP') appDispatch(popup_admin_release_app(event));
+    else if (type === 'RELEASE_APP')
+        appDispatch(popup_admin_release_app(event));
     else if (type === 'PATCH_APP') patchApp(event);
-    else if (type  != type.toUpperCase()) (Actions as any as [string, any])[action.type](action.payload, menu);
+    else if (type != type.toUpperCase())
+        (Actions as Record<string, any>)[action.type](action.payload, menu);
     else appDispatch(action);
 
     appDispatch(menu_hide({}));

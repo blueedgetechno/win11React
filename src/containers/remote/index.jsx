@@ -1,7 +1,4 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useRef, useState, useEffect } from 'react';
-import './remote.scss';
+import React, { useEffect, useRef, useState } from 'react';
 import { RemoteDesktopClient } from '../../../core/app';
 import { AudioWrapper } from '../../../core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../core/pipeline/sink/video/wrapper';
@@ -18,6 +15,8 @@ import {
     getPlatform,
     getResolution
 } from '../../../core/utils/platform';
+import { useAppSelector } from '../../backend/reducers';
+import './remote.scss';
 
 let callback = async () => {};
 let fetch_callback = async () => {
@@ -31,7 +30,7 @@ let pointer = false;
 let Platform = '';
 
 export const Remote = () => {
-    const selector = useSelector((store) => store);
+    // const selector = useAppSelector((store) => store);
     const [connectionPath, setConnectionPath] = useState([]);
     const [videoConnectivity, setVideoConnectivity] = useState('not started');
     const [audioConnectivity, setAudioConnectivity] = useState('not started');

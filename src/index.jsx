@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
-import store from './backend/reducers';
+import { store } from './backend/reducers';
 
 // Sentry.init({
 //   dsn: "https://6c16d34365334e0fbee992044f9d223b@o575799.ingest.sentry.io/6251530",

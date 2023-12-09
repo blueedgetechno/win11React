@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import ModalEditOrInsert from './modal/admin';
 import Modal from './modal/index';
 import Notify from './modal/notify';
@@ -8,9 +7,10 @@ import { UserFeedBack } from './modal/userFeedBack';
 import ModalSelectVendor from './modal/vendor';
 import ModalWorkerInfo from './modal/worker';
 
+import { useAppSelector } from '../../backend/reducers';
 import './index.scss';
 const Popup = (props) => {
-    const modalInfo = useSelector((state) => state.modal);
+    const modalInfo = useAppSelector((state) => state.modal);
     //const modalInfo ={type: 'notify', data:''}
     return (
         <Modal type={modalInfo?.type} isOpen={modalInfo.type != 'disable'}>

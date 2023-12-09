@@ -1,5 +1,6 @@
-import store, { appDispatch, popup_worker_profile } from '../reducers/index';
+import { appDispatch, popup_worker_profile, worker_dir } from '../reducers/index';
 import { log } from '../utils/log';
+import { formatEvent } from '../utils/worker';
 import { supabase } from './fetch/createClient';
 import {
     AddSubscription,
@@ -30,18 +31,7 @@ const wrapper = async (func: () => Promise<any>) => {
     }
 };
 
-const formatEvent = (event: any) => {
-    const pid = event.target.dataset.pid;
-    const action = {
-        type: event.target.dataset.action,
-        payload: event.target.dataset.payload,
-        pid: event.target.dataset.pid,
-        ...store.getState().worker.data.getId(pid)
-    };
 
-    console.log(action);
-    return action;
-};
 
 export const refeshWorker = () =>
     wrapper(async () => {
@@ -124,10 +114,7 @@ export const openWorker = (e: any) => {
     if (worker == null) return;
     else if (worker.type == 'file') return;
 
-    appDispatch({
-        type: 'FILEDIRWORKER',
-        payload: worker.id
-    });
+    appDispatch(worker_dir(worker.id))
 };
 
 export const viewDetail = (e: any) => {

@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiPauseBold } from 'react-icons/pi';
-import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import { UserEvents } from '../../backend/actions/analytics';
 import { fetchApp } from '../../backend/actions/preload';
+import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
@@ -14,8 +14,7 @@ import './startmenu.scss';
 export * from './start';
 
 export const DesktopApp = () => {
-    const user = useSelector((state) => state.user);
-    const deskApps = useSelector((state) => {
+    const deskApps = useAppSelector((state) => {
         var arr = { ...state.desktop };
         var tmpApps = [...arr.apps];
 
@@ -66,12 +65,8 @@ export const DesktopApp = () => {
                 left: touch.clientX
             };
             data.menu = e.target.dataset.menu;
-            data.attr = e.target.attributes;
-            data.dataset = e.target.dataset;
-            dispatch({
-                type: 'MENUSHOW',
-                payload: data
-            });
+            data.dataset = {...e.target.dataset};
+            dispatch(menu_show(data));
         }, 100); // 1000 milliseconds = 1 second
     };
 
@@ -93,7 +88,7 @@ export const DesktopApp = () => {
         if (hasNotReadyApp) intervalFetchApp();
     }, [hasNotReadyApp]);
 
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const handleDouble = (e) => {
         e.stopPropagation();
         const action = {
@@ -103,7 +98,7 @@ export const DesktopApp = () => {
         };
 
         UserEvents({ content: `click app ${e.target.dataset.name}` });
-        dispatch(action);
+        dispatch_generic(action)
     };
 
     return (
@@ -147,7 +142,7 @@ export const DesktopApp = () => {
 };
 
 export const BandPane = () => {
-    const sidepane = useSelector((state) => state.sidepane);
+    const sidepane = useAppSelector((state) => state.sidepane);
 
     return (
         <div
@@ -165,14 +160,14 @@ export const BandPane = () => {
 };
 
 export const SidePane = () => {
-    const sidepane = useSelector((state) => state.sidepane);
-    const setting = useSelector((state) => state.setting);
-    const tasks = useSelector((state) => state.taskbar);
+    const sidepane = useAppSelector((state) => state.sidepane);
+    const setting = useAppSelector((state) => state.setting);
+    const tasks = useAppSelector((state) => state.taskbar);
     const [pnstates, setPnstate] = useState([]);
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     let [btlevel, setBtLevel] = useState('');
-    const childToParent = () => {};
+    const childToParent = () => { };
 
     const clickDispatch = (event) => {
         var action = {
@@ -183,7 +178,9 @@ export const SidePane = () => {
         if (action.type) {
             if (action.type != action.type.toUpperCase()) {
                 Actions[action.type](action.payload);
-            } else dispatch(action);
+            } else {
+                dispatch_generic(action)
+            }
         }
     };
 
@@ -212,13 +209,10 @@ export const SidePane = () => {
         var brgt = e.target.value;
         document.getElementById('brightoverlay').style.opacity =
             (100 - brgt) / 100;
-        dispatch({
-            type: 'STNGSETV',
-            payload: {
-                path: 'system.display.brightness',
-                value: brgt
-            }
-        });
+        dispatch(setting_setv({
+            path: 'system.display.brightness',
+            value: brgt
+        }));
         sliderBackground(bSlider, brgt);
     };
 
@@ -311,7 +305,7 @@ export const SidePane = () => {
 };
 
 export const CalnWid = () => {
-    const sidepane = useSelector((state) => state.sidepane);
+    const sidepane = useAppSelector((state) => state.sidepane);
     const [loaded, setLoad] = useState(false);
 
     const [collapse, setCollapse] = useState('');

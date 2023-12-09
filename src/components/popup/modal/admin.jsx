@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { supabase, virtapi } from '../../../backend/actions/fetch/createClient';
 import { fetchStore } from '../../../backend/actions/preload';
+import { appDispatch } from '../../../backend/reducers';
 import { log } from '../../../backend/utils/log';
 import { Image } from '../../shared/general';
 
@@ -11,17 +11,17 @@ const ModalEditOrInsert = (props) => {
         modalType == 'edit'
             ? appData
             : {
-                  id: '',
-                  name: '',
-                  type: '',
-                  description: '',
-                  feature: '',
-                  screenshoots: [],
-                  icon: ''
-              }
+                id: '',
+                name: '',
+                type: '',
+                description: '',
+                feature: '',
+                screenshoots: [],
+                icon: ''
+            }
     );
 
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const closeModal = async () => {
         dispatch({
             type: 'CLOSE_MODAL'

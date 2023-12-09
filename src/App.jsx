@@ -4,7 +4,8 @@ import ReactModal from 'react-modal';
 import { UserSession } from './backend/actions/analytics';
 import { afterMath } from './backend/actions/index';
 import { checkAvailableCluster, preload } from './backend/actions/preload';
-import { useAppSelector } from './backend/reducers';
+import { appDispatch, useAppSelector,store, menu_show } from './backend/reducers';
+import { Background } from './containers/background';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './components/popup';
@@ -17,6 +18,8 @@ import {
     StartMenu
 } from './components/start';
 import Taskbar from './components/taskbar';
+import * as Applications from './containers/applications';
+import * as Drafts from './containers/applications/draft';
 import { BootScreen, LockScreen } from './containers/background';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
@@ -34,7 +37,7 @@ function App() {
     const [alignvert, setalignvert] = useState(initialAlignvert);
 
     ReactModal.setAppElement('#root');
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     window.onclick = afterMath;
     window.oncontextmenu = (e) => {
@@ -47,12 +50,8 @@ function App() {
 
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
-            data.attr = e.target.attributes;
-            data.dataset = e.target.dataset;
-            dispatch({
-                type: 'MENUSHOW',
-                payload: data
-            });
+            data.dataset = {...e.target.dataset};
+            dispatch(menu_show(data));
         }
     };
 
@@ -98,8 +97,10 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {!user?.id || wall?.locked ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {/* <Background /> */}
-                    <Remote />
+                    { true 
+                    ? <Background />
+                    : <Remote /> 
+                    }
                     <>
                         <div
                             className="desktop"
@@ -136,7 +137,7 @@ function App() {
                         <Popup />
                     </>
                 </div>
-                <AvailableCluster isBootScreen={lockscreen} />
+                {/* <AvailableCluster isBootScreen={lockscreen} /> */}
             </ErrorBoundary>
         </div>
     );

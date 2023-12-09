@@ -100,18 +100,6 @@ const apps = [
         type: 'app',
         action: 'RFAPP'
     },
-    //{
-    //  name: "Time Manager",
-    //  icon: "timemanager",
-    //  type: "app",
-    //  action: "TIMEMANAGER",
-    //},
-    //{
-    //  name: "FeedBack",
-    //  icon: "feedback",
-    //  type: "app",
-    //  action: "FEEDBACK",
-    //},
     {
         name: 'Blue',
         icon: 'win/user',

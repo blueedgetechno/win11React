@@ -16,32 +16,19 @@ export const taskSlice = createSlice({
     name: 'task',
     initialState,
     reducers: {
-        task_toggle: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                align: state.align == 'left' ? 'center' : 'left'
-            };
+        task_toggle: (state) => {
+            state.align = state.align == 'left' ? 'center' : 'left'
         },
         task_show: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                prev: true,
-                prevApp: (action.payload && action.payload.app) || 'store',
-                prevPos: (action.payload && action.payload.pos) || 50
-            };
+            state.prev = true
+            state.prevApp = (action.payload && action.payload.app) || 'store'
+            state.prevPos = (action.payload && action.payload.pos) || 50
         },
-        task_hide: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                prev: false
-            };
+        task_hide: (state) => {
+            state.prev = false
         },
         task_audo: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                audio: action.payload
-            };
+            state.audio = action.payload
         }
     }
 });
-

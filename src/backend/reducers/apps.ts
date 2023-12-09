@@ -37,7 +37,7 @@ initialState.hz = 2;
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export const appSlice = createSlice({
-    name: 'desk',
+    name: 'apps',
     initialState,
     reducers: {
         app_external: (state, action: PayloadAction<any>) => {

@@ -2,13 +2,13 @@ import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { Image } from '../../../components/shared/general';
 
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import './assets/about.scss';
 export const AboutWin = () => {
-    const wnapp = useSelector((state) => state.apps.about);
-    const dispatch = useDispatch();
+    const wnapp = useAppSelector((state) => state.apps.about);
+    const dispatch = appDispatch;
     const { t, i18n } = useTranslation();
 
     const action = () => {

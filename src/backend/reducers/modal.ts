@@ -5,7 +5,7 @@ const initialState = {
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export const modalSlice = createSlice({
-    name: 'desk',
+    name: 'popup',
     initialState,
     reducers: {
         popup_worker_profile: (state, action: PayloadAction<any>) => {},
@@ -16,6 +16,6 @@ export const modalSlice = createSlice({
         popup_admin_update_store: (state, action: PayloadAction<any>) => {},
         popup_admin_insert_store: (state, action: PayloadAction<any>) => {},
         popup_admin_release_app: (state, action: PayloadAction<any>) => {},
-        popup_notify: (state, action: PayloadAction<any>) => {},
+        popup_notify: (state, action: PayloadAction<any>) => {}
     }
 });

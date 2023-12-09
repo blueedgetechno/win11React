@@ -19,66 +19,45 @@ const initialState = {
 };
 
 export const menuSlice = createSlice({
-    name: 'desk',
+    name: 'startmenu',
     initialState,
     reducers: {
-        startshw: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                menu: true,
-                hide: false,
-                pwctrl: false
-            };
+        startshw: (state) => {
+            state.menu = true
+            state.hide = false
+            state.pwctrl = false
         },
-        starthid: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                hide: true,
-                showAll: false,
-                pwctrl: false
-            };
+        starthid: (state) => {
+            state.hide = true
+            state.showAll = false
+            state.pwctrl = false
         },
-        startogg: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                hide: !(state.hide || !state.menu),
-                menu: true,
-                alpha: false,
-                curAlpha: 'A',
-                pwctrl: false,
-                showAll: state.menu && state.showAll ? true : false
-            };
+        startogg: (state) => {
+            state.hide = !(state.hide || !state.menu)
+            state.menu = true
+            state.alpha = false
+            state.curAlpha = 'A'
+            state.pwctrl = false
+            state.showAll = state.menu && state.showAll ? true : false
         },
-        startall: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                showAll: !state.showAll,
-                alpha: false,
-                pwctrl: false,
-                curAlpha: 'A'
-            };
+        startall: (state) => {
+            state.showAll = !state.showAll
+            state.alpha = false
+            state.pwctrl = false
+            state.curAlpha = 'A'
         },
         startalpha: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                alpha: !state.alpha,
-                pwctrl: false,
-                curAlpha: action.payload || 'A'
-            };
+            state.alpha = !state.alpha
+            state.pwctrl = false
+            state.curAlpha = action.payload || 'A'
         },
-        startsrc: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                hide: !(state.hide || state.menu),
-                menu: false,
-                pwctrl: false
-            };
+        startsrc: (state) => {
+            state.hide = !(state.hide || state.menu)
+            state.menu = false
+            state.pwctrl = false
         },
-        startpwc: (state, action: PayloadAction<any>) => {
-            state = {
-                ...state,
-                pwctrl: true
-            };
+        startpwc: (state) => {
+            state.pwctrl = true
         }
     }
 });

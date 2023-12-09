@@ -51,7 +51,7 @@ const initialState = {
 };
 
 export const sidepaneSlice = createSlice({
-    name: 'desk',
+    name: 'sidepane',
     initialState,
     reducers: {
         sidepane_panethem: (state, action: PayloadAction<any>) => {

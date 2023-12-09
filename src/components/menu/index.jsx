@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { menuDispatch } from '../../backend/actions';
+import { useAppSelector } from '../../backend/reducers';
 import { Icon } from '../shared/general';
 import './menu.scss';
 
 export const ActMenu = () => {
-    const menu = useSelector((state) => state.menus);
+    const menu = useAppSelector((state) => state.menus);
     const menudata = menu.data[menu.opts];
-    const { abpos, isLeft } = useSelector((state) => {
+    const { abpos, isLeft } = useAppSelector((state) => {
         var acount = state.menus.menus[state.menus.opts].length;
         var tmpos = {
                 top: state.menus.top,

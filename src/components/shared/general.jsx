@@ -2,12 +2,12 @@ import * as FaRegIcons from '@fortawesome/free-regular-svg-icons';
 import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { appDispatch, dispatch_generic, useAppSelector } from '../../backend/reducers';
 import './general.scss';
 import * as AllIcons from './icons';
 
 export const Icon = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     var src = `img/icon/${props.ui != null ? 'ui/' : ''}${props.src}.png`;
 
     if (src == undefined || src.includes('undefined')) {
@@ -34,13 +34,10 @@ export const Icon = (props) => {
         if (action.type === 'FUNC') {
             const func = props.func;
             func();
-        } else {
-            dispatch(action);
         }
-        if (props.isTrack) {
-            // const iconName = props.name ?? props.src;
-            // const eventName = props.payload === "close" ? `close icon` : `click icon`;
-        }
+
+
+        dispatch_generic(action)
     };
 
     if (props.fafa != null) {
@@ -111,7 +108,7 @@ export const Icon = (props) => {
             >
                 {props.className == 'tsIcon' ? (
                     <div
-                        onClick={props.click != null ? clickDispatch : () => {}}
+                        onClick={props.click != null ? clickDispatch : () => { }}
                         style={{ width: props.width, height: props.width }}
                         data-action={props.click}
                         data-payload={props.payload}
@@ -144,7 +141,7 @@ export const Icon = (props) => {
                     <img
                         width={props.width}
                         height={props.height}
-                        onClick={props.click != null ? clickDispatch : () => {}}
+                        onClick={props.click != null ? clickDispatch : () => { }}
                         data-action={props.click}
                         data-payload={props.payload}
                         data-click={props.click != null}
@@ -164,7 +161,7 @@ export const Icon = (props) => {
 };
 
 export const Image = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     let src = props.absolute
         ? props.src
@@ -190,14 +187,10 @@ export const Image = (props) => {
             payload: event.currentTarget.dataset.payload
         };
 
-        if (action.type) {
-            dispatch(action);
+        if (!action.type)
+            return
 
-            if (props.isTrack) {
-                // const imgName = props.src || props.name || "unknow";
-                // AnalyticTrack(`click ${props.type ?? "app"}`, {
-            }
-        }
+        dispatch();
     };
 
     return (
@@ -243,9 +236,9 @@ export const Image = (props) => {
 };
 
 export const SnapScreen = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const [delay, setDelay] = useState(false);
-    const lays = useSelector((state) => state.globals.lays);
+    const lays = useAppSelector((state) => state.globals.lays);
 
     const clickDispatch = (event) => {
         var action = {
@@ -255,7 +248,7 @@ export const SnapScreen = (props) => {
         };
 
         if (action.dim && action.type) {
-            dispatch(action);
+            dispatch_generic(action)
             props.closeSnap();
         }
     };
@@ -300,7 +293,7 @@ export const SnapScreen = (props) => {
 };
 
 export const ToolBar = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const [snap, setSnap] = useState(false);
 
     const openSnap = () => {
@@ -405,7 +398,7 @@ export const ToolBar = (props) => {
             }
         };
 
-        dispatch(action);
+        dispatch_generic(action)
     };
 
     return (

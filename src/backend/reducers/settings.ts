@@ -1,4 +1,3 @@
-
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 const initialState = {
     system: {
@@ -57,19 +56,19 @@ const changeVal = (obj: any, pathin: string, val = 'togg') => {
 
 // TODO setting in db
 export const settSlice = createSlice({
-    name: 'desk',
+    name: 'setting',
     initialState,
     reducers: {
-        stngtheme: (state, action: PayloadAction<any>) => {
+        setting_theme: (state, action: PayloadAction<any>) => {
             state.person.theme = action.payload;
         },
-        stngtogg: (state, action: PayloadAction<any>) => {
+        setting_togg: (state, action: PayloadAction<any>) => {
             state = changeVal(state, action.payload);
         },
-        stngsetv: (state, action: PayloadAction<any>) => {
+        setting_setv: (state, action: PayloadAction<any>) => {
             state = changeVal(state, action.payload.path, action.payload.value);
         },
-        stngload: (state, action: PayloadAction<any>) => {
+        setting_load: (state, action: PayloadAction<any>) => {
             state = { ...action.payload };
         }
     }

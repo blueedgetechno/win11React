@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { defaultDispatch } from '../../../backend/actions/click';
 import { openWorker, refeshWorker } from '../../../backend/actions/worker';
+import { appDispatch, menu_hide, useAppSelector } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
@@ -27,7 +27,7 @@ const NavTitle = (props) => {
 };
 
 const FolderDrop = ({ dir }) => {
-    const files = useSelector((state) => state.files);
+    const files = useAppSelector((state) => state.files);
     const folder = files.data.getId(dir);
 
     return (
@@ -52,7 +52,7 @@ const FolderDrop = ({ dir }) => {
 
 const Dropdown = (props) => {
     const [open, setOpen] = useState(props.isDropped != null);
-    const special = useSelector((state) => state.worker.data.special);
+    const special = useAppSelector((state) => state.worker.data.special);
     const [fid, setFID] = useState(() => {
         if (props.spid) return special[props.spid];
         else return props.dir;
@@ -99,15 +99,15 @@ const Dropdown = (props) => {
 };
 
 export const Worker = () => {
-    const wnapp = useSelector((state) => state.apps.worker);
-    const files = useSelector((state) => state.worker);
+    const wnapp = useAppSelector((state) => state.apps.worker);
+    const files = useAppSelector((state) => state.worker);
     const fdata = files.data.getId(files.cdir);
 
     const [contentData, setContentData] = useState(fdata);
     const [cpath, setPath] = useState(files.cpath);
     const [searchtxt, setShText] = useState('');
     const [filters, setFilters] = useState({}); //{status: '',}
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
 
     const filterType = fdata?.info?.menu;
 
@@ -327,9 +327,8 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt, data }) => {
-    const files = useSelector((state) => state.worker);
-    const user = useSelector((state) => state.user);
-    const special = useSelector((state) => state.worker.data.special);
+    const files = useAppSelector((state) => state.worker);
+    const user = useAppSelector((state) => state.user);
     const [selected, setSelect] = useState('null');
     const [userInfo, setuserInfo] = useState(null);
     //const fdata = files.data.getId(files.cdir);
@@ -404,11 +403,11 @@ const ContentArea = ({ searchtxt, data }) => {
 
         return list;
     };
-    const dispatch = useDispatch();
+    const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
         setSelect(e.target.dataset.id);
-        dispatch({ type: 'MENUHIDE' });
+        dispatch(menu_hide());
     };
 
     const handleDouble = (e) => {
@@ -480,7 +479,7 @@ const ContentArea = ({ searchtxt, data }) => {
                     <>
                         <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
                             {subInfo?.info?.menu == 'worker' ||
-                            subInfo?.info?.menu == 'session' ? (
+                                subInfo?.info?.menu == 'session' ? (
                                 <Image
                                     src={`icon/win/${renderIconName(
                                         subInfo?.info
@@ -498,9 +497,6 @@ const ContentArea = ({ searchtxt, data }) => {
 };
 
 const NavPane = ({ type, changeFilter }) => {
-    const files = useSelector((state) => state.worker);
-    const special = useSelector((state) => state.worker.data.special);
-
     return (
         <div className="navpane win11Scroll">
             <div className="extcont">

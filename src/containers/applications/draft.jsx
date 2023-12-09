@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../backend/reducers';
 import { ToolBar } from '../../components/shared/general';
 
 export const IFrame = (props) => {
-    const wnapp = useSelector((state) => state.apps[props.icon]);
+    const wnapp = useAppSelector((state) => state.apps[props.icon]);
     if (!wnapp) return null;
     var data = wnapp.data;
 

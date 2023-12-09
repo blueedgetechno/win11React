@@ -1,5 +1,5 @@
 import { supabase } from '../actions/fetch/createClient';
-import store from '../reducers';
+import { store } from '../reducers';
 import { scanCodeApps } from './constant';
 
 export const isAdmin = () => {
