@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
-import { UserSession } from './backend/actions/analytics';
+import { preload } from './backend/actions/background';
+import { UserSession } from './backend/actions/fetch/analytics';
 import { afterMath } from './backend/actions/index';
-import { checkAvailableCluster, preload } from './backend/actions/preload';
-import { appDispatch, useAppSelector,store, menu_show } from './backend/reducers';
-import { Background } from './containers/background';
+import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './components/popup';
-import AvailableCluster from './components/shared/AvailableCluster';
 import {
     BandPane,
     CalnWid,
@@ -19,8 +17,7 @@ import {
 } from './components/start';
 import Taskbar from './components/taskbar';
 import * as Applications from './containers/applications';
-import * as Drafts from './containers/applications/draft';
-import { BootScreen, LockScreen } from './containers/background';
+import { Background, BootScreen, LockScreen } from './containers/background';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
@@ -50,7 +47,7 @@ function App() {
 
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
-            data.dataset = {...e.target.dataset};
+            data.dataset = { ...e.target.dataset };
             dispatch(menu_show(data));
         }
     };
@@ -68,7 +65,7 @@ function App() {
         };
 
         UserSession();
-        checkAvailableCluster();
+        // checkAvailableCluster();
 
         preload()
             .then(() => {
@@ -97,9 +94,9 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {!user?.id || wall?.locked ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    { true 
-                    ? <Background />
-                    : <Remote /> 
+                    {true
+                        ? <Background />
+                        : <Remote />
                     }
                     <>
                         <div
@@ -109,11 +106,10 @@ function App() {
                         >
                             <DesktopApp />
                             {Object.keys(Applications).map((key, idx) => {
-                                console.log(key)
                                 var WinApp = Applications[key];
                                 return key != 'Worker' && key != 'PaymentApp'
-                                ? <WinApp key={idx} />
-                                : null
+                                    ? <WinApp key={idx} />
+                                    : null
                             })}
                             {/* {Object.keys(apps)
                                 .filter((x) => x != 'hz')

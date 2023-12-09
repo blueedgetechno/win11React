@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserEvents } from '../../../backend/actions/analytics';
+import { UserEvents } from '../../../backend/actions/fetch/analytics';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
@@ -191,7 +191,7 @@ export const PaymentApp = () => {
                                                             shape: 'pill',
                                                             color:
                                                                 fundingSource ==
-                                                                FUNDING.PAYLATER
+                                                                    FUNDING.PAYLATER
                                                                     ? 'gold'
                                                                     : ''
                                                         }}

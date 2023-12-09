@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
-import { UserEvents } from '../../backend/actions/analytics';
+import { UserEvents } from '../../backend/actions/fetch/analytics';
 import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
@@ -13,10 +13,10 @@ import './startmenu.scss';
 export * from './start';
 
 export const DesktopApp = () => {
-    const deskApps = useAppSelector((state) => 
+    const deskApps = useAppSelector((state) =>
         state.apps.apps.filter(x => state.desktop.apps.includes(x.id))
     );
-    const desk = useAppSelector((state) => 
+    const desk = useAppSelector((state) =>
         state.desktop
     );
     const [holding, setHolding] = useState(false);

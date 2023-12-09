@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { supabase, virtapi } from '../../../backend/actions/fetch/createClient';
-import { fetchStore } from '../../../backend/actions/preload';
+import { fetchStore } from '../../../backend/actions/background';
+import { supabase } from '../../../backend/actions/fetch/createClient';
 import { appDispatch } from '../../../backend/reducers';
 import { log } from '../../../backend/utils/log';
 import { Image } from '../../shared/general';
@@ -102,37 +102,6 @@ const ModalEditOrInsert = (props) => {
         });
     }
 
-    async function handleUpdateApp(app) {
-        const { id, name, icon, description, feature, screenshoots } = app;
-        const { error } = await virtapi(`stores?id=eq.${id}`, 'PATCH', {
-            name: name,
-            icon: icon,
-            metadata: {
-                description: description,
-                feature: feature,
-                screenshoots: screenshoots
-            }
-        });
-
-        if (error) throw error;
-    }
-
-    async function handleInsertApp(newData) {
-        const { name, icon, description, type, feature, screenshoots } =
-            newData;
-        const resp = await virtapi(`stores`, 'POST', {
-            name: name,
-            icon: icon,
-            type: type,
-            metadata: {
-                description: description,
-                feature: feature,
-                screenshoots: screenshoots
-            }
-        });
-
-        if (resp.status != 200) throw await resp.text();
-    }
 
     const handleSubmitForm = async (event) => {
         event.preventDefault();

@@ -1,25 +1,24 @@
 import { ThunkMiddleware, configureStore } from '@reduxjs/toolkit';
-import { appSlice } from './apps';
+import { appSlice,appsAsync } from './apps';
 import { deskSlice } from './desktop';
-import { globalSlice } from './globals';
+import { globalSlice, storeAsync } from './globals';
 import { menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
 import { settSlice } from './settings.js';
 import { sidepaneSlice } from './sidepane';
 import { menuSlice } from './startmenu';
 import { taskSlice } from './taskbar';
-import { userSlice } from './user';
+import { userAsync, userSlice } from './user';
 import { wallSlice } from './wallpaper';
-import { workerSlice } from './worker';
+import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 const middleware: ThunkMiddleware = () =>
     next =>
-        action => {
+        async action => {
             console.log(action)
-            // Otherwise, pass the action down the middleware chain as usual
-            return next(action)
+            return await next(action)
         }
 
 export const store = configureStore({
@@ -70,7 +69,6 @@ export const {
 export const { app_toggle,app_add, app_external, app_showdesk, app_url } =
     appSlice.actions;
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
-export const { updateapp, updategame } = globalSlice.actions;
 export const { setting_load, setting_setv, setting_theme, setting_togg } = settSlice.actions;
 export const {
     worker_back,
@@ -100,6 +98,11 @@ export const {
     sidepane_panehide,
     sidepane_panethem
 } = sidepaneSlice.actions;
+
+export const {fetch_app} = appsAsync 
+export const {fetch_worker} = workerAsync
+export const {fetch_store} = storeAsync
+export const {fetch_user} = userAsync
 
 export const dispatch_generic = async ({type,payload}:{type: string,payload:any}) => {
     store.dispatch({type,payload})

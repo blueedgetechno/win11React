@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserEvents } from '../../backend/actions/analytics';
+import { UserEvents } from '../../backend/actions/fetch/analytics';
 import { supabase } from '../../backend/actions/fetch/createClient';
 import { appDispatch, useAppSelector } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';

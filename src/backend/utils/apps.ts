@@ -8,6 +8,12 @@ const apps: {
     payload?: string
 }[] = [
         {
+            name: 'Settings',
+            id: 'settings',
+            type: 'app',
+            action: 'SETTING'
+        },
+        {
             name: 'Get Started',
             id: 'getstarted',
             type: 'app',
@@ -42,13 +48,6 @@ const apps: {
             id: 'refund',
             type: 'app',
             action: 'RFAPP'
-        },
-        {
-            name: 'Pricing',
-            id: 'pricing',
-            type: 'app',
-            action: 'EXTERNAL',
-            payload: externalLink.PRICING_LINK
         },
         {
             name: 'Guideline',

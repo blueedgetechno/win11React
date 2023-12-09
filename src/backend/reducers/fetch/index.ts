@@ -4,7 +4,37 @@ import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
+export const ConfigureApplication = async ({
+    vol_speed,
+    vol_availability,
+    gpu_model,
+    desc,
+    store_id,
+    vcpus,
+    ram,
+    vdriver,
+    hidevm,
+    cluster_id
+}: any) => {
+    const { data, error, code } = await SupabaseFuncInvoke('configure_application', {
+        action: 'RELEASE',
+        store_id: parseInt(store_id),
+        desc: desc,
+        speed: vol_speed,
+        availability: vol_availability,
+        cluster_id,
+        hardware: {
+            gpu_model: gpu_model,
+            vcpus: parseInt(vcpus),
+            ram: parseInt(ram),
+            vdriver: vdriver,
+            hidevm: hidevm
+        }
+    });
 
+    if (error != null) throw error;
+    return data
+}
 export const FetchAuthorizedWorkers = async () => {
     const { data, error } = await SupabaseFuncInvoke('worker_profile_render');
     if (error != null) throw error;
@@ -95,17 +125,14 @@ export const AdjustSubscription = async (
     return data;
 };
 
+
 export const DownloadApplication = async (
     app_template_id: string,
     availability: string,
     speed: string,
     safe: string
 ) => {
-    const {
-        data: result,
-        code,
-        error
-    } = await SupabaseFuncInvoke('launch_application', {
+    const { data, code, error } = await SupabaseFuncInvoke('launch_application', {
         action: 'SETUP',
         app_template_id: app_template_id,
         option: { availability, speed, safe }
@@ -120,15 +147,15 @@ export const DownloadApplication = async (
         if (countBindingStorageErr == COUNT_ERR_RPC)
             throw { error: null, code: '0' };
 
-        const { data, error } = await virtapi(`rpc/binding_storage`, 'POST', {
-            volume_id: result.volume_ids.at(0)
+        const { data: res, error } = await virtapi(`rpc/binding_storage`, 'POST', {
+            volume_id: data.volume_ids.at(0)
         });
 
         if (error) countBindingStorageErr++;
-        else if (data.length == 0)
+        else if (res.length == 0)
             throw { error: 'Resource not found!', code: '5' };
-        else if (data.at(0).storage_id != null) {
-            storageId = data.at(0).storage_id;
+        else if (res.at(0).storage_id != null) {
+            storageId = res.at(0).storage_id;
             break;
         }
 
@@ -147,37 +174,30 @@ export const StartApplication = async (storage_id: string) => {
         }
     );
 
-    if (error != null) {
+    if (error != null)
         throw { error, code };
-    }
 
-    let countErr = 0;
     for (let i = 0; i < 100; i++) {
-        if (countErr >= COUNT_ERR_RPC) {
-            await fetchApp();
-            throw { error: null, code: '0' };
-        }
-
         const { data, error } = await supabase.rpc('setup_status', {
             storage_id
         });
 
-        if (error) countErr++;
-        else if (data == true) break;
-
-        await sleep(TIME_SLEEP);
+        if (error) 
+            throw {error,code:0};
+        else if (data == true) 
+            break;
+        else
+            await sleep(TIME_SLEEP);
     }
 
     return data;
 };
-export const AccessApplication = async (input: any) => {
-    const { storage_id } = input;
-
+export const AccessApplication = async (input: { storage_id: string } | { volume_id: string }) => {
     const { data, code, error } = await SupabaseFuncInvoke(
         'access_application',
         {
             action: 'ACCESS',
-            storage_id: storage_id
+            ...input
         }
     );
     if (error != null) throw { error, code };
@@ -231,8 +251,22 @@ export const StopApplication = async (storage_id: string) => {
             storage_id: storage_id
         }
     );
-    if (error != null) throw { error, code };
+    if (error != null) 
+        throw { error, code };
 
+    for (let i = 0; i < 100; i++) {
+        const { data, error } = await supabase
+            .rpc('setup_status', {
+                storage_id: storage_id
+            });
+
+        if (error)
+            throw { error, code: 0 }
+        else if (data == false)
+            break;
+
+        await sleep(10 * 1000);
+    }
     return data;
 };
 
@@ -372,3 +406,63 @@ export const FetchApplicationTemplates = async (id: number) => {
         })
         .filter((x) => x != undefined);
 };
+
+export async function FetchApp(app: any) {
+    const region: string[] = []
+
+    const subscription = await supabase
+        .from('subscriptions')
+        .select('account_id, metadata')
+    // .eq('account_id', user.id);
+    let user_region;
+
+    // switch (
+    // // JSON.stringify(subscription.data.at(0).metadata).toString()
+    // ) {
+    //     case '{}': // thinkmay internal user
+    //         user_region = region[0];
+    //         break;
+    //     case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
+    //         user_region = region[1];
+    //         break;
+    // }
+
+    // const { data, error } = await virtapi(
+    //     `rpc/get_app_from_store`,
+    //     'POST',
+    //     { store_id: `${app.id}` }
+    // );
+    // if (error) throw error;
+}
+
+async function handleUpdateApp(app: any) {
+    const { id, name, icon, description, feature, screenshoots } = app;
+    const { error } = await virtapi(`stores?id=eq.${id}`, 'PATCH', {
+        name: name,
+        icon: icon,
+        metadata: {
+            description: description,
+            feature: feature,
+            screenshoots: screenshoots
+        }
+    });
+
+    if (error) throw error;
+}
+
+async function handleInsertApp(newData: any) {
+    // const { name, icon, description, type, feature, screenshoots } =
+    //     newData;
+    // const resp = await virtapi(`stores`, 'POST', {
+    //     name: name,
+    //     icon: icon,
+    //     type: type,
+    //     metadata: {
+    //         description: description,
+    //         feature: feature,
+    //         screenshoots: screenshoots
+    //     }
+    // });
+
+    // if (resp.status != 200) throw await resp.text();
+}

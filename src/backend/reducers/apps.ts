@@ -1,5 +1,82 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { allApps } from '../utils';
+import { formatAppRenderTree } from '../utils/formatData';
+import { openRemotePage } from '../utils/remote';
+import { AccessApplication, DeleteApplication, DownloadApplication, FetchUserApplication, ResetApplication, StartApplication, StopApplication } from './fetch';
+import { BuilderHelper, CacheRequest } from './helper';
+
+
+
+export const appsAsync = {
+    fetch_app: createAsyncThunk(
+        'fetch_app',
+        async (): Promise<any[]> => {
+            return await CacheRequest('apps', 30, async () => {
+                const data = await FetchUserApplication();
+                return (await formatAppRenderTree(data)).filter(
+                    (x) => x !== undefined
+                );
+            })
+        }
+    ),
+
+    install_app: createAsyncThunk(
+        'start_app',
+        async ({
+            app_template_id,
+            availability,
+            speed,
+            safe
+        }: {
+            app_template_id: string,
+            availability: string,
+            speed: string,
+            safe: string,
+        }, { getState }): Promise<void> => {
+            await DownloadApplication(
+                app_template_id,
+                availability,
+                speed,
+                safe
+            );
+        }
+    ),
+
+    access_app: createAsyncThunk(
+        'start_app',
+        async ({ storage_id }: { storage_id: string }, { getState }): Promise<string> => {
+            return await AccessApplication({ storage_id });
+        }
+    ),
+    reset_app: createAsyncThunk(
+        'start_app',
+        async ({ storage_id }: { storage_id: string }, { getState }): Promise<string> => {
+            return await ResetApplication({ storage_id });
+        }
+    ),
+
+    start_app: createAsyncThunk(
+        'start_app',
+        async ({ storage_id }: { storage_id: string }, { getState }): Promise<void> => {
+            await StartApplication(storage_id);
+            return await AccessApplication({ storage_id });
+        }
+    ),
+
+    pause_app: createAsyncThunk(
+        'start_app',
+        async ({ storage_id }: { storage_id: string }, { getState }): Promise<void> => {
+            await StopApplication(storage_id);
+        }
+    ),
+
+    delete_app: createAsyncThunk(
+        'delete_app',
+        async ({ storage_id }: { storage_id: string }, { getState }): Promise<void> => {
+            await DeleteApplication(storage_id);
+        }
+    )
+}
 
 const initialState = {
     hz: 0,
@@ -56,15 +133,17 @@ export const appSlice = createSlice({
             // }
         },
         app_add: (state, action: PayloadAction<any[]>) => {
-            const app = action.payload.map(x =>{return{
-                ...x,
-                size : 'full',
-                hide : true,
-                max : null,
-                z : 0,
-            }});
+            const app = action.payload.map(x => {
+                return {
+                    ...x,
+                    size: 'full',
+                    hide: x.id != 'settings',
+                    max: null,
+                    z: 0,
+                }
+            });
 
-            state.apps = [...initialState.apps,...app]
+            state.apps = [...initialState.apps, ...app]
         },
 
 
@@ -86,7 +165,7 @@ export const appSlice = createSlice({
                 return
             }
 
-            const tmpState = {...state}
+            const tmpState = { ...state }
             if (obj.z != tmpState.hz) {
                 obj.hide = false;
                 if (!obj.max) {
@@ -177,5 +256,20 @@ export const appSlice = createSlice({
 
         //   }
         // }
+    },
+    extraReducers: builder => {
+        BuilderHelper('fetch_app', builder, appsAsync.fetch_app, (state, action) => {
+            const app = action.payload.map(x => {
+                return {
+                    ...x,
+                    size: 'full',
+                    hide: x.id != 'settings',
+                    max: null,
+                    z: 0,
+                }
+            });
+
+            state.apps = [...initialState.apps, ...app]
+        })
     }
 });

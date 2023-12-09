@@ -3,6 +3,7 @@ import icons from './apps';
 var { taskbar, desktop } = {
     taskbar: ['Store'],
     desktop: [
+        'Settings',
         'Get Started',
         'Worker Profile',
         'Guideline',
@@ -18,11 +19,11 @@ var { taskbar, desktop } = {
 };
 
 export const taskApps = icons
-    .filter((x) => taskbar.includes(x.name))
+    // .filter((x) => taskbar.includes(x.name))
     .map(x => x.id);
 
 export const desktopApps = icons
-    .filter((x) => desktop.includes(x.name))
+    // .filter((x) => desktop.includes(x.name))
     .sort((a, b) => desktop.indexOf(a.name) > desktop.indexOf(b.name) ? 1 : -1)
     .map(x => x.id);
 

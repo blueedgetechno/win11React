@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { changeTheme, handleLogOut } from '../../backend/actions';
+import { changeTheme } from '../../backend/actions';
 import { useAppSelector } from '../../backend/reducers';
 import { isGreenList, isMobile } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
@@ -23,7 +23,7 @@ export const StartMenu = () => {
         });
     };
 
-    const usageTime  = undefined
+    const usageTime = undefined
     const total_time = undefined
     const checkPackage = () => {
         const packages = {
@@ -34,7 +34,7 @@ export const StartMenu = () => {
         const usageTime = user?.usageTime?.at(0);
         if (usageTime == undefined)
             return
-            
+
         return packages[usageTime?.package] ?? usageTime?.package;
     };
 
@@ -117,7 +117,7 @@ export const StartMenu = () => {
                 <div className="menuBar">
                     <div
                         className="flex prtclk items-center gap-2"
-                        onClick={handleLogOut}
+                        onClick={() => appDispatch(user_delete())}
                         data-action="WALLSHUTDN"
                     >
                         <svg

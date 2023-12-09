@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { ReleaseApp } from '../../../backend/actions/app';
 import { useAppSelector } from '../../../backend/reducers';
-import { formatEvent } from '../../../backend/utils/worker';
+// import { formatEvent } from '../../../backend/utils/worker';
 
 function ReleaseAppModal({ data }) {
     const apps = useAppSelector((state) => state.globals.apps);
@@ -25,8 +25,8 @@ function ReleaseAppModal({ data }) {
         const ram = document.querySelector('#ram').value;
         const vdriver = document.querySelector('#vdriver').checked;
         const hidevm = document.querySelector('#hidevm').checked;
-        const cluster_id =
-            formatEvent(data?.event)?.host?.info?.cluster_id ?? '';
+        // const cluster_id =
+        //     formatEvent(data?.event)?.host?.info?.cluster_id ?? '';
 
         ReleaseApp({
             vol_speed,

@@ -201,18 +201,46 @@ const initialState = {
     games: [] as any[]
 };
 
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { virtapi } from '../actions/fetch/createClient';
+import { BuilderHelper, CacheRequest } from './helper';
+
+
+export const storeAsync = {
+    fetch_store: createAsyncThunk(
+        'fetch_store',
+        async (): Promise<any> => {
+            return await CacheRequest('store', 30, async () => {
+                const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
+                if (error) throw error;
+
+                return data
+            })
+        }
+    )
+}
+export const deleteStore = async (app: any) => {
+    if (!isAdmin()) return;
+
+    const { error } = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
+    if (error) throw error;
+
+    await log({
+        error: null,
+        type: 'confirm',
+        confirmCallback: deleteApp
+    });
+
+    fetchStore();
+};
+
 export const globalSlice = createSlice({
     name: 'global',
     initialState,
-    reducers: {
-        updategame: (state, action: PayloadAction<any[]>) => {
-            state.games = []
-            state.games.push(...action.payload)
-        },
-        updateapp: (state, action: PayloadAction<any[]>) => {
-            state.apps = []
-            state.apps.push(...action.payload);
-        }
+    reducers: {},
+    extraReducers: builder => {
+        BuilderHelper('fetch_store', builder, storeAsync.fetch_store, (state, action) => {
+
+        })
     }
 });

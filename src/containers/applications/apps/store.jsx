@@ -1,14 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, } from 'react-redux';
-import { UserEvents } from '../../../backend/actions/analytics';
 import { deleteStore, installApp } from '../../../backend/actions/app';
-import { virtapi } from '../../../backend/actions/fetch/createClient';
-import { fetchStore } from '../../../backend/actions/preload';
+import { fetchStore } from '../../../backend/actions/background';
+import { UserEvents } from '../../../backend/actions/fetch/analytics';
 import {
     isAdmin,
-    isGreenList,
-    isMobile
+    isGreenList
 } from '../../../backend/utils/checking';
 import {
     Icon,
@@ -18,9 +15,7 @@ import {
 } from '../../../components/shared/general';
 
 import Swal from 'sweetalert2';
-import { supabase } from '../../../backend/actions/fetch/createClient';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
-import { isWhiteList } from '../../../backend/utils/checking';
 import './assets/store.scss';
 
 const emap = (v) => {
@@ -322,39 +317,6 @@ const DetailPage = ({ app }) => {
 
     const region = ['Hà Nội', 'India'];
 
-    useEffect(() => {
-        (async () => {
-            const subscription = await supabase
-                .from('subscriptions')
-                .select('account_id, metadata')
-                .eq('account_id', user.id);
-            let user_region;
-
-            switch (
-            JSON.stringify(subscription.data.at(0).metadata).toString()
-            ) {
-                case '{}': // thinkmay internal user
-                    user_region = region[0];
-                    break;
-                case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
-                    user_region = region[1];
-                    break;
-            }
-
-            const { data, error } = await virtapi(
-                `rpc/get_app_from_store`,
-                'POST',
-                { store_id: `${app.id}` }
-            );
-            if (error) throw error;
-
-            for (let i = 0; i < data.length; i++) {
-                const option = data[i];
-                if (isWhiteList() || user_region == option.region)
-                    SetOptions((old) => [...old, option]);
-            }
-        })();
-    }, []);
     // useLayoutEffect(() => {
     //     const element = document.getElementById('storeScroll');
     //     element.scrollTo({ top: 0, behavior: 'smooth' });

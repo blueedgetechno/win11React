@@ -1,12 +1,6 @@
-import { isScanCodeApp } from '../utils/checking';
+import { isScanCodeApp } from './checking';
 
-/**
- *
- * @param {string} url ''
- * @param {string} appName ''
- * @param {'current_tab' | 'new_tab'} type 'current_tab'
- * @returns
- */
+
 export function openRemotePage(
     url: string,
     appName: string,

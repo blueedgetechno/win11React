@@ -1,102 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { defaultDispatch } from '../../../backend/actions/click';
-import { openWorker, refeshWorker } from '../../../backend/actions/worker';
+// import { openWorker, refeshWorker } from '../../../backend/actions/worker';
 import { appDispatch, menu_hide, useAppSelector } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
 
-const NavTitle = (props) => {
-    var src = props.icon || 'folder';
-
-    return (
-        <div
-            className="navtitle flex prtclk"
-            data-action={props.action}
-            data-payload={props.payload}
-            onClick={defaultDispatch}
-        >
-            <Icon
-                className="mr-1"
-                src={'win/' + src + '-sm'}
-                width={props.isize || 16}
-            />
-            <span>{props.title}</span>
-        </div>
-    );
-};
-
-const FolderDrop = ({ dir }) => {
-    const files = useAppSelector((state) => state.files);
-    const folder = files.data.getId(dir);
-
-    return (
-        <>
-            {folder.data &&
-                folder.data.map((item, i) => {
-                    if (item.type == 'folder') {
-                        return (
-                            <Dropdown
-                                key={i}
-                                icon={item.info && item.info.icon}
-                                title={item.name}
-                                notoggle={item.data.length == 0}
-                                dir={item.id}
-                            />
-                        );
-                    }
-                })}
-        </>
-    );
-};
-
-const Dropdown = (props) => {
-    const [open, setOpen] = useState(props.isDropped != null);
-    const special = useAppSelector((state) => state.worker.data.special);
-    const [fid, setFID] = useState(() => {
-        if (props.spid) return special[props.spid];
-        else return props.dir;
-    });
-    const toggle = () => setOpen(!open);
-
-    return (
-        <div className="dropdownmenu">
-            <div className="droptitle">
-                {!props.notoggle ? (
-                    <Icon
-                        className="arrUi"
-                        fafa={open ? 'faChevronDown' : 'faChevronRight'}
-                        width={10}
-                        onClick={toggle}
-                        pr
-                    />
-                ) : (
-                    <Icon
-                        className="arrUi opacity-0"
-                        fafa="faCircle"
-                        width={10}
-                    />
-                )}
-                <NavTitle
-                    icon={props.icon}
-                    title={props.title}
-                    isize={props.isize}
-                    action={props.action}
-                    payload={fid}
-                />
-                {props.pinned != null ? (
-                    <Icon className="pinUi" src="win/pinned" width={16} />
-                ) : null}
-            </div>
-            {!props.notoggle ? (
-                <div className="dropcontent">
-                    {open ? props.children : null}
-                    {open && fid != null ? <FolderDrop dir={fid} /> : null}
-                </div>
-            ) : null}
-        </div>
-    );
-};
 
 export const Worker = () => {
     const wnapp = useAppSelector((state) => state.apps.worker);
@@ -133,7 +41,7 @@ export const Worker = () => {
                 <div key={index++} className="dirCont flex items-center">
                     <div
                         className="dncont"
-                        onClick={defaultDispatch}
+                        // onClick={defaultDispatch}
                         tabIndex="-1"
                         data-action="FILEDIRWORKER"
                         data-payload={curr.id}
@@ -294,7 +202,6 @@ export const Worker = () => {
                         </div>
                     </div>
                     <div className="sec2">
-                        <NavPane />
                         <ContentArea searchtxt={searchtxt} data={contentData} />
                     </div>
                     <div className="sec3">
@@ -411,7 +318,7 @@ const ContentArea = ({ searchtxt, data }) => {
 
     const handleDouble = (e) => {
         e.stopPropagation();
-        openWorker(e);
+        // openWorker(e);
     };
 
     const emptyClick = (e) => {
@@ -495,15 +402,6 @@ const ContentArea = ({ searchtxt, data }) => {
     );
 };
 
-const NavPane = ({ type, changeFilter }) => {
-    return (
-        <div className="navpane win11Scroll">
-            <div className="extcont">
-                <Dropdown icon="thispc" title="Worker" action=""></Dropdown>
-            </div>
-        </div>
-    );
-};
 
 const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
     const handleChangeFilter = (key, value) => {
@@ -528,7 +426,7 @@ const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
                     <Icon
                         src="refresh"
                         click={'FUNC'}
-                        func={refeshWorker}
+                        // func={refeshWorker}
                         ui
                         width={18}
                         margin="0 6px"

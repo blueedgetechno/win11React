@@ -1,52 +1,18 @@
 import 'sweetalert2/src/sweetalert2.scss';
 import '../reducers/index';
 import {
-    store,
     appDispatch,
-    desk_sort,
-    menu_chng,
-    menu_hide,
-    popup_admin_release_app,
     desk_hide,
     desk_show,
     desk_size,
-    user_delete
+    desk_sort,
+    menu_chng,
+    menu_hide,
+    store
 } from '../reducers/index';
-import { localStorageKey } from '../utils/constant';
-import { Log } from '../utils/log';
-import {
-    connectStorage,
-    connectVolume,
-    deleteApp,
-    deleteStorage,
-    deleteVolume,
-    forkVolume,
-    migrateVolume,
-    openApp,
-    patchApp,
-    pauseApp,
-    resetApp,
-    setDefaultOsVolume,
-    startApp,
-    stopStorage,
-    stopVolume
-} from './app';
-import { supabase } from './fetch/createClient';
-import * as Actions from './index';
-import { fetchApp } from './preload';
-import {
-    adjustSubscription,
-    connectSession,
-    connectWorker,
-    createSession,
-    createSubscription,
-    deactiveSession,
-    modifySubscription,
-    openWorker,
-    viewDetail
-} from './worker';
+import { fetchApp } from './background';
 
-export const refresh = async (_: any, menu: any) => {
+export const refresh = async () => {
     appDispatch(desk_hide())
     await fetchApp();
     appDispatch(desk_show())
@@ -65,7 +31,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -136,48 +102,6 @@ export const changeTaskAlign = (align: string, menu: any) => {
     appDispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-export const performApp = (act: string, menu: any) => {
-    var data = {
-        type: menu.dataset.action,
-        payload: menu.dataset.payload,
-        name: menu.dataset?.name ?? 'Null'
-    };
-    // add analytic
-    if (menu.dataset.action == 'CLOUDAPP') {
-        openApp(data);
-        return;
-    }
-    if (act == 'open') {
-        if (data.type) appDispatch(data);
-    } else if (act == 'delshort') {
-        if (data.type) {
-            var apps = store.getState().apps;
-            var app = Object.keys(apps).filter(
-                (x) =>
-                    apps[x].action == data.type ||
-                    (apps[x].payload == data.payload && apps[x].payload != null)
-            );
-
-            const ap = (apps as [string, any])[app as any];
-            if (ap) {
-                appDispatch({ type: 'DESKREM', payload: ap.name });
-            }
-        }
-    }
-};
-
-export const delDefaultApp = () => {
-    // TODO
-};
-
-export const delApp = ({}, menu: any) => {
-    var data = {
-        type: menu.dataset.action,
-        payload: menu.dataset.payload
-    };
-
-    deleteApp(data);
-};
 
 export const getTreeValue = (obj: any, path: any) => {
     if (path == null) return false;
@@ -202,83 +126,17 @@ export const changeTheme = () => {
     appDispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
 };
 
-export const handleLogOut = async () => {
-    const logging = new Log();
-    logging.loading();
 
-    const { error } = await supabase.auth.signOut();
-    if (error) logging.error();
-
-    logging.close();
-
-    appDispatch(user_delete())
-};
 
 export const menuDispatch = async (event: Event, menu: any) => {
-    const action = {
+    appDispatch(menu_hide({}));
+    appDispatch({
         type: (event.target as any).dataset.action,
         payload: (event.target as any).dataset.payload
-    };
-    const externalAppData = {
-        type: menu?.dataset?.action,
-        payload: menu?.dataset?.payload,
-        name: menu?.dataset?.name
-    };
-
-    const type = (event.target as any).dataset.action;
-    if (!type) return;
-    //Worker Menu action
-    if (type === 'FILEDIRWORKER') openWorker(event);
-    else if (type === 'CREATESESSION') createSession(event);
-    else if (type === 'DEACTIVATESESSION') deactiveSession(event);
-    else if (type === 'CONNECTWORKER') connectWorker(event);
-    else if (type === 'CONNECTWORKERSESSION') connectSession(event);
-    else if (type === 'VIEW_DETAIL') viewDetail(event);
-    else if (type === 'CREATE_SUB') createSubscription();
-    else if (type === 'MODIFY_SUB') modifySubscription();
-    else if (type === 'ADJUST_SUB') adjustSubscription(event);
-    else if (type === 'CONNECT_STORAGE') connectStorage(event);
-    else if (type === 'STOP_STORAGE') stopStorage(event);
-    else if (type === 'DELETE_STORAGE') deleteStorage(event);
-    else if (type === 'CONNECT_VOLUME') connectVolume(event);
-    else if (type === 'STOP_VOLUME') stopVolume(event);
-    else if (type === 'DELETE_VOLUME') deleteVolume(event);
-    else if (type === 'FORK_VOLUME') forkVolume(event);
-    else if (type === 'MIGRATE_VOLUME') migrateVolume(event);
-    else if (type === 'SET_DEFAULT_OS') setDefaultOsVolume(event);
-    else if (type === 'PAUSE_APP') pauseApp(externalAppData);
-    else if (type === 'START_APP') startApp(externalAppData);
-    else if (type === 'RESET_APP') resetApp(externalAppData);
-    else if (type === 'OPEN_APP') openApp(externalAppData);
-    else if (type === 'OPEN_APP_NEWTAB') openApp(externalAppData, 'new_tab');
-    else if (type === 'RELEASE_APP')
-        appDispatch(popup_admin_release_app(event));
-    else if (type === 'PATCH_APP') patchApp(event);
-    else if (type != type.toUpperCase())
-        (Actions as Record<string, any>)[action.type](action.payload, menu);
-    else appDispatch(action);
-
-    appDispatch(menu_hide({}));
+    });
 };
 
-//Cache user request & show when reload
 
-export const cacheRequest = ({ action, appName, callback = '' }: any) => {
-    const cache = {
-        action,
-        appName,
-        callback
-    };
-
-    localStorage.setItem(localStorageKey.request, JSON.stringify(cache));
-};
-
-export const getCacheData = () => {
-    const cache = localStorage.getItem(localStorageKey.request);
-    const data = JSON.parse(cache ?? '');
-
-    return data;
-};
 
 export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
