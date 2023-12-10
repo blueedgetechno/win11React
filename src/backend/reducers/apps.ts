@@ -1,9 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { appDispatch, desk_add } from '.';
 import { allApps } from '../utils';
 import { AccessApplication, DeleteApplication, DownloadApplication, FetchUserApplication, ResetApplication, StartApplication, StopApplication } from './fetch';
 import { formatAppRenderTree } from './fetch/formatData';
 import { BuilderHelper, CacheRequest } from './helper';
-import { appDispatch, desk_add } from '.';
 
 
 
@@ -101,6 +101,7 @@ const initialState = {
             hide: boolean
             max: boolean | null
             z: number
+            dim?: any
         })[]
 }
 
@@ -186,67 +187,87 @@ export const appSlice = createSlice({
             if (obj == undefined)
                 return
 
-            obj.hide = false
-            obj.size = 'full'
-            // obj.max = true
-            obj.z = 999
-        }
+            const tmpState = { ...state }
+            if (obj.z != tmpState.hz) {
+                obj.hide = false;
+                if (!obj.max) {
+                    tmpState.hz += 1;
+                    obj.z = tmpState.hz;
+                    obj.max = true;
+                } else {
+                    obj.z = -1;
+                    obj.max = false;
+                }
+            } else {
+                obj.max = !obj.max;
+                obj.hide = false;
+                if (obj.max) {
+                    tmpState.hz += 1;
+                    obj.z = tmpState.hz;
+                } else {
+                    obj.z = -1;
+                    tmpState.hz -= 1;
+                }
+            }
 
-        // } else if (action.payload == "close") {
-        // } else if (action.payload == "mxmz") {
-        //     obj.size = ["mini", "full"][obj.size != "full" ? 1 : 0];
-        //     obj.hide = false;
-        //     obj.max = true;
-        //     tmpState.hz += 1;
-        //     obj.z = tmpState.hz;
-        // } else if (action.payload == "togg") {
-        //     if (obj.z != tmpState.hz) {
-        //     obj.hide = false;
-        //     if (!obj.max) {
-        //         tmpState.hz += 1;
-        //         obj.z = tmpState.hz;
-        //         obj.max = true;
-        //     } else {
-        //         obj.z = -1;
-        //         obj.max = false;
-        //     }
-        //     } else {
-        //     obj.max = !obj.max;
-        //     obj.hide = false;
-        //     if (obj.max) {
-        //         tmpState.hz += 1;
-        //         obj.z = tmpState.hz;
-        //     } else {
-        //         obj.z = -1;
-        //         tmpState.hz -= 1;
-        //     }
-        //     }
+            state.hz = tmpState.hz
+        },
+        app_maximize: (state, action: PayloadAction<string>) => {
+            const obj = state.apps.find(x => action.payload == x.id)
+            if (obj == undefined)
+                return
 
+            obj.size = ["mini", "full"][obj.size != "full" ? 1 : 0];
+            obj.hide = false;
+            obj.max = true;
+            state.hz += 1;
+            obj.z = state.hz;
+        },
+        app_minimize: (state, action: PayloadAction<string>) => {
+            const obj = state.apps.find(x => action.payload == x.id)
+            if (obj == undefined)
+                return
 
-        //     obj.max = false;
-        //     obj.hide = false;
-        //     if (obj.z == tmpState.hz) {
-        //     tmpState.hz -= 1;
-        //     }
-        //     obj.z = -1;
-        // } else if (action.payload == "resize") {
-        //     obj.size = "cstm";
-        //     obj.hide = false;
-        //     obj.max = true;
-        //     if (obj.z != tmpState.hz) tmpState.hz += 1;
-        //     obj.z = tmpState.hz;
-        //     obj.dim = action.dim;
-        // } else if (action.payload == "front") {
-        //     obj.hide = false;
-        //     obj.max = true;
-        //     if (obj.z != tmpState.hz) {
-        //     tmpState.hz += 1;
-        //     obj.z = tmpState.hz;
-        //     }
-        // }
+            obj.max = false;
+            obj.hide = false;
+            if (obj.z == state.hz) {
+                state.hz -= 1;
+            }
+            obj.z = -1;
+        },
+        app_resize: (state, action: PayloadAction<any>) => {
+            const obj = state.apps.find(x => action.payload.id == x.id)
+            if (obj == undefined)
+                return
 
-        //   }
-        // }
+            obj.max = false;
+            obj.hide = false;
+            if (obj.z == state.hz) {
+                state.hz -= 1;
+            }
+            obj.z = -1;
+            obj.size = "cstm";
+            obj.hide = false;
+            obj.max = true;
+            if (obj.z != state.hz) 
+                state.hz += 1;
+            obj.z = state.hz;
+
+            obj.dim = {...action.payload};
+            obj.dim.id == undefined
+        },
+        app_front: (state, action: PayloadAction<any>) => {
+            const obj = state.apps.find(x => action.payload.id == x.id)
+            if (obj == undefined)
+                return
+
+            obj.hide = false;
+            obj.max = true;
+            if (obj.z != state.hz) {
+                state.hz += 1;
+                obj.z = state.hz;
+            }
+        },
     },
     extraReducers: builder => {
         BuilderHelper('fetch_app', builder, appsAsync.fetch_app, (state, action) => {
@@ -260,7 +281,7 @@ export const appSlice = createSlice({
                 }
             });
 
-            
+
             state.apps = [...initialState.apps, ...app]
         })
     }

@@ -88,7 +88,6 @@ export const PaymentApp = () => {
         };
     };
 
-    console.log(wnapp)
     return (
         <div
             className="paymentApp floatTab dpShad"
@@ -102,7 +101,7 @@ export const PaymentApp = () => {
             data-hide={wnapp.hide}
         >
             <ToolBar
-                app={wnapp.action}
+                app={wnapp.id}
                 icon={wnapp.id}
                 size={wnapp.size}
                 name="Payment"

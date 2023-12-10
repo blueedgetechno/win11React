@@ -31,7 +31,6 @@ export const menuSlice = createSlice({
         },
         startogg: (state) => {
             state.hide = !state.hide 
-            console.log('hello')
             // state.hide = !(state.hide || !state.menu)
             // state.menu = true
             // state.alpha = false

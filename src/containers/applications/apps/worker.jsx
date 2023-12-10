@@ -134,7 +134,7 @@ export const Worker = () => {
             id={wnapp.id + 'App'}
         >
             <ToolBar
-                app={wnapp.action}
+                app={wnapp.id}
                 icon={wnapp.id}
                 size={wnapp.size}
                 name={wnapp.name}

@@ -99,10 +99,8 @@ export const { fetch_user } = userAsync
 
 import * as actions from '.';
 export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
-    if (Object.keys(actions).includes(type)) {
-        console.log('found')
+    if (Object.keys(actions).includes(type))
         return store.dispatch((actions as Record<string, any>)[type](payload))
-    }
 
     store.dispatch({ type, payload })
 }

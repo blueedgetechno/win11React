@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { appDispatch } from '../../../backend/reducers';
+import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import {
     Icon,
     LazyComponent,
     ToolBar
 } from '../../../components/shared/general';
-import { useAppSelector } from '../../../backend/reducers';
 
 export const EdgeMenu = () => {
     const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'edge'));
@@ -120,7 +119,7 @@ export const EdgeMenu = () => {
             id={wnapp.id + 'App'}
         >
             <ToolBar
-                app={wnapp.action}
+                app={wnapp.id}
                 icon={wnapp.id}
                 size={wnapp.size}
                 name="Browser"

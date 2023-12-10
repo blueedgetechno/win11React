@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { appDispatch, useAppSelector } from "../../../backend/reducers";
-import { Image,ToolBar } from "../../../components/shared/general";
 import { changeTheme } from "../../../backend/actions";
+import { appDispatch, useAppSelector } from "../../../backend/reducers";
+import { Image, ToolBar } from "../../../components/shared/general";
 import LangSwitch from "./assets/Langswitch";
 import "./assets/settings.scss";
 import data from "./assets/settingsData.json";
@@ -57,7 +57,7 @@ export const Settings = () => {
       id={wnapp.id + "App"}
     >
       <ToolBar
-        app={wnapp.action}
+        app={wnapp.id}
         icon={wnapp.id}
         size={wnapp.size}
         name="Settings"

@@ -241,7 +241,6 @@ export const globalSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         BuilderHelper('fetch_store', builder, storeAsync.fetch_store, (state, action) => {
-            console.log(action.payload)
             state.games = action.payload
         })
     }

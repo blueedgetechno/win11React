@@ -6,17 +6,23 @@ import { Icon } from '../shared/general';
 import './taskbar.scss';
 
 const Taskbar = () => {
-    const tasks = useAppSelector((state) => state.taskbar);
-    const apps = useAppSelector((state) => 
-        state.apps.apps.filter(x => state.taskbar.apps.includes(x.id))
-    );
     const dispatch = appDispatch;
+    const tasks = useAppSelector((state) => state.taskbar);
+    const apps = useAppSelector((state) => state.apps)
+    const defaultapps = useAppSelector((state) => 
+        state.apps.apps
+            .filter(x => state.taskbar.apps.includes(x.id))
+    );
+    const tempapps = useAppSelector((state) => 
+        state.apps.apps
+            .filter(x => !x.hide)
+            .filter(x => defaultapps.find(y => y.id == x.id) == undefined)
+    );
 
     const showPrev = (event) => {
         var ele = event.target;
-        while (ele && ele.getAttribute('value') == null) {
+        while (ele && ele.getAttribute('value') == null)
             ele = ele.parentElement;
-        }
 
         var appPrev = ele.getAttribute('value');
         var xpos = window.scrollX + ele.getBoundingClientRect().left;
@@ -64,9 +70,9 @@ const Taskbar = () => {
                         click="startmenu/startogg"
                     />
 
-                    {apps.map((task, i) => {
-                        var isHidden = task.hide;
-                        var isActive = task.z == apps.hz;
+                    {defaultapps.map((task, i) => {
+                        const isHidden = task.hide;
+                        const isActive = task.z == apps.hz;
                         return (
                             <div
                                 key={i}
@@ -87,30 +93,23 @@ const Taskbar = () => {
                             </div>
                         );
                     })}
-                    {Object.keys(apps).map((key, i) => {
-                        if (key != 'hz') {
-                            var isActive = apps[key].z == apps.hz;
-                        }
-                        return key != 'hz' &&
-                            key != 'undefined' &&
-                            !apps[key].task &&
-                            !apps[key].hide ? (
-                            <div
-                                key={i}
-                                onMouseOver={(!isActive && showPrev) || null}
-                                value={apps[key].icon}
-                            >
-                                <Icon
-                                    className="tsIcon"
-                                    width={24}
-                                    active={isActive}
-                                    click={apps[key].action}
-                                    payload="togg"
-                                    open="true"
-                                    src={apps[key].icon}
-                                />
-                            </div>
-                        ) : null;
+                    {tempapps.map((key, i) => {
+                        const isActive = key.z == apps.hz;
+                        return <div
+                                    key={i}
+                                    onMouseOver={(!isActive && showPrev) || null}
+                                    value={key.icon}
+                                >
+                                    <Icon
+                                        className="tsIcon"
+                                        width={24}
+                                        active={isActive}
+                                        click={key.action}
+                                        payload="togg"
+                                        open="true"
+                                        src={key.id}
+                                    />
+                                </div>
                     })}
                 </div>
             </div>

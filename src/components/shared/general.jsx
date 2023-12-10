@@ -227,7 +227,6 @@ export const Image = (props) => {
 };
 
 export const SnapScreen = (props) => {
-    const dispatch = appDispatch;
     const [delay, setDelay] = useState(false);
     const lays = useAppSelector((state) => state.globals.lays);
 
@@ -235,10 +234,9 @@ export const SnapScreen = (props) => {
         var action = {
             type: event.currentTarget.dataset.action,
             payload: event.currentTarget.dataset.payload,
-            dim: JSON.parse(event.currentTarget.dataset.dim)
         };
 
-        if (action.dim && action.type) {
+        if (action.type) {
             dispatch_generic(action)
             props.closeSnap();
         }
@@ -271,9 +269,8 @@ export const SnapScreen = (props) => {
                                     borderBottomLeftRadius: (y.br % 7 == 0) * 4
                                 }}
                                 onClick={clickDispatch}
-                                data-dim={JSON.stringify(y.dim)}
-                                data-action={props.app}
-                                data-payload="resize"
+                                data-action={'apps/app_resize'}
+                                data-payload={{id: props.app,...y.dim}}
                             ></div>
                         ))}
                     </div>
@@ -297,8 +294,8 @@ export const ToolBar = (props) => {
 
     const toolClick = () => {
         dispatch({
-            type: props.app,
-            payload: 'front'
+            type: 'apps/app_front',
+            payload: props.app,
         });
     };
 
@@ -379,20 +376,19 @@ export const ToolBar = (props) => {
         wnapp.classList.remove('z9900');
 
         var action = {
-            type: props.app,
-            payload: 'resize',
-            dim: {
+            type: 'apps/app_resize',
+            payload: {
+                id: props.icon,
                 width: getComputedStyle(wnapp).width,
                 height: getComputedStyle(wnapp).height,
                 top: getComputedStyle(wnapp).top,
                 left: getComputedStyle(wnapp).left
-            }
+            },
         };
 
         dispatch_generic(action)
     };
 
-    console.log(props)
     return (
         <>
             <div
@@ -421,8 +417,8 @@ export const ToolBar = (props) => {
                 <div className="actbtns flex items-center">
                     <Icon
                         invert={props.invert}
-                        click={props.app}
-                        payload="mnmz"
+                        click={'apps/app_minimize'}
+                        payload={props.icon}
                         pr
                         src="minimize"
                         ui
@@ -436,11 +432,11 @@ export const ToolBar = (props) => {
                     >
                         <Icon
                             invert={props.invert}
-                            click={props.app}
+                            click={'apps/app_maximize'}
+                            payload={props.icon}
                             ui
                             pr
                             width={12}
-                            payload="mxmz"
                             src={props.size == 'full' ? 'maximize' : 'maxmin'}
                         />
                         <SnapScreen
