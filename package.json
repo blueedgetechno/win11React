@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",
+    "dexie": "^3.2.4",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-xhr-backend": "^3.2.2",
     "keen-slider": "^6.8.6",

@@ -32,7 +32,8 @@ const apps: AppData[] = [
     {
         name: 'Worker Profile',
         id: 'worker',
-        action: 'WORKER'
+        action: 'apps/app_toggle',
+        payload: 'worker'
     },
     {
         name: 'Browser',

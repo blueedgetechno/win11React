@@ -11,22 +11,25 @@ import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
 
 export const Worker = () => {
-    const wnapp = useAppSelector((state) => state.apps.worker);
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'worker'));
     const files = useAppSelector((state) => state.worker);
-    // const fdata = files.data.getId(files.cdir);
-    const fdata = {};
 
-    const [contentData, setContentData] = useState(fdata);
+    const [contentData, setContentData] = useState(files.c);
     const [cpath, setPath] = useState(files.cpath);
     const [searchtxt, setShText] = useState('');
     const [filters, setFilters] = useState({}); //{status: '',}
     const dispatch = appDispatch;
 
-    const filterType = fdata?.info?.menu;
+    // const filterType = fdata?.info?.menu;
 
+    // useEffect(() => {
+    //     setContentData(fdata?.data);
+    // }, [fdata]);
     useEffect(() => {
-        setContentData(fdata?.data);
-    }, [fdata]);
+        setPath(files.cpath);
+        setShText('');
+    }, [files.cpath]);
+
 
     const handleChange = (e) => setPath(e.target.value);
     const handleSearchChange = (e) => setShText(e.target.value);
@@ -64,7 +67,7 @@ export const Worker = () => {
             <div key={index++} className="dirCont flex items-center">
                 <Icon
                     className="pr-1 pb-px"
-                    src={'win/' + fdata?.info?.id + '-sm'}
+                    // src={'win/' + fdata?.info?.id + '-sm'}
                     width={16}
                 />
                 <Icon className="dirchev" fafa="faChevronRight" width={8} />
@@ -78,54 +81,7 @@ export const Worker = () => {
         );
     };
 
-    useEffect(() => {
-        setPath(files.cpath);
-        setShText('');
-    }, [files.cpath]);
 
-    const changeFilter = (key, value) => {
-        if (value == '') {
-            setFilters((prev) => {
-                const { [key]: value, ...rest } = prev;
-
-                return rest;
-            });
-            return;
-        }
-
-        setFilters((prev) => ({ ...prev, [key]: value }));
-    };
-
-    useEffect(() => {
-        let cloneData = fdata?.data;
-        for (let key in filters) {
-            if (key == 'sort' && filters[key] == 'oldest') {
-                cloneData.sort((a, b) => {
-                    return (
-                        Date.parse(a.info.created_at) -
-                        Date.parse(b.info.created_at)
-                    );
-                });
-            } else if (key == 'sort' && filters[key] == 'newest') {
-                cloneData.sort((a, b) => {
-                    return (
-                        Date.parse(b.info.created_at) -
-                        Date.parse(a.info.created_at)
-                    );
-                });
-            } else {
-                cloneData = cloneData.filter(
-                    (prev) => prev.info[key] == filters[key]
-                );
-            }
-        }
-        setContentData(cloneData);
-    }, [filters]);
-
-    const resetFilter = () => {
-        setContentData(fdata.data);
-        setFilters({});
-    };
     return (
         <div
             className="msfiles floatTab dpShad"
@@ -146,17 +102,19 @@ export const Worker = () => {
             />
             <div className="windowScreen flex flex-col">
                 <Ribbon
-                    type={filterType}
-                    changeFilter={changeFilter}
-                    filters={filters}
-                    resetFilter={resetFilter}
+                    // type={filterType}
+                    // changeFilter={changeFilter}
+                    // filters={filters}
+                    // resetFilter={resetFilter}
                 />
                 <div className="restWindow flex-grow flex flex-col">
                     <div className="sec1">
                         <Icon
                             className={
                                 'navIcon hvtheme' +
-                                (files.hid == 0 ? ' disableIt' : '')
+                                // (files.hid == 0 ? ' disableIt' : '')
+                                ''
+
                             }
                             fafa="faArrowLeft"
                             width={14}
@@ -166,9 +124,10 @@ export const Worker = () => {
                         <Icon
                             className={
                                 'navIcon hvtheme' +
-                                (files.hid + 1 == files.hist.length
-                                    ? ' disableIt'
-                                    : '')
+                                // (files.hid + 1 == files.hist.length
+                                //     ? ' disableIt'
+                                //     : '')
+                                ''
                             }
                             fafa="faArrowRight"
                             width={14}
@@ -190,7 +149,7 @@ export const Worker = () => {
                                 onChange={handleChange}
                                 onKeyDown={handleEnter}
                             />
-                            <DirCont />
+                            {/* <DirCont /> */}
                         </div>
                         <div className="srchbar">
                             <Icon
@@ -206,19 +165,19 @@ export const Worker = () => {
                             />
                         </div>
                     </div>
-                    <div className="sec2">
+                    {/* <div className="sec2">
                         <ContentArea searchtxt={searchtxt} data={contentData} />
-                    </div>
+                    </div> */}
                     <div className="sec3">
-                        <div className="item-count text-xs">
+                        {/* <div className="item-count text-xs">
                             {fdata?.data?.length} items
-                        </div>
+                        </div> */}
                         <div className="view-opts flex">
                             <Icon
                                 className="viewicon hvtheme p-1"
                                 click="FILEVIEWWORKER"
                                 payload="5"
-                                open={files.view == 5}
+                                // open={files.view == 5}
                                 src="win/viewinfo"
                                 width={16}
                             />
@@ -226,7 +185,7 @@ export const Worker = () => {
                                 className="viewicon hvtheme p-1"
                                 click="FILEVIEWWORKER"
                                 payload="1"
-                                open={files.view == 1}
+                                // open={files.view == 1}
                                 src="win/viewlarge"
                                 width={16}
                             />
@@ -239,81 +198,8 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt, data }) => {
-    const files = useAppSelector((state) => state.worker);
-    const user = useAppSelector((state) => state.user);
     const [selected, setSelect] = useState('null');
-    const [userInfo, setuserInfo] = useState(null);
-    const subInfo = React.useMemo(() => {
-        if (selected == null) {
-            return {
-                info: userInfo
-            };
-        }
-        // const res = files.data.getId(selected);
-        return res;
-    }, [selected]);
 
-    useEffect(() => {
-        setuserInfo({ email: user.email });
-    }, []);
-
-    const renderSubdata = (data) => {
-        const list = [];
-        for (const key in data) {
-            if (key == 'hardware' || key == 'media_config') {
-                for (const hwkey in data[key]) {
-                    if (
-                        hwkey == 'NICs' ||
-                        hwkey == 'PublicIP' ||
-                        hwkey == 'PrivateIP'
-                    ) {
-                        continue;
-                    }
-
-                    const renderobj =
-                        typeof data[key][hwkey] === 'string'
-                            ? data[key][hwkey]
-                            : JSON.stringify(data[key][hwkey]);
-
-                    list.push(
-                        <div className="wrapperText" key={Math.random()}>
-                            <p className="title">
-                                {renderobj && combineText(hwkey)}:{' '}
-                            </p>
-                            <p className="content"> {renderobj}</p>
-                        </div>
-                    );
-                }
-                continue;
-            }
-
-            if (
-                typeof data[key] === 'object' ||
-                key == 'icon' ||
-                key == 'id' ||
-                key == 'ended' ||
-                key == 'isActive' ||
-                key == 'account_id' ||
-                key == 'proxy_profile_id' ||
-                key == 'worker_profile_id' ||
-                key == 'worker_session_id' ||
-                key == 'user_session_id' ||
-                key == 'spid' ||
-                key == 'menu'
-            ) {
-                continue;
-            }
-
-            list.push(
-                <div className="wrapperText" key={key}>
-                    <p className="title">{data[key] && combineText(key)}: </p>
-                    <p className="content"> {data[key]}</p>
-                </div>
-            );
-        }
-
-        return list;
-    };
     const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
@@ -353,7 +239,7 @@ const ContentArea = ({ searchtxt, data }) => {
         >
             <div className="contentwrap win11Scroll">
                 <div className="gridshow" data-size="lg">
-                    {data?.length > 0 &&
+                    {
                         data.map((item, i) => {
                             return (
                                 item.name.includes(searchtxt) && (
@@ -377,16 +263,12 @@ const ContentArea = ({ searchtxt, data }) => {
                                     </div>
                                 )
                             );
-                        })}
+                        })
+                    }
                 </div>
-                {data?.length == 0 ? (
-                    <span className="text-xs mx-auto">
-                        This folder is empty.
-                    </span>
-                ) : null}
             </div>
             <div className="subinfo">
-                {
+                {/* {
                     <>
                         <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
                             {subInfo?.info?.menu == 'worker' ||
@@ -401,7 +283,7 @@ const ContentArea = ({ searchtxt, data }) => {
                             {renderSubdata(subInfo?.info)}
                         </div>
                     </>
-                }
+                } */}
             </div>
         </div>
     );
@@ -429,7 +311,7 @@ const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
                 <div className="drdwcont flex">
                     <Icon
                         src="refresh"
-                        click={'worker/fetch_worker'}
+                        click={'fetch_worker'}
                         ui
                         width={18}
                         margin="0 6px"

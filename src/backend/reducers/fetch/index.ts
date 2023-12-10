@@ -1,4 +1,5 @@
 import { sleep } from '../../utils/sleep';
+import { RenderNode, TreeResult } from '../../utils/tree';
 import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
@@ -37,15 +38,15 @@ export const ConfigureApplication = async ({
     if (error != null) throw error;
     return data;
 };
-export const FetchAuthorizedWorkers = async () => {
+export const FetchAuthorizedWorkers = async (): Promise<RenderNode<any>> => {
     const { data, error } = await SupabaseFuncInvoke('worker_profile_render');
     if (error != null) throw error;
-    return data;
+    return data.tree;
 };
-export const FetchUserApplication = async () => {
+export const FetchUserApplication = async (): Promise<RenderNode<any>> =>  {
     const { data, error } = await SupabaseFuncInvoke('user_application_fetch');
     if (error != null) throw error;
-    return data;
+    return (data as TreeResult).tree;
 };
 
 export const DeactivateWorkerSession = async (worker_session_id: string) => {

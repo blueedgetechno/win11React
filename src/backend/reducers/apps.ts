@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, desk_add } from '.';
-import { allApps } from '../utils';
+import { AppData, allApps } from '../utils';
+import { RenderNode } from '../utils/tree';
 import {
     AccessApplication,
     DeleteApplication,
@@ -10,16 +11,49 @@ import {
     StartApplication,
     StopApplication
 } from './fetch';
-import { formatAppRenderTree } from './fetch/formatData';
+import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
         const result = await CacheRequest('apps', 30, async () => {
-            const data = await FetchUserApplication();
-            return (await formatAppRenderTree(data)).filter(
-                (x) => x !== undefined
-            );
+            return new RenderNode(await FetchUserApplication()).mapAsync(['pending','storage'], async storage => {
+                if (storage.type == 'pending')
+                    return {
+                        id: 'win/down',
+                        name: `Installing`,
+                        action: 'apps/app_error',
+
+                        payload: {},
+                        installing: true,
+                        ready: false
+                    } as AppData;
+
+                const { data, error } = await virtapi(
+                    `rpc/get_app_metadata_from_volume`,
+                    'POST',
+                    { deploy_as: `${storage.id}` }
+                );
+                if (error)
+                    throw error;
+
+                const icon = (data as any[]).at(0) ?? {
+                    name: 'Game Pause',
+                    icon: 'win/down'
+                };
+
+                // id in store. +  icon: url img, => view
+                // metatada: Meta in store.
+                // pause check by storage.data.lenghth > 0.
+                return {
+                    id: icon.icon,
+                    name: `${icon.name} ${storage.id}`,
+                    action: 'apps/app_remote',
+
+                    payload: { ...icon, ...storage },
+                    ready: storage.data.length != 0
+                } as AppData;
+            })
         });
 
         appDispatch(desk_add(result.map((x) => x.id)));
@@ -129,36 +163,17 @@ export const appSlice = createSlice({
             obj.max = true;
             state.hz += 1;
             obj.z = state.hz;
-
-            // var obj = { ...state['edge'] };
-            // if (action.payload && action.payload.startsWith('http')) {
-            //     obj.url = action.payload;
-            // } else if (action.payload && action.payload.length != 0) {
-            //     obj.url = 'https://www.bing.com/search?q=' + action.payload;
-            // } else {
-            //     obj.url = null;
-            // }
-
-            // obj.size = 'full';
-            // obj.hide = false;
-            // obj.max = true;
-            // state.hz += 1;
-            // obj.z = state.hz;
-            // state['edge'] = obj;
         },
         app_showdesk: (state, action: PayloadAction<any>) => {
-            // const keys = Object.keys(state);
-            // for (var i = 0; i < keys.length; i++) {
-            //     var obj = state[keys[i]];
-            //     if (obj.hide == false) {
-            //         obj.max = false;
-            //         if (obj.z == state.hz) {
-            //             state.hz -= 1;
-            //         }
-            //         obj.z = -1;
-            //         state[keys[i]] = obj;
-            //     }
-            // }
+            state.apps.forEach(obj => {
+                if (obj.hide)
+                    return
+
+                obj.max = false;
+                if (obj.z == state.hz)
+                    state.hz -= 1;
+                obj.z = -1;
+            })
         },
         app_add: (state, action: PayloadAction<any[]>) => {
             const app = action.payload.map((x) => {

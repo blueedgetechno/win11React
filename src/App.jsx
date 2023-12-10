@@ -99,7 +99,7 @@ function App() {
                             <DesktopApp />
                             {Object.keys(Applications).map((key, idx) => {
                                 var WinApp = Applications[key];
-                                if (key == 'Worker') return null;
+                                // if (key == 'Worker') return null;
 
                                 return <WinApp key={idx} />;
                             })}

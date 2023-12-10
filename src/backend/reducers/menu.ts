@@ -205,7 +205,7 @@ const initialState = {
             },
             {
                 name: 'Show Desktop',
-                action: 'SHOWDSK'
+                action: 'apps/app_showdesk'
             }
         ],
         app: [

@@ -6,6 +6,83 @@ import {
     UnknownAction
 } from '@reduxjs/toolkit';
 
+import Dexie, { Table } from 'dexie';
+class TodoDB extends Dexie {
+  data!: Table<{timestamp:number,id:string,raw:any}, string>;
+  constructor() {
+    super('thinkmaydb2');
+    this.version(2).stores({
+      data: 'id,raw,timestamp'
+    });
+  }
+}
+
+const db = new TodoDB();
+const PREFIX = (name: string) => `THINKMAY_${name}`;
+export async function CacheRequest<T>(
+    name: string,
+    sec: number,
+    req: () => Promise<T>
+): Promise<T> {
+	sec = 60 * 60
+    const store = async (raw:any,timestamp:number) => {
+        if (db == null) {
+            localStorage.setItem(
+                PREFIX(name),
+                JSON.stringify({
+                    timestamp,
+                    raw,
+                })
+            );
+        } else {
+            await db.data
+                .add({ 
+                    timestamp, 
+                    raw, 
+                    id:PREFIX(name)
+                })
+        }
+    }
+
+    const get = async () : Promise<any | null> => {
+        if (db == null) {
+            const data = localStorage.getItem(PREFIX(name));
+            try {
+                const {timestamp,raw} = JSON.parse(data ?? '')
+                if (new Date().getTime() - timestamp > sec * 1000)
+                    return null
+                else
+                    return raw
+            } catch {return null}
+        } else {
+            return (await db.data 
+                .where('id')
+                .equals(PREFIX(name))
+                .first())
+                ?.raw
+                ?? null
+        }
+    }
+
+    const do_req = async () => {
+        const result = await req()
+        const timestamp = new Date().getTime()
+        store(result,timestamp)
+        return result;
+    };
+
+    const cache = await get()
+    if (cache == null) 
+        return await do_req();
+
+    return cache
+}
+
+
+
+
+
+
 const isPending = (action: UnknownAction) => action.type.endsWith('/pending');
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled');
@@ -57,37 +134,6 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(isFulfilledAction(name), (state, action) => {
             console.log(action.type);
         });
-}
-
-const PREFIX = (name: string) => `THINKMAY_${name}`;
-export async function CacheRequest<T>(
-    name: string,
-    sec: number,
-    req: () => Promise<T>
-): Promise<T> {
-    const do_req = async () => {
-        const result = await req();
-        localStorage.setItem(
-            PREFIX(name),
-            JSON.stringify({
-                timestamp: new Date().getTime(),
-                result
-            })
-        );
-        return result;
-    };
-
-    const cache = localStorage.getItem(PREFIX(name));
-    if (cache == null) return await do_req();
-
-    try {
-        const { timestamp, result } = JSON.parse(cache);
-        if (Math.abs(new Date().getTime() - timestamp) > sec * 1000)
-            throw 'outdated';
-        else return result;
-    } catch {
-        return await do_req();
-    }
 }
 
 export async function Confirms(): Promise<void> {
