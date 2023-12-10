@@ -7,28 +7,28 @@ const initialState = {
             src: 'wifi',
             name: 'WiFi',
             state: 'network.wifi.state',
-            action: 'STNGTOGG'
+            action: 'setting/setting_togg'
         },
         {
             ui: true,
             src: 'bluetooth',
             name: 'Bluetooth',
             state: 'devices.bluetooth',
-            action: 'STNGTOGG'
+            action: 'setting/setting_togg'
         },
         {
             ui: true,
             src: 'airplane',
             name: 'Flight Mode',
             state: 'network.airplane',
-            action: 'STNGTOGG'
+            action: 'setting/setting_togg'
         },
         {
             ui: true,
             src: 'saver',
             name: 'Battery Saver',
             state: 'system.power.saver.state',
-            action: 'STNGTOGG'
+            action: 'setting/setting_togg'
         },
         {
             ui: true,
@@ -42,7 +42,7 @@ const initialState = {
             src: 'nightlight',
             name: 'Night Light',
             state: 'system.display.nightlight.state',
-            action: 'STNGTOGG'
+            action: 'setting/setting_togg'
         }
     ],
     notifications: [

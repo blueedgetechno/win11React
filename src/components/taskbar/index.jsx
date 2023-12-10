@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { appDispatch, task_hide, task_show,dispatch_generic, useAppSelector } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
 import Battery from '../../components/shared/Battery';
+import { clickDispatch } from '../../backend/utils/dispatch'
 import { Icon } from '../shared/general';
 import './taskbar.scss';
 
@@ -39,16 +40,6 @@ const Taskbar = () => {
         dispatch(task_hide());
     };
 
-    const clickDispatch = (event) => {
-        const dataset = event.target.dataset
-        if (!dataset.action) 
-            return
-        
-        dispatch_generic({
-            type: dataset.action,
-            payload: dataset.payload
-        })
-    };
 
     const [time, setTime] = useState(new Date());
 

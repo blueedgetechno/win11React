@@ -36,7 +36,6 @@ const initialState = {
     }
 };
 
-//document.body.dataset.theme = initialState.person.theme
 
 const changeVal = (obj: any, pathin: string, val = 'togg') => {
     var tmp = obj;

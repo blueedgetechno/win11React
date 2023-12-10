@@ -1,6 +1,7 @@
 import * as FaRegIcons from '@fortawesome/free-regular-svg-icons';
 import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clickDispatch, customClickDispatch } from '../../backend/utils/dispatch';
 import { useEffect, useState } from 'react';
 import { appDispatch, dispatch_generic, useAppSelector } from '../../backend/reducers';
 import './general.scss';
@@ -24,12 +25,7 @@ export const Icon = (props) => {
         }
     }
 
-    const clickDispatch = (event) => {
-        dispatch_generic({
-            type: event.currentTarget.dataset.action,
-            payload: event.currentTarget.dataset.payload
-        })
-    };
+
 
     if (props.fafa != null) {
         return (
@@ -172,18 +168,6 @@ export const Image = (props) => {
         }
     };
 
-    const clickDispatch = (event) => {
-        var action = {
-            type: event.currentTarget.dataset.action,
-            payload: event.currentTarget.dataset.payload
-        };
-
-        if (!action.type)
-            return
-
-        dispatch();
-    };
-
     return (
         <div
             className={`imageCont prtclk ${props.className || ''}`}
@@ -229,18 +213,7 @@ export const Image = (props) => {
 export const SnapScreen = (props) => {
     const [delay, setDelay] = useState(false);
     const lays = useAppSelector((state) => state.globals.lays);
-
-    const clickDispatch = (event) => {
-        var action = {
-            type: event.currentTarget.dataset.action,
-            payload: event.currentTarget.dataset.payload,
-        };
-
-        if (action.type) {
-            dispatch_generic(action)
-            props.closeSnap();
-        }
-    };
+    const clickDispatch = customClickDispatch(props.closeSnap)
 
     useEffect(() => {
         if (delay && props.snap) {

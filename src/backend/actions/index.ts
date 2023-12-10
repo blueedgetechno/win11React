@@ -9,7 +9,10 @@ import {
     dispatch_generic,
     menu_chng,
     menu_hide,
-    store
+    setting_theme,
+    sidepane_panethem,
+    store,
+    wall_set
 } from '../reducers/index';
 import { fetchApp } from './background';
 
@@ -122,9 +125,9 @@ export const changeTheme = () => {
     var icon = thm == 'light' ? 'sun' : 'moon';
     localStorage.setItem('theme', thm);
     document.body.dataset.theme = thm;
-    appDispatch({ type: 'STNGTHEME', payload: thm });
-    appDispatch({ type: 'PANETHEM', payload: icon });
-    appDispatch({ type: 'WALLSET', payload: thm == 'light' ? 0 : 1 });
+    appDispatch(setting_theme(thm));
+    appDispatch(sidepane_panethem(icon));
+    appDispatch(wall_set(thm == 'light' ? 0 : 1));
 };
 
 

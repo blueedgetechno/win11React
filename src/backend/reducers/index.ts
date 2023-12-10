@@ -97,9 +97,13 @@ export const { fetch_store } = storeAsync
 export const { fetch_user } = userAsync
 
 import * as actions from '.';
-export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
-    if (Object.keys(actions).includes(type))
-        return store.dispatch((actions as Record<string, any>)[type](payload))
+import * as Actions from '../actions/index.js';
 
-    store.dispatch({ type, payload })
+export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
+    if (Object.keys(Actions).includes(type))
+        (Actions as Record<string,any>)[type](payload)
+    else if (Object.keys(actions).includes(type))
+        store.dispatch((actions as Record<string, any>)[type](payload))
+    else
+        store.dispatch({ type, payload })
 }

@@ -4,6 +4,7 @@ import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
+import { clickDispatch } from '../../backend/utils/dispatch';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
@@ -102,23 +103,6 @@ export const SidePane = () => {
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
-    let [btlevel, setBtLevel] = useState('');
-    const childToParent = () => { };
-
-    const clickDispatch = (event) => {
-        var action = {
-            type: event.target.dataset.action,
-            payload: event.target.dataset.payload
-        };
-
-        if (action.type) {
-            if (action.type != action.type.toUpperCase()) {
-                Actions[action.type](action.payload);
-            } else {
-                dispatch_generic(action)
-            }
-        }
-    };
 
     const vSlider = document.querySelector('.vSlider');
     const bSlider = document.querySelector('.bSlider');
