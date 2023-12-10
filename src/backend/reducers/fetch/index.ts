@@ -15,25 +15,28 @@ export const ConfigureApplication = async ({
     hidevm,
     cluster_id
 }: any) => {
-    const { data, error, code } = await SupabaseFuncInvoke('configure_application', {
-        action: 'RELEASE',
-        store_id: parseInt(store_id),
-        desc: desc,
-        speed: vol_speed,
-        availability: vol_availability,
-        cluster_id,
-        hardware: {
-            gpu_model: gpu_model,
-            vcpus: parseInt(vcpus),
-            ram: parseInt(ram),
-            vdriver: vdriver,
-            hidevm: hidevm
+    const { data, error, code } = await SupabaseFuncInvoke(
+        'configure_application',
+        {
+            action: 'RELEASE',
+            store_id: parseInt(store_id),
+            desc: desc,
+            speed: vol_speed,
+            availability: vol_availability,
+            cluster_id,
+            hardware: {
+                gpu_model: gpu_model,
+                vcpus: parseInt(vcpus),
+                ram: parseInt(ram),
+                vdriver: vdriver,
+                hidevm: hidevm
+            }
         }
-    });
+    );
 
     if (error != null) throw error;
-    return data
-}
+    return data;
+};
 export const FetchAuthorizedWorkers = async () => {
     const { data, error } = await SupabaseFuncInvoke('worker_profile_render');
     if (error != null) throw error;
@@ -124,18 +127,20 @@ export const AdjustSubscription = async (
     return data;
 };
 
-
 export const DownloadApplication = async (
     app_template_id: string,
     availability: string,
     speed: string,
     safe: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke('launch_application', {
-        action: 'SETUP',
-        app_template_id: app_template_id,
-        option: { availability, speed, safe }
-    });
+    const { data, code, error } = await SupabaseFuncInvoke(
+        'launch_application',
+        {
+            action: 'SETUP',
+            app_template_id: app_template_id,
+            option: { availability, speed, safe }
+        }
+    );
     if (error != null) {
         throw { error, code };
     }
@@ -146,9 +151,13 @@ export const DownloadApplication = async (
         if (countBindingStorageErr == COUNT_ERR_RPC)
             throw { error: null, code: '0' };
 
-        const { data: res, error } = await virtapi(`rpc/binding_storage`, 'POST', {
-            volume_id: data.volume_ids.at(0)
-        });
+        const { data: res, error } = await virtapi(
+            `rpc/binding_storage`,
+            'POST',
+            {
+                volume_id: data.volume_ids.at(0)
+            }
+        );
 
         if (error) countBindingStorageErr++;
         else if (res.length == 0)
@@ -173,25 +182,23 @@ export const StartApplication = async (storage_id: string) => {
         }
     );
 
-    if (error != null)
-        throw { error, code };
+    if (error != null) throw { error, code };
 
     for (let i = 0; i < 100; i++) {
         const { data, error } = await supabase.rpc('setup_status', {
             storage_id
         });
 
-        if (error) 
-            throw {error,code:0};
-        else if (data == true) 
-            break;
-        else
-            await sleep(TIME_SLEEP);
+        if (error) throw { error, code: 0 };
+        else if (data == true) break;
+        else await sleep(TIME_SLEEP);
     }
 
     return data;
 };
-export const AccessApplication = async (input: { storage_id: string } | { volume_id: string }) => {
+export const AccessApplication = async (
+    input: { storage_id: string } | { volume_id: string }
+) => {
     const { data, code, error } = await SupabaseFuncInvoke(
         'access_application',
         {
@@ -250,19 +257,15 @@ export const StopApplication = async (storage_id: string) => {
             storage_id: storage_id
         }
     );
-    if (error != null) 
-        throw { error, code };
+    if (error != null) throw { error, code };
 
     for (let i = 0; i < 100; i++) {
-        const { data, error } = await supabase
-            .rpc('setup_status', {
-                storage_id: storage_id
-            });
+        const { data, error } = await supabase.rpc('setup_status', {
+            storage_id: storage_id
+        });
 
-        if (error)
-            throw { error, code: 0 }
-        else if (data == false)
-            break;
+        if (error) throw { error, code: 0 };
+        else if (data == false) break;
 
         await sleep(10 * 1000);
     }
@@ -407,11 +410,11 @@ export const FetchApplicationTemplates = async (id: number) => {
 };
 
 export async function FetchApp(app: any) {
-    const region: string[] = []
+    const region: string[] = [];
 
     const subscription = await supabase
         .from('subscriptions')
-        .select('account_id, metadata')
+        .select('account_id, metadata');
     // .eq('account_id', user.id);
     let user_region;
 
@@ -462,6 +465,5 @@ async function handleInsertApp(newData: any) {
     //         screenshoots: screenshoots
     //     }
     // });
-
     // if (resp.status != 200) throw await resp.text();
 }

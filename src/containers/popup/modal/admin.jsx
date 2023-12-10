@@ -11,17 +11,17 @@ const ModalEditOrInsert = (props) => {
         modalType == 'edit'
             ? appData
             : {
-                id: '',
-                name: '',
-                type: '',
-                description: '',
-                feature: '',
-                screenshoots: [],
-                icon: ''
-            }
+                  id: '',
+                  name: '',
+                  type: '',
+                  description: '',
+                  feature: '',
+                  screenshoots: [],
+                  icon: ''
+              }
     );
 
-    const closeModal = () => appDispatch(popup_close())
+    const closeModal = () => appDispatch(popup_close());
 
     function handleChangeInput(e) {
         const name = e.target.name;
@@ -96,7 +96,6 @@ const ModalEditOrInsert = (props) => {
             };
         });
     }
-
 
     const handleSubmitForm = async (event) => {
         event.preventDefault();

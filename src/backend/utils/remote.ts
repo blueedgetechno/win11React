@@ -1,6 +1,5 @@
 import { isScanCodeApp } from './checking';
 
-
 export function openRemotePage(
     url: string,
     appName: string,

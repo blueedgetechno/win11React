@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { appDispatch, setting_setv, useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    setting_setv,
+    useAppSelector
+} from '../../../backend/reducers';
 import { Icon, ToolBar } from '../../../components/shared/general';
 import LangSwitch from './assets/Langswitch';
 import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';
 
 export const Getstarted = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'getstarted'));
+    const wnapp = useAppSelector((state) =>
+        state.apps.apps.find((x) => x.id == 'getstarted')
+    );
     const dispatch = appDispatch;
     const tasks = useAppSelector((state) => state.taskbar);
     const { t } = useTranslation();
@@ -17,10 +23,12 @@ export const Getstarted = () => {
 
     const changUserName = (e) => {
         var newName = e.target.value;
-        dispatch(setting_setv({
-            path: 'person.name',
-            value: newName
-        }));
+        dispatch(
+            setting_setv({
+                path: 'person.name',
+                value: newName
+            })
+        );
     };
 
     return (

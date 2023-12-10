@@ -17,19 +17,19 @@ export const deskSlice = createSlice({
             state.apps = state.apps.filter((x) => x != action.payload);
         },
         desk_add: (state, action: PayloadAction<string[]>) => {
-            state.apps = [...desktopApps,...action.payload]
+            state.apps = [...desktopApps, ...action.payload];
         },
         desk_hide: (state) => {
-            state.hide= true ;
+            state.hide = true;
         },
         desk_show: (state) => {
-            state.hide= false;
+            state.hide = false;
         },
         desk_size: (state, action: PayloadAction<number>) => {
-            state.size= action.payload ;
+            state.size = action.payload;
         },
         desk_sort: (state, action: PayloadAction<any>) => {
-            state.sort= action.payload || 'none' ;
+            state.sort = action.payload || 'none';
         }
     }
 });

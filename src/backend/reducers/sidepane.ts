@@ -47,58 +47,65 @@ const initialState = {
     ],
     notifications: [
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
         },
         {
-            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            urlToImage:
+                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
             url: 'https://win11.blueedge.me/',
             name: 'hello',
             title: 'name',
             content: 'hello'
-        },
+        }
     ],
 
     hide: true,
-    banhide: true,
+    banhide: true
 };
 
 export const sidepaneSlice = createSlice({
@@ -109,17 +116,17 @@ export const sidepaneSlice = createSlice({
             state.banhide = !state.banhide;
         },
         sidepane_bandhide: (state) => {
-            state.banhide = true
+            state.banhide = true;
         },
         sidepane_panetogg: (state) => {
             state.hide = !state.hide;
         },
         sidepane_panehide: (state) => {
-            state.hide = true
+            state.hide = true;
         },
 
         sidepane_panethem: (state, action: PayloadAction<any>) => {
             state.quicks[4].src = action.payload;
-        },
+        }
     }
 });

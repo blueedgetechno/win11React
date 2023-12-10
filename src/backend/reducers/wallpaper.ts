@@ -37,14 +37,14 @@ export const wallSlice = createSlice({
     reducers: {
         wall_next: (state) => {
             const twps = (state.wps + 1) % walls.length;
-            state.wps = twps
-            state.src = walls[twps]
+            state.wps = twps;
+            state.src = walls[twps];
         },
         wall_unlock: (state) => {
-            state.unlocked = false
+            state.unlocked = false;
         },
         wall_lock: (state) => {
-            state.unlocked = false
+            state.unlocked = false;
         },
         wall_set: (state, action: PayloadAction<any>) => {
             let isIndex = !Number.isNaN(parseInt(action.payload)),
@@ -59,8 +59,8 @@ export const wallSlice = createSlice({
                 wps = walls.indexOf(action.payload);
             }
 
-            state.wps = wps
-            state.src = src
+            state.wps = wps;
+            state.src = src;
         }
     }
 });

@@ -4,10 +4,16 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from '../../../components/shared/general';
 
-import { appDispatch, app_close, useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    app_close,
+    useAppSelector
+} from '../../../backend/reducers';
 import './assets/about.scss';
 export const AboutWin = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'about'));
+    const wnapp = useAppSelector((state) =>
+        state.apps.apps.find((x) => x.id == 'about')
+    );
     const dispatch = appDispatch;
     const { t, i18n } = useTranslation();
 
@@ -118,7 +124,7 @@ export const AboutWin = () => {
                                 currentSlide ===
                                 instanceRef.current.track.details.slides
                                     .length -
-                                1
+                                    1
                             }
                         />
                     </>
@@ -159,8 +165,9 @@ function Arrow(props) {
     return (
         <svg
             onClick={props.onClick}
-            className={`arrow ${props.left ? 'arrow--left' : 'arrow--right'
-                } ${disabeld}`}
+            className={`arrow ${
+                props.left ? 'arrow--left' : 'arrow--right'
+            } ${disabeld}`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
         >

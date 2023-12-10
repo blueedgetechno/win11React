@@ -19,7 +19,9 @@ const initialOptions = {
 };
 
 export const PaymentApp = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'payment'));
+    const wnapp = useAppSelector((state) =>
+        state.apps.apps.find((x) => x.id == 'payment')
+    );
     const user = useAppSelector((state) => state.user);
     const dispatch = appDispatch;
 
@@ -159,9 +161,7 @@ export const PaymentApp = () => {
                                 Chuyển Khoản
                             </button>
                             <div className="items-center flex flex-col items-center mt-4">
-                                <PayPalScriptProvider
-                                    options={initialOptions}
-                                >
+                                <PayPalScriptProvider options={initialOptions}>
                                     {' '}
                                     {FUNDING_SOURCES.map(
                                         (fundingSource, index) => {
@@ -189,7 +189,7 @@ export const PaymentApp = () => {
                                                         shape: 'pill',
                                                         color:
                                                             fundingSource ==
-                                                                FUNDING.PAYLATER
+                                                            FUNDING.PAYLATER
                                                                 ? 'gold'
                                                                 : ''
                                                     }}

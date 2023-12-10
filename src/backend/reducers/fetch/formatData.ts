@@ -1,5 +1,5 @@
-import { AppData } from "../../utils";
-import { virtapi } from "./createClient";
+import { AppData } from '../../utils';
+import { virtapi } from './createClient';
 
 export function formatWorkerRenderTree(data: any) {
     const tree = data.tree;
@@ -48,10 +48,10 @@ function AddNode(folder: any, tree: any) {
 //   }
 // }
 
-export async function formatAppRenderTree(data: any) : Promise<AppData[]> {
+export async function formatAppRenderTree(data: any): Promise<AppData[]> {
     return await Promise.all(
         data.tree.data.map(async (storage: any) => {
-            if (storage.type == 'pending') 
+            if (storage.type == 'pending')
                 return {
                     id: 'win/down',
                     name: `Installing`,
@@ -67,13 +67,12 @@ export async function formatAppRenderTree(data: any) : Promise<AppData[]> {
                 'POST',
                 { deploy_as: `${storage.id}` }
             );
-            if (error) 
-                return;
+            if (error) return;
 
             const icon = (data as any[]).at(0) ?? {
-                    name: 'Game Pause',
-                    icon: 'win/down'
-                };
+                name: 'Game Pause',
+                icon: 'win/down'
+            };
 
             // id in store. +  icon: url img, => view
             // metatada: Meta in store.
@@ -83,8 +82,8 @@ export async function formatAppRenderTree(data: any) : Promise<AppData[]> {
                 name: `${icon.name} ${storage.id}`,
                 action: 'apps/app_remote',
 
-                payload: {...icon,...storage},
-                ready: storage.data.length != 0,
+                payload: { ...icon, ...storage },
+                ready: storage.data.length != 0
             } as AppData;
         })
     );

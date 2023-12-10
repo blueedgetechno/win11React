@@ -14,16 +14,15 @@ import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
-const middleware: ThunkMiddleware = () =>
-    next =>
-        async action => {
-            console.log({ ...action as any })
-            return await next(action)
-        }
+const middleware: ThunkMiddleware = () => (next) => async (action) => {
+    console.log({ ...(action as any) });
+    return await next(action);
+};
 
 export const store = configureStore({
     devTools: true,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(middleware),
     reducer: {
         user: userSlice.reducer,
         wallpaper: wallSlice.reducer,
@@ -46,7 +45,8 @@ export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const { user_delete } = userSlice.actions;
-export const { wall_next, wall_set,wall_lock,wall_unlock } = wallSlice.actions;
+export const { wall_next, wall_set, wall_lock, wall_unlock } =
+    wallSlice.actions;
 export const { task_audo, task_hide, task_show, task_toggle } =
     taskSlice.actions;
 export const {
@@ -66,10 +66,17 @@ export const {
     startshw,
     startsrc
 } = menuSlice.actions;
-export const { app_toggle, app_add,app_close, app_external, app_showdesk, app_url } =
-    appSlice.actions;
+export const {
+    app_toggle,
+    app_add,
+    app_close,
+    app_external,
+    app_showdesk,
+    app_url
+} = appSlice.actions;
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
-export const { setting_load, setting_setv, setting_theme, setting_togg } = settSlice.actions;
+export const { setting_load, setting_setv, setting_theme, setting_togg } =
+    settSlice.actions;
 export const {
     worker_back,
     worker_dir,
@@ -79,10 +86,7 @@ export const {
     worker_update,
     worker_view
 } = workerSlice.actions;
-export const {
-    popup_close,
-    popup_open
-} = popupSlice.actions;
+export const { popup_close, popup_open } = popupSlice.actions;
 export const {
     sidepane_bandhide,
     sidepane_bandtogg,
@@ -91,19 +95,24 @@ export const {
     sidepane_panethem
 } = sidepaneSlice.actions;
 
-export const { fetch_app, install_app, } = appsAsync
-export const { fetch_worker } = workerAsync
-export const { fetch_store } = storeAsync
-export const { fetch_user } = userAsync
+export const { fetch_app, install_app } = appsAsync;
+export const { fetch_worker } = workerAsync;
+export const { fetch_store } = storeAsync;
+export const { fetch_user } = userAsync;
 
 import * as actions from '.';
 import * as Actions from '../actions/index.js';
 
-export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
+export const dispatch_generic = async ({
+    type,
+    payload
+}: {
+    type: string;
+    payload: any;
+}) => {
     if (Object.keys(Actions).includes(type))
-        (Actions as Record<string,any>)[type](payload)
+        (Actions as Record<string, any>)[type](payload);
     else if (Object.keys(actions).includes(type))
-        store.dispatch((actions as Record<string, any>)[type](payload))
-    else
-        store.dispatch({ type, payload })
-}
+        store.dispatch((actions as Record<string, any>)[type](payload));
+    else store.dispatch({ type, payload });
+};

@@ -1,23 +1,28 @@
 import { useEffect, useState } from 'react';
-import { appDispatch, task_hide, task_show,dispatch_generic, useAppSelector } from '../../backend/reducers';
+import {
+    appDispatch,
+    task_hide,
+    task_show,
+    dispatch_generic,
+    useAppSelector
+} from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
 import Battery from '../../components/shared/Battery';
-import { clickDispatch } from '../../backend/utils/dispatch'
+import { clickDispatch } from '../../backend/utils/dispatch';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
 
 const Taskbar = () => {
     const dispatch = appDispatch;
     const tasks = useAppSelector((state) => state.taskbar);
-    const apps = useAppSelector((state) => state.apps)
-    const defaultapps = useAppSelector((state) => 
-        state.apps.apps
-            .filter(x => state.taskbar.apps.includes(x.id))
+    const apps = useAppSelector((state) => state.apps);
+    const defaultapps = useAppSelector((state) =>
+        state.apps.apps.filter((x) => state.taskbar.apps.includes(x.id))
     );
-    const tempapps = useAppSelector((state) => 
+    const tempapps = useAppSelector((state) =>
         state.apps.apps
-            .filter(x => !x.hide)
-            .filter(x => defaultapps.find(y => y.id == x.id) == undefined)
+            .filter((x) => !x.hide)
+            .filter((x) => defaultapps.find((y) => y.id == x.id) == undefined)
     );
 
     const showPrev = (event) => {
@@ -30,16 +35,17 @@ const Taskbar = () => {
 
         var offsetx = Math.round((xpos * 10000) / window.innerWidth) / 100;
 
-        dispatch(task_show({
-            app: appPrev,
-            pos: offsetx
-        }));
+        dispatch(
+            task_show({
+                app: appPrev,
+                pos: offsetx
+            })
+        );
     };
 
     const hidePrev = () => {
         dispatch(task_hide());
     };
-
 
     const [time, setTime] = useState(new Date());
 
@@ -86,21 +92,23 @@ const Taskbar = () => {
                     })}
                     {tempapps.map((key, i) => {
                         const isActive = key.z == apps.hz;
-                        return <div
-                                    key={i}
-                                    onMouseOver={(!isActive && showPrev) || null}
-                                    value={key.icon}
-                                >
-                                    <Icon
-                                        className="tsIcon"
-                                        width={24}
-                                        active={isActive}
-                                        click={key.action}
-                                        payload="togg"
-                                        open="true"
-                                        src={key.id}
-                                    />
-                                </div>
+                        return (
+                            <div
+                                key={i}
+                                onMouseOver={(!isActive && showPrev) || null}
+                                value={key.icon}
+                            >
+                                <Icon
+                                    className="tsIcon"
+                                    width={24}
+                                    active={isActive}
+                                    click={key.action}
+                                    payload="togg"
+                                    open="true"
+                                    src={key.id}
+                                />
+                            </div>
+                        );
                     })}
                 </div>
             </div>
@@ -128,9 +136,7 @@ const Taskbar = () => {
                         <Battery />
                     </div>
                 </>
-                <div
-                    className="taskDate m-1 handcr prtclk rounded hvlight"
-                >
+                <div className="taskDate m-1 handcr prtclk rounded hvlight">
                     <div>
                         {time.toLocaleTimeString('en-US', {
                             hour: 'numeric',

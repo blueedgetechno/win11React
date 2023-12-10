@@ -17,9 +17,9 @@ import {
 import { fetchApp } from './background';
 
 export const refresh = async () => {
-    appDispatch(desk_hide())
+    appDispatch(desk_hide());
     await fetchApp();
-    appDispatch(desk_show())
+    appDispatch(desk_show());
 };
 
 export const afterMath = (event: any) => {
@@ -35,7 +35,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -68,7 +68,7 @@ export const changeIconSize = (size: string, menu: any) => {
     }
 
     // refresh("", tmpMenu);
-    appDispatch(desk_size(isize))
+    appDispatch(desk_size(isize));
     appDispatch(menu_chng({}));
 };
 
@@ -106,7 +106,6 @@ export const changeTaskAlign = (align: string, menu: any) => {
     appDispatch({ type: 'MENUCHNG', payload: tmpMenu });
 };
 
-
 export const getTreeValue = (obj: any, path: any) => {
     if (path == null) return false;
 
@@ -130,21 +129,16 @@ export const changeTheme = () => {
     appDispatch(wall_set(thm == 'light' ? 0 : 1));
 };
 
-
-
 export const menuDispatch = async (event: Event, menu: any) => {
-    const dataset = (event.target as any)?.dataset
-    if (dataset.action == undefined) 
-        return
-    
+    const dataset = (event.target as any)?.dataset;
+    if (dataset.action == undefined) return;
+
     appDispatch(menu_hide({}));
     dispatch_generic({
         type: dataset.action,
         payload: dataset.payload
     });
 };
-
-
 
 export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });

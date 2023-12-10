@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    hide: true,
+    hide: true
     // menu: false,
     // showAll: false,
     // alpha: false,
@@ -21,16 +21,16 @@ export const menuSlice = createSlice({
     reducers: {
         startshw: (state) => {
             // state.menu = true
-            state.hide = false
+            state.hide = false;
             // state.pwctrl = false
         },
         starthid: (state) => {
-            state.hide = true
+            state.hide = true;
             // state.showAll = false
             // state.pwctrl = false
         },
         startogg: (state) => {
-            state.hide = !state.hide 
+            state.hide = !state.hide;
             // state.hide = !(state.hide || !state.menu)
             // state.menu = true
             // state.alpha = false

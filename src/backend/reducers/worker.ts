@@ -22,13 +22,8 @@ const initialState: WorkerType = {
     cpath: ''
 };
 
-
-
 initialState.hist.push(initialState.cdir);
 // initialState.data.parse({});
-
-
-
 
 function format(tmp: WorkerType, navHist = false): WorkerType {
     if (!navHist && tmp.cdir != tmp.hist[tmp.hid]) {
@@ -49,7 +44,6 @@ function format(tmp: WorkerType, navHist = false): WorkerType {
     return tmp;
 }
 
-
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FetchAuthorizedWorkers } from './fetch';
 import { formatWorkerRenderTree } from './fetch/formatData';
@@ -62,7 +56,7 @@ export const workerAsync = {
             return await CacheRequest('worker', 30, async () => {
                 const res = await FetchAuthorizedWorkers();
                 return formatWorkerRenderTree(res);
-            })
+            });
         }
     ),
     stop_volume: createAsyncThunk(
@@ -71,10 +65,10 @@ export const workerAsync = {
             return await CacheRequest('worker', 30, async () => {
                 const res = await FetchAuthorizedWorkers();
                 return formatWorkerRenderTree(res);
-            })
+            });
         }
     )
-}
+};
 export const stopVolume = (e: Event) =>
     wrapper(async () => {
         const payload = formatEvent(e);
@@ -289,7 +283,7 @@ export const openWorker = (e: any) => {
     if (worker == null) return;
     else if (worker.type == 'file') return;
 
-    appDispatch(worker_dir(worker.id))
+    appDispatch(worker_dir(worker.id));
 };
 
 export const viewDetail = (e: any) => {
@@ -380,22 +374,9 @@ export const adjustSubscription = async (e: any) =>
         return 'success';
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const ReleaseApp = async (data: any) => {
     wrapper(async () => {
-        ConfigureApplication(data)
+        ConfigureApplication(data);
         appDispatch({ type: 'CLOSE_MODAL', payload: {} });
     });
 };
@@ -426,7 +407,6 @@ export const patchApp = async (app: any) => {
 };
 
 export const workerSlice = createSlice({
-
     name: 'worker',
     initialState,
     reducers: {
@@ -471,9 +451,12 @@ export const workerSlice = createSlice({
             // state.view = 1;
         }
     },
-    extraReducers: build => {
-        BuilderHelper('fetch_worker', build, workerAsync.fetch_worker, (state, action) => {
-
-        })
+    extraReducers: (build) => {
+        BuilderHelper(
+            'fetch_worker',
+            build,
+            workerAsync.fetch_worker,
+            (state, action) => {}
+        );
     }
 });

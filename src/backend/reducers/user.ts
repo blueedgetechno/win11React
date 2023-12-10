@@ -5,8 +5,8 @@ import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
 type Data = User & {
-    plans: string[]
-}
+    plans: string[];
+};
 
 const initialState: Data = {
     id: 'unknown',
@@ -18,34 +18,31 @@ const initialState: Data = {
 };
 
 export const userAsync = {
-    fetch_user: createAsyncThunk(
-        'fetch_user',
-        async (): Promise<Data> => {
-            return await CacheRequest('user', 30, async () => {
-                const { data: { user }, error } = await supabase.auth.getUser();
-                if (error != null)
-                    throw error;
-                if (user == null)
-                    throw 'wtf';
+    fetch_user: createAsyncThunk('fetch_user', async (): Promise<Data> => {
+        return await CacheRequest('user', 30, async () => {
+            const {
+                data: { user },
+                error
+            } = await supabase.auth.getUser();
+            if (error != null) throw error;
+            if (user == null) throw 'wtf';
 
-                // const { data } = await supabase.rpc('validate_user_access', {
-                //     user_account_id: user?.id,
-                //     plan_name: ['day', 'week', 'month', 'fullstack', 'admin']
-                // });
+            // const { data } = await supabase.rpc('validate_user_access', {
+            //     user_account_id: user?.id,
+            //     plan_name: ['day', 'week', 'month', 'fullstack', 'admin']
+            // });
 
+            // const { data } = await supabase.rpc('get_usage_time_user', {
+            //     user_id: user?.id
+            // });
 
-                // const { data } = await supabase.rpc('get_usage_time_user', {
-                //     user_id: user?.id
-                // });
-
-                return {
-                    ...user,
-                    plans: []
-                }
-            })
-        }
-    )
-}
+            return {
+                ...user,
+                plans: []
+            };
+        });
+    })
+};
 
 export const userSlice = createSlice({
     name: 'user',
@@ -56,10 +53,15 @@ export const userSlice = createSlice({
             localStorage.removeItem(localStorageKey.user);
         }
     },
-    extraReducers: builder => {
-        BuilderHelper('fetch_user', builder, userAsync.fetch_user, (state, action) => {
-            state.id = action.payload.id
-            state.email = action.payload.email
-        })
+    extraReducers: (builder) => {
+        BuilderHelper(
+            'fetch_user',
+            builder,
+            userAsync.fetch_user,
+            (state, action) => {
+                state.id = action.payload.id;
+                state.email = action.payload.email;
+            }
+        );
     }
 });

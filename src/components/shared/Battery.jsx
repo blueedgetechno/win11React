@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { appDispatch, setting_setv, setting_theme, useAppSelector } from '../../backend/reducers';
+import {
+    appDispatch,
+    setting_setv,
+    setting_theme,
+    useAppSelector
+} from '../../backend/reducers';
 import './battery.scss';
 
 const Battery = ({ pct, invert }) => {
@@ -15,10 +20,12 @@ const Battery = ({ pct, invert }) => {
         if (bt.charging) {
             level = -level;
         }
-        dispatch(setting_setv({ 
-            path: 'system.power.battery',
-            value: level
-        }));
+        dispatch(
+            setting_setv({
+                path: 'system.power.battery',
+                value: level
+            })
+        );
     };
 
     useEffect(() => {

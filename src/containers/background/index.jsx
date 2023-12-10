@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { supabase } from '../../backend/reducers/fetch/createClient';
-import { appDispatch, useAppSelector, wall_unlock } from '../../backend/reducers';
+import {
+    appDispatch,
+    useAppSelector,
+    wall_unlock
+} from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';

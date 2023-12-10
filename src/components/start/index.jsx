@@ -2,8 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
-import { appDispatch, dispatch_generic, setting_setv, task_audo, useAppSelector } from '../../backend/reducers';
-import { clickDispatch, customClickDispatch } from '../../backend/utils/dispatch';
+import {
+    appDispatch,
+    dispatch_generic,
+    setting_setv,
+    task_audo,
+    useAppSelector
+} from '../../backend/reducers';
+import {
+    clickDispatch,
+    customClickDispatch
+} from '../../backend/utils/dispatch';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
@@ -13,11 +22,9 @@ export * from './start';
 
 export const DesktopApp = () => {
     const deskApps = useAppSelector((state) =>
-        state.apps.apps.filter(x => state.desktop.apps.includes(x.id))
+        state.apps.apps.filter((x) => state.desktop.apps.includes(x.id))
     );
-    const desk = useAppSelector((state) =>
-        state.desktop
-    );
+    const desk = useAppSelector((state) => state.desktop);
     const [holding, setHolding] = useState(false);
     const timeoutRef = useRef(null);
 
@@ -44,7 +51,7 @@ export const DesktopApp = () => {
     };
 
     const dispatch = appDispatch;
-    const handleDouble = customClickDispatch(e => e.stopPropagation());
+    const handleDouble = customClickDispatch((e) => e.stopPropagation());
 
     return (
         <div className="desktopCont">
@@ -72,11 +79,10 @@ export const DesktopApp = () => {
                                 pr
                                 width={Math.round(desk.size * 36)}
                             />
-                            <div className="appName">
-                                {app.name}
-                            </div>
-                            {!app.installing ? null
-                            : <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" /> }
+                            <div className="appName">{app.name}</div>
+                            {!app.installing ? null : (
+                                <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
+                            )}
                         </div>
                     );
                 })}
@@ -90,7 +96,6 @@ export const SidePane = () => {
     const tasks = useAppSelector((state) => state.taskbar);
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
-
 
     const vSlider = document.querySelector('.vSlider');
     const bSlider = document.querySelector('.bSlider');
@@ -116,10 +121,12 @@ export const SidePane = () => {
         var brgt = e.target.value;
         document.getElementById('brightoverlay').style.opacity =
             (100 - brgt) / 100;
-        dispatch(setting_setv({
-            path: 'system.display.brightness',
-            value: brgt
-        }));
+        dispatch(
+            setting_setv({
+                path: 'system.display.brightness',
+                value: brgt
+            })
+        );
         sliderBackground(bSlider, brgt);
     };
 

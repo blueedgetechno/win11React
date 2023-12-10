@@ -23,8 +23,8 @@ export const StartMenu = () => {
         });
     };
 
-    const usageTime = undefined
-    const total_time = undefined
+    const usageTime = undefined;
+    const total_time = undefined;
     const checkPackage = () => {
         const packages = {
             week: '20h',
@@ -32,8 +32,7 @@ export const StartMenu = () => {
         };
 
         const usageTime = user?.usageTime?.at(0);
-        if (usageTime == undefined)
-            return
+        if (usageTime == undefined) return;
 
         return packages[usageTime?.package] ?? usageTime?.package;
     };
@@ -60,7 +59,9 @@ export const StartMenu = () => {
                         ) : null}
                     </div>
                     <h6>
-                        {!validate_user_access('month', 'week', 'admin') ? t('timemanager.inActiveUser') : null}
+                        {!validate_user_access('month', 'week', 'admin')
+                            ? t('timemanager.inActiveUser')
+                            : null}
                     </h6>
                     <div className="h-full flex flex-col p-2" data-dock="true">
                         <div className="w-full flex gap-4 justify-between my-[14px] ">
@@ -78,7 +79,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                //invert={pnstates[idx] ? true : null}
+                                    //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>
@@ -103,10 +104,10 @@ export const StartMenu = () => {
                                 <span>
                                     {usageTime?.total_time
                                         ? usageTime?.total_time.toFixed(1) +
-                                        '/' +
-                                        checkPackage() +
-                                        '/' +
-                                        usageTime?.package
+                                          '/' +
+                                          checkPackage() +
+                                          '/' +
+                                          usageTime?.package
                                         : 'Invalid'}
                                 </span>
                             </div>

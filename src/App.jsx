@@ -8,11 +8,7 @@ import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './containers/popup';
-import {
-    DesktopApp,
-    SidePane,
-    StartMenu
-} from './components/start';
+import { DesktopApp, SidePane, StartMenu } from './components/start';
 import Taskbar from './components/taskbar';
 import * as Applications from './containers/applications';
 import { Background, BootScreen, LockScreen } from './containers/background';
@@ -93,10 +89,7 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' || !wall.unlocked ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {true
-                        ? <Background />
-                        : <Remote />
-                    }
+                    {true ? <Background /> : <Remote />}
                     <>
                         <div
                             className="desktop"
@@ -106,10 +99,9 @@ function App() {
                             <DesktopApp />
                             {Object.keys(Applications).map((key, idx) => {
                                 var WinApp = Applications[key];
-                                if (key == 'Worker')
-                                    return null
+                                if (key == 'Worker') return null;
 
-                                return <WinApp key={idx} />
+                                return <WinApp key={idx} />;
                             })}
                             <StartMenu />
                         </div>

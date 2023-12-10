@@ -36,7 +36,6 @@ const initialState = {
     }
 };
 
-
 const changeVal = (obj: any, pathin: string, val = 'togg') => {
     var tmp = obj;
     const path = pathin.split('.');

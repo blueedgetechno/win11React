@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchStore } from '../../../backend/actions/background';
-import {
-    validate_user_access
-} from '../../../backend/utils/checking';
+import { validate_user_access } from '../../../backend/utils/checking';
 import {
     Icon,
     Image,
@@ -12,7 +10,11 @@ import {
 } from '../../../components/shared/general';
 
 import Swal from 'sweetalert2';
-import { appDispatch, install_app, useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    install_app,
+    useAppSelector
+} from '../../../backend/reducers';
 import './assets/store.scss';
 
 const emap = (v) => {
@@ -21,7 +23,9 @@ const emap = (v) => {
 };
 const listDraftApp = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const MicroStore = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'store'));
+    const wnapp = useAppSelector((state) =>
+        state.apps.apps.find((x) => x.id == 'store')
+    );
     const [tab, setTab] = useState('sthome');
     const [page, setPage] = useState(0);
     const [opapp, setOpapp] = useState({});
@@ -212,51 +216,51 @@ const FrontPage = (props) => {
                 <div className="flex w-max pr-8">
                     {games.length > 0
                         ? games.map((game, i) => {
-                            return (
-                                <div
-                                    key={i}
-                                    className="ribcont rounded-md my-0 p-2 pb-2"
-                                    onClick={() => {
-                                        props.app_click(game);
-                                    }}
-                                    style={{
-                                        background: game.steam_off
-                                            ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
-                                            : ''
-                                    }}
-                                >
-                                    <Image
-                                        className="mx-1 py-1 mb-6 rounded"
-                                        w={100}
-                                        h={100}
-                                        absolute={true}
-                                        src={game.icon}
-                                    />
-                                    <div className="capitalize text-xs text-center font-semibold">
-                                        {game.name}
-                                    </div>
-                                    <div className="text-xs text-center font-regular">
-                                        {game.steam_off
-                                            ? 'Steam Offline'
-                                            : ''}
-                                    </div>
-                                </div>
-                            );
-                        })
+                              return (
+                                  <div
+                                      key={i}
+                                      className="ribcont rounded-md my-0 p-2 pb-2"
+                                      onClick={() => {
+                                          props.app_click(game);
+                                      }}
+                                      style={{
+                                          background: game.steam_off
+                                              ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
+                                              : ''
+                                      }}
+                                  >
+                                      <Image
+                                          className="mx-1 py-1 mb-6 rounded"
+                                          w={100}
+                                          h={100}
+                                          absolute={true}
+                                          src={game.icon}
+                                      />
+                                      <div className="capitalize text-xs text-center font-semibold">
+                                          {game.name}
+                                      </div>
+                                      <div className="text-xs text-center font-regular">
+                                          {game.steam_off
+                                              ? 'Steam Offline'
+                                              : ''}
+                                      </div>
+                                  </div>
+                              );
+                          })
                         : listDraftApp.map((i) => (
-                            <div
-                                key={i}
-                                className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
-                            >
-                                <Image
-                                    className="mx-1 rounded bg-slate-200"
-                                    w={100}
-                                    h={100}
-                                    ext
-                                />
-                                <div className="capitalize text-xs text-center font-semibold"></div>
-                            </div>
-                        ))}
+                              <div
+                                  key={i}
+                                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                              >
+                                  <Image
+                                      className="mx-1 rounded bg-slate-200"
+                                      w={100}
+                                      h={100}
+                                      ext
+                                  />
+                                  <div className="capitalize text-xs text-center font-semibold"></div>
+                              </div>
+                          ))}
                 </div>
             </div>
         </div>
@@ -280,16 +284,17 @@ const DetailPage = ({ app }) => {
     // const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
-        if (!validate_user_access('month', 'week', 'admin'))
-            return;
+        if (!validate_user_access('month', 'week', 'admin')) return;
 
-        appDispatch(install_app({
-            app_template_id: id,
-            appName: app.name ?? 'null',
-            availability: 'HA',
-            speed: 'HOT',
-            safe: false
-        }));
+        appDispatch(
+            install_app({
+                app_template_id: id,
+                appName: app.name ?? 'null',
+                availability: 'HA',
+                speed: 'HOT',
+                safe: false
+            })
+        );
     };
 
     async function VolumeOption() {
@@ -373,7 +378,11 @@ const DetailPage = ({ app }) => {
                                     payload={x}
                                     onClick={() => download(x, app)}
                                 >
-                                    {validate_user_access(['month', 'week', 'admin'])
+                                    {validate_user_access([
+                                        'month',
+                                        'week',
+                                        'admin'
+                                    ])
                                         ? `${x.gpu} ${x.region}`
                                         : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
                                 </div>
@@ -504,7 +513,7 @@ const DetailPage = ({ app }) => {
                                                         emap(
                                                             Math.abs(stars - x)
                                                         ) *
-                                                        100 +
+                                                            100 +
                                                         '%',
                                                     padding: '3px 0'
                                                 }}
@@ -631,20 +640,20 @@ const DownPage = ({ action }) => {
                 {storeApps.length > 0
                     ? renderSearchResult()
                     : listDraftApp.map((i) => (
-                        <div
-                            key={i}
-                            className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
-                            data-action="page2"
-                        >
-                            <Image
-                                className="mx-4 mb-6 rounded bg-slate-200"
-                                w={100}
-                                h={100}
-                                ext
-                            />
-                            <div className="capitalize text-xs text-center font-semibold"></div>
-                        </div>
-                    ))}
+                          <div
+                              key={i}
+                              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                              data-action="page2"
+                          >
+                              <Image
+                                  className="mx-4 mb-6 rounded bg-slate-200"
+                                  w={100}
+                                  h={100}
+                                  ext
+                              />
+                              <div className="capitalize text-xs text-center font-semibold"></div>
+                          </div>
+                      ))}
             </div>
         </div>
     );

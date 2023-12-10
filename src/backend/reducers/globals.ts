@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BuilderHelper, CacheRequest, Confirms } from './helper';
 import { virtapi } from './fetch/createClient';
 
-
 const initialState = {
     lays: [
         [
@@ -202,46 +201,50 @@ const initialState = {
         }
     ],
 
-    games: [] as any[],
+    games: [] as any[]
 };
 
-
 export const storeAsync = {
-    fetch_store: createAsyncThunk(
-        'fetch_store',
-        async (): Promise<any[]> => {
-            return await CacheRequest('store', 30, async () => {
-                const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
-                if (error) throw error;
+    fetch_store: createAsyncThunk('fetch_store', async (): Promise<any[]> => {
+        return await CacheRequest('store', 30, async () => {
+            const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
+            if (error) throw error;
 
-                return data
-            })
-        }
-    ),
+            return data;
+        });
+    }),
     delete_store: createAsyncThunk(
         'delete_store',
-        async ({store_id}:{store_id:number}): Promise<any[]> => {
-            await Confirms()
-            const { error } = await virtapi(`stores?id=eq.${store_id}`, 'DELETE');
+        async ({ store_id }: { store_id: number }): Promise<any[]> => {
+            await Confirms();
+            const { error } = await virtapi(
+                `stores?id=eq.${store_id}`,
+                'DELETE'
+            );
             if (error) throw error;
 
             return await CacheRequest('store', 30, async () => {
                 const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
                 if (error) throw error;
 
-                return data
-            })
+                return data;
+            });
         }
-    ),
-}
+    )
+};
 
 export const globalSlice = createSlice({
     name: 'global',
     initialState,
     reducers: {},
-    extraReducers: builder => {
-        BuilderHelper('fetch_store', builder, storeAsync.fetch_store, (state, action) => {
-            state.games = action.payload
-        })
+    extraReducers: (builder) => {
+        BuilderHelper(
+            'fetch_store',
+            builder,
+            storeAsync.fetch_store,
+            (state, action) => {
+                state.games = action.payload;
+            }
+        );
     }
 });

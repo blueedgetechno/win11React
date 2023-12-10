@@ -175,4 +175,4 @@ export type Bin = {
 
     //     this.tree = tree;
     // }
-}
+};

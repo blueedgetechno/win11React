@@ -1,4 +1,8 @@
-import { appDispatch, popup_close, useAppSelector } from '../../backend/reducers';
+import {
+    appDispatch,
+    popup_close,
+    useAppSelector
+} from '../../backend/reducers';
 import './index.scss';
 import * as modals from './modal';
 import ReactModal from 'react-modal';
@@ -15,13 +19,12 @@ const Popup = () => {
         >
             <div className="selectText d-flex overflow-auto min-h-full">
                 {Object.keys(modals)
-                    .filter(x => x == popup.type)
+                    .filter((x) => x == popup.type)
                     .map((key, idx) => {
                         const WinApp = modals[key];
-                        return <WinApp key={idx} data={popup.data} />
+                        return <WinApp key={idx} data={popup.data} />;
                     })
-                    .at(0)
-                }
+                    .at(0)}
             </div>
         </ReactModal>
     );

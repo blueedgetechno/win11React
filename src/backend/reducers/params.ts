@@ -14,7 +14,6 @@ export const paramsSlice = createSlice({
     name: 'params',
     initialState,
     reducers: {
-        update: (state, action: PayloadAction<any>) => {
-        }
+        update: (state, action: PayloadAction<any>) => {}
     }
 });

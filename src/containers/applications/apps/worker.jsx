@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { appDispatch, menu_hide, useAppSelector, worker_path, worker_prev } from '../../../backend/reducers';
+import {
+    appDispatch,
+    menu_hide,
+    useAppSelector,
+    worker_path,
+    worker_prev
+} from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
-
 
 export const Worker = () => {
     const wnapp = useAppSelector((state) => state.apps.worker);
     const files = useAppSelector((state) => state.worker);
     // const fdata = files.data.getId(files.cdir);
-    const fdata = {}
+    const fdata = {};
 
     const [contentData, setContentData] = useState(fdata);
     const [cpath, setPath] = useState(files.cpath);
@@ -385,7 +390,7 @@ const ContentArea = ({ searchtxt, data }) => {
                     <>
                         <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
                             {subInfo?.info?.menu == 'worker' ||
-                                subInfo?.info?.menu == 'session' ? (
+                            subInfo?.info?.menu == 'session' ? (
                                 <Image
                                     src={`icon/win/${renderIconName(
                                         subInfo?.info
@@ -401,7 +406,6 @@ const ContentArea = ({ searchtxt, data }) => {
         </div>
     );
 };
-
 
 const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
     const handleChangeFilter = (key, value) => {

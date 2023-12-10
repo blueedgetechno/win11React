@@ -453,9 +453,9 @@ export const menusSlice = createSlice({
         },
         menu_show: (state, action: PayloadAction<any>) => {
             state.hide = false;
-            state.top =     action.payload.top || 272;
-            state.left =    action.payload.left || 430;
-            state.opts =    action.payload.menu || 'desk';
+            state.top = action.payload.top || 272;
+            state.left = action.payload.left || 430;
+            state.opts = action.payload.menu || 'desk';
             state.dataset = action.payload.dataset;
         },
         menu_chng: (state, action: PayloadAction<any>) => {

@@ -1,9 +1,16 @@
 import * as FaRegIcons from '@fortawesome/free-regular-svg-icons';
 import * as FaIcons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clickDispatch, customClickDispatch } from '../../backend/utils/dispatch';
+import {
+    clickDispatch,
+    customClickDispatch
+} from '../../backend/utils/dispatch';
 import { useEffect, useState } from 'react';
-import { appDispatch, dispatch_generic, useAppSelector } from '../../backend/reducers';
+import {
+    appDispatch,
+    dispatch_generic,
+    useAppSelector
+} from '../../backend/reducers';
 import './general.scss';
 import * as AllIcons from './icons';
 
@@ -24,8 +31,6 @@ export const Icon = (props) => {
             prtclk = 'prtclk';
         }
     }
-
-
 
     if (props.fafa != null) {
         return (
@@ -95,7 +100,7 @@ export const Icon = (props) => {
             >
                 {props.className == 'tsIcon' ? (
                     <div
-                        onClick={props.click != null ? clickDispatch : () => { }}
+                        onClick={props.click != null ? clickDispatch : () => {}}
                         style={{ width: props.width, height: props.width }}
                         data-action={props.click}
                         data-payload={props.payload}
@@ -128,7 +133,7 @@ export const Icon = (props) => {
                     <img
                         width={props.width}
                         height={props.height}
-                        onClick={props.click != null ? clickDispatch : () => { }}
+                        onClick={props.click != null ? clickDispatch : () => {}}
                         data-action={props.click}
                         data-payload={props.payload}
                         data-click={props.click != null}
@@ -138,10 +143,12 @@ export const Icon = (props) => {
                         src={src}
                         style={{
                             margin: props.margin || null,
-                            ...props.mono  ? {
-                                // '-webkit-filter': 'grayscale(100%)', // TODO
-                                'filter': 'grayscale(100%)'
-                            } : {}
+                            ...(props.mono
+                                ? {
+                                      // '-webkit-filter': 'grayscale(100%)', // TODO
+                                      filter: 'grayscale(100%)'
+                                  }
+                                : {})
                         }}
                         alt=""
                     />
@@ -217,7 +224,7 @@ export const Image = (props) => {
 export const SnapScreen = (props) => {
     const [delay, setDelay] = useState(false);
     const lays = useAppSelector((state) => state.globals.lays);
-    const clickDispatch = customClickDispatch(props.closeSnap)
+    const clickDispatch = customClickDispatch(props.closeSnap);
 
     useEffect(() => {
         if (delay && props.snap) {
@@ -247,7 +254,7 @@ export const SnapScreen = (props) => {
                                 }}
                                 onClick={clickDispatch}
                                 data-action={'apps/app_resize'}
-                                data-payload={{id: props.app,...y.dim}}
+                                data-payload={{ id: props.app, ...y.dim }}
                             ></div>
                         ))}
                     </div>
@@ -269,10 +276,10 @@ export const ToolBar = (props) => {
         setSnap(false);
     };
 
-    const toolClick = () => 
+    const toolClick = () =>
         dispatch_generic({
             type: 'apps/app_front',
-            payload: props.app,
+            payload: props.app
         });
 
     var posP = [0, 0],
@@ -359,10 +366,10 @@ export const ToolBar = (props) => {
                 height: getComputedStyle(wnapp).height,
                 top: getComputedStyle(wnapp).top,
                 left: getComputedStyle(wnapp).left
-            },
+            }
         };
 
-        dispatch_generic(action)
+        dispatch_generic(action);
     };
 
     return (
@@ -426,7 +433,7 @@ export const ToolBar = (props) => {
                         className="closeBtn"
                         invert={props.invert}
                         name={props.app}
-                        click={"apps/app_close"}
+                        click={'apps/app_close'}
                         payload={props.icon}
                         pr
                         src="close"
