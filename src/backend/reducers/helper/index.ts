@@ -24,7 +24,6 @@ export async function CacheRequest<T>(
     sec: number,
     req: () => Promise<T>
 ): Promise<T> {
-	sec = 60 * 60
     const store = async (raw:any,timestamp:number) => {
         if (db == null) {
             localStorage.setItem(
@@ -35,6 +34,10 @@ export async function CacheRequest<T>(
                 })
             );
         } else {
+            await db.data 
+                .where('id')
+                .equals(PREFIX(name))
+                .delete() 
             await db.data
                 .add({ 
                     timestamp, 
@@ -55,12 +58,17 @@ export async function CacheRequest<T>(
                     return raw
             } catch {return null}
         } else {
-            return (await db.data 
+            const {timestamp,raw} = await db.data 
                 .where('id')
                 .equals(PREFIX(name))
-                .first())
-                ?.raw
-                ?? null
+                .first() ?? {}
+
+            if (timestamp == undefined)
+                return null
+            if (new Date().getTime() - timestamp > sec * 1000)
+                return null
+            else
+                return raw
         }
     }
 
