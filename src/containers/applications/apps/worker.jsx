@@ -3,7 +3,6 @@ import {
     appDispatch,
     menu_hide,
     useAppSelector,
-    worker_path,
     worker_prev
 } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
@@ -14,22 +13,14 @@ import { customClickDispatch } from '../../../backend/utils/dispatch';
 export const Worker = () => {
     const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'worker'));
     const files = useAppSelector((state) => state.worker);
-
-    const [cpath, setPath] = useState(files.cpath);
     const [searchtxt, setShText] = useState('');
 
     useEffect(() => {
-        setPath(files.cpath);
         setShText('');
     }, [files.cpath]);
 
-    const handleChange = (e) => setPath(e.target.value);
     const handleSearchChange = (e) => setShText(e.target.value);
-    const handleEnter = (e) => {
-        if (e.key === 'Enter') {
-            appDispatch(worker_path(cpath));
-        }
-    };
+
 
     return (
         <div
@@ -65,8 +56,6 @@ export const Worker = () => {
                                 className="path-field"
                                 type="text"
                                 value={files.cpath}
-                                onChange={handleChange}
-                                onKeyDown={handleEnter}
                             />
                         </div>
                         <div className="srchbar">

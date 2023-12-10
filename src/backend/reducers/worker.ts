@@ -205,12 +205,12 @@ export const workerSlice = createSlice({
         worker_prev: (state, action: PayloadAction<any>) => {
             const paths = state.cpath.split('/').filter(x => x.length > 0)
             paths.pop()
+            state.cpath = paths.join('/')
             if (paths.length == 0) {
                 state.cdata = new RenderNode(state.data).data.map(x => x.any())
                 return
             }
 
-            state.cpath = paths.join('/')
             let temp : RenderNode<any>[] = []
             let target : RenderNode<any> = state.data
             paths.forEach(x => {

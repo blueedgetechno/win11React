@@ -78,12 +78,7 @@ export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
 export const { setting_load, setting_setv, setting_theme, setting_togg } =
     settSlice.actions;
 export const {
-    worker_back,
-    worker_dir,
-    worker_next,
-    worker_path,
     worker_prev,
-    worker_update,
     worker_view
 } = workerSlice.actions;
 export const { popup_close, popup_open } = popupSlice.actions;
