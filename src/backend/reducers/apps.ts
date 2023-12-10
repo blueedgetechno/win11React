@@ -48,9 +48,9 @@ export const appsAsync = {
                 return {
                     id: icon.icon,
                     name: `${icon.name} ${storage.id}`,
-                    action: 'apps/app_remote',
+                    action: 'access_app',
 
-                    payload: { ...icon, ...storage },
+                    payload: storage.id,
                     ready: storage.data.length != 0
                 } as AppData;
             })
@@ -86,9 +86,9 @@ export const appsAsync = {
     ),
 
     access_app: createAsyncThunk(
-        'start_app',
+        'access_app',
         async (
-            { storage_id }: { storage_id: string },
+            storage_id : string,
             { getState }
         ): Promise<string> => {
             return await AccessApplication({ storage_id });
@@ -293,23 +293,29 @@ export const appSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        BuilderHelper(
-            'fetch_app',
-            builder,
-            appsAsync.fetch_app,
-            (state, action) => {
-                const app = action.payload.map((x) => {
-                    return {
-                        ...x,
-                        size: 'full',
-                        hide: x.id != 'settings',
-                        max: null,
-                        z: 0
-                    };
-                });
+        BuilderHelper<any,any,any>( builder,
+            {
+                fetch: appsAsync.access_app, 
+                hander: (state, action) => {
+                    console.log(action.payload)
+                },
+            }, {
+                fetch: appsAsync.fetch_app,
+                hander: (state, action) => {
+                    const app = action.payload.map((x:any) => {
+                        return {
+                            ...x,
+                            payload: x.payload,
+                            size: 'full',
+                            hide: x.id != 'settings',
+                            max: null,
+                            z: 0
+                        };
+                    });
 
-                state.apps = [...initialState.apps, ...app];
-            }
+                    state.apps = [...initialState.apps, ...app];
+                }
+            },
         );
     }
 });

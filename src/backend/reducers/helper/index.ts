@@ -24,6 +24,7 @@ export async function CacheRequest<T>(
     sec: number,
     req: () => Promise<T>
 ): Promise<T> {
+    sec = 120
     const store = async (raw:any,timestamp:number) => {
         if (db == null) {
             localStorage.setItem(
@@ -97,49 +98,53 @@ const isFulfilled = (action: UnknownAction) =>
 const isRejected = (action: UnknownAction) => action.type.endsWith('/rejected');
 
 export const isPendingAction =
-    (prefix: string) =>
+    (prefixs: string[]) =>
     (action: UnknownAction): action is UnknownAction => {
         // Note: this cast to UnknownAction could also be `any` or whatever fits your case best
-        return action.type.includes(prefix) && isPending(action);
+        return  prefixs.find(prefix => action.type.includes(prefix)) != undefined && isPending(action);
     };
 
 export const isRejectedAction =
-    (prefix: string) =>
+    (prefixs: string[]) =>
     (action: UnknownAction): action is UnknownAction => {
         // Note: this cast to UnknownAction could also be `any` or whatever fits your case best - like if you had standardized errors and used `rejectWithValue`
-        return action.type.includes(prefix) && isRejected(action);
+        return prefixs.find(prefix => action.type.includes(prefix)) != undefined && isRejected(action);
     };
 
 export const isFulfilledAction =
-    (prefix: string) =>
+    (prefixs: string[]) =>
     (action: UnknownAction): action is UnknownAction => {
-        return action.type.includes(prefix) && isFulfilled(action);
+        return prefixs.find(prefix => action.type.includes(prefix)) != undefined && isFulfilled(action);
     };
 
 export async function BuilderHelper<T, U, V>(
-    name: string,
     builder: ActionReducerMapBuilder<T>,
-    fetch: AsyncThunk<U, V, any>,
-    hander: CaseReducer<
-        T,
-        PayloadAction<
-            U,
-            string,
-            { arg: V; requestId: string; requestStatus: 'fulfilled' },
-            never
+    ...handlers: {
+        fetch: AsyncThunk<U, V, any>,
+        hander: CaseReducer<
+            T,
+            PayloadAction<
+                U,
+                string,
+                { arg: V; requestId: string; requestStatus: 'fulfilled' },
+                never
+            >
         >
-    >
+    }[]
 ) {
-    builder
-        .addCase(fetch.fulfilled, hander)
+    let after = builder
+
+    handlers.forEach(x => after = after.addCase(x.fetch.fulfilled, x.hander))
+
+    after
         // use scoped matchers to handle generic loading / error setting behavior for async thunks this slice cares about
-        .addMatcher(isPendingAction(name), (state, action) => {
+        .addMatcher(isPendingAction(handlers.map(x => x.fetch.typePrefix)), (state, action) => {
             console.log(action.type);
         })
-        .addMatcher(isRejectedAction(name), (state, action) => {
+        .addMatcher(isRejectedAction(handlers.map(x => x.fetch.typePrefix)), (state, action) => {
             console.log(action.type);
         })
-        .addMatcher(isFulfilledAction(name), (state, action) => {
+        .addMatcher(isFulfilledAction(handlers.map(x => x.fetch.typePrefix)), (state, action) => {
             console.log(action.type);
         });
 }

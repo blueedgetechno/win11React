@@ -222,27 +222,26 @@ export const workerSlice = createSlice({
         },
     },
     extraReducers: (build) => {
-        BuilderHelper(
-            'fetch_worker',
-            build,
-            workerAsync.fetch_worker,
-            (state, action) => {
-                state.cpath = initialState.cpath
-                state.data = action.payload
-                const paths = state.cpath.split('/').filter(x => x.length > 0)
-                if (paths.length == 0) {
-                    state.cdata = new RenderNode(state.data).data.map(x => x.any())
-                    return
+        BuilderHelper( build,{
+                fetch: workerAsync.fetch_worker,
+                hander: (state, action) => {
+                    state.cpath = initialState.cpath
+                    state.data = action.payload
+                    const paths = state.cpath.split('/').filter(x => x.length > 0)
+                    if (paths.length == 0) {
+                        state.cdata = new RenderNode(state.data).data.map(x => x.any())
+                        return
+                    }
+
+                    let temp : RenderNode<any>[] = []
+                    let target : RenderNode<any> = state.data
+                    paths.forEach(x => {
+                        temp = new RenderNode(target).data
+                        target = temp.find(y => y.id == x) ?? target
+                    })
+
+                    state.cdata = target.data.map(x => x.any())
                 }
-
-                let temp : RenderNode<any>[] = []
-                let target : RenderNode<any> = state.data
-                paths.forEach(x => {
-                    temp = new RenderNode(target).data
-                    target = temp.find(y => y.id == x) ?? target
-                })
-
-                state.cdata = target.data.map(x => x.any())
             }
         );
     }

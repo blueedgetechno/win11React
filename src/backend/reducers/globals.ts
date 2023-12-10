@@ -238,12 +238,11 @@ export const globalSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        BuilderHelper(
-            'fetch_store',
-            builder,
-            storeAsync.fetch_store,
-            (state, action) => {
-                state.games = action.payload;
+        BuilderHelper( builder,{
+                fetch: storeAsync.fetch_store,
+                hander: (state, action) => {
+                    state.games = action.payload;
+                }
             }
         );
     }

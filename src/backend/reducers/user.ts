@@ -54,13 +54,12 @@ export const userSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        BuilderHelper(
-            'fetch_user',
-            builder,
-            userAsync.fetch_user,
-            (state, action) => {
-                state.id = action.payload.id;
-                state.email = action.payload.email;
+        BuilderHelper(builder,{
+                fetch: userAsync.fetch_user,
+                hander: (state, action) => {
+                    state.id = action.payload.id;
+                    state.email = action.payload.email;
+                }
             }
         );
     }
