@@ -84,26 +84,6 @@ export const appsAsync = {
 const initialState = {
     hz: 0,
     apps: allApps
-        .map(x => {
-            return {
-                ...x,
-                size: 'full',
-                hide: true, // hide or show app
-                max: null,  // max size ?
-                z: 0        // z-index of app
-            }
-        }) as ({
-            id: string,
-            name: string,
-            action: string,
-            payload?: string
-            size?: string
-            hide: boolean
-            max: boolean | null
-            z: number
-            dim?: any
-            url?: string | null
-        })[]
 }
 
 

@@ -137,7 +137,11 @@ export const Icon = (props) => {
                         data-rounded={props.rounded != null ? 'true' : 'false'}
                         src={src}
                         style={{
-                            margin: props.margin || null
+                            margin: props.margin || null,
+                            ...props.mono  ? {
+                                // '-webkit-filter': 'grayscale(100%)', // TODO
+                                'filter': 'grayscale(100%)'
+                            } : {}
                         }}
                         alt=""
                     />

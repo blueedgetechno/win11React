@@ -1,11 +1,22 @@
 import { externalLink } from './constant';
 
-const apps: {
-    name: string,
+export type AppData = {
     id: string,
+    name: string,
     action: string,
-    payload?: string
-}[] = [
+    payload?: any,
+
+    size?: string
+    ready?: boolean,
+    installing?: boolean,
+    hide?: boolean
+    max?: boolean | null
+    z?: number
+    dim?: any
+    url?: string | null
+}
+
+const apps: AppData[] = [
     {
         name: 'Settings',
         id: 'settings',
@@ -76,6 +87,13 @@ var { taskbar, desktop } = {
         'Payment'
     ],
 };
+
+apps.map(x => {
+    x.size= 'full'
+    x.hide= true
+    x.max= null
+    x.z= 0
+}) 
 
 export const taskApps = apps
     .filter((x) => taskbar.includes(x.name))

@@ -1,3 +1,4 @@
+import { AppData } from "../../utils";
 import { virtapi } from "./createClient";
 
 export function formatWorkerRenderTree(data: any) {
@@ -47,67 +48,44 @@ function AddNode(folder: any, tree: any) {
 //   }
 // }
 
-export async function formatAppRenderTree(data: any) {
+export async function formatAppRenderTree(data: any) : Promise<AppData[]> {
     return await Promise.all(
         data.tree.data.map(async (storage: any) => {
-            if (storage.type == 'pending') {
+            if (storage.type == 'pending') 
                 return {
+                    id: 'win/down',
                     name: `Installing`,
-                    icon: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png',
-                    action: 'CLOUDAPP',
-                    payload: JSON.stringify({
-                        storage_id: null,
-                        status: 'NOT_READY',
-                        additional: {}
-                    }),
-                    status: 'NOT_READY'
-                };
-            }
+                    action: 'apps/app_error',
 
-            let icons = JSON.parse(
-                localStorage.getItem(
-                    `app_metadata_from_volume_${storage.id}`
-                ) ?? `[]`
+                    payload: {},
+                    installing: true,
+                    ready: false
+                } as AppData;
+
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage.id}` }
             );
-            if (icons?.length == 0 || icons?.length == undefined) {
-                const { data, error } = await virtapi(
-                    `rpc/get_app_metadata_from_volume`,
-                    'POST',
-                    {
-                        deploy_as: `${storage.id}`
-                    }
-                );
-                if (error) return;
+            if (error) 
+                return;
 
-                icons = data;
-                localStorage.setItem(
-                    `app_metadata_from_volume_${storage.id}`,
-                    JSON.stringify(icons)
-                );
-            }
+            const icon = (data as any[]).at(0) ?? {
+                    name: 'Game Pause',
+                    icon: 'win/down'
+                };
 
-            const icon = icons.at(0) ?? {
-                name: 'Game Pause',
-                icon: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/bb62785b-c54a-44e6-94bf-1ccca295023c/delruxq-390edd6a-59c7-47d3-a150-b8460f53119c.png'
-            };
             // id in store. +  icon: url img, => view
             // metatada: Meta in store.
             // pause check by storage.data.lenghth > 0.
-            const paused = storage.data.length == 0;
             return {
+                id: icon.icon,
                 name: `${icon.name} ${storage.id}`,
-                icon: icon.icon,
-                action: 'CLOUDAPP',
-                payload: JSON.stringify({
-                    status: paused ? 'PAUSED' : 'RUNNING',
-                    storage_id: storage.id,
-                    additional: icon.metadata, // TODO
-                    privateIp: storage?.data[0]?.info?.hardware?.PrivateIP ?? 0,
-                    volume_id: storage?.info?.deploy_as ?? 0
-                }),
-                type: 'externalApp',
-                status: paused ? 'PAUSED' : 'RUNNING'
-            };
+                action: 'apps/app_remote',
+
+                payload: {...icon,...storage},
+                ready: storage.data.length != 0,
+            } as AppData;
         })
     );
 }

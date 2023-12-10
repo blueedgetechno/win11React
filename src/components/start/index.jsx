@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
-import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import { appDispatch, dispatch_generic, setting_setv, task_audo, useAppSelector } from '../../backend/reducers';
-import { clickDispatch } from '../../backend/utils/dispatch';
+import { clickDispatch, customClickDispatch } from '../../backend/utils/dispatch';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
@@ -45,16 +44,7 @@ export const DesktopApp = () => {
     };
 
     const dispatch = appDispatch;
-    const handleDouble = (e) => {
-        e.stopPropagation();
-        const action = {
-            type: e.target.dataset.action,
-            payload: e.target.dataset.payload,
-            name: e.target.dataset.name
-        };
-
-        dispatch_generic(action)
-    };
+    const handleDouble = customClickDispatch(e => e.stopPropagation());
 
     return (
         <div className="desktopCont">
@@ -78,16 +68,15 @@ export const DesktopApp = () => {
                                 className="dskIcon "
                                 click={'null'}
                                 src={app.id}
+                                mono={!(app.ready ?? true)}
                                 pr
                                 width={Math.round(desk.size * 36)}
                             />
-
-                            <div className="appName">{app.name}</div>
-                            {app?.status == 'PAUSED' ? (
-                                <PiPauseBold className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
-                            ) : app.status == 'NOT_READY' ? (
-                                <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
-                            ) : null}
+                            <div className="appName">
+                                {app.name}
+                            </div>
+                            {!app.installing ? null
+                            : <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" /> }
                         </div>
                     );
                 })}
