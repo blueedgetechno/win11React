@@ -118,7 +118,7 @@ const Taskbar = () => {
                     <div
                         className="px-2 prtclk handcr hvlight flex"
                         onClick={clickDispatch}
-                        data-action="sidepane_bandtogg"
+                        data-action="sidepane/sidepane_bandtogg"
                     >
                         <Icon fafa="faChevronUp" width={10} />
                     </div>
@@ -139,8 +139,6 @@ const Taskbar = () => {
                 </>
                 <div
                     className="taskDate m-1 handcr prtclk rounded hvlight"
-                    onClick={clickDispatch}
-                    data-action="sidepane_calntogg"
                 >
                     <div>
                         {time.toLocaleTimeString('en-US', {

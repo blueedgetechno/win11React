@@ -45,32 +45,39 @@ const initialState = {
             action: 'STNGTOGG'
         }
     ],
+    notifications: [
+        {
+            urlToImage: 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
+            url: 'https://win11.blueedge.me/',
+            name: 'hello',
+            title: 'name',
+            content: 'hello'
+        }
+    ],
+
     hide: true,
     banhide: true,
-    calhide: true
 };
 
 export const sidepaneSlice = createSlice({
     name: 'sidepane',
     initialState,
     reducers: {
+        sidepane_bandtogg: (state) => {
+            state.banhide = !state.banhide;
+        },
+        sidepane_bandhide: (state) => {
+            state.banhide = true
+        },
+        sidepane_panetogg: (state) => {
+            state.hide = !state.hide;
+        },
+        sidepane_panehide: (state) => {
+            state.hide = true
+        },
+
         sidepane_panethem: (state, action: PayloadAction<any>) => {
             state.quicks[4].src = action.payload;
         },
-        sidepane_bandtogg: (state, action: PayloadAction<any>) => {
-            state.banhide = !state.banhide;
-        },
-        sidepane_bandhide: (state, action: PayloadAction<any>) => {
-            state.hide = !state.hide;
-        },
-        sidepane_panetogg: (state, action: PayloadAction<any>) => {
-            state.hide = !state.hide;
-        },
-        sidepane_calntogg: (state, action: PayloadAction<any>) => {
-            state.calhide = !state.calhide;
-        },
-        sidepane_calnhide: (state, action: PayloadAction<any>) => {
-            state.calhide = true;
-        }
     }
 });

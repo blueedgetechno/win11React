@@ -95,24 +95,6 @@ export const DesktopApp = () => {
     );
 };
 
-export const BandPane = () => {
-    const sidepane = useAppSelector((state) => state.sidepane);
-
-    return (
-        <div
-            className="bandpane dpShad"
-            data-hide={sidepane.banhide}
-            style={{ '--prefix': 'BAND' }}
-        >
-            <div className="bandContainer">
-                <Icon className="hvlight" src="defender" width={17} />
-                <Icon className="hvlight" src="spotify" width={17} />
-                <Icon className="hvlight" src="teams" width={17} />
-            </div>
-        </div>
-    );
-};
-
 export const SidePane = () => {
     const sidepane = useAppSelector((state) => state.sidepane);
     const setting = useAppSelector((state) => state.setting);
@@ -254,60 +236,6 @@ export const SidePane = () => {
                     <Battery pct />
                 </div>
             </div>
-        </div>
-    );
-};
-
-export const CalnWid = () => {
-    const sidepane = useAppSelector((state) => state.sidepane);
-    const [loaded, setLoad] = useState(false);
-
-    const [collapse, setCollapse] = useState('');
-
-    const collapseToggler = () => {
-        collapse === '' ? setCollapse('collapse') : setCollapse('');
-    };
-
-    useEffect(() => {
-        if (!loaded) {
-            setLoad(true);
-            //const newLocal = window.dycalendar.draw({
-            //  target: "#dycalendar",
-            //  type: "month",
-            //  dayformat: "ddd",
-            //  monthformat: "full",
-            //  prevnextbutton: "show",
-            //  highlighttoday: true,
-            //});
-        }
-    });
-
-    return (
-        <div
-            className={`calnpane ${collapse} dpShad`}
-            data-hide={sidepane.calhide}
-            style={{ '--prefix': 'CALN' }}
-        >
-            <div className="topBar pl-4 text-sm">
-                <div className="date">
-                    {new Date().toLocaleDateString(undefined, {
-                        weekday: 'long',
-                        month: 'long',
-                        day: 'numeric'
-                    })}
-                </div>
-                <div
-                    className="collapser p-2 m-4 rounded"
-                    onClick={collapseToggler}
-                >
-                    {collapse === '' ? (
-                        <Icon fafa="faChevronDown" />
-                    ) : (
-                        <Icon fafa="faChevronUp" />
-                    )}
-                </div>
-            </div>
-            <div id="dycalendar"></div>
         </div>
     );
 };

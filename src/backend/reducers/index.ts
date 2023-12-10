@@ -86,9 +86,8 @@ export const {
 export const {
     sidepane_bandhide,
     sidepane_bandtogg,
-    sidepane_calnhide,
-    sidepane_calntogg,
     sidepane_panetogg,
+    sidepane_panehide,
     sidepane_panethem
 } = sidepaneSlice.actions;
 

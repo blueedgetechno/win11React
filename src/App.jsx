@@ -9,8 +9,6 @@ import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import Popup from './containers/popup';
 import {
-    BandPane,
-    CalnWid,
     DesktopApp,
     SidePane,
     StartMenu
@@ -114,9 +112,7 @@ function App() {
                                 return <WinApp key={idx} />
                             })}
                             <StartMenu />
-                            <CalnWid />
                         </div>
-                        <BandPane />
                         <SidePane />
                         <Taskbar />
                         <ActMenu />
