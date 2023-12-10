@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { appDispatch, task_hide, task_show, useAppSelector } from '../../backend/reducers';
+import { appDispatch, task_hide, task_show,dispatch_generic, useAppSelector } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
 import Battery from '../../components/shared/Battery';
 import { Icon } from '../shared/general';
@@ -34,17 +34,14 @@ const Taskbar = () => {
     };
 
     const clickDispatch = (event) => {
-        var action = {
-            type: event.target.dataset.action,
-            payload: event.target.dataset.payload
-        };
-
-        if (!action.type) {
+        const dataset = event.target.dataset
+        if (!dataset.action) 
             return
-        }
-
-        console.log(action)
-        dispatch_generic(action)
+        
+        dispatch_generic({
+            type: dataset.action,
+            payload: dataset.payload
+        })
     };
 
     const [time, setTime] = useState(new Date());
@@ -122,14 +119,14 @@ const Taskbar = () => {
                     <div
                         className="px-2 prtclk handcr hvlight flex"
                         onClick={clickDispatch}
-                        data-action="BANDTOGG"
+                        data-action="sidepane_bandtogg"
                     >
                         <Icon fafa="faChevronUp" width={10} />
                     </div>
                     <div
                         className="prtclk handcr my-1 px-1 hvlight flex rounded"
                         onClick={clickDispatch}
-                        data-action="PANETOGG"
+                        data-action="sidepane_panetogg"
                     >
                         <Icon className="taskIcon" src="wifi" ui width={16} />
                         <Icon
@@ -144,7 +141,7 @@ const Taskbar = () => {
                 <div
                     className="taskDate m-1 handcr prtclk rounded hvlight"
                     onClick={clickDispatch}
-                    data-action="CALNTOGG"
+                    data-action="sidepane_calntogg"
                 >
                     <div>
                         {time.toLocaleTimeString('en-US', {

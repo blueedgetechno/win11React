@@ -58,7 +58,8 @@ export const userSlice = createSlice({
     },
     extraReducers: builder => {
         BuilderHelper('fetch_user', builder, userAsync.fetch_user, (state, action) => {
-            state = action.payload
+            state.id = action.payload.id
+            state.email = action.payload.email
         })
     }
 });

@@ -63,8 +63,8 @@ export const sidepaneSlice = createSlice({
         sidepane_bandhide: (state, action: PayloadAction<any>) => {
             state.hide = !state.hide;
         },
-        sidepane_panehide: (state, action: PayloadAction<any>) => {
-            state.hide = true;
+        sidepane_panetogg: (state, action: PayloadAction<any>) => {
+            state.hide = !state.hide;
         },
         sidepane_calntogg: (state, action: PayloadAction<any>) => {
             state.calhide = !state.calhide;

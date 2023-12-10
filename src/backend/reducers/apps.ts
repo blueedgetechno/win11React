@@ -87,13 +87,21 @@ const initialState = {
         .map(x => {
             return {
                 ...x,
-                id: x.id,
                 size: 'full',
                 hide: true, // hide or show app
-                max: false,  // max size ?
+                max: null,  // max size ?
                 z: 0        // z-index of app
             }
-        })
+        }) as ({
+            id: string,
+            name: string,
+            action: string,
+            payload?: string
+            size?: string
+            hide: boolean
+            max: boolean | null
+            z: number
+        })[]
 }
 
 
@@ -162,54 +170,29 @@ export const appSlice = createSlice({
             obj.z = state.hz;
         },
 
-        app_toggle: (state, action: PayloadAction<string>) => {
+        app_close: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find(x => action.payload == x.id)
             if (obj == undefined) {
                 return
             }
 
+            obj.hide = true;
+            obj.max = null;
+            obj.z = -1;
+            state.hz -= 1;
+        },
+        app_toggle: (state, action: PayloadAction<string>) => {
+            const obj = state.apps.find(x => action.payload == x.id)
+            if (obj == undefined)
+                return
+
             obj.hide = false
             obj.size = 'full'
-            obj.max = true
+            // obj.max = true
             obj.z = 999
-            state.hz = obj.z
-            // console.log({...obj})
-            // if (obj.z != state.hz) {
-            //     obj.hide = false;
-            //     if (!obj.max) {
-            //         state.hz += 1;
-            //         obj.z = state.hz;
-            //         obj.max = true;
-            //     } else {
-            //         obj.z = -1;
-            //         obj.max = false;
-            //     }
-            // } else {
-            //     obj.max = !obj.max;
-            //     obj.hide = false;
-            //     if (obj.max) {
-            //         state.hz += 1;
-            //         obj.z = state.hz;
-            //     } else {
-            //         obj.z = -1;
-            //         state.hz -= 1;
-            //     }
-            // }
-
-
-            // obj.max = false;
-            // obj.hide = false;
-            // if (obj.z == state.hz) {
-            //     state.hz -= 1;
-            // }
-            // obj.z = -1;
         }
 
         // } else if (action.payload == "close") {
-        //     obj.hide = true;
-        //     obj.max = null;
-        //     obj.z = -1;
-        //     tmpState.hz -= 1;
         // } else if (action.payload == "mxmz") {
         //     obj.size = ["mini", "full"][obj.size != "full" ? 1 : 0];
         //     obj.hide = false;

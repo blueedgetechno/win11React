@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BuilderHelper, CacheRequest } from './helper';
+import { BuilderHelper, CacheRequest, Confirms } from './helper';
 import { virtapi } from './fetch/createClient';
 
 
@@ -202,15 +202,14 @@ const initialState = {
         }
     ],
 
-    apps: [] as any[],
-    games: [] as any[]
+    games: [] as any[],
 };
 
 
 export const storeAsync = {
     fetch_store: createAsyncThunk(
         'fetch_store',
-        async (): Promise<any> => {
+        async (): Promise<any[]> => {
             return await CacheRequest('store', 30, async () => {
                 const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
                 if (error) throw error;
@@ -218,20 +217,23 @@ export const storeAsync = {
                 return data
             })
         }
-    )
+    ),
+    delete_store: createAsyncThunk(
+        'delete_store',
+        async ({store_id}:{store_id:number}): Promise<any[]> => {
+            await Confirms()
+            const { error } = await virtapi(`stores?id=eq.${store_id}`, 'DELETE');
+            if (error) throw error;
+
+            return await CacheRequest('store', 30, async () => {
+                const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
+                if (error) throw error;
+
+                return data
+            })
+        }
+    ),
 }
-export const deleteStore = async (app: any) => {
-    const { error } = await virtapi(`stores?id=eq.${app.id}`, 'DELETE');
-    if (error) throw error;
-
-    await log({
-        error: null,
-        type: 'confirm',
-        confirmCallback: deleteApp
-    });
-
-    fetchStore();
-};
 
 export const globalSlice = createSlice({
     name: 'global',
@@ -239,7 +241,8 @@ export const globalSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         BuilderHelper('fetch_store', builder, storeAsync.fetch_store, (state, action) => {
-
+            console.log(action.payload)
+            state.games = action.payload
         })
     }
 });

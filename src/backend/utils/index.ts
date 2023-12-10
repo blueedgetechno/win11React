@@ -15,7 +15,8 @@ const apps: {
     {
         name: 'Get Started',
         id: 'getstarted',
-        action: 'OOBE'
+        action: 'apps/app_toggle',
+        payload: 'getstarted'
     },
     {
         name: 'Worker Profile',
@@ -37,28 +38,25 @@ const apps: {
     {
         name: 'Payment',
         id: 'payment',
-        action: 'PMAPP'
-    },
-    {
-        name: 'Refund',
-        id: 'refund',
-        action: 'RFAPP'
+        action: 'apps/app_toggle',
+        payload: 'payment'
     },
     {
         name: 'Guideline',
         id: 'about',
-        action: 'ABOUT'
+        action: 'apps/app_toggle',
+        payload: 'about'
     },
     {
         name: 'Discord',
         id: 'discord',
-        action: 'EXTERNAL',
+        action: 'apps/app_external',
         payload: externalLink.DISCORD_LINK
     },
     {
         name: 'Thinkmay Fanpage',
-        id: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png',
-        action: 'EXTERNAL',
+        id: 'facebook',
+        action: 'apps/app_external',
         payload: externalLink.FACEBOOK_LINK
     }
 ];
@@ -68,7 +66,6 @@ var { taskbar, desktop } = {
         'Settings',
         'Get Started',
         'Worker Profile',
-        'Guideline',
         'Github',
         'Browser',
         'FeedBack',

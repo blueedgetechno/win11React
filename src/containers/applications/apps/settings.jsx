@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useAppSelector, useDispatch } from "../../../backend/reducers";
-// import { useDispatch, useAppSelector } from "react-redux";
-// import { changeTheme } from "../../../actions";
-// import { Image, ToolBar } from "../../../utils/general";
+import { appDispatch, useAppSelector } from "../../../backend/reducers";
+import { Image,ToolBar } from "../../../components/shared/general";
+import { changeTheme } from "../../../backend/actions";
 import LangSwitch from "./assets/Langswitch";
 import "./assets/settings.scss";
 import data from "./assets/settingsData.json";
@@ -10,7 +9,7 @@ import data from "./assets/settingsData.json";
 export const Settings = () => {
   const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'settings'));
   const theme = useAppSelector((state) => state.setting.person.theme);
-  const dispatch = useDispatch;
+  const dispatch = appDispatch;
 
   const wall = useAppSelector((state) => state.wallpaper);
 

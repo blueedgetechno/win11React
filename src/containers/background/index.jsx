@@ -48,7 +48,7 @@ export const LockScreen = () => {
     };
 
     const proceed = async () => {
-        if (user.id) {
+        if (user.id != 'unknown') {
             setUnLock(true);
             dispatch({ type: 'WALLUNLOCK' });
 
@@ -116,7 +116,7 @@ export const LockScreen = () => {
                     className="flex items-center mt-6 signInBtn"
                     onClick={proceed}
                 >
-                    {user.id ? ' Enter' : 'Continue with Google'}
+                    {user.id != 'unknown' ? ' Enter' : 'Continue with Google'}
                 </div>
             </div>
 

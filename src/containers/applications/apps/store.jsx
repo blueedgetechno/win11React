@@ -159,7 +159,6 @@ export const MicroStore = () => {
 
 const FrontPage = (props) => {
     const vendors = useAppSelector((state) => state.globals.vendors);
-    const apps = useAppSelector((state) => state.globals.apps);
     const games = useAppSelector((state) => state.globals.games);
 
     const { t, i18n } = useTranslation();
@@ -192,7 +191,7 @@ const FrontPage = (props) => {
                                         h={100}
                                         absolute={true}
                                         src={vendor?.images[0]}
-                                        err={vendor.id}
+                                        err={vendor.icon}
                                     />
                                 </a>
                             );
@@ -231,7 +230,7 @@ const FrontPage = (props) => {
                                         w={100}
                                         h={100}
                                         absolute={true}
-                                        src={game.id}
+                                        src={game.icon}
                                     />
                                     <div className="capitalize text-xs text-center font-semibold">
                                         {game.name}
@@ -258,46 +257,6 @@ const FrontPage = (props) => {
                                 <div className="capitalize text-xs text-center font-semibold"></div>
                             </div>
                         ))}
-                </div>
-            </div>
-
-            <div
-                id="apprib"
-                className="storeScroll frontCont amzApps my-8 py-20 w-auto mx-8 \
-        flex justify-between noscroll overflow-x-scroll overflow-y-hidden"
-            >
-                <div className="flex w-64 flex-col text-gray-100 h-full px-8  ">
-                    <div className="text-xl">{t('store.featured-app')}</div>
-                    <div className="text-xs mt-2">
-                        {t('store.featured-app.info')}
-                    </div>
-                </div>
-                <div className="flex w-max pr-8">
-                    {apps &&
-                        apps.map((app, i) => {
-                            var stars = 5;
-
-                            return (
-                                <div
-                                    key={i}
-                                    className="my-0 ribcont rounded-md  p-3 wrapperLogo"
-                                    onClick={() => {
-                                        props.app_click(app);
-                                    }}
-                                >
-                                    <Image
-                                        className="mx-4 mb-6 rounded"
-                                        w={120}
-                                        h={100}
-                                        absolute={true}
-                                        src={app.id}
-                                    />
-                                    <div className="capitalize text-xs text-center font-semibold">
-                                        {app.name}
-                                    </div>
-                                </div>
-                            );
-                        })}
                 </div>
             </div>
         </div>
@@ -439,7 +398,7 @@ const DetailPage = ({ app }) => {
                     className="rounded"
                     ext
                     h={100}
-                    src={app?.id}
+                    src={app?.icon}
                     err="img/asset/bootlogo.png"
                 />
                 <div className="flex flex-col items-center text-center relative">
@@ -573,11 +532,10 @@ const DetailPage = ({ app }) => {
 
 const DownPage = ({ action }) => {
     const [catg, setCatg] = useState('all');
-    const apps = useAppSelector((state) => state.globals.apps);
     const games = useAppSelector((state) => state.globals.games);
     const [searchtxt, setShText] = useState('');
 
-    const [storeApps, setStoreApps] = useState([...apps, ...games]);
+    const [storeApps, setStoreApps] = useState([...games]);
     const handleSearchChange = (e) => {
         setShText(e.target.value);
     };
@@ -588,13 +546,7 @@ const DownPage = ({ action }) => {
     // }, [apps, games]);
 
     useEffect(() => {
-        if (catg == 'app') {
-            setStoreApps(apps);
-            return;
-        } else if (catg == 'all') {
-            setStoreApps([...apps, ...games]);
-            return;
-        }
+        setStoreApps([...games]);
         setStoreApps(games);
     }, [catg]);
     const renderSearchResult = () => {
@@ -622,7 +574,7 @@ const DownPage = ({ action }) => {
                             className="mx-4 mb-6 rounded"
                             w={100}
                             h={100}
-                            src={app.id}
+                            src={app.icon}
                             ext
                         />
                         <div className="capitalize text-xs text-center font-semibold">

@@ -121,7 +121,7 @@ const initialState = {
             },
             {
                 name: 'Refresh',
-                action: 'refresh',
+                action: 'fetch_app',
                 type: 'svg',
                 icon: 'refresh'
             },

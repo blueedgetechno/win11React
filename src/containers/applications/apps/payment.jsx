@@ -19,7 +19,7 @@ const initialOptions = {
 };
 
 export const PaymentApp = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.filter(x => x.id == 'payment'));
+    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'payment'));
     const user = useAppSelector((state) => state.user);
     const dispatch = appDispatch;
 
@@ -87,6 +87,8 @@ export const PaymentApp = () => {
             });
         };
     };
+
+    console.log(wnapp)
     return (
         <div
             className="paymentApp floatTab dpShad"
@@ -157,49 +159,47 @@ export const PaymentApp = () => {
                             >
                                 Chuyển Khoản
                             </button>
-                            {user?.id ? (
-                                <div className="items-center flex flex-col items-center mt-4">
-                                    <PayPalScriptProvider
-                                        options={initialOptions}
-                                    >
-                                        {' '}
-                                        {FUNDING_SOURCES.map(
-                                            (fundingSource, index) => {
-                                                return (
-                                                    <PayPalButtons
-                                                        key={index}
-                                                        className="max-w-[120px] min-w-[80px] mx-auto paypalCtn"
-                                                        fundingSource={
-                                                            fundingSource
-                                                        }
-                                                        disableMaxWidth={false}
-                                                        createSubscription={async (
-                                                            data,
+                            <div className="items-center flex flex-col items-center mt-4">
+                                <PayPalScriptProvider
+                                    options={initialOptions}
+                                >
+                                    {' '}
+                                    {FUNDING_SOURCES.map(
+                                        (fundingSource, index) => {
+                                            return (
+                                                <PayPalButtons
+                                                    key={index}
+                                                    className="max-w-[120px] min-w-[80px] mx-auto paypalCtn"
+                                                    fundingSource={
+                                                        fundingSource
+                                                    }
+                                                    disableMaxWidth={false}
+                                                    createSubscription={async (
+                                                        data,
+                                                        actions
+                                                    ) =>
+                                                        subscribe(
+                                                            user,
+                                                            sub.plan_id,
                                                             actions
-                                                        ) =>
-                                                            subscribe(
-                                                                user,
-                                                                sub.plan_id,
-                                                                actions
-                                                            )
-                                                        }
-                                                        onApprove={payment}
-                                                        style={{
-                                                            layout: 'vertical',
-                                                            shape: 'pill',
-                                                            color:
-                                                                fundingSource ==
-                                                                    FUNDING.PAYLATER
-                                                                    ? 'gold'
-                                                                    : ''
-                                                        }}
-                                                    />
-                                                );
-                                            }
-                                        )}
-                                    </PayPalScriptProvider>
-                                </div>
-                            ) : null}
+                                                        )
+                                                    }
+                                                    onApprove={payment}
+                                                    style={{
+                                                        layout: 'vertical',
+                                                        shape: 'pill',
+                                                        color:
+                                                            fundingSource ==
+                                                                FUNDING.PAYLATER
+                                                                ? 'gold'
+                                                                : ''
+                                                    }}
+                                                />
+                                            );
+                                        }
+                                    )}
+                                </PayPalScriptProvider>
+                            </div>
                         </div>
                     ))}
                 </div>

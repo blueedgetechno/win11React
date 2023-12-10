@@ -392,6 +392,7 @@ export const ToolBar = (props) => {
         dispatch_generic(action)
     };
 
+    console.log(props)
     return (
         <>
             <div
@@ -453,8 +454,8 @@ export const ToolBar = (props) => {
                         className="closeBtn"
                         invert={props.invert}
                         name={props.app}
-                        click={props.app}
-                        payload="close"
+                        click={"apps/app_close"}
+                        payload={props.icon}
                         pr
                         src="close"
                         ui

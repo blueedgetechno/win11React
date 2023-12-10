@@ -8,9 +8,9 @@ export * from './apps/about';
 export * from './apps/edge';
 export * from './apps/getstarted';
 export * from './apps/payment';
-export * from './apps/refund';
 export * from './apps/store';
 export * from './apps/worker';
+export * from './apps/settings';
 
 export const ScreenPreview = () => {
     const tasks = useAppSelector((state) => state.taskbar);

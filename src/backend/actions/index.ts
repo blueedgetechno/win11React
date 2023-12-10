@@ -6,6 +6,7 @@ import {
     desk_show,
     desk_size,
     desk_sort,
+    dispatch_generic,
     menu_chng,
     menu_hide,
     store
@@ -129,10 +130,14 @@ export const changeTheme = () => {
 
 
 export const menuDispatch = async (event: Event, menu: any) => {
+    const dataset = (event.target as any)?.dataset
+    if (dataset.action == undefined) 
+        return
+    
     appDispatch(menu_hide({}));
-    appDispatch({
-        type: (event.target as any).dataset.action,
-        payload: (event.target as any).dataset.payload
+    dispatch_generic({
+        type: dataset.action,
+        payload: dataset.payload
     });
 };
 

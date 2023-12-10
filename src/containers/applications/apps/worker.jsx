@@ -425,8 +425,7 @@ const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
                 <div className="drdwcont flex">
                     <Icon
                         src="refresh"
-                        click={'FUNC'}
-                        // func={refeshWorker}
+                        click={'worker/fetch_worker'}
                         ui
                         width={18}
                         margin="0 6px"

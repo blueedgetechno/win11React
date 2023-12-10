@@ -17,7 +17,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 const middleware: ThunkMiddleware = () =>
     next =>
         async action => {
-            console.log({...action as any})
+            console.log({ ...action as any })
             return await next(action)
         }
 
@@ -88,15 +88,21 @@ export const {
     sidepane_bandtogg,
     sidepane_calnhide,
     sidepane_calntogg,
-    sidepane_panehide,
+    sidepane_panetogg,
     sidepane_panethem
 } = sidepaneSlice.actions;
 
-export const { fetch_app,install_app, } = appsAsync
+export const { fetch_app, install_app, } = appsAsync
 export const { fetch_worker } = workerAsync
 export const { fetch_store } = storeAsync
 export const { fetch_user } = userAsync
 
+import * as actions from '.';
 export const dispatch_generic = async ({ type, payload }: { type: string, payload: any }) => {
+    if (Object.keys(actions).includes(type)) {
+        console.log('found')
+        return store.dispatch((actions as Record<string, any>)[type](payload))
+    }
+
     store.dispatch({ type, payload })
 }
