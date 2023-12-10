@@ -22,6 +22,7 @@ import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
+import { WidPane } from './components/start/widget';
 
 function App() {
     const apps = useAppSelector((state) => state.apps);
@@ -120,6 +121,7 @@ function App() {
                         <Taskbar />
                         <ActMenu />
                         <Popup />
+                        <WidPane />
                     </>
                 </div>
                 {/* <AvailableCluster isBootScreen={lockscreen} /> */}
