@@ -51,7 +51,13 @@ export class RenderNode<T> {
         this.id = id
         this.type = type
         this.info = info
-        this.data = data.map(x => new RenderNode(x))
+        this.data = []
+        data.forEach(x => {
+            if(this.data.find(y => y.id == x.id) != undefined)
+                return
+
+            this.data.push(new RenderNode(x))
+        })
     }
 
 	async iterateAsync(predecate: (node: RenderNode<any>) => Promise<void>) : Promise<void>  {

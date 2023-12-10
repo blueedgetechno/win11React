@@ -9,78 +9,27 @@ import {
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
+import { customClickDispatch } from '../../../backend/utils/dispatch';
 
 export const Worker = () => {
     const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'worker'));
     const files = useAppSelector((state) => state.worker);
 
-    const [contentData, setContentData] = useState(files.c);
     const [cpath, setPath] = useState(files.cpath);
     const [searchtxt, setShText] = useState('');
-    const [filters, setFilters] = useState({}); //{status: '',}
-    const dispatch = appDispatch;
 
-    // const filterType = fdata?.info?.menu;
-
-    // useEffect(() => {
-    //     setContentData(fdata?.data);
-    // }, [fdata]);
     useEffect(() => {
         setPath(files.cpath);
         setShText('');
     }, [files.cpath]);
 
-
     const handleChange = (e) => setPath(e.target.value);
     const handleSearchChange = (e) => setShText(e.target.value);
-
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
-            dispatch(worker_path(cpath));
+            appDispatch(worker_path(cpath));
         }
     };
-
-    const DirCont = () => {
-        var arr = [],
-            curr = fdata,
-            index = 0;
-        while (curr) {
-            arr.push(
-                <div key={index++} className="dirCont flex items-center">
-                    <div
-                        className="dncont"
-                        // onClick={defaultDispatch}
-                        tabIndex="-1"
-                        data-action="FILEDIRWORKER"
-                        data-payload={curr.id}
-                    >
-                        {curr.name}
-                    </div>
-                    <Icon className="dirchev" fafa="faChevronRight" width={8} />
-                </div>
-            );
-
-            curr = curr.host;
-        }
-
-        arr.push(
-            <div key={index++} className="dirCont flex items-center">
-                <Icon
-                    className="pr-1 pb-px"
-                    // src={'win/' + fdata?.info?.id + '-sm'}
-                    width={16}
-                />
-                <Icon className="dirchev" fafa="faChevronRight" width={8} />
-            </div>
-        );
-
-        return (
-            <div key={index++} className="dirfbox h-full flex">
-                {arr.reverse()}
-            </div>
-        );
-    };
-
 
     return (
         <div
@@ -101,55 +50,24 @@ export const Worker = () => {
                 name={wnapp.name}
             />
             <div className="windowScreen flex flex-col">
-                <Ribbon
-                    // type={filterType}
-                    // changeFilter={changeFilter}
-                    // filters={filters}
-                    // resetFilter={resetFilter}
-                />
+                <Ribbon/>
                 <div className="restWindow flex-grow flex flex-col">
                     <div className="sec1">
-                        <Icon
-                            className={
-                                'navIcon hvtheme' +
-                                // (files.hid == 0 ? ' disableIt' : '')
-                                ''
-
-                            }
-                            fafa="faArrowLeft"
-                            width={14}
-                            click="FILEPREVWORKER"
-                            pr
-                        />
-                        <Icon
-                            className={
-                                'navIcon hvtheme' +
-                                // (files.hid + 1 == files.hist.length
-                                //     ? ' disableIt'
-                                //     : '')
-                                ''
-                            }
-                            fafa="faArrowRight"
-                            width={14}
-                            click="FILENEXTWORKER"
-                            pr
-                        />
                         <Icon
                             className="navIcon hvtheme"
                             fafa="faArrowUp"
                             width={14}
-                            click="FILEBACKWORKER"
+                            click="worker/worker_prev"
                             pr
                         />
                         <div className="path-bar noscroll" tabIndex="-1">
                             <input
                                 className="path-field"
                                 type="text"
-                                value={cpath}
+                                value={files.cpath}
                                 onChange={handleChange}
                                 onKeyDown={handleEnter}
                             />
-                            {/* <DirCont /> */}
                         </div>
                         <div className="srchbar">
                             <Icon
@@ -165,31 +83,11 @@ export const Worker = () => {
                             />
                         </div>
                     </div>
-                    {/* <div className="sec2">
-                        <ContentArea searchtxt={searchtxt} data={contentData} />
-                    </div> */}
-                    <div className="sec3">
-                        {/* <div className="item-count text-xs">
-                            {fdata?.data?.length} items
-                        </div> */}
-                        <div className="view-opts flex">
-                            <Icon
-                                className="viewicon hvtheme p-1"
-                                click="FILEVIEWWORKER"
-                                payload="5"
-                                // open={files.view == 5}
-                                src="win/viewinfo"
-                                width={16}
-                            />
-                            <Icon
-                                className="viewicon hvtheme p-1"
-                                click="FILEVIEWWORKER"
-                                payload="1"
-                                // open={files.view == 1}
-                                src="win/viewlarge"
-                                width={16}
-                            />
-                        </div>
+                    <div className="sec2">
+                        <ContentArea 
+                            searchtxt={searchtxt} 
+                            data={files} 
+                        />
                     </div>
                 </div>
             </div>
@@ -198,22 +96,25 @@ export const Worker = () => {
 };
 
 const ContentArea = ({ searchtxt, data }) => {
-    const [selected, setSelect] = useState('null');
+    const [selected, setSelect] = useState({});
 
     const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
-        setSelect(e.target.dataset.id);
+        console.log(e.target.dataset)
+        if (e.target.dataset.payload == null) 
+            return
+        
+        setSelect(data.cdata.find(x => e.target.dataset.payload == x.id) ?? {});
         dispatch(menu_hide());
     };
 
-    const handleDouble = (e) => {
+    const handleDouble = customClickDispatch((e) => {
         e.stopPropagation();
-        // openWorker(e);
-    };
+    });
 
     const emptyClick = (e) => {
-        setSelect(null);
+        setSelect({});
     };
 
     const handleKey = (e) => {
@@ -230,6 +131,27 @@ const ContentArea = ({ searchtxt, data }) => {
         else return 'folder3d';
     };
 
+    const renderSubdata = (data) => {
+        const list = [];
+        for (const key in data) {
+            if (key == 'data')
+                continue
+            else if ( typeof data[key] === 'object') {
+                list.push(renderSubdata(data[key])) 
+                continue
+            }
+
+            list.push(
+                <div className="wrapperText" key={key}>
+                    <p className="title">{data[key] && combineText(key)}: </p>
+                    <p className="content"> {data[key]}</p>
+                </div>
+            );
+        }
+
+        return list;
+    };
+
     return (
         <div
             className="contentarea"
@@ -240,26 +162,29 @@ const ContentArea = ({ searchtxt, data }) => {
             <div className="contentwrap win11Scroll">
                 <div className="gridshow" data-size="lg">
                     {
-                        data.map((item, i) => {
+                        data.cdata.map((item, i) => {
                             return (
-                                item.name.includes(searchtxt) && (
+                                (JSON.stringify(item.info) + item.id)
+                                .includes(searchtxt) && (
                                     <div
                                         key={i}
                                         className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
-                                        data-id={item.id}
-                                        data-pid={item.id}
-                                        data-focus={selected == item.id}
+                                        title={item.id}
+
+                                        data-action={'worker/worker_view'}
+                                        data-payload={item.id}
+
+                                        data-focus={selected.id == item.id}
+
                                         onClick={handleClick}
                                         onDoubleClick={handleDouble}
-                                        data-menu={item.info.menu}
-                                        title={item.name}
                                     >
                                         <Image
                                             src={`icon/win/${renderIconName(
                                                 item.info
                                             )}`}
                                         />
-                                        <span>{item.name}</span>
+                                        <span>{item.id}</span>
                                     </div>
                                 )
                             );
@@ -268,31 +193,19 @@ const ContentArea = ({ searchtxt, data }) => {
                 </div>
             </div>
             <div className="subinfo">
-                {/* {
+                {
                     <>
                         <div className="conticon  flex flex-col items-center gap-2 prtclk containerImg">
-                            {subInfo?.info?.menu == 'worker' ||
-                            subInfo?.info?.menu == 'session' ? (
-                                <Image
-                                    src={`icon/win/${renderIconName(
-                                        subInfo?.info
-                                    )}`}
-                                />
-                            ) : null}
-
-                            {renderSubdata(subInfo?.info)}
+                            {renderSubdata(selected)}
                         </div>
                     </>
-                } */}
+                }
             </div>
         </div>
     );
 };
 
-const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
-    const handleChangeFilter = (key, value) => {
-        changeFilter(key, value);
-    };
+const Ribbon = () => {
     return (
         <div className="msribbon flex">
             <div className="ribsec">
@@ -318,88 +231,6 @@ const Ribbon = ({ type, changeFilter, filters, resetFilter }) => {
                     />
                 </div>
             </div>
-            <div className="ml-[45px] flex gap-5 items-center">
-                {filter(type) && (
-                    <>
-                        <div className="flex items-center gap-2">
-                            <label className="uppercase font-[500]" htmlFor="">
-                                Create at
-                            </label>
-
-                            <select
-                                onChange={(e) =>
-                                    handleChangeFilter('sort', e.target.value)
-                                }
-                                className="h-[40px] p-2"
-                                name=""
-                                id=""
-                            >
-                                <option value={''}> X </option>
-                                <option value={'oldest'}> Oldest </option>
-                                <option value={'newest'}> Newest </option>
-                            </select>
-                        </div>
-                        {filter(type)?.map((i) => (
-                            <div className="flex items-center gap-2">
-                                <label
-                                    className="uppercase font-[500]"
-                                    htmlFor=""
-                                >
-                                    {i.field}
-                                </label>
-                                <select
-                                    value={filters[i.field] ?? ''}
-                                    onChange={(e) =>
-                                        handleChangeFilter(
-                                            i.field,
-                                            e.target.value
-                                        )
-                                    }
-                                    className="h-[40px] p-2"
-                                    name=""
-                                    id=""
-                                >
-                                    {i.options?.map((x) => (
-                                        <option value={x}>{x || 'X'} </option>
-                                    ))}
-                                </select>
-                            </div>
-                        ))}
-                        <button
-                            className="instbtn h-[40px]"
-                            onClick={() => {
-                                resetFilter();
-                            }}
-                        >
-                            {' '}
-                            Reset
-                        </button>
-                    </>
-                )}
-            </div>
         </div>
     );
-};
-
-const listFilter = {
-    holder: [
-        {
-            field: 'volume_class',
-            options: ['', 'LA|COLD']
-        },
-        {
-            field: 'type',
-            options: ['', 'APP', 'OS', 'MODIFICATION']
-        },
-        {
-            field: 'state',
-            options: ['', 'RUNNING', 'STOPPED']
-        }
-    ]
-};
-
-const filter = (type) => {
-    const filterField = listFilter[type];
-
-    return filterField;
 };

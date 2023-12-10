@@ -6,7 +6,7 @@ import { BuilderHelper, CacheRequest } from './helper';
 type WorkerType = {
     data: any;
     cpath: string;
-    cdata: any,
+    cdata: any[],
 
     hist: any[];
     hid: number;
@@ -16,7 +16,7 @@ const initialState: WorkerType = {
     data: null,
 
     cpath: '',
-    cdata: null,
+    cdata: [],
 
     hist: [],
     hid: 0,
@@ -188,46 +188,38 @@ export const workerSlice = createSlice({
     name: 'worker',
     initialState,
     reducers: {
-        worker_dir: (state, action: PayloadAction<any>) => {
-            // state.cdir = action.payload;
-        },
-        worker_path: (state, action: PayloadAction<any>) => {
-            // const pathid = state.data.parsePath(action.payload);
-            // if (pathid) state.cdir = pathid;
-        },
-        worker_back: (state, action: PayloadAction<any>) => {
-            // const item = state.data.getId(state.cdir);
-            // if (item.host) state.cdir = item.host.id;
-        },
-        worker_view: (state, action: PayloadAction<any>) => {
-            // state.view = action.payload;
+        worker_view: (state, action: PayloadAction<string|number>) => {
+            const paths = state.cpath.split('/').filter(x => x.length > 0)
+            paths.push(`${action.payload}`)
+            state.cpath = paths.join('/')
+
+            let temp : RenderNode<any>[] = []
+            let target : RenderNode<any> = state.data
+            paths.forEach(x => {
+                temp = new RenderNode(target).data
+                target = temp.find(y => y.id == x) ?? target
+            })
+
+            state.cdata = target.data.map(x => x.any())
         },
         worker_prev: (state, action: PayloadAction<any>) => {
-            // state.hid++;
-            // if (state.hid < 0) state.hid = 0;
-            // state = format(state, true);
-        },
-        worker_next: (state, action: PayloadAction<any>) => {
-            // state.hid--;
-            // if (state.hid > state.hist.length - 1)
-            //     state.hid = state.hist.length - 1;
-            // state = format(state, true);
-        },
-        worker_update: (state, action: PayloadAction<any>) => {
-            // const { data, oldCpath } = action.payload;
-            // state.data = {
-            //     tree: [],
-            //     lookup: {},
-            //     special: {}
-            // };
+            const paths = state.cpath.split('/').filter(x => x.length > 0)
+            paths.pop()
+            if (paths.length == 0) {
+                state.cdata = new RenderNode(state.data).data.map(x => x.any())
+                return
+            }
 
-            // state.data.parse(data);
-            // const pathid = state.data.parsePath(oldCpath);
-            // state.cdir = pathid ?? '%worker%';
-            // state.hist = [];
-            // state.hid = 0;
-            // state.view = 1;
-        }
+            state.cpath = paths.join('/')
+            let temp : RenderNode<any>[] = []
+            let target : RenderNode<any> = state.data
+            paths.forEach(x => {
+                temp = new RenderNode(target).data
+                target = temp.find(y => y.id == x) ?? target
+            })
+
+            state.cdata = target.data.map(x => x.any())
+        },
     },
     extraReducers: (build) => {
         BuilderHelper(
@@ -235,7 +227,22 @@ export const workerSlice = createSlice({
             build,
             workerAsync.fetch_worker,
             (state, action) => {
+                state.cpath = initialState.cpath
                 state.data = action.payload
+                const paths = state.cpath.split('/').filter(x => x.length > 0)
+                if (paths.length == 0) {
+                    state.cdata = new RenderNode(state.data).data.map(x => x.any())
+                    return
+                }
+
+                let temp : RenderNode<any>[] = []
+                let target : RenderNode<any> = state.data
+                paths.forEach(x => {
+                    temp = new RenderNode(target).data
+                    target = temp.find(y => y.id == x) ?? target
+                })
+
+                state.cdata = target.data.map(x => x.any())
             }
         );
     }
