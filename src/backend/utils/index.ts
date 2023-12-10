@@ -44,8 +44,8 @@ const apps: {
     {
         name: 'Guideline',
         id: 'about',
-        action: 'apps/app_toggle',
-        payload: 'about'
+        action: 'apps/app_url',
+        payload:  'https://thinkmay.net'
     },
     {
         name: 'Discord',

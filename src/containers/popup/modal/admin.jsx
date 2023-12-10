@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fetchStore } from '../../../backend/actions/background';
+import { appDispatch, popup_close } from '../../../backend/reducers';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
-import { appDispatch } from '../../../backend/reducers';
 import { log } from '../../../backend/utils/log';
 import { Image } from '../../../components/shared/general';
 
@@ -21,12 +21,7 @@ const ModalEditOrInsert = (props) => {
             }
     );
 
-    const dispatch = appDispatch;
-    const closeModal = async () => {
-        dispatch({
-            type: 'CLOSE_MODAL'
-        });
-    };
+    const closeModal = () => appDispatch(popup_close())
 
     function handleChangeInput(e) {
         const name = e.target.name;

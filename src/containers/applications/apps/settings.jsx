@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { changeTheme } from "../../../backend/actions";
-import { appDispatch, useAppSelector } from "../../../backend/reducers";
+import { appDispatch, useAppSelector, wall_set } from "../../../backend/reducers";
 import { Image, ToolBar } from "../../../components/shared/general";
 import LangSwitch from "./assets/Langswitch";
 import "./assets/settings.scss";
@@ -36,10 +36,7 @@ export const Settings = () => {
       changeTheme();
     }
 
-    dispatch({
-      type: "WALLSET",
-      payload: src,
-    });
+    dispatch(wall_set(src));
   };
 
   const userName = useAppSelector((state) => state.setting.person.name);

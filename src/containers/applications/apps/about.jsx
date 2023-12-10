@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from '../../../components/shared/general';
 
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { appDispatch, app_close, useAppSelector } from '../../../backend/reducers';
 import './assets/about.scss';
 export const AboutWin = () => {
     const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'about'));
@@ -15,7 +15,7 @@ export const AboutWin = () => {
         localStorage.setItem('openAboutThinkmay', false);
         localStorage.removeItem('openAboutThinkmay2');
         localStorage.removeItem('openAboutThinkmay3');
-        dispatch({ type: 'ABOUT', payload: 'close' });
+        dispatch(app_close(wnapp.id));
     };
     const [currentSlide, setCurrentSlide] = useState(0);
     const [loaded, setLoaded] = useState(false);
@@ -118,7 +118,7 @@ export const AboutWin = () => {
                                 currentSlide ===
                                 instanceRef.current.track.details.slides
                                     .length -
-                                    1
+                                1
                             }
                         />
                     </>
@@ -159,9 +159,8 @@ function Arrow(props) {
     return (
         <svg
             onClick={props.onClick}
-            className={`arrow ${
-                props.left ? 'arrow--left' : 'arrow--right'
-            } ${disabeld}`}
+            className={`arrow ${props.left ? 'arrow--left' : 'arrow--right'
+                } ${disabeld}`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
         >

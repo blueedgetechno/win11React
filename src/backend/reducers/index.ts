@@ -46,7 +46,7 @@ export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const { user_delete } = userSlice.actions;
-export const { wall_next, wall_set } = wallSlice.actions;
+export const { wall_next, wall_set,wall_lock,wall_unlock } = wallSlice.actions;
 export const { task_audo, task_hide, task_show, task_toggle } =
     taskSlice.actions;
 export const {
@@ -66,7 +66,7 @@ export const {
     startshw,
     startsrc
 } = menuSlice.actions;
-export const { app_toggle, app_add, app_external, app_showdesk, app_url } =
+export const { app_toggle, app_add,app_close, app_external, app_showdesk, app_url } =
     appSlice.actions;
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
 export const { setting_load, setting_setv, setting_theme, setting_togg } = settSlice.actions;

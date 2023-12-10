@@ -26,6 +26,7 @@ const themes = ['default', 'dark', 'ThemeA', 'ThemeB', 'ThemeD', 'ThemeC'];
 const initialState = {
     themes: themes,
     wps: wps,
+    unlocked: true,
     src: walls[wps],
     act: ''
 };
@@ -34,10 +35,16 @@ export const wallSlice = createSlice({
     name: 'wall',
     initialState,
     reducers: {
-        wall_next: (state, action: PayloadAction<any>) => {
+        wall_next: (state) => {
             const twps = (state.wps + 1) % walls.length;
             state.wps = twps
             state.src = walls[twps]
+        },
+        wall_unlock: (state) => {
+            state.unlocked = false
+        },
+        wall_lock: (state) => {
+            state.unlocked = false
         },
         wall_set: (state, action: PayloadAction<any>) => {
             let isIndex = !Number.isNaN(parseInt(action.payload)),

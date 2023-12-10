@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../../backend/reducers/fetch/createClient';
-import { appDispatch, useAppSelector } from '../../backend/reducers';
+import { appDispatch, useAppSelector, wall_unlock } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
@@ -50,7 +50,7 @@ export const LockScreen = () => {
     const proceed = async () => {
         if (user.id != 'unknown') {
             setUnLock(true);
-            dispatch({ type: 'WALLUNLOCK' });
+            dispatch(wall_unlock());
 
             return;
         }

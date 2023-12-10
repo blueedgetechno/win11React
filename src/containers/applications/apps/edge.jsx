@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { appDispatch, app_url, useAppSelector } from '../../../backend/reducers';
 import {
     Icon,
     LazyComponent,
@@ -102,7 +102,7 @@ export const EdgeMenu = () => {
         if (wnapp.url) {
             setTyping(false);
             setUrl(wnapp.url);
-            dispatch({ type: 'EDGELINK' });
+            dispatch(app_url());
         }
     });
 

@@ -91,7 +91,7 @@ function App() {
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {lockscreen ? <BootScreen /> : null}
-                {user?.id == 'unknown' || wall?.locked ? <LockScreen /> : null}
+                {user.id == 'unknown' || !wall.unlocked ? <LockScreen /> : null}
                 <div className="appwrap ">
                     {true
                         ? <Background />

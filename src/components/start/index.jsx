@@ -3,7 +3,7 @@ import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
-import { appDispatch, dispatch_generic, setting_setv, useAppSelector } from '../../backend/reducers';
+import { appDispatch, dispatch_generic, setting_setv, task_audo, useAppSelector } from '../../backend/reducers';
 import { clickDispatch } from '../../backend/utils/dispatch';
 import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
@@ -27,7 +27,6 @@ export const DesktopApp = () => {
         timeoutRef.current = setTimeout(() => {
             setHolding(true);
             e.preventDefault();
-            // dispatch({ type: 'GARBAGE'});
             var touch = e.touches[0] || e.changedTouches[0];
 
             var data = {
@@ -113,8 +112,7 @@ export const SidePane = () => {
         if (e.target.value < 30) aud = 1;
         if (e.target.value == 0) aud = 0;
 
-        dispatch({ type: 'TASKAUDO', payload: aud });
-
+        dispatch(task_audo(aud));
         sliderBackground(vSlider, e.target.value);
     };
 

@@ -265,12 +265,11 @@ export const ToolBar = (props) => {
         setSnap(false);
     };
 
-    const toolClick = () => {
-        dispatch({
+    const toolClick = () => 
+        dispatch_generic({
             type: 'apps/app_front',
             payload: props.app,
         });
-    };
 
     var posP = [0, 0],
         dimP = [0, 0],

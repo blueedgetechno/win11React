@@ -65,7 +65,6 @@ export const Remote = () => {
             const fullscreen = document.fullscreenElement != null;
             const havingPtrLock = document.pointerLockElement != null;
 
-            // remoteVideo.current.style.cursor = 'none'
             remoteVideo.current.style.objectFit = !fullscreen
                 ? 'contain'
                 : no_stretch

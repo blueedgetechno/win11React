@@ -178,8 +178,9 @@ const initialState = {
             },
             {
                 name: 'Guideline',
-                action: 'ABOUT',
-                icon: 'about'
+                icon: 'about',
+                action: 'apps/app_url',
+                payload: 'https://thinkmay.net'
             }
         ],
         task: [

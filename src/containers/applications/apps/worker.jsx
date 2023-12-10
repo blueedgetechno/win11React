@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { appDispatch, menu_hide, useAppSelector } from '../../../backend/reducers';
+import { appDispatch, menu_hide, useAppSelector, worker_path, worker_prev } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
@@ -28,7 +28,7 @@ export const Worker = () => {
 
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
-            dispatch({ type: 'FILEPATHWORKER', payload: cpath });
+            dispatch(worker_path(cpath));
         }
     };
 
@@ -327,7 +327,7 @@ const ContentArea = ({ searchtxt, data }) => {
 
     const handleKey = (e) => {
         if (e.key == 'Backspace') {
-            dispatch({ type: 'FILEPREVWORKER' });
+            dispatch(worker_prev());
         }
     };
 
