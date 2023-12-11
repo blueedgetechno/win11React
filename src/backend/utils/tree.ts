@@ -20,6 +20,7 @@ export type NodeType =
     | 'user_session'
     | '';
 
+
 export class RenderNode<T> {
     id: string | number;
     type: NodeType;

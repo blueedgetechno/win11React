@@ -1,7 +1,51 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
-import { RootState } from '.';
+import { RootState, appDispatch, audio_status, update_metrics, video_status } from '.';
 import { BuilderHelper } from './helper';
+import { RemoteDesktopClient } from '../../../core/app'
+import { AddNotifier, ConnectionEvent, Log, LogLevel } from '../../../core/utils/log';
+
+export let client : RemoteDesktopClient | null = null;
+export const assign = (fun: () => RemoteDesktopClient) => {
+    client = fun()        
+    client.HandleMetricRaw = async (data) => { };
+    client.HandleMetrics = async (metrics) => {
+        switch (metrics.type) {
+            case 'VIDEO':
+                appDispatch(update_metrics(metrics));
+                break;
+            case 'FRAME_LOSS':
+                console.log('frame loss occur');
+                break;
+            default:
+                break;
+        }
+    };
+        
+}        
+
+AddNotifier(async (message, text, source) => {
+    console.log(message);
+    if (message == ConnectionEvent.WebRTCConnectionClosed)
+        source == 'audio'
+            ? appDispatch(audio_status('closed'))
+            : appDispatch(video_status('closed'));
+    if (message == ConnectionEvent.WebRTCConnectionDoneChecking)
+        source == 'audio'
+            ? appDispatch(audio_status('connected'))
+            : appDispatch(video_status('connected'));
+    if (message == ConnectionEvent.WebRTCConnectionChecking)
+        source == 'audio'
+            ? appDispatch(audio_status('connecting'))
+            : appDispatch(video_status('connecting'));
+
+    if (message == ConnectionEvent.ApplicationStarted) {
+        appDispatch(audio_status('started'));
+        appDispatch(video_status('started'));
+    }
+
+    Log(LogLevel.Infor, `${message} ${text ?? ''} ${source ?? ''}`);
+});
 
 type ConnectStatus =
     | 'not started'
@@ -93,6 +137,10 @@ export const remoteSlice = createSlice({
                     bandwidth: [],
                     buffer: []
                 };
+            } else {
+                state.connection = undefined
+                state.metrics = undefined
+                client?.Close()
             }
             state.active = !state.active;
         },

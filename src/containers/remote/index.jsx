@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { RemoteDesktopClient } from '../../../core/app';
 import { AudioWrapper } from '../../../core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../core/pipeline/sink/video/wrapper';
@@ -12,21 +12,17 @@ import { getBrowser, getOS, getPlatform } from '../../../core/utils/platform';
 import {
     appDispatch,
     audio_status,
-    update_connection_path,
     update_metrics,
     useAppSelector,
     video_status
 } from '../../backend/reducers';
+import { client,assign } from '../../backend/reducers/remote';
 import './remote.scss';
 
-let client = null;
-let video = null;
-let audio = null;
 let clipboard = '';
 let pointer = false;
 let no_stretch = false;
 let platform = getPlatform();
-
 export const Remote = () => {
     const remote = useAppSelector((store) => store.remote);
     const videoConnectivity = useAppSelector(
@@ -67,8 +63,8 @@ export const Remote = () => {
             remoteVideo.current.style.objectFit = !fullscreen
                 ? 'contain'
                 : no_stretch
-                  ? 'contain'
-                  : 'fill';
+                    ? 'contain'
+                    : 'fill';
 
             if (pointer != fullscreen) {
                 client?.PointerVisible(view_pointer ? true : fullscreen);
@@ -78,7 +74,7 @@ export const Remote = () => {
             if (fullscreen && !havingPtrLock && getBrowser() != 'Safari')
                 try {
                     remoteVideo.current.requestPointerLock();
-                } catch {}
+                } catch { }
             else if (!fullscreen && havingPtrLock && getBrowser() != 'Safari')
                 document.exitPointerLock();
         };
@@ -121,41 +117,19 @@ export const Remote = () => {
     }, [videoConnectivity, audioConnectivity]);
 
     useEffect(() => {
-        if (!remote.active || remote.auth == undefined) return;
-
-        AddNotifier(async (message, text, source) => {
-            console.log(message);
-            if (message == ConnectionEvent.WebRTCConnectionClosed)
-                source == 'audio'
-                    ? appDispatch(audio_status('closed'))
-                    : appDispatch(video_status('closed'));
-            if (message == ConnectionEvent.WebRTCConnectionDoneChecking)
-                source == 'audio'
-                    ? appDispatch(audio_status('connected'))
-                    : appDispatch(video_status('connected'));
-            if (message == ConnectionEvent.WebRTCConnectionChecking)
-                source == 'audio'
-                    ? appDispatch(audio_status('connecting'))
-                    : appDispatch(video_status('connecting'));
-
-            if (message == ConnectionEvent.ApplicationStarted) {
-                await TurnOnConfirm(message, text);
-                appDispatch(audio_status('started'));
-                appDispatch(video_status('started'));
-            }
-
-            Log(LogLevel.Infor, `${message} ${text ?? ''} ${source ?? ''}`);
-        });
+        if (!remote.active || remote.auth == undefined) 
+            return;
 
         SetupWebRTC();
     }, [remote.active]);
 
     const SetupWebRTC = () => {
-        if (client != null) client.Close();
+        if (client != null) 
+            client.Close();
 
-        video = new VideoWrapper(remoteVideo.current);
-        audio = new AudioWrapper(remoteAudio.current);
-        client = new RemoteDesktopClient(
+        const video = new VideoWrapper(remoteVideo.current);
+        const audio = new AudioWrapper(remoteAudio.current);
+        assign(() => new RemoteDesktopClient(
             video,
             audio,
             remote.auth.signaling,
@@ -168,21 +142,9 @@ export const Remote = () => {
                 no_hid: false,
                 scancode: false
             }
-        );
+        ));
 
-        client.HandleMetrics = async (metrics) => {
-            switch (metrics.type) {
-                case 'VIDEO':
-                    appDispatch(update_metrics(metrics));
-                    break;
-                case 'FRAME_LOSS':
-                    console.log('frame loss occur');
-                    break;
-                default:
-                    break;
-            }
-        };
-        client.HandleMetricRaw = async (data) => {};
+
     };
 
     return (

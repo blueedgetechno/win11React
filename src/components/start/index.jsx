@@ -63,7 +63,7 @@ export const DesktopApp = () => {
                             className="dskApp prtclk relative"
                             tabIndex={0}
                             data-action={app.action}
-                            data-menu={app.type ?? 'app'}
+                            data-menu={app.action}
                             data-payload={app.payload || 'full'}
                             data-id={app.id ?? 'null'}
                             data-name={app.name}

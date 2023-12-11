@@ -92,6 +92,7 @@ const Taskbar = () => {
                     })}
                     {tempapps.map((key, i) => {
                         const isActive = key.z == apps.hz;
+                        console.log(key)
                         return (
                             <div
                                 key={i}
@@ -103,7 +104,8 @@ const Taskbar = () => {
                                     width={24}
                                     active={isActive}
                                     click={key.action}
-                                    payload="togg"
+                                    payload={key.payload}
+                                    menu={key.action}
                                     open="true"
                                     src={key.id}
                                 />

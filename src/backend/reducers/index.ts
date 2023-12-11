@@ -4,7 +4,7 @@ import * as Actions from '../actions/index.js';
 import { appSlice, appsAsync } from './apps';
 import { deskSlice } from './desktop';
 import { globalSlice, storeAsync } from './globals';
-import { menusSlice } from './menu';
+import { MenuOpt, menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
 import { remoteAsync, remoteSlice } from './remote.js';
 import { settSlice } from './settings.js';
@@ -16,6 +16,7 @@ import { wallSlice } from './wallpaper';
 import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { NodeType } from '../utils/tree.js';
 
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
     console.log({ ...(action as any) });
@@ -118,3 +119,13 @@ export const dispatch_generic = async ({
         store.dispatch((actions as Record<string, any>)[type](payload));
     else store.dispatch({ type, payload });
 };
+
+
+export function mapMenu(type: NodeType) : MenuOpt | null {
+    switch (type) {
+        case 'admin':
+            return null
+        default:
+            return null
+    }
+}
