@@ -6,39 +6,39 @@ import {
     AddNotifier,
     ConnectionEvent,
     Log,
-    LogConnectionEvent,
     LogLevel
 } from '../../../core/utils/log';
+import { getBrowser, getOS, getPlatform } from '../../../core/utils/platform';
 import {
-    getBrowser,
-    getOS,
-    getPlatform,
-    getResolution
-} from '../../../core/utils/platform';
-import { useAppSelector } from '../../backend/reducers';
+    appDispatch,
+    audio_status,
+    update_connection_path,
+    update_metrics,
+    useAppSelector,
+    video_status
+} from '../../backend/reducers';
 import './remote.scss';
 
-let callback = async () => {};
-let fetch_callback = async () => {
-    return [];
-};
 let client = null;
 let video = null;
 let audio = null;
 let clipboard = '';
 let pointer = false;
-let Platform = '';
+let no_stretch = false;
+let platform = getPlatform();
 
 export const Remote = () => {
-    // const selector = useAppSelector((store) => store);
-    const [connectionPath, setConnectionPath] = useState([]);
-    const [videoConnectivity, setVideoConnectivity] = useState('not started');
-    const [audioConnectivity, setAudioConnectivity] = useState('not started');
-    const [metrics, setMetrics] = useState([]);
+    const remote = useAppSelector((store) => store.remote);
+    const videoConnectivity = useAppSelector(
+        (store) => store.remote.connection.video
+    );
+    const audioConnectivity = useAppSelector(
+        (store) => store.remote.connection.audio
+    );
+
     const remoteVideo = useRef(null);
     const remoteAudio = useRef(null);
 
-    const [platform, setPlatform] = useState(null);
     const shouldResetKey = useRef(true);
 
     useEffect(() => {
@@ -53,7 +53,6 @@ export const Remote = () => {
                     clipboard = _clipboard;
                 })
                 .catch(() => {
-                    // not in focus zone
                     if (shouldResetKey?.current == true)
                         client?.hid?.ResetKeyStuck();
 
@@ -79,7 +78,7 @@ export const Remote = () => {
             if (fullscreen && !havingPtrLock && getBrowser() != 'Safari')
                 try {
                     remoteVideo.current.requestPointerLock();
-                } catch (e) {}
+                } catch {}
             else if (!fullscreen && havingPtrLock && getBrowser() != 'Safari')
                 document.exitPointerLock();
         };
@@ -89,8 +88,6 @@ export const Remote = () => {
             clearInterval(UIStateLoop);
             client?.hid?.ResetKeyStuck();
             client?.Close();
-            localStorage.setItem('signaling', '{}');
-            localStorage.setItem('webrtc', '{}');
         };
     }, []);
 
@@ -120,75 +117,49 @@ export const Remote = () => {
             return () => {
                 clearTimeout(interval);
             };
-        } else if (videoConnectivity == 'connected') {
-            const interval = setInterval(callback, 12 * 1000);
-            return () => {
-                clearInterval(interval);
-            };
         }
     }, [videoConnectivity, audioConnectivity]);
 
-    const SetupConnection = async () => {
-        if (
-            videoConnectivity != 'not started' &&
-            audioConnectivity != 'not started'
-        )
-            return;
-        else if (ref == null || ref == 'null')
-            throw new Error(`invalid URL, please check again (｡◕‿‿◕｡)`);
+    useEffect(() => {
+        if (!remote.active || remote.auth == undefined) return;
 
-        localStorage.setItem('reference', ref);
-        localStorage.setItem('scancode', scancode);
-        const core = new SbCore();
-        if (!(await core.Authenticated()) && user_ref == undefined) {
-            await core.LoginWithGoogle();
-            return;
-        }
+        AddNotifier(async (message, text, source) => {
+            console.log(message);
+            if (message == ConnectionEvent.WebRTCConnectionClosed)
+                source == 'audio'
+                    ? appDispatch(audio_status('closed'))
+                    : appDispatch(video_status('closed'));
+            if (message == ConnectionEvent.WebRTCConnectionDoneChecking)
+                source == 'audio'
+                    ? appDispatch(audio_status('connected'))
+                    : appDispatch(video_status('connected'));
+            if (message == ConnectionEvent.WebRTCConnectionChecking)
+                source == 'audio'
+                    ? appDispatch(audio_status('connecting'))
+                    : appDispatch(video_status('connecting'));
 
-        const result = await core.AuthenticateSession(ref, user_ref, {
-            platform: getOS(),
-            browser: getBrowser(),
-            resolution: getResolution(),
-            turn: false,
-            no_video: false,
-            low_bitrate: false,
-            no_mic: false,
-            no_hid: false,
-            no_stretch: false,
-            view_pointer: true,
-            show_gamepad: false,
-            screen: {
-                width: window.screen.width,
-                height: window.screen.height
+            if (message == ConnectionEvent.ApplicationStarted) {
+                await TurnOnConfirm(message, text);
+                appDispatch(audio_status('started'));
+                appDispatch(video_status('started'));
             }
+
+            Log(LogLevel.Infor, `${message} ${text ?? ''} ${source ?? ''}`);
         });
 
-        const {
-            Email,
-            SignalingConfig,
-            WebRTCConfig,
-            PingCallback,
-            FetchCallback
-        } = result;
-        callback = PingCallback;
-        fetch_callback = FetchCallback;
-        await LogConnectionEvent(
-            ConnectionEvent.ApplicationStarted,
-            `Login as ${Email}`
-        );
-
-        localStorage.setItem('signaling', JSON.stringify(SignalingConfig));
-        localStorage.setItem('webrtc', JSON.stringify(WebRTCConfig));
-    };
+        SetupWebRTC();
+    }, [remote.active]);
 
     const SetupWebRTC = () => {
         if (client != null) client.Close();
 
+        video = new VideoWrapper(remoteVideo.current);
+        audio = new AudioWrapper(remoteAudio.current);
         client = new RemoteDesktopClient(
             video,
             audio,
-            JSON.parse(localStorage.getItem('signaling')),
-            JSON.parse(localStorage.getItem('webrtc')),
+            remote.auth.signaling,
+            remote.auth.webrtc,
             {
                 platform,
                 turn: true,
@@ -202,18 +173,7 @@ export const Remote = () => {
         client.HandleMetrics = async (metrics) => {
             switch (metrics.type) {
                 case 'VIDEO':
-                    setMetrics(
-                        metrics.decodefps.map((val, index) => {
-                            return {
-                                index: index,
-                                receivefps: metrics.receivefps[index],
-                                decodefps: metrics.decodefps[index],
-                                packetloss: metrics.packetloss[index],
-                                bandwidth: metrics.bandwidth[index],
-                                buffer: metrics.buffer[index]
-                            };
-                        })
-                    );
+                    appDispatch(update_metrics(metrics));
                     break;
                 case 'FRAME_LOSS':
                     console.log('frame loss occur');
@@ -222,88 +182,13 @@ export const Remote = () => {
                     break;
             }
         };
-        client.HandleMetricRaw = async (data) => {
-            if (
-                data.type == 'network' &&
-                data.address.remote != undefined &&
-                data.address.local != undefined
-            )
-                setConnectionPath((old) => {
-                    if (
-                        old.find((x) => x.local == data.address.local) ==
-                        undefined
-                    )
-                        return [...old, data.address];
-
-                    return old;
-                });
-        };
+        client.HandleMetricRaw = async (data) => {};
     };
-
-    useEffect(() => {
-        return; // todo
-        AddNotifier(async (message, text, source) => {
-            if (message == ConnectionEvent.WebRTCConnectionClosed)
-                source == 'audio'
-                    ? setAudioConnectivity('closed')
-                    : setVideoConnectivity('closed');
-            if (message == ConnectionEvent.WebRTCConnectionDoneChecking)
-                source == 'audio'
-                    ? setAudioConnectivity('connected')
-                    : setVideoConnectivity('connected');
-            if (message == ConnectionEvent.WebRTCConnectionChecking)
-                source == 'audio'
-                    ? setAudioConnectivity('connecting')
-                    : setVideoConnectivity('connecting');
-            if (
-                message == ConnectionEvent.WebRTCConnectionDoneChecking &&
-                source == 'video' &&
-                low_bitrate
-            )
-                client.ChangeBitrate(1000);
-
-            if (message == ConnectionEvent.ApplicationStarted) {
-                await TurnOnConfirm(message, text);
-                setAudioConnectivity('started');
-                setVideoConnectivity('started');
-            }
-
-            Log(LogLevel.Infor, `${message} ${text ?? ''} ${source ?? ''}`);
-        });
-
-        setPlatform((old) => {
-            if (Platform == null) return getPlatform();
-            else return Platform;
-        });
-
-        video = new VideoWrapper(remoteVideo.current);
-        audio = new AudioWrapper(remoteAudio.current);
-        SetupConnection()
-            .catch((err) => {
-                // TurnOnAlert(formatError(err?.message ?? ""))
-                // setTimeout(() => router.push(REDIRECT_PAGE), 5000);
-            })
-            .then(async () => {
-                SetupWebRTC();
-                setInterval(async () => {
-                    // TODO
-                    const result = await fetch_callback();
-                    const data = result.at(0);
-
-                    if (data == undefined) return;
-                    else if (!data.is_ping_worker_account) {
-                        await TurnOnAlert('RemotePC is shutdown');
-                        // setTimeout(() => router.push(REDIRECT_PAGE), 5000);
-                    }
-                }, 30 * 1000);
-            });
-    }, []);
 
     return (
         <div>
             <video
                 className="background"
-                src={`/public/video/video_demo_desktop.mp4`}
                 ref={remoteVideo}
                 autoPlay
                 muted

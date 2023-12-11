@@ -6,7 +6,7 @@ import { BuilderHelper, CacheRequest } from './helper';
 type WorkerType = {
     data: any;
     cpath: string;
-    cdata: any[],
+    cdata: any[];
 
     hist: any[];
     hid: number;
@@ -19,21 +19,15 @@ const initialState: WorkerType = {
     cdata: [],
 
     hist: [],
-    hid: 0,
+    hid: 0
 };
 
-
-
 export const workerAsync = {
-    fetch_worker: createAsyncThunk(
-        'fetch_worker',
-        async (): Promise<any> => {
-            return await CacheRequest('worker', 30, async () => {
-                return new RenderNode(await FetchAuthorizedWorkers()).any()
-            });
-        }
-    ),
-
+    fetch_worker: createAsyncThunk('fetch_worker', async (): Promise<any> => {
+        return await CacheRequest('worker', 30, async () => {
+            return new RenderNode(await FetchAuthorizedWorkers()).any();
+        });
+    })
 
     // access_volume: createAsyncThunk(
     //     'fetch_worker',
@@ -87,9 +81,6 @@ export const workerAsync = {
     //         // );
     //     }
     // ),
-
-
-
 
     // access_storage: createAsyncThunk(
     //     'fetch_worker',
@@ -181,68 +172,70 @@ export const workerAsync = {
     // ),
 };
 
-
-
-
 export const workerSlice = createSlice({
     name: 'worker',
     initialState,
     reducers: {
-        worker_view: (state, action: PayloadAction<string|number>) => {
-            const paths = state.cpath.split('/').filter(x => x.length > 0)
-            paths.push(`${action.payload}`)
-            state.cpath = paths.join('/')
+        worker_view: (state, action: PayloadAction<string | number>) => {
+            const paths = state.cpath.split('/').filter((x) => x.length > 0);
+            paths.push(`${action.payload}`);
+            state.cpath = paths.join('/');
 
-            let temp : RenderNode<any>[] = []
-            let target : RenderNode<any> = state.data
-            paths.forEach(x => {
-                temp = new RenderNode(target).data
-                target = temp.find(y => y.id == x) ?? target
-            })
+            let temp: RenderNode<any>[] = [];
+            let target: RenderNode<any> = state.data;
+            paths.forEach((x) => {
+                temp = new RenderNode(target).data;
+                target = temp.find((y) => y.id == x) ?? target;
+            });
 
-            state.cdata = target.data.map(x => x.any())
+            state.cdata = target.data.map((x) => x.any());
         },
         worker_prev: (state, action: PayloadAction<any>) => {
-            const paths = state.cpath.split('/').filter(x => x.length > 0)
-            paths.pop()
-            state.cpath = paths.join('/')
+            const paths = state.cpath.split('/').filter((x) => x.length > 0);
+            paths.pop();
+            state.cpath = paths.join('/');
             if (paths.length == 0) {
-                state.cdata = new RenderNode(state.data).data.map(x => x.any())
-                return
+                state.cdata = new RenderNode(state.data).data.map((x) =>
+                    x.any()
+                );
+                return;
             }
 
-            let temp : RenderNode<any>[] = []
-            let target : RenderNode<any> = state.data
-            paths.forEach(x => {
-                temp = new RenderNode(target).data
-                target = temp.find(y => y.id == x) ?? target
-            })
+            let temp: RenderNode<any>[] = [];
+            let target: RenderNode<any> = state.data;
+            paths.forEach((x) => {
+                temp = new RenderNode(target).data;
+                target = temp.find((y) => y.id == x) ?? target;
+            });
 
-            state.cdata = target.data.map(x => x.any())
-        },
+            state.cdata = target.data.map((x) => x.any());
+        }
     },
     extraReducers: (build) => {
-        BuilderHelper( build,{
-                fetch: workerAsync.fetch_worker,
-                hander: (state, action) => {
-                    state.cpath = initialState.cpath
-                    state.data = action.payload
-                    const paths = state.cpath.split('/').filter(x => x.length > 0)
-                    if (paths.length == 0) {
-                        state.cdata = new RenderNode(state.data).data.map(x => x.any())
-                        return
-                    }
-
-                    let temp : RenderNode<any>[] = []
-                    let target : RenderNode<any> = state.data
-                    paths.forEach(x => {
-                        temp = new RenderNode(target).data
-                        target = temp.find(y => y.id == x) ?? target
-                    })
-
-                    state.cdata = target.data.map(x => x.any())
+        BuilderHelper(build, {
+            fetch: workerAsync.fetch_worker,
+            hander: (state, action) => {
+                state.cpath = initialState.cpath;
+                state.data = action.payload;
+                const paths = state.cpath
+                    .split('/')
+                    .filter((x) => x.length > 0);
+                if (paths.length == 0) {
+                    state.cdata = new RenderNode(state.data).data.map((x) =>
+                        x.any()
+                    );
+                    return;
                 }
+
+                let temp: RenderNode<any>[] = [];
+                let target: RenderNode<any> = state.data;
+                paths.forEach((x) => {
+                    temp = new RenderNode(target).data;
+                    target = temp.find((y) => y.id == x) ?? target;
+                });
+
+                state.cdata = target.data.map((x) => x.any());
             }
-        );
+        });
     }
 });

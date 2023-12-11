@@ -1,9 +1,12 @@
 import { ThunkMiddleware, configureStore } from '@reduxjs/toolkit';
+import * as actions from '.';
+import * as Actions from '../actions/index.js';
 import { appSlice, appsAsync } from './apps';
 import { deskSlice } from './desktop';
 import { globalSlice, storeAsync } from './globals';
 import { menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
+import { remoteAsync, remoteSlice } from './remote.js';
 import { settSlice } from './settings.js';
 import { sidepaneSlice } from './sidepane';
 import { menuSlice } from './startmenu';
@@ -35,6 +38,7 @@ export const store = configureStore({
         setting: settSlice.reducer,
         worker: workerSlice.reducer,
         popup: popupSlice.reducer,
+        remote: remoteSlice.reducer,
         sidepane: sidepaneSlice.reducer
     }
 });
@@ -77,10 +81,7 @@ export const {
 export const { menu_chng, menu_hide, menu_show } = menusSlice.actions;
 export const { setting_load, setting_setv, setting_theme, setting_togg } =
     settSlice.actions;
-export const {
-    worker_prev,
-    worker_view
-} = workerSlice.actions;
+export const { worker_prev, worker_view } = workerSlice.actions;
 export const { popup_close, popup_open } = popupSlice.actions;
 export const {
     sidepane_bandhide,
@@ -89,14 +90,20 @@ export const {
     sidepane_panehide,
     sidepane_panethem
 } = sidepaneSlice.actions;
+export const {
+    toggle_remote,
+    close_remote,
+    audio_status,
+    video_status,
+    update_connection_path,
+    update_metrics
+} = remoteSlice.actions;
 
-export const { fetch_app, install_app,access_app } = appsAsync;
+export const { fetch_app, install_app, access_app } = appsAsync;
 export const { fetch_worker } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
-
-import * as actions from '.';
-import * as Actions from '../actions/index.js';
+export const { authenticate_session } = remoteAsync;
 
 export const dispatch_generic = async ({
     type,

@@ -43,7 +43,7 @@ export const FetchAuthorizedWorkers = async (): Promise<RenderNode<any>> => {
     if (error != null) throw error;
     return data.tree;
 };
-export const FetchUserApplication = async (): Promise<RenderNode<any>> =>  {
+export const FetchUserApplication = async (): Promise<RenderNode<any>> => {
     const { data, error } = await SupabaseFuncInvoke('user_application_fetch');
     if (error != null) throw error;
     return (data as TreeResult).tree;

@@ -19,7 +19,7 @@ import './index.css';
 import { WidPane } from './components/start/widget';
 
 function App() {
-    const apps = useAppSelector((state) => state.apps);
+    const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
     const wall = useAppSelector((state) => state.wallpaper);
 
@@ -43,6 +43,9 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
+            if (data.menu == 'desk' && remote.connection?.video == 'connected')
+                return;
+
             dispatch(menu_show(data));
         }
     };
@@ -89,7 +92,10 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' || !wall.unlocked ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {true ? <Background /> : <Remote />}
+                    {remote.connection?.video != 'connected' ? (
+                        <Background />
+                    ) : null}
+                    {remote.active ? <Remote /> : null}
                     <>
                         <div
                             className="desktop"

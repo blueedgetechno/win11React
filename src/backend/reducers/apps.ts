@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, desk_add } from '.';
+import { appDispatch, authenticate_session, desk_add, toggle_remote } from '.';
 import { AppData, allApps } from '../utils';
 import { RenderNode } from '../utils/tree';
 import {
@@ -17,43 +17,45 @@ import { BuilderHelper, CacheRequest } from './helper';
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
         const result = await CacheRequest('apps', 30, async () => {
-            return new RenderNode(await FetchUserApplication()).mapAsync(['pending','storage'], async storage => {
-                if (storage.type == 'pending')
+            return new RenderNode(await FetchUserApplication()).mapAsync(
+                ['pending', 'storage'],
+                async (storage) => {
+                    if (storage.type == 'pending')
+                        return {
+                            id: 'win/down',
+                            name: `Installing`,
+                            action: 'apps/app_error',
+
+                            payload: {},
+                            installing: true,
+                            ready: false
+                        } as AppData;
+
+                    const { data, error } = await virtapi(
+                        `rpc/get_app_metadata_from_volume`,
+                        'POST',
+                        { deploy_as: `${storage.id}` }
+                    );
+                    if (error) throw error;
+
+                    const icon = (data as any[]).at(0) ?? {
+                        name: 'Game Pause',
+                        icon: 'win/down'
+                    };
+
+                    // id in store. +  icon: url img, => view
+                    // metatada: Meta in store.
+                    // pause check by storage.data.lenghth > 0.
                     return {
-                        id: 'win/down',
-                        name: `Installing`,
-                        action: 'apps/app_error',
+                        id: icon.icon,
+                        name: `${icon.name} ${storage.id}`,
+                        action: 'access_app',
 
-                        payload: {},
-                        installing: true,
-                        ready: false
+                        payload: storage.id,
+                        ready: storage.data.length != 0
                     } as AppData;
-
-                const { data, error } = await virtapi(
-                    `rpc/get_app_metadata_from_volume`,
-                    'POST',
-                    { deploy_as: `${storage.id}` }
-                );
-                if (error)
-                    throw error;
-
-                const icon = (data as any[]).at(0) ?? {
-                    name: 'Game Pause',
-                    icon: 'win/down'
-                };
-
-                // id in store. +  icon: url img, => view
-                // metatada: Meta in store.
-                // pause check by storage.data.lenghth > 0.
-                return {
-                    id: icon.icon,
-                    name: `${icon.name} ${storage.id}`,
-                    action: 'access_app',
-
-                    payload: storage.id,
-                    ready: storage.data.length != 0
-                } as AppData;
-            })
+                }
+            );
         });
 
         appDispatch(desk_add(result.map((x) => x.id)));
@@ -87,11 +89,15 @@ export const appsAsync = {
 
     access_app: createAsyncThunk(
         'access_app',
-        async (
-            storage_id : string,
-            { getState }
-        ): Promise<string> => {
-            return await AccessApplication({ storage_id });
+        async (storage_id: string, { getState }): Promise<string> => {
+            const result = await AccessApplication({ storage_id });
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            await appDispatch(toggle_remote());
+            return storage_id;
         }
     ),
     reset_app: createAsyncThunk(
@@ -136,7 +142,11 @@ export const appsAsync = {
     )
 };
 
-const initialState = {
+type Data = {
+    hz: number;
+    apps: AppData[];
+};
+const initialState: Data = {
     hz: 0,
     apps: allApps
 };
@@ -165,15 +175,13 @@ export const appSlice = createSlice({
             obj.z = state.hz;
         },
         app_showdesk: (state, action: PayloadAction<any>) => {
-            state.apps.forEach(obj => {
-                if (obj.hide)
-                    return
+            state.apps.forEach((obj) => {
+                if (obj.hide) return;
 
                 obj.max = false;
-                if (obj.z == state.hz)
-                    state.hz -= 1;
+                if (obj.z == state.hz) state.hz -= 1;
                 obj.z = -1;
-            })
+            });
         },
         app_add: (state, action: PayloadAction<any[]>) => {
             const app = action.payload.map((x) => {
@@ -293,16 +301,45 @@ export const appSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        BuilderHelper<any,any,any>( builder,
+        BuilderHelper<Data, any, any>(
+            builder,
             {
-                fetch: appsAsync.access_app, 
+                fetch: appsAsync.access_app,
                 hander: (state, action) => {
-                    console.log(action.payload)
-                },
-            }, {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+                    if (obj == undefined) return;
+
+                    if (obj.z != state.hz) {
+                        obj.hide = false;
+                        if (!obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                            obj.max = true;
+                        } else {
+                            obj.z = -1;
+                            obj.max = false;
+                        }
+                    } else {
+                        obj.max = !obj.max;
+                        obj.hide = false;
+                        if (obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                        } else {
+                            obj.z = -1;
+                            state.hz -= 1;
+                        }
+                    }
+                }
+            },
+            {
                 fetch: appsAsync.fetch_app,
                 hander: (state, action) => {
-                    const app = action.payload.map((x:any) => {
+                    const app = action.payload.map((x: any) => {
                         return {
                             ...x,
                             payload: x.payload,
@@ -315,7 +352,7 @@ export const appSlice = createSlice({
 
                     state.apps = [...initialState.apps, ...app];
                 }
-            },
+            }
         );
     }
 });

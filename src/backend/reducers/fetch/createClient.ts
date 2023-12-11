@@ -45,7 +45,11 @@ const getCredentialHeader = async () => {
         access_token: session?.access_token
     };
 };
-export const SupabaseFuncInvoke = async (funcName: string, body?: any) => {
+export const SupabaseFuncInvoke = async (
+    funcName: string,
+    body?: any,
+    headers?: any
+) => {
     try {
         const credential = await getCredentialHeader();
         const response = await fetch(
@@ -54,6 +58,7 @@ export const SupabaseFuncInvoke = async (funcName: string, body?: any) => {
                 body: JSON.stringify(body ?? {}),
                 method: 'POST',
                 headers: {
+                    ...headers,
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${supabaseKey}`,
                     access_token: credential.access_token ?? ''

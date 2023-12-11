@@ -11,7 +11,9 @@ import './assets/fileexpo.scss';
 import { customClickDispatch } from '../../../backend/utils/dispatch';
 
 export const Worker = () => {
-    const wnapp = useAppSelector((state) => state.apps.apps.find(x => x.id == 'worker'));
+    const wnapp = useAppSelector((state) =>
+        state.apps.apps.find((x) => x.id == 'worker')
+    );
     const files = useAppSelector((state) => state.worker);
     const [searchtxt, setShText] = useState('');
 
@@ -20,7 +22,6 @@ export const Worker = () => {
     }, [files.cpath]);
 
     const handleSearchChange = (e) => setShText(e.target.value);
-
 
     return (
         <div
@@ -41,7 +42,7 @@ export const Worker = () => {
                 name={wnapp.name}
             />
             <div className="windowScreen flex flex-col">
-                <Ribbon/>
+                <Ribbon />
                 <div className="restWindow flex-grow flex flex-col">
                     <div className="sec1">
                         <Icon
@@ -56,6 +57,7 @@ export const Worker = () => {
                                 className="path-field"
                                 type="text"
                                 value={files.cpath}
+                                onChange={() => {}}
                             />
                         </div>
                         <div className="srchbar">
@@ -73,10 +75,7 @@ export const Worker = () => {
                         </div>
                     </div>
                     <div className="sec2">
-                        <ContentArea 
-                            searchtxt={searchtxt} 
-                            data={files} 
-                        />
+                        <ContentArea searchtxt={searchtxt} data={files} />
                     </div>
                 </div>
             </div>
@@ -90,11 +89,12 @@ const ContentArea = ({ searchtxt, data }) => {
     const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
-        console.log(e.target.dataset)
-        if (e.target.dataset.payload == null) 
-            return
-        
-        setSelect(data.cdata.find(x => e.target.dataset.payload == x.id) ?? {});
+        console.log(e.target.dataset);
+        if (e.target.dataset.payload == null) return;
+
+        setSelect(
+            data.cdata.find((x) => e.target.dataset.payload == x.id) ?? {}
+        );
         dispatch(menu_hide());
     };
 
@@ -123,11 +123,10 @@ const ContentArea = ({ searchtxt, data }) => {
     const renderSubdata = (data) => {
         const list = [];
         for (const key in data) {
-            if (key == 'data')
-                continue
-            else if ( typeof data[key] === 'object') {
-                list.push(renderSubdata(data[key])) 
-                continue
+            if (key == 'data') continue;
+            else if (typeof data[key] === 'object') {
+                list.push(renderSubdata(data[key]));
+                continue;
             }
 
             list.push(
@@ -150,35 +149,31 @@ const ContentArea = ({ searchtxt, data }) => {
         >
             <div className="contentwrap win11Scroll">
                 <div className="gridshow" data-size="lg">
-                    {
-                        data.cdata.map((item, i) => {
-                            return (
-                                (JSON.stringify(item.info) + item.id)
-                                .includes(searchtxt) && (
-                                    <div
-                                        key={i}
-                                        className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
-                                        title={item.id}
-
-                                        data-action={'worker/worker_view'}
-                                        data-payload={item.id}
-
-                                        data-focus={selected.id == item.id}
-
-                                        onClick={handleClick}
-                                        onDoubleClick={handleDouble}
-                                    >
-                                        <Image
-                                            src={`icon/win/${renderIconName(
-                                                item.info
-                                            )}`}
-                                        />
-                                        <span>{item.id}</span>
-                                    </div>
-                                )
-                            );
-                        })
-                    }
+                    {data.cdata.map((item, i) => {
+                        return (
+                            (JSON.stringify(item.info) + item.id).includes(
+                                searchtxt
+                            ) && (
+                                <div
+                                    key={i}
+                                    className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
+                                    title={item.id}
+                                    data-action={'worker/worker_view'}
+                                    data-payload={item.id}
+                                    data-focus={selected.id == item.id}
+                                    onClick={handleClick}
+                                    onDoubleClick={handleDouble}
+                                >
+                                    <Image
+                                        src={`icon/win/${renderIconName(
+                                            item.info
+                                        )}`}
+                                    />
+                                    <span>{item.id}</span>
+                                </div>
+                            )
+                        );
+                    })}
                 </div>
             </div>
             <div className="subinfo">
