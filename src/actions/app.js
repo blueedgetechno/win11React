@@ -21,7 +21,7 @@ import { SupabaseFuncInvoke } from "./fetch";
 import i18next from "i18next";
 import { sleep } from "../utils/sleep";
 import { openRemotePage } from "./remote";
-import { isAdmin } from "../utils/checking";
+import { isAdmin, isOverUsing } from "../utils/checking";
 import { formatError } from "../utils/formatErr";
 import { localStorageKey } from "../data/constant";
 
@@ -160,7 +160,9 @@ export const startApp = async (appInput) =>
     //await sleep(15000)
     //cacheRequest({ action: 'START', appName, })
     //return
-
+    if (isOverUsing()) {
+      throw { error: "Bạn đã chơi hết số giờ quy định, cảm ơn bạn rất nhiều về trải nghiệm vừa qua <3", code: '999' }
+    }
     await StartApplication(payload.storage_id, payload.volume_id);
 
     // Open new tab

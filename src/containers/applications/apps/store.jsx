@@ -5,7 +5,7 @@ import { deleteStore } from "../../../actions/app";
 import { useTranslation } from "react-i18next";
 import { fetchStore } from "../../../actions/preload";
 import { installApp } from "../../../actions/app";
-import { isAdmin, isGreenList, isMobile } from "../../../utils/checking";
+import { isAdmin, isGreenList, isMobile, isOverUsing } from "../../../utils/checking";
 import { virtapi } from "../../../supabase/createClient";
 import { UserEvents } from "../../../actions/analytics.js";
 
@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import "./assets/store.scss";
 import { supabase } from "../../../supabase/createClient.js";
 import { isWhiteList } from "../../../utils/checking.js";
+import { log } from "../../../lib/log.js";
 
 const emap = (v) => {
   v = Math.min(1 / v, 10);
@@ -158,7 +159,6 @@ const FrontPage = (props) => {
 
   const { t, i18n } = useTranslation();
 
-  console.log(games, apps);
   const [cover, setCover] = useState("");
   useEffect(() => {
     setCover(vendors[0]?.images[0]);
@@ -361,6 +361,9 @@ const DetailPage = ({ app }) => {
 
     UserEvents({ content: `user download app` })
     if (!isGreenList()) return;
+    if(isOverUsing()){
+      log({icon:'warning', type:'error', content:'', title: 'Bạn đã chơi hết số giờ quy định, cảm ơn bạn rất nhiều về trải nghiệm vừa qua <3'})
+    }
     //const vol_option = await VolumeOption();
     await installApp({
       app_template_id: id,

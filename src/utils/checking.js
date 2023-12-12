@@ -16,6 +16,11 @@ export const isWhiteList = () => {
   const user = store.getState().user;
   return user?.whitelist == true;
 };
+
+export const isOverUsing = () => {
+  const usageTime = store.getState().usageTime;
+  return Number.parseInt(usageTime?.total_time) > 100
+};
 export const isAllowWorkerProfileFetch = async () => {
   const user = store.getState().user;
   const { data, error } = await supabase.rpc("validate_user_access", {
