@@ -39,17 +39,18 @@ const getCredentialHeader = async () => {
         data: { session },
         error
     } = await supabase.auth.getSession();
-    if (error != null) throw new Error('unauthorized');
+    if (error) 
+        throw new Error('unauthorized');
 
     return {
         access_token: session?.access_token
     };
 };
-export const SupabaseFuncInvoke = async (
+export async function SupabaseFuncInvoke<T>(
     funcName: string,
     body?: any,
     headers?: any
-) => {
+): Promise<Error | T> {
     try {
         const credential = await getCredentialHeader();
         const response = await fetch(
@@ -66,13 +67,16 @@ export const SupabaseFuncInvoke = async (
             }
         );
         if (response.ok === false) {
-            const res = await response.json();
-            return { error: res.message, code: res.code, data: null };
+            const res = await response.json() as {
+                message: string,
+                code: number,
+            };
+            return new Error(res.message)
         }
 
-        const data = await response.json();
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
+        const data = await response.json() as T;
+        return data 
+    } catch (error: any) {
+        return new Error(error.message)
     }
 };

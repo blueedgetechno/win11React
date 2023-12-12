@@ -1,5 +1,5 @@
 import { sleep } from '../../utils/sleep';
-import { RenderNode, TreeResult } from '../../utils/tree';
+import { RenderNode } from '../../utils/tree';
 import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
@@ -16,7 +16,7 @@ export const ConfigureApplication = async ({
     hidevm,
     cluster_id
 }: any) => {
-    const { data, error, code } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'RELEASE',
@@ -35,38 +35,43 @@ export const ConfigureApplication = async ({
         }
     );
 
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 export const FetchAuthorizedWorkers = async (): Promise<RenderNode<any>> => {
-    const { data, error } = await SupabaseFuncInvoke('worker_profile_render');
-    if (error != null) throw error;
-    return data.tree;
+    const result = await SupabaseFuncInvoke<{ tree: RenderNode<any> }>('worker_profile_render');
+    if (result instanceof Error)
+        throw result;
+    return result.tree;
 };
 export const FetchUserApplication = async (): Promise<RenderNode<any>> => {
-    const { data, error } = await SupabaseFuncInvoke('user_application_fetch');
-    if (error != null) throw error;
-    return (data as TreeResult).tree;
+    const result = await SupabaseFuncInvoke<{ tree: RenderNode<any> }>('user_application_fetch');
+    if (result instanceof Error)
+        throw result;
+    return result.tree;
 };
 
 export const DeactivateWorkerSession = async (worker_session_id: string) => {
-    const { data, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'worker_session_deactivate',
         {
             worker_session_id: worker_session_id
         }
     );
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 export const CreateWorkerSession = async (worker_profile_id: string) => {
-    const { data, error } = await SupabaseFuncInvoke('worker_session_create', {
+    const result = await SupabaseFuncInvoke('worker_session_create', {
         worker_id: worker_profile_id
     });
 
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 /**
@@ -80,13 +85,14 @@ export const AddSubscription = async (
     plan: string,
     free: string
 ) => {
-    const { data, error } = await SupabaseFuncInvoke('add_subscription', {
+    const result = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,
         free
     });
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 /**
@@ -96,13 +102,14 @@ export const AddSubscription = async (
  * @returns
  */
 export const ModifySubscription = async (action: string, email: string) => {
-    const { data, error } = await SupabaseFuncInvoke('modify_subscription', {
+    const result = await SupabaseFuncInvoke('modify_subscription', {
         email,
         action
     });
 
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 /**
@@ -118,14 +125,15 @@ export const AdjustSubscription = async (
     created_at: string,
     ends_at: string
 ) => {
-    const { data, error } = await SupabaseFuncInvoke('modify_subscription', {
+    const result = await SupabaseFuncInvoke('modify_subscription', {
         email,
         action: 'ADJUST',
         created_at,
         ends_at
     });
-    if (error != null) throw error;
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 export const DownloadApplication = async (
@@ -134,7 +142,7 @@ export const DownloadApplication = async (
     speed: string,
     safe: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke<{ volume_ids: string[] }>(
         'launch_application',
         {
             action: 'SETUP',
@@ -142,27 +150,22 @@ export const DownloadApplication = async (
             option: { availability, speed, safe }
         }
     );
-    if (error != null) {
-        throw { error, code };
+    if (result instanceof Error) {
+        throw result;
     }
 
     let storageId = 0;
-    let countBindingStorageErr = 0;
     for (let i = 0; i < 100; i++) {
-        if (countBindingStorageErr == COUNT_ERR_RPC)
-            throw { error: null, code: '0' };
-
         const { data: res, error } = await virtapi(
             `rpc/binding_storage`,
             'POST',
             {
-                volume_id: data.volume_ids.at(0)
+                volume_id: result.volume_ids.at(0)
             }
         );
 
-        if (error) countBindingStorageErr++;
-        else if (res.length == 0)
-            throw { error: 'Resource not found!', code: '5' };
+        if (res.length == 0)
+            throw new Error('Resource not found!')
         else if (res.at(0).storage_id != null) {
             storageId = res.at(0).storage_id;
             break;
@@ -171,11 +174,11 @@ export const DownloadApplication = async (
         await sleep(TIME_SLEEP);
     }
 
-    return storageId;
+    return `${storageId}`;
 };
 
 export const StartApplication = async (storage_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'request_application',
         {
             action: 'START',
@@ -183,107 +186,116 @@ export const StartApplication = async (storage_id: string) => {
         }
     );
 
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
     for (let i = 0; i < 100; i++) {
         const { data, error } = await supabase.rpc('setup_status', {
             storage_id
         });
 
-        if (error) throw { error, code: 0 };
+        if (error) 
+            throw new Error(error.message);
         else if (data == true) break;
         else await sleep(TIME_SLEEP);
     }
 
-    return data;
+    return result;
 };
 export const AccessApplication = async (
     input: { storage_id: string } | { volume_id: string }
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke<{url:string}>(
         'access_application',
         {
             action: 'ACCESS',
             ...input
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 export const AccessVolume = async (volume_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke<{url:string}>(
         'access_application',
         {
             action: 'ACCESS',
             volume_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 export const ResetApplication = async (input: any) => {
     const { storage_id } = input;
 
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke<{url:string}>(
         'access_application',
         {
             action: 'RESET',
             storage_id: storage_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 
 export const DeleteApplication = async (storage_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'request_application',
         {
             action: 'DELETE',
             storage_id: storage_id
         }
     );
-    if (error != null) throw { error, code };
-    return data;
+    if (result instanceof Error)
+        throw result;
+    return result;
 };
 
 export const StopApplication = async (storage_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'request_application',
         {
             action: 'STOP',
             storage_id: storage_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
     for (let i = 0; i < 100; i++) {
         const { data, error } = await supabase.rpc('setup_status', {
             storage_id: storage_id
         });
 
-        if (error) throw { error, code: 0 };
+        if (error)
+            throw new Error(error.message);
         else if (data == false) break;
 
         await sleep(10 * 1000);
     }
-    return data;
+    return result;
 };
 
 export const StopVolume = async (volume_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'STOP',
             volume_id: volume_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 
 export const ForkVolume = async (
@@ -294,7 +306,7 @@ export const ForkVolume = async (
     ram: string,
     description: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'FORK',
@@ -308,9 +320,10 @@ export const ForkVolume = async (
             description
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 
 export const PatchApp = async (
@@ -318,7 +331,7 @@ export const PatchApp = async (
     desc: string,
     cluster_id: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'PATCH',
@@ -327,25 +340,27 @@ export const PatchApp = async (
             cluster_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 
 export const DeleteVolume = async (volume_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'DELETE',
             volume_id: volume_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 export const MigrateVolume = async (volume_id: string, cluster_id: string) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'MIGRATE',
@@ -353,15 +368,16 @@ export const MigrateVolume = async (volume_id: string, cluster_id: string) => {
             cluster_id: cluster_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 export const SetDefaultOsVolume = async (
     volume_id: string,
     cluster_id: string
 ) => {
-    const { data, code, error } = await SupabaseFuncInvoke(
+    const result = await SupabaseFuncInvoke(
         'configure_application',
         {
             action: 'SET_DEFAULT_OS',
@@ -369,9 +385,10 @@ export const SetDefaultOsVolume = async (
             cluster_id: cluster_id
         }
     );
-    if (error != null) throw { error, code };
+    if (result instanceof Error)
+        throw result;
 
-    return data;
+    return result;
 };
 export const FetchApplicationTemplates = async (id: number) => {
     const session = await supabase.auth.getSession();
@@ -435,7 +452,7 @@ export async function FetchApp(app: any) {
     //     'POST',
     //     { store_id: `${app.id}` }
     // );
-    // if (error) throw error;
+    // if (error) throw result;
 }
 
 async function handleUpdateApp(app: any) {

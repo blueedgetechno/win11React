@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, authenticate_session, desk_add, toggle_remote } from '.';
+import { appDispatch, authenticate_session, close_remote, desk_add, toggle_remote } from '.';
 import { AppData, allApps } from '../utils';
 import { RenderNode } from '../utils/tree';
 import {
@@ -64,7 +64,7 @@ export const appsAsync = {
     }),
 
     install_app: createAsyncThunk(
-        'start_app',
+        'install_app',
         async (
             {
                 app_template_id,
@@ -79,12 +79,20 @@ export const appsAsync = {
             },
             { getState }
         ): Promise<void> => {
-            await DownloadApplication(
+            const storage_id = await DownloadApplication(
                 app_template_id,
                 availability,
                 speed,
                 safe
             );
+
+            const result = await AccessApplication({ storage_id });
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(toggle_remote());
         }
     ),
 
@@ -97,48 +105,57 @@ export const appsAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
-            await appDispatch(toggle_remote());
+            appDispatch(toggle_remote());
             return storage_id;
         }
     ),
     reset_app: createAsyncThunk(
-        'start_app',
+        'reset_app',
         async (
-            { storage_id }: { storage_id: string },
+            storage_id : string,
             { getState }
         ): Promise<string> => {
-            return await ResetApplication({ storage_id });
+            const result = await ResetApplication({ storage_id });
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(toggle_remote());
+            return storage_id;
         }
     ),
 
     start_app: createAsyncThunk(
         'start_app',
         async (
-            { storage_id }: { storage_id: string },
+            storage_id : string,
             { getState }
-        ): Promise<void> => {
-            // await StartApplication(storage_id);
-            // return await AccessApplication({ storage_id });
+        ) => {
+            await StartApplication(storage_id);
+            return await AccessApplication({ storage_id });
         }
     ),
 
     pause_app: createAsyncThunk(
-        'start_app',
+        'pause_app',
         async (
-            { storage_id }: { storage_id: string },
+            storage_id : string,
             { getState }
         ): Promise<void> => {
             await StopApplication(storage_id);
+            appDispatch(close_remote());
         }
     ),
 
     delete_app: createAsyncThunk(
         'delete_app',
         async (
-            { storage_id }: { storage_id: string },
+            storage_id : string,
             { getState }
         ): Promise<void> => {
             await DeleteApplication(storage_id);
+            appDispatch(close_remote());
         }
     )
 };
@@ -335,6 +352,21 @@ export const appSlice = createSlice({
                             state.hz -= 1;
                         }
                     }
+                }
+            },
+            {
+                fetch: appsAsync.pause_app,
+                hander: (state, action) => {
+                }
+            },
+            {
+                fetch: appsAsync.delete_app,
+                hander: (state, action) => {
+                }
+            },
+            {
+                fetch: appsAsync.start_app,
+                hander: (state, action) => {
                 }
             },
             {

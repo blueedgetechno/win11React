@@ -6,7 +6,7 @@ export type Notification = {
     url: string
     name: string
     title: string
-    content: string
+    content?: string
 }
 
 

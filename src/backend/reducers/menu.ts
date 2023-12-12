@@ -56,6 +56,23 @@ const initialState: Data = {
 export type MenuOption = 'desk' | 'paused_app' | 'running_app' | NodeType
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
+        case 'running_app':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Pause',
+                        action: 'pause_app',
+                        icon: 'start'
+                    },
+                    {
+                        name: 'Delete',
+                        action: 'delete_app',
+                        icon: 'delete'
+                    }
+                ],
+            }
         case 'paused_app':
             return {
                 width: '200px',

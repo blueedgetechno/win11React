@@ -43,6 +43,9 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
+            if (data.menu == 'desk' && remote.connection?.video == 'connected')
+                return;
+
             dispatch(menu_show(data));
         }
     };

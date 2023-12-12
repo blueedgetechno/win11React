@@ -98,7 +98,7 @@ export const remoteAsync = {
     authenticate_session: createAsyncThunk(
         'authenticate_session',
         async ({ ref, uref }: { ref: string; uref?: string }, {}) => {
-            const { data, error } = await SupabaseFuncInvoke(
+            const result = await SupabaseFuncInvoke<AuthSessionResp>(
                 'session_authenticate',
                 {
                     reference: ref,
@@ -106,9 +106,10 @@ export const remoteAsync = {
                 },
                 { uref }
             );
-            if (error != null) throw new Error(error);
+            if (result instanceof Error) 
+                throw result
 
-            return data;
+            return result;
         }
     )
 };

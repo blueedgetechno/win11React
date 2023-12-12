@@ -138,9 +138,8 @@ export async function BuilderHelper<T, U, V>(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = () => appDispatch(push_notification({
-                    title: action.type,
+                    title: `request ${action.type.split('/').at(0)} is pending`,
                     name: new Date().toUTCString(),
-                    content: action.type,
                     url: action.type,
                     urlToImage: action.type,
                 }))
@@ -152,9 +151,9 @@ export async function BuilderHelper<T, U, V>(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = () => appDispatch(push_notification({
-                    title: action.type,
+                    title: `request ${action.type.split('/').at(0)} is failed`,
                     name: new Date().toUTCString(),
-                    content: action.type,
+                    content: (action.error as Error).message,
                     url: action.type,
                     urlToImage: action.type,
                 }))
@@ -166,9 +165,8 @@ export async function BuilderHelper<T, U, V>(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = () => appDispatch(push_notification({
-                    title: action.type,
+                    title: `request ${action.type.split('/').at(0)} is completed`,
                     name: new Date().toUTCString(),
-                    content: action.type,
                     url: action.type,
                     urlToImage: action.type,
                 }))
