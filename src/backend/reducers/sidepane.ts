@@ -1,6 +1,23 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+
+export type Notification = {
+    urlToImage: string
+    url: string
+    name: string
+    title: string
+    content: string
+}
+
+
+type Data = {
+    quicks: any[]
+    notifications: Notification[]
+    hide: boolean
+    banhide: boolean
+}
+
+const initialState : Data = {
     quicks: [
         {
             ui: true,
@@ -45,64 +62,7 @@ const initialState = {
             action: 'setting/setting_togg'
         }
     ],
-    notifications: [
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        },
-        {
-            urlToImage:
-                'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-            url: 'https://win11.blueedge.me/',
-            name: 'hello',
-            title: 'name',
-            content: 'hello'
-        }
-    ],
+    notifications: [],
 
     hide: true,
     banhide: true
@@ -127,6 +87,10 @@ export const sidepaneSlice = createSlice({
 
         sidepane_panethem: (state, action: PayloadAction<any>) => {
             state.quicks[4].src = action.payload;
+        },
+        push_notification: (state, action: PayloadAction<Notification>) => {
+            state.notifications = [action.payload,...state.notifications]
+            state.banhide = false
         }
     }
 });

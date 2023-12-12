@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import Dexie, { Table } from 'dexie';
+import { appDispatch, push_notification } from '..';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -136,19 +137,43 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                console.log(action.type);
+                const notify = () => appDispatch(push_notification({
+                    title: action.type,
+                    name: new Date().toUTCString(),
+                    content: action.type,
+                    url: action.type,
+                    urlToImage: action.type,
+                }))
+
+                setTimeout(notify,500)
             }
         )
         .addMatcher(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                console.log(action.type);
+                const notify = () => appDispatch(push_notification({
+                    title: action.type,
+                    name: new Date().toUTCString(),
+                    content: action.type,
+                    url: action.type,
+                    urlToImage: action.type,
+                }))
+
+                setTimeout(notify,500)
             }
         )
         .addMatcher(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                console.log(action.type);
+                const notify = () => appDispatch(push_notification({
+                    title: action.type,
+                    name: new Date().toUTCString(),
+                    content: action.type,
+                    url: action.type,
+                    urlToImage: action.type,
+                }))
+
+                setTimeout(notify,500)
             }
         );
 }

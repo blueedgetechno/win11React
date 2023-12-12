@@ -405,14 +405,14 @@
   .allNewsCont {
     margin-top: 12px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    // grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-column-gap: 10px;
     grid-row-gap: 10px;
   }
 
   .articleCont {
     position: relative;
-    height: 220px;
+    height: 100px;
     padding: 0 12px;
     border-radius: 6px;
     overflow: hidden;
@@ -463,56 +463,6 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: justify;
-      }
-    }
-
-    &:nth-child(5n) {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      background-size: contain;
-      background-position-x: 160px;
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--dark-txt);
-        background: linear-gradient(
-          to left,
-          transparent 0%,
-          var(--backgrad) 60%
-        );
-        z-index: 0;
-      }
-
-      .tpNews {
-        width: 45%;
-        position: relative;
-        padding: 16px 0;
-
-        .tpSource {
-          margin-bottom: 24px;
-        }
-
-        .tpArticle {
-          margin-bottom: 8px;
-        }
-
-        .tpdesc {
-          font-size: 0.72em;
-          font-weight: 400;
-          color: var(--med-txt);
-          max-height: 90px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 5;
-          -webkit-box-orient: vertical;
-          text-align: justify;
-        }
       }
     }
   }

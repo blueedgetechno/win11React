@@ -89,7 +89,8 @@ export const {
     sidepane_bandtogg,
     sidepane_panetogg,
     sidepane_panehide,
-    sidepane_panethem
+    sidepane_panethem,
+    push_notification
 } = sidepaneSlice.actions;
 export const {
     toggle_remote,
@@ -119,13 +120,3 @@ export const dispatch_generic = async ({
         store.dispatch((actions as Record<string, any>)[type](payload));
     else store.dispatch({ type, payload });
 };
-
-
-export function mapMenu(type: NodeType) : MenuOpt | null {
-    switch (type) {
-        case 'admin':
-            return null
-        default:
-            return null
-    }
-}

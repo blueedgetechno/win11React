@@ -53,11 +53,9 @@ export const WidPane = () => {
                                                 <div className="tpArticle">
                                                     {article.title}
                                                 </div>
-                                                {i % 5 == 4 ? (
-                                                    <div className="tpdesc">
-                                                        {article.content}
-                                                    </div>
-                                                ) : null}
+                                                <div className="tpdesc">
+                                                    {article.content}
+                                                </div>
                                             </div>
                                         </a>
                                     );
