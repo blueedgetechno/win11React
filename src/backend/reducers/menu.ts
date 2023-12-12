@@ -1,40 +1,38 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NodeType } from '../utils/tree';
 
+type Opts =
+    | {
+          type: 'hr';
+      }
+    | {
+          name: string;
+          action?: string;
+          type?: string;
+          icon?: string;
 
+          opts?: Opts[];
 
-type Opts = {
-    type: 'hr'
-} | {
-    name: string
-    action?: string
-    type?: string
-    icon?: string
-
-    opts?: Opts[]
-
-    dot?: boolean
-    payload?: any
-}
+          dot?: boolean;
+          payload?: any;
+      };
 
 export type MenuOpt = {
-    width: string
-    secwid: string
-    ispace?: boolean
-    data: Opts[]
-}
+    width: string;
+    secwid: string;
+    ispace?: boolean;
+    data: Opts[];
+};
 
 type Data = {
-    hide: boolean,
-    top: number,
-    left: number,
-    opts: string,
-    attr: any,
-    dataset: any,
-    data: MenuOpt
-}
-
-
+    hide: boolean;
+    top: number;
+    left: number;
+    opts: string;
+    attr: any;
+    dataset: any;
+    data: MenuOpt;
+};
 
 const initialState: Data = {
     hide: true,
@@ -51,9 +49,7 @@ const initialState: Data = {
     }
 };
 
-
-
-export type MenuOption = 'desk' | 'paused_app' | 'running_app' | NodeType
+export type MenuOption = 'desk' | 'paused_app' | 'running_app' | NodeType;
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
         case 'running_app':
@@ -71,8 +67,8 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         action: 'delete_app',
                         icon: 'delete'
                     }
-                ],
-            }
+                ]
+            };
         case 'paused_app':
             return {
                 width: '200px',
@@ -88,8 +84,8 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         action: 'delete_app',
                         icon: 'delete'
                     }
-                ],
-            }
+                ]
+            };
         case 'desk':
             return {
                 width: '200px',
@@ -132,14 +128,13 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         payload: 'https://thinkmay.net'
                     }
                 ]
-
-            }
+            };
         default:
             return {
                 width: '310px',
                 secwid: '200px',
                 data: []
-            }
+            };
     }
 }
 
@@ -156,7 +151,7 @@ export const menusSlice = createSlice({
             state.left = action.payload.left || 430;
             state.opts = action.payload.menu || 'desk';
             state.dataset = action.payload.dataset;
-            state.data = menu_conversion(action.payload.menu)
+            state.data = menu_conversion(action.payload.menu);
         },
         menu_chng: (state, action: PayloadAction<any>) => {
             state = { ...action.payload };

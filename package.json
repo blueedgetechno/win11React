@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "@webgpu/types": "^0.1.40",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",
     "dexie": "^3.2.4",

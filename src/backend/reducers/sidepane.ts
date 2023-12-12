@@ -1,23 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-
 export type Notification = {
-    urlToImage: string
-    url: string
-    name: string
-    title: string
-    content?: string
-}
-
+    urlToImage: string;
+    url: string;
+    name: string;
+    title: string;
+    content?: string;
+};
 
 type Data = {
-    quicks: any[]
-    notifications: Notification[]
-    hide: boolean
-    banhide: boolean
-}
+    quicks: any[];
+    notifications: Notification[];
+    hide: boolean;
+    banhide: boolean;
+};
 
-const initialState : Data = {
+const initialState: Data = {
     quicks: [
         {
             ui: true,
@@ -89,8 +87,8 @@ export const sidepaneSlice = createSlice({
             state.quicks[4].src = action.payload;
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
-            state.notifications = [action.payload,...state.notifications]
-            state.banhide = false
+            state.notifications = [action.payload, ...state.notifications];
+            state.banhide = false;
         }
     }
 });

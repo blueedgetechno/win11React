@@ -14,10 +14,7 @@ export const WidPane = () => {
     };
 
     return (
-        <div
-            className="widPaneCont"
-            data-hide={widget.banhide}
-        >
+        <div className="widPaneCont" data-hide={widget.banhide}>
             <LazyComponent show={!widget.banhide}>
                 <div className="WidPane win11Scroll">
                     <div className="widtop">

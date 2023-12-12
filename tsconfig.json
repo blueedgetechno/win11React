@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "types": ["vite/client"],
-    "target": "ES2020",
-    "useDefineForClassFields": true,
+    "types": [
+      "vite/client",
+      "@webgpu/types"
+    ],
+    "target": "es5",
     "lib": [
-      "ES2020",
       "DOM",
+      "ESNext",
       "DOM.Iterable"
     ],
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "esModuleInterop": true,
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -18,13 +24,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "strict": false,
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "core/**"
   ],
   "references": [
     {

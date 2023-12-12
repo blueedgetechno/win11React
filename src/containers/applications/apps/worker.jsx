@@ -158,12 +158,10 @@ const ContentArea = ({ searchtxt, data }) => {
                                     key={i}
                                     className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
                                     title={item.id}
-
                                     data-action={'worker/worker_view'}
                                     data-payload={item.id}
                                     data-menu={item.type}
                                     data-focus={selected.id == item.id}
-
                                     onClick={handleClick}
                                     onDoubleClick={handleDouble}
                                 >

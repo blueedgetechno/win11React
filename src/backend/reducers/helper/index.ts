@@ -137,41 +137,56 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => appDispatch(push_notification({
-                    title: `request ${action.type.split('/').at(0)} is pending`,
-                    name: new Date().toUTCString(),
-                    url: action.type,
-                    urlToImage: action.type,
-                }))
+                const notify = () =>
+                    appDispatch(
+                        push_notification({
+                            title: `request ${action.type
+                                .split('/')
+                                .at(0)} is pending`,
+                            name: new Date().toUTCString(),
+                            url: action.type,
+                            urlToImage: action.type
+                        })
+                    );
 
-                setTimeout(notify,500)
+                setTimeout(notify, 500);
             }
         )
         .addMatcher(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => appDispatch(push_notification({
-                    title: `request ${action.type.split('/').at(0)} is failed`,
-                    name: new Date().toUTCString(),
-                    content: (action.error as Error).message,
-                    url: action.type,
-                    urlToImage: action.type,
-                }))
+                const notify = () =>
+                    appDispatch(
+                        push_notification({
+                            title: `request ${action.type
+                                .split('/')
+                                .at(0)} is failed`,
+                            name: new Date().toUTCString(),
+                            content: (action.error as Error).message,
+                            url: action.type,
+                            urlToImage: action.type
+                        })
+                    );
 
-                setTimeout(notify,500)
+                setTimeout(notify, 500);
             }
         )
         .addMatcher(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => appDispatch(push_notification({
-                    title: `request ${action.type.split('/').at(0)} is completed`,
-                    name: new Date().toUTCString(),
-                    url: action.type,
-                    urlToImage: action.type,
-                }))
+                const notify = () =>
+                    appDispatch(
+                        push_notification({
+                            title: `request ${action.type
+                                .split('/')
+                                .at(0)} is completed`,
+                            name: new Date().toUTCString(),
+                            url: action.type,
+                            urlToImage: action.type
+                        })
+                    );
 
-                setTimeout(notify,500)
+                setTimeout(notify, 500);
             }
         );
 }

@@ -16,7 +16,7 @@ import {
     useAppSelector,
     video_status
 } from '../../backend/reducers';
-import { client,assign } from '../../backend/reducers/remote';
+import { client, assign } from '../../backend/reducers/remote';
 import './remote.scss';
 
 let clipboard = '';
@@ -63,8 +63,8 @@ export const Remote = () => {
             remoteVideo.current.style.objectFit = !fullscreen
                 ? 'contain'
                 : no_stretch
-                    ? 'contain'
-                    : 'fill';
+                  ? 'contain'
+                  : 'fill';
 
             if (pointer != fullscreen) {
                 client?.PointerVisible(view_pointer ? true : fullscreen);
@@ -74,7 +74,7 @@ export const Remote = () => {
             if (fullscreen && !havingPtrLock && getBrowser() != 'Safari')
                 try {
                     remoteVideo.current.requestPointerLock();
-                } catch { }
+                } catch {}
             else if (!fullscreen && havingPtrLock && getBrowser() != 'Safari')
                 document.exitPointerLock();
         };
@@ -117,34 +117,33 @@ export const Remote = () => {
     }, [videoConnectivity, audioConnectivity]);
 
     useEffect(() => {
-        if (!remote.active || remote.auth == undefined) 
-            return;
+        if (!remote.active || remote.auth == undefined) return;
 
         SetupWebRTC();
     }, [remote.active]);
 
     const SetupWebRTC = () => {
-        if (client != null) 
-            client.Close();
+        if (client != null) client.Close();
 
         const video = new VideoWrapper(remoteVideo.current);
         const audio = new AudioWrapper(remoteAudio.current);
-        assign(() => new RemoteDesktopClient(
-            video,
-            audio,
-            remote.auth.signaling,
-            remote.auth.webrtc,
-            {
-                platform,
-                turn: true,
-                no_video: false,
-                no_mic: false,
-                no_hid: false,
-                scancode: false
-            }
-        ));
-
-
+        assign(
+            () =>
+                new RemoteDesktopClient(
+                    video,
+                    audio,
+                    remote.auth.signaling,
+                    remote.auth.webrtc,
+                    {
+                        platform,
+                        turn: true,
+                        no_video: false,
+                        no_mic: false,
+                        no_hid: false,
+                        scancode: false
+                    }
+                )
+        );
     };
 
     return (

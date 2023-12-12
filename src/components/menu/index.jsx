@@ -7,7 +7,7 @@ import { customClickDispatch } from '../../backend/utils/dispatch';
 
 export const ActMenu = () => {
     const menu = useAppSelector((state) => state.menus);
-    const menudata = useAppSelector((state) => state.menus.data)
+    const menudata = useAppSelector((state) => state.menus.data);
 
     const { abpos, isLeft } = useAppSelector((state) => {
         var acount = state.menus.data.data?.length;

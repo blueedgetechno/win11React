@@ -1,5 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, authenticate_session, close_remote, desk_add, toggle_remote } from '.';
+import {
+    appDispatch,
+    authenticate_session,
+    close_remote,
+    desk_add,
+    toggle_remote
+} from '.';
 import { AppData, allApps } from '../utils';
 import { RenderNode } from '../utils/tree';
 import {
@@ -53,7 +59,10 @@ export const appsAsync = {
 
                         payload: storage.id,
                         ready: storage.data.length != 0,
-                        menu: storage.data.length != 0 ? 'running_app' : 'paused_app'
+                        menu:
+                            storage.data.length != 0
+                                ? 'running_app'
+                                : 'paused_app'
                     } as AppData;
                 }
             );
@@ -111,10 +120,7 @@ export const appsAsync = {
     ),
     reset_app: createAsyncThunk(
         'reset_app',
-        async (
-            storage_id : string,
-            { getState }
-        ): Promise<string> => {
+        async (storage_id: string, { getState }): Promise<string> => {
             const result = await ResetApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -128,10 +134,7 @@ export const appsAsync = {
 
     start_app: createAsyncThunk(
         'start_app',
-        async (
-            storage_id : string,
-            { getState }
-        ) => {
+        async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
             return await AccessApplication({ storage_id });
         }
@@ -139,10 +142,7 @@ export const appsAsync = {
 
     pause_app: createAsyncThunk(
         'pause_app',
-        async (
-            storage_id : string,
-            { getState }
-        ): Promise<void> => {
+        async (storage_id: string, { getState }): Promise<void> => {
             await StopApplication(storage_id);
             appDispatch(close_remote());
         }
@@ -150,10 +150,7 @@ export const appsAsync = {
 
     delete_app: createAsyncThunk(
         'delete_app',
-        async (
-            storage_id : string,
-            { getState }
-        ): Promise<void> => {
+        async (storage_id: string, { getState }): Promise<void> => {
             await DeleteApplication(storage_id);
             appDispatch(close_remote());
         }
@@ -356,18 +353,15 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.pause_app,
-                hander: (state, action) => {
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.delete_app,
-                hander: (state, action) => {
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.start_app,
-                hander: (state, action) => {
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.fetch_app,

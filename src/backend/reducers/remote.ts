@@ -1,14 +1,25 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
-import { RootState, appDispatch, audio_status, update_metrics, video_status } from '.';
+import {
+    RootState,
+    appDispatch,
+    audio_status,
+    update_metrics,
+    video_status
+} from '.';
 import { BuilderHelper } from './helper';
-import { RemoteDesktopClient } from '../../../core/app'
-import { AddNotifier, ConnectionEvent, Log, LogLevel } from '../../../core/utils/log';
+import { RemoteDesktopClient } from '../../../core/app';
+import {
+    AddNotifier,
+    ConnectionEvent,
+    Log,
+    LogLevel
+} from '../../../core/utils/log';
 
-export let client : RemoteDesktopClient | null = null;
+export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
-    client = fun()        
-    client.HandleMetricRaw = async (data) => { };
+    client = fun();
+    client.HandleMetricRaw = async (data) => {};
     client.HandleMetrics = async (metrics) => {
         switch (metrics.type) {
             case 'VIDEO':
@@ -21,8 +32,7 @@ export const assign = (fun: () => RemoteDesktopClient) => {
                 break;
         }
     };
-        
-}        
+};
 
 AddNotifier(async (message, text, source) => {
     console.log(message);
@@ -106,8 +116,7 @@ export const remoteAsync = {
                 },
                 { uref }
             );
-            if (result instanceof Error) 
-                throw result
+            if (result instanceof Error) throw result;
 
             return result;
         }
@@ -139,9 +148,9 @@ export const remoteSlice = createSlice({
                     buffer: []
                 };
             } else {
-                state.connection = undefined
-                state.metrics = undefined
-                client?.Close()
+                state.connection = undefined;
+                state.metrics = undefined;
+                client?.Close();
             }
             state.active = !state.active;
         },

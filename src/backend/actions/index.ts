@@ -129,11 +129,10 @@ export const changeTheme = () => {
 
 export const menuDispatch = async (event: Event) => {
     const dataset = (event.target as any)?.dataset as {
-        action: string,
-        payload: any,
+        action: string;
+        payload: any;
     };
-    if (dataset.action == undefined) 
-        return;
+    if (dataset.action == undefined) return;
 
     appDispatch(menu_hide());
     dispatch_generic({

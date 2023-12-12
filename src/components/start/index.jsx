@@ -82,7 +82,7 @@ export const DesktopApp = () => {
                             {!app.installing ? null : (
                                 <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                             )}
-                            {(app.ready ?? true) ? null : (
+                            {app.ready ?? true ? null : (
                                 <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                             )}
                         </div>
@@ -153,10 +153,7 @@ export const SidePane = () => {
     }, [setting, sidepane]);
 
     return (
-        <div
-            className="sidePane dpShad"
-            data-hide={sidepane.hide}
-        >
+        <div className="sidePane dpShad" data-hide={sidepane.hide}>
             <div className="quickSettings p-5 pb-8">
                 <div className="qkCont">
                     {sidepane.quicks.map((qk, idx) => {
