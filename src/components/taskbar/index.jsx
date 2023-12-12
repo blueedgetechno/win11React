@@ -64,6 +64,7 @@ const Taskbar = () => {
                         src="home"
                         width={24}
                         click="startmenu/startogg"
+                        style={{ '--prefix': 'START' }}
                     />
 
                     {defaultapps.map((task, i) => {
@@ -118,12 +119,14 @@ const Taskbar = () => {
                         className="px-2 prtclk handcr hvlight flex"
                         onClick={clickDispatch}
                         data-action="sidepane/sidepane_bandtogg"
+                        style={{ '--prefix': 'BAND' }}
                     >
                         <Icon fafa="faChevronUp" width={10} />
                     </div>
                     <div
                         className="prtclk handcr my-1 px-1 hvlight flex rounded"
                         onClick={clickDispatch}
+                        style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
                     >
                         <Icon className="taskIcon" src="wifi" ui width={16} />

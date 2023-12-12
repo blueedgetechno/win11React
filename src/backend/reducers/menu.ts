@@ -62,10 +62,14 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
-                        name: 'Refresh',
-                        action: 'fetch_app',
-                        type: 'svg',
-                        icon: 'refresh'
+                        name: 'Start',
+                        action: 'start_app',
+                        icon: 'start'
+                    },
+                    {
+                        name: 'Delete',
+                        action: 'delete_app',
+                        icon: 'delete'
                     }
                 ],
             }

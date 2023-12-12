@@ -24,12 +24,10 @@ export const refresh = async () => {
 
 export const afterMath = (event: any) => {
     var ess = [
-        ['START', 'STARTHID'],
-        ['BAND', 'BANDHIDE'],
-        ['PANE', 'PANEHIDE'],
-        ['WIDG', 'WIDGHIDE'],
-        ['CALN', 'CALNHIDE'],
-        ['MENU', 'MENUHIDE']
+        // ['START','startmenu/starthid'], // TODO
+        ['BAND', 'sidepane/sidepane_bandhide'],
+        ['PANE', 'sidepane/sidepane_panehide'],
+        ['MENU', 'menu/menu_hide']
     ];
 
     var actionType = '';
@@ -46,7 +44,7 @@ export const afterMath = (event: any) => {
             !actionType.startsWith(item[0]) &&
             !actionType0.startsWith(item[0])
         ) {
-            // appDispatch({ type: item[1], payload: {} });
+            appDispatch({ type: item[1], payload: {} });
         }
     });
 };

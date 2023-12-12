@@ -17,7 +17,6 @@ export const WidPane = () => {
         <div
             className="widPaneCont"
             data-hide={widget.banhide}
-            style={{ '--prefix': 'WIDG' }}
         >
             <LazyComponent show={!widget.banhide}>
                 <div className="WidPane win11Scroll">

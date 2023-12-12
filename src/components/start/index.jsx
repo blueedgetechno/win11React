@@ -156,7 +156,6 @@ export const SidePane = () => {
         <div
             className="sidePane dpShad"
             data-hide={sidepane.hide}
-            style={{ '--prefix': 'PANE' }}
         >
             <div className="quickSettings p-5 pb-8">
                 <div className="qkCont">

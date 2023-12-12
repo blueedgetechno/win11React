@@ -41,7 +41,6 @@ export const StartMenu = () => {
         <div
             className="startMenu dpShad"
             data-hide={start.hide}
-            style={{ '--prefix': 'START' }}
             data-align={align}
             data-mobile={isMobile()}
         >

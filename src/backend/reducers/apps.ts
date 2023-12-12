@@ -117,8 +117,8 @@ export const appsAsync = {
             { storage_id }: { storage_id: string },
             { getState }
         ): Promise<void> => {
-            await StartApplication(storage_id);
-            return await AccessApplication({ storage_id });
+            // await StartApplication(storage_id);
+            // return await AccessApplication({ storage_id });
         }
     ),
 

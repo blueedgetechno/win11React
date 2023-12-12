@@ -100,7 +100,7 @@ export const {
     update_metrics
 } = remoteSlice.actions;
 
-export const { fetch_app, install_app, access_app } = appsAsync;
+export const { fetch_app, install_app, start_app,pause_app,delete_app, access_app } = appsAsync;
 export const { fetch_worker } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
