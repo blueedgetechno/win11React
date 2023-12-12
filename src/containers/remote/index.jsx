@@ -69,7 +69,7 @@ export const Remote = () => {
     }, []);
     useEffect(() => {
         if (remote.fullscreen) requestFullscreen();
-        else document.exitFullscreen();
+        else document.exitFullscreen().catch(() => {});
     }, [remote.fullscreen]);
 
     const SetupWebRTC = () => {
@@ -104,7 +104,7 @@ export const Remote = () => {
                 autoPlay
                 muted
                 playsInline
-                objectFit={'contain'}
+                objectfit={'contain'}
                 loop
             ></video>
             <audio

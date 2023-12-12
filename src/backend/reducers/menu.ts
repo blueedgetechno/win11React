@@ -74,6 +74,18 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
+        case 'worker':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Access',
+                        action: 'connect_worker'
+                        // icon: 'start'
+                    }
+                ]
+            };
         case 'paused_app':
             return {
                 width: '200px',

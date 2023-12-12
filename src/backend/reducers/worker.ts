@@ -1,7 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RenderNode } from '../utils/tree';
-import { FetchAuthorizedWorkers } from './fetch';
+import { CreateWorkerSession, FetchAuthorizedWorkers } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
+import { appDispatch, authenticate_session, toggle_remote } from '.';
 
 type WorkerType = {
     data: any;
@@ -27,7 +28,7 @@ export const workerAsync = {
         return await CacheRequest('worker', 30, async () => {
             return new RenderNode(await FetchAuthorizedWorkers()).any();
         });
-    })
+    }),
 
     // access_volume: createAsyncThunk(
     //     'fetch_worker',
@@ -125,12 +126,18 @@ export const workerAsync = {
     //     }
     // ),
 
-    // connect_worker: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // const res = await CreateWorkerSession(worker.info.worker_profile_id);
-    //     }
-    // ),
+    connect_worker: createAsyncThunk(
+        'fetch_worker',
+        async (worker_profile_id: string, { getState }): Promise<any> => {
+            const result = await CreateWorkerSession(worker_profile_id);
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(toggle_remote());
+        }
+    )
 
     // create_subscription: createAsyncThunk(
     //     'fetch_worker',
@@ -212,30 +219,37 @@ export const workerSlice = createSlice({
         }
     },
     extraReducers: (build) => {
-        BuilderHelper(build, {
-            fetch: workerAsync.fetch_worker,
-            hander: (state, action) => {
-                state.cpath = initialState.cpath;
-                state.data = action.payload;
-                const paths = state.cpath
-                    .split('/')
-                    .filter((x) => x.length > 0);
-                if (paths.length == 0) {
-                    state.cdata = new RenderNode(state.data).data.map((x) =>
-                        x.any()
-                    );
-                    return;
+        BuilderHelper<WorkerType, any, any>(
+            build,
+            {
+                fetch: workerAsync.fetch_worker,
+                hander: (state, action) => {
+                    state.cpath = initialState.cpath;
+                    state.data = action.payload;
+                    const paths = state.cpath
+                        .split('/')
+                        .filter((x) => x.length > 0);
+                    if (paths.length == 0) {
+                        state.cdata = new RenderNode(state.data).data.map((x) =>
+                            x.any()
+                        );
+                        return;
+                    }
+
+                    let temp: RenderNode<any>[] = [];
+                    let target: RenderNode<any> = state.data;
+                    paths.forEach((x) => {
+                        temp = new RenderNode(target).data;
+                        target = temp.find((y) => y.id == x) ?? target;
+                    });
+
+                    state.cdata = target.data.map((x) => x.any());
                 }
-
-                let temp: RenderNode<any>[] = [];
-                let target: RenderNode<any> = state.data;
-                paths.forEach((x) => {
-                    temp = new RenderNode(target).data;
-                    target = temp.find((y) => y.id == x) ?? target;
-                });
-
-                state.cdata = target.data.map((x) => x.any());
+            },
+            {
+                fetch: workerAsync.connect_worker,
+                hander: (state, action) => {}
             }
-        });
+        );
     }
 });

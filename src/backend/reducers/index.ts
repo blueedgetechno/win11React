@@ -110,7 +110,7 @@ export const {
     delete_app,
     access_app
 } = appsAsync;
-export const { fetch_worker } = workerAsync;
+export const { fetch_worker, connect_worker } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const { authenticate_session } = remoteAsync;

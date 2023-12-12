@@ -59,9 +59,12 @@ export const DeactivateWorkerSession = async (worker_session_id: string) => {
 };
 
 export const CreateWorkerSession = async (worker_profile_id: string) => {
-    const result = await SupabaseFuncInvoke('worker_session_create', {
-        worker_id: worker_profile_id
-    });
+    const result = await SupabaseFuncInvoke<{ url: string }>(
+        'worker_session_create',
+        {
+            worker_id: worker_profile_id
+        }
+    );
 
     if (result instanceof Error) throw result;
     return result;

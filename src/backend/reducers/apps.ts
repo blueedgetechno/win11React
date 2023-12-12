@@ -4,6 +4,7 @@ import {
     authenticate_session,
     close_remote,
     desk_add,
+    fetch_app,
     toggle_remote
 } from '.';
 import { AppData, allApps } from '../utils';
@@ -102,6 +103,7 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+            appDispatch(fetch_app());
         }
     ),
 
@@ -143,22 +145,25 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+            return storage_id;
         }
     ),
 
     pause_app: createAsyncThunk(
         'pause_app',
-        async (storage_id: string, { getState }): Promise<void> => {
+        async (storage_id: string, { getState }): Promise<string> => {
             await StopApplication(storage_id);
             appDispatch(close_remote());
+            return storage_id;
         }
     ),
 
     delete_app: createAsyncThunk(
         'delete_app',
-        async (storage_id: string, { getState }): Promise<void> => {
+        async (storage_id: string, { getState }): Promise<string> => {
             await DeleteApplication(storage_id);
             appDispatch(close_remote());
+            return storage_id;
         }
     )
 };
@@ -358,6 +363,46 @@ export const appSlice = createSlice({
                 }
             },
             {
+                fetch: appsAsync.start_app,
+                hander: (state, action) => {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+                    if (obj == undefined) return;
+
+                    if (obj.z != state.hz) {
+                        obj.hide = false;
+                        if (!obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                            obj.max = true;
+                        } else {
+                            obj.z = -1;
+                            obj.max = false;
+                        }
+                    } else {
+                        obj.max = !obj.max;
+                        obj.hide = false;
+                        if (obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                        } else {
+                            obj.z = -1;
+                            state.hz -= 1;
+                        }
+                    }
+
+                    obj.ready = true;
+                }
+            },
+            {
+                fetch: appsAsync.install_app,
+                hander: (state, action) => {
+                }
+            },
+            {
                 fetch: appsAsync.pause_app,
                 hander: (state, action) => {
                     const obj = state.apps.find(
@@ -377,18 +422,6 @@ export const appSlice = createSlice({
                             action.payload == x.payload &&
                             x.action == 'access_app'
                     );
-                }
-            },
-            {
-                fetch: appsAsync.start_app,
-                hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
-                    );
-
-                    obj.ready = true;
                 }
             },
             {
