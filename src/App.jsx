@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
 import { preload } from './backend/actions/background';
-import { UserSession } from './backend/reducers/fetch/analytics';
 import { afterMath } from './backend/actions/index';
 import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
+import { UserSession } from './backend/reducers/fetch/analytics';
+import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
-import Popup from './containers/popup';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
+import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
 import * as Applications from './containers/applications';
 import { Background, BootScreen, LockScreen } from './containers/background';
+import Popup from './containers/popup';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
-import { WidPane } from './components/start/widget';
 
+let clipboard = '';
+let shouldResetKey = false;
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
     const wall = useAppSelector((state) => state.wallpaper);
 
-    const [showtaskbar, setShowtaskbar] = useState(true);
     const [lockscreen, setLockscreen] = useState(true);
-    const [initialAlignvert] = useState(window.innerWidth < window.innerHeight);
-    const [alignvert, setalignvert] = useState(initialAlignvert);
 
     ReactModal.setAppElement('#root');
     const dispatch = appDispatch;
@@ -43,16 +43,16 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
-            if (data.menu == 'desk' && remote.connection?.video == 'connected')
-                return;
+            if (
+                data.menu == 'desk' &&
+                remote.connection?.video == 'connected'
+            ) {
+                data.menu = 'desk_remote';
+            }
 
             dispatch(menu_show(data));
         }
     };
-
-    useEffect(() => {
-        if (alignvert != initialAlignvert) window.location.reload(); //TODO, softer reload
-    }, [alignvert]);
 
     useEffect(() => {
         window.onbeforeunload = (e) => {
@@ -74,16 +74,40 @@ function App() {
                 setLockscreen(false);
             });
 
-        if (isMobile()) setShowtaskbar(false);
-
         window.history.replaceState({}, document.title, '/' + '');
+    }, []);
 
-        // const check = () => {
-        //     if (isMobile())
-        //         setalignvert(window.innerWidth < window.innerHeight);
-        // };
-        //const loop = setInterval(check,100)
-        //return () => {clearInterval(loop)}
+    const [fullscreen, setFullscreen] = useState(false);
+    useEffect(() => {
+        const handleClipboard = () => {
+            navigator.clipboard
+                .readText()
+                .then((_clipboard) => {
+                    shouldResetKey = true;
+                    if (_clipboard == clipboard) return;
+
+                    client?.hid?.SetClipboard(_clipboard);
+                    clipboard = _clipboard;
+                })
+                .catch(() => {
+                    if (shouldResetKey) client?.hid?.ResetKeyStuck();
+
+                    shouldResetKey = false;
+                });
+        };
+        const handleState = () => {
+            const fullscreen = document.fullscreenElement != null;
+            setFullscreen(fullscreen);
+        };
+
+        const UIStateLoop = setInterval(handleState, 100);
+        const ClipboardLoop = setInterval(handleClipboard, 1000);
+        return () => {
+            clearInterval(ClipboardLoop);
+            clearInterval(UIStateLoop);
+            client?.hid?.ResetKeyStuck();
+            client?.Close();
+        };
     }, []);
 
     return (
@@ -96,25 +120,27 @@ function App() {
                         <Background />
                     ) : null}
                     {remote.active ? <Remote /> : null}
-                    <>
-                        <div
-                            className="desktop"
-                            data-menu="desk"
-                            data-mobile={isMobile()}
-                        >
-                            <DesktopApp />
-                            {Object.keys(Applications).map((key, idx) => {
-                                var WinApp = Applications[key];
-                                return <WinApp key={idx} />;
-                            })}
+                    {!fullscreen ? (
+                        <>
+                            <SidePane />
+                            <Taskbar />
+                            <ActMenu />
+                            <Popup />
+                            <WidPane />
                             <StartMenu />
-                        </div>
-                        <SidePane />
-                        <Taskbar />
-                        <ActMenu />
-                        <Popup />
-                        <WidPane />
-                    </>
+                            <div
+                                className="desktop"
+                                data-menu="desk"
+                                data-mobile={isMobile()}
+                            >
+                                <DesktopApp />
+                                {Object.keys(Applications).map((key, idx) => {
+                                    var WinApp = Applications[key];
+                                    return <WinApp key={idx} />;
+                                })}
+                            </div>
+                        </>
+                    ) : null}
                 </div>
                 {/* <AvailableCluster isBootScreen={lockscreen} /> */}
             </ErrorBoundary>

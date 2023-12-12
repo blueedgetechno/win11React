@@ -136,7 +136,13 @@ export const appsAsync = {
         'start_app',
         async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
-            return await AccessApplication({ storage_id });
+            const result = await AccessApplication({ storage_id });
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(toggle_remote());
         }
     ),
 
@@ -353,15 +359,37 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.pause_app,
-                hander: (state, action) => {}
+                hander: (state, action) => {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+
+                    obj.ready = false;
+                }
             },
             {
                 fetch: appsAsync.delete_app,
-                hander: (state, action) => {}
+                hander: (state, action) => {
+                    state.apps = state.apps.filter(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+                }
             },
             {
                 fetch: appsAsync.start_app,
-                hander: (state, action) => {}
+                hander: (state, action) => {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+
+                    obj.ready = true;
+                }
             },
             {
                 fetch: appsAsync.fetch_app,

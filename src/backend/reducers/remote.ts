@@ -1,5 +1,4 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import {
     RootState,
     appDispatch,
@@ -7,7 +6,6 @@ import {
     update_metrics,
     video_status
 } from '.';
-import { BuilderHelper } from './helper';
 import { RemoteDesktopClient } from '../../../core/app';
 import {
     AddNotifier,
@@ -15,6 +13,8 @@ import {
     Log,
     LogLevel
 } from '../../../core/utils/log';
+import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
+import { BuilderHelper } from './helper';
 
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
@@ -85,6 +85,7 @@ export type Metric = {
 
 type Data = {
     active: boolean;
+    fullscreen: boolean;
     auth?: AuthSessionResp;
     metrics?: Metric;
     connection?: {
@@ -95,7 +96,8 @@ type Data = {
 };
 
 const initialState: Data = {
-    active: false
+    active: false,
+    fullscreen: false
 };
 
 export const remoteAsync = {
@@ -132,6 +134,7 @@ export const remoteSlice = createSlice({
             state.auth = undefined;
             state.connection = undefined;
             state.metrics = undefined;
+            state.fullscreen = false;
         },
         toggle_remote: (state) => {
             if (!state.active) {
@@ -153,6 +156,9 @@ export const remoteSlice = createSlice({
                 client?.Close();
             }
             state.active = !state.active;
+        },
+        fullscreen: (state) => {
+            if (state.active) state.fullscreen = true;
         },
         audio_status: (state, action: PayloadAction<ConnectStatus>) => {
             if (state.connection != undefined)

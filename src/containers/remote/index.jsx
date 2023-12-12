@@ -1,28 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { RemoteDesktopClient } from '../../../core/app';
 import { AudioWrapper } from '../../../core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../core/pipeline/sink/video/wrapper';
-import {
-    AddNotifier,
-    ConnectionEvent,
-    Log,
-    LogLevel
-} from '../../../core/utils/log';
-import { getBrowser, getOS, getPlatform } from '../../../core/utils/platform';
-import {
-    appDispatch,
-    audio_status,
-    update_metrics,
-    useAppSelector,
-    video_status
-} from '../../backend/reducers';
-import { client, assign } from '../../backend/reducers/remote';
+import { requestFullscreen } from '../../../core/utils/screen';
+import { useAppSelector } from '../../backend/reducers';
+import { assign, client } from '../../backend/reducers/remote';
 import './remote.scss';
 
-let clipboard = '';
-let pointer = false;
-let no_stretch = false;
-let platform = getPlatform();
 export const Remote = () => {
     const remote = useAppSelector((store) => store.remote);
     const videoConnectivity = useAppSelector(
@@ -34,58 +18,6 @@ export const Remote = () => {
 
     const remoteVideo = useRef(null);
     const remoteAudio = useRef(null);
-
-    const shouldResetKey = useRef(true);
-
-    useEffect(() => {
-        const handleState = () => {
-            navigator.clipboard
-                .readText()
-                .then((_clipboard) => {
-                    shouldResetKey.current = true;
-                    if (_clipboard == clipboard) return;
-
-                    client?.hid?.SetClipboard(_clipboard);
-                    clipboard = _clipboard;
-                })
-                .catch(() => {
-                    if (shouldResetKey?.current == true)
-                        client?.hid?.ResetKeyStuck();
-
-                    shouldResetKey.current = false;
-                });
-
-            if (getOS() == 'iOS' || getBrowser() == 'Safari') return;
-
-            const fullscreen = document.fullscreenElement != null;
-            const havingPtrLock = document.pointerLockElement != null;
-
-            remoteVideo.current.style.objectFit = !fullscreen
-                ? 'contain'
-                : no_stretch
-                  ? 'contain'
-                  : 'fill';
-
-            if (pointer != fullscreen) {
-                client?.PointerVisible(view_pointer ? true : fullscreen);
-                pointer = fullscreen;
-            }
-
-            if (fullscreen && !havingPtrLock && getBrowser() != 'Safari')
-                try {
-                    remoteVideo.current.requestPointerLock();
-                } catch {}
-            else if (!fullscreen && havingPtrLock && getBrowser() != 'Safari')
-                document.exitPointerLock();
-        };
-
-        const UIStateLoop = setInterval(handleState, 100);
-        return () => {
-            clearInterval(UIStateLoop);
-            client?.hid?.ResetKeyStuck();
-            client?.Close();
-        };
-    }, []);
 
     useEffect(() => {
         const got_stuck_one = () => {
@@ -118,9 +50,27 @@ export const Remote = () => {
 
     useEffect(() => {
         if (!remote.active || remote.auth == undefined) return;
-
         SetupWebRTC();
     }, [remote.active]);
+
+    useEffect(() => {
+        const handleState = () => {
+            const fullscreen = document.fullscreenElement != null;
+            const havingPtrLock = document.pointerLockElement != null;
+            if (fullscreen && !havingPtrLock)
+                remoteVideo.current.requestPointerLock();
+            else if (!fullscreen && havingPtrLock) document.exitPointerLock();
+        };
+
+        const UIStateLoop = setInterval(handleState, 100);
+        return () => {
+            clearInterval(UIStateLoop);
+        };
+    }, []);
+    useEffect(() => {
+        if (remote.fullscreen) requestFullscreen();
+        else document.exitFullscreen();
+    }, [remote.fullscreen]);
 
     const SetupWebRTC = () => {
         if (client != null) client.Close();
@@ -135,7 +85,7 @@ export const Remote = () => {
                     remote.auth.signaling,
                     remote.auth.webrtc,
                     {
-                        platform,
+                        platform: 'win11',
                         turn: true,
                         no_video: false,
                         no_mic: false,
@@ -154,6 +104,7 @@ export const Remote = () => {
                 autoPlay
                 muted
                 playsInline
+                objectFit={'contain'}
                 loop
             ></video>
             <audio

@@ -49,7 +49,12 @@ const initialState: Data = {
     }
 };
 
-export type MenuOption = 'desk' | 'paused_app' | 'running_app' | NodeType;
+export type MenuOption =
+    | 'desk'
+    | 'desk_remote'
+    | 'paused_app'
+    | 'running_app'
+    | NodeType;
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
         case 'running_app':
@@ -83,6 +88,35 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         name: 'Delete',
                         action: 'delete_app',
                         icon: 'delete'
+                    }
+                ]
+            };
+        case 'desk_remote':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Fullscreen',
+                        action: 'fullscreen',
+                        payload: true
+                    },
+                    {
+                        type: 'hr'
+                    },
+                    {
+                        name: 'Display settings',
+                        icon: 'display',
+                        type: 'svg',
+                        action: 'SETTINGS',
+                        payload: 'full'
+                    },
+                    {
+                        name: 'Personalize',
+                        icon: 'personalize',
+                        type: 'svg',
+                        action: 'SETTINGS',
+                        payload: 'full'
                     }
                 ]
             };

@@ -95,6 +95,7 @@ export const {
 export const {
     toggle_remote,
     close_remote,
+    fullscreen,
     audio_status,
     video_status,
     update_connection_path,
