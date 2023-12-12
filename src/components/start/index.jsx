@@ -4,7 +4,6 @@ import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import {
     appDispatch,
-    dispatch_generic,
     setting_setv,
     task_audo,
     useAppSelector
@@ -63,7 +62,7 @@ export const DesktopApp = () => {
                             className="dskApp prtclk relative"
                             tabIndex={0}
                             data-action={app.action}
-                            data-menu={app.action}
+                            data-menu={app.menu}
                             data-payload={app.payload || 'full'}
                             data-id={app.id ?? 'null'}
                             data-name={app.name}
@@ -75,12 +74,15 @@ export const DesktopApp = () => {
                                 className="dskIcon "
                                 click={'null'}
                                 src={app.id}
-                                mono={!(app.ready ?? true)}
+                                // mono={!(app.ready ?? true)}
                                 pr
                                 width={Math.round(desk.size * 36)}
                             />
                             <div className="appName">{app.name}</div>
                             {!app.installing ? null : (
+                                <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
+                            )}
+                            {(app.ready ?? true) ? null : (
                                 <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                             )}
                         </div>

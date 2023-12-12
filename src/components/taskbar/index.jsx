@@ -3,12 +3,11 @@ import {
     appDispatch,
     task_hide,
     task_show,
-    dispatch_generic,
     useAppSelector
 } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
-import Battery from '../../components/shared/Battery';
 import { clickDispatch } from '../../backend/utils/dispatch';
+import Battery from '../../components/shared/Battery';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
 
@@ -58,7 +57,7 @@ const Taskbar = () => {
 
     return (
         <div className="taskbar" data-mobile={isMobile()}>
-            <div className="tasksCont" data-menu="task" data-side={tasks.align}>
+            <div className="tasksCont" data-side={tasks.align}>
                 <div className="tsbar" onMouseOut={hidePrev}>
                     <Icon
                         className="tsIcon tsIconInvert"
@@ -92,7 +91,6 @@ const Taskbar = () => {
                     })}
                     {tempapps.map((key, i) => {
                         const isActive = key.z == apps.hz;
-                        console.log(key)
                         return (
                             <div
                                 key={i}

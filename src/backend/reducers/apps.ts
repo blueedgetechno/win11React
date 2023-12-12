@@ -52,7 +52,8 @@ export const appsAsync = {
                         action: 'access_app',
 
                         payload: storage.id,
-                        ready: storage.data.length != 0
+                        ready: storage.data.length != 0,
+                        menu: storage.data.length != 0 ? 'running_app' : 'paused_app'
                     } as AppData;
                 }
             );

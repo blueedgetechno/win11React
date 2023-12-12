@@ -7,15 +7,10 @@ import { customClickDispatch } from '../../backend/utils/dispatch';
 
 export const ActMenu = () => {
     const menu = useAppSelector((state) => state.menus);
-
-    const menudata = useAppSelector((state) => 
-        state.menus.data.find(x => x.name == state.menus.opts)?.data
-        ??  state.menus.data.find(x => x.name == 'default')?.data)
+    const menudata = useAppSelector((state) => state.menus.data)
 
     const { abpos, isLeft } = useAppSelector((state) => {
-        var acount = state.menus.data
-            .find(x => x.name == state.menus.opts)
-            ?.length;
+        var acount = state.menus.data.data?.length;
         var tmpos = {
                 top: state.menus.top,
                 left: state.menus.left
@@ -46,7 +41,7 @@ export const ActMenu = () => {
 
     const menuclickDispatch = (event) => {
         event.stopPropagation();
-        menuDispatch(event, menu);
+        menuDispatch(event);
     };
 
     const menuobj = (data, parentId) => {
@@ -134,10 +129,7 @@ export const ActMenu = () => {
             data-hide={menu.hide}
             data-left={isLeft}
         >
-            {menuobj(menu.data
-                .find(x => x.name == menu.opts)?.data 
-                ?? [], 
-                menu?.dataset?.id)}
+            {menuobj(menudata.data, menu?.dataset?.id)}
         </div>
     );
 };

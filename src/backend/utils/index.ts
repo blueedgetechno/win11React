@@ -1,3 +1,4 @@
+import { MenuOption } from '../reducers/menu';
 import { externalLink } from './constant';
 
 export type AppData = {
@@ -6,6 +7,7 @@ export type AppData = {
     action: string;
     payload?: any;
 
+    menu?: MenuOption;
     size?: string;
     ready?: boolean;
     installing?: boolean;

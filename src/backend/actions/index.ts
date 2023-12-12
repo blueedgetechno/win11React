@@ -129,14 +129,18 @@ export const changeTheme = () => {
     appDispatch(wall_set(thm == 'light' ? 0 : 1));
 };
 
-export const menuDispatch = async (event: Event, menu: any) => {
-    const dataset = (event.target as any)?.dataset;
-    if (dataset.action == undefined) return;
+export const menuDispatch = async (event: Event) => {
+    const dataset = (event.target as any)?.dataset as {
+        action: string,
+        payload: any,
+    };
+    if (dataset.action == undefined) 
+        return;
 
-    appDispatch(menu_hide({}));
+    appDispatch(menu_hide());
     dispatch_generic({
         type: dataset.action,
-        payload: dataset.payload
+        payload: store.getState().menus.dataset?.payload
     });
 };
 
