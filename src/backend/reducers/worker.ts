@@ -127,7 +127,7 @@ export const workerAsync = {
     // ),
 
     connect_worker: createAsyncThunk(
-        'fetch_worker',
+        'connect_worker',
         async (worker_profile_id: string, { getState }): Promise<any> => {
             const result = await CreateWorkerSession(worker_profile_id);
             const url = new URL(result.url);

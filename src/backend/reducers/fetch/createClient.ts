@@ -1,5 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
+export enum CAUSE {
+    UNKNOWN,
+    OUT_OF_HARDWARE,
+    MAXIMUM_DEPLOYMENT_REACHED,
+    INVALID_AUTH_HEADER,
+    API_CALL,
+    LOCKED_RESOURCE,
+    VM_BOOTING_UP,
+    PERMISSION_REQUIRED,
+    NEED_WAIT,
+    INVALID_REQUEST,
+}
+
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const supabase = createClient(supabaseUrl, supabaseKey);
@@ -65,13 +79,8 @@ export async function SupabaseFuncInvoke<T>(
                 }
             }
         );
-        if (response.ok === false) {
-            const res = (await response.json()) as {
-                message: string;
-                code: number;
-            };
-            return new Error(res.message);
-        }
+        if (response.ok === false) 
+            return new Error(await response.text());
 
         const data = (await response.json()) as T;
         return data;

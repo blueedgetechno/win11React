@@ -9,6 +9,7 @@ import {
 import Dexie, { Table } from 'dexie';
 import { appDispatch, push_notification } from '..';
 import { externalLink } from '../../utils/constant';
+import { formatError } from '../../utils/formatErr';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -172,7 +173,7 @@ export async function BuilderHelper<T, U, V>(
                                 .split('/')
                                 .at(0)} is failed`,
                             name: new Date().toUTCString(),
-                            content: (action.error as Error).message,
+                            content: formatError(action.error as Error),
                             url: externalLink.DISCORD_LINK,
                             urlToImage: action.type
                         })
