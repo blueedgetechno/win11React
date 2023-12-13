@@ -139,7 +139,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Refresh',
-                        action: 'fetch_app',
+                        action: 'refresh',
                         type: 'svg',
                         icon: 'refresh'
                     },

@@ -29,19 +29,19 @@ const loadSettings = async () => {
 };
 
 export const fetchApp = async () => {
-    appDispatch(fetch_app());
+    await appDispatch(fetch_app());
 };
 
 export const fetchWorker = async () => {
-    appDispatch(fetch_worker());
+    await appDispatch(fetch_worker());
 };
 
 export const fetchStore = async () => {
-    appDispatch(fetch_store());
+    await appDispatch(fetch_store());
 };
 
 export const fetchUser = async () => {
-    appDispatch(fetch_user());
+    await appDispatch(fetch_user());
 };
 
 const server_availability = () => {};
@@ -51,9 +51,7 @@ const ping_remote = async () => {
 };
 
 export const preload = async () => {
-    await Promise.all([fetchUser(), loadSettings()]);
-    await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
-
+    Promise.all([fetchUser(), loadSettings(),fetchWorker(), fetchStore(), fetchApp()]);
     setInterval(ping_remote, 10 * 1000);
     setInterval(server_availability, 30 * 1000);
 };

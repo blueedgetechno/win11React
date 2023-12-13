@@ -8,6 +8,7 @@ import {
 
 import Dexie, { Table } from 'dexie';
 import { appDispatch, push_notification } from '..';
+import { externalLink } from '../../utils/constant';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -148,11 +149,11 @@ export async function BuilderHelper<T, U, V>(
                 const notify = () =>
                     appDispatch(
                         push_notification({
+                            type: 'pending',
                             title: `request ${action.type
                                 .split('/')
                                 .at(0)} is pending`,
                             name: new Date().toUTCString(),
-                            url: action.type,
                             urlToImage: action.type
                         })
                     );
@@ -166,12 +167,13 @@ export async function BuilderHelper<T, U, V>(
                 const notify = () =>
                     appDispatch(
                         push_notification({
+                            type: 'rejected',
                             title: `request ${action.type
                                 .split('/')
                                 .at(0)} is failed`,
                             name: new Date().toUTCString(),
                             content: (action.error as Error).message,
-                            url: action.type,
+                            url: externalLink.DISCORD_LINK,
                             urlToImage: action.type
                         })
                     );
@@ -185,11 +187,11 @@ export async function BuilderHelper<T, U, V>(
                 const notify = () =>
                     appDispatch(
                         push_notification({
+                            type: 'fulfilled',
                             title: `request ${action.type
                                 .split('/')
                                 .at(0)} is completed`,
                             name: new Date().toUTCString(),
-                            url: action.type,
                             urlToImage: action.type
                         })
                     );

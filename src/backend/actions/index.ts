@@ -19,7 +19,7 @@ import { fetchApp } from './background';
 export const refresh = async () => {
     appDispatch(desk_hide());
     await fetchApp();
-    appDispatch(desk_show());
+    setTimeout(() => appDispatch(desk_show()),200)
 };
 
 export const afterMath = (event: any) => {

@@ -5,13 +5,7 @@ import './widget.scss';
 
 export const WidPane = () => {
     const widget = useAppSelector((state) => state.sidepane);
-    const theme = useAppSelector((state) => state.setting.person.theme);
-    const getRandom = (x = 0) => {
-        if (theme == 'light')
-            return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
-        if (theme == 'dark')
-            return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
-    };
+    const img = useAppSelector((state) => state.wallpaper.src);
 
     return (
         <div className="widPaneCont" data-hide={widget.banhide}>
@@ -35,8 +29,13 @@ export const WidPane = () => {
                                             className="articleCont ltShad"
                                             target="_blank"
                                             style={{
-                                                '--backgrad': getRandom(2),
-                                                backgroundImage: `url(${article.urlToImage})`
+                                                '--backgrad': 
+                                                article.type == 'pending'
+                                                ? '#795701'
+                                                : article.type == 'rejected'
+                                                ? '#a80022'
+                                                : '#012b7c',
+                                                backgroundImage: `url(img/wallpaper/${img})`
                                             }}
                                             href={article.url}
                                             rel="noopener noreferrer"
@@ -50,7 +49,7 @@ export const WidPane = () => {
                                                 <div className="tpArticle">
                                                     {article.title}
                                                 </div>
-                                                <div className="tpdesc">
+                                                <div className="tpArticle">
                                                     {article.content}
                                                 </div>
                                             </div>

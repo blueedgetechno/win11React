@@ -451,11 +451,10 @@
       }
 
       .tpArticle {
-        margin-top: 4px;
-        font-size: 0.8em;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--txt-col);
-        max-height: 56px;
+        max-height: 64px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
