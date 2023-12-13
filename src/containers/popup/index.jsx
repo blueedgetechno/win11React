@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import ReactModal from 'react-modal';
 import {
     appDispatch,
     popup_close,
@@ -6,7 +7,7 @@ import {
 } from '../../backend/reducers';
 import './index.scss';
 import * as modals from './modal';
-import ReactModal from 'react-modal';
+
 
 const Popup = () => {
     const popup = useAppSelector((state) => state.popup);
@@ -22,7 +23,7 @@ const Popup = () => {
             onRequestClose={() => appDispatch(popup_close())}
             contentLabel="Example Modal"
             className="modalContent "
-            overlayClassName="fixed inset-0"
+            overlayClassName="modalOverlay"
         >
             <div className="selectText d-flex overflow-auto min-h-full">
                 {Object.keys(modals)

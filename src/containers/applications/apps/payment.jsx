@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 import {
-    FUNDING,
-    PayPalButtons,
-    PayPalScriptProvider
+    FUNDING
 } from '@paypal/react-paypal-js';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
 
@@ -31,20 +29,20 @@ export const PaymentApp = () => {
             type: 'start',
             title: 'Start',
             for: 'Month',
-            hours: 100,
+            hours: 110,
             gpu: 'RTX 3060ti',
             ram: '16GB',
-            price: '250k'
+            price: '289k'
         },
         {
             name: 'month',
             type: 'standard',
             title: 'Standard',
             for: 'Month',
-            hours: 150,
+            hours: 160,
             gpu: 'RTX 3060ti',
             ram: '16GB',
-            price: '300k'
+            price: '359k'
         }
     ]);
 

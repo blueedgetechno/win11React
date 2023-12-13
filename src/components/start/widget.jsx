@@ -25,7 +25,7 @@ export const WidPane = () => {
                                 {widget.notifications.map((article, i) => {
                                     return (
                                         <a
-                                            className="articleCont  shadow-2xl"
+                                            className={`articleCont  shadow-2xl ${article.type == 'pending' ? 'load' : null}`}
                                             target="_blank"
                                             style={{
                                                 '--backgrad': 

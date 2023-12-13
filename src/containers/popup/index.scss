@@ -7,3 +7,20 @@
 		font-size: 50px;
 	}
 }
+
+
+.fullscreenModal{
+	color: #000000;
+	.ctnButton{
+		display: flex;
+		align-items: center;
+
+		.key{
+			border: 1px solid #5c4949;
+			padding: 6px;
+			margin: 0 8px; 
+			font-weight: 500;
+			
+		}
+	}
+}
