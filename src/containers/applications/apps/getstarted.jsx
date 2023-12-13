@@ -1,29 +1,71 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     appDispatch,
+    app_close,
+    demo_app,
     setting_setv,
     useAppSelector
 } from '../../../backend/reducers';
 import { Icon, ToolBar } from '../../../components/shared/general';
-import LangSwitch from './assets/Langswitch';
-import countries from './assets/countrylist.json';
 import './assets/getstarted.scss';
+
+const countries = [
+    "Vietnam",
+    "India",
+    "United States",
+    "Europe",
+    "South East Asia",
+    "East Asia",
+    "South America"
+]
+
+
+const experiences = [
+    "Comfortable gameplay",
+    "Hardcore gameplay",
+    "Professional work",
+    "Explore new technologies",
+    "I don't know yet",
+]
 
 export const Getstarted = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'getstarted')
     );
-    const dispatch = appDispatch;
-    const tasks = useAppSelector((state) => state.taskbar);
+    const demo = useAppSelector((state) => state.apps.allow_demo);
     const { t } = useTranslation();
 
-    const [pageNo, setPageNo] = useState(1);
-    const nextPage = () => (pageNo !== 6 ? setPageNo(pageNo + 1) : null);
+    const [pageNo, setPageNo] = useState(0);
+    const nextPage = () => setPageNo(pageNo + 1);
+    useEffect(() => {
+        if (pageNo != 5)
+            return
+
+        setPageNo(0)
+        appDispatch(app_close('getstarted'))
+        if (demo)
+            appDispatch(demo_app())
+    },[pageNo])
+
+    const country = (country) => {
+        nextPage()
+    }
+    const exp = (exp) => {
+        nextPage()
+    }
+
+
+    useEffect(() => {
+        if (!wnapp.hide)
+            window.onkeydown = (e) => e.key == 'Enter'? nextPage() : null
+        else 
+            window.onkeydown = null
+    },[wnapp.hide,pageNo])
 
     const changUserName = (e) => {
         var newName = e.target.value;
-        dispatch(
+        appDispatch(
             setting_setv({
                 path: 'person.name',
                 value: newName
@@ -52,13 +94,43 @@ export const Getstarted = () => {
             <div className="windowScreen flex flex-col" data-dock="true">
                 <div className="restWindow flex-grow flex flex-col">
                     <div className="inner_fill_setup">
+                        {pageNo === 0 ? (
+                            <>
+                                <div className="left">
+                                    <img
+                                        id="left_img"
+                                        src="logo.png"
+                                    />
+                                </div>
+                                <div className="right">
+                                    <div className="header mb-8">
+                                        Welcome to thinkmay <br/> cloud gaming
+                                    </div>
+                                    <div>
+                                        We will setup 15 minutes demo gameplay<br/>
+                                        before you subscribe for our service, 
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        Is this the first time you try our service? <br/>
+                                    </div>
+                                </div>
+
+                                <div className="no_button base" onClick={nextPage}>
+                                    Had an account
+                                </div>
+                                <div className="yes_button base" onClick={nextPage}>
+                                    Yes
+                                </div>
+                            </>
+                        ) : null}
                         {pageNo === 1 ? (
                             <>
                                 <div className="left">
                                     <img
                                         alt="left image"
                                         id="left_img"
-                                        src="img/oobe/window11_oobe_region.png"
+                                        src="logo.png"
                                     />
                                 </div>
                                 <div className="right">
@@ -73,6 +145,7 @@ export const Getstarted = () => {
                                                 <div
                                                     key={i}
                                                     className="list_oobe_opt"
+                                                    onClick={() => country(e)}
                                                 >
                                                     {e}
                                                 </div>
@@ -87,7 +160,7 @@ export const Getstarted = () => {
                                 <div className="left">
                                     <img
                                         id="left_img"
-                                        src="img/oobe/window11_oobe_keyb_layout.png"
+                                        src="logo.png"
                                     />
                                 </div>
                                 <div className="right">
@@ -98,39 +171,34 @@ export const Getstarted = () => {
                                         </div>
                                     </div>
                                     <div className="list_oobe mt-4 win11Scroll">
-                                        <LangSwitch />
+                                        <div className="list_oobe mt-4 win11Scroll">
+                                            {experiences.map((e, i) => {
+                                                return (
+                                                    <div
+                                                        key={i}
+                                                        className="list_oobe_opt"
+                                                        onClick={() => exp(e)}
+                                                    >
+                                                        {e}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                 </div>
                             </>
                         ) : null}
-                        {pageNo === 3 ? (
+                        {/* {pageNo === 3 ? (
                             <>
                                 <div className="left">
                                     <img
                                         id="left_img"
-                                        src="img/oobe/window11_oobe_update.png"
-                                    />
-                                </div>
-                                <div className="right align">
-                                    <img
-                                        id="loader"
-                                        src="img/oobe/window11_oobe_region.png"
-                                    />
-                                    Checking for updates.
-                                </div>
-                            </>
-                        ) : null}
-                        {pageNo === 4 ? (
-                            <>
-                                <div className="left">
-                                    <img
-                                        id="left_img"
-                                        src="img/oobe/window11_oobe_name.png"
+                                        src="logo.png"
                                     />
                                 </div>
                                 <div className="right">
                                     <div className="header mb-2">
-                                        Let's name your PC
+                                        Set your username
                                     </div>
                                     <div className="header_sml">
                                         Make it yours with unique name that's
@@ -147,30 +215,27 @@ export const Getstarted = () => {
                                         />
                                     </div>
                                     <div className="text_sml_black">
-                                        No more than 15 character <br />
-                                        No spaces or any of the following
-                                        special characters:
-                                        <br />
-                                        &quot;/\ [ ] : | &lt; &gt;+ = ; , ?
+                                        Enter to finish
                                     </div>
                                 </div>
                             </>
-                        ) : null}
-                        {pageNo === 5 ? (
+                        ) : null} */}
+                        {pageNo === 3 ? (
                             <>
                                 <div className="left">
                                     <img
                                         id="left_img"
-                                        src="img/oobe/window11_oobe_wifi.png"
+                                        src="logo.png"
                                     />
                                 </div>
                                 <div className="right">
                                     <div className="header">
-                                        Let's connect you to a network
+                                        How to get the best experience
                                         <div className="header_sml">
                                             You'll need an internet connection
                                             to continue the setting up your
-                                            device.Once connected, you'll get
+                                            device. <br/>
+                                            Once connected, you'll get
                                             the latest features and security
                                             updates.
                                         </div>
@@ -182,10 +247,28 @@ export const Getstarted = () => {
                                                 ></i>{' '}
                                                 <div className="ethernet_list_opt_inr">
                                                     <div className="text_sml_black_wifi">
-                                                        Ethernet 01
+                                                        Turn off you VPN
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        Not connected
+                                                        VPN downgrade 
+                                                    </div>
+                                                    <div className="text_sml_black_wifi">
+                                                        Use 5Ghz wifi if possible
+                                                    </div>
+                                                    <div className="header_sml_wifi">
+                                                        5Ghz wifi will help you get better connection
+                                                    </div>
+                                                    <div className="text_sml_black_wifi">
+                                                        Contact our customer support
+                                                    </div>
+                                                    <div className="header_sml_wifi">
+                                                        If you have connectivity problems
+                                                    </div>
+                                                    <div className="text_sml_black_wifi">
+                                                        Join our community to request games
+                                                    </div>
+                                                    <div className="header_sml_wifi">
+                                                        Join our discord to get lastest updates
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,51 +276,28 @@ export const Getstarted = () => {
                                             <div className="list_oobe_opt"></div>
                                         </div>
                                         <div className="text_sml_black">
-                                            Having trouble to getting connected?
-                                        </div>
-                                        <div className="header_sml">
-                                            For troubleshooting tips use another
-                                            device and visit aka.ms/networksetup
+                                            Enter to continue
                                         </div>
                                     </div>
                                 </div>
                             </>
                         ) : null}
-                        {pageNo === 6 ? (
+                        {pageNo === 4 ? (
                             <>
                                 <div className="left">
                                     <img
                                         id="left_img"
-                                        src="img/oobe/window11_oobe_update.png"
+                                        src="logo.png"
                                     />
                                 </div>
                                 <div className="right">
                                     <div className="header mb-8">
                                         The setup has completed.
                                     </div>
-                                    <div>You can close this now.</div>
+                                    <div>Enter to play right now.</div>
                                 </div>
                             </>
                         ) : null}
-
-                        <div className="yes_button base" onClick={nextPage}>
-                            Yes
-                        </div>
-                    </div>
-
-                    <div className="setup_settings">
-                        <img
-                            alt="accessibility"
-                            className="mr-4 acsblty"
-                            src="img/oobe/window11_oobe_accessibility.png"
-                            width={16}
-                        />
-                        <Icon
-                            className="taskIcon"
-                            src={`audio${tasks.audio}`}
-                            ui
-                            width={16}
-                        />
                     </div>
                 </div>
             </div>

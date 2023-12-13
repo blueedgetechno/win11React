@@ -1,10 +1,11 @@
 type Data = {
-    active?: string;
+    active: boolean;
     type?: string;
-    data: any;
+    data?: any;
 };
 
 const initialState: Data = {
+    active: false,
     data: {}
 };
 
@@ -13,13 +14,16 @@ export const modalSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
-        popup_open: (state, action: PayloadAction<Data>) => {
-            state.active = action.payload.active;
+        popup_open: (state, action: PayloadAction<{
+            type: string;
+            data?: any;
+        }>) => {
+            state.active = true
             state.type = action.payload.type;
             state.data = action.payload.data;
         },
         popup_close: (state) => {
-            state.active = undefined;
+            state.active = false;
             state.type = undefined;
         }
     }

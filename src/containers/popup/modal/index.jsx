@@ -1,3 +1,1 @@
-export * from './admin';
-export * from './release';
-export * from './worker';
+export { fullscreen_warning } from './fullscreen';

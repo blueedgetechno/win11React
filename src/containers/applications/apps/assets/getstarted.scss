@@ -78,6 +78,21 @@
     color: var(--alt-txt);
   }
 
+  .no_button {
+    border-radius: 4px;
+    background: var(--clrPrm);
+    color: var(--alt-txt);
+    height: 36px;
+    width: 122px;
+    text-align: center;
+    line-height: 36px;
+    position: absolute;
+    font-size: 14px;
+    right: 150px;
+    cursor: default;
+    animation: transition_effect 1.4s;
+    bottom: 37px;
+  }
   .yes_button {
     border-radius: 4px;
     background: var(--clrPrm);

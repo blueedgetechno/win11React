@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
     appDispatch,
     popup_close,
@@ -9,9 +10,15 @@ import ReactModal from 'react-modal';
 
 const Popup = () => {
     const popup = useAppSelector((state) => state.popup);
+    useEffect(() => {
+        if (popup.active)
+            document.getElementById('root').style.filter = 'blur(3px)'
+        else
+            document.getElementById('root').style.filter = null
+    },[popup.active])
     return (
         <ReactModal
-            isOpen={popup.active != undefined}
+            isOpen={popup.active}
             onRequestClose={() => appDispatch(popup_close())}
             contentLabel="Example Modal"
             className="modalContent "
@@ -23,8 +30,7 @@ const Popup = () => {
                     .map((key, idx) => {
                         const WinApp = modals[key];
                         return <WinApp key={idx} data={popup.data} />;
-                    })
-                    .at(0)}
+                })}
             </div>
         </ReactModal>
     );

@@ -159,7 +159,7 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                setTimeout(notify, 500);
+                setTimeout(notify, 100);
             }
         )
         .addMatcher(
@@ -179,7 +179,7 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                setTimeout(notify, 500);
+                setTimeout(notify, 100);
             }
         )
         .addMatcher(
@@ -197,7 +197,7 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                setTimeout(notify, 500);
+                setTimeout(notify, 100);
             }
         );
 }

@@ -28,8 +28,7 @@ const apps: AppData[] = [
     {
         name: 'Get Started',
         id: 'getstarted',
-        // action: 'apps/app_toggle', // TODO
-        action: 'demo_app',
+        action: 'apps/app_toggle',
         payload: 'getstarted'
     },
     {

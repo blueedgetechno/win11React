@@ -1,5 +1,6 @@
 import {
     appDispatch,
+    app_toggle,
     fetch_app,
     fetch_store,
     fetch_user,
@@ -30,6 +31,9 @@ const loadSettings = async () => {
 
 export const fetchApp = async () => {
     await appDispatch(fetch_app());
+
+    // TODO
+    appDispatch(app_toggle('getstarted'))
 };
 
 export const fetchWorker = async () => {
@@ -51,7 +55,9 @@ const ping_remote = async () => {
 };
 
 export const preload = async () => {
-    Promise.all([fetchUser(), loadSettings(),fetchWorker(), fetchStore(), fetchApp()]);
+    await Promise.all([fetchUser(), loadSettings(),fetchWorker(), fetchStore(), fetchApp()]);
+
+
     setInterval(ping_remote, 10 * 1000);
     setInterval(server_availability, 30 * 1000);
 };

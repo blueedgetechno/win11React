@@ -4,6 +4,7 @@ import {
     authenticate_session,
     close_remote,
     desk_add,
+    desk_remove,
     fetch_app,
     toggle_remote
 } from '.';
@@ -21,6 +22,7 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
+import { warning_fullscreen } from '../actions';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -105,12 +107,14 @@ export const appsAsync = {
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
             appDispatch(fetch_app());
+
+            warning_fullscreen()
         }
     ),
 
     demo_app: createAsyncThunk(
         'demo_app',
-        async (arg:{}, { getState }): Promise<void> => {
+        async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -118,6 +122,9 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+            appDispatch(desk_remove('getstarted'))
+
+            warning_fullscreen()
         }
     ),
     access_app: createAsyncThunk(
@@ -130,6 +137,7 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+
             return storage_id;
         }
     ),
@@ -158,6 +166,8 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+
+            warning_fullscreen()
             return storage_id;
         }
     ),
@@ -183,10 +193,12 @@ export const appsAsync = {
 
 type Data = {
     hz: number;
+    allow_demo: boolean,
     apps: AppData[];
 };
 const initialState: Data = {
     hz: 0,
+    allow_demo: true,
     apps: allApps
 };
 
@@ -413,11 +425,13 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => {}
+                hander: (state, action) => {
+                    state.allow_demo = false
+                }
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.pause_app,

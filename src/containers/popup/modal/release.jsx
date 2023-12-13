@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useAppSelector } from '../../../backend/reducers';
 // import { formatEvent } from '../../../backend/utils/worker';
 
-function ReleaseAppModal({ data }) {
+export function ReleaseAppModal({ data }) {
     const apps = useAppSelector((state) => state.globals.apps);
     const games = useAppSelector((state) => state.globals.games);
 
@@ -161,4 +161,3 @@ function ReleaseAppModal({ data }) {
     );
 }
 
-export default ReleaseAppModal;

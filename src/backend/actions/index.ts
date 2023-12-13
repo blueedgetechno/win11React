@@ -9,7 +9,12 @@ import {
     dispatch_generic,
     menu_chng,
     menu_hide,
+    popup_close,
+    popup_open,
+    push_notification,
     setting_theme,
+    sidepane_bandhide,
+    sidepane_panehide,
     sidepane_panethem,
     store,
     wall_set
@@ -144,3 +149,12 @@ export const menuDispatch = async (event: Event) => {
 export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
+
+export const warning_fullscreen = () => {
+    appDispatch(popup_open({ type: 'fullscreen_warning' }));
+    setTimeout(() => {
+        appDispatch(popup_close())
+        appDispatch(sidepane_bandhide());
+        appDispatch(sidepane_panehide());
+    },5000)
+}
