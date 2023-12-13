@@ -19,7 +19,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { NodeType } from '../utils/tree.js';
 
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
-    console.log({ ...(action as any) });
+    // console.log({ ...(action as any) });
     return await next(action);
 };
 
