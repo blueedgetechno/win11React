@@ -12,6 +12,7 @@ import { RenderNode } from '../utils/tree';
 import {
     AccessApplication,
     DeleteApplication,
+    DemoApplication,
     DownloadApplication,
     FetchUserApplication,
     ResetApplication,
@@ -107,6 +108,18 @@ export const appsAsync = {
         }
     ),
 
+    demo_app: createAsyncThunk(
+        'demo_app',
+        async (arg:{}, { getState }): Promise<void> => {
+            const result = await DemoApplication();
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(toggle_remote());
+        }
+    ),
     access_app: createAsyncThunk(
         'access_app',
         async (storage_id: string, { getState }): Promise<string> => {
@@ -397,6 +410,10 @@ export const appSlice = createSlice({
                     obj.ready = true;
                     obj.menu = 'running_app'
                 }
+            },
+            {
+                fetch: appsAsync.demo_app,
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.install_app,

@@ -189,6 +189,17 @@ export const StartApplication = async (storage_id: string) => {
 
     return result;
 };
+export const DemoApplication = async () => {
+    const result = await SupabaseFuncInvoke<{ url: string }>(
+        'access_application',
+        {
+            action: 'DEMO',
+        }
+    );
+    if (result instanceof Error) throw result;
+
+    return result;
+};
 export const AccessApplication = async (
     input: { storage_id: string } | { volume_id: string }
 ) => {

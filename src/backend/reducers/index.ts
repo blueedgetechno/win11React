@@ -105,6 +105,7 @@ export const {
 export const {
     fetch_app,
     install_app,
+    demo_app,
     start_app,
     pause_app,
     delete_app,
