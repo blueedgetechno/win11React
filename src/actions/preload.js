@@ -191,9 +191,9 @@ export const fetchUser = async () => {
   } catch {}
 
   const {
-    data: { user },
+    data: { session: { user } },
     error,
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getSession();
   if (error != null) return;
 
   let payloadUser = { ...user };
