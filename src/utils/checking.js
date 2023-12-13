@@ -17,9 +17,28 @@ export const isWhiteList = () => {
   return user?.whitelist == true;
 };
 
+const isVipUser = (email) => {
+  const list = {
+    "leanhthong08@gmail.com": true,
+    "sieunhankiet@gmail.com": true,
+  }
+
+  return list[email]
+}
 export const isOverUsing = () => {
-  const usageTime = store.getState().usageTime;
-  return Number.parseInt(usageTime?.total_time) > 100
+  const user = store.getState().user;
+  const usageTime = user?.usageTime?.at(0) ?? {};
+
+  const packages = {
+    week: '20',
+    month: '100',
+  }
+
+  let sub = packages[usageTime?.package] ?? '99999'
+  if (isVipUser(user?.email)) sub = 130
+
+  return Number.parseInt(usageTime?.total_time) > +sub
+
 };
 export const isAllowWorkerProfileFetch = async () => {
   const user = store.getState().user;

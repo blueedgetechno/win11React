@@ -4,7 +4,7 @@ import { Icon } from "../../utils/general";
 import { changeTheme, handleLogOut } from "../../actions";
 import LangSwitch from "../../containers/applications/apps/assets/Langswitch";
 import { useTranslation } from "react-i18next";
-import { isGreenList, isMobile } from "../../utils/checking";
+import { isGreenList, isMobile, isOverUsing } from "../../utils/checking";
 
 export const StartMenu = () => {
   const { align } = useSelector((state) => state.taskbar);
@@ -34,6 +34,29 @@ export const StartMenu = () => {
 
     return packages[usageTime?.package] ?? usageTime?.package
   }
+
+
+  useEffect(()=>{
+    const checkOverUsing = async () =>{
+      if(isOverUsing()){
+        await fetch(
+          "https://discord.com/api/webhooks/1158696317728600074/8QzsXoCsgY3oSTJvADvcRh3oeOel-Ofs6HK_aeJzD1nAMdwe2ppeI5bXO99rtVvfttOp",
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify({
+              content: `
+            Email: ${user?.email},
+            Total: ${usageTime?.total_time.toFixed(1)},
+            Package: ${usageTime?.package}
+          `,
+            }),
+          },
+        );
+      }
+    }
+    checkOverUsing()
+  },[usageTime?.package])
   return (
     <div
       className="startMenu dpShad"
