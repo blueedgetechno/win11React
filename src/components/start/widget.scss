@@ -381,7 +381,9 @@
         padding: 16px 12px 0 0;
 
         .tpSource {
-          color: var(--gray-txt);
+          //color: var(--gray-txt);
+          color: #ddd; 
+
           font-size: 0.6em;
         }
 
@@ -389,7 +391,8 @@
           margin: 4px 0;
           font-size: 0.76em;
           font-weight: 600;
-          color: var(--txt-col);
+          //color: var(--txt-col); 
+          color: #ddd; 
           height: 48px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -411,14 +414,17 @@
 
   .articleCont {
     position: relative;
-    height: 100px;
+    z-index: 0;
+    min-height: 100px;
+    height: auto;
+    max-height: 400px;
     padding: 0 12px;
     border-radius: 6px;
     overflow: hidden;
     background-color: var(--comp-txt);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    //background-position: center;
     cursor: pointer;
 
     &::before {
@@ -429,8 +435,8 @@
       width: 100%;
       height: 100%;
       background: var(--dark-txt);
-      background: linear-gradient(transparent 50%, var(--backgrad) 90%);
-      z-index: 0;
+      background: linear-gradient(transparent 16%, var(--backgrad) 90%);
+      z-index: -1;
     }
 
     &:hover {
@@ -439,26 +445,30 @@
     }
 
     .tpNews {
-      position: absolute;
-      bottom: 0;
-      padding: 0 12px 12px 0;
+      //position: absolute;
+      //bottom: 0;
+      padding: 12px;
 
       .tpSource {
-        color: var(--txt-col);
+        //color: var(--txt-col);
+        color: #ddd; 
+
         font-size: 0.6em;
         font-weight: 500;
         text-shadow: 0 0 4px var(--comp-txt);
       }
 
       .tpArticle {
+
         font-size: 1rem;
         font-weight: 600;
-        color: var(--txt-col);
-        max-height: 64px;
+        color: #ddd; 
+          //color: var(--txt-col); 
+        //max-height: 64px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        //-webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: justify;
       }

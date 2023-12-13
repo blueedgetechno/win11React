@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppSelector } from '../../backend/reducers';
 import { Icon, LazyComponent } from '../shared/general';
 import './widget.scss';
@@ -26,15 +25,15 @@ export const WidPane = () => {
                                 {widget.notifications.map((article, i) => {
                                     return (
                                         <a
-                                            className="articleCont ltShad"
+                                            className="articleCont  shadow-2xl"
                                             target="_blank"
                                             style={{
                                                 '--backgrad': 
                                                 article.type == 'pending'
-                                                ? '#795701'
+                                                        ? '#8b670c'
                                                 : article.type == 'rejected'
-                                                ? '#a80022'
-                                                : '#012b7c',
+                                                            ? '#c20c30'
+                                                            : '#0c41aa',
                                                 backgroundImage: `url(img/wallpaper/${img})`
                                             }}
                                             href={article.url}
