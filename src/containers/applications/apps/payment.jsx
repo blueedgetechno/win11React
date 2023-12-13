@@ -25,35 +25,26 @@ export const PaymentApp = () => {
   const dispatch = useDispatch();
 
   const [ListSubs,setListSubs] = useState([
-    //{
-    //  name: 'week',
-    //  type: 'trial',
-    //  title: 'Trial',
-    //  for: 'Week',
-    //  hours: 20,
-    //  gpu: 'RTX 3060ti',
-    //  ram: '16GB',
-    //  price: '75k'
-    //},
+    
     {
       name: 'month',
       type: 'start',
       title: 'Start',
       for: 'Month',
-      hours: 100,
+      hours: 110,
       gpu: 'RTX 3060ti',
       ram: '16GB',
-      price: '250k'
+      price: '289k'
     },
     {
       name: 'month',
       type: 'standard',
       title: 'Standard',
       for: 'Month',
-      hours: 150,
+      hours: 160,
       gpu: 'RTX 3060ti',
       ram: '16GB',
-      price: '300k'
+      price: '359k'
     }
   ]) 
 
