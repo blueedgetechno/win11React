@@ -395,6 +395,7 @@ export const appSlice = createSlice({
                     }
 
                     obj.ready = true;
+                    obj.menu = 'running_app'
                 }
             },
             {
@@ -411,6 +412,7 @@ export const appSlice = createSlice({
                     );
 
                     obj.ready = false;
+                    obj.menu = 'paused_app'
                 }
             },
             {
