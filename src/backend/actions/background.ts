@@ -47,7 +47,7 @@ export const fetchUser = async () => {
 const server_availability = () => {};
 
 const ping_remote = async () => {
-    appDispatch(ping_session());
+    ping_session();
 };
 
 export const preload = async () => {

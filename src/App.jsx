@@ -31,8 +31,7 @@ function App() {
     ReactModal.setAppElement('#root');
     const dispatch = appDispatch;
 
-    window.onclick = afterMath;
-    window.oncontextmenu = (e) => {
+    const ctxmenu = (e) => {
         afterMath(e);
         e.preventDefault();
         var data = {
@@ -79,6 +78,16 @@ function App() {
 
     const [fullscreen, setFullscreen] = useState(false);
     useEffect(() => {
+        if (fullscreen) {
+            window.onclick = null    
+            window.oncontextmenu = ev => ev.preventDefault()
+        } else {
+            window.oncontextmenu = ctxmenu
+            window.onclick = afterMath
+        }
+    },[fullscreen])
+
+    useEffect(() => {
         const handleClipboard = () => {
             navigator.clipboard
                 .readText()
@@ -109,6 +118,7 @@ function App() {
             client?.Close();
         };
     }, []);
+
 
     return (
         <div className="App">

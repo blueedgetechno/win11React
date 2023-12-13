@@ -161,7 +161,7 @@ export const PaymentApp = () => {
                                 Chuyển Khoản
                             </button>
                             <div className="items-center flex flex-col items-center mt-4">
-                                <PayPalScriptProvider options={initialOptions}>
+                                {/* <PayPalScriptProvider options={initialOptions}>
                                     {' '}
                                     {FUNDING_SOURCES.map(
                                         (fundingSource, index) => {
@@ -197,7 +197,7 @@ export const PaymentApp = () => {
                                             );
                                         }
                                     )}
-                                </PayPalScriptProvider>
+                                </PayPalScriptProvider> */}
                             </div>
                         </div>
                     ))}

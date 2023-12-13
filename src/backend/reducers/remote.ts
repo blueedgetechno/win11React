@@ -3,6 +3,7 @@ import {
     RootState,
     appDispatch,
     audio_status,
+    store,
     update_metrics,
     video_status
 } from '.';
@@ -23,7 +24,7 @@ export const assign = (fun: () => RemoteDesktopClient) => {
     client.HandleMetrics = async (metrics) => {
         switch (metrics.type) {
             case 'VIDEO':
-                appDispatch(update_metrics(metrics));
+                // appDispatch(update_metrics(metrics));
                 break;
             case 'FRAME_LOSS':
                 console.log('frame loss occur');
@@ -101,14 +102,12 @@ const initialState: Data = {
 };
 
 export const remoteAsync = {
-    ping_session: createAsyncThunk('ping_session', async (_, { getState }) => {
-        if (!(getState() as RootState).remote.active) return;
-
-        const { error } = await supabase.rpc(`ping_session`, {
-            session_id: (getState() as RootState).remote.auth?.id
+    ping_session: async () => {
+        if (!store.getState().remote.active) return;
+        await supabase.rpc(`ping_session`, {
+            session_id: store.getState().remote.auth?.id
         });
-        if (error != null) throw new Error(`unable to ping ${error.message}`);
-    }),
+    },
     authenticate_session: createAsyncThunk(
         'authenticate_session',
         async ({ ref, uref }: { ref: string; uref?: string }, {}) => {
@@ -188,10 +187,6 @@ export const remoteSlice = createSlice({
                     state.auth = action.payload;
                 }
             },
-            {
-                fetch: remoteAsync.ping_session,
-                hander: (state) => {}
-            }
         );
     }
 });

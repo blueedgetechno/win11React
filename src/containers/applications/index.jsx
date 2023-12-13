@@ -4,7 +4,6 @@ import './tabs.scss';
 import './tabs2.scss';
 import './wnapp.scss';
 
-export * from './apps/about';
 export * from './apps/edge';
 export * from './apps/getstarted';
 export * from './apps/payment';
