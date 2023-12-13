@@ -77,10 +77,18 @@ export async function CacheRequest<T>(
     return cache;
 }
 
-const isPending = (action: UnknownAction) => action.type.endsWith('/pending');
+const isPending = (action: UnknownAction) =>
+    action.type.endsWith('/pending') &&
+    !action.type.includes('fetch') &&
+    !action.type.includes('ping');
 const isFulfilled = (action: UnknownAction) =>
-    action.type.endsWith('/fulfilled');
-const isRejected = (action: UnknownAction) => action.type.endsWith('/rejected');
+    action.type.endsWith('/fulfilled') &&
+    !action.type.includes('fetch') &&
+    !action.type.includes('ping');
+const isRejected = (action: UnknownAction) =>
+    action.type.endsWith('/rejected') &&
+    !action.type.includes('fetch') &&
+    !action.type.includes('ping');
 
 export const isPendingAction =
     (prefixs: string[]) =>

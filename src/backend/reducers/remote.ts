@@ -102,6 +102,8 @@ const initialState: Data = {
 
 export const remoteAsync = {
     ping_session: createAsyncThunk('ping_session', async (_, { getState }) => {
+        if (!(getState() as RootState).remote.active) return;
+
         const { error } = await supabase.rpc(`ping_session`, {
             session_id: (getState() as RootState).remote.auth?.id
         });

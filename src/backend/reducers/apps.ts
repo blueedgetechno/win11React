@@ -399,8 +399,7 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => {
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.pause_app,

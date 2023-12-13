@@ -4,6 +4,7 @@ import {
     fetch_store,
     fetch_user,
     fetch_worker,
+    ping_session,
     setting_theme,
     sidepane_panethem,
     wall_set
@@ -43,21 +44,16 @@ export const fetchUser = async () => {
     appDispatch(fetch_user());
 };
 
-export const checkAvailableCluster = async () => {
-    // let checking = false;
-    // if (!isGreenList) return
-    // while (true) {
-    // const { data } = await virtapi('rpc/attachable_clusters', 'POST', {});
-    // checking = data.at(0).total > 0;
-    // appDispatch({
-    //     type: 'UPDATE_CLUSTER_STATUS',
-    //     payload: checking
-    // });
-    // await sleep(30 * 1000)
-    // }
+const server_availability = () => {};
+
+const ping_remote = async () => {
+    appDispatch(ping_session());
 };
 
 export const preload = async () => {
     await Promise.all([fetchUser(), loadSettings()]);
     await Promise.all([fetchWorker(), fetchStore(), fetchApp()]);
+
+    setInterval(ping_remote, 10 * 1000);
+    setInterval(server_availability, 30 * 1000);
 };

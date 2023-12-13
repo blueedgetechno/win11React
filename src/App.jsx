@@ -48,6 +48,7 @@ function App() {
                 remote.connection?.video == 'connected'
             ) {
                 data.menu = 'desk_remote';
+                return;
             }
 
             dispatch(menu_show(data));
@@ -63,7 +64,6 @@ function App() {
         };
 
         UserSession();
-        // checkAvailableCluster();
 
         preload()
             .then(() => {

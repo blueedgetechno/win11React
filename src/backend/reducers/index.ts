@@ -113,7 +113,7 @@ export const {
 export const { fetch_worker, connect_worker } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
-export const { authenticate_session } = remoteAsync;
+export const { authenticate_session, ping_session } = remoteAsync;
 
 export const dispatch_generic = async ({
     type,
