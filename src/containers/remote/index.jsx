@@ -90,7 +90,7 @@ export const Remote = () => {
                         no_video: false,
                         no_mic: false,
                         no_hid: false,
-                        scancode: false
+                        scancode: true
                     }
                 )
         );
