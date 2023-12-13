@@ -99,7 +99,7 @@ export const Remote = () => {
     return (
         <div>
             <video
-                className="background"
+                className="remote"
                 ref={remoteVideo}
                 autoPlay
                 muted
