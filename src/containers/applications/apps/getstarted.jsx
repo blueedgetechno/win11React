@@ -5,7 +5,8 @@ import {
     appDispatch,
     app_close,
     demo_app,
-    setting_setv,
+    close_remote,
+    app_toggle,
     useAppSelector
 } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
@@ -46,7 +47,7 @@ export const Getstarted = () => {
         setTimeout(() => {
             appDispatch(close_remote());
             appDispatch(app_toggle('payment'));
-        }, 20 * 1000);
+        }, 10 * 60 * 1000);
     }, [pageNo]);
 
     const country = (country) => {
