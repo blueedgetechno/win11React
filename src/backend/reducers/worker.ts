@@ -25,7 +25,7 @@ const initialState: WorkerType = {
 
 export const workerAsync = {
     fetch_worker: createAsyncThunk('fetch_worker', async (): Promise<any> => {
-        return await CacheRequest('worker', 30, async () => {
+        return await CacheRequest('worker', 90, async () => {
             return new RenderNode(await FetchAuthorizedWorkers()).any();
         });
     }),

@@ -8,6 +8,7 @@ import {
     fetch_app,
     toggle_remote
 } from '.';
+import { CloseDemo, warning_fullscreen } from '../actions';
 import { AppData, allApps } from '../utils';
 import { RenderNode } from '../utils/tree';
 import {
@@ -22,7 +23,6 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
-import { warning_fullscreen } from '../actions';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -108,7 +108,7 @@ export const appsAsync = {
             appDispatch(toggle_remote());
             appDispatch(fetch_app());
 
-            warning_fullscreen()
+            warning_fullscreen();
         }
     ),
 
@@ -122,9 +122,10 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
-            appDispatch(desk_remove('getstarted'))
+            appDispatch(desk_remove('getstarted'));
+            CloseDemo();
 
-            warning_fullscreen()
+            warning_fullscreen();
         }
     ),
     access_app: createAsyncThunk(
@@ -167,7 +168,7 @@ export const appsAsync = {
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
 
-            warning_fullscreen()
+            warning_fullscreen();
             return storage_id;
         }
     ),
@@ -193,12 +194,10 @@ export const appsAsync = {
 
 type Data = {
     hz: number;
-    allow_demo: boolean,
     apps: AppData[];
 };
 const initialState: Data = {
     hz: 0,
-    allow_demo: true,
     apps: allApps
 };
 
@@ -420,18 +419,16 @@ export const appSlice = createSlice({
                     }
 
                     obj.ready = true;
-                    obj.menu = 'running_app'
+                    obj.menu = 'running_app';
                 }
             },
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => {
-                    state.allow_demo = false
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.pause_app,
@@ -443,7 +440,7 @@ export const appSlice = createSlice({
                     );
 
                     obj.ready = false;
-                    obj.menu = 'paused_app'
+                    obj.menu = 'paused_app';
                 }
             },
             {

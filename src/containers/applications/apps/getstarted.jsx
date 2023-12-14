@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DoDemo, LoginAndDemo, login } from '../../../backend/actions';
 import {
     appDispatch,
     app_close,
@@ -7,71 +8,59 @@ import {
     setting_setv,
     useAppSelector
 } from '../../../backend/reducers';
-import { Icon, ToolBar } from '../../../components/shared/general';
+import { ToolBar } from '../../../components/shared/general';
 import './assets/getstarted.scss';
 
 const countries = [
-    "Vietnam",
-    "India",
-    "United States",
-    "Europe",
-    "South East Asia",
-    "East Asia",
-    "South America"
-]
-
+    'Vietnam',
+    'India',
+    'United States',
+    'Europe',
+    'South East Asia',
+    'East Asia',
+    'South America'
+];
 
 const experiences = [
-    "Comfortable gameplay",
-    "Hardcore gameplay",
-    "Professional work",
-    "Explore new technologies",
-    "I don't know yet",
-]
+    'Comfortable gameplay',
+    'Hardcore gameplay',
+    'Professional work',
+    'Explore new technologies',
+    "I don't know yet"
+];
 
 export const Getstarted = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'getstarted')
     );
-    const demo = useAppSelector((state) => state.apps.allow_demo);
     const { t } = useTranslation();
 
-    const [pageNo, setPageNo] = useState(0);
+    const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
     useEffect(() => {
-        if (pageNo != 5)
-            return
+        if (pageNo != 5) return;
 
-        setPageNo(0)
-        appDispatch(app_close('getstarted'))
-        if (demo)
-            appDispatch(demo_app())
-    },[pageNo])
+        setPageNo(0);
+        appDispatch(app_close('getstarted'));
+        appDispatch(demo_app());
+        setTimeout(() => {
+            appDispatch(close_remote());
+            appDispatch(app_toggle('payment'));
+        }, 20 * 1000);
+    }, [pageNo]);
 
     const country = (country) => {
-        nextPage()
-    }
+        nextPage();
+    };
     const exp = (exp) => {
-        nextPage()
-    }
-
+        nextPage();
+    };
 
     useEffect(() => {
         if (!wnapp.hide)
-            window.onkeydown = (e) => e.key == 'Enter'? nextPage() : null
-        else 
-            window.onkeydown = null
-    },[wnapp.hide,pageNo])
-
-    const changUserName = (e) => {
-        var newName = e.target.value;
-        appDispatch(
-            setting_setv({
-                path: 'person.name',
-                value: newName
-            })
-        );
-    };
+            window.onkeydown = (e) => (e.key == 'Enter' ? nextPage() : null);
+        else window.onkeydown = null;
+    }, [wnapp.hide, pageNo]);
 
     return (
         <div
@@ -97,29 +86,31 @@ export const Getstarted = () => {
                         {pageNo === 0 ? (
                             <>
                                 <div className="left">
-                                    <img
-                                        id="left_img"
-                                        src="logo.png"
-                                    />
+                                    <img id="left_img" src="logo.png" />
                                 </div>
                                 <div className="right">
                                     <div className="header mb-8">
-                                        Welcome to thinkmay <br/> cloud gaming
+                                        Welcome to thinkmay <br /> cloud gaming
                                     </div>
                                     <div>
-                                        We will setup 15 minutes demo gameplay<br/>
-                                        before you subscribe for our service, 
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        Is this the first time you try our service? <br/>
+                                        We will setup 15 minutes demo gameplay
+                                        <br />
+                                        before you subscribe for our service,
+                                        <br />
+                                        <br />
+                                        <br />
+                                        Is this the first time you try our
+                                        service? <br />
                                     </div>
                                 </div>
 
-                                <div className="no_button base" onClick={nextPage}>
+                                <div className="no_button base" onClick={login}>
                                     Had an account
                                 </div>
-                                <div className="yes_button base" onClick={nextPage}>
+                                <div
+                                    className="yes_button base"
+                                    onClick={LoginAndDemo}
+                                >
                                     Yes
                                 </div>
                             </>
@@ -158,10 +149,7 @@ export const Getstarted = () => {
                         {pageNo === 2 ? (
                             <>
                                 <div className="left">
-                                    <img
-                                        id="left_img"
-                                        src="logo.png"
-                                    />
+                                    <img id="left_img" src="logo.png" />
                                 </div>
                                 <div className="right">
                                     <div className="header">
@@ -223,10 +211,7 @@ export const Getstarted = () => {
                         {pageNo === 3 ? (
                             <>
                                 <div className="left">
-                                    <img
-                                        id="left_img"
-                                        src="logo.png"
-                                    />
+                                    <img id="left_img" src="logo.png" />
                                 </div>
                                 <div className="right">
                                     <div className="header">
@@ -234,9 +219,9 @@ export const Getstarted = () => {
                                         <div className="header_sml">
                                             You'll need an internet connection
                                             to continue the setting up your
-                                            device. <br/>
-                                            Once connected, you'll get
-                                            the latest features and security
+                                            device. <br />
+                                            Once connected, you'll get the
+                                            latest features and security
                                             updates.
                                         </div>
                                         <div className="ethernet_list">
@@ -250,33 +235,42 @@ export const Getstarted = () => {
                                                         Turn off you VPN
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        VPN downgrade 
+                                                        VPN downgrade
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Use 5Ghz wifi if possible
+                                                        Use 5Ghz wifi if
+                                                        possible
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        5Ghz wifi will help you get better connection
+                                                        5Ghz wifi will help you
+                                                        get better connection
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Contact our customer support
+                                                        Contact our customer
+                                                        support
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        If you have connectivity problems
+                                                        If you have connectivity
+                                                        problems
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Join our community to request games
+                                                        Join our community to
+                                                        request games
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        Join our discord to get lastest updates
+                                                        Join our discord to get
+                                                        lastest updates
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="list_oobe_opt"></div>
                                             <div className="list_oobe_opt"></div>
                                         </div>
-                                        <div className="text_sml_black">
-                                            Enter to continue
+                                        <div
+                                            className="yes_button base"
+                                            onClick={nextPage}
+                                        >
+                                            Yes
                                         </div>
                                     </div>
                                 </div>
@@ -285,16 +279,18 @@ export const Getstarted = () => {
                         {pageNo === 4 ? (
                             <>
                                 <div className="left">
-                                    <img
-                                        id="left_img"
-                                        src="logo.png"
-                                    />
+                                    <img id="left_img" src="logo.png" />
                                 </div>
                                 <div className="right">
                                     <div className="header mb-8">
                                         The setup has completed.
                                     </div>
-                                    <div>Enter to play right now.</div>
+                                    <div
+                                        className="yes_button base"
+                                        onClick={nextPage}
+                                    >
+                                        Yes
+                                    </div>
                                 </div>
                             </>
                         ) : null}

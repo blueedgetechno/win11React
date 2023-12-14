@@ -10,6 +10,7 @@ import Dexie, { Table } from 'dexie';
 import { appDispatch, push_notification } from '..';
 import { externalLink } from '../../utils/constant';
 import { formatError } from '../../utils/formatErr';
+import { UserEvents } from '../fetch/analytics';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -166,6 +167,7 @@ export async function BuilderHelper<T, U, V>(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = () =>
+                    // UserEvents(`request ${action.type .split('/') .at(0)} is failed`)
                     appDispatch(
                         push_notification({
                             type: 'rejected',
@@ -186,6 +188,7 @@ export async function BuilderHelper<T, U, V>(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = () =>
+                    // UserEvents(`request ${action.type .split('/') .at(0)} is completed`)
                     appDispatch(
                         push_notification({
                             type: 'fulfilled',

@@ -10,6 +10,7 @@ import {
     sidepane_panethem,
     wall_set
 } from '../reducers';
+import { DoDemo, FirstTime } from '.';
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -33,7 +34,7 @@ export const fetchApp = async () => {
     await appDispatch(fetch_app());
 
     // TODO
-    appDispatch(app_toggle('getstarted'))
+    if (DoDemo() || FirstTime()) appDispatch(app_toggle('getstarted'));
 };
 
 export const fetchWorker = async () => {
@@ -55,8 +56,13 @@ const ping_remote = async () => {
 };
 
 export const preload = async () => {
-    await Promise.all([fetchUser(), loadSettings(),fetchWorker(), fetchStore(), fetchApp()]);
-
+    await Promise.all([
+        fetchUser(),
+        loadSettings(),
+        fetchWorker(),
+        fetchStore(),
+        fetchApp()
+    ]);
 
     setInterval(ping_remote, 10 * 1000);
     setInterval(server_availability, 30 * 1000);

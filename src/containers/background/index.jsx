@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { supabase } from '../../backend/reducers/fetch/createClient';
+import { useState } from 'react';
+import { login } from '../../backend/actions';
 import {
     appDispatch,
     useAppSelector,
@@ -59,20 +59,7 @@ export const LockScreen = () => {
             return;
         }
 
-        const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo,
-                queryParams: {
-                    access_type: 'offline',
-                    prompt: 'consent'
-                }
-            }
-        });
-        if (error) {
-            throw error;
-        }
+        await login();
     };
 
     return (

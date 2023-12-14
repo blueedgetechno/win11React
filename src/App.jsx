@@ -4,7 +4,6 @@ import ReactModal from 'react-modal';
 import { preload } from './backend/actions/background';
 import { afterMath } from './backend/actions/index';
 import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
-import { UserSession } from './backend/reducers/fetch/analytics';
 import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
@@ -18,6 +17,7 @@ import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
+import { FirstTime } from './backend/actions/index';
 
 let clipboard = '';
 let shouldResetKey = false;
@@ -42,7 +42,7 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
-            if ( data.menu == 'desk' && remote.active) {
+            if (data.menu == 'desk' && remote.active) {
                 data.menu = 'desk_remote';
                 return;
             }
@@ -52,14 +52,13 @@ function App() {
     };
 
     useEffect(() => {
+        window.history.replaceState({}, document.title, '/' + '');
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
             if (e) e.returnValue = text;
             return text;
         };
-
-        UserSession();
 
         preload()
             .then(() => {
@@ -69,20 +68,18 @@ function App() {
                 await new Promise((r) => setTimeout(r, 1000));
                 setLockscreen(false);
             });
-
-        window.history.replaceState({}, document.title, '/' + '');
     }, []);
 
     const [fullscreen, setFullscreen] = useState(false);
     useEffect(() => {
         if (fullscreen) {
-            window.onclick = null    
-            window.oncontextmenu = ev => ev.preventDefault()
+            window.onclick = null;
+            window.oncontextmenu = (ev) => ev.preventDefault();
         } else {
-            window.oncontextmenu = ctxmenu
-            window.onclick = afterMath
+            window.oncontextmenu = ctxmenu;
+            window.onclick = afterMath;
         }
-    },[fullscreen])
+    }, [fullscreen]);
 
     useEffect(() => {
         const handleClipboard = () => {
@@ -116,12 +113,11 @@ function App() {
         };
     }, []);
 
-
     return (
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {lockscreen ? <BootScreen /> : null}
-                {user.id == 'unknown' || !wall.unlocked ? <LockScreen /> : null}
+                {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
                 <div className="appwrap ">
                     {remote.connection?.video != 'connected' ? (
                         <Background />

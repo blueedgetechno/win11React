@@ -3,9 +3,7 @@ import { appDispatch, useAppSelector } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
-import {
-    FUNDING
-} from '@paypal/react-paypal-js';
+import { FUNDING } from '@paypal/react-paypal-js';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];

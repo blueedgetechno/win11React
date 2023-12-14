@@ -14,11 +14,14 @@ export const modalSlice = createSlice({
     name: 'popup',
     initialState,
     reducers: {
-        popup_open: (state, action: PayloadAction<{
-            type: string;
-            data?: any;
-        }>) => {
-            state.active = true
+        popup_open: (
+            state,
+            action: PayloadAction<{
+                type: string;
+                data?: any;
+            }>
+        ) => {
+            state.active = true;
             state.type = action.payload.type;
             state.data = action.payload.data;
         },

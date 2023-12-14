@@ -17,7 +17,10 @@ export const deskSlice = createSlice({
             state.apps = state.apps.filter((x) => x != action.payload);
         },
         desk_add: (state, action: PayloadAction<string[]>) => {
-            state.apps = [...state.apps.filter(x => desktopApps.includes(x)), ...action.payload];
+            state.apps = [
+                ...state.apps.filter((x) => desktopApps.includes(x)),
+                ...action.payload
+            ];
         },
         desk_hide: (state) => {
             state.hide = true;

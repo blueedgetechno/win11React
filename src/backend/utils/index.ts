@@ -78,12 +78,8 @@ var { taskbar, desktop } = {
     taskbar: ['Store'],
     desktop: [
         'Settings',
-        'Get Started',
         'Worker Profile',
-        'Github',
         'Browser',
-        'FeedBack',
-        'Landing page',
         'Discord',
         'Thinkmay Fanpage',
         'Store',

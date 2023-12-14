@@ -20,11 +20,12 @@ import {
     wall_set
 } from '../reducers/index';
 import { fetchApp } from './background';
+import { supabase } from '../reducers/fetch/createClient';
 
 export const refresh = async () => {
     appDispatch(desk_hide());
     await fetchApp();
-    setTimeout(() => appDispatch(desk_show()),200)
+    setTimeout(() => appDispatch(desk_show()), 200);
 };
 
 export const afterMath = (event: any) => {
@@ -153,8 +154,41 @@ export const dispatchOutSide = (action: string, payload: any) => {
 export const warning_fullscreen = () => {
     appDispatch(popup_open({ type: 'fullscreen_warning' }));
     setTimeout(() => {
-        appDispatch(popup_close())
+        appDispatch(popup_close());
         appDispatch(sidepane_bandhide());
         appDispatch(sidepane_panehide());
-    },5000)
+    }, 5000);
+};
+
+export const login = async () => {
+    localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
+    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
+    const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+            redirectTo,
+            queryParams: {
+                access_type: 'offline',
+                prompt: 'consent'
+            }
+        }
+    });
+    if (error) {
+        throw error;
+    }
+};
+
+export function LoginAndDemo() {
+    localStorage.setItem('THINKMAY_DEMO', 'TRUE');
+    login();
+}
+export function FirstTime(): boolean {
+    return localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE';
+}
+export function DoDemo(): boolean {
+    const result = localStorage.getItem('THINKMAY_DEMO') == 'TRUE';
+    return result;
+}
+export function CloseDemo() {
+    localStorage.removeItem('THINKMAY_DEMO');
 }

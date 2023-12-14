@@ -10,9 +10,8 @@ export enum CAUSE {
     VM_BOOTING_UP,
     PERMISSION_REQUIRED,
     NEED_WAIT,
-    INVALID_REQUEST,
+    INVALID_REQUEST
 }
-
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -79,8 +78,7 @@ export async function SupabaseFuncInvoke<T>(
                 }
             }
         );
-        if (response.ok === false) 
-            return new Error(await response.text());
+        if (response.ok === false) return new Error(await response.text());
 
         const data = (await response.json()) as T;
         return data;

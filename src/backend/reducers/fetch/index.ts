@@ -193,7 +193,7 @@ export const DemoApplication = async () => {
     const result = await SupabaseFuncInvoke<{ url: string }>(
         'access_application',
         {
-            action: 'DEMO',
+            action: 'DEMO'
         }
     );
     if (result instanceof Error) throw result;

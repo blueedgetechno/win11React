@@ -25,15 +25,20 @@ export const WidPane = () => {
                                 {widget.notifications.map((article, i) => {
                                     return (
                                         <a
-                                            className={`articleCont  shadow-2xl ${article.type == 'pending' ? 'load' : null}`}
+                                            className={`articleCont  shadow-2xl ${
+                                                article.type == 'pending'
+                                                    ? 'load'
+                                                    : null
+                                            }`}
                                             target="_blank"
                                             style={{
-                                                '--backgrad': 
-                                                article.type == 'pending'
+                                                '--backgrad':
+                                                    article.type == 'pending'
                                                         ? '#8b670c'
-                                                : article.type == 'rejected'
-                                                            ? '#c20c30'
-                                                            : '#0c41aa',
+                                                        : article.type ==
+                                                            'rejected'
+                                                          ? '#c20c30'
+                                                          : '#0c41aa',
                                                 backgroundImage: `url(img/wallpaper/${img})`
                                             }}
                                             href={article.url}

@@ -179,14 +179,11 @@ export const remoteSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        BuilderHelper<Data, any, any>(
-            builder,
-            {
-                fetch: remoteAsync.authenticate_session,
-                hander: (state, action: PayloadAction<AuthSessionResp>) => {
-                    state.auth = action.payload;
-                }
-            },
-        );
+        BuilderHelper<Data, any, any>(builder, {
+            fetch: remoteAsync.authenticate_session,
+            hander: (state, action: PayloadAction<AuthSessionResp>) => {
+                state.auth = action.payload;
+            }
+        });
     }
 });

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '@supabase/supabase-js';
 import { localStorageKey } from '../utils/constant';
+import { UserSession } from './fetch/analytics';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
@@ -21,24 +22,26 @@ export const userAsync = {
     fetch_user: createAsyncThunk('fetch_user', async (): Promise<Data> => {
         return await CacheRequest('user', 30, async () => {
             const {
-                data: { user },
+                data: {
+                    session: { user }
+                },
                 error
-            } = await supabase.auth.getUser();
+            } = await supabase.auth.getSession();
             if (error != null) throw error;
-            if (user == null) throw 'wtf';
 
-            // const { data } = await supabase.rpc('validate_user_access', {
-            //     user_account_id: user?.id,
-            //     plan_name: ['day', 'week', 'month', 'fullstack', 'admin']
-            // });
+            const { data: plans, error: err } = await supabase.rpc(
+                'get_user_plans',
+                {
+                    user_account_id: user?.id
+                }
+            );
+            if (err != null) throw err;
 
-            // const { data } = await supabase.rpc('get_usage_time_user', {
-            //     user_id: user?.id
-            // });
+            await UserSession(user.email);
 
             return {
                 ...user,
-                plans: []
+                plans: plans.map((x) => x.plans)
             };
         });
     })
