@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import {
     appDispatch,
@@ -10,11 +9,6 @@ import * as modals from './modal';
 
 const Popup = () => {
     const popup = useAppSelector((state) => state.popup);
-    useEffect(() => {
-        if (popup.active)
-            document.getElementById('root').style.filter = 'blur(3px)';
-        else document.getElementById('root').style.filter = null;
-    }, [popup.active]);
     return (
         <ReactModal
             isOpen={popup.active}

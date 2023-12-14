@@ -280,7 +280,7 @@ a {
 .modalOverlay{
   position: fixed;
   inset: 0px;
-  background: rgba(0,0,0,0.40);
+  background: rgba(0,0,0,0.50);
 }
 .modalContent {
   display: flex;
