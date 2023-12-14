@@ -17,9 +17,10 @@ export const AboutWin = () => {
 
   const action = () => {
     setOpen(false);
-    localStorage.setItem("openAboutThinkmay", false);
+    localStorage.setItem("openAboutThinkmay4", false);
     localStorage.removeItem("openAboutThinkmay2");
     localStorage.removeItem("openAboutThinkmay3");
+    localStorage.removeItem("openAboutThinkmay");
     //dispatch({ type: "DESKABOUT", payload: false });
     dispatch({ type: "ABOUT", payload: 'close'});
 
@@ -45,13 +46,14 @@ export const AboutWin = () => {
     }}
     className="aboutApp floatTab dpShad aboutAnimation">
       <div className="text-xl font-semibold text-center my-4">
-        Hướng dẫn sử dụng^^
+        {/*Hướng dẫn sử dụng^^*/}
+        UPDATE Phiên bản mới
       </div>
 
       <div className="navigation-wrapper">
         <div ref={sliderRef} className="keen-slider">
           <div className="keen-slider__slide number-slide1">
-            <strong className="text-[16px] mb-[8px] mb-[12px] text-center">
+            {/*<strong className="text-[16px] mb-[8px] mb-[12px] text-center">
               LƯU Ý: Đây là giao diện không phải RemotePC
             </strong>
             <div>
@@ -64,18 +66,20 @@ export const AboutWin = () => {
 
             <div className="wrapper-img mt-[24px]">
               <Image h={120} src="icon/b1" />
-            </div>
+            </div>*/}
             
-            {/*<strong className="text-[20px] mb-[8px] mb-[12px] text-center">Phiên bản mới đã được update. Lưu Ý: </strong>
+            <strong className="text-[20px] mb-[8px] mb-[12px] text-center">Thinkmay đang thử nghiệm phiên bản mới </strong>
             <p className="text-[17px] mb-4">
-              1. App đã cài tại <strong>https://dev-thinkmay.netlify.app/.</strong> thì <strong>không cần xóa</strong>, có thể start và chơi lại bình thường.
+              Bạn có thể trải nghiệm tại đây: <a className="underline text-black font-medium" href="https://dev-thinkmay.netlify.app/." target="_blank" rel="noopener noreferrer">https://dev-thinkmay.netlify.app/.</a> ^^
+              <br />
             </p>
-            <p  className="text-[17px]">
-              2. App đã cài tại <strong>https://app.thinkmay.net</strong> trước khi có thông báo này, <strong>bắt buộc xóa</strong> app và tải lại để tránh bị kẹt data.
-            </p>*/}
+            <p className="text-[17px] mb-4"> 
+            Nếu thấy điểm nào cần cải thiện, bạn hãy cho Thinkmay xin góp ý để cải thiện nha. Luv :3
+
+            </p>
             
           </div>
-          <div className="keen-slider__slide number-slide2">
+          {/*<div className="keen-slider__slide number-slide2">
             <p>
               <strong>B2:</strong> Ra màn hình chính, Double-click hoặc click chuột phải để mở game.
             </p>
@@ -84,8 +88,8 @@ export const AboutWin = () => {
                 <Image w={110} h={110} src="icon/b2-2" />
               </div>
             </div>
-          </div>
-          <div className="keen-slider__slide number-slide4">
+          </div>*/}
+          {/*<div className="keen-slider__slide number-slide4">
             <p>
               <strong>B3:</strong> Để <strong>tắt máy</strong> và lưu lại
               data: Click <strong>Pause App</strong>(click chuột phải, hoặc
@@ -95,14 +99,14 @@ export const AboutWin = () => {
             <div className="wrapper-img mt-[20px]">
               <Image h={160} w={160} src="icon/b3" />
             </div>
-          </div>
-          <div className="keen-slider__slide number-slide5">
+          </div>*/}
+          {/*<div className="keen-slider__slide number-slide5">
             <p className="text-center text-[24px] mt-[50px]">
               Thư giãn với tựa game yêu thích nào^^
             </p>
-          </div>
+          </div>*/}
         </div>
-        {loaded && instanceRef.current && (
+        {/*{loaded && instanceRef.current && (
           <>
             <Arrow
               left
@@ -122,7 +126,7 @@ export const AboutWin = () => {
               }
             />
           </>
-        )}
+        )}*/}
       </div>
       {loaded && instanceRef.current && (
         <div className="dots ">

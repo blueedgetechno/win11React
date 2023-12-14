@@ -5,7 +5,7 @@ import { isMobile } from "../utils/checking";
 var dev = "";
 
 const defState = {};
-const openGuideline = localStorage.getItem("openAboutThinkmay") ?? 'true';
+const openGuideline = localStorage.getItem("openAboutThinkmay4") ?? 'true';
 
 for (var i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon] = allApps[i];
