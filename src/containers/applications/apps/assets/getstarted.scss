@@ -51,6 +51,10 @@
     overflow-x: hidden;
     overflow-y: scroll;
     animation: transition_effect 1.4s;
+
+    :nth-child(1){
+      background: rgb(175 175 175 / 20%);
+    }
   }
 
   .list_oobe_opt {
@@ -59,18 +63,20 @@
     display: flex;
     border-radius: 4px;
     margin-bottom: 6px;
+
+    
   }
 
   .list_oobe_opt_wifi {
     width: 306px;
-    padding: 12px;
+    padding: 12px 0px ;
     display: flex;
     border-radius: 4px;
     margin-bottom: 6px;
   }
 
   .list_oobe_opt:hover {
-    background: rgb(175 175 175 / 12%);
+    background: rgb(175 175 175 / 40%);
   }
 
   #selected {
@@ -80,18 +86,21 @@
 
   .no_button {
     border-radius: 4px;
-    background: var(--clrPrm);
-    color: var(--alt-txt);
+    //background: var(--clrPrm);
+    //color: white;
     height: 36px;
-    width: 122px;
+    cursor: pointer;
+    width: max-content;
     text-align: center;
     line-height: 36px;
     position: absolute;
     font-size: 14px;
     right: 150px;
-    cursor: default;
     animation: transition_effect 1.4s;
     bottom: 37px;
+    &:hover{
+      opacity: 0.85;
+    }
   }
   .yes_button {
     border-radius: 4px;
@@ -103,6 +112,7 @@
     line-height: 36px;
     position: absolute;
     font-size: 14px;
+    font-weight: 500;
     right: 35px;
     cursor: default;
     animation: transition_effect 1.4s;
@@ -128,18 +138,19 @@
   }
 
   .header_sml {
-    color: grey;
-    font-size: 12px;
+    color: #b6b3b3;
+    font-size: 16px;
     width: 325px;
     margin-top: 8px;
     animation: transition_effect 1.4s;
   }
 
   .header_sml_wifi {
-    color: grey;
-    font-size: 12px;
+    color: #b6b3b3;
+    font-size: 16px;
     width: 325px;
     animation: transition_effect 1.4s;
+    margin-bottom: 8px;
   }
 
   .text_sml_black {
@@ -153,7 +164,7 @@
 
   .text_sml_black_wifi {
     color: var(--dark-txt);
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .align {

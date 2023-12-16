@@ -4,9 +4,9 @@ import { DoDemo, LoginAndDemo, login } from '../../../backend/actions';
 import {
     appDispatch,
     app_close,
-    demo_app,
-    close_remote,
     app_toggle,
+    close_remote,
+    demo_app,
     useAppSelector
 } from '../../../backend/reducers';
 import { ToolBar } from '../../../components/shared/general';
@@ -70,9 +70,11 @@ export const Getstarted = () => {
             data-max={wnapp.max}
             style={{
                 ...(wnapp.size == 'cstm' ? wnapp.dim : null),
-                zIndex: wnapp.z
+                //zIndex: wnapp.z
+                zIndex: 999
             }}
-            data-hide={wnapp.hide}
+            data-hide={false}
+            //data-hide={wnapp.hide}
             id={wnapp.id + 'App'}
         >
             <ToolBar
@@ -106,7 +108,7 @@ export const Getstarted = () => {
                                 </div>
 
                                 <div className="no_button base" onClick={login}>
-                                    Had an account
+                                    Have an account? <span className='underline'> Sign in</span>
                                 </div>
                                 <div
                                     className="yes_button base"
@@ -160,7 +162,6 @@ export const Getstarted = () => {
                                         </div>
                                     </div>
                                     <div className="list_oobe mt-4 win11Scroll">
-                                        <div className="list_oobe mt-4 win11Scroll">
                                             {experiences.map((e, i) => {
                                                 return (
                                                     <div
@@ -172,7 +173,6 @@ export const Getstarted = () => {
                                                     </div>
                                                 );
                                             })}
-                                        </div>
                                     </div>
                                 </div>
                             </>
@@ -227,10 +227,6 @@ export const Getstarted = () => {
                                         </div>
                                         <div className="ethernet_list">
                                             <div className="list_oobe_opt_wifi">
-                                                <i
-                                                    id="connection"
-                                                    className="bx bx-desktop"
-                                                ></i>{' '}
                                                 <div className="ethernet_list_opt_inr">
                                                     <div className="text_sml_black_wifi">
                                                         Turn off you VPN
@@ -264,8 +260,7 @@ export const Getstarted = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="list_oobe_opt"></div>
-                                            <div className="list_oobe_opt"></div>
+
                                         </div>
                                         <div
                                             className="yes_button base"
