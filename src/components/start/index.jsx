@@ -4,6 +4,7 @@ import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 import {
     appDispatch,
+    change_bitrate,
     setting_setv,
     task_audo,
     useAppSelector
@@ -101,6 +102,12 @@ export const SidePane = () => {
 
     const vSlider = document.querySelector('.vSlider');
     const bSlider = document.querySelector('.bSlider');
+    const rSlider = document.querySelector('.rSlider');
+
+    const setBitrate = (e) => {
+        dispatch(change_bitrate(e.target.value))
+        sliderBackground(rSlider, e.target.value);
+    };
 
     const setVolume = (e) => {
         var aud = 3;
@@ -179,13 +186,24 @@ export const SidePane = () => {
                         );
                     })}
                 </div>
-                <div className="sliderCont">
+                {/* <div className="sliderCont">
                     <Icon className="mx-2" src="brightness" ui width={20} />
                     <input
                         className="sliders bSlider"
                         onChange={setBrightness}
                         type="range"
                         min="10"
+                        max="100"
+                        defaultValue="100"
+                    />
+                </div> */}
+                <div className="sliderCont">
+                    <Icon className="mx-2" src="brightness" ui width={20} />
+                    <input
+                        className="sliders rSlider"
+                        onChange={setBitrate}
+                        type="range"
+                        min="0"
                         max="100"
                         defaultValue="100"
                     />

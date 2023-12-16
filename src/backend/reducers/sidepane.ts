@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type Notification = {
-    urlToImage: string;
+    urlToImage?: string;
     url?: string;
     name: string;
     title: string;
