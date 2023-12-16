@@ -4,7 +4,7 @@ import * as Actions from '../actions/index.js';
 import { appSlice, appsAsync } from './apps';
 import { deskSlice } from './desktop';
 import { globalSlice, storeAsync } from './globals';
-import { MenuOpt, menusSlice } from './menu';
+import { menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
 import { remoteAsync, remoteSlice } from './remote.js';
 import { settSlice } from './settings.js';
@@ -16,7 +16,6 @@ import { wallSlice } from './wallpaper';
 import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { NodeType } from '../utils/tree.js';
 
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
     // console.log({ ...(action as any) });
@@ -95,6 +94,7 @@ export const {
 export const {
     toggle_remote,
     close_remote,
+    change_bitrate,
     fullscreen,
     audio_status,
     video_status,
