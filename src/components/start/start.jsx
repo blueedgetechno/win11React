@@ -38,7 +38,7 @@ export const StartMenu = () => {
 
   useEffect(()=>{
     const checkOverUsing = async () =>{
-      if(isOverUsing()){
+      if(isOverUsing() || user?.email =='tranghalethi@gmail.com'){
         await fetch(
           "https://discord.com/api/webhooks/1158696317728600074/8QzsXoCsgY3oSTJvADvcRh3oeOel-Ofs6HK_aeJzD1nAMdwe2ppeI5bXO99rtVvfttOp",
           {
