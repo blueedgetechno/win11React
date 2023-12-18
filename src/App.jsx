@@ -113,8 +113,6 @@ function App() {
         return () => {
             clearInterval(ClipboardLoop);
             clearInterval(UIStateLoop);
-            client?.hid?.ResetKeyStuck();
-            client?.Close();
         };
     }, [remote.active]);
 
