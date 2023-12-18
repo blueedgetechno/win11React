@@ -111,6 +111,7 @@ export const {
     start_app,
     pause_app,
     delete_app,
+    reset_app,
     access_app
 } = appsAsync;
 export const { fetch_worker, connect_worker } = workerAsync;

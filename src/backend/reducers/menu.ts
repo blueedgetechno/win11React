@@ -63,6 +63,10 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
+                        name: 'Reset',
+                        action: 'reset_app',
+                    },
+                    {
                         name: 'Pause',
                         action: 'pause_app',
                         icon: 'start'

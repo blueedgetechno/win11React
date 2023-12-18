@@ -391,6 +391,39 @@ export const appSlice = createSlice({
         BuilderHelper<Data, any, any>(
             builder,
             {
+                fetch: appsAsync.reset_app,
+                hander: (state, action) => {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'access_app'
+                    );
+                    if (obj == undefined) return;
+
+                    if (obj.z != state.hz) {
+                        obj.hide = false;
+                        if (!obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                            obj.max = true;
+                        } else {
+                            obj.z = -1;
+                            obj.max = false;
+                        }
+                    } else {
+                        obj.max = !obj.max;
+                        obj.hide = false;
+                        if (obj.max) {
+                            state.hz += 1;
+                            obj.z = state.hz;
+                        } else {
+                            obj.z = -1;
+                            state.hz -= 1;
+                        }
+                    }
+                }
+            },
+            {
                 fetch: appsAsync.access_app,
                 hander: (state, action) => {
                     const obj = state.apps.find(
