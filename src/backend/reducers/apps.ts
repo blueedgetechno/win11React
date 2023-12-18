@@ -6,6 +6,7 @@ import {
     desk_add,
     desk_remove,
     fetch_app,
+    scancode,
     toggle_remote
 } from '.';
 import { CloseDemo, warning_fullscreen } from '../actions';
@@ -23,6 +24,7 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
+import { scanCodeApps } from '../utils/constant';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -106,6 +108,15 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(toggle_remote());
+
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage_id}` }
+            );
+            if (error) throw error;
+            const app_name = data.at(0)?.name as string
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(fetch_app());
 
             warning_fullscreen();
@@ -137,6 +148,15 @@ export const appsAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
+
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage_id}` }
+            );
+            if (error) throw error;
+            const app_name = data.at(0)?.name as string
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(toggle_remote());
 
             return storage_id;
@@ -151,6 +171,15 @@ export const appsAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
+
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage_id}` }
+            );
+            if (error) throw error;
+            const app_name = data.at(0)?.name as string
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(toggle_remote());
             return storage_id;
         }
@@ -166,6 +195,14 @@ export const appsAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage_id}` }
+            );
+            if (error) throw error;
+            const app_name = data.at(0)?.name as string
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(toggle_remote());
 
             warning_fullscreen();

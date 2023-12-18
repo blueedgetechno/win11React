@@ -85,12 +85,8 @@ export const Remote = () => {
                     remote.auth.signaling,
                     remote.auth.webrtc,
                     {
-                        platform: 'win11',
-                        turn: true,
-                        no_video: false,
-                        no_mic: false,
-                        no_hid: false,
-                        scancode: true
+                        scancode: remote.scancode,
+                        ads_period: remote.ads_period
                     }
                 )
         );

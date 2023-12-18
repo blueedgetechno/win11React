@@ -90,6 +90,8 @@ export type Metric = {
 type Data = {
     active: boolean;
     fullscreen: boolean;
+    scancode: boolean;
+    ads_period: number;
     bitrate: number;
     prev_bitrate: number;
     auth?: AuthSessionResp;
@@ -104,6 +106,8 @@ type Data = {
 
 const initialState: Data = {
     active: false,
+    ads_period: 100,
+    scancode: false,
     fullscreen: false,
     bitrate: MIN_BITRATE,
     prev_bitrate: MIN_BITRATE,
@@ -192,6 +196,12 @@ export const remoteSlice = createSlice({
                 client = null
             }
             state.active = !state.active;
+        },
+        ads_period : (state,action: PayloadAction<number>) => {
+            state.ads_period = action.payload;
+        },
+        scancode : (state,action: PayloadAction<boolean>) => {
+            state.scancode = action.payload;
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = true;
