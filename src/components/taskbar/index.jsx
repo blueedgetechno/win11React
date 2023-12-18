@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { TbBellRingingFilled } from "react-icons/tb";
+
 import {
     appDispatch,
     task_hide,
@@ -7,7 +9,6 @@ import {
 } from '../../backend/reducers';
 import { isMobile } from '../../backend/utils/checking';
 import { clickDispatch } from '../../backend/utils/dispatch';
-import Battery from '../../components/shared/Battery';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
 
@@ -116,12 +117,13 @@ const Taskbar = () => {
             <div className="taskright">
                 <>
                     <div
-                        className="px-2 prtclk handcr hvlight flex"
+                        className="px-2 prtclk handcr hvlight flex "
                         onClick={clickDispatch}
                         data-action="sidepane/sidepane_bandtogg"
                         style={{ '--prefix': 'BAND' }}
                     >
-                        <Icon fafa="faChevronUp" width={10} />
+                        <TbBellRingingFilled />
+
                     </div>
                     <div
                         className="prtclk handcr my-1 px-1 hvlight flex rounded"
@@ -136,7 +138,7 @@ const Taskbar = () => {
                             ui
                             width={16}
                         />
-                        <Battery />
+                        {/*<Battery />*/}
                     </div>
                 </>
                 <div className="taskDate m-1 handcr prtclk rounded hvlight">

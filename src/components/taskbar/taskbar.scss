@@ -69,8 +69,10 @@ body[data-theme="dark"] {
   right: 0;
   width: auto;
   height: 100%;
-  margin-left: 10px;
+  //margin-left: 10px;
   display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .taskIcon {

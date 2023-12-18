@@ -513,3 +513,14 @@ body[data-theme="dark"] .widPaneCont {
   --clrWeather: #1b2257;
   --topStoriesClr: #35264c;
 }
+
+
+@media (1px < width< 800px) {
+  .widPaneCont{
+    top: 0;
+    right: 50px;
+    bottom: 12px;
+    width: 760px;
+    max-width: 66vw;
+  }
+}
