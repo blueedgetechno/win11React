@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DoDemo, LoginAndDemo, login } from '../../../backend/actions';
+import { LoginAndDemo, login } from '../../../backend/actions';
 import {
     appDispatch,
     app_close,
@@ -36,6 +36,7 @@ export const Getstarted = () => {
     );
     const { t } = useTranslation();
 
+    //const [pageNo, setPageNo] = useState(2);
     const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
     useEffect(() => {
@@ -82,7 +83,7 @@ export const Getstarted = () => {
                 name="Get Started"
             />
             <div className="windowScreen flex flex-col" data-dock="true">
-                <div className="restWindow flex-grow flex flex-col">
+                <div className="restWindow flex-grow flex flex-col p-[24px]">
                     <div className="inner_fill_setup">
                         {pageNo === 0 ? (
                             <>
@@ -143,6 +144,12 @@ export const Getstarted = () => {
                                                 </div>
                                             );
                                         })}
+                                        <div
+                                            className="yes_button base"
+                                            onClick={nextPage}
+                                        >
+                                            Yes
+                                        </div>
                                     </div>
                                 </div>
                             </>
@@ -171,6 +178,12 @@ export const Getstarted = () => {
                                                     </div>
                                                 );
                                             })}
+                                        <div
+                                            className="yes_button base"
+                                            onClick={nextPage}
+                                        >
+                                            Yes
+                                        </div>
                                     </div>
                                 </div>
                             </>

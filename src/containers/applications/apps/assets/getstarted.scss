@@ -2,8 +2,8 @@
   background: rgb(var(--base_bg-rgb) / 67%);
   backdrop-filter: blur(2rem);
   color: var(--dark-txt);
-  min-width: 800px;
-  min-height: 680px;
+  //min-width: 800px;
+  //min-height: 680px;
 
   .restWindow {
     display: flex;
@@ -12,21 +12,29 @@
   }
 
   .inner_fill_setup {
+    display: flex;
     background: rgb(255 255 255 / 75%);
     position: relative;
-    width: 720px;
-    height: 580px;
+    //width: 720px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 580px;
+    height: 100%;
+    min-height: 320px;
     border-radius: 8px;
-    display: grid;
-    grid-template-columns: 50% 50%;
+    //display: grid;
+    //grid-template-columns: 50% 50%;
     box-shadow: 10px 6px 20px 0px rgb(0 0 0 / 3%);
   }
 
   .left {
+    padding: 20px;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
 
   #left_img {
     width: 230px;
@@ -35,11 +43,15 @@
   }
 
   .right {
+    flex: 1;
+    width: 100%;
     padding: 20px;
     animation: transition_effect 1.4s;
   }
 
   .header {
+    padding-right: 14px;
+    width: 100%;
     font-size: 20px;
     font-weight: 600;
     padding-top: 36px;
@@ -68,7 +80,7 @@
   }
 
   .list_oobe_opt_wifi {
-    width: 306px;
+    //width: 306px;
     padding: 12px 0px ;
     display: flex;
     border-radius: 4px;
@@ -138,17 +150,18 @@
   }
 
   .header_sml {
+    width: 100%;
     color: #b6b3b3;
-    font-size: 16px;
-    width: 325px;
+    font-size: 14px;
+    //width: 325px;
     margin-top: 8px;
     animation: transition_effect 1.4s;
   }
 
   .header_sml_wifi {
     color: #b6b3b3;
-    font-size: 16px;
-    width: 325px;
+    font-size: 13px;
+    //width: 325px;
     animation: transition_effect 1.4s;
     margin-bottom: 8px;
   }
@@ -206,7 +219,8 @@
 
   .ethernet_list {
     height: 248px;
-    width: 316px;
+    //width: 316px;
+    width: 100%;
     border-bottom: 1px rgba(128, 128, 128, 0.278) solid;
   }
 
@@ -251,6 +265,14 @@
     }
   }
 }
+
+  @media (0px < width < 800px) {
+    .getstarted{
+      .left{
+        display: none;
+      }
+    }
+  }
 
 .langSwitcherTile {
   &::after {
