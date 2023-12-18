@@ -51,7 +51,8 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        user_delete: () => {
+        user_delete: (state) => {
+            state.id = 'unknown'
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }
