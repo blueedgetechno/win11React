@@ -209,6 +209,8 @@ export const remoteSlice = createSlice({
                 state.connection = undefined;
                 state.metrics = undefined;
                 state.fullscreen = false;
+                client?.Close();
+                client = null
             }
             state.active = !state.active;
         },
