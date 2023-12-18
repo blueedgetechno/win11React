@@ -8,6 +8,7 @@ import { assign, client } from '../../backend/reducers/remote';
 import './remote.scss';
 
 export const Remote = () => {
+    const wall = useAppSelector((state) => state.wallpaper);
     const remote = useAppSelector((store) => store.remote);
     const remoteVideo = useRef(null);
     const remoteAudio = useRef(null);
@@ -62,6 +63,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
+                style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted
                 playsInline

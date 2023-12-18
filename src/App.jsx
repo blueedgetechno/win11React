@@ -122,10 +122,7 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {remote.connection?.video != 'connected' ? (
-                        <Background />
-                    ) : null}
-                    {remote.active ? <Remote /> : null}
+                    {remote.active ? <Remote /> : <Background /> }
                     {!fullscreen ? (
                         <>
                             <SidePane />
