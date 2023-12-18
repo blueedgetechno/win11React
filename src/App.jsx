@@ -42,10 +42,8 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
-            if (data.menu == 'desk' && remote.active) {
-                data.menu = 'desk_remote';
+            if (data.menu == 'desk' && remote.active) 
                 return;
-            }
 
             dispatch(menu_show(data));
         }
@@ -83,7 +81,7 @@ function App() {
             window.oncontextmenu = ctxmenu;
             window.onclick = afterMath;
         }
-    }, [fullscreen]);
+    }, [fullscreen,remote.active]);
 
     useEffect(() => {
         if (!remote.active) 
@@ -115,8 +113,6 @@ function App() {
         return () => {
             clearInterval(ClipboardLoop);
             clearInterval(UIStateLoop);
-            client?.hid?.ResetKeyStuck();
-            client?.Close();
         };
     }, [remote.active]);
 

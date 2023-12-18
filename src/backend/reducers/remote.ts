@@ -17,6 +17,7 @@ import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
 import { scanCodeApps } from '../utils/constant';
 import { isMobile } from '../utils/checking';
+import { EventCode } from '../../../core/models/keys.model';
 
 export const MAX_BITRATE = 10000
 export const MIN_BITRATE = 1000
@@ -39,7 +40,6 @@ export const assign = (fun: () => RemoteDesktopClient) => {
 };
 
 AddNotifier(async (message, text, source) => {
-    console.log(message);
     if (message == ConnectionEvent.WebRTCConnectionClosed)
         source == 'audio'
             ? appDispatch(audio_status('closed'))
@@ -58,7 +58,16 @@ AddNotifier(async (message, text, source) => {
         appDispatch(video_status('started'));
     }
 
-    Log(LogLevel.Infor, `${message} ${text ?? ''} ${source ?? ''}`);
+    if (message == ConnectionEvent.ReceivedAudioStream)
+        appDispatch(push_notification({
+            title: `Receive audio stream`,
+            type: 'fulfilled',
+        }))
+    if (message == ConnectionEvent.ReceivedAudioStream)
+        appDispatch(push_notification({
+            title: `Receive video stream`,
+            type: 'fulfilled',
+        }))
 });
 
 type ConnectStatus =
@@ -90,6 +99,8 @@ export type Metric = {
 type Data = {
     active: boolean;
     fullscreen: boolean;
+    scancode: boolean;
+    ads_period: number;
     bitrate: number;
     prev_bitrate: number;
     auth?: AuthSessionResp;
@@ -104,11 +115,21 @@ type Data = {
 
 const initialState: Data = {
     active: false,
+    ads_period: 100,
+    scancode: false,
     fullscreen: false,
     bitrate: MIN_BITRATE,
     prev_bitrate: MIN_BITRATE,
     peers: []
 };
+
+
+export function WindowD() {
+    client?.hid?.TriggerKey(EventCode.KeyDown,'lwin')
+    client?.hid?.TriggerKey(EventCode.KeyDown,'d')
+    client?.hid?.TriggerKey(EventCode.KeyUp,'d')
+    client?.hid?.TriggerKey(EventCode.KeyUp,'lwin')
+}
 
 export function openRemotePage(ref:string, appName:string) {
     document.location.href = `https://remote.thinkmay.net/?ref=${ref}&turn=true&no_stretch=true&page=${appName}&scancode=${scanCodeApps.includes(appName)}`;
@@ -188,10 +209,14 @@ export const remoteSlice = createSlice({
                 state.connection = undefined;
                 state.metrics = undefined;
                 state.fullscreen = false;
-                client?.Close();
-                client = null
             }
             state.active = !state.active;
+        },
+        ads_period : (state,action: PayloadAction<number>) => {
+            state.ads_period = action.payload;
+        },
+        scancode : (state,action: PayloadAction<boolean>) => {
+            state.scancode = action.payload;
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = true;
