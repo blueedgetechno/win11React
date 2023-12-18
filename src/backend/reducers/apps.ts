@@ -1,16 +1,18 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+    RootState,
     appDispatch,
     authenticate_session,
     close_remote,
     desk_add,
-    desk_remove,
     fetch_app,
+    open_remote,
     scancode,
     toggle_remote
 } from '.';
 import { CloseDemo, warning_fullscreen } from '../actions';
 import { AppData, allApps } from '../utils';
+import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
 import {
     AccessApplication,
@@ -24,7 +26,6 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
-import { scanCodeApps } from '../utils/constant';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -101,13 +102,16 @@ export const appsAsync = {
                 safe
             );
 
+            if ((getState() as RootState).remote.remote_id != undefined)
+                return
+
             const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
-            appDispatch(toggle_remote());
+            appDispatch(open_remote(storage_id));
 
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
@@ -132,8 +136,7 @@ export const appsAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
-            appDispatch(toggle_remote());
-            appDispatch(desk_remove('getstarted'));
+            appDispatch(open_remote('demo'));
             CloseDemo();
 
             warning_fullscreen();
@@ -142,6 +145,12 @@ export const appsAsync = {
     access_app: createAsyncThunk(
         'access_app',
         async (storage_id: string, { getState }): Promise<string> => {
+            if ((getState() as RootState).remote.remote_id == storage_id) {
+                appDispatch(toggle_remote());
+                return
+            }
+
+            appDispatch(close_remote());
             const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -157,7 +166,8 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(toggle_remote());
+
+            appDispatch(open_remote(storage_id));
 
             return storage_id;
         }
@@ -165,6 +175,7 @@ export const appsAsync = {
     reset_app: createAsyncThunk(
         'reset_app',
         async (storage_id: string, { getState }): Promise<string> => {
+            appDispatch(close_remote());
             const result = await ResetApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -180,7 +191,7 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(toggle_remote());
+            appDispatch(open_remote(storage_id));
             return storage_id;
         }
     ),
@@ -189,6 +200,9 @@ export const appsAsync = {
         'start_app',
         async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
+            if ((getState() as RootState).remote.remote_id != undefined)
+                return
+
             const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -203,7 +217,7 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(toggle_remote());
+            appDispatch(open_remote(storage_id));
 
             warning_fullscreen();
             return storage_id;
@@ -494,11 +508,11 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.pause_app,

@@ -93,6 +93,7 @@ export const {
 } = sidepaneSlice.actions;
 export const {
     toggle_remote,
+    open_remote,
     scancode,
     ads_period,
     close_remote,

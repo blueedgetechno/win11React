@@ -1,8 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { appDispatch, authenticate_session, open_remote } from '.';
 import { RenderNode } from '../utils/tree';
 import { CreateWorkerSession, FetchAuthorizedWorkers } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
-import { appDispatch, authenticate_session, toggle_remote } from '.';
 
 type WorkerType = {
     data: any;
@@ -135,7 +135,7 @@ export const workerAsync = {
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
-            appDispatch(toggle_remote());
+            appDispatch(open_remote(worker_profile_id));
         }
     )
 
@@ -248,7 +248,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.connect_worker,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             }
         );
     }

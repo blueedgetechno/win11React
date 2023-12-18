@@ -97,6 +97,7 @@ export type Metric = {
 };
 
 type Data = {
+    remote_id?: string;
     active: boolean;
     fullscreen: boolean;
     scancode: boolean;
@@ -182,6 +183,7 @@ export const remoteSlice = createSlice({
     initialState,
     reducers: {
         close_remote: (state) => {
+            state.remote_id = undefined
             state.active = false;
             state.auth = undefined;
             state.connection = undefined;
@@ -189,6 +191,25 @@ export const remoteSlice = createSlice({
             state.fullscreen = false;
             client?.Close();
             client = null
+        },
+        open_remote: (state,action:PayloadAction<string>) =>{
+            if (!state.active) {
+                state.connection = {
+                    audio: 'started',
+                    video: 'started',
+                    paths: []
+                };
+                state.metrics = {
+                    receivefps: [],
+                    decodefps: [],
+                    packetloss: [],
+                    bandwidth: [],
+                    buffer: []
+                };
+            }
+
+            state.active = true
+            state.remote_id = action.payload
         },
         toggle_remote: (state) => {
             if (!state.active) {
@@ -205,7 +226,6 @@ export const remoteSlice = createSlice({
                     buffer: []
                 };
             } else {
-                state.auth = undefined;
                 state.connection = undefined;
                 state.metrics = undefined;
                 state.fullscreen = false;
