@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LoginAndDemo, login } from '../../../backend/actions';
+import { DoDemo, LoginAndDemo, login } from '../../../backend/actions';
 import {
     appDispatch,
     app_close,
