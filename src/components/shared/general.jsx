@@ -42,6 +42,7 @@ export const Icon = (props) => {
                 data-action={props.click}
                 data-payload={props.payload}
                 data-menu={props.menu}
+                style={{...props.style}}
             >
                 <FontAwesomeIcon
                     data-flip={props.flip != null}
@@ -72,6 +73,7 @@ export const Icon = (props) => {
                 data-action={props.click}
                 data-payload={props.payload}
                 data-menu={props.menu}
+                style={{...props.style}}
             >
                 <CustomIcon
                     data-flip={props.flip != null}
@@ -97,6 +99,7 @@ export const Icon = (props) => {
                 onClick={props.onClick || (props.pr && clickDispatch) || null}
                 data-menu={props.menu}
                 data-pr={props.pr}
+                style={{...props.style}}
             >
                 {props.className == 'tsIcon' ? (
                     <div

@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export type Notification = {
     urlToImage?: string;
     url?: string;
-    name: string;
+    name?: string;
     title: string;
     type: 'pending' | 'fulfilled' | 'rejected';
     content?: string;

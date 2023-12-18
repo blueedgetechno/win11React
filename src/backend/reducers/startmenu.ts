@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { WindowD } from './remote';
 
 const initialState = {
     hide: true
@@ -30,6 +31,8 @@ export const menuSlice = createSlice({
             // state.pwctrl = false
         },
         startogg: (state) => {
+            if(state.hide)
+                WindowD()
             state.hide = !state.hide;
             // state.hide = !(state.hide || !state.menu)
             // state.menu = true

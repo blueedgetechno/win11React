@@ -30,7 +30,7 @@ export const refresh = async () => {
 
 export const afterMath = (event: any) => {
     var ess = [
-        // ['START','startmenu/starthid'], // TODO
+        ['START','startmenu/starthid'], // TODO
         ['BAND', 'sidepane/sidepane_bandhide'],
         ['PANE', 'sidepane/sidepane_panehide'],
         ['MENU', 'menu/menu_hide']
