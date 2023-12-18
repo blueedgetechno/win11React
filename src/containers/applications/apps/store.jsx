@@ -16,6 +16,7 @@ import {
     useAppSelector
 } from '../../../backend/reducers';
 import './assets/store.scss';
+import { FetchApp } from '../../../backend/reducers/fetch';
 
 const emap = (v) => {
     v = Math.min(1 / v, 10);
@@ -276,6 +277,12 @@ const DetailPage = ({ app }) => {
     const user = useAppSelector((state) => state.user);
 
     const region = ['Hà Nội', 'India'];
+
+    useEffect(() => {
+        FetchApp(app)
+            .then(x => SetOptions(x))
+    },[])
+
 
     // useLayoutEffect(() => {
     //     const element = document.getElementById('storeScroll');

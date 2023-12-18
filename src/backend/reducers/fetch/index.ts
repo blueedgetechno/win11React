@@ -390,31 +390,14 @@ export const FetchApplicationTemplates = async (id: number) => {
 };
 
 export async function FetchApp(app: any) {
-    const region: string[] = [];
+    const { data, error } = await virtapi(
+        `rpc/get_app_from_store`,
+        'POST',
+        { store_id: `${app.id}` }
+    );
+    if (error) throw error;
 
-    const subscription = await supabase
-        .from('subscriptions')
-        .select('account_id, metadata');
-    // .eq('account_id', user.id);
-    let user_region;
-
-    // switch (
-    // // JSON.stringify(subscription.data.at(0).metadata).toString()
-    // ) {
-    //     case '{}': // thinkmay internal user
-    //         user_region = region[0];
-    //         break;
-    //     case '{"referal":{"email":"kmrjay730@gmail.com","account_id":"30739186-d473-4349-9a35-8e15980c155a"}}':
-    //         user_region = region[1];
-    //         break;
-    // }
-
-    // const { data, error } = await virtapi(
-    //     `rpc/get_app_from_store`,
-    //     'POST',
-    //     { store_id: `${app.id}` }
-    // );
-    // if (error) throw result;
+    return data
 }
 
 async function handleUpdateApp(app: any) {
