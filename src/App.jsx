@@ -53,13 +53,6 @@ function App() {
 
     useEffect(() => {
         window.history.replaceState({}, document.title, '/' + '');
-        window.onbeforeunload = (e) => {
-            const text = 'Are you sure (｡◕‿‿◕｡)';
-            e = e || window.event;
-            if (e) e.returnValue = text;
-            return text;
-        };
-
         preload()
             .then(() => {
                 console.log('Loaded');
@@ -69,6 +62,17 @@ function App() {
                 setLockscreen(false);
             });
     }, []);
+    useEffect(() => {
+        if (user.id == 'unknown') 
+            return
+        
+        window.onbeforeunload = (e) => {
+            const text = 'Are you sure (｡◕‿‿◕｡)';
+            e = e || window.event;
+            if (e) e.returnValue = text;
+            return text;
+        };
+    }, [user]);
 
     const [fullscreen, setFullscreen] = useState(false);
     useEffect(() => {
@@ -82,6 +86,9 @@ function App() {
     }, [fullscreen]);
 
     useEffect(() => {
+        if (!remote.active) 
+            return
+        
         const handleClipboard = () => {
             navigator.clipboard
                 .readText()
@@ -111,7 +118,7 @@ function App() {
             client?.hid?.ResetKeyStuck();
             client?.Close();
         };
-    }, []);
+    }, [remote]);
 
     return (
         <div className="App">

@@ -70,11 +70,9 @@ export const Getstarted = () => {
             data-max={wnapp.max}
             style={{
                 ...(wnapp.size == 'cstm' ? wnapp.dim : null),
-                //zIndex: wnapp.z
-                zIndex: 999
+                zIndex: wnapp.z
             }}
-            data-hide={false}
-            //data-hide={wnapp.hide}
+            data-hide={wnapp.hide}
             id={wnapp.id + 'App'}
         >
             <ToolBar
