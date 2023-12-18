@@ -15,6 +15,8 @@ import {
 } from '../../../core/utils/log';
 import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
+import { scanCodeApps } from '../utils/constant';
+import { isMobile } from '../utils/checking';
 
 export const MAX_BITRATE = 10000
 export const MIN_BITRATE = 1000
@@ -108,6 +110,10 @@ const initialState: Data = {
     peers: []
 };
 
+export function openRemotePage(ref:string, appName:string) {
+    document.location.href = `https://remote.thinkmay.net/?ref=${ref}&turn=true&no_stretch=true&page=${appName}&scancode=${scanCodeApps.includes(appName)}`;
+}
+
 export const remoteAsync = {
     ping_session: async () => {
         if (!store.getState().remote.active) return;
@@ -132,6 +138,9 @@ export const remoteAsync = {
     authenticate_session: createAsyncThunk(
         'authenticate_session',
         async ({ ref, uref }: { ref: string; uref?: string }, { }) => {
+            if (isMobile()) 
+                openRemotePage(ref,'thinkmay')
+                
             const result = await SupabaseFuncInvoke<AuthSessionResp>(
                 'session_authenticate',
                 {

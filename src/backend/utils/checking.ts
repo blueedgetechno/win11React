@@ -1,5 +1,4 @@
 import { store } from '../reducers';
-import { scanCodeApps } from './constant';
 
 export const validate_user_access = (...plans: string[]) => {
     const user = store.getState().user;
@@ -20,8 +19,4 @@ export const isMobile = () => {
             check = true;
     })(navigator.userAgent || navigator.vendor);
     return check;
-};
-
-export const isScanCodeApp = (name = '') => {
-    return Object.keys(scanCodeApps).some((app) => name.includes(app));
 };
