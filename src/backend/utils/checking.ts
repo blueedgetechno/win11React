@@ -2,7 +2,7 @@ import { store } from '../reducers';
 
 export const validate_user_access = (...plans: string[]) => {
     const user = store.getState().user;
-    return plans.every((x) => user.plans.includes(x));
+    return plans.find((x) => user.plans.includes(x)) != undefined;
 };
 
 export const isMobile = () => {
