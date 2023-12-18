@@ -72,7 +72,7 @@ function App() {
             if (e) e.returnValue = text;
             return text;
         };
-    }, [user]);
+    }, [user.id]);
 
     const [fullscreen, setFullscreen] = useState(false);
     useEffect(() => {
@@ -118,7 +118,7 @@ function App() {
             client?.hid?.ResetKeyStuck();
             client?.Close();
         };
-    }, [remote]);
+    }, [remote.active]);
 
     return (
         <div className="App">
