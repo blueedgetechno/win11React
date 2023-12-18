@@ -63,6 +63,7 @@ export const userSlice = createSlice({
             hander: (state, action) => {
                 state.id = action.payload.id;
                 state.email = action.payload.email;
+                state.plans = action.payload.plans
             }
         });
     }

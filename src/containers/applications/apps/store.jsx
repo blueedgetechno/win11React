@@ -385,11 +385,11 @@ const DetailPage = ({ app }) => {
                                     payload={x}
                                     onClick={() => download(x, app)}
                                 >
-                                    {validate_user_access([
+                                    {validate_user_access(
                                         'month',
                                         'week',
                                         'admin'
-                                    ])
+                                    )
                                         ? `${x.gpu} ${x.region}`
                                         : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
                                 </div>
