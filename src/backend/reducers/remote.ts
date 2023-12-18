@@ -166,6 +166,8 @@ export const remoteSlice = createSlice({
             state.connection = undefined;
             state.metrics = undefined;
             state.fullscreen = false;
+            client?.Close();
+            client = null
         },
         toggle_remote: (state) => {
             if (!state.active) {
@@ -182,10 +184,12 @@ export const remoteSlice = createSlice({
                     buffer: []
                 };
             } else {
+                state.auth = undefined;
                 state.connection = undefined;
                 state.metrics = undefined;
-                client?.Close();
                 state.fullscreen = false;
+                client?.Close();
+                client = null
             }
             state.active = !state.active;
         },
