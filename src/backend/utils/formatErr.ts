@@ -9,7 +9,7 @@ map.set(CAUSE.MAXIMUM_DEPLOYMENT_REACHED, i18next.t('error.ALREADY_DEPLOYED'));
 map.set(CAUSE.INVALID_AUTH_HEADER, 'invalid_auth_header');
 map.set(CAUSE.API_CALL, 'api_call'); // server lỗi
 map.set(CAUSE.LOCKED_RESOURCE, i18next.t('error.IS_LOCKED')); //volumne is lock
-map.set(CAUSE.VM_BOOTING_UP, 'VM is booting up');
+map.set(CAUSE.VM_BOOTING_UP, i18next.t('error.NOT_PINGED'));
 map.set(CAUSE.PERMISSION_REQUIRED, 'permission_required');
 map.set(CAUSE.NEED_WAIT, 'need_wait'); //
 map.set(CAUSE.INVALID_REQUEST, 'invalid_request');
@@ -45,12 +45,17 @@ const listErr = [
         text: ['Server is down!', 'error.suggest']
     },
     {
+        msg: 'demo not available', //TODO
+        text: ['info.closeDemo']
+    },
+    {
         msg: 'timeout', //TODO
         text: ['error.TIME_OUT']
     }
 ];
 const includesErr = (err = '') => {
     let errFormat = '';
+
     for (let i = 0; i < listErr.length; i++) {
         if (JSON.stringify(err)?.includes(listErr[i].msg)) {
             listErr[i].text.forEach((txt) => {

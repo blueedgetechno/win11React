@@ -43,7 +43,8 @@
     "installApp": "Tips: Khi có logo installing, đợi 1 vài phút cho đến khi logo game xuất hiện",
     "pauseApp": "Tips: Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!",
     "thanks": "Xin cảm ơn bạn ^^",
-    "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3"
+    "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3",
+    "closeDemo": "Đang đóng demo, bạn vui lòng truy cập fanpage để được hướng dẫn"
   },
   "timemanager": {
     "startAt": "Ngày bắt đầu",
@@ -56,5 +57,22 @@
   },
   "app": {
     "guideline": "Hướng dẫn"
+  },
+  "notify": {
+    "status": {
+      "pending": "Đang",
+      "success": "Thành công",
+      "rejected": "Thất bại",
+    },
+    "action": {
+      "fetch_app": "Load danh sách app",
+      "install_app": "Cài máy remote",
+      "demo_app": "Mở game trải nghiệm",
+      "start_app": "Mở máy remote",
+      "pause_app": "Tắt máy remote",
+      "delete_app": "Xóa máy remote",
+      "reset_app": "Reset máy remote",
+      "access_app": "Truy cập máy remote",
+    }
   }
 }

@@ -10,7 +10,7 @@ import Dexie, { Table } from 'dexie';
 import { appDispatch, push_notification } from '..';
 import { externalLink } from '../../utils/constant';
 import { formatError } from '../../utils/formatErr';
-import { UserEvents } from '../fetch/analytics';
+import { formatTitleNotify } from '../../utils/forrmatNotify';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -152,9 +152,10 @@ export async function BuilderHelper<T, U, V>(
                     appDispatch(
                         push_notification({
                             type: 'pending',
-                            title: `request ${action.type
-                                .split('/')
-                                .at(0)} is pending`,
+                            title: formatTitleNotify(
+                                'pending',
+                                action.type.split('/').at(0)
+                            ),
                             name: new Date().toUTCString(),
                             urlToImage: action.type
                         })
@@ -171,9 +172,10 @@ export async function BuilderHelper<T, U, V>(
                     appDispatch(
                         push_notification({
                             type: 'rejected',
-                            title: `request ${action.type
-                                .split('/')
-                                .at(0)} is failed`,
+                            title: formatTitleNotify(
+                                'rejected',
+                                action.type.split('/').at(0)
+                            ),
                             name: new Date().toUTCString(),
                             content: formatError(action.error as Error),
                             url: externalLink.DISCORD_LINK,
@@ -192,9 +194,10 @@ export async function BuilderHelper<T, U, V>(
                     appDispatch(
                         push_notification({
                             type: 'fulfilled',
-                            title: `request ${action.type
-                                .split('/')
-                                .at(0)} is completed`,
+                            title: formatTitleNotify(
+                                'success',
+                                action.type.split('/').at(0)
+                            ),
                             name: new Date().toUTCString(),
                             urlToImage: action.type
                         })
