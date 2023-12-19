@@ -370,39 +370,39 @@
       font-weight: 600;
     }
 
-    .topNewsCont {
-      width: 100%;
-      display: grid;
-      padding-bottom: 12px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
+    //.topNewsCont {
+    //  width: 100%;
+    //  display: grid;
+    //  padding-bottom: 12px;
+    //  grid-template-columns: repeat(2, minmax(0, 1fr));
+    //  grid-template-rows: repeat(2, minmax(0, 1fr));
 
-      .tpNews {
-        padding: 16px 12px 0 0;
+    //  .tpNews {
+    //    padding: 16px 12px 0 0;
 
-        .tpSource {
-          //color: var(--gray-txt);
-          color: #ddd; 
+    //    .tpSource {
+    //      //color: var(--gray-txt);
+    //      color: #ddd; 
 
-          font-size: 0.6em;
-        }
+    //      font-size: 0.6em;
+    //    }
 
-        .tpArticle {
-          margin: 4px 0;
-          font-size: 0.76em;
-          font-weight: 600;
-          //color: var(--txt-col); 
-          color: #ddd; 
-          height: 48px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          text-align: justify;
-        }
-      }
-    }
+    //    .tpArticle {
+    //      margin: 4px 0;
+    //      font-size: 0.76em;
+    //      font-weight: 600;
+    //      //color: var(--txt-col); 
+    //      color: #ddd; 
+    //      height: 48px;
+    //      overflow: hidden;
+    //      text-overflow: ellipsis;
+    //      display: -webkit-box;
+    //      -webkit-line-clamp: 3;
+    //      -webkit-box-orient: vertical;
+    //      text-align: justify;
+    //    }
+    //  }
+    //}
   }
 
   .allNewsCont {
@@ -458,6 +458,20 @@
         text-shadow: 0 0 4px var(--comp-txt);
       }
 
+      .tpTitle {
+
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #ede3e3; 
+          //color: var(--txt-col); 
+        //max-height: 64px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        //-webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-align: justify;
+      }
       .tpArticle {
 
         font-size: 1rem;

@@ -50,7 +50,7 @@ export const WidPane = () => {
                                                 <div className="tpSource">
                                                     {article.name ?? new Date().toUTCString()}
                                                 </div>
-                                                <div className="tpArticle">
+                                                <div className="tpTitle">
                                                     {article.title}
                                                 </div>
                                                 <div className="tpArticle">
