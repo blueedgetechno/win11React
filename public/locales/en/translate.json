@@ -62,7 +62,7 @@
     "status": {
       "pending": "Pending to: ",
       "success": "Completed: ",
-      "rejected": "Failed to: ",
+      "rejected": "Failed to: "
     },
     "action": {
       "fetch_app": "Fetch your PC data",
@@ -72,7 +72,7 @@
       "pause_app": "Shutdown PC",
       "delete_app": "Delete PC",
       "reset_app": "Reset session",
-      "access_app": "Access PC",
+      "access_app": "Access PC"
     }
   }
 }

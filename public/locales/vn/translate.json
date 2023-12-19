@@ -60,9 +60,9 @@
   },
   "notify": {
     "status": {
-      "pending": "Đang",
-      "success": "Thành công",
-      "rejected": "Thất bại",
+      "pending": "Đang: ",
+      "success": "Thành công: ",
+      "rejected": "Có lỗi khi: "
     },
     "action": {
       "fetch_app": "Load danh sách app",
@@ -72,7 +72,7 @@
       "pause_app": "Tắt máy remote",
       "delete_app": "Xóa máy remote",
       "reset_app": "Reset máy remote",
-      "access_app": "Truy cập máy remote",
+      "access_app": "Truy cập máy remote"
     }
   }
 }
