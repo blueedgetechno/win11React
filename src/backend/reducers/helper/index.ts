@@ -7,7 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import Dexie, { Table } from 'dexie';
-import { appDispatch, push_notification } from '..';
+import { appDispatch, popup_close, popup_open, push_notification } from '..';
 import { externalLink } from '../../utils/constant';
 import { formatError } from '../../utils/formatErr';
 import { formatTitleNotify } from '../../utils/forrmatNotify';
@@ -148,7 +148,7 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () =>
+                const notify = () => {
                     appDispatch(
                         push_notification({
                             type: 'pending',
@@ -160,6 +160,13 @@ export async function BuilderHelper<T, U, V>(
                             urlToImage: action.type
                         })
                     );
+                    appDispatch(
+                        popup_open({
+                            type: 'notify',
+                            data: {}
+                        })
+                    )
+                }
 
                 setTimeout(notify, 100);
             }
@@ -167,7 +174,7 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () =>
+                const notify = () => {
                     // UserEvents(`request ${action.type .split('/') .at(0)} is failed`)
                     appDispatch(
                         push_notification({
@@ -182,6 +189,11 @@ export async function BuilderHelper<T, U, V>(
                             urlToImage: action.type
                         })
                     );
+                    appDispatch(
+                        popup_close()
+                    )
+                }
+
 
                 setTimeout(notify, 100);
             }
@@ -189,7 +201,7 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () =>
+                const notify = () => {
                     // UserEvents(`request ${action.type .split('/') .at(0)} is completed`)
                     appDispatch(
                         push_notification({
@@ -202,6 +214,8 @@ export async function BuilderHelper<T, U, V>(
                             urlToImage: action.type
                         })
                     );
+                    appDispatch(popup_close())
+                }
 
                 setTimeout(notify, 100);
             }
