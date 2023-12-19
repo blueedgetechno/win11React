@@ -48,7 +48,7 @@ jobs:
           cache: npm
 
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: production-files
           path: ./build
