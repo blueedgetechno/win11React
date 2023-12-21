@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, authenticate_session, open_remote } from '.';
 import { RenderNode } from '../utils/tree';
-import { AccessApplication, AddSubscription, AdjustSubscription, CreateWorkerSession, DeactivateWorkerSession, DeleteApplication, DeleteVolume, FetchAuthorizedWorkers, ForkVolume, ModifySubscription, PatchApp, SetDefaultOsVolume, StopApplication, StopVolume } from './fetch';
+import { AccessApplication, AddSubscription, AdjustSubscription, ConfigureApplication, CreateWorkerSession, DeactivateWorkerSession, DeleteApplication, DeleteVolume, FetchAuthorizedWorkers, ForkVolume, ModifySubscription, PatchApp, SetDefaultOsVolume, StopApplication, StopVolume } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
 
 type WorkerType = {
@@ -141,12 +141,13 @@ export const workerAsync = {
 
     create_subscription: createAsyncThunk(
         'create_subscription',
-        async (arg:{
-            email: string,
-            plan: string,
-            free: string
-        }, { getState }): Promise<any> => {
-            await AddSubscription(arg);
+        async (): Promise<any> => {
+            let email = ""
+            let plan = ""
+            let free = ""
+            await AddSubscription({
+                email, plan, free
+            });
         }
     ),
     renew_subscription: createAsyncThunk(
@@ -192,8 +193,28 @@ export const workerAsync = {
     ),
     release_app: createAsyncThunk(
         'release_app',
-        async (arg, { getState }): Promise<any> => {
-            // ConfigureApplication(data);
+        async (store_id: number, { getState }): Promise<any> => {
+            let vol_speed = ""
+            let vol_availability = ""
+            let gpu_model = ""
+            let desc = ""
+            let vcpus = ""
+            let ram = ""
+            let vdriver = ""
+            let hidevm = ""
+            let cluster_id = ""
+            await ConfigureApplication({
+                vol_speed,
+                vol_availability,
+                gpu_model,
+                desc,
+                store_id,
+                vcpus,
+                ram,
+                vdriver,
+                hidevm,
+                cluster_id,
+            });
         }
     ),
     patch_app: createAsyncThunk(
