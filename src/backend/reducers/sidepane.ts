@@ -23,7 +23,7 @@ const initialState: Data = {
             src: 'wifi',
             name: 'WiFi',
             state: 'network.wifi.state',
-            action: 'setting/setting_togg'
+            action: 'remote/toggle_remote'
         },
         {
             ui: true,
@@ -37,7 +37,7 @@ const initialState: Data = {
             src: 'airplane',
             name: 'Flight Mode',
             state: 'network.airplane',
-            action: 'setting/setting_togg'
+            action: 'remote/hard_reset'
         },
         {
             ui: true,

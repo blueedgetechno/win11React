@@ -236,6 +236,9 @@ export const remoteSlice = createSlice({
             }
             state.active = !state.active;
         },
+        hard_reset: (state) => {
+            client?.HardReset()
+        },
         ads_period: (state, action: PayloadAction<number>) => {
             state.ads_period = action.payload;
         },
