@@ -320,8 +320,8 @@ export const ToolBar = (props) => {
             ];
         }
 
-        document.onmouseup = closeDrag;
-        document.onmousemove = eleDrag;
+        document.addEventListener('mouseup',closeDrag) ;
+        document.addEventListener('mousemove',eleDrag);
     };
 
     const setPos = (pos0, pos1) => {
@@ -355,8 +355,8 @@ export const ToolBar = (props) => {
     };
 
     const closeDrag = () => {
-        document.onmouseup = null;
-        document.onmousemove = null;
+        document.removeEventListener('mouseup',closeDrag) ;
+        document.removeEventListener('mousemove',eleDrag);
 
         wnapp.classList.remove('notrans');
         wnapp.classList.remove('z9900');
