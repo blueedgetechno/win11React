@@ -201,9 +201,9 @@ export const SidePane = () => {
                 </div> */}
                 <div className="sliderCont flex flex-col items-start">
                     {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
-                    <div className='flex items-center'><MdVideoSettings className="mx-2 text-[1.3rem]" />:</div>
+                    <div className='flex items-center'><MdVideoSettings className="mx-2 text-[1.3rem]" /> Chất lượng hình ảnh:</div>
                     <div className='flex flex-1 items-center gap-[4px] w-full text-[12px]'>
-                        <span>1mbs</span>
+                        <span>Thấp</span>
                         <input
                             className="sliders rSlider"
                             onChange={setBitrate}
@@ -212,7 +212,7 @@ export const SidePane = () => {
                             max="100"
                             defaultValue="100"
                         />
-                        <span>10mbs</span>
+                        <span>Cao</span>
                     </div>
                 </div>
                 {/*<div className="sliderCont">
