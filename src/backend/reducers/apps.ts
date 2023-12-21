@@ -10,7 +10,7 @@ import {
     scancode,
     toggle_remote
 } from '.';
-import { CloseDemo, warning_fullscreen } from '../actions';
+import { CloseDemo, block_user_action, warning_fullscreen } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
@@ -168,6 +168,7 @@ export const appsAsync = {
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             appDispatch(open_remote(storage_id));
+            block_user_action();
 
             return storage_id;
         }

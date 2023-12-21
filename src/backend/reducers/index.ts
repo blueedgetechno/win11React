@@ -95,6 +95,7 @@ export const {
 } = sidepaneSlice.actions;
 export const {
     toggle_remote,
+    hard_reset,
     open_remote,
     scancode,
     scancode_toggle,

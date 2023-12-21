@@ -160,6 +160,24 @@ export const warning_fullscreen = () => {
     }, 5000);
 };
 
+
+export const block_user_action = async () => {
+    appDispatch(popup_open({ type: 'notify', data: {} }));
+
+    while (true) {
+        const status = store.getState().remote.connection.video
+        if (status != 'connected') {
+            await new Promise(r => setTimeout(r,1000))
+            continue
+        }
+        
+        break
+    }
+
+
+    appDispatch(popup_close());
+};
+
 export const login = async () => {
     localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
