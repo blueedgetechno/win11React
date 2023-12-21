@@ -18,7 +18,9 @@ import { workerAsync, workerSlice } from './worker';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
-    // console.log({ ...(action as any) });
+    if(window.location.href.includes('localhost'))
+        console.log({ ...(action as any) });
+
     return await next(action);
 };
 
