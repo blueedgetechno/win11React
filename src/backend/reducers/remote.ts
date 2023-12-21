@@ -10,8 +10,6 @@ import { RemoteDesktopClient } from '../../../core/app';
 import {
     AddNotifier,
     ConnectionEvent,
-    Log,
-    LogLevel
 } from '../../../core/utils/log';
 import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
@@ -19,8 +17,10 @@ import { scanCodeApps } from '../utils/constant';
 import { isMobile } from '../utils/checking';
 import { EventCode } from '../../../core/models/keys.model';
 
-export const MAX_BITRATE = 10000
-export const MIN_BITRATE = 1000
+const size = () => (client != null) ? ( client.video.video.videoHeight * client.video.video.videoWidth ) : (1920 * 1080)
+export const MAX_BITRATE = () => 10000 / (1920 * 1080) * size()
+export const MIN_BITRATE = () => 1000  / (1920 * 1080) * size()
+    
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
     client = fun();
@@ -119,8 +119,8 @@ const initialState: Data = {
     ads_period: 50,
     scancode: false,
     fullscreen: false,
-    bitrate: MIN_BITRATE,
-    prev_bitrate: MIN_BITRATE,
+    bitrate: MIN_BITRATE(),
+    prev_bitrate: MIN_BITRATE(),
     peers: []
 };
 
@@ -251,7 +251,7 @@ export const remoteSlice = createSlice({
             }
         },
         change_bitrate: (state, action: PayloadAction<number>) => {
-            if (state.active) state.bitrate = (MAX_BITRATE - MIN_BITRATE) / 100 * action.payload + MIN_BITRATE
+            if (state.active) state.bitrate = (MAX_BITRATE() - MIN_BITRATE()) / 100 * action.payload + MIN_BITRATE()
         },
         audio_status: (state, action: PayloadAction<ConnectStatus>) => {
             if (state.connection != undefined)
