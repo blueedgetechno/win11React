@@ -252,7 +252,6 @@ export const remoteSlice = createSlice({
             if (state.bitrate != state.prev_bitrate) {
                 client?.ChangeBitrate(state.bitrate)
                 state.prev_bitrate = state.bitrate
-                console.log(`bitrate change to ${state.bitrate}`)
             }
         },
         change_bitrate: (state, action: PayloadAction<number>) => {

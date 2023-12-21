@@ -15,7 +15,6 @@ map.set(CAUSE.NEED_WAIT, 'need_wait'); //
 map.set(CAUSE.INVALID_REQUEST, 'invalid_request');
 
 export function formatError(error: Error) {
-    console.log(error);
     const err = JSON.parse(error.message) as {
         message: string;
         code: CAUSE;
