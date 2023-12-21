@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
+import { MdVideoSettings } from "react-icons/md";
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
+
 import {
     appDispatch,
     change_bitrate,
@@ -197,18 +199,23 @@ export const SidePane = () => {
                         defaultValue="100"
                     />
                 </div> */}
-                <div className="sliderCont">
-                    <Icon className="mx-2" src="brightness" ui width={20} />
-                    <input
-                        className="sliders rSlider"
-                        onChange={setBitrate}
-                        type="range"
-                        min="0"
-                        max="100"
-                        defaultValue="100"
-                    />
+                <div className="sliderCont flex flex-col items-start">
+                    {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
+                    <div className='flex items-center'><MdVideoSettings className="mx-2 text-[1.3rem]" />:</div>
+                    <div className='flex flex-1 items-center gap-[4px] w-full text-[12px]'>
+                        <span>1mbs</span>
+                        <input
+                            className="sliders rSlider"
+                            onChange={setBitrate}
+                            type="range"
+                            min="0"
+                            max="100"
+                            defaultValue="100"
+                        />
+                        <span>10mbs</span>
+                    </div>
                 </div>
-                <div className="sliderCont">
+                {/*<div className="sliderCont">
                     <Icon
                         className="mx-2"
                         src={'audio' + tasks.audio}
@@ -223,7 +230,7 @@ export const SidePane = () => {
                         max="100"
                         defaultValue="100"
                     />
-                </div>
+                </div>*/}
             </div>
             <div className="p-1 bottomBar">
                 <div className="px-3 battery-sidepane">
