@@ -76,11 +76,11 @@ export const CreateWorkerSession = async (worker_profile_id: string) => {
  * @param {'month' | 'week'} plan
  * @returns
  */
-export const AddSubscription = async (
+export const AddSubscription = async ({email,free,plan}:{
     email: string,
     plan: string,
     free: string
-) => {
+}) => {
     const result = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,

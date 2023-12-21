@@ -78,6 +78,29 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
+        case 'storage':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Access',
+                        action: 'connect_worker'
+                        // icon: 'start'
+                    }
+                ]
+            };
+        case 'volume':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Access',
+                        action: 'connect_volume'
+                    }
+                ]
+            };
         case 'worker':
             return {
                 width: '200px',

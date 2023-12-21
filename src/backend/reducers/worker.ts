@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, authenticate_session, open_remote } from '.';
 import { RenderNode } from '../utils/tree';
-import { CreateWorkerSession, FetchAuthorizedWorkers } from './fetch';
+import { AccessApplication, AddSubscription, CreateWorkerSession, FetchAuthorizedWorkers, ModifySubscription } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
 
 type WorkerType = {
@@ -30,102 +30,106 @@ export const workerAsync = {
         });
     }),
 
-    // access_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async ({ }: {}, { getState }): Promise<any> => {
-    //         // const result = await AccessApplication(input);
-    //     }
-    // ),
-    // start_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // const result = await AccessApplication(input);
-    //     }
-    // ),
-    // delete_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async ({ volume_id }: { volume_id: string }, { getState }): Promise<any> => {
-    //         // await DeleteVolume(volume_id);
-    //     }
-    // ),
-    // stop_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         return await CacheRequest('worker', 30, async () => {
-    //             // const res = await FetchAuthorizedWorkers();
-    //             // return formatWorkerRenderTree(res);
-    //         });
-    //     }
-    // ),
-    // default_os_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await SetDefaultOsVolume(volume, cluster_id);
-    //     }
-    // ),
+    access_volume: createAsyncThunk(
+        'fetch_worker',
+        async ({ }: {}, { getState }): Promise<any> => {
+            // const result = await AccessApplication(input);
+        }
+    ),
+    start_volume: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // const result = await AccessApplication(input);
+        }
+    ),
+    delete_volume: createAsyncThunk(
+        'fetch_worker',
+        async ({ volume_id }: { volume_id: string }, { getState }): Promise<any> => {
+            // await DeleteVolume(volume_id);
+        }
+    ),
+    stop_volume: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            return await CacheRequest('worker', 30, async () => {
+                // const res = await FetchAuthorizedWorkers();
+                // return formatWorkerRenderTree(res);
+            });
+        }
+    ),
+    default_os_volume: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await SetDefaultOsVolume(volume, cluster_id);
+        }
+    ),
     // migrate_volume: createAsyncThunk(
     //     'fetch_worker',
     //     async (arg, { getState }): Promise<any> => {
     //         // await MigrateVolume(volume, cluster_id);
     //     }
     // ),
-    // fork_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await ForkVolume(
-    //         //     volume,
-    //         //     cluster_id,
-    //         //     gpu_model,
-    //         //     vcpus,
-    //         //     ram,
-    //         //     description
-    //         // );
-    //     }
-    // ),
+    fork_volume: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await ForkVolume(
+            //     volume,
+            //     cluster_id,
+            //     gpu_model,
+            //     vcpus,
+            //     ram,
+            //     description
+            // );
+        }
+    ),
 
-    // access_storage: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //     }
-    // ),
-    // start_storage: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         return await CacheRequest('worker', 30, async () => {
-    //             // const res = await FetchAuthorizedWorkers();
-    //             // return formatWorkerRenderTree(res);
-    //         });
-    //     }
-    // ),
-    // stop_storage: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         return await CacheRequest('worker', 30, async () => {
-    //             // const res = await FetchAuthorizedWorkers();
-    //             // return formatWorkerRenderTree(res);
-    //         });
-    //     }
-    // ),
-    // delete_storage: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await StopApplication(storage);
-    //     }
-    // ),
 
-    // create_session: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await CreateWorkerSession(worker_profile_id);
-    //     }
-    // ),
-    // deactivate_session: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await DeactivateWorkerSession(worker_session_id);
-    //     }
-    // ),
+    start_storage: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            return await CacheRequest('worker', 30, async () => {
+                // const res = await FetchAuthorizedWorkers();
+                // return formatWorkerRenderTree(res);
+            });
+        }
+    ),
+    stop_storage: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            return await CacheRequest('worker', 30, async () => {
+                // const res = await FetchAuthorizedWorkers();
+                // return formatWorkerRenderTree(res);
+            });
+        }
+    ),
+    delete_storage: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await StopApplication(storage);
+        }
+    ),
 
+
+    deactivate_session: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await DeactivateWorkerSession(worker_session_id);
+        }
+    ),
+
+    connect_volume: createAsyncThunk(
+        'connect_worker',
+        async (volume_id: string, { getState }): Promise<any> => {
+            volume_id = volume_id.split(" ").at(-1)
+            const result = await AccessApplication({volume_id});
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(volume_id));
+        }
+    ),
     connect_worker: createAsyncThunk(
         'connect_worker',
         async (worker_profile_id: string, { getState }): Promise<any> => {
@@ -137,46 +141,46 @@ export const workerAsync = {
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(worker_profile_id));
         }
-    )
+    ),
 
-    // create_subscription: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await AddSubscription(
-    //         //     formValues.email,
-    //         //     formValues.plan,
-    //         //     formValues.free
-    //         // );
-    //     }
-    // ),
-    // modify_subscription: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // ModifySubscription(formValues.action, formValues.email);
-    //     }
-    // ),
-    // adjust_subscription: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await AdjustSubscription(
-    //         //     formValues.email,
-    //         //     new Date(formValues.created_at).toISOString(),
-    //         //     new Date(formValues.ends_at).toISOString()
-    //         // );
-    //     }
-    // ),
-    // release_app: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // ConfigureApplication(data);
-    //     }
-    // ),
-    // patch_app: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await PatchApp(app_id, text, cluster_id);
-    //     }
-    // ),
+    create_subscription: createAsyncThunk(
+        'create_subscription',
+        async (arg:{
+            email: string,
+            plan: string,
+            free: string
+        }, { getState }): Promise<any> => {
+            await AddSubscription(arg);
+        }
+    ),
+    modify_subscription: createAsyncThunk(
+        'fetch_worker',
+        async (email:string, { getState }): Promise<any> => {
+            // ModifySubscription(formValues.action, email);
+        }
+    ),
+    adjust_subscription: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await AdjustSubscription(
+            //     formValues.email,
+            //     new Date(formValues.created_at).toISOString(),
+            //     new Date(formValues.ends_at).toISOString()
+            // );
+        }
+    ),
+    release_app: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // ConfigureApplication(data);
+        }
+    ),
+    patch_app: createAsyncThunk(
+        'fetch_worker',
+        async (arg, { getState }): Promise<any> => {
+            // await PatchApp(app_id, text, cluster_id);
+        }
+    ),
 };
 
 export const workerSlice = createSlice({

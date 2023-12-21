@@ -28,6 +28,7 @@ export async function CacheRequest<T>(
     sec: number,
     req: () => Promise<T>
 ): Promise<T> {
+    sec = window.location.href.includes('localhost') ? 10 * 60 : sec
     const store = async (raw: any, timestamp: number) => {
         if (db == null) {
             localStorage.setItem(

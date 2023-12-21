@@ -116,7 +116,7 @@ type Data = {
 
 const initialState: Data = {
     active: false,
-    ads_period: 100,
+    ads_period: 50,
     scancode: false,
     fullscreen: false,
     bitrate: MIN_BITRATE,
