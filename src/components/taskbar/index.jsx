@@ -14,6 +14,7 @@ import './taskbar.scss';
 
 const Taskbar = () => {
     const dispatch = appDispatch;
+    const remote = useAppSelector((state) => state.remote);
     const tasks = useAppSelector((state) => state.taskbar);
     const apps = useAppSelector((state) => state.apps);
     const defaultapps = useAppSelector((state) =>
@@ -131,14 +132,15 @@ const Taskbar = () => {
                         style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
                     >
-                        <Icon className="taskIcon" src="wifi" ui width={16} />
+                        {   remote.connection?.video == 'connected' 
+                            ?  <Icon className="taskIcon" src={remote.frame_drop ? "wifi_low" :"wifi"} ui width={16} />
+                            :  null }
                         <Icon
                             className="taskIcon"
                             src={'audio' + tasks.audio}
                             ui
                             width={16}
                         />
-                        {/*<Battery />*/}
                     </div>
                 </>
                 <div className="taskDate m-1 handcr prtclk rounded hvlight">

@@ -89,7 +89,6 @@ const ContentArea = ({ searchtxt, data }) => {
     const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
-        console.log(e.target.dataset);
         if (e.target.dataset.payload == null) return;
 
         setSelect(

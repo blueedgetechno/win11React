@@ -44,7 +44,7 @@ const initialState: Data = {
             src: 'saver',
             name: 'Battery Saver',
             state: 'system.power.saver.state',
-            action: 'setting/setting_togg'
+            action: 'remote/scancode_toggle'
         },
         {
             ui: true,
