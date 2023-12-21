@@ -173,15 +173,16 @@ export const SidePane = () => {
                                     onClick={clickDispatch}
                                     data-action={qk.action}
                                     data-payload={qk.payload || qk.state}
-                                    data-state={pnstates[idx]}
+                                    //data-state={pnstates[idx]}
                                 >
-                                    <Icon
+                                    {/*<Icon
                                         className="quickIcon"
                                         ui={qk.ui}
                                         src={qk.src}
                                         width={14}
                                         invert={pnstates[idx] ? true : null}
-                                    />
+                                    />*/}
+                                    <qk.src />
                                 </div>
                                 <div className="qktext">{qk.name}</div>
                             </div>
