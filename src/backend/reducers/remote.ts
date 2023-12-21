@@ -31,7 +31,8 @@ export const assign = (fun: () => RemoteDesktopClient) => {
                 // appDispatch(update_metrics(metrics));
                 break;
             case 'FRAME_LOSS':
-                console.log('frame loss occur');
+                appDispatch(remoteSlice.actions.framedrop(true));
+                setTimeout(() => appDispatch(remoteSlice.actions.framedrop(false)),200)
                 break;
             default:
                 break;
@@ -98,6 +99,7 @@ export type Metric = {
 
 type Data = {
     remote_id?: string;
+    frame_drop?: boolean;
     active: boolean;
     fullscreen: boolean;
     scancode: boolean;
@@ -239,6 +241,9 @@ export const remoteSlice = createSlice({
         },
         scancode : (state,action: PayloadAction<boolean>) => {
             state.scancode = action.payload;
+        },
+        framedrop: (state,action:PayloadAction<boolean>) => {
+            if (state.active) state.frame_drop = action.payload;
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = true;
