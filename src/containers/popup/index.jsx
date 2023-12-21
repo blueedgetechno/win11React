@@ -8,17 +8,19 @@ import './index.scss';
 import * as modals from './modal';
 
 const Popup = () => {
-    const popup = useAppSelector((state) => state.popup);
+    const popup = useAppSelector((state) => state.popup.data_stack.at(-1));
 
     const closeOutSite = () => {
-        if (popup.type == 'notify') {
+        if (popup == undefined)
             return
-        }
+        else if (popup.type == 'notify')
+            return
+
         appDispatch(popup_close())
     }
-    return (
-        <ReactModal
-            isOpen={popup.active}
+    return (<>{popup != undefined
+        ? <ReactModal
+            isOpen={true}
             onRequestClose={() => closeOutSite()}
             contentLabel="Example Modal"
             className="modalContent "
@@ -33,6 +35,7 @@ const Popup = () => {
                     })}
             </div>
         </ReactModal>
+        : null}</>
     );
 };
 
