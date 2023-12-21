@@ -18,7 +18,7 @@ import { workerAsync, workerSlice } from './worker';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
-    if(window.location.href.includes('localhost'))
+    if (window.location.href.includes('localhost'))
         console.log({ ...(action as any) });
 
     return await next(action);
@@ -97,6 +97,7 @@ export const {
     toggle_remote,
     open_remote,
     scancode,
+    scancode_toggle,
     ads_period,
     close_remote,
     change_bitrate,

@@ -7,20 +7,20 @@ import {
     video_status
 } from '.';
 import { RemoteDesktopClient } from '../../../core/app';
+import { EventCode } from '../../../core/models/keys.model';
 import {
     AddNotifier,
     ConnectionEvent,
 } from '../../../core/utils/log';
+import { isMobile } from '../utils/checking';
+import { scanCodeApps } from '../utils/constant';
 import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
-import { scanCodeApps } from '../utils/constant';
-import { isMobile } from '../utils/checking';
-import { EventCode } from '../../../core/models/keys.model';
 
-const size = () => (client != null) ? ( client.video.video.videoHeight * client.video.video.videoWidth ) : (1920 * 1080)
+const size = () => (client != null) ? (client.video.video.videoHeight * client.video.video.videoWidth) : (1920 * 1080)
 export const MAX_BITRATE = () => 10000 / (1920 * 1080) * size()
-export const MIN_BITRATE = () => 1000  / (1920 * 1080) * size()
-    
+export const MIN_BITRATE = () => 1000 / (1920 * 1080) * size()
+
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
     client = fun();
@@ -32,7 +32,7 @@ export const assign = (fun: () => RemoteDesktopClient) => {
                 break;
             case 'FRAME_LOSS':
                 appDispatch(remoteSlice.actions.framedrop(true));
-                setTimeout(() => appDispatch(remoteSlice.actions.framedrop(false)),200)
+                setTimeout(() => appDispatch(remoteSlice.actions.framedrop(false)), 200)
                 break;
             default:
                 break;
@@ -128,13 +128,13 @@ const initialState: Data = {
 
 
 export function WindowD() {
-    client?.hid?.TriggerKey(EventCode.KeyDown,'lwin')
-    client?.hid?.TriggerKey(EventCode.KeyDown,'d')
-    client?.hid?.TriggerKey(EventCode.KeyUp,'d')
-    client?.hid?.TriggerKey(EventCode.KeyUp,'lwin')
+    client?.hid?.TriggerKey(EventCode.KeyDown, 'lwin')
+    client?.hid?.TriggerKey(EventCode.KeyDown, 'd')
+    client?.hid?.TriggerKey(EventCode.KeyUp, 'd')
+    client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin')
 }
 
-export function openRemotePage(ref:string, appName:string) {
+export function openRemotePage(ref: string, appName: string) {
     document.location.href = `https://remote.thinkmay.net/?ref=${ref}&turn=true&no_stretch=true&page=${appName}&scancode=${scanCodeApps.includes(appName)}`;
 }
 
@@ -162,9 +162,9 @@ export const remoteAsync = {
     authenticate_session: createAsyncThunk(
         'authenticate_session',
         async ({ ref, uref }: { ref: string; uref?: string }, { }) => {
-            if (isMobile()) 
-                openRemotePage(ref,'thinkmay')
-                
+            if (isMobile())
+                openRemotePage(ref, 'thinkmay')
+
             const result = await SupabaseFuncInvoke<AuthSessionResp>(
                 'session_authenticate',
                 {
@@ -194,7 +194,7 @@ export const remoteSlice = createSlice({
             client?.Close();
             client = null
         },
-        open_remote: (state,action:PayloadAction<string>) =>{
+        open_remote: (state, action: PayloadAction<string>) => {
             if (!state.active) {
                 state.connection = {
                     audio: 'started',
@@ -236,13 +236,18 @@ export const remoteSlice = createSlice({
             }
             state.active = !state.active;
         },
-        ads_period : (state,action: PayloadAction<number>) => {
+        ads_period: (state, action: PayloadAction<number>) => {
             state.ads_period = action.payload;
         },
-        scancode : (state,action: PayloadAction<boolean>) => {
+        scancode_toggle: (state) => {
+            state.scancode = !state.scancode;
+            if (client)
+                client.hid.scancode = state.scancode;
+        },
+        scancode: (state, action: PayloadAction<boolean>) => {
             state.scancode = action.payload;
         },
-        framedrop: (state,action:PayloadAction<boolean>) => {
+        framedrop: (state, action: PayloadAction<boolean>) => {
             if (state.active) state.frame_drop = action.payload;
         },
         fullscreen: (state) => {
