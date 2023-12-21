@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, authenticate_session, open_remote } from '.';
 import { RenderNode } from '../utils/tree';
-import { AccessApplication, AddSubscription, CreateWorkerSession, FetchAuthorizedWorkers, ModifySubscription } from './fetch';
+import { AccessApplication, AddSubscription, AdjustSubscription, CreateWorkerSession, DeactivateWorkerSession, DeleteApplication, DeleteVolume, FetchAuthorizedWorkers, ForkVolume, ModifySubscription, PatchApp, SetDefaultOsVolume, StopApplication, StopVolume } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
 
 type WorkerType = {
@@ -29,38 +29,36 @@ export const workerAsync = {
             return new RenderNode(await FetchAuthorizedWorkers()).any();
         });
     }),
-
     access_volume: createAsyncThunk(
-        'fetch_worker',
-        async ({ }: {}, { getState }): Promise<any> => {
-            // const result = await AccessApplication(input);
-        }
-    ),
-    start_volume: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // const result = await AccessApplication(input);
-        }
-    ),
-    delete_volume: createAsyncThunk(
-        'fetch_worker',
-        async ({ volume_id }: { volume_id: string }, { getState }): Promise<any> => {
-            // await DeleteVolume(volume_id);
+        'access_volume',
+        async (volume_id: string, { getState }): Promise<any> => {
+            volume_id = volume_id.split(" ").at(-1)
+            const result = await AccessApplication({ volume_id });
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(volume_id));
         }
     ),
     stop_volume: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            return await CacheRequest('worker', 30, async () => {
-                // const res = await FetchAuthorizedWorkers();
-                // return formatWorkerRenderTree(res);
-            });
+        'stop_volume',
+        async (volume_id: string, { getState }): Promise<any> => {
+            await StopVolume(volume_id)
+        }
+    ),
+    delete_volume: createAsyncThunk(
+        'delete_volume',
+        async ({ volume_id }: { volume_id: string }, { getState }): Promise<any> => {
+            await DeleteVolume(volume_id);
         }
     ),
     default_os_volume: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await SetDefaultOsVolume(volume, cluster_id);
+        'default_os_volume',
+        async (volume_id: string, { getState }): Promise<any> => {
+            let cluster_id = '';
+            await SetDefaultOsVolume(volume_id, cluster_id);
         }
     ),
     // migrate_volume: createAsyncThunk(
@@ -70,68 +68,66 @@ export const workerAsync = {
     //     }
     // ),
     fork_volume: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await ForkVolume(
-            //     volume,
-            //     cluster_id,
-            //     gpu_model,
-            //     vcpus,
-            //     ram,
-            //     description
-            // );
-        }
-    ),
-
-
-    start_storage: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            return await CacheRequest('worker', 30, async () => {
-                // const res = await FetchAuthorizedWorkers();
-                // return formatWorkerRenderTree(res);
-            });
-        }
-    ),
-    stop_storage: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            return await CacheRequest('worker', 30, async () => {
-                // const res = await FetchAuthorizedWorkers();
-                // return formatWorkerRenderTree(res);
-            });
-        }
-    ),
-    delete_storage: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await StopApplication(storage);
-        }
-    ),
-
-
-    deactivate_session: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await DeactivateWorkerSession(worker_session_id);
-        }
-    ),
-
-    connect_volume: createAsyncThunk(
-        'connect_worker',
-        async (volume_id: string, { getState }): Promise<any> => {
+        'fork_volume',
+        async ( volume_id: string, { getState }): Promise<any> => {
             volume_id = volume_id.split(" ").at(-1)
-            const result = await AccessApplication({volume_id});
+            let cluster_id = 'todo';
+            let gpu_model = 'todo';
+            let vcpus = 'todo';
+            let ram = 'todo';
+            let description = 'todo';
+            await ForkVolume(
+                volume_id,
+                cluster_id,
+                gpu_model,
+                vcpus,
+                ram,
+                description
+            );
+        }
+    ),
+
+    access_storage: createAsyncThunk(
+        'access_storage',
+        async (storage_id: string, { getState }): Promise<any> => {
+            const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(volume_id));
+            appDispatch(open_remote(storage_id));
         }
     ),
-    connect_worker: createAsyncThunk(
-        'connect_worker',
+    stop_storage: createAsyncThunk( //TODO
+        'stop_storage',
+        async (storage_id: string, {getState}) => {
+            await StopApplication(storage_id)
+        }
+    ),
+    delete_storage: createAsyncThunk( //TODO
+        'delete_storage',
+        async (storage_id: string, {getState}) => {
+            await DeleteApplication(storage_id);
+        }
+    ),
+
+    create_session: createAsyncThunk(
+        'create_session',
+        async (worker_session_id: string, {getState}): Promise<any> => {
+            await CreateWorkerSession(worker_session_id)
+        }
+    ),
+
+    deactivate_session: createAsyncThunk(
+        'deactivate_session',
+        async (worker_session_id: string, { getState }): Promise<any> => {
+            await DeactivateWorkerSession(worker_session_id);
+        }
+    ),
+
+    access_worker: createAsyncThunk(
+        'access_worker',
         async (worker_profile_id: string, { getState }): Promise<any> => {
             const result = await CreateWorkerSession(worker_profile_id);
             const url = new URL(result.url);
@@ -153,32 +149,63 @@ export const workerAsync = {
             await AddSubscription(arg);
         }
     ),
-    modify_subscription: createAsyncThunk(
-        'fetch_worker',
+    renew_subscription: createAsyncThunk(
+        'renew_subscription',
         async (email:string, { getState }): Promise<any> => {
-            // ModifySubscription(formValues.action, email);
+            await ModifySubscription({
+                action: 'RENEW',
+                email
+            });
         }
     ),
+    upgrade_subscription: createAsyncThunk(
+        'upgrade_subscription',
+        async (email:string, { getState }): Promise<any> => {
+            await ModifySubscription({
+                action: 'UPGRADE',
+                email
+            });
+        }
+    ),
+    cancel_subscription: createAsyncThunk(
+        'cancel_subscription',
+        async (email:string, { getState }): Promise<any> => {
+            await ModifySubscription({
+                action: 'CANCEL',
+                email
+            });
+        }
+    ),
+    
     adjust_subscription: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await AdjustSubscription(
-            //     formValues.email,
-            //     new Date(formValues.created_at).toISOString(),
-            //     new Date(formValues.ends_at).toISOString()
-            // );
+        'adjust_subscription',
+        async (email:string, { getState }): Promise<any> => {
+            let created_at = '' 
+            let ends_at = '' 
+            
+            await AdjustSubscription({
+                email,
+                created_at, 
+                ends_at 
+            });
         }
     ),
     release_app: createAsyncThunk(
-        'fetch_worker',
+        'release_app',
         async (arg, { getState }): Promise<any> => {
             // ConfigureApplication(data);
         }
     ),
     patch_app: createAsyncThunk(
-        'fetch_worker',
-        async (arg, { getState }): Promise<any> => {
-            // await PatchApp(app_id, text, cluster_id);
+        'patch_app',
+        async (app_id: number, { getState }): Promise<any> => {
+            let desc="" 
+            let cluster_id=""
+            await PatchApp({
+                app_id, 
+                desc,
+                cluster_id
+            });
         }
     ),
 };
@@ -251,7 +278,7 @@ export const workerSlice = createSlice({
                 }
             },
             {
-                fetch: workerAsync.connect_worker,
+                fetch: workerAsync.access_worker,
                 hander: (state, action) => { }
             }
         );
