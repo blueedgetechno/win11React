@@ -6,17 +6,19 @@ import ringSound  from "/audio/ring2.mp3"
 import useSound from 'use-sound';
 
 import { isGreenList, isMobile } from "../../utils/checking";
+import { sleep } from '../../utils/sleep';
 
 function AvailableCluster({isBootScreen}) {
 	//const [availableCluster, setAvailableCluster] = React.useState(false)
 	const user = useSelector((state) => state.user);
 	const availableCluster = useSelector((state) => state.globals.hasAvailableCluster);
-	const [play] = useSound(ringSound);
+	const [play] = useSound(ringSound,{volume: 0.4});
 
 	React.useEffect(()=>{
 		availableCluster ? play() : null
+
 	},[availableCluster])
-	
+
 	return (
 		<>
 			{
