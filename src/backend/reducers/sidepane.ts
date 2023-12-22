@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { MdKeyboard, MdOutlineResetTv } from "react-icons/md";
 //import { MdKeyboard } from "react-icons/md";
 import { FiVideoOff } from "react-icons/fi";
+import { RiFullscreenFill } from "react-icons/ri";
 
 export type Notification = {
     urlToImage?: string;
@@ -28,13 +29,13 @@ const initialState: Data = {
             state: 'network.wifi.state',
             action: 'remote/toggle_remote'
         },
-        //{
-        //    ui: true,
-        //    src: 'bluetooth',
-        //    name: 'Bluetooth',
-        //    state: 'devices.bluetooth',
-        //    action: 'setting/setting_togg'
-        //},
+        {
+            ui: true,
+            src: RiFullscreenFill,
+            name: 'FullScreen',
+            state: 'devices.bluetooth',
+            action: 'remote/fullscreen'
+        },
         {
             ui: true,
             src: MdOutlineResetTv,
