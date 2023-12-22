@@ -63,18 +63,18 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
+                        name: 'Access',
+                        action: 'access_app',
+                    },
+                    {
                         name: 'Reset',
                         action: 'reset_app',
+                        icon: 'reset'
                     },
                     {
-                        name: 'Pause',
+                        name: 'Shutdown',
                         action: 'pause_app',
-                        icon: 'start'
-                    },
-                    {
-                        name: 'Delete',
-                        action: 'delete_app',
-                        icon: 'delete'
+                        icon: 'shutdown'
                     }
                 ]
             };
@@ -85,8 +85,24 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Access',
-                        action: 'connect_worker'
-                        // icon: 'start'
+                        action: 'access_storage',
+                    },
+                    {
+                        name: 'Pause',
+                        action: 'stop_storage',
+                        icon: 'shutdown'
+                    },
+                    {
+                        name: 'Delete',
+                        action: 'delete_storage',
+                        icon: 'delete'
+                    },
+                    {
+                        type: "hr",
+                    },
+                    {
+                        name: 'Detail', 
+                        action: 'viewDetail', // TODO
                     }
                 ]
             };
@@ -97,7 +113,51 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Access',
-                        action: 'connect_volume'
+                        action: 'access_volume',
+                    },
+                    {
+                        name: 'Stop',
+                        action: 'stop_volume',
+                        icon: 'shutdown'
+                    },
+                    {
+                        name: 'Fork',
+                        action: 'fork_volume',
+                    },
+                    // { // PENDING
+                    //     name: 'Migrate',
+                    //     action: ''
+                    // },
+                    {
+                        name: 'Set default os',
+                        action: 'default_os_volume',
+                    },
+                    {
+                        name: 'Delete',
+                        action: 'delete_volume',
+                        icon: 'delete'
+                    },
+                    {
+                        type: "hr",
+                    },
+                    {
+                        name: 'Detail', 
+                        action: 'viewDetail', // TODO
+                    }
+                ]
+            };
+        case 'application':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Release',
+                        action: 'release_app'
+                    },
+                    {
+                        name: 'Patch',
+                        action: 'patch_app'
                     }
                 ]
             };
@@ -108,10 +168,32 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Access',
-                        action: 'connect_worker'
-                        // icon: 'start'
+                        action: 'access_worker'
+                    },
+                    {
+                        name: 'Create Session',
+                        action: 'create_session'
+                    },
+                    {
+                        name: 'Detail', 
+                        action: '', // TODO
                     }
                 ]
+            };
+        case 'worker_session':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Access',
+                        action: 'access_worker'
+                    },
+                    {
+                        name: 'Deactivate Session',
+                        action: 'deactivate_session'
+                    },
+                ]  
             };
         case 'paused_app':
             return {
@@ -119,7 +201,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
-                        name: 'Start',
+                        name: 'Power On',
                         action: 'start_app',
                         icon: 'start'
                     },
@@ -202,8 +284,42 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-        default:
+        case 'subscriptions': 
             return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'New Subscription',
+                        action: 'create_subscription'
+                    }
+                ]
+            }
+        case 'subscription':
+            return {
+                width: '200px',
+                secwid: '200px',    
+                data: [
+                    {
+                        name: 'Renew',
+                        action: 'renew_subscription'
+                    },
+                    {
+                        name: 'Upgrade',
+                        action: 'upgrade_subscription'
+                    },
+                    {
+                        name: 'Adjust',
+                        action: 'adjust_subscription'
+                    },
+                    {
+                        name: 'Cancel',
+                        action: 'cancel_subscription'
+                    },
+                ]
+            }
+        default:
+       return {
                 width: '310px',
                 secwid: '200px',
                 data: []

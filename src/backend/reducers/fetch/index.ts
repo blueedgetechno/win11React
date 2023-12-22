@@ -96,10 +96,9 @@ export const AddSubscription = async ({email,free,plan}:{
  * @param {string} email
  * @returns
  */
-export const ModifySubscription = async (action: string, email: string) => {
+export const ModifySubscription = async (input: {action: string, email: string}) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
-        email,
-        action
+        ...input
     });
 
     if (result instanceof Error) throw result;
@@ -114,16 +113,14 @@ export const ModifySubscription = async (action: string, email: string) => {
  * @returns
  */
 
-export const AdjustSubscription = async (
+export const AdjustSubscription = async (input: {
     email: string,
     created_at: string,
     ends_at: string
-) => {
+}) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
-        email,
         action: 'ADJUST',
-        created_at,
-        ends_at
+        ...input
     });
     if (result instanceof Error) throw result;
     return result;
@@ -304,16 +301,15 @@ export const ForkVolume = async (
     return result;
 };
 
-export const PatchApp = async (
+export const PatchApp = async (input: {
     app_id: number,
     desc: string,
     cluster_id: string
+}
 ) => {
     const result = await SupabaseFuncInvoke('configure_application', {
         action: 'PATCH',
-        app_id: app_id,
-        desc,
-        cluster_id
+        ...input
     });
     if (result instanceof Error) throw result;
 

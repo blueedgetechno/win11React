@@ -119,7 +119,31 @@ export const {
     reset_app,
     access_app
 } = appsAsync;
-export const { fetch_worker, connect_worker, connect_volume } = workerAsync;
+export const { 
+    fetch_worker, 
+    access_worker,
+
+    access_volume,
+    stop_volume,
+    delete_volume,
+    default_os_volume,
+    fork_volume,
+
+    access_storage,
+    stop_storage,
+    delete_storage,
+
+    create_session,
+    deactivate_session,
+
+    create_subscription,
+    renew_subscription,
+    adjust_subscription,
+    upgrade_subscription,
+
+    patch_app,
+    release_app
+} = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const { authenticate_session, ping_session } = remoteAsync;
