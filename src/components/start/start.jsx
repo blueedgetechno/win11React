@@ -1,11 +1,9 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { changeTheme } from '../../backend/actions';
-import { useAppSelector } from '../../backend/reducers';
+import { appDispatch, useAppSelector, user_delete } from '../../backend/reducers';
 import { isMobile, validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
-import { appDispatch,user_delete } from '../../backend/reducers';
 
 export const StartMenu = () => {
     const { t, i18n } = useTranslation();
@@ -23,16 +21,15 @@ export const StartMenu = () => {
             year: 'numeric'
         });
     };
-
-    const usageTime = undefined;
-    const total_time = undefined;
+    console.log(user, 'start bar');
+    const usageTime = user?.usageTime;
+    const total_time = usageTime?.total_time;
     const checkPackage = () => {
         const packages = {
             week: '20h',
             month: '100h'
         };
 
-        const usageTime = user?.usageTime?.at(0);
         if (usageTime == undefined) return;
 
         return packages[usageTime?.package] ?? usageTime?.package;
