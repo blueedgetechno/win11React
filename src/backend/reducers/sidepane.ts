@@ -1,8 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { MdKeyboard, MdOutlineResetTv } from "react-icons/md";
-//import { MdKeyboard } from "react-icons/md";
-import { FiVideoOff } from "react-icons/fi";
-import { RiFullscreenFill } from "react-icons/ri";
 
 export type Notification = {
     urlToImage?: string;
@@ -24,46 +20,46 @@ const initialState: Data = {
     quicks: [
         {
             ui: true,
-            src: FiVideoOff,
-            name: 'Video toggle',
+            src: 'wifi',
+            name: 'WiFi',
             state: 'network.wifi.state',
             action: 'remote/toggle_remote'
         },
         {
             ui: true,
-            src: RiFullscreenFill,
-            name: 'FullScreen',
+            src: 'bluetooth',
+            name: 'Bluetooth',
             state: 'devices.bluetooth',
-            action: 'remote/fullscreen'
+            action: 'setting/setting_togg'
         },
         {
             ui: true,
-            src: MdOutlineResetTv,
-            name: 'Reset',
+            src: 'airplane',
+            name: 'Flight Mode',
             state: 'network.airplane',
             action: 'remote/hard_reset'
         },
         {
             ui: true,
-            src: MdKeyboard,
-            name: 'Scan Code',
+            src: 'saver',
+            name: 'Battery Saver',
             state: 'system.power.saver.state',
             action: 'remote/scancode_toggle'
         },
-        //{
-        //    ui: true,
-        //    src: 'sun',
-        //    name: 'Theme',
-        //    state: 'person.theme',
-        //    action: 'changeTheme'
-        //},
-        //{
-        //    ui: true,
-        //    src: 'nightlight',
-        //    name: 'Night Light',
-        //    state: 'system.display.nightlight.state',
-        //    action: 'setting/setting_togg'
-        //}
+        {
+            ui: true,
+            src: 'sun',
+            name: 'Theme',
+            state: 'person.theme',
+            action: 'changeTheme'
+        },
+        {
+            ui: true,
+            src: 'nightlight',
+            name: 'Night Light',
+            state: 'system.display.nightlight.state',
+            action: 'setting/setting_togg'
+        }
     ],
     notifications: [],
 

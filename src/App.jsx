@@ -133,7 +133,8 @@ function App() {
                             <Popup />
                             <WidPane />
                             <StartMenu />
-                            <div
+                            {remote.connection?.video != 'connected'   
+                            ? <div
                                 className="desktop"
                                 data-menu="desk"
                                 data-mobile={isMobile()}
@@ -144,6 +145,7 @@ function App() {
                                     return <WinApp key={idx} />;
                                 })}
                             </div>
+                            : null }
                         </>
                     ) : null}
                 </div>
