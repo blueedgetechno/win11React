@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { MdVideoSettings } from "react-icons/md";
 import { TbBellRingingFilled } from "react-icons/tb";
 
 import {
@@ -136,13 +135,12 @@ const Taskbar = () => {
                         {   remote.connection?.video == 'connected' 
                             ?  <Icon className="taskIcon" src={remote.frame_drop ? "wifi_low" :"wifi"} ui width={16} />
                             :  null }
-                        {/*<Icon
+                        <Icon
                             className="taskIcon"
                             src={'audio' + tasks.audio}
                             ui
                             width={16}
-                        />*/}
-                        <MdVideoSettings />
+                        />
                     </div>
                 </>
                 <div className="taskDate m-1 handcr prtclk rounded hvlight">
