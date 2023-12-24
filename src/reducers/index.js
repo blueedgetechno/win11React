@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from "redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
 
 import wallReducer from "./wallpaper";
 import taskReducer from "./taskbar";
@@ -26,6 +27,6 @@ const allReducers = combineReducers({
   files: fileReducer,
 });
 
-var store = createStore(allReducers);
+var store = createStore(allReducers,devToolsEnhancer());
 
 export default store;
