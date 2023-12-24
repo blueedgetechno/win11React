@@ -21,6 +21,7 @@ interface UsageTime {
 }
 const initialState: Data = {
     id: 'unknown',
+    email: '',
     aud: 'unknown',
     created_at: 'unknown',
     app_metadata: {},
@@ -32,7 +33,7 @@ const initialState: Data = {
 
 export const userAsync = {
     fetch_user: createAsyncThunk('fetch_user', async (): Promise<Data> => {
-        return await CacheRequest('user', 30, async () => {
+        return await CacheRequest('user', 5, async () => {
             const {
                 data: {
                     session: { user }
@@ -81,7 +82,9 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         user_delete: (state) => {
-            state.id = 'unknown'
+            state.id = initialState.id
+            state.email = initialState.email
+            state.usageTime = initialState.usageTime 
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }
