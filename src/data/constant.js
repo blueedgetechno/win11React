@@ -24,7 +24,8 @@ export const scanCodeApps = {
   "Red Dead Redemption 2": true,
   "Elden Ring": true,
   "God of War": true,
-  "Spider-man Remastered": true
+  "Spider-man Remastered": true,
+  "Counter-Strike 2": true
 
 };
 
