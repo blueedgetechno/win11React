@@ -1,5 +1,4 @@
 import { combineReducers, createStore } from "redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
 
 import wallReducer from "./wallpaper";
 import taskReducer from "./taskbar";
