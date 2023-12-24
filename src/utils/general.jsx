@@ -100,6 +100,32 @@ export const Icon = (props) => {
         />
       </div>
     );
+  } else if(props.className == "dskIcon prtclk") {
+    return (
+      <div
+        className={`uicon ${props.className || ""} ${prtclk}`}
+        data-open={props.open}
+        data-action={props.click}
+        data-active={props.active}
+        data-payload={props.payload}
+        data-menu={props.menu}
+      >
+          <img
+            width={props.width}
+            height={props.height}
+            data-flip={props.flip != null}
+            data-invert={props.invert != null ? "true" : "false"}
+            data-rounded={props.rounded != null ? "true" : "false"}
+            data-action={props.click}
+            data-payload={props.payload}
+            src={src}
+            style={{
+              margin: props.margin || null,
+            }}
+            alt=""
+          />
+      </div>
+    );
   } else {
     return (
       <div

@@ -45,6 +45,25 @@ export const DesktopApp = () => {
     return arr;
   });
   const dispatch = useDispatch();
+  const sidepane = useSelector((state) => state.sidepane);
+	const doubleClickDispatch = (event) => {
+		if (!sidepane.banhide) dispatch({ type: "BANDHIDE" });
+		console.log(event);
+		var action = {
+			type: event.currentTarget.dataset.action,
+			payload: event.currentTarget.dataset.payload,
+		};
+
+		if (action.type) {
+			dispatch(action);
+		}
+			event.currentTarget.dataset.pr = true;
+			event.currentTarget.dataset.click = true;
+	};
+	const clickDispatch = (event) =>{
+			event.currentTarget.dataset.pr = false;
+			event.currentTarget.dataset.click = false;
+	}
 
   return (
     <div className="desktopCont">
@@ -52,7 +71,15 @@ export const DesktopApp = () => {
         deskApps.apps.map((app, i) => {
           return (
             // to allow it to be focusable (:focus)
-            <div key={i} className="dskApp" tabIndex={0}>
+            <div 
+              key={i} 
+              className="dskApp" 
+              tabIndex={0}
+              onDoubleClick={doubleClickDispatch}
+              onClick={clickDispatch}
+              data-action={app.action}
+              data-payload={app.payload || "full"}
+            >
               <Icon
                 click={app.action}
                 className="dskIcon prtclk"
