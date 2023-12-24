@@ -426,3 +426,12 @@ async function handleInsertApp(newData: any) {
     // });
     // if (resp.status != 200) throw await resp.text();
 }
+
+export async function HasAvailableCluster() {
+    const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
+    if (error) throw error;
+
+    const checking = data.at(0).total > 0
+
+    return checking
+}

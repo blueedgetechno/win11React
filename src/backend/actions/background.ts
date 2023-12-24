@@ -1,3 +1,4 @@
+import { DoDemo, FirstTime } from '.';
 import {
     appDispatch,
     app_toggle,
@@ -8,9 +9,12 @@ import {
     ping_session,
     setting_theme,
     sidepane_panethem,
+    update_available_cluster,
     wall_set
 } from '../reducers';
-import { DoDemo, FirstTime } from '.';
+import { HasAvailableCluster } from '../reducers/fetch';
+import { validate_user_access } from '../utils/checking';
+import { sleep } from '../utils/sleep';
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -49,7 +53,22 @@ export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
 
-const server_availability = () => {};
+export const checkAvailableCluster = async () => {
+    let checking = false
+
+
+    //if (!isGreenList) return
+    if (!validate_user_access('month', 'week', 'admin')) return
+    while (true) {
+        const result = await HasAvailableCluster()
+        checking = result
+
+        appDispatch(update_available_cluster(checking));
+        await sleep(30 * 1000)
+    }
+
+
+};
 
 const ping_remote = async () => {
     ping_session();
@@ -65,5 +84,5 @@ export const preload = async () => {
     ]);
 
     setInterval(ping_remote, 10 * 1000);
-    setInterval(server_availability, 30 * 1000);
+    //setInterval(server_availability, 30 * 1000);
 };

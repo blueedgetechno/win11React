@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BuilderHelper, CacheRequest, Confirms } from './helper';
 import { virtapi } from './fetch/createClient';
+import { BuilderHelper, CacheRequest, Confirms } from './helper';
 
 const initialState = {
     lays: [
@@ -201,7 +201,8 @@ const initialState = {
         }
     ],
 
-    games: [] as any[]
+    games: [] as any[],
+    hasAvailableCluster: false
 };
 
 export const storeAsync = {
@@ -236,7 +237,11 @@ export const storeAsync = {
 export const globalSlice = createSlice({
     name: 'global',
     initialState,
-    reducers: {},
+    reducers: {
+        update_available_cluster: (state, action) => {
+            state.hasAvailableCluster = action.payload
+        }
+    },
     extraReducers: (builder) => {
         BuilderHelper(builder, {
             fetch: storeAsync.fetch_store,

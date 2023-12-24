@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
-import { preload } from './backend/actions/background';
-import { afterMath } from './backend/actions/index';
+import { checkAvailableCluster, preload } from './backend/actions/background';
+import { FirstTime, afterMath } from './backend/actions/index';
 import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
 import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
+import AvailableCluster from './components/shared/AvailableCluster';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
 import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
@@ -17,7 +18,6 @@ import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
-import { FirstTime } from './backend/actions/index';
 
 let clipboard = '';
 let shouldResetKey = false;
@@ -59,6 +59,8 @@ function App() {
                 await new Promise((r) => setTimeout(r, 1000));
                 setLockscreen(false);
             });
+
+        checkAvailableCluster()
     }, []);
     useEffect(() => {
         if (user.id == 'unknown') 
@@ -145,7 +147,7 @@ function App() {
                         </>
                     ) : null}
                 </div>
-                {/* <AvailableCluster isBootScreen={lockscreen} /> */}
+                <AvailableCluster isBootScreen={lockscreen} />
             </ErrorBoundary>
         </div>
     );
