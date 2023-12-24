@@ -139,6 +139,22 @@ i[data-flip="true"] {
   transition: 100ms ease-in-out;
 }
 
+.dskApp {
+  transform-origin: center;
+}
+
+.dskApp[data-click="true"] {
+  animation: push 0.3s ease-in-out;
+}
+
+.dskApp[data-pr="true"] {
+  animation: push 0.3s ease-in-out;
+}
+
+@keyframes push {
+  50%{transform: scale(0.7);}
+}
+
 .desktop {
   position: absolute;
   width: 100vw;
