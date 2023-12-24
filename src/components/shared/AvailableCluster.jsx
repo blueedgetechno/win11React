@@ -1,33 +1,29 @@
-import React from 'react';
 import './index.scss';
 
 import { useAppSelector } from '../../backend/reducers';
 import { validate_user_access } from '../../backend/utils/checking';
 
-function AvailableCluster({ isBootScreen }) {
+function AvailableCluster() {
     const availableCluster = useAppSelector(
         (state) => state.globals.hasAvailableCluster
     );
 
-    return (
-        <>
-            {!isBootScreen && validate_user_access('month', 'week', 'admin') ? (
-                <div className="clusterInfo">
-                    {availableCluster ? (
-                        <>
-                            <div className="pointer green"></div>
-                            <span className="text-[16px]">Còn máy</span>
-                        </>
-                    ) : (
-                        <>
-                            <div className="pointer orange"></div>
-                            <span className="text-[16px]">Đang hết máy</span>
-                        </>
-                    )}
-                </div>
-            ) : null}
-        </>
-    );
+    if (!validate_user_access('month', 'week', 'admin'))
+        return null
+
+    return <div className="clusterInfo">
+        {availableCluster ? (
+            <>
+                <div className="pointer green"></div>
+                <span className="text-[16px]">Available</span>
+            </>
+        ) : (
+            <>
+                <div className="pointer orange"></div>
+                <span className="text-[16px]">Unavailable</span>
+            </>
+        )}
+    </div>
 }
 
 export default AvailableCluster;
