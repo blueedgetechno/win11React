@@ -235,6 +235,11 @@ export const fetchUser = async () => {
 
     payloadUser = { ...payloadUser, usageTime: data };
   }
+
+  // TODO
+  if (payloadUser.email == 'huyhoangdo0205@gmail.com')
+    document.location.href = 'https://dev-thinkmay.netlify.app'
+
   store.dispatch({
     type: "ADD_USER",
     payload: payloadUser,
