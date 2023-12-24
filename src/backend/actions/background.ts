@@ -14,7 +14,6 @@ import {
 } from '../reducers';
 import { HasAvailableCluster } from '../reducers/fetch';
 import { validate_user_access } from '../utils/checking';
-import { sleep } from '../utils/sleep';
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -53,21 +52,8 @@ export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
 
-export const checkAvailableCluster = async () => {
-    let checking = false
-
-
-    //if (!isGreenList) return
-    if (!validate_user_access('month', 'week', 'admin')) return
-    while (true) {
-        const result = await HasAvailableCluster()
-        checking = result
-
-        appDispatch(update_available_cluster(checking));
-        await sleep(30 * 1000)
-    }
-
-
+export const available_cluster = async () => {
+    appDispatch(update_available_cluster(await HasAvailableCluster()));
 };
 
 const ping_remote = async () => {
@@ -84,5 +70,8 @@ export const preload = async () => {
     ]);
 
     setInterval(ping_remote, 10 * 1000);
-    //setInterval(server_availability, 30 * 1000);
+    if (!validate_user_access('month', 'week', 'admin'))
+        return
+
+    setInterval(available_cluster, 30 * 1000);
 };

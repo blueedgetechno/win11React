@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
-import { checkAvailableCluster, preload } from './backend/actions/background';
+import { preload } from './backend/actions/background';
 import { FirstTime, afterMath } from './backend/actions/index';
 import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
 import { client } from './backend/reducers/remote';
@@ -42,7 +42,7 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
-            if (data.menu == 'desk' && remote.active) 
+            if (data.menu == 'desk' && remote.active)
                 return;
 
             dispatch(menu_show(data));
@@ -52,20 +52,17 @@ function App() {
     useEffect(() => {
         window.history.replaceState({}, document.title, '/' + '');
         preload()
-            .then(() => {
-                console.log('Loaded');
-            })
             .finally(async () => {
+                console.log('Loaded');
                 await new Promise((r) => setTimeout(r, 1000));
                 setLockscreen(false);
             });
 
-        checkAvailableCluster()
     }, []);
     useEffect(() => {
-        if (user.id == 'unknown') 
+        if (user.id == 'unknown')
             return
-        
+
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
@@ -83,12 +80,12 @@ function App() {
             window.oncontextmenu = ctxmenu;
             window.onclick = afterMath;
         }
-    }, [fullscreen,remote.active]);
+    }, [fullscreen, remote.active]);
 
     useEffect(() => {
-        if (!remote.active) 
+        if (!remote.active)
             return
-        
+
         const handleClipboard = () => {
             navigator.clipboard
                 .readText()
@@ -124,7 +121,10 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {remote.active ? <Remote /> : <Background /> }
+                    {remote.active ? <Remote /> : <>
+                        <Background />
+                        <AvailableCluster />
+                    </>}
                     {!fullscreen ? (
                         <>
                             <SidePane />
@@ -133,23 +133,22 @@ function App() {
                             <Popup />
                             <WidPane />
                             <StartMenu />
-                            {remote.connection?.video != 'connected'   
-                            ? <div
-                                className="desktop"
-                                data-menu="desk"
-                                data-mobile={isMobile()}
-                            >
-                                <DesktopApp />
-                                {Object.keys(Applications).map((key, idx) => {
-                                    var WinApp = Applications[key];
-                                    return <WinApp key={idx} />;
-                                })}
-                            </div>
-                            : null }
+                            {remote.connection?.video != 'connected'
+                                ? <div
+                                    className="desktop"
+                                    data-menu="desk"
+                                    data-mobile={isMobile()}
+                                >
+                                    <DesktopApp />
+                                    {Object.keys(Applications).map((key, idx) => {
+                                        var WinApp = Applications[key];
+                                        return <WinApp key={idx} />;
+                                    })}
+                                </div>
+                                : null}
                         </>
                     ) : null}
                 </div>
-                <AvailableCluster isBootScreen={lockscreen} />
             </ErrorBoundary>
         </div>
     );
