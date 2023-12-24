@@ -66,6 +66,7 @@ export const preload = async () => {
         loadSettings(),
         fetchWorker(),
         fetchStore(),
+        available_cluster(),
         fetchApp()
     ]);
 

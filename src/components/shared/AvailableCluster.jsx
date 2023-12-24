@@ -5,10 +5,10 @@ import { validate_user_access } from '../../backend/utils/checking';
 
 function AvailableCluster() {
     const availableCluster = useAppSelector(
-        (state) => state.globals.hasAvailableCluster
+        (state) => state.globals.service_available
     );
 
-    if (!validate_user_access('month', 'week', 'admin'))
+    if (!validate_user_access('month', 'week', 'admin') || availableCluster == null)
         return null
 
     return <div className="clusterInfo">
