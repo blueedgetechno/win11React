@@ -102,6 +102,7 @@ export const {
     ads_period,
     close_remote,
     change_bitrate,
+    change_framerate,
     fullscreen,
     audio_status,
     video_status,

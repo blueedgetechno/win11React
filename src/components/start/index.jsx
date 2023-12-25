@@ -9,6 +9,7 @@ import { getTreeValue } from '../../backend/actions';
 import {
     appDispatch,
     change_bitrate,
+    change_framerate,
     setting_setv,
     task_audo,
     useAppSelector
@@ -110,6 +111,10 @@ export const SidePane = () => {
 
     const setBitrate = (e) => {
         dispatch(change_bitrate(e.target.value));
+        sliderBackground(rSlider, e.target.value);
+    };
+    const setFramerate = (e) => {
+        dispatch(change_framerate(e.target.value));
         sliderBackground(rSlider, e.target.value);
     };
 
@@ -216,14 +221,31 @@ export const SidePane = () => {
                 <div className="sliderCont flex flex-col items-start">
                     {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
                     <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> Chất
-                        lượng hình ảnh:
+                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> 
+                        Quality
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
                         <span>Low</span>
                         <input
                             className="sliders rSlider"
                             onChange={setBitrate}
+                            type="range"
+                            min="0"
+                            max="100"
+                            defaultValue="100"
+                        />
+                        <span>High</span>
+                    </div>
+
+                    <div className="flex items-center">
+                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> 
+                        Framerate
+                    </div>
+                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
+                        <span>Low</span>
+                        <input
+                            className="sliders rSlider"
+                            onChange={setFramerate}
                             type="range"
                             min="0"
                             max="100"

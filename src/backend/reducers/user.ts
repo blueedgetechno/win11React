@@ -83,7 +83,7 @@ export const userSlice = createSlice({
         user_delete: (state) => {
             state.id = initialState.id
             state.email = initialState.email
-            state.usageTime = initialState.usageTime 
+            state.usageTime = initialState.usageTime
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }

@@ -20,6 +20,8 @@ const size = () =>
         : 1920 * 1080;
 export const MAX_BITRATE = () => (10000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
+export const MAX_FRAMERATE = 120
+export const MIN_FRAMERATE = 40
 
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
@@ -113,6 +115,8 @@ type Data = {
     ads_period: number;
     bitrate: number;
     prev_bitrate: number;
+    framerate: number;
+    prev_framerate: number;
     auth?: AuthSessionResp;
     metrics?: Metric;
     peers: { email: string; last_check: number; start_at: number }[];
@@ -130,6 +134,8 @@ const initialState: Data = {
     fullscreen: false,
     bitrate: MIN_BITRATE(),
     prev_bitrate: MIN_BITRATE(),
+    framerate: 60,
+    prev_framerate: 120,
     peers: []
 };
 
@@ -270,6 +276,16 @@ export const remoteSlice = createSlice({
                 client?.ChangeBitrate(state.bitrate);
                 state.prev_bitrate = state.bitrate;
             }
+            if (state.framerate != state.prev_framerate) {
+                client?.ChangeFramerate(state.framerate);
+                state.prev_framerate = state.framerate;
+            }
+        },
+        change_framerate: (state, action: PayloadAction<number>) => {
+            if (state.active)
+                state.framerate =
+                    ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) * action.payload +
+                    MIN_FRAMERATE;
         },
         change_bitrate: (state, action: PayloadAction<number>) => {
             if (state.active)
