@@ -18,7 +18,7 @@ type Data = {
 
 const initialState: Data = {
     quicks: [
-                {
+        {
             ui: true,
             src: 'FiVideoOff',
             name: 'Video toggle',
@@ -38,7 +38,7 @@ const initialState: Data = {
             name: 'Scan Code',
             state: 'system.power.saver.state',
             action: 'remote/scancode_toggle'
-        },
+        }
     ],
     notifications: [],
 

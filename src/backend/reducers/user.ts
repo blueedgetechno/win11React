@@ -53,9 +53,8 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         user_delete: (state) => {
-            state.id = initialState.id
-            state.email = initialState.email
-            state.usageTime = initialState.usageTime 
+            state.id = initialState.id;
+            state.email = initialState.email;
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }
@@ -66,7 +65,7 @@ export const userSlice = createSlice({
             hander: (state, action) => {
                 state.id = action.payload.id;
                 state.email = action.payload.email;
-                state.plans = action.payload.plans
+                state.plans = action.payload.plans;
             }
         });
     }

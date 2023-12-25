@@ -42,8 +42,7 @@ function App() {
         if (e.target.dataset.menu != null) {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
-            if (data.menu == 'desk' && remote.active)
-                return;
+            if (data.menu == 'desk' && remote.active) return;
 
             dispatch(menu_show(data));
         }
@@ -51,17 +50,14 @@ function App() {
 
     useEffect(() => {
         window.history.replaceState({}, document.title, '/' + '');
-        preload()
-            .finally(async () => {
-                console.log('Loaded');
-                await new Promise((r) => setTimeout(r, 1000));
-                setLockscreen(false);
-            });
-
+        preload().finally(async () => {
+            console.log('Loaded');
+            await new Promise((r) => setTimeout(r, 1000));
+            setLockscreen(false);
+        });
     }, []);
     useEffect(() => {
-        if (user.id == 'unknown')
-            return
+        if (user.id == 'unknown') return;
 
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
@@ -83,8 +79,7 @@ function App() {
     }, [fullscreen, remote.active]);
 
     useEffect(() => {
-        if (!remote.active)
-            return
+        if (!remote.active) return;
 
         const handleClipboard = () => {
             navigator.clipboard
@@ -121,10 +116,14 @@ function App() {
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
                 <div className="appwrap ">
-                    {remote.active ? <Remote /> : <>
-                        <Background />
-                        <AvailableCluster />
-                    </>}
+                    {remote.active ? (
+                        <Remote />
+                    ) : (
+                        <>
+                            <Background />
+                            <AvailableCluster />
+                        </>
+                    )}
                     {!fullscreen ? (
                         <>
                             <SidePane />
@@ -133,19 +132,21 @@ function App() {
                             <Popup />
                             <WidPane />
                             <StartMenu />
-                            {remote.connection?.video != 'connected'
-                                ? <div
+                            {remote.connection?.video != 'connected' ? (
+                                <div
                                     className="desktop"
                                     data-menu="desk"
                                     data-mobile={isMobile()}
                                 >
                                     <DesktopApp />
-                                    {Object.keys(Applications).map((key, idx) => {
-                                        var WinApp = Applications[key];
-                                        return <WinApp key={idx} />;
-                                    })}
+                                    {Object.keys(Applications).map(
+                                        (key, idx) => {
+                                            var WinApp = Applications[key];
+                                            return <WinApp key={idx} />;
+                                        }
+                                    )}
                                 </div>
-                                : null}
+                            ) : null}
                         </>
                     ) : null}
                 </div>

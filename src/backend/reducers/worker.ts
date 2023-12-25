@@ -1,7 +1,23 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, authenticate_session, open_remote } from '.';
 import { RenderNode } from '../utils/tree';
-import { AccessApplication, AddSubscription, AdjustSubscription, ConfigureApplication, CreateWorkerSession, DeactivateWorkerSession, DeleteApplication, DeleteVolume, FetchAuthorizedWorkers, ForkVolume, ModifySubscription, PatchApp, SetDefaultOsVolume, StopApplication, StopVolume } from './fetch';
+import {
+    AccessApplication,
+    AddSubscription,
+    AdjustSubscription,
+    ConfigureApplication,
+    CreateWorkerSession,
+    DeactivateWorkerSession,
+    DeleteApplication,
+    DeleteVolume,
+    FetchAuthorizedWorkers,
+    ForkVolume,
+    ModifySubscription,
+    PatchApp,
+    SetDefaultOsVolume,
+    StopApplication,
+    StopVolume
+} from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
 
 type WorkerType = {
@@ -32,7 +48,7 @@ export const workerAsync = {
     access_volume: createAsyncThunk(
         'access_volume',
         async (volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(" ").at(-1)
+            volume_id = volume_id.split(' ').at(-1);
             const result = await AccessApplication({ volume_id });
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
@@ -45,12 +61,15 @@ export const workerAsync = {
     stop_volume: createAsyncThunk(
         'stop_volume',
         async (volume_id: string, { getState }): Promise<any> => {
-            await StopVolume(volume_id)
+            await StopVolume(volume_id);
         }
     ),
     delete_volume: createAsyncThunk(
         'delete_volume',
-        async ({ volume_id }: { volume_id: string }, { getState }): Promise<any> => {
+        async (
+            { volume_id }: { volume_id: string },
+            { getState }
+        ): Promise<any> => {
             await DeleteVolume(volume_id);
         }
     ),
@@ -69,8 +88,8 @@ export const workerAsync = {
     // ),
     fork_volume: createAsyncThunk(
         'fork_volume',
-        async ( volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(" ").at(-1)
+        async (volume_id: string, { getState }): Promise<any> => {
+            volume_id = volume_id.split(' ').at(-1);
             let cluster_id = 'todo';
             let gpu_model = 'todo';
             let vcpus = 'todo';
@@ -99,23 +118,25 @@ export const workerAsync = {
             appDispatch(open_remote(storage_id));
         }
     ),
-    stop_storage: createAsyncThunk( //TODO
+    stop_storage: createAsyncThunk(
+        //TODO
         'stop_storage',
-        async (storage_id: string, {getState}) => {
-            await StopApplication(storage_id)
+        async (storage_id: string, { getState }) => {
+            await StopApplication(storage_id);
         }
     ),
-    delete_storage: createAsyncThunk( //TODO
+    delete_storage: createAsyncThunk(
+        //TODO
         'delete_storage',
-        async (storage_id: string, {getState}) => {
+        async (storage_id: string, { getState }) => {
             await DeleteApplication(storage_id);
         }
     ),
 
     create_session: createAsyncThunk(
         'create_session',
-        async (worker_session_id: string, {getState}): Promise<any> => {
-            await CreateWorkerSession(worker_session_id)
+        async (worker_session_id: string, { getState }): Promise<any> => {
+            await CreateWorkerSession(worker_session_id);
         }
     ),
 
@@ -142,17 +163,19 @@ export const workerAsync = {
     create_subscription: createAsyncThunk(
         'create_subscription',
         async (): Promise<any> => {
-            let email = ""
-            let plan = ""
-            let free = ""
+            let email = '';
+            let plan = '';
+            let free = '';
             await AddSubscription({
-                email, plan, free
+                email,
+                plan,
+                free
             });
         }
     ),
     renew_subscription: createAsyncThunk(
         'renew_subscription',
-        async (email:string, { getState }): Promise<any> => {
+        async (email: string, { getState }): Promise<any> => {
             await ModifySubscription({
                 action: 'RENEW',
                 email
@@ -161,7 +184,7 @@ export const workerAsync = {
     ),
     upgrade_subscription: createAsyncThunk(
         'upgrade_subscription',
-        async (email:string, { getState }): Promise<any> => {
+        async (email: string, { getState }): Promise<any> => {
             await ModifySubscription({
                 action: 'UPGRADE',
                 email
@@ -170,39 +193,39 @@ export const workerAsync = {
     ),
     cancel_subscription: createAsyncThunk(
         'cancel_subscription',
-        async (email:string, { getState }): Promise<any> => {
+        async (email: string, { getState }): Promise<any> => {
             await ModifySubscription({
                 action: 'CANCEL',
                 email
             });
         }
     ),
-    
+
     adjust_subscription: createAsyncThunk(
         'adjust_subscription',
-        async (email:string, { getState }): Promise<any> => {
-            let created_at = '' 
-            let ends_at = '' 
-            
+        async (email: string, { getState }): Promise<any> => {
+            let created_at = '';
+            let ends_at = '';
+
             await AdjustSubscription({
                 email,
-                created_at, 
-                ends_at 
+                created_at,
+                ends_at
             });
         }
     ),
     release_app: createAsyncThunk(
         'release_app',
         async (store_id: number, { getState }): Promise<any> => {
-            let vol_speed = ""
-            let vol_availability = ""
-            let gpu_model = ""
-            let desc = ""
-            let vcpus = ""
-            let ram = ""
-            let vdriver = ""
-            let hidevm = ""
-            let cluster_id = ""
+            let vol_speed = '';
+            let vol_availability = '';
+            let gpu_model = '';
+            let desc = '';
+            let vcpus = '';
+            let ram = '';
+            let vdriver = '';
+            let hidevm = '';
+            let cluster_id = '';
             await ConfigureApplication({
                 vol_speed,
                 vol_availability,
@@ -213,22 +236,22 @@ export const workerAsync = {
                 ram,
                 vdriver,
                 hidevm,
-                cluster_id,
+                cluster_id
             });
         }
     ),
     patch_app: createAsyncThunk(
         'patch_app',
         async (app_id: number, { getState }): Promise<any> => {
-            let desc="" 
-            let cluster_id=""
+            let desc = '';
+            let cluster_id = '';
             await PatchApp({
-                app_id, 
+                app_id,
                 desc,
                 cluster_id
             });
         }
-    ),
+    )
 };
 
 export const workerSlice = createSlice({
@@ -300,7 +323,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.access_worker,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             }
         );
     }

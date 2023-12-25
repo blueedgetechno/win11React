@@ -279,10 +279,8 @@ const DetailPage = ({ app }) => {
     const region = ['Hà Nội', 'India'];
 
     useEffect(() => {
-        FetchApp(app)
-            .then(x => SetOptions(x))
-    },[])
-
+        FetchApp(app).then((x) => SetOptions(x));
+    }, []);
 
     // useLayoutEffect(() => {
     //     const element = document.getElementById('storeScroll');

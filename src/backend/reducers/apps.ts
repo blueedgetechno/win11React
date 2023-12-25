@@ -102,8 +102,7 @@ export const appsAsync = {
                 safe
             );
 
-            if ((getState() as RootState).remote.remote_id != undefined)
-                return
+            if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
@@ -119,7 +118,7 @@ export const appsAsync = {
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(fetch_app());
 
@@ -147,7 +146,7 @@ export const appsAsync = {
         async (storage_id: string, { getState }): Promise<string> => {
             if ((getState() as RootState).remote.remote_id == storage_id) {
                 appDispatch(toggle_remote());
-                return
+                return;
             }
 
             appDispatch(close_remote());
@@ -164,7 +163,7 @@ export const appsAsync = {
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             appDispatch(open_remote(storage_id));
@@ -190,7 +189,7 @@ export const appsAsync = {
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(open_remote(storage_id));
             return storage_id;
@@ -201,8 +200,7 @@ export const appsAsync = {
         'start_app',
         async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
-            if ((getState() as RootState).remote.remote_id != undefined)
-                return
+            if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
             const url = new URL(result.url);
@@ -216,7 +214,7 @@ export const appsAsync = {
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(open_remote(storage_id));
 
@@ -509,11 +507,11 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.pause_app,

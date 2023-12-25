@@ -28,7 +28,7 @@ export async function CacheRequest<T>(
     sec: number,
     req: () => Promise<T>
 ): Promise<T> {
-    sec = window.location.href.includes('localhost') ? 10 * 60 : sec
+    sec = window.location.href.includes('localhost') ? 10 * 60 : sec;
     const store = async (raw: any, timestamp: number) => {
         if (db == null) {
             localStorage.setItem(
@@ -166,8 +166,8 @@ export async function BuilderHelper<T, U, V>(
                             type: 'notify',
                             data: {}
                         })
-                    )
-                }
+                    );
+                };
 
                 setTimeout(notify, 100);
             }
@@ -190,11 +190,8 @@ export async function BuilderHelper<T, U, V>(
                             urlToImage: action.type
                         })
                     );
-                    appDispatch(
-                        popup_close()
-                    )
-                }
-
+                    appDispatch(popup_close());
+                };
 
                 setTimeout(notify, 100);
             }
@@ -215,8 +212,8 @@ export async function BuilderHelper<T, U, V>(
                             urlToImage: action.type
                         })
                     );
-                    appDispatch(popup_close())
-                }
+                    appDispatch(popup_close());
+                };
 
                 setTimeout(notify, 100);
             }

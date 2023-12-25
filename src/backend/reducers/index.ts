@@ -49,7 +49,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const { update_available_cluster } = globalSlice.actions
+export const { update_available_cluster } = globalSlice.actions;
 export const { user_delete } = userSlice.actions;
 export const { wall_next, wall_set, wall_lock, wall_unlock } =
     wallSlice.actions;
@@ -119,8 +119,8 @@ export const {
     reset_app,
     access_app
 } = appsAsync;
-export const { 
-    fetch_worker, 
+export const {
+    fetch_worker,
     access_worker,
 
     access_volume,

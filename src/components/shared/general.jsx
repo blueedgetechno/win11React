@@ -42,7 +42,7 @@ export const Icon = (props) => {
                 data-action={props.click}
                 data-payload={props.payload}
                 data-menu={props.menu}
-                style={{...props.style}}
+                style={{ ...props.style }}
             >
                 <FontAwesomeIcon
                     data-flip={props.flip != null}
@@ -73,7 +73,7 @@ export const Icon = (props) => {
                 data-action={props.click}
                 data-payload={props.payload}
                 data-menu={props.menu}
-                style={{...props.style}}
+                style={{ ...props.style }}
             >
                 <CustomIcon
                     data-flip={props.flip != null}
@@ -99,7 +99,7 @@ export const Icon = (props) => {
                 onClick={props.onClick || (props.pr && clickDispatch) || null}
                 data-menu={props.menu}
                 data-pr={props.pr}
-                style={{...props.style}}
+                style={{ ...props.style }}
             >
                 {props.className == 'tsIcon' ? (
                     <div
@@ -320,8 +320,8 @@ export const ToolBar = (props) => {
             ];
         }
 
-        document.addEventListener('mouseup',closeDrag) ;
-        document.addEventListener('mousemove',eleDrag);
+        document.addEventListener('mouseup', closeDrag);
+        document.addEventListener('mousemove', eleDrag);
     };
 
     const setPos = (pos0, pos1) => {
@@ -355,8 +355,8 @@ export const ToolBar = (props) => {
     };
 
     const closeDrag = () => {
-        document.removeEventListener('mouseup',closeDrag) ;
-        document.removeEventListener('mousemove',eleDrag);
+        document.removeEventListener('mouseup', closeDrag);
+        document.removeEventListener('mousemove', eleDrag);
 
         wnapp.classList.remove('notrans');
         wnapp.classList.remove('z9900');

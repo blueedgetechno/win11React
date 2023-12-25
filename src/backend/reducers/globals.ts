@@ -239,7 +239,7 @@ export const globalSlice = createSlice({
     initialState,
     reducers: {
         update_available_cluster: (state, action: PayloadAction<boolean>) => {
-            state.service_available = action.payload
+            state.service_available = action.payload;
         }
     },
     extraReducers: (builder) => {

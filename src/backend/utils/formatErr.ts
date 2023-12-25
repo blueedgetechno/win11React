@@ -15,17 +15,17 @@ map.set(CAUSE.NEED_WAIT, 'need_wait'); //
 map.set(CAUSE.INVALID_REQUEST, 'invalid_request');
 
 export function formatError(error: Error) {
-    let formatMsg
+    let formatMsg;
     console.log(error);
     const err = JSON.parse(error.message) as {
         message: string;
         code: CAUSE;
     };
-    formatMsg = map.get(err.code)
+    formatMsg = map.get(err.code);
     if (err.code == 0 || !map.get(err.code)) {
-        formatMsg = includesErr(err.message)
+        formatMsg = includesErr(err.message);
     }
-    return formatMsg
+    return formatMsg;
 }
 
 const listErr = [

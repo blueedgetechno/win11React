@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
-import { MdVideoSettings } from "react-icons/md";
-import * as md from "react-icons/md";
-import * as fi from "react-icons/fi";
+import { MdVideoSettings } from 'react-icons/md';
+import * as md from 'react-icons/md';
+import * as fi from 'react-icons/fi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -109,7 +109,7 @@ export const SidePane = () => {
     const rSlider = document.querySelector('.rSlider');
 
     const setBitrate = (e) => {
-        dispatch(change_bitrate(e.target.value))
+        dispatch(change_bitrate(e.target.value));
         sliderBackground(rSlider, e.target.value);
     };
 
@@ -177,19 +177,25 @@ export const SidePane = () => {
                                     data-payload={qk.payload || qk.state}
                                     data-state={pnstates[idx]}
                                 >
-                                    {
-                                        Object.keys(md).includes(qk.src)
-                                        ? (() => {const WinApp = md[qk.src]; return <WinApp/>})()
-                                        : Object.keys(fi).includes(qk.src) 
-                                        ? (() => {const WinApp = fi[qk.src]; return <WinApp/>})()
-                                        : <Icon
+                                    {Object.keys(md).includes(qk.src) ? (
+                                        (() => {
+                                            const WinApp = md[qk.src];
+                                            return <WinApp />;
+                                        })()
+                                    ) : Object.keys(fi).includes(qk.src) ? (
+                                        (() => {
+                                            const WinApp = fi[qk.src];
+                                            return <WinApp />;
+                                        })()
+                                    ) : (
+                                        <Icon
                                             className="quickIcon"
                                             ui={qk.ui}
                                             src={qk.src}
                                             width={14}
                                             invert={pnstates[idx] ? true : null}
                                         />
-                                    }
+                                    )}
                                 </div>
                                 <div className="qktext">{qk.name}</div>
                             </div>
@@ -209,8 +215,11 @@ export const SidePane = () => {
                 </div> */}
                 <div className="sliderCont flex flex-col items-start">
                     {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
-                    <div className='flex items-center'><MdVideoSettings className="mx-2 text-[1.3rem]" /> Chất lượng hình ảnh:</div>
-                    <div className='flex flex-1 items-center gap-[4px] w-full text-[12px]'>
+                    <div className="flex items-center">
+                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> Chất
+                        lượng hình ảnh:
+                    </div>
+                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
                         <span>Low</span>
                         <input
                             className="sliders rSlider"

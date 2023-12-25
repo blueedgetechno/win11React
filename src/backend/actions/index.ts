@@ -30,7 +30,7 @@ export const refresh = async () => {
 
 export const afterMath = (event: any) => {
     var ess = [
-        ['START','startmenu/starthid'], // TODO
+        ['START', 'startmenu/starthid'], // TODO
         ['BAND', 'sidepane/sidepane_bandhide'],
         ['PANE', 'sidepane/sidepane_panehide'],
         ['MENU', 'menu/menu_hide']
@@ -160,20 +160,18 @@ export const warning_fullscreen = () => {
     }, 5000);
 };
 
-
 export const block_user_action = async () => {
     appDispatch(popup_open({ type: 'notify', data: {} }));
 
     while (true) {
-        const status = store.getState().remote.connection.video
+        const status = store.getState().remote.connection.video;
         if (status != 'connected') {
-            await new Promise(r => setTimeout(r,1000))
-            continue
+            await new Promise((r) => setTimeout(r, 1000));
+            continue;
         }
-        
-        break
-    }
 
+        break;
+    }
 
     appDispatch(popup_close());
 };

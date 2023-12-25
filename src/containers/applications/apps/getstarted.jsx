@@ -45,10 +45,13 @@ export const Getstarted = () => {
         setPageNo(0);
         appDispatch(app_close('getstarted'));
         appDispatch(demo_app());
-        setTimeout(() => {
-            appDispatch(close_remote());
-            appDispatch(app_toggle('payment'));
-        }, 10 * 60 * 1000);
+        setTimeout(
+            () => {
+                appDispatch(close_remote());
+                appDispatch(app_toggle('payment'));
+            },
+            10 * 60 * 1000
+        );
     }, [pageNo]);
 
     const country = (country) => {
@@ -107,7 +110,8 @@ export const Getstarted = () => {
                                 </div>
 
                                 <div className="no_button base" onClick={login}>
-                                    Have an account? <span className='underline'> Sign in</span>
+                                    Have an account?{' '}
+                                    <span className="underline"> Sign in</span>
                                 </div>
                                 <div
                                     className="yes_button base"
@@ -167,17 +171,17 @@ export const Getstarted = () => {
                                         </div>
                                     </div>
                                     <div className="list_oobe mt-4 win11Scroll">
-                                            {experiences.map((e, i) => {
-                                                return (
-                                                    <div
-                                                        key={i}
-                                                        className="list_oobe_opt"
-                                                        onClick={() => exp(e)}
-                                                    >
-                                                        {e}
-                                                    </div>
-                                                );
-                                            })}
+                                        {experiences.map((e, i) => {
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className="list_oobe_opt"
+                                                    onClick={() => exp(e)}
+                                                >
+                                                    {e}
+                                                </div>
+                                            );
+                                        })}
                                         <div
                                             className="yes_button base"
                                             onClick={nextPage}
@@ -271,7 +275,6 @@ export const Getstarted = () => {
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div
                                             className="yes_button base"

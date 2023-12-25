@@ -13,7 +13,6 @@ export const Remote = () => {
     const remoteVideo = useRef(null);
     const remoteAudio = useRef(null);
 
-
     useEffect(() => {
         if (!remote.active || remote.auth == undefined) return;
         SetupWebRTC();
