@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { MdVideoSettings } from "react-icons/md";
+import * as md from "react-icons/md";
+import * as fi from "react-icons/fi";
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -175,13 +177,19 @@ export const SidePane = () => {
                                     data-payload={qk.payload || qk.state}
                                     data-state={pnstates[idx]}
                                 >
-                                    <Icon
-                                        className="quickIcon"
-                                        ui={qk.ui}
-                                        src={qk.src}
-                                        width={14}
-                                        invert={pnstates[idx] ? true : null}
-                                    />
+                                    {
+                                        Object.keys(md).includes(qk.src)
+                                        ? (() => {const WinApp = md[qk.src]; return <WinApp/>})()
+                                        : Object.keys(fi).includes(qk.src) 
+                                        ? (() => {const WinApp = fi[qk.src]; return <WinApp/>})()
+                                        : <Icon
+                                            className="quickIcon"
+                                            ui={qk.ui}
+                                            src={qk.src}
+                                            width={14}
+                                            invert={pnstates[idx] ? true : null}
+                                        />
+                                    }
                                 </div>
                                 <div className="qktext">{qk.name}</div>
                             </div>
@@ -203,7 +211,7 @@ export const SidePane = () => {
                     {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
                     <div className='flex items-center'><MdVideoSettings className="mx-2 text-[1.3rem]" /> Chất lượng hình ảnh:</div>
                     <div className='flex flex-1 items-center gap-[4px] w-full text-[12px]'>
-                        <span>Thấp</span>
+                        <span>Low</span>
                         <input
                             className="sliders rSlider"
                             onChange={setBitrate}
@@ -212,25 +220,9 @@ export const SidePane = () => {
                             max="100"
                             defaultValue="100"
                         />
-                        <span>Cao</span>
+                        <span>High</span>
                     </div>
                 </div>
-                {/*<div className="sliderCont">
-                    <Icon
-                        className="mx-2"
-                        src={'audio' + tasks.audio}
-                        ui
-                        width={18}
-                    />
-                    <input
-                        className="sliders vSlider"
-                        onChange={setVolume}
-                        type="range"
-                        min="0"
-                        max="100"
-                        defaultValue="100"
-                    />
-                </div>*/}
             </div>
             <div className="p-1 bottomBar">
                 <div className="px-3 battery-sidepane">
