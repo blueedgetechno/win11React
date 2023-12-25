@@ -103,8 +103,10 @@
     height: 36px;
     cursor: pointer;
     width: max-content;
+    max-width: 110px;
+
     text-align: center;
-    line-height: 36px;
+    //line-height: 36px;
     position: absolute;
     font-size: 14px;
     right: 150px;

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
-import { MdVideoSettings } from 'react-icons/md';
-import * as md from 'react-icons/md';
 import * as fi from 'react-icons/fi';
+import * as md from 'react-icons/md';
+import { MdVideoSettings } from 'react-icons/md';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -106,16 +106,16 @@ export const SidePane = () => {
     const dispatch = appDispatch;
 
     const vSlider = document.querySelector('.vSlider');
-    const bSlider = document.querySelector('.bSlider');
-    const rSlider = document.querySelector('.rSlider');
+    const framerateSlider = document.querySelector('.framerateSlider');
+    const bitrateSlider = document.querySelector('.bitrateSlider');
 
     const setBitrate = (e) => {
         dispatch(change_bitrate(e.target.value));
-        sliderBackground(rSlider, e.target.value);
+        sliderBackground(bitrateSlider, e.target.value);
     };
     const setFramerate = (e) => {
         dispatch(change_framerate(e.target.value));
-        sliderBackground(rSlider, e.target.value);
+        sliderBackground(framerateSlider, e.target.value);
     };
 
     const setVolume = (e) => {
@@ -227,7 +227,7 @@ export const SidePane = () => {
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
                         <span>Low</span>
                         <input
-                            className="sliders rSlider"
+                            className="sliders bitrateSlider"
                             onChange={setBitrate}
                             type="range"
                             min="0"
@@ -244,7 +244,7 @@ export const SidePane = () => {
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
                         <span>Low</span>
                         <input
-                            className="sliders rSlider"
+                            className="sliders framerateSlider"
                             onChange={setFramerate}
                             type="range"
                             min="0"
