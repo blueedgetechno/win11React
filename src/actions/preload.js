@@ -235,6 +235,15 @@ export const fetchUser = async () => {
 
     payloadUser = { ...payloadUser, usageTime: data };
   }
+
+  // TODO
+  const {data,error:er} = await supabase.rpc('list_beta_user')
+  if (er) 
+    return
+
+  if (data.map(x => x.email).includes(payloadUser.email))
+    document.location.href = 'https://dev-thinkmay.netlify.app'
+
   store.dispatch({
     type: "ADD_USER",
     payload: payloadUser,
