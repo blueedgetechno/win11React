@@ -27,8 +27,8 @@ export const StartMenu = () => {
 
   const checkPackage = () =>{
     const packages = {
-      week :'20h',
-      month: '100h',
+      week :'24h',
+      month: '110h',
   
     }
 
@@ -38,7 +38,7 @@ export const StartMenu = () => {
 
   useEffect(()=>{
     const checkOverUsing = async () =>{
-      if(isOverUsing() || user?.email =='tranghalethi@gmail.com'){
+      if(isOverUsing()){
         await fetch(
           "https://discord.com/api/webhooks/1158696317728600074/8QzsXoCsgY3oSTJvADvcRh3oeOel-Ofs6HK_aeJzD1nAMdwe2ppeI5bXO99rtVvfttOp",
           {

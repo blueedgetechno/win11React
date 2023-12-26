@@ -20,7 +20,10 @@ export const isWhiteList = () => {
 const isVipUser = (email) => {
   const list = {
     "leanhthong08@gmail.com": true,
+    "tranghalethi@gmail.com": true,
     "sieunhankiet@gmail.com": true,
+    "thuongkp789@gmail.com": true,
+
   }
 
   return list[email]
@@ -30,12 +33,13 @@ export const isOverUsing = () => {
   const usageTime = user?.usageTime?.at(0) ?? {};
 
   const packages = {
-    week: '20',
-    month: '100',
+    week: '24',
+    month: '110',
   }
 
   let sub = packages[usageTime?.package] ?? '99999'
-  if (isVipUser(user?.email)) sub = 130
+
+  if (isVipUser(user?.email)) sub = 160
 
   return Number.parseInt(usageTime?.total_time) > +sub
 
