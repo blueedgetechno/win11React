@@ -3,7 +3,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
 import { preload } from './backend/actions/background';
 import { FirstTime, afterMath } from './backend/actions/index';
-import { appDispatch, menu_show, useAppSelector } from './backend/reducers';
+import {
+    appDispatch,
+    menu_show,
+    set_fullscreen,
+    useAppSelector
+} from './backend/reducers';
 import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
@@ -19,12 +24,9 @@ import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
 
-let clipboard = '';
-let shouldResetKey = false;
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
-    const wall = useAppSelector((state) => state.wallpaper);
 
     const [lockscreen, setLockscreen] = useState(true);
 
@@ -67,48 +69,27 @@ function App() {
         };
     }, [user.id]);
 
-    const [fullscreen, setFullscreen] = useState(false);
     useEffect(() => {
-        if (fullscreen) {
+        if (remote.fullscreen) {
             window.onclick = null;
             window.oncontextmenu = (ev) => ev.preventDefault();
         } else {
             window.oncontextmenu = ctxmenu;
             window.onclick = afterMath;
         }
-    }, [fullscreen, remote.active]);
 
-    useEffect(() => {
         if (!remote.active) return;
 
-        const handleClipboard = () => {
-            navigator.clipboard
-                .readText()
-                .then((_clipboard) => {
-                    shouldResetKey = true;
-                    if (_clipboard == clipboard) return;
-
-                    client?.hid?.SetClipboard(_clipboard);
-                    clipboard = _clipboard;
-                })
-                .catch(() => {
-                    if (shouldResetKey) client?.hid?.ResetKeyStuck();
-
-                    shouldResetKey = false;
-                });
-        };
         const handleState = () => {
             const fullscreen = document.fullscreenElement != null;
-            setFullscreen(fullscreen);
+            if (fullscreen == remote.fullscreen) return;
+
+            appDispatch(set_fullscreen(fullscreen));
         };
 
         const UIStateLoop = setInterval(handleState, 100);
-        const ClipboardLoop = setInterval(handleClipboard, 1000);
-        return () => {
-            clearInterval(ClipboardLoop);
-            clearInterval(UIStateLoop);
-        };
-    }, [remote.active]);
+        return () => clearInterval(UIStateLoop);
+    }, [remote.active, remote.fullscreen]);
 
     return (
         <div className="App">
@@ -124,7 +105,7 @@ function App() {
                             <AvailableCluster />
                         </>
                     )}
-                    {!fullscreen ? (
+                    {!remote.fullscreen ? (
                         <>
                             <SidePane />
                             <Taskbar />
@@ -132,21 +113,17 @@ function App() {
                             <Popup />
                             <WidPane />
                             <StartMenu />
-                            {remote.connection?.video != 'connected' ? (
-                                <div
-                                    className="desktop"
-                                    data-menu="desk"
-                                    data-mobile={isMobile()}
-                                >
-                                    <DesktopApp />
-                                    {Object.keys(Applications).map(
-                                        (key, idx) => {
-                                            var WinApp = Applications[key];
-                                            return <WinApp key={idx} />;
-                                        }
-                                    )}
-                                </div>
-                            ) : null}
+                            <div
+                                className="desktop"
+                                data-menu="desk"
+                                data-mobile={isMobile()}
+                            >
+                                {!remote.active ? <DesktopApp /> : null}
+                                {Object.keys(Applications).map((key, idx) => {
+                                    var WinApp = Applications[key];
+                                    return <WinApp key={idx} />;
+                                })}
+                            </div>
                         </>
                     ) : null}
                 </div>

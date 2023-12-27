@@ -7,10 +7,11 @@ import {
     desk_add,
     fetch_app,
     open_remote,
+    ready,
     scancode,
     toggle_remote
 } from '.';
-import { CloseDemo, block_user_action, warning_fullscreen } from '../actions';
+import { CloseDemo } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
@@ -111,6 +112,7 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
+            await ready();
 
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
@@ -121,8 +123,6 @@ export const appsAsync = {
             const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(fetch_app());
-
-            warning_fullscreen();
         }
     ),
 
@@ -136,9 +136,8 @@ export const appsAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
+            await ready();
             CloseDemo();
-
-            warning_fullscreen();
         }
     ),
     access_app: createAsyncThunk(
@@ -146,6 +145,7 @@ export const appsAsync = {
         async (storage_id: string, { getState }): Promise<string> => {
             if ((getState() as RootState).remote.remote_id == storage_id) {
                 appDispatch(toggle_remote());
+                await ready();
                 return;
             }
 
@@ -154,8 +154,6 @@ export const appsAsync = {
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
-
-            await appDispatch(authenticate_session({ ref }));
 
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
@@ -166,8 +164,9 @@ export const appsAsync = {
             const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
+            await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
-            block_user_action();
+            await ready();
 
             return storage_id;
         }
@@ -181,8 +180,6 @@ export const appsAsync = {
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
 
-            await appDispatch(authenticate_session({ ref }));
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
@@ -191,7 +188,10 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
+
+            await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
+            await ready();
             return storage_id;
         }
     ),
@@ -207,7 +207,6 @@ export const appsAsync = {
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
 
-            await appDispatch(authenticate_session({ ref }));
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
@@ -216,9 +215,11 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(open_remote(storage_id));
 
-            warning_fullscreen();
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(storage_id));
+            await ready();
+
             return storage_id;
         }
     ),
@@ -405,69 +406,20 @@ export const appSlice = createSlice({
             builder,
             {
                 fetch: appsAsync.reset_app,
-                hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
-                    );
-                    if (obj == undefined) return;
-
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
-                }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
-                    );
-                    if (obj == undefined) return;
+                hander: (state, action) => {}
+            },
 
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
-                }
+            {
+                fetch: appsAsync.demo_app,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: appsAsync.install_app,
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.start_app,
@@ -478,40 +430,9 @@ export const appSlice = createSlice({
                             x.action == 'access_app'
                     );
                     if (obj == undefined) return;
-
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
-
                     obj.ready = true;
                     obj.menu = 'running_app';
                 }
-            },
-            {
-                fetch: appsAsync.demo_app,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: appsAsync.install_app,
-                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.pause_app,
@@ -534,7 +455,7 @@ export const appSlice = createSlice({
                             action.payload == x.payload &&
                             x.action == 'access_app'
                     );
-                    state.apps.splice(filtered,1)
+                    state.apps.splice(filtered, 1);
                 }
             },
             {

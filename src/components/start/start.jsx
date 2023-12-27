@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { changeTheme } from '../../backend/actions';
-import { appDispatch, useAppSelector, user_delete } from '../../backend/reducers';
+import {
+    appDispatch,
+    useAppSelector,
+    user_delete
+} from '../../backend/reducers';
 import { isMobile, validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';

@@ -5,19 +5,17 @@ import { UserSession } from './fetch/analytics';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
-
 type Data = User & {
     plans?: string[];
     greenlist?: boolean;
-    usageTime?: UsageTime
-
+    usageTime?: UsageTime;
 };
 interface UsageTime {
-    email: string
-    end_time: string
-    package: string
-    start_time: string
-    total_time: number
+    email: string;
+    end_time: string;
+    package: string;
+    start_time: string;
+    total_time: number;
 }
 const initialState: Data = {
     id: 'unknown',
@@ -27,8 +25,7 @@ const initialState: Data = {
     app_metadata: {},
     user_metadata: {},
     plans: [],
-    greenlist: false,
-
+    greenlist: false
 };
 
 export const userAsync = {
@@ -51,17 +48,29 @@ export const userAsync = {
             );
             if (err != null) throw err;
             {
-                const { data, error } = await supabase.rpc("validate_user_access", {
-                    user_account_id: user?.id,
-                    plan_name: ['day', 'week', 'month', 'fullstack', 'admin']
-                });
+                const { data, error } = await supabase.rpc(
+                    'validate_user_access',
+                    {
+                        user_account_id: user?.id,
+                        plan_name: [
+                            'day',
+                            'week',
+                            'month',
+                            'fullstack',
+                            'admin'
+                        ]
+                    }
+                );
                 if (error) throw error;
-                payloadUser = { ...payloadUser, greenlist: data }
+                payloadUser = { ...payloadUser, greenlist: data };
             }
             if (payloadUser?.greenlist == true) {
-                const { data, error } = await supabase.rpc("get_usage_time_user", {
-                    user_id: payloadUser.id,
-                });
+                const { data, error } = await supabase.rpc(
+                    'get_usage_time_user',
+                    {
+                        user_id: payloadUser.id
+                    }
+                );
                 if (error) return;
 
                 payloadUser = { ...payloadUser, usageTime: data?.at(0) };
@@ -81,9 +90,9 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         user_delete: (state) => {
-            state.id = initialState.id
-            state.email = initialState.email
-            state.usageTime = initialState.usageTime
+            state.id = initialState.id;
+            state.email = initialState.email;
+            state.usageTime = initialState.usageTime;
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }
@@ -94,9 +103,9 @@ export const userSlice = createSlice({
             hander: (state, action) => {
                 state.id = action.payload.id;
                 state.email = action.payload.email;
-                state.plans = action.payload.plans
-                state.greenlist = action.payload.greenlist
-                state.usageTime = action.payload.usageTime
+                state.plans = action.payload.plans;
+                state.greenlist = action.payload.greenlist;
+                state.usageTime = action.payload.usageTime;
             }
         });
     }

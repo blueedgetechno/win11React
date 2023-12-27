@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, authenticate_session, open_remote } from '.';
+import { appDispatch, authenticate_session, open_remote, ready } from '.';
 import { RenderNode } from '../utils/tree';
 import {
     AccessApplication,
@@ -56,6 +56,7 @@ export const workerAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(volume_id));
+            await ready();
         }
     ),
     stop_volume: createAsyncThunk(
@@ -116,6 +117,7 @@ export const workerAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
+            await ready();
         }
     ),
     stop_storage: createAsyncThunk(
@@ -157,6 +159,7 @@ export const workerAsync = {
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(worker_profile_id));
+            await ready();
         }
     ),
 

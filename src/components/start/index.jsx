@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
+import * as fa from 'react-icons/fa';
 import { MdVideoSettings } from 'react-icons/md';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
@@ -101,7 +102,7 @@ export const DesktopApp = () => {
 export const SidePane = () => {
     const sidepane = useAppSelector((state) => state.sidepane);
     const setting = useAppSelector((state) => state.setting);
-    const tasks = useAppSelector((state) => state.taskbar);
+    const remote = useAppSelector((state) => state.remote);
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
@@ -160,16 +161,23 @@ export const SidePane = () => {
     useEffect(() => {
         var tmp = [];
         for (var i = 0; i < sidepane.quicks.length; i++) {
-            var val = getTreeValue(setting, sidepane.quicks[i].state);
+            var val = getTreeValue(
+                { ...setting, ...remote },
+                sidepane.quicks[i].state
+            );
             if (sidepane.quicks[i].name == 'Theme') val = val == 'dark';
             tmp.push(val);
         }
 
         setPnstate(tmp);
-    }, [setting, sidepane]);
+    }, [setting, sidepane, remote]);
 
     return (
-        <div className="sidePane dpShad" data-hide={sidepane.hide}>
+        <div
+            style={{ '--prefix': 'PANE' }}
+            className="sidePane dpShad"
+            data-hide={sidepane.hide}
+        >
             <div className="quickSettings p-5 pb-8">
                 <div className="qkCont">
                     {sidepane.quicks.map((qk, idx) => {
@@ -190,6 +198,11 @@ export const SidePane = () => {
                                     ) : Object.keys(fi).includes(qk.src) ? (
                                         (() => {
                                             const WinApp = fi[qk.src];
+                                            return <WinApp />;
+                                        })()
+                                    ) : Object.keys(fa).includes(qk.src) ? (
+                                        (() => {
+                                            const WinApp = fa[qk.src];
                                             return <WinApp />;
                                         })()
                                     ) : (
@@ -221,7 +234,7 @@ export const SidePane = () => {
                 <div className="sliderCont flex flex-col items-start">
                     {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
                     <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> 
+                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
                         Quality
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
@@ -238,7 +251,7 @@ export const SidePane = () => {
                     </div>
 
                     <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" /> 
+                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
                         Framerate
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">

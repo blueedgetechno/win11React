@@ -10,18 +10,11 @@ import * as modals from './modal';
 const Popup = () => {
     const popup = useAppSelector((state) => state.popup.data_stack.at(-1));
 
-    const closeOutSite = () => {
-        if (popup == undefined) return;
-        else if (popup.type == 'notify') return;
-
-        appDispatch(popup_close());
-    };
     return (
         <>
             {popup != undefined ? (
                 <ReactModal
                     isOpen={true}
-                    onRequestClose={() => closeOutSite()}
                     contentLabel="Modal"
                     className="modalContent "
                     overlayClassName="modalOverlay"

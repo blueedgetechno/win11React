@@ -7,10 +7,8 @@ import {
 } from '@reduxjs/toolkit';
 
 import Dexie, { Table } from 'dexie';
-import { appDispatch, popup_close, popup_open, push_notification } from '..';
-import { externalLink } from '../../utils/constant';
+import { appDispatch, popup_close, popup_open } from '..';
 import { formatError } from '../../utils/formatErr';
-import { formatTitleNotify } from '../../utils/forrmatNotify';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -149,13 +147,13 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => {
-                    appDispatch(popup_open({
+                const notify = async () =>
+                    appDispatch(
+                        popup_open({
                             type: 'notify',
-                            data: {loading:true}
+                            data: { loading: true }
                         })
                     );
-                };
 
                 setTimeout(notify, 100);
             }
@@ -164,15 +162,19 @@ export async function BuilderHelper<T, U, V>(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = async () => {
-                    appDispatch(popup_close());
-                    appDispatch(popup_open({
+                    appDispatch(
+                        popup_open({
                             type: 'complete',
                             data: {
                                 success: false,
-                                content: formatError(action.error as Error),
+                                content: formatError(action.error as Error)
                             }
                         })
                     );
+
+                    await new Promise((r) => setTimeout(r, 3000));
+                    appDispatch(popup_close());
+                    appDispatch(popup_close());
                 };
 
                 setTimeout(notify, 1000);
@@ -182,8 +184,8 @@ export async function BuilderHelper<T, U, V>(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
                 const notify = async () => {
-                    appDispatch(popup_close());
-                    appDispatch(popup_open({
+                    appDispatch(
+                        popup_open({
                             type: 'complete',
                             data: {
                                 success: true,
@@ -192,7 +194,8 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                    await new Promise(r => setTimeout(r,3000))
+                    await new Promise((r) => setTimeout(r, 3000));
+                    appDispatch(popup_close());
                     appDispatch(popup_close());
                 };
 

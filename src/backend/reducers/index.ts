@@ -104,6 +104,8 @@ export const {
     change_bitrate,
     change_framerate,
     fullscreen,
+    set_fullscreen,
+    homescreen,
     audio_status,
     video_status,
     update_connection_path,
@@ -149,6 +151,7 @@ export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const { authenticate_session, ping_session } = remoteAsync;
 
+export { ready } from './remote';
 export const dispatch_generic = async ({
     type,
     payload

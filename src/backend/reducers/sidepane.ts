@@ -22,7 +22,7 @@ const initialState: Data = {
             ui: true,
             src: 'FiVideoOff',
             name: 'Video toggle',
-            state: 'network.wifi.state',
+            state: 'active',
             action: 'remote/toggle_remote'
         },
         {
@@ -34,9 +34,28 @@ const initialState: Data = {
         },
         {
             ui: true,
+            src: 'FaWindows',
+            name: 'Home screen',
+            action: 'remote/homescreen'
+        },
+        {
+            src: 'MdLoop',
+            name: 'Low Period',
+            state: 'low_ads',
+            action: 'remote/ads_period'
+        },
+        {
+            ui: true,
+            src: 'MdFullscreen',
+            name: 'Fullscreen',
+            state: 'fullscreen',
+            action: 'remote/fullscreen'
+        },
+        {
+            ui: true,
             src: 'MdKeyboard',
             name: 'Scan Code',
-            state: 'system.power.saver.state',
+            state: 'scancode',
             action: 'remote/scancode_toggle'
         }
     ],

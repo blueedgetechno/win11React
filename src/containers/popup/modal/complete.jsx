@@ -1,17 +1,10 @@
-import { MdOutlineDone, MdRemoveCircle } from "react-icons/md";
+import { MdOutlineDone, MdRemoveCircle } from 'react-icons/md';
 
-
-export function complete({ data: {
-    success,
-    content,
-} }) {
-
+export function complete({ data: { success, content } }) {
     return (
         <div className="w-[330px] h-auto p-[14px] rounded-lg">
             <div className="notify-icon">
-                {success
-                    ? <MdOutlineDone />
-                    : <MdRemoveCircle />}
+                {success ? <MdOutlineDone /> : <MdRemoveCircle />}
             </div>
             <p className="text-center text-[1.2rem] mb-[24px]">
                 {success ? 'Success' : 'Failure'}
@@ -20,7 +13,6 @@ export function complete({ data: {
         </div>
     );
 }
-
 
 const Content = ({ content }) => {
     return (

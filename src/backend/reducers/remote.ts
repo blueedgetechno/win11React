@@ -2,7 +2,8 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     appDispatch,
     audio_status,
-    push_notification,
+    popup_close,
+    popup_open,
     store,
     video_status
 } from '.';
@@ -20,11 +21,12 @@ const size = () =>
         : 1920 * 1080;
 export const MAX_BITRATE = () => (10000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
-export const MAX_FRAMERATE = 120
-export const MIN_FRAMERATE = 40
+export const MAX_FRAMERATE = 120;
+export const MIN_FRAMERATE = 40;
 
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
+    if (client != null) client.Close();
     client = fun();
     client.HandleMetricRaw = async (data) => {};
     client.HandleMetrics = async (metrics) => {
@@ -43,6 +45,21 @@ export const assign = (fun: () => RemoteDesktopClient) => {
                 break;
         }
     };
+};
+export const ready = async () => {
+    appDispatch(
+        popup_open({
+            type: 'notify',
+            data: {
+                loading: true
+            }
+        })
+    );
+
+    while (!client?.ready()) await new Promise((r) => setTimeout(r, 1000));
+
+    await new Promise((r) => setTimeout(r, 1000));
+    appDispatch(popup_close());
 };
 
 AddNotifier(async (message, text, source) => {
@@ -63,21 +80,6 @@ AddNotifier(async (message, text, source) => {
         appDispatch(audio_status('started'));
         appDispatch(video_status('started'));
     }
-
-    if (message == ConnectionEvent.ReceivedAudioStream)
-        appDispatch(
-            push_notification({
-                title: `Receive audio stream`,
-                type: 'fulfilled'
-            })
-        );
-    if (message == ConnectionEvent.ReceivedAudioStream)
-        appDispatch(
-            push_notification({
-                title: `Receive video stream`,
-                type: 'fulfilled'
-            })
-        );
 });
 
 type ConnectStatus =
@@ -112,7 +114,7 @@ type Data = {
     active: boolean;
     fullscreen: boolean;
     scancode: boolean;
-    ads_period: number;
+    low_ads: boolean;
     bitrate: number;
     prev_bitrate: number;
     framerate: number;
@@ -129,7 +131,7 @@ type Data = {
 
 const initialState: Data = {
     active: false,
-    ads_period: 50,
+    low_ads: true,
     scancode: false,
     fullscreen: false,
     bitrate: MIN_BITRATE(),
@@ -207,7 +209,7 @@ export const remoteSlice = createSlice({
             state.connection = undefined;
             state.metrics = undefined;
             state.fullscreen = false;
-            client?.Close();
+            setTimeout(() => client?.Close(), 100);
             client = null;
         },
         open_remote: (state, action: PayloadAction<string>) => {
@@ -231,6 +233,8 @@ export const remoteSlice = createSlice({
         },
         toggle_remote: (state) => {
             if (!state.active) {
+                if (state.remote_id == undefined) return;
+
                 state.connection = {
                     audio: 'started',
                     video: 'started',
@@ -247,7 +251,7 @@ export const remoteSlice = createSlice({
                 state.connection = undefined;
                 state.metrics = undefined;
                 state.fullscreen = false;
-                client?.Close();
+                setTimeout(() => client?.Close(), 100);
                 client = null;
             }
             state.active = !state.active;
@@ -256,7 +260,7 @@ export const remoteSlice = createSlice({
             client?.HardReset();
         },
         ads_period: (state, action: PayloadAction<number>) => {
-            state.ads_period = action.payload;
+            state.low_ads = !state.low_ads;
         },
         scancode_toggle: (state) => {
             state.scancode = !state.scancode;
@@ -268,8 +272,14 @@ export const remoteSlice = createSlice({
         framedrop: (state, action: PayloadAction<boolean>) => {
             if (state.active) state.frame_drop = action.payload;
         },
+        homescreen: () => {
+            WindowD();
+        },
+        set_fullscreen: (state, action: PayloadAction<boolean>) => {
+            state.fullscreen = action.payload;
+        },
         fullscreen: (state) => {
-            if (state.active) state.fullscreen = true;
+            if (state.active) state.fullscreen = !state.fullscreen;
         },
         sync: (state) => {
             if (state.bitrate != state.prev_bitrate) {
@@ -327,27 +337,6 @@ export const remoteSlice = createSlice({
                 )
                 .map((x) => x.email);
             state.peers = action.payload;
-
-            if (news.length > 0)
-                setTimeout(() => {
-                    appDispatch(
-                        push_notification({
-                            type: 'fulfilled',
-                            name: `${news} joined the stream`,
-                            title: `${news} joined the stream`
-                        })
-                    );
-                }, 500);
-            if (outs.length > 0)
-                setTimeout(() => {
-                    appDispatch(
-                        push_notification({
-                            type: 'fulfilled',
-                            name: `${outs} exit the stream`,
-                            title: `${outs} exit the stream`
-                        })
-                    );
-                }, 500);
         },
         update_connection_path: (state, action: PayloadAction<any>) => {
             if (state.connection != undefined)
