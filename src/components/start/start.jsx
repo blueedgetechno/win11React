@@ -28,16 +28,6 @@ export const StartMenu = () => {
 
     const usageTime = user?.usageTime;
     const total_time = usageTime?.total_time;
-    const checkPackage = () => {
-        const packages = {
-            week: '20h',
-            month: '100h'
-        };
-
-        if (usageTime == undefined) return;
-
-        return packages[usageTime?.package] ?? usageTime?.package;
-    };
 
     return (
         <div
@@ -105,8 +95,6 @@ export const StartMenu = () => {
                                 <span>
                                     {usageTime?.total_time
                                         ? usageTime?.total_time.toFixed(1) +
-                                          '/' +
-                                          checkPackage() +
                                           '/' +
                                           usageTime?.package
                                         : 'Invalid'}
