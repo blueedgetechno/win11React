@@ -529,11 +529,12 @@ export const appSlice = createSlice({
             {
                 fetch: appsAsync.delete_app,
                 hander: (state, action) => {
-                    state.apps = state.apps.filter(
+                    const filtered = state.apps.findIndex(
                         (x) =>
                             action.payload == x.payload &&
                             x.action == 'access_app'
                     );
+                    state.apps.splice(filtered,1)
                 }
             },
             {
