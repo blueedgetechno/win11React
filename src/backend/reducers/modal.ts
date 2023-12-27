@@ -1,6 +1,16 @@
 type PopupData = {
-    type: string;
-    data?: any;
+    type: 'complete';
+    data: {
+        success: boolean
+        content: string
+    };
+} | {
+    type: 'notify';
+    data: {
+        title?: string
+        loading: boolean
+        tips?: boolean
+    };
 };
 
 type Data = {

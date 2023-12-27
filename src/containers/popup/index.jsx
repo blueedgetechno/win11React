@@ -22,7 +22,7 @@ const Popup = () => {
                 <ReactModal
                     isOpen={true}
                     onRequestClose={() => closeOutSite()}
-                    contentLabel="Example Modal"
+                    contentLabel="Modal"
                     className="modalContent "
                     overlayClassName="modalOverlay"
                 >

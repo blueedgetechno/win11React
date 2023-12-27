@@ -1,2 +1,2 @@
-export { fullscreen_warning } from './fullscreen';
+export { complete } from './complete';
 export { notify } from './notify';

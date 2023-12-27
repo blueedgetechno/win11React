@@ -3,16 +3,11 @@ import { useEffect, useState } from 'react';
 
 import { TbLoader3 } from 'react-icons/tb';
 
-export function notify({ data }) {
-    const {
+export function notify({
         title,
-        content,
-        type,
-        showProtip = true,
-        showLoadingProcess = false,
-        loadingProcessMs = 8 * 1000,
-        loadingPercent = 0
-    } = data;
+        tips,
+        loading,
+    }) {
 
     return (
         <div className="w-[330px] h-auto p-[14px]">
@@ -22,31 +17,25 @@ export function notify({ data }) {
             <p className="text-center text-[1.2rem] mb-[24px]">
                 {title ?? 'Please wait...'}
             </p>
-            {/*<p>{content}</p>*/}
-            {showLoadingProcess ? (
-                <LoadingProgressBar percent={loadingPercent} />
-            ) : (
-                ''
-            )}
-            {showProtip ? <Protip></Protip> : ''}
+
+            {loading ?? true
+                ?  <LoadingProgressBar/>
+                : null}
+            {tips ?? true
+                ? <Protip/>
+                : null}
         </div>
     );
 }
 
-const Loading = () => {
-    return <div></div>;
-};
 
-const LoadingProgressBar = ({ percent = 0 }) => {
-    const [loading, setLoading] = useState(percent);
+const LoadingProgressBar = () => {
+    const [loading, setLoading] = useState(0);
 
-    useEffect(() => {
-        setLoading(percent);
-    }, [percent]);
     useEffect(() => {
         const interval = setInterval(() => {
             const randomNumber = Math.floor(Math.random() * 5) + 1;
-            if (percent != 100) {
+            if (loading != 100) {
                 setLoading((prevLoading) =>
                     prevLoading < 94 ? prevLoading + randomNumber : 99
                 );
@@ -54,7 +43,7 @@ const LoadingProgressBar = ({ percent = 0 }) => {
         }, 3.5 * 1000);
 
         return () => clearInterval(interval);
-    }, [percent]);
+    }, [loading]);
 
     return (
         <div className="loading-container !relative">
