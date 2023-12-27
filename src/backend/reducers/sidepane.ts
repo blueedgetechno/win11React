@@ -57,6 +57,13 @@ const initialState: Data = {
             name: 'Scan Code',
             state: 'scancode',
             action: 'remote/scancode_toggle'
+        },
+        {
+            ui: true,
+            src: 'FaExternalLinkAlt',
+            name: 'External tab',
+            state: 'old_version',
+            action: 'remote/remote_version'
         }
     ],
     notifications: [],

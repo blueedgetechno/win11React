@@ -1,5 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, authenticate_session, open_remote, ready } from '.';
+import {
+    RootState,
+    appDispatch,
+    authenticate_session,
+    open_remote,
+    ready
+} from '.';
 import { RenderNode } from '../utils/tree';
 import {
     AccessApplication,
@@ -19,6 +25,7 @@ import {
     StopVolume
 } from './fetch';
 import { BuilderHelper, CacheRequest } from './helper';
+import { openRemotePage } from './remote';
 
 type WorkerType = {
     data: any;
@@ -50,6 +57,9 @@ export const workerAsync = {
         async (volume_id: string, { getState }): Promise<any> => {
             volume_id = volume_id.split(' ').at(-1);
             const result = await AccessApplication({ volume_id });
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url);
+
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
@@ -111,6 +121,8 @@ export const workerAsync = {
         'access_storage',
         async (storage_id: string, { getState }): Promise<any> => {
             const result = await AccessApplication({ storage_id });
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url);
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
@@ -153,6 +165,8 @@ export const workerAsync = {
         'access_worker',
         async (worker_profile_id: string, { getState }): Promise<any> => {
             const result = await CreateWorkerSession(worker_profile_id);
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url);
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');

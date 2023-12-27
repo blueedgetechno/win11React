@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+    RootState,
     appDispatch,
     audio_status,
     popup_close,
@@ -119,6 +120,7 @@ type Data = {
     prev_bitrate: number;
     framerate: number;
     prev_framerate: number;
+    old_version: boolean;
     auth?: AuthSessionResp;
     metrics?: Metric;
     peers: { email: string; last_check: number; start_at: number }[];
@@ -134,6 +136,8 @@ const initialState: Data = {
     low_ads: true,
     scancode: false,
     fullscreen: false,
+    old_version: isMobile(),
+
     bitrate: MIN_BITRATE(),
     prev_bitrate: MIN_BITRATE(),
     framerate: 60,
@@ -148,10 +152,12 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
 
-export function openRemotePage(ref: string, appName: string) {
-    document.location.href = `https://remote.thinkmay.net/?ref=${ref}&turn=true&no_stretch=true&page=${appName}&scancode=${scanCodeApps.includes(
-        appName
-    )}`;
+export function openRemotePage(url: string, appName?: string) {
+    window.open(`${url}&no_stretch=true${(appName != undefined)
+            ? `&page=${appName}&scancode=${scanCodeApps.includes(appName)}`
+            : ''
+        }`,'_blank');
+
 }
 
 export const remoteAsync = {
@@ -180,9 +186,7 @@ export const remoteAsync = {
     },
     authenticate_session: createAsyncThunk(
         'authenticate_session',
-        async ({ ref, uref }: { ref: string; uref?: string }, {}) => {
-            if (isMobile()) openRemotePage(ref, 'thinkmay');
-
+        async ({ ref, uref }: { ref: string; uref?: string }) => {
             const result = await SupabaseFuncInvoke<AuthSessionResp>(
                 'session_authenticate',
                 {
@@ -277,6 +281,9 @@ export const remoteSlice = createSlice({
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
+        },
+        remote_version: (state) => {
+            state.old_version = !state.old_version;
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = !state.fullscreen;

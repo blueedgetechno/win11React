@@ -27,6 +27,7 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
+import { openRemotePage } from './remote';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -106,6 +107,17 @@ export const appsAsync = {
             if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
+            const { data, error } = await virtapi(
+                `rpc/get_app_metadata_from_volume`,
+                'POST',
+                { deploy_as: `${storage_id}` }
+            );
+            if (error) throw error;
+            const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url, app_name);
+
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
@@ -114,13 +126,6 @@ export const appsAsync = {
             appDispatch(open_remote(storage_id));
             await ready();
 
-            const { data, error } = await virtapi(
-                `rpc/get_app_metadata_from_volume`,
-                'POST',
-                { deploy_as: `${storage_id}` }
-            );
-            if (error) throw error;
-            const app_name = data.at(0)?.name as string;
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(fetch_app());
         }
@@ -130,6 +135,9 @@ export const appsAsync = {
         'demo_app',
         async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url);
+
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
@@ -151,10 +159,6 @@ export const appsAsync = {
 
             appDispatch(close_remote());
             const result = await AccessApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
@@ -162,6 +166,16 @@ export const appsAsync = {
             );
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             await appDispatch(authenticate_session({ ref }));
@@ -176,10 +190,6 @@ export const appsAsync = {
         async (storage_id: string, { getState }): Promise<string> => {
             appDispatch(close_remote());
             const result = await ResetApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
@@ -187,6 +197,15 @@ export const appsAsync = {
             );
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             await appDispatch(authenticate_session({ ref }));
@@ -203,10 +222,6 @@ export const appsAsync = {
             if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
@@ -214,6 +229,15 @@ export const appsAsync = {
             );
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             await appDispatch(authenticate_session({ ref }));
