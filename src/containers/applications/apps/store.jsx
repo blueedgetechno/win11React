@@ -586,8 +586,8 @@ const DownPage = ({ action }) => {
                     >
                         <Image
                             className="mx-4 mb-6 rounded"
-                            w={100}
-                            h={100}
+                            w={140}
+                            h={140}
                             src={app.icon}
                             ext
                         />
@@ -647,13 +647,13 @@ const DownPage = ({ action }) => {
                     : listDraftApp.map((i) => (
                           <div
                               key={i}
-                              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                              className="animate-pulse ribcont p-8 pt-8 ltShad prtclk"
                               data-action="page2"
                           >
                               <Image
-                                  className="mx-4 mb-6 rounded bg-slate-200"
-                                  w={100}
-                                  h={100}
+                                  className="mx-5 mb-12 bg-slate-400"
+                                  w={200}
+                                  h={200}
                                   ext
                               />
                               <div className="capitalize text-xs text-center font-semibold"></div>
