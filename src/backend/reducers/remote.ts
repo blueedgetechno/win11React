@@ -153,11 +153,14 @@ export function WindowD() {
 }
 
 export function openRemotePage(url: string, appName?: string) {
-    window.open(`${url}&no_stretch=true${(appName != undefined)
-            ? `&page=${appName}&scancode=${scanCodeApps.includes(appName)}`
-            : ''
-        }`,'_blank');
-
+    window.open(
+        `${url}&no_stretch=true${
+            appName != undefined
+                ? `&page=${appName}&scancode=${scanCodeApps.includes(appName)}`
+                : ''
+        }`,
+        '_blank'
+    );
 }
 
 export const remoteAsync = {
