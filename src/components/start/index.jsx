@@ -52,7 +52,7 @@ export const DesktopApp = () => {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
             dispatch(menu_show(data));
-        }, 100); // 1000 milliseconds = 1 second
+        }, 300); // 1000 milliseconds = 1 second
     };
 
     const handleTouchEnd = () => {
