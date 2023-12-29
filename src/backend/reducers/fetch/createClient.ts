@@ -11,7 +11,7 @@ export enum CAUSE {
     PERMISSION_REQUIRED,
     NEED_WAIT,
     INVALID_REQUEST,
-    REMOTE_TIMEOUT 
+    REMOTE_TIMEOUT
 }
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;

@@ -28,12 +28,15 @@ export const Remote = () => {
         const handleState = () => {
             const fullscreen = document.fullscreenElement != null;
             const havingPtrLock = document.pointerLockElement != null;
-            if (fullscreen && !havingPtrLock) remoteVideo.current.requestPointerLock();
+            if (fullscreen && !havingPtrLock)
+                remoteVideo.current.requestPointerLock();
             else if (!fullscreen && havingPtrLock) document.exitPointerLock();
         };
 
         const UIStateLoop = setInterval(handleState, 100);
-        return () => { clearInterval(UIStateLoop); };
+        return () => {
+            clearInterval(UIStateLoop);
+        };
     }, []);
 
     const SetupWebRTC = () => {

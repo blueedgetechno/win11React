@@ -75,6 +75,7 @@ export const {
 export const {
     app_toggle,
     app_add,
+    app_stuck,
     app_close,
     app_external,
     app_showdesk,
@@ -149,7 +150,12 @@ export const {
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
-export const { authenticate_session, ping_session,load_setting,cache_setting } = remoteAsync;
+export const {
+    authenticate_session,
+    ping_session,
+    load_setting,
+    cache_setting
+} = remoteAsync;
 
 export { ready } from './remote';
 export const dispatch_generic = async ({

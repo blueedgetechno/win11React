@@ -23,26 +23,27 @@ const db = new TodoDB();
 const PREFIX = (name: string) => `THINKMAY_${name}`;
 export async function SetPermanentCache<T>(
     name: string,
-    raw: T,
+    raw: T
 ): Promise<void> {
     const timestamp = new Date().getTime();
     if (db == null) {
-        localStorage.setItem(PREFIX(name), JSON.stringify({
-            timestamp,
-            raw
-        }));
+        localStorage.setItem(
+            PREFIX(name),
+            JSON.stringify({
+                timestamp,
+                raw
+            })
+        );
     } else {
         await db.data.where('id').equals(PREFIX(name)).delete();
         await db.data.add({
             id: PREFIX(name),
             timestamp,
-            raw,
+            raw
         });
     }
 }
-export async function GetPermanentCache<T>(
-    name: string,
-): Promise<T|null> {
+export async function GetPermanentCache<T>(name: string): Promise<T | null> {
     if (db == null) {
         const data = localStorage.getItem(PREFIX(name));
         try {
@@ -52,7 +53,8 @@ export async function GetPermanentCache<T>(
             return null;
         }
     } else {
-        const { raw } = (await db.data.where('id').equals(PREFIX(name)).first()) ?? {};
+        const { raw } =
+            (await db.data.where('id').equals(PREFIX(name)).first()) ?? {};
         return raw;
     }
 }

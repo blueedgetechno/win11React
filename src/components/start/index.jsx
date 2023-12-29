@@ -4,7 +4,7 @@ import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
 import { MdVideoSettings } from 'react-icons/md';
-import { PiPauseBold } from "react-icons/pi";
+import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -110,14 +110,12 @@ export const SidePane = () => {
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
-
-
     useEffect(() => {
         const framerateSlider = document.querySelector('.framerateSlider');
         const bitrateSlider = document.querySelector('.bitrateSlider');
         sliderBackground(framerateSlider, remote.framerate);
         sliderBackground(bitrateSlider, remote.bitrate);
-    },[remote.bitrate,remote.framerate])
+    }, [remote.bitrate, remote.framerate]);
 
     const setBitrate = (e) => {
         dispatch(change_bitrate(e.target.value));

@@ -64,8 +64,7 @@ export const PaymentApp = () => {
         );
     };
 
-    const payment = async (data, actions) => {
-    };
+    const payment = async (data, actions) => {};
 
     const subscribe = async (user, plan_id, actions) => {
         return actions.subscription.create({

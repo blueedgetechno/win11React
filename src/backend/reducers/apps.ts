@@ -283,7 +283,7 @@ export const appSlice = createSlice({
         app_external: (state, action: PayloadAction<any>) => {
             //window.open(action.payload, '_blank');
             setTimeout(() => {
-                window.open(action.payload, "_blank");
+                window.open(action.payload, '_blank');
             }, 0);
         },
         app_url: (state, action: PayloadAction<string | undefined>) => {
@@ -324,7 +324,14 @@ export const appSlice = createSlice({
 
             state.apps = [...initialState.apps, ...app];
         },
+        app_stuck: (state, action: PayloadAction<string>) => {
+            const obj = state.apps.find(
+                (x) => action.payload == x.payload && x.action == 'access_app'
+            );
 
+            obj.menu = 'need_reset_app';
+            obj.action = 'reset_app';
+        },
         app_full: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find((x) => action.payload == x.id);
             if (obj == undefined) return;
@@ -433,7 +440,17 @@ export const appSlice = createSlice({
             builder,
             {
                 fetch: appsAsync.reset_app,
-                hander: (state, action) => {}
+                hander: (state, action) => {
+                    const obj = state.apps.find(
+                        (x) =>
+                            action.payload == x.payload &&
+                            x.action == 'reset_app'
+                    );
+                    if (obj == undefined) return;
+                    obj.action = 'access_app';
+                    obj.menu = 'running_app';
+                    obj.ready = true;
+                }
             },
             {
                 fetch: appsAsync.access_app,

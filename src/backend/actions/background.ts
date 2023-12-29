@@ -72,7 +72,7 @@ export const preload = async () => {
         fetchStore(),
         fetchSetting(),
         fetchApp(),
-        available_cluster(),
+        available_cluster()
     ]);
 
     setInterval(ping_remote, 10 * 1000);

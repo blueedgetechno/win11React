@@ -42,16 +42,21 @@ export const userAsync = {
             await UserSession(user.email);
 
             const { data: plans, error: err } = await supabase.rpc(
-                'get_user_plans', {
+                'get_user_plans',
+                {
                     user_account_id: user?.id
                 }
             );
-            if (err)
-                throw err
+            if (err) throw err;
 
-            if ((plans as string[]).find(x => ['month','week','admin','remote'].includes(x)) != undefined) {
+            if (
+                (plans as string[]).find((x) =>
+                    ['month', 'week', 'admin', 'remote'].includes(x)
+                ) != undefined
+            ) {
                 const { data, error } = await supabase.rpc(
-                    'get_usage_time_user', {
+                    'get_usage_time_user',
+                    {
                         user_id: payloadUser.id
                     }
                 );
