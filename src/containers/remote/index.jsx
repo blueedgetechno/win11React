@@ -28,8 +28,7 @@ export const Remote = () => {
         const handleState = () => {
             const fullscreen = document.fullscreenElement != null;
             const havingPtrLock = document.pointerLockElement != null;
-            if (fullscreen && !havingPtrLock)
-                remoteVideo.current.requestPointerLock();
+            if (fullscreen && !havingPtrLock) remoteVideo.current.requestPointerLock();
             else if (!fullscreen && havingPtrLock) document.exitPointerLock();
         };
 

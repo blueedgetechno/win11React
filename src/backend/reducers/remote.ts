@@ -56,7 +56,17 @@ export const ready = async () => {
         })
     );
 
-    while (!client?.ready()) await new Promise((r) => setTimeout(r, 1000));
+    let start = new Date().getTime()
+    while (!client?.ready()) {
+        const now = new Date().getTime()
+        if ((now - start) > 1 * 60 * 1000) {
+            await client?.HardReset()
+            start = now
+        }
+
+        
+        await new Promise((r) => setTimeout(r, 1000));
+    }
 
     await new Promise((r) => setTimeout(r, 1000));
     appDispatch(popup_close());
