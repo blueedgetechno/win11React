@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    RootState,
     appDispatch,
     audio_status,
     popup_close,
@@ -153,14 +152,17 @@ export function WindowD() {
 }
 
 export function openRemotePage(url: string, appName?: string) {
-    window.open(
-        `${url}&no_stretch=true${
-            appName != undefined
+
+    setTimeout(() => {
+        window.open(
+            `${url}&no_stretch=true${appName != undefined
                 ? `&page=${appName}&scancode=${scanCodeApps.includes(appName)}`
                 : ''
-        }`,
-        '_blank'
-    );
+            }`,
+            '_blank'
+        );
+    }, 0);
+
 }
 
 export const remoteAsync = {
