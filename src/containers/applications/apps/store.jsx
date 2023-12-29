@@ -221,7 +221,7 @@ const FrontPage = (props) => {
               return (
                 <div
                   key={i}
-                  className="ribcont rounded-md my-0 p-2 pb-2"
+                  className="ribcont rounded-md p-1 pt-1 pb-0 ltShad prtclk"
                   onClick={() => {
                     props.app_click(game);
                   }}
@@ -232,19 +232,19 @@ const FrontPage = (props) => {
                   }}
                 >
                   <Image
-                    className="mx-1 py-1 mb-3 rounded"
-                    w={100}
-                    h={100}
+                    className="mb-3 rounded"
+                    w={160}
+                    h={160}
                     absolute={true}
                     src={game.icon}
                   />
-                  <div className="capitalize text-xs text-center font-semibold">
+                   <div className="capitalize text-xs text-center font-semibold" style={{ color: game.steam_off ? '#313131' : '' }}>
                     {game.name}
                   </div>
-                  <div className="text-[11px] text-center font-regular">
+                  <div className="text-xs text-center font-regular" style={{ color: game.steam_off ? '#313131' : '' }}>
                     {game.steam_off ? `(${t("info.withoutAcc")})` : ""}
                   </div>
-                  <div className="text-[11px] text-center font-regular">
+                  <div className="text-xs text-center font-regular" style={{ color: game.steam_off ? '#313131' : '' }}>
                     {CheckAppPriority(game.volume_class)}
                   </div>
 
@@ -641,7 +641,7 @@ const DownPage = ({ action }) => {
         return (
           <div
             key={index}
-            className="ribcont p-4 pt-8 ltShad prtclk"
+            className="ribcont p-2 pt-2 ltShad prtclk"
             onClick={() => {
               action(app);
             }}
@@ -653,19 +653,19 @@ const DownPage = ({ action }) => {
             }}
           >
             <Image
-              className="mx-4 mb-6 rounded"
-              w={100}
-              h={100}
+              className="rounded mb-4"
+              w={180}
+              h={180}
               src={app.icon}
               ext
             />
-            <div className="capitalize text-xs text-center font-semibold">
+            <div className="capitalize text-xs text-center font-semibold" style={{ color: app.steam_off ? '#313131' : '' }}>
               {app.name}
             </div>
-            <div className="text-[11px] text-center font-regular">
+            <div className="text-[11px] text-center font-regular" style={{color:'#313131'}}>
               {app.steam_off ? `(${t("info.withoutAcc")})` : ""}
             </div>
-            <div className="text-[11px] text-center font-regular">
+            <div className="text-[11px] text-center font-regular" style={{ color: app.steam_off ? '#313131' : '' }}>
               {CheckAppPriority(app.volume_class)}
             </div>
           </div>
