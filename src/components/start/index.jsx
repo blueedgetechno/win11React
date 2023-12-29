@@ -4,6 +4,7 @@ import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
 import { MdVideoSettings } from 'react-icons/md';
+import { PiPauseBold } from "react-icons/pi";
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -93,7 +94,7 @@ export const DesktopApp = () => {
                                 <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                             )}
                             {app.ready ?? true ? null : (
-                                <AiOutlineCloudDownload className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
+                                <PiPauseBold className="text-[1.2rem] text-white absolute top-[-3px] right-[-3px]" />
                             )}
                         </div>
                     );
