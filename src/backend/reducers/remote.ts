@@ -57,9 +57,9 @@ export const ready = async () => {
     );
 
     let start = new Date().getTime()
-    while (!client?.ready()) {
+    while (client == null || !client?.ready()) {
         const now = new Date().getTime()
-        if ((now - start) > 1 * 60 * 1000) {
+        if ((now - start) > 1 * 60 * 1000 && client != null) {
             await client?.HardReset()
             start = now
         }
@@ -155,6 +155,9 @@ const initialState: Data = {
 };
 
 export function WindowD() {
+    if (client == null) 
+        return
+    
     client?.hid?.TriggerKey(EventCode.KeyDown, 'lwin');
     client?.hid?.TriggerKey(EventCode.KeyDown, 'd');
     client?.hid?.TriggerKey(EventCode.KeyUp, 'd');
@@ -275,7 +278,10 @@ export const remoteSlice = createSlice({
             }
             state.active = !state.active;
         },
-        hard_reset: (state) => {
+        hard_reset: () => {
+            if (client == null) 
+                return
+
             client?.HardReset();
         },
         ads_period: (state, action: PayloadAction<number>) => {
@@ -304,14 +310,13 @@ export const remoteSlice = createSlice({
             if (state.active) state.fullscreen = !state.fullscreen;
         },
         sync: (state) => {
-            if (state.bitrate != state.prev_bitrate) {
+            if (state.bitrate != state.prev_bitrate && client != null)
                 client?.ChangeBitrate(state.bitrate);
-                state.prev_bitrate = state.bitrate;
-            }
-            if (state.framerate != state.prev_framerate) {
+            if (state.framerate != state.prev_framerate && client != null)
                 client?.ChangeFramerate(state.framerate);
-                state.prev_framerate = state.framerate;
-            }
+
+            state.prev_framerate = state.framerate;
+            state.prev_bitrate = state.bitrate;
         },
         change_framerate: (state, action: PayloadAction<number>) => {
             if (state.active)

@@ -80,8 +80,9 @@ function App() {
                     shouldResetKey = true;
                     if (_clipboard == clipboard) return;
 
-                    client?.hid?.SetClipboard(_clipboard);
                     clipboard = _clipboard;
+                    if(client != null)
+                        client?.hid?.SetClipboard(_clipboard);
                 })
                 .catch(() => {
                     if (shouldResetKey) client?.hid?.ResetKeyStuck();
