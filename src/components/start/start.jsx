@@ -25,16 +25,6 @@ export const StartMenu = () => {
     });
   };
 
-  const checkPackage = () =>{
-    const packages = {
-      week :'24h',
-      month: '110h',
-  
-    }
-
-    return packages[usageTime?.package] ?? usageTime?.package
-  }
-
 
   useEffect(()=>{
     const checkOverUsing = async () =>{
@@ -56,7 +46,7 @@ export const StartMenu = () => {
       }
     }
     checkOverUsing()
-  },[usageTime?.package])
+  },[])
   return (
     <div
       className="startMenu dpShad"
@@ -119,7 +109,7 @@ export const StartMenu = () => {
                   {usageTime.total_time
                     ? usageTime?.total_time.toFixed(1) +
                     "/" +
-                    checkPackage()+'/'+usageTime?.package
+                    usageTime?.package
                     : "Invalid"}
                 </span>
               </div>
