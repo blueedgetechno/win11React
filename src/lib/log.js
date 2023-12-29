@@ -109,6 +109,7 @@ export const log = async ({
               <option value="remote">Remote</option>
               <option value="admin">Admin</option>
             </select>
+            <div className="flex items-center gap-2"><span>Price (month/week)</span><input id="price_add" class="swal2-input"/></div>
           </div>
         <div className="flex items-center justify-around">
           <label className="flex items-center gap-2" htmlFor="free_sub"> <input type="checkbox" className="h-[20px] w-[20px]" id="free_sub" name="free_sub" /> <span>Free Subscription ?</span></label>
@@ -119,6 +120,7 @@ export const log = async ({
           return {
             email: document.getElementById('email').value,
             plan : document.getElementById('plan').value,
+            price : document.getElementById('price_add').value,
             free: document.querySelector('#free_sub').checked
           }
         }
@@ -138,13 +140,15 @@ export const log = async ({
               <option value="RENEW">Renew</option>
               <option value="UPGRADE">Upgrade</option>
             </select>
+            <div className="flex items-center gap-2"><span>Price (upgrade)</span><input id="price_upgrade" class="swal2-input"/></div>
           </div>
           `,
         focusConfirm: false,
         preConfirm: () => {
           return {
             email:  document.getElementById('email').value,
-            action :  document.getElementById('action').value
+            action :  document.getElementById('action').value,
+            price :  document.getElementById('price_upgrade').value
           }
         }
       })

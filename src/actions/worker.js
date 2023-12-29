@@ -1,9 +1,8 @@
-import { CreateWorkerSession, DeactivateWorkerSession, AddSubscription, ModifySubscription } from "./fetch";
+import { CreateWorkerSession, DeactivateWorkerSession, AddSubscription, ModifySubscription, UpgradeSubscription, AdjustSubscription } from "./fetch";
 import store from "../reducers";
 import { log } from "../lib/log";
 import { fetchWorker } from "./preload";
 import { openRemotePage } from "./remote";
-import { AdjustSubscription } from "./fetch/index.js";
 import { supabase } from "../supabase/createClient.js";
 
 const wrapper = async (func) => {
@@ -144,7 +143,7 @@ export const createSubscription = async (e) => {
       title: "Create new subscription",
     });
   
-      await AddSubscription(formValues.email, formValues.plan, formValues.free);
+      await AddSubscription(formValues.email, formValues.plan, formValues.free, formValues.price);
   
       log({ type: "close" });
   
@@ -161,8 +160,13 @@ export const modifySubscription = async (e) => {
           type: "loading",
           title: "Create new subscription",
         });
+
+        if (formValues.action == 'UPGRADE'){
+          await UpgradeSubscription(formValues.email, formValues.price);
+        } else {
+          await ModifySubscription(formValues.action, formValues.email);
+        }
     
-        await ModifySubscription(formValues.action, formValues.email);
     
         log({ type: "close" });
     

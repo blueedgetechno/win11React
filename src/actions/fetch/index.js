@@ -55,9 +55,9 @@ export const CreateWorkerSession = async (worker_profile_id) => {
  * @param {'month' | 'week'} plan 
  * @returns 
  */
-export const AddSubscription = async (email,plan,free) => {
+export const AddSubscription = async (email,plan,free,price) => {
   const { data, code, error } = await SupabaseFuncInvoke("add_subscription", {
-    email, plan, free
+    email, plan, free, price
   });
   if (error != null) throw error;
   return data;
@@ -65,7 +65,7 @@ export const AddSubscription = async (email,plan,free) => {
 
 /**
  * 
- * @param {'CANCEL' | 'RENEW' | 'UPGRADE'} action 
+ * @param {'CANCEL' | 'RENEW'} action 
  * @param {string} email 
  * @returns 
  */
@@ -77,6 +77,24 @@ export const ModifySubscription = async (action,email) => {
   if (error != null) throw error;
   return data;
 };
+
+/**
+ * 
+ * @param {string} email 
+ * @param {string} price 
+ * @returns 
+ */
+export const UpgradeSubscription = async (email,price) => {
+  const { data, code, error } = await SupabaseFuncInvoke("modify_subscription", {
+    action: 'UPGRADE',
+    email,
+    price
+  });
+
+  if (error != null) throw error;
+  return data;
+};
+
 
 /**
  * 
