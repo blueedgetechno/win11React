@@ -149,7 +149,7 @@ export const {
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
-export const { authenticate_session, ping_session } = remoteAsync;
+export const { authenticate_session, ping_session,load_setting,cache_setting } = remoteAsync;
 
 export { ready } from './remote';
 export const dispatch_generic = async ({

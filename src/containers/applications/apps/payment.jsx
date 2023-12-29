@@ -65,7 +65,6 @@ export const PaymentApp = () => {
     };
 
     const payment = async (data, actions) => {
-        console.log(data, actions);
     };
 
     const subscribe = async (user, plan_id, actions) => {

@@ -6,6 +6,7 @@ import {
     fetch_store,
     fetch_user,
     fetch_worker,
+    load_setting,
     ping_session,
     setting_theme,
     sidepane_panethem,
@@ -51,6 +52,9 @@ export const fetchStore = async () => {
 export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
+export const fetchSetting = async () => {
+    await appDispatch(load_setting());
+};
 
 export const available_cluster = async () => {
     appDispatch(update_available_cluster(await HasAvailableCluster()));
@@ -66,8 +70,9 @@ export const preload = async () => {
         loadSettings(),
         fetchWorker(),
         fetchStore(),
+        fetchSetting(),
+        fetchApp(),
         available_cluster(),
-        fetchApp()
     ]);
 
     setInterval(ping_remote, 10 * 1000);
