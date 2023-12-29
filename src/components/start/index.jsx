@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
+import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
-import * as fa from 'react-icons/fa';
 import { MdVideoSettings } from 'react-icons/md';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
+import { useDispatch } from 'react-redux';
 import {
     appDispatch,
     change_bitrate,
     change_framerate,
+    menu_show,
     setting_setv,
     task_audo,
     useAppSelector
@@ -34,6 +36,8 @@ export const DesktopApp = () => {
     const [holding, setHolding] = useState(false);
     const timeoutRef = useRef(null);
 
+    const dispatch = useDispatch();
+
     const handleTouchStart = (e) => {
         Actions.afterMath(e);
         timeoutRef.current = setTimeout(() => {
@@ -48,7 +52,7 @@ export const DesktopApp = () => {
             data.menu = e.target.dataset.menu;
             data.dataset = { ...e.target.dataset };
             dispatch(menu_show(data));
-        }, 100); // 1000 milliseconds = 1 second
+        }, 300); // 1000 milliseconds = 1 second
     };
 
     const handleTouchEnd = () => {
@@ -56,7 +60,6 @@ export const DesktopApp = () => {
         //setHolding(false);
     };
 
-    const dispatch = appDispatch;
     const handleDouble = customClickDispatch((e) => e.stopPropagation());
 
     return (
