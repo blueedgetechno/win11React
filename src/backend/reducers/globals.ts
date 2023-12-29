@@ -206,17 +206,17 @@ const initialState = {
 };
 
 export type Store = {
-    id: string, 
-    name: string, 
-    icon: string, 
-    type: 'APP' | 'GAME' 
-    description: string, 
-    screenshoots: string[], 
-    feature: string,
-    steam_off: null | 'true'
-    volume_ids: string[],
-    volume_class?: 'LA' | 'HA'
-}
+    id: string;
+    name: string;
+    icon: string;
+    type: 'APP' | 'GAME';
+    description: string;
+    screenshoots: string[];
+    feature: string;
+    steam_off: null | 'true';
+    volume_ids: string[];
+    volume_class?: 'LA' | 'HA';
+};
 
 export const storeAsync = {
     fetch_store: createAsyncThunk('fetch_store', async (): Promise<Store[]> => {
@@ -225,17 +225,17 @@ export const storeAsync = {
             if (error) throw error;
 
             let stores = [];
-            for (let index = 0; index < data.length; index++){
+            for (let index = 0; index < data.length; index++) {
                 const appStore = data[index];
-                const volume = await virtapi('rpc/fetch_volume_class', "POST", {
-                volume_id: appStore.volume_ids[0]
-                })
-                if (volume.error){
-                // Not found volume_class
+                const volume = await virtapi('rpc/fetch_volume_class', 'POST', {
+                    volume_id: appStore.volume_ids[0]
+                });
+                if (volume.error) {
+                    // Not found volume_class
                 } else {
-                appStore.volume_class = volume.data[0].volume_class
+                    appStore.volume_class = volume.data[0].volume_class;
                 }
-                stores.push(appStore)
+                stores.push(appStore);
             }
 
             return stores;

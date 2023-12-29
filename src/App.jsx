@@ -24,6 +24,8 @@ import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
 
+let clipboard = '';
+let shouldResetKey = false;
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
@@ -68,6 +70,29 @@ function App() {
             return text;
         };
     }, [user.id]);
+    useEffect(() => {
+        if (!remote.active) return;
+
+        const handleClipboard = () => {
+            navigator.clipboard
+                .readText()
+                .then((_clipboard) => {
+                    shouldResetKey = true;
+                    if (_clipboard == clipboard) return;
+
+                    client?.hid?.SetClipboard(_clipboard);
+                    clipboard = _clipboard;
+                })
+                .catch(() => {
+                    if (shouldResetKey) client?.hid?.ResetKeyStuck();
+
+                    shouldResetKey = false;
+                });
+        };
+
+        const ClipboardLoop = setInterval(handleClipboard, 1000);
+        return () => { clearInterval(ClipboardLoop) };
+    }, [remote.active]);
 
     useEffect(() => {
         if (remote.fullscreen) {

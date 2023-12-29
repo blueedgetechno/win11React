@@ -3,11 +3,9 @@ import { RemoteDesktopClient } from '../../../core/app';
 import { AudioWrapper } from '../../../core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../core/pipeline/sink/video/wrapper';
 import { useAppSelector } from '../../backend/reducers';
-import { assign, client } from '../../backend/reducers/remote';
+import { assign } from '../../backend/reducers/remote';
 import './remote.scss';
 
-let clipboard = '';
-let shouldResetKey = false;
 export const Remote = () => {
     const wall = useAppSelector((state) => state.wallpaper);
     const remote = useAppSelector((store) => store.remote);
@@ -36,31 +34,7 @@ export const Remote = () => {
         };
 
         const UIStateLoop = setInterval(handleState, 100);
-        return () => {
-            clearInterval(UIStateLoop);
-        };
-    }, []);
-
-    useEffect(() => {
-        const handleClipboard = () => {
-            navigator.clipboard
-                .readText()
-                .then((_clipboard) => {
-                    shouldResetKey = true;
-                    if (_clipboard == clipboard) return;
-
-                    client?.hid?.SetClipboard(_clipboard);
-                    clipboard = _clipboard;
-                })
-                .catch(() => {
-                    if (shouldResetKey) client?.hid?.ResetKeyStuck();
-
-                    shouldResetKey = false;
-                });
-        };
-
-        const ClipboardLoop = setInterval(handleClipboard, 1000);
-        return () => clearInterval(ClipboardLoop);
+        return () => { clearInterval(UIStateLoop); };
     }, []);
 
     const SetupWebRTC = () => {

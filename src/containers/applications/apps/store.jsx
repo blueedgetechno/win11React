@@ -237,18 +237,40 @@ const FrontPage = (props) => {
                                           absolute={true}
                                           src={game.icon}
                                       />
-                                      <div className="capitalize text-xs text-center font-semibold" style={{ color: game.steam_off ? '#313131' : '' }}>
+                                      <div
+                                          className="capitalize text-xs text-center font-semibold"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
                                           {game.name}
                                       </div>
-                                      <div className="text-xs text-center font-regular" style={{ color: game.steam_off ? '#313131' : '' }}>
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
                                           {game.steam_off
                                               ? 'Steam Offline'
                                               : ''}
                                       </div>
-                                      <div className="text-xs text-center font-regular" style={{ color: game.steam_off ? '#313131' : '' }}>
-                                            {game.volume_class.includes('LA') ? 'Low availablity' : ''}
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
+                                          {game.volume_class.includes('LA')
+                                              ? 'Low availablity'
+                                              : ''}
                                       </div>
-
                                   </div>
                               );
                           })
@@ -595,17 +617,25 @@ const DownPage = ({ action }) => {
                             src={app.icon}
                             ext
                         />
-                        <div 
+                        <div
                             className="capitalize text-xs text-center font-semibold"
                             style={{ color: app.steam_off ? '#313131' : '' }}
                         >
                             {app.name}
                         </div>
-                        <div className="text-xs text-center font-regular" style={{color:'#313131'}}>
+                        <div
+                            className="text-xs text-center font-regular"
+                            style={{ color: '#313131' }}
+                        >
                             {app.steam_off ? 'Steam Offline' : ''}
                         </div>
-                        <div className="text-xs text-center font-regular" style={{ color: app.steam_off ? '#313131' : '' }}>
-                            {app.volume_class.includes('LA') ? 'Low availablity' : ''}
+                        <div
+                            className="text-xs text-center font-regular"
+                            style={{ color: app.steam_off ? '#313131' : '' }}
+                        >
+                            {app.volume_class.includes('LA')
+                                ? 'Low availablity'
+                                : ''}
                         </div>
                     </div>
                 );
