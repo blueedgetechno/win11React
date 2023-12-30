@@ -286,7 +286,6 @@ export const remoteSlice = createSlice({
             state.metrics = undefined;
             state.fullscreen = false;
             setTimeout(() => client?.Close(), 100);
-            client = null;
         },
         open_remote: (state, action: PayloadAction<string>) => {
             if (!state.active) {
@@ -328,7 +327,6 @@ export const remoteSlice = createSlice({
                 state.metrics = undefined;
                 state.fullscreen = false;
                 setTimeout(() => client?.Close(), 100);
-                client = null;
             }
             state.active = !state.active;
         },
