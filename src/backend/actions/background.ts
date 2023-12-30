@@ -1,15 +1,19 @@
 import { DoDemo, FirstTime } from '.';
 import {
+    RootState,
     appDispatch,
     app_toggle,
     fetch_app,
     fetch_store,
     fetch_user,
     fetch_worker,
+    have_focus,
     load_setting,
+    loose_focus,
     ping_session,
     setting_theme,
     sidepane_panethem,
+    store,
     update_available_cluster,
     wall_set
 } from '../reducers';
@@ -67,12 +71,13 @@ const handleClipboard = async () => {
         if (client == null || !client?.ready()) return;
 
         const clipboard = await navigator.clipboard.readText();
+        if (!(store.getState() as RootState).remote.focus) appDispatch(have_focus());
         if (clipboard == old_clipboard) return;
 
         old_clipboard = clipboard;
         client?.hid?.SetClipboard(clipboard);
     } catch {
-        client?.hid?.ResetKeyStuck();
+        if ((store.getState() as RootState).remote.focus) appDispatch(loose_focus());
     }
 };
 
