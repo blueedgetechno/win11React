@@ -19,9 +19,9 @@ export const Remote = () => {
 
     useEffect(() => {
         const job = remote.fullscreen
-            ? document.documentElement.requestFullscreen()
-            : document.exitFullscreen();
-        job.catch(() => {});
+            ? (document.documentElement.requestFullscreen ? document.documentElement.requestFullscreen() : null)
+            : (document.exitFullscreen ? document.exitFullscreen() : null);
+        job?.catch(() => {});
     }, [remote.fullscreen]);
 
     useEffect(() => {
