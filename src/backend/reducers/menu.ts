@@ -63,7 +63,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
-                        name: 'Access',
+                        name: 'Open',
                         action: 'access_app'
                     },
                     {
