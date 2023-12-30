@@ -64,14 +64,11 @@ export const appsAsync = {
                     return {
                         id: icon.icon,
                         name: `${icon.name} ${storage.id}`,
+                        ready: storage.data.length != 0,
                         action: storage.data.length != 0 ? 'access_app' : 'start_app',
+                        menu: storage.data.length != 0 ? 'running_app' : 'paused_app',
 
                         payload: storage.id,
-                        ready: storage.data.length != 0,
-                        menu:
-                            storage.data.length != 0
-                                ? 'running_app'
-                                : 'paused_app'
                     } as AppData;
                 }
             );
@@ -325,9 +322,9 @@ export const appSlice = createSlice({
             state.apps = [...initialState.apps, ...app];
         },
         app_stuck: (state, action: PayloadAction<string>) => {
-            const obj = state.apps.find(
-                (x) => action.payload == x.payload && x.action == 'access_app'
-            );
+            const obj = state.apps.find((x) => action.payload == x.payload);
+            if (obj == undefined)
+                return;
 
             obj.menu = 'need_reset_app';
             obj.action = 'reset_app';
@@ -345,9 +342,9 @@ export const appSlice = createSlice({
 
         app_close: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find((x) => action.payload == x.id);
-            if (obj == undefined) {
+            if (obj == undefined)
                 return;
-            }
+
 
             obj.hide = true;
             obj.max = null;
@@ -441,11 +438,7 @@ export const appSlice = createSlice({
             {
                 fetch: appsAsync.reset_app,
                 hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'reset_app'
-                    );
+                    const obj = state.apps.find((x) => action.payload == x.payload);
                     if (obj == undefined) return;
                     obj.action = 'access_app';
                     obj.menu = 'running_app';
@@ -454,25 +447,21 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
 
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.start_app,
                 hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'start_app'
-                    );
+                    const obj = state.apps.find((x) => action.payload == x.payload);
                     if (obj == undefined) return;
                     obj.ready = true;
                     obj.menu = 'running_app';
@@ -481,12 +470,8 @@ export const appSlice = createSlice({
             {
                 fetch: appsAsync.pause_app,
                 hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
-                    );
-
+                    const obj = state.apps.find((x) => action.payload == x.payload);
+                    if (obj == undefined) return;
                     obj.ready = false;
                     obj.menu = 'paused_app';
                 }
@@ -494,10 +479,8 @@ export const appSlice = createSlice({
             {
                 fetch: appsAsync.delete_app,
                 hander: (state, action) => {
-                    const filtered = state.apps.findIndex(
-                        (x) =>
-                            action.payload == x.payload
-                    );
+                    const filtered = state.apps.findIndex((x) => action.payload == x.payload);
+                    if (filtered == -1) return
                     state.apps.splice(filtered, 1);
                 }
             },
