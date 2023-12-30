@@ -19,21 +19,24 @@ export const Remote = () => {
 
     useEffect(() => {
         const job = remote.fullscreen
-            ? document.documentElement.requestFullscreen()
-            : document.exitFullscreen();
-        job.catch(() => {});
+            ? (document.documentElement.requestFullscreen ? document.documentElement.requestFullscreen() : null)
+            : (document.exitFullscreen ? document.exitFullscreen() : null);
+        job?.catch(() => {});
     }, [remote.fullscreen]);
 
     useEffect(() => {
         const handleState = () => {
             const fullscreen = document.fullscreenElement != null;
             const havingPtrLock = document.pointerLockElement != null;
-            if (fullscreen && !havingPtrLock) remoteVideo.current.requestPointerLock();
+            if (fullscreen && !havingPtrLock)
+                remoteVideo.current.requestPointerLock();
             else if (!fullscreen && havingPtrLock) document.exitPointerLock();
         };
 
         const UIStateLoop = setInterval(handleState, 100);
-        return () => { clearInterval(UIStateLoop); };
+        return () => {
+            clearInterval(UIStateLoop);
+        };
     }, []);
 
     const SetupWebRTC = () => {

@@ -1,7 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+    RootState,
     appDispatch,
+    app_stuck,
     audio_status,
+    cache_setting,
+    close_remote,
     popup_close,
     popup_open,
     store,
@@ -12,8 +16,8 @@ import { EventCode } from '../../../core/models/keys.model';
 import { AddNotifier, ConnectionEvent } from '../../../core/utils/log';
 import { isMobile } from '../utils/checking';
 import { scanCodeApps } from '../utils/constant';
-import { SupabaseFuncInvoke, supabase } from './fetch/createClient';
-import { BuilderHelper } from './helper';
+import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
+import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
 
 const size = () =>
     client != null
@@ -56,19 +60,27 @@ export const ready = async () => {
         })
     );
 
-    let start = new Date().getTime()
+    let start = new Date().getTime();
     while (client == null || !client?.ready()) {
-        const now = new Date().getTime()
-        if ((now - start) > 1 * 60 * 1000 && client != null) {
-            await client?.HardReset()
-            start = now
+        const now = new Date().getTime();
+        if (now - start > 60 * 1000) {
+            const id = store.getState().remote.remote_id;
+            appDispatch(popup_close());
+            appDispatch(app_stuck(id));
+            appDispatch(close_remote());
+            throw new Error(
+                JSON.stringify({
+                    message: 'remote timeout connect to machine',
+                    code: CAUSE.REMOTE_TIMEOUT
+                })
+            );
         }
 
-        
         await new Promise((r) => setTimeout(r, 1000));
     }
 
     await new Promise((r) => setTimeout(r, 1000));
+    appDispatch(remoteSlice.actions.sync());
     appDispatch(popup_close());
 };
 
@@ -147,17 +159,16 @@ const initialState: Data = {
     fullscreen: false,
     old_version: isMobile(),
 
-    bitrate: MIN_BITRATE(),
-    prev_bitrate: MIN_BITRATE(),
-    framerate: 60,
-    prev_framerate: 120,
+    bitrate: 0,
+    prev_bitrate: 0,
+    framerate: 0,
+    prev_framerate: 0,
     peers: []
 };
 
 export function WindowD() {
-    if (client == null) 
-        return
-    
+    if (client == null) return;
+
     client?.hid?.TriggerKey(EventCode.KeyDown, 'lwin');
     client?.hid?.TriggerKey(EventCode.KeyDown, 'd');
     client?.hid?.TriggerKey(EventCode.KeyUp, 'd');
@@ -165,17 +176,18 @@ export function WindowD() {
 }
 
 export function openRemotePage(url: string, appName?: string) {
-
     setTimeout(() => {
         window.open(
-            `${url}&no_stretch=true${appName != undefined
-                ? `&page=${appName}&scancode=${scanCodeApps.includes(appName)}`
-                : ''
+            `${url}&no_stretch=true${
+                appName != undefined
+                    ? `&page=${appName}&scancode=${scanCodeApps.includes(
+                          appName
+                      )}`
+                    : ''
             }`,
             '_blank'
         );
     }, 0);
-
 }
 
 export const remoteAsync = {
@@ -202,6 +214,48 @@ export const remoteAsync = {
             )
         );
     },
+    cache_setting: createAsyncThunk(
+        'cache_setting',
+        async (_: void, { getState }) => {
+            const { bitrate, framerate, old_version, low_ads } = (
+                getState() as RootState
+            ).remote;
+            const data = { bitrate, framerate, old_version, low_ads };
+
+            await SetPermanentCache('setting', data);
+            const {
+                data: {
+                    session: {
+                        user: { user_metadata }
+                    }
+                },
+                error
+            } = await supabase.auth.getSession();
+            if (error || user_metadata == undefined) return;
+
+            await supabase.auth.updateUser({
+                data: { ...user_metadata, setting: data }
+            });
+        }
+    ),
+    load_setting: createAsyncThunk('load_setting', async (_: void) => {
+        const remote = await GetPermanentCache<Data>('setting');
+        if (remote) return remote;
+
+        const {
+            data: {
+                session: {
+                    user: {
+                        user_metadata: { setting }
+                    }
+                }
+            },
+            error
+        } = await supabase.auth.getSession();
+        if (error || setting == undefined) return initialState;
+
+        return setting;
+    }),
     authenticate_session: createAsyncThunk(
         'authenticate_session',
         async ({ ref, uref }: { ref: string; uref?: string }) => {
@@ -232,7 +286,6 @@ export const remoteSlice = createSlice({
             state.metrics = undefined;
             state.fullscreen = false;
             setTimeout(() => client?.Close(), 100);
-            client = null;
         },
         open_remote: (state, action: PayloadAction<string>) => {
             if (!state.active) {
@@ -274,18 +327,17 @@ export const remoteSlice = createSlice({
                 state.metrics = undefined;
                 state.fullscreen = false;
                 setTimeout(() => client?.Close(), 100);
-                client = null;
             }
             state.active = !state.active;
         },
         hard_reset: () => {
-            if (client == null) 
-                return
+            if (client == null) return;
 
             client?.HardReset();
         },
         ads_period: (state, action: PayloadAction<number>) => {
             state.low_ads = !state.low_ads;
+            setTimeout(() => appDispatch(cache_setting()), 500);
         },
         scancode_toggle: (state) => {
             state.scancode = !state.scancode;
@@ -305,30 +357,40 @@ export const remoteSlice = createSlice({
         },
         remote_version: (state) => {
             state.old_version = !state.old_version;
+            setTimeout(() => appDispatch(cache_setting()), 500);
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = !state.fullscreen;
         },
         sync: (state) => {
-            if (state.bitrate != state.prev_bitrate && client != null)
-                client?.ChangeBitrate(state.bitrate);
-            if (state.framerate != state.prev_framerate && client != null)
-                client?.ChangeFramerate(state.framerate);
+            if (client == null) return;
+            else if (!client.ready()) return;
+
+            if (state.bitrate != state.prev_bitrate)
+                client?.ChangeBitrate(
+                    ((MAX_BITRATE() - MIN_BITRATE()) / 100) * state.bitrate +
+                        MIN_BITRATE()
+                );
+            if (state.framerate != state.prev_framerate)
+                client?.ChangeFramerate(
+                    ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) * state.framerate +
+                        MIN_FRAMERATE
+                );
+
+            if (
+                state.framerate != state.prev_framerate ||
+                state.bitrate != state.prev_bitrate
+            )
+                setTimeout(() => appDispatch(cache_setting()), 500);
 
             state.prev_framerate = state.framerate;
             state.prev_bitrate = state.bitrate;
         },
         change_framerate: (state, action: PayloadAction<number>) => {
-            if (state.active)
-                state.framerate =
-                    ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) * action.payload +
-                    MIN_FRAMERATE;
+            state.framerate = action.payload;
         },
         change_bitrate: (state, action: PayloadAction<number>) => {
-            if (state.active)
-                state.bitrate =
-                    ((MAX_BITRATE() - MIN_BITRATE()) / 100) * action.payload +
-                    MIN_BITRATE();
+            state.bitrate = action.payload;
         },
         audio_status: (state, action: PayloadAction<ConnectStatus>) => {
             if (state.connection != undefined)
@@ -348,21 +410,6 @@ export const remoteSlice = createSlice({
             >
         ) => {
             if (!state.active) return;
-
-            const news = action.payload
-                .filter(
-                    (x) =>
-                        state.peers.find((y) => y.start_at == x.start_at) ==
-                        undefined
-                )
-                .map((x) => x.email);
-            const outs = state.peers
-                .filter(
-                    (x) =>
-                        action.payload.find((y) => y.start_at == x.start_at) ==
-                        undefined
-                )
-                .map((x) => x.email);
             state.peers = action.payload;
         },
         update_connection_path: (state, action: PayloadAction<any>) => {
@@ -371,11 +418,29 @@ export const remoteSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        BuilderHelper<Data, any, any>(builder, {
-            fetch: remoteAsync.authenticate_session,
-            hander: (state, action: PayloadAction<AuthSessionResp>) => {
-                state.auth = action.payload;
+        BuilderHelper<Data, any, any>(
+            builder,
+            {
+                fetch: remoteAsync.authenticate_session,
+                hander: (state, action: PayloadAction<AuthSessionResp>) => {
+                    state.auth = action.payload;
+                }
+            },
+            {
+                fetch: remoteAsync.load_setting,
+                hander: (state, action: PayloadAction<any>) => {
+                    const { bitrate, framerate, old_version, low_ads } =
+                        action.payload;
+                    state.bitrate = bitrate;
+                    state.framerate = framerate;
+                    state.old_version = old_version;
+                    state.low_ads = low_ads;
+                }
+            },
+            {
+                fetch: remoteAsync.cache_setting,
+                hander: (state, action: PayloadAction<void>) => {}
             }
-        });
+        );
     }
 });

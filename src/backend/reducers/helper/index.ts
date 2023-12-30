@@ -21,6 +21,44 @@ class TodoDB extends Dexie {
 
 const db = new TodoDB();
 const PREFIX = (name: string) => `THINKMAY_${name}`;
+export async function SetPermanentCache<T>(
+    name: string,
+    raw: T
+): Promise<void> {
+    const timestamp = new Date().getTime();
+    if (db == null) {
+        localStorage.setItem(
+            PREFIX(name),
+            JSON.stringify({
+                timestamp,
+                raw
+            })
+        );
+    } else {
+        await db.data.where('id').equals(PREFIX(name)).delete();
+        await db.data.add({
+            id: PREFIX(name),
+            timestamp,
+            raw
+        });
+    }
+}
+export async function GetPermanentCache<T>(name: string): Promise<T | null> {
+    if (db == null) {
+        const data = localStorage.getItem(PREFIX(name));
+        try {
+            const { raw } = JSON.parse(data ?? '');
+            return raw;
+        } catch {
+            return null;
+        }
+    } else {
+        const { raw } =
+            (await db.data.where('id').equals(PREFIX(name)).first()) ?? {};
+        return raw;
+    }
+}
+
 export async function CacheRequest<T>(
     name: string,
     sec: number,
@@ -82,14 +120,17 @@ export async function CacheRequest<T>(
 const isPending = (action: UnknownAction) =>
     action.type.endsWith('/pending') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isRejected = (action: UnknownAction) =>
     action.type.endsWith('/rejected') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 
 export const isPendingAction =

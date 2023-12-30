@@ -4,7 +4,7 @@ import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
 import { MdVideoSettings } from 'react-icons/md';
-import { PiPauseBold } from "react-icons/pi";
+import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
 
@@ -110,29 +110,19 @@ export const SidePane = () => {
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
-    const vSlider = document.querySelector('.vSlider');
-    const framerateSlider = document.querySelector('.framerateSlider');
-    const bitrateSlider = document.querySelector('.bitrateSlider');
+    useEffect(() => {
+        const framerateSlider = document.querySelector('.framerateSlider');
+        const bitrateSlider = document.querySelector('.bitrateSlider');
+        sliderBackground(framerateSlider, remote.framerate);
+        sliderBackground(bitrateSlider, remote.bitrate);
+    }, [remote.bitrate, remote.framerate]);
 
     const setBitrate = (e) => {
         dispatch(change_bitrate(e.target.value));
-        sliderBackground(bitrateSlider, e.target.value);
     };
     const setFramerate = (e) => {
         dispatch(change_framerate(e.target.value));
-        sliderBackground(framerateSlider, e.target.value);
     };
-
-    const setVolume = (e) => {
-        var aud = 3;
-        if (e.target.value < 70) aud = 2;
-        if (e.target.value < 30) aud = 1;
-        if (e.target.value == 0) aud = 0;
-
-        dispatch(task_audo(aud));
-        sliderBackground(vSlider, e.target.value);
-    };
-
     function sliderBackground(elem, e) {
         elem.style.setProperty(
             '--track-color',
@@ -249,7 +239,7 @@ export const SidePane = () => {
                             type="range"
                             min="0"
                             max="100"
-                            defaultValue="100"
+                            value={remote.bitrate}
                         />
                         <span>High</span>
                     </div>
@@ -266,7 +256,7 @@ export const SidePane = () => {
                             type="range"
                             min="0"
                             max="100"
-                            defaultValue="100"
+                            value={remote.framerate}
                         />
                         <span>High</span>
                     </div>

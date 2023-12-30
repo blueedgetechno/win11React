@@ -54,9 +54,27 @@ export type MenuOption =
     | 'desk_remote'
     | 'paused_app'
     | 'running_app'
+    | 'need_reset_app'
     | NodeType;
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
+        case 'need_reset_app':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Reset',
+                        action: 'reset_app',
+                        icon: 'reset'
+                    },
+                    {
+                        name: 'Shutdown',
+                        action: 'pause_app',
+                        icon: 'shutdown'
+                    }
+                ]
+            };
         case 'running_app':
             return {
                 width: '200px',

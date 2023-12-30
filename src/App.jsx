@@ -81,8 +81,7 @@ function App() {
                     if (_clipboard == clipboard) return;
 
                     clipboard = _clipboard;
-                    if(client != null)
-                        client?.hid?.SetClipboard(_clipboard);
+                    if (client != null) client?.hid?.SetClipboard(_clipboard);
                 })
                 .catch(() => {
                     if (shouldResetKey) client?.hid?.ResetKeyStuck();
@@ -92,7 +91,9 @@ function App() {
         };
 
         const ClipboardLoop = setInterval(handleClipboard, 1000);
-        return () => { clearInterval(ClipboardLoop) };
+        return () => {
+            clearInterval(ClipboardLoop);
+        };
     }, [remote.active]);
 
     useEffect(() => {

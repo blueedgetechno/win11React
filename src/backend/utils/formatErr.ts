@@ -6,26 +6,23 @@ const map: Map<CAUSE, string> = new Map<CAUSE, string>();
 map.set(CAUSE.UNKNOWN, 'unknown');
 map.set(CAUSE.OUT_OF_HARDWARE, i18next.t('error.run_out_of_gpu_stock'));
 map.set(CAUSE.MAXIMUM_DEPLOYMENT_REACHED, i18next.t('error.ALREADY_DEPLOYED'));
-map.set(CAUSE.INVALID_AUTH_HEADER, 'invalid_auth_header');
-map.set(CAUSE.API_CALL, 'api_call'); // server lỗi
 map.set(CAUSE.LOCKED_RESOURCE, i18next.t('error.IS_LOCKED')); //volumne is lock
 map.set(CAUSE.VM_BOOTING_UP, i18next.t('error.NOT_PINGED'));
+map.set(CAUSE.REMOTE_TIMEOUT, i18next.t('error.REMOTE_TIMEOUT'));
+
+map.set(CAUSE.INVALID_AUTH_HEADER, 'invalid_auth_header');
+map.set(CAUSE.API_CALL, 'api_call'); // server lỗi
 map.set(CAUSE.PERMISSION_REQUIRED, 'permission_required');
 map.set(CAUSE.NEED_WAIT, 'need_wait'); //
 map.set(CAUSE.INVALID_REQUEST, 'invalid_request');
 
 export function formatError(error: Error) {
-    let formatMsg;
-    console.log(error);
     const err = JSON.parse(error.message) as {
         message: string;
         code: CAUSE;
     };
-    formatMsg = map.get(err.code);
-    if (err.code == 0 || !map.get(err.code)) {
-        formatMsg = includesErr(err.message);
-    }
-    return formatMsg;
+    if (err.code == 0) return includesErr(err.message);
+    else return map.get(err.code) ?? includesErr(err.message);
 }
 
 const listErr = [
@@ -52,6 +49,10 @@ const listErr = [
     {
         msg: 'demo not available', //TODO
         text: ['info.closeDemo']
+    },
+    {
+        msg: 'remote timeout',
+        text: ['error.REMOTE_TIMEOUT']
     },
     {
         msg: 'timeout', //TODO

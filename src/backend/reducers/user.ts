@@ -39,6 +39,7 @@ export const userAsync = {
             } = await supabase.auth.getSession();
             if (error != null) throw error;
             let payloadUser: Data = { ...user };
+            await UserSession(user.email);
 
             const { data: plans, error: err } = await supabase.rpc(
                 'get_user_plans',
@@ -46,25 +47,13 @@ export const userAsync = {
                     user_account_id: user?.id
                 }
             );
-            if (err != null) throw err;
-            {
-                const { data, error } = await supabase.rpc(
-                    'validate_user_access',
-                    {
-                        user_account_id: user?.id,
-                        plan_name: [
-                            'day',
-                            'week',
-                            'month',
-                            'fullstack',
-                            'admin'
-                        ]
-                    }
-                );
-                if (error) throw error;
-                payloadUser = { ...payloadUser, greenlist: data };
-            }
-            if (payloadUser?.greenlist == true) {
+            if (err) throw err;
+
+            if (
+                (plans as string[]).find((x) =>
+                    ['month', 'week', 'admin', 'remote'].includes(x)
+                ) != undefined
+            ) {
                 const { data, error } = await supabase.rpc(
                     'get_usage_time_user',
                     {
@@ -73,9 +62,8 @@ export const userAsync = {
                 );
                 if (error) return;
 
-                payloadUser = { ...payloadUser, usageTime: data?.at(0) };
+                payloadUser.usageTime = data?.at(0);
             }
-            await UserSession(user.email);
 
             return {
                 ...payloadUser,
