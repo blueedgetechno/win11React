@@ -9,7 +9,6 @@ import {
     set_fullscreen,
     useAppSelector
 } from './backend/reducers';
-import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import AvailableCluster from './components/shared/AvailableCluster';
@@ -24,8 +23,6 @@ import { ErrorFallback } from './error';
 import './i18nextConf';
 import './index.css';
 
-let clipboard = '';
-let shouldResetKey = false;
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
@@ -70,31 +67,6 @@ function App() {
             return text;
         };
     }, [user.id]);
-    useEffect(() => {
-        if (!remote.active) return;
-
-        const handleClipboard = () => {
-            navigator.clipboard
-                .readText()
-                .then((_clipboard) => {
-                    shouldResetKey = true;
-                    if (_clipboard == clipboard) return;
-
-                    clipboard = _clipboard;
-                    if (client != null) client?.hid?.SetClipboard(_clipboard);
-                })
-                .catch(() => {
-                    if (shouldResetKey) client?.hid?.ResetKeyStuck();
-
-                    shouldResetKey = false;
-                });
-        };
-
-        const ClipboardLoop = setInterval(handleClipboard, 1000);
-        return () => {
-            clearInterval(ClipboardLoop);
-        };
-    }, [remote.active]);
 
     useEffect(() => {
         if (remote.fullscreen) {
