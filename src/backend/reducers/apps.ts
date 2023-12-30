@@ -64,7 +64,7 @@ export const appsAsync = {
                     return {
                         id: icon.icon,
                         name: `${icon.name} ${storage.id}`,
-                        action: 'access_app',
+                        action: storage.data.length != 0 ? 'access_app' : 'start_app',
 
                         payload: storage.id,
                         ready: storage.data.length != 0,
@@ -471,7 +471,7 @@ export const appSlice = createSlice({
                     const obj = state.apps.find(
                         (x) =>
                             action.payload == x.payload &&
-                            x.action == 'access_app'
+                            x.action == 'start_app'
                     );
                     if (obj == undefined) return;
                     obj.ready = true;
@@ -496,8 +496,7 @@ export const appSlice = createSlice({
                 hander: (state, action) => {
                     const filtered = state.apps.findIndex(
                         (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
+                            action.payload == x.payload
                     );
                     state.apps.splice(filtered, 1);
                 }
