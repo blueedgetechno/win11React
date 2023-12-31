@@ -9,6 +9,7 @@ import {
     popup_close,
     popup_open,
     store,
+    toggle_remote,
     video_status
 } from '.';
 import { RemoteDesktopClient } from '../../../core/app';
@@ -132,16 +133,22 @@ export type Metric = {
 
 type Data = {
     remote_id?: string;
-    frame_drop?: boolean;
+
     active: boolean;
     fullscreen: boolean;
+    focus: boolean;
+
     scancode: boolean;
     low_ads: boolean;
+    old_version: boolean;
+
     bitrate: number;
     prev_bitrate: number;
     framerate: number;
     prev_framerate: number;
-    old_version: boolean;
+
+    frame_drop?: boolean;
+
     auth?: AuthSessionResp;
     metrics?: Metric;
     peers: { email: string; last_check: number; start_at: number }[];
@@ -153,6 +160,7 @@ type Data = {
 };
 
 const initialState: Data = {
+    focus: true,
     active: false,
     low_ads: true,
     scancode: false,
@@ -278,6 +286,13 @@ export const remoteSlice = createSlice({
     name: 'remote',
     initialState,
     reducers: {
+        loose_focus: (state) => {
+            state.focus = false
+            client?.hid?.ResetKeyStuck()
+        },
+        have_focus: (state) => {
+            state.focus = true
+        },
         close_remote: (state) => {
             state.remote_id = undefined;
             state.active = false;

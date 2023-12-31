@@ -98,6 +98,8 @@ export const {
     toggle_remote,
     hard_reset,
     open_remote,
+    loose_focus,
+    have_focus,
     scancode,
     scancode_toggle,
     ads_period,

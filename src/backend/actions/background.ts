@@ -1,15 +1,19 @@
 import { DoDemo, FirstTime } from '.';
 import {
+    RootState,
     appDispatch,
     app_toggle,
     fetch_app,
     fetch_store,
     fetch_user,
     fetch_worker,
+    have_focus,
     load_setting,
+    loose_focus,
     ping_session,
     setting_theme,
     sidepane_panethem,
+    store,
     update_available_cluster,
     wall_set
 } from '../reducers';
@@ -61,19 +65,19 @@ export const available_cluster = async () => {
     appDispatch(update_available_cluster(await HasAvailableCluster()));
 };
 
-let old_clipboard = ""
+let old_clipboard = '';
 const handleClipboard = async () => {
     try {
-        if (client == null || !client?.ready())
-            return
+        if (client == null || !client?.ready()) return;
 
-        const clipboard = await navigator.clipboard.readText()
+        const clipboard = await navigator.clipboard.readText();
+        if (!(store.getState() as RootState).remote.focus) appDispatch(have_focus());
         if (clipboard == old_clipboard) return;
 
         old_clipboard = clipboard;
         client?.hid?.SetClipboard(clipboard);
     } catch {
-        client?.hid?.ResetKeyStuck();
+        if ((store.getState() as RootState).remote.focus) appDispatch(loose_focus());
     }
 };
 
@@ -95,6 +99,6 @@ export const preload = async () => {
     setInterval(ping_remote, 10 * 1000);
     setInterval(handleClipboard, 1000);
 
-    if (validate_user_access('month', 'week', 'admin')) 
+    if (validate_user_access('month', 'week', 'admin'))
         setInterval(available_cluster, 30 * 1000);
 };
