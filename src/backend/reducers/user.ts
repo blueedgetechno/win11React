@@ -49,8 +49,15 @@ export const userAsync = {
             );
             if (err) throw err;
 
+            console.log(
+                (plans as any[]).map((x) => x.plans).find((x) =>
+                    ['month', 'week', 'admin', 'remote'].includes(x)
+                ) != undefined
+
+
+            );
             if (
-                (plans as string[]).find((x) =>
+                (plans as any[]).map((x) => x.plans).find((x) =>
                     ['month', 'week', 'admin', 'remote'].includes(x)
                 ) != undefined
             ) {
