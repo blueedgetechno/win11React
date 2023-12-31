@@ -9,7 +9,6 @@ import {
     popup_close,
     popup_open,
     store,
-    toggle_remote,
     video_status
 } from '.';
 import { RemoteDesktopClient } from '../../../core/app';
@@ -40,11 +39,11 @@ export const assign = (fun: () => RemoteDesktopClient) => {
                 // appDispatch(update_metrics(metrics));
                 break;
             case 'FRAME_LOSS':
+                if ((store.getState() as RootState).remote.fullscreen) return;
+
                 appDispatch(remoteSlice.actions.framedrop(true));
-                setTimeout(
-                    () => appDispatch(remoteSlice.actions.framedrop(false)),
-                    200
-                );
+                await new Promise((r) => setTimeout(r, 100));
+                appDispatch(remoteSlice.actions.framedrop(false));
                 break;
             default:
                 break;
@@ -201,6 +200,9 @@ export function openRemotePage(url: string, appName?: string) {
 export const remoteAsync = {
     ping_session: async () => {
         if (!store.getState().remote.active) return;
+        else if (client == null) return;
+        else if (!client.ready()) return;
+
         await supabase.rpc(`ping_session`, {
             session_id: store.getState().remote.auth?.id
         });
@@ -209,18 +211,19 @@ export const remoteAsync = {
         });
         if (error) return;
 
-        appDispatch(remoteSlice.actions.sync());
-        appDispatch(
-            remoteSlice.actions.update_peers(
-                data.map((x) => {
-                    return {
-                        email: x.email,
-                        start_at: Date.parse(x.start_at),
-                        last_check: Date.parse(x.last_check)
-                    };
-                })
-            )
-        );
+        const peers = data.map((x) => {
+            return {
+                email: x.email,
+                start_at: Date.parse(x.start_at),
+                last_check: Date.parse(x.last_check)
+            };
+        });
+
+        if (peers.length != store.getState().remote.peers.length)
+            appDispatch(remoteSlice.actions.update_peers(peers));
+        if (store.getState().remote.prev_bitrate != store.getState().remote.bitrate ||
+            store.getState().remote.prev_framerate != store.getState().remote.framerate)
+            appDispatch(remoteSlice.actions.sync());
     },
     cache_setting: createAsyncThunk(
         'cache_setting',
@@ -287,11 +290,11 @@ export const remoteSlice = createSlice({
     initialState,
     reducers: {
         loose_focus: (state) => {
-            state.focus = false
-            client?.hid?.ResetKeyStuck()
+            state.focus = false;
+            client?.hid?.ResetKeyStuck();
         },
         have_focus: (state) => {
-            state.focus = true
+            state.focus = true;
         },
         close_remote: (state) => {
             state.remote_id = undefined;
@@ -350,9 +353,11 @@ export const remoteSlice = createSlice({
 
             client?.HardReset();
         },
-        ads_period: (state, action: PayloadAction<number>) => {
+        ads_period: (state) => {
             state.low_ads = !state.low_ads;
-            setTimeout(() => appDispatch(cache_setting()), 500);
+            client?.SetPeriod(
+                (1000 / state.framerate) * (state.low_ads ? 2 : 10)
+            );
         },
         scancode_toggle: (state) => {
             state.scancode = !state.scancode;
@@ -378,20 +383,28 @@ export const remoteSlice = createSlice({
             if (state.active) state.fullscreen = !state.fullscreen;
         },
         sync: (state) => {
-            if (client == null) return;
-            else if (!client.ready()) return;
-
             if (state.bitrate != state.prev_bitrate)
                 client?.ChangeBitrate(
-                    ((MAX_BITRATE() - MIN_BITRATE()) / 100) * state.bitrate +
-                        MIN_BITRATE()
+                    Math.round(
+                        ((MAX_BITRATE() - MIN_BITRATE()) / 100) *
+                            state.bitrate +
+                            MIN_BITRATE()
+                    )
                 );
-            if (state.framerate != state.prev_framerate)
+            if (state.framerate != state.prev_framerate) {
+                client?.SetPeriod(
+                    Math.round(
+                        (1000 / state.framerate) * (state.low_ads ? 2 : 10)
+                    )
+                );
                 client?.ChangeFramerate(
-                    ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) * state.framerate +
-                        MIN_FRAMERATE
+                    Math.round(
+                        ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) *
+                            state.framerate +
+                            MIN_FRAMERATE
+                    )
                 );
-
+            }
             if (
                 state.framerate != state.prev_framerate ||
                 state.bitrate != state.prev_bitrate

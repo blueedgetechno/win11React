@@ -53,10 +53,7 @@ export const Remote = () => {
                     audio,
                     remote.auth.signaling,
                     remote.auth.webrtc,
-                    {
-                        scancode: remote.scancode,
-                        ads_period: remote.low_ads ? 50 : 300
-                    }
+                    { scancode: remote.scancode }
                 )
         );
     };

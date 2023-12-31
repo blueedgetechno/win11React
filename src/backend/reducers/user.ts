@@ -49,17 +49,12 @@ export const userAsync = {
             );
             if (err) throw err;
 
-            console.log(
-                (plans as any[]).map((x) => x.plans).find((x) =>
-                    ['month', 'week', 'admin', 'remote'].includes(x)
-                ) != undefined
-
-
-            );
             if (
-                (plans as any[]).map((x) => x.plans).find((x) =>
-                    ['month', 'week', 'admin', 'remote'].includes(x)
-                ) != undefined
+                (plans as any[])
+                    .map((x) => x.plans)
+                    .find((x) =>
+                        ['month', 'week', 'admin', 'remote'].includes(x)
+                    ) != undefined
             ) {
                 const { data, error } = await supabase.rpc(
                     'get_usage_time_user',

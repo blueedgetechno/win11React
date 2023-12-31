@@ -62,7 +62,9 @@ export const fetchSetting = async () => {
 };
 
 export const available_cluster = async () => {
-    appDispatch(update_available_cluster(await HasAvailableCluster()));
+    const availability = await HasAvailableCluster();
+    if (store.getState().globals.service_available != availability)
+        appDispatch(update_available_cluster());
 };
 
 let old_clipboard = '';
@@ -71,13 +73,15 @@ const handleClipboard = async () => {
         if (client == null || !client?.ready()) return;
 
         const clipboard = await navigator.clipboard.readText();
-        if (!(store.getState() as RootState).remote.focus) appDispatch(have_focus());
+        if (!(store.getState() as RootState).remote.focus)
+            appDispatch(have_focus());
         if (clipboard == old_clipboard) return;
 
         old_clipboard = clipboard;
         client?.hid?.SetClipboard(clipboard);
     } catch {
-        if ((store.getState() as RootState).remote.focus) appDispatch(loose_focus());
+        if ((store.getState() as RootState).remote.focus)
+            appDispatch(loose_focus());
     }
 };
 
