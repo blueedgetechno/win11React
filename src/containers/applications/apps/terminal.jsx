@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
 import login from "../../../components/login";
+import { installApp } from "../../../actions";
 
 import { ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
@@ -72,7 +73,21 @@ export const WnTerminal = () => {
       }
     } else if (type == "eval") {
       if (arg.length) {
-        tmpStack.push(eval(arg).toString());
+        tmpStack.push('Installing app');
+        var AppName = arg[arg.indexOf('-n')+1]
+        var IframeUrl = arg[arg.indexOf('-u')+1]
+        var IconUrl = arg[arg.indexOf('-i')+1]
+        var Json = {
+          "name": AppName,
+          "icon": IconUrl,
+          "type": "game",
+          "data": {
+            "type": "IFrame",
+            "url": IframeUrl,
+            "invert": true
+          }
+        }
+        installApp()
       }
     } else if (type == "install") {
       if (arg.length) {
