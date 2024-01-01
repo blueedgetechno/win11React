@@ -73,7 +73,7 @@ export const WnTerminal = () => {
       }
     } else if (type == "eval") {
       if (arg.length) {
-        tmpStack.push(eval(arg).toString())
+        tmpStack.push(eval(arg).toString());
       }
     } else if (type == "install") {
       if (arg.length) {
