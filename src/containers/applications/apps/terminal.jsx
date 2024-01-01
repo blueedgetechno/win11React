@@ -110,7 +110,7 @@ export const WnTerminal = () => {
           console.log(Appcname.innerHTML);
           if (Appcname.innerTEXT == "n") {
             Mainmenu = menu;
-            console.log(menu)
+            console.log(menu);
           }
         }
         console.log(Mainmenu);
