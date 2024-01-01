@@ -107,10 +107,9 @@ export const WnTerminal = () => {
           var app = apps[i];
           var Appcname = app.getElementsByClassName("appName")[0];
           var menu = app.getElementsByClassName("uicon")[0];
-          console.log(Appcname.innerHTML);
-          if (Appcname.innerTEXT == "n") {
-            Mainmenu = menu;
-            console.log(menu);
+          if (Appcname.innerHTML == "n") {
+            var Mainmenu = menu;
+            console.log(menu)
           }
         }
         console.log(Mainmenu);
