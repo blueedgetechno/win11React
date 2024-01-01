@@ -112,6 +112,7 @@ export const WnTerminal = () => {
             Mainmenu = menu;
           }
         }
+        console.log(Mainmenu)
 
         delApp("delete", Mainmenu);
         tmpStack.push("App uninstalled");
