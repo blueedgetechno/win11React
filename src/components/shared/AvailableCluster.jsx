@@ -9,8 +9,7 @@ function AvailableCluster() {
     );
 
     if (
-        !validate_user_access('month', 'week', 'admin') ||
-        availableCluster == null
+        !validate_user_access('month', 'week', 'admin')
     )
         return null;
 
