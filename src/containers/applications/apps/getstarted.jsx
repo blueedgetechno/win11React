@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DoDemo, LoginAndDemo, login } from '../../../backend/actions';
+import { LoginAndDemo, login } from '../../../backend/actions';
+
 import {
     appDispatch,
     app_close,
@@ -22,22 +23,14 @@ const countries = [
     'South America'
 ];
 
-const experiences = [
-    'Comfortable gameplay',
-    'Hardcore gameplay',
-    'Professional work',
-    'Explore new technologies',
-    "I don't know yet"
-];
-
 export const Getstarted = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'getstarted')
     );
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
-    //const [pageNo, setPageNo] = useState(2);
-    const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
+    const [pageNo, setPageNo] = useState(3);
+    //const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
     useEffect(() => {
         if (pageNo != 5) return;
@@ -67,6 +60,15 @@ export const Getstarted = () => {
         else window.onkeydown = null;
     }, [wnapp.hide, pageNo]);
 
+    const experiences = [
+        "getStarted.experiences.comfortable",
+        "getStarted.experiences.hardcore",
+        "getStarted.experiences.professional",
+        "getStarted.experiences.explore",
+        "getStarted.experiences.dont_know",
+
+    ];
+
     return (
         <div
             className="getstarted floatTab dpShad"
@@ -95,29 +97,30 @@ export const Getstarted = () => {
                                 </div>
                                 <div className="right">
                                     <div className="header mb-8">
-                                        Welcome to thinkmay <br /> cloud gaming
+                                        Welcome to Thinkmay <br /> cloud gaming
                                     </div>
                                     <div>
-                                        We will setup 15 minutes demo gameplay
+                                        {t('getStarted.welcome_line2')}
                                         <br />
-                                        before you subscribe for our service,
+                                        {t('getStarted.welcome_line3')}
                                         <br />
                                         <br />
                                         <br />
-                                        Is this the first time you try our
-                                        service? <br />
+                                        {t('getStarted.welcome_line4')}
+
+                                        <br />
                                     </div>
                                 </div>
 
                                 <div className="no_button base" onClick={login}>
-                                    Have an account?{' '}
-                                    <span className="underline"> Sign in</span>
+                                    {t('getStarted.have_account')},{' '}
+                                    <span className="underline">{t('getStarted.sign_in')}</span>
                                 </div>
                                 <div
                                     className="yes_button base"
                                     onClick={LoginAndDemo}
                                 >
-                                    Yes
+                                    Next
                                 </div>
                             </>
                         ) : null}
@@ -132,7 +135,7 @@ export const Getstarted = () => {
                                 </div>
                                 <div className="right">
                                     <div className="header">
-                                        {t('oobe.country')}
+                                        {t('getStarted.country')}
                                         <br />
                                         <div className="header_sml"></div>
                                     </div>
@@ -152,7 +155,7 @@ export const Getstarted = () => {
                                             className="yes_button base"
                                             onClick={nextPage}
                                         >
-                                            Yes
+                                            Next
                                         </div>
                                     </div>
                                 </div>
@@ -165,9 +168,9 @@ export const Getstarted = () => {
                                 </div>
                                 <div className="right">
                                     <div className="header">
-                                        {t('oobe.keyboard')}
+                                        {t('getStarted.use_case')}
                                         <div className="header_sml">
-                                            {t('oobe.anotherkeyboard')}
+                                            {/*{t('getStarted.anotherkeyboard')}*/}
                                         </div>
                                     </div>
                                     <div className="list_oobe mt-4 win11Scroll">
@@ -178,7 +181,7 @@ export const Getstarted = () => {
                                                     className="list_oobe_opt"
                                                     onClick={() => exp(e)}
                                                 >
-                                                    {e}
+                                                    {i18n.t(e)}
                                                 </div>
                                             );
                                         })}
@@ -186,7 +189,7 @@ export const Getstarted = () => {
                                             className="yes_button base"
                                             onClick={nextPage}
                                         >
-                                            Yes
+                                            Next
                                         </div>
                                     </div>
                                 </div>
@@ -231,47 +234,46 @@ export const Getstarted = () => {
                                 </div>
                                 <div className="right">
                                     <div className="header">
-                                        How to get the best experience
+                                        {t('getStarted.guideline.title')}
                                         <div className="header_sml">
-                                            You'll need an internet connection
-                                            to continue the setting up your
-                                            device. <br />
-                                            Once connected, you'll get the
-                                            latest features and security
-                                            updates.
+                                            {t('getStarted.guideline.header_1')}
+
+                                            <br />
+                                            {t('getStarted.guideline.header_2')}
+
                                         </div>
                                         <div className="ethernet_list">
                                             <div className="list_oobe_opt_wifi">
                                                 <div className="ethernet_list_opt_inr">
                                                     <div className="text_sml_black_wifi">
-                                                        Turn off you VPN
+                                                        {t('getStarted.guideline.content_1')}
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        VPN downgrade
+                                                        {t('getStarted.guideline.content_2')}
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Use 5Ghz wifi if
-                                                        possible
+                                                        {t('getStarted.guideline.content_3')}
+
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        5Ghz wifi will help you
-                                                        get better connection
+                                                        {t('getStarted.guideline.content_4')}
+
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Contact our customer
-                                                        support
+                                                        {t('getStarted.guideline.content_5')}
+
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        If you have connectivity
-                                                        problems
+                                                        {t('getStarted.guideline.content_6')}
+
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        Join our community to
-                                                        request games
+                                                        {t('getStarted.guideline.content_7')}
+
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        Join our discord to get
-                                                        lastest updates
+                                                        {t('getStarted.guideline.content_8')}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -280,7 +282,7 @@ export const Getstarted = () => {
                                             className="yes_button base"
                                             onClick={nextPage}
                                         >
-                                            Yes
+                                            Next
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +295,7 @@ export const Getstarted = () => {
                                 </div>
                                 <div className="right">
                                     <div className="header mb-8">
-                                        The setup has completed.
+                                        {t('getStarted.completed')}
                                     </div>
                                     <div
                                         className="yes_button base"
