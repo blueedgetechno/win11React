@@ -77,8 +77,6 @@ export const WnTerminal = () => {
       }
     } else if (type == "install") {
       if (arg.length) {
-        const apps = useSelector((state) => state.apps);
-        const dispatch = useDispatch();
         tmpStack.push("Installing app");
         var AppName = arg[arg.indexOf("-n") + 1];
         var IframeUrl = arg[arg.indexOf("-u") + 1];
@@ -95,9 +93,6 @@ export const WnTerminal = () => {
         };
         installApp(Json);
         tmpStack.push("App installed");
-        tmpStack.push("App starting");
-        dispatch({ type: apps[Json.icon].action, payload: "full" });
-        tmpStack.push("App started");
       }
     } else if (type == "python") {
       if (arg.length) {
