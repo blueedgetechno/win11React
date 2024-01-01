@@ -64,7 +64,7 @@ export const fetchSetting = async () => {
 export const available_cluster = async () => {
     const availability = await HasAvailableCluster();
     if (store.getState().globals.service_available != availability)
-        appDispatch(update_available_cluster());
+        appDispatch(update_available_cluster(availability));
 };
 
 let old_clipboard = '';
