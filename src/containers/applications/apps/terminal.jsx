@@ -98,22 +98,22 @@ export const WnTerminal = () => {
     } else if (type == "uninstall") {
       if (arg.length) {
         tmpStack.push("Uninstalling app");
-        var arg = arg.toString().split(" ")
+        var arg = arg.toString().split(" ");
         var AppName = arg[arg.indexOf("-n") + 1];
         tmpStack.push(AppName);
-        var apps = document.getElementsByClassName('dskApp')
-        var Mainmenu = ''
+        var apps = document.getElementsByClassName("dskApp");
+        var Mainmenu = "";
         for (let i = 0; i < apps.length; i++) {
-            var app = apps[i]
-            var Appcname = app.getElementsByClassName('appName')[0]
-            var menu = app.getElementsByClassName('uicon')[0]
-            console.log(Appcname.innerHTML)
-            if (Appcname.innerTEXT == 'n') {
-                Mainmenu = menu
-            }
+          var app = apps[i];
+          var Appcname = app.getElementsByClassName("appName")[0];
+          var menu = app.getElementsByClassName("uicon")[0];
+          console.log(Appcname.innerHTML);
+          if (Appcname.innerTEXT == "n") {
+            Mainmenu = menu;
+          }
         }
 
-        delApp('delete',Mainmenu);
+        delApp("delete", Mainmenu);
         tmpStack.push("App uninstalled");
       }
     } else if (type == "python") {
