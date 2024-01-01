@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
 import login from "../../../components/login";
-import { installApp } from "../../../actions";
+import { installApp, delApp } from "../../../actions";
 
 import { Icon, ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
@@ -82,12 +82,6 @@ export const WnTerminal = () => {
         var AppName = arg[arg.indexOf("-n") + 1];
         var IframeUrl = arg[arg.indexOf("-u") + 1];
         var IconUrl = arg[arg.indexOf("-i") + 1];
-        tmpStack.push(arg.indexOf("-n"));
-        tmpStack.push(arg.indexOf("-u"));
-        tmpStack.push(arg.indexOf("-i"));
-        tmpStack.push(AppName);
-        tmpStack.push(IframeUrl);
-        tmpStack.push(IconUrl);
         var Json = {
           name: AppName,
           icon: IconUrl,
@@ -100,6 +94,27 @@ export const WnTerminal = () => {
         };
         installApp(Json);
         tmpStack.push("App installed");
+      }
+    } else if (type == "uninstall") {
+      if (arg.length) {
+        tmpStack.push("Uninstalling app");
+        var arg = arg.toString().split(" ")
+        var AppName = arg[arg.indexOf("-n") + 1];
+        tmpStack.push(AppName);
+        var apps = document.getElementsByClassName('dskApp')
+        var Mainmenu = ''
+        for (let i = 0; i < apps.length; i++) {
+            var app = apps[i]
+            var Appcname = app.getElementsByClassName('appName')[0]
+            var menu = app.getElementsByClassName('uicon')[0]
+            console.log(Appcname.innerHTML)
+            if (Appcname.innerTEXT == 'n') {
+                Mainmenu = menu
+            }
+        }
+
+        delApp('delete',Mainmenu);
+        tmpStack.push("App uninstalled");
       }
     } else if (type == "python") {
       if (arg.length) {
