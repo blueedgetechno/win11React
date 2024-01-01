@@ -74,6 +74,10 @@ export const WnTerminal = () => {
       if (arg.length) {
         tmpStack.push(eval(arg).toString());
       }
+    } else if (type == "install") {
+      if (arg.length) {
+        tmpStack.push(arg);
+      }
     } else if (type == "python") {
       if (arg.length) {
         if (window.pythonRunner) {
