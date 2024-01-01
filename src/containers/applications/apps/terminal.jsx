@@ -4,7 +4,7 @@ import i18next from "i18next";
 import login from "../../../components/login";
 import { installApp } from "../../../actions";
 
-import { ToolBar } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 
 export const WnTerminal = () => {
@@ -81,6 +81,9 @@ export const WnTerminal = () => {
         var AppName = arg[arg.indexOf("-n") + 1];
         var IframeUrl = arg[arg.indexOf("-u") + 1];
         var IconUrl = arg[arg.indexOf("-i") + 1];
+        tmpStack.push(AppName)
+        tmpStack.push(IframeUrl)
+        tmpStack.push(IconUrl)
         var Json = {
           name: AppName,
           icon: IconUrl,
