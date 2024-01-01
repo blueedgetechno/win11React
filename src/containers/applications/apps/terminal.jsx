@@ -78,6 +78,7 @@ export const WnTerminal = () => {
     } else if (type == "install") {
       if (arg.length) {
         tmpStack.push("Installing app");
+        var arg = arg.toString().split(" ")
         var AppName = arg[arg.indexOf("-n") + 1];
         var IframeUrl = arg[arg.indexOf("-u") + 1];
         var IconUrl = arg[arg.indexOf("-i") + 1];
