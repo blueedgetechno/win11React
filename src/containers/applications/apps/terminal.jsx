@@ -315,7 +315,8 @@ export const WnTerminal = () => {
         "VER            Displays the Windows version.",
         "PYTHON         EXECUTE PYTHON CODE.",
         "EVAL           RUNS JavaScript statements.",
-        "INSTALL           Instal a app with name and iframe url",
+        "INSTALL        Instal a app with app name and iframe url",
+        "UNINSTALL      Uninstal a app with app name",
       ];
 
       for (var i = 0; i < helpArr.length; i++) {
