@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchStore } from '../../../backend/actions/background';
 import { validate_user_access } from '../../../backend/utils/checking';
@@ -15,8 +15,8 @@ import {
     install_app,
     useAppSelector
 } from '../../../backend/reducers';
-import './assets/store.scss';
 import { FetchApp } from '../../../backend/reducers/fetch';
+import './assets/store.scss';
 
 const emap = (v) => {
     v = Math.min(1 / v, 10);
@@ -315,7 +315,7 @@ const DetailPage = ({ app }) => {
     // const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
-        if (!validate_user_access('month', 'week', 'admin')) return;
+        if (!validate_user_access('month', 'week', 'admin', 'day')) return;
 
         appDispatch(
             install_app({
@@ -412,7 +412,8 @@ const DetailPage = ({ app }) => {
                                     {validate_user_access(
                                         'month',
                                         'week',
-                                        'admin'
+                                        'admin',
+                                        'day'
                                     )
                                         ? `${x.gpu} ${x.region}`
                                         : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}

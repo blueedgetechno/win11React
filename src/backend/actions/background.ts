@@ -103,6 +103,6 @@ export const preload = async () => {
     setInterval(ping_remote, 10 * 1000);
     setInterval(handleClipboard, 100);
 
-    if (validate_user_access('month', 'week', 'admin'))
+    if (validate_user_access('month', 'week', 'admin', 'day'))
         setInterval(available_cluster, 30 * 1000);
 };

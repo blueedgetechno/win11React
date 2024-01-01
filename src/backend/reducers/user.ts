@@ -53,7 +53,7 @@ export const userAsync = {
                 (plans as any[])
                     .map((x) => x.plans)
                     .find((x) =>
-                        ['month', 'week', 'admin', 'remote'].includes(x)
+                        ['month', 'week', 'admin', 'remote', 'day'].includes(x)
                     ) != undefined
             ) {
                 const { data, error } = await supabase.rpc(
