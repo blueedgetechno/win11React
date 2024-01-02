@@ -49,7 +49,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const { update_available_cluster } = globalSlice.actions
+export const { update_available_cluster } = globalSlice.actions;
 export const { user_delete } = userSlice.actions;
 export const { wall_next, wall_set, wall_lock, wall_unlock } =
     wallSlice.actions;
@@ -75,6 +75,7 @@ export const {
 export const {
     app_toggle,
     app_add,
+    app_stuck,
     app_close,
     app_external,
     app_showdesk,
@@ -97,12 +98,17 @@ export const {
     toggle_remote,
     hard_reset,
     open_remote,
+    loose_focus,
+    have_focus,
     scancode,
     scancode_toggle,
     ads_period,
     close_remote,
     change_bitrate,
+    change_framerate,
     fullscreen,
+    set_fullscreen,
+    homescreen,
     audio_status,
     video_status,
     update_connection_path,
@@ -119,8 +125,8 @@ export const {
     reset_app,
     access_app
 } = appsAsync;
-export const { 
-    fetch_worker, 
+export const {
+    fetch_worker,
     access_worker,
 
     access_volume,
@@ -146,8 +152,15 @@ export const {
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
-export const { authenticate_session, ping_session } = remoteAsync;
+export const {
+    authenticate_session,
+    ping_session,
+    load_setting,
+    cache_setting,
+    toggle_remote_async
+} = remoteAsync;
 
+export { ready } from './remote';
 export const dispatch_generic = async ({
     type,
     payload

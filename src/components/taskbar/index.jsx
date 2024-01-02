@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { TbBellRingingFilled } from "react-icons/tb";
+import { TbBellRingingFilled } from 'react-icons/tb';
 
+import { MdVideoSettings } from 'react-icons/md';
 import {
     appDispatch,
     task_hide,
@@ -124,7 +125,6 @@ const Taskbar = () => {
                         style={{ '--prefix': 'BAND' }}
                     >
                         <TbBellRingingFilled />
-
                     </div>
                     <div
                         className="prtclk handcr my-1 px-1 hvlight flex rounded"
@@ -132,15 +132,15 @@ const Taskbar = () => {
                         style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
                     >
-                        {   remote.connection?.video == 'connected' 
-                            ?  <Icon className="taskIcon" src={remote.frame_drop ? "wifi_low" :"wifi"} ui width={16} />
-                            :  null }
-                        <Icon
-                            className="taskIcon"
-                            src={'audio' + tasks.audio}
-                            ui
-                            width={16}
-                        />
+                        {remote.connection?.video == 'connected' ? (
+                            <Icon
+                                className="taskIcon"
+                                src={remote.frame_drop ? 'wifi_low' : 'wifi'}
+                                ui
+                                width={16}
+                            />
+                        ) : null}
+                        <MdVideoSettings />
                     </div>
                 </>
                 <div className="taskDate m-1 handcr prtclk rounded hvlight">

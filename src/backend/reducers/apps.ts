@@ -7,10 +7,11 @@ import {
     desk_add,
     fetch_app,
     open_remote,
+    ready,
     scancode,
     toggle_remote
 } from '.';
-import { CloseDemo, block_user_action, warning_fullscreen } from '../actions';
+import { CloseDemo } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
@@ -26,6 +27,7 @@ import {
 } from './fetch';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
+import { openRemotePage } from './remote';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
@@ -62,14 +64,17 @@ export const appsAsync = {
                     return {
                         id: icon.icon,
                         name: `${icon.name} ${storage.id}`,
-                        action: 'access_app',
-
-                        payload: storage.id,
                         ready: storage.data.length != 0,
+                        action:
+                            storage.data.length != 0
+                                ? 'access_app'
+                                : 'start_app',
                         menu:
                             storage.data.length != 0
                                 ? 'running_app'
-                                : 'paused_app'
+                                : 'paused_app',
+
+                        payload: storage.id
                     } as AppData;
                 }
             );
@@ -102,28 +107,30 @@ export const appsAsync = {
                 safe
             );
 
-            if ((getState() as RootState).remote.remote_id != undefined)
-                return
+            if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url, app_name);
+
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(storage_id));
+            await ready();
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
             appDispatch(fetch_app());
-
-            warning_fullscreen();
         }
     ),
 
@@ -131,15 +138,17 @@ export const appsAsync = {
         'demo_app',
         async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
+            if ((getState() as RootState).remote.old_version)
+                return openRemotePage(result.url);
+
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
             if (ref == null) throw new Error('invalid ref');
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
+            await ready();
             CloseDemo();
-
-            warning_fullscreen();
         }
     ),
     access_app: createAsyncThunk(
@@ -147,28 +156,34 @@ export const appsAsync = {
         async (storage_id: string, { getState }): Promise<string> => {
             if ((getState() as RootState).remote.remote_id == storage_id) {
                 appDispatch(toggle_remote());
-                return
+                await ready();
+                return;
             }
 
             appDispatch(close_remote());
             const result = await AccessApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
-            await appDispatch(authenticate_session({ ref }));
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
+            await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
-            block_user_action();
+            await ready();
 
             return storage_id;
         }
@@ -178,21 +193,27 @@ export const appsAsync = {
         async (storage_id: string, { getState }): Promise<string> => {
             appDispatch(close_remote());
             const result = await ResetApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
-            await appDispatch(authenticate_session({ ref }));
-
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
+            const app_name = data.at(0)?.name as string;
+
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
+
+            await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
+            await ready();
             return storage_id;
         }
     ),
@@ -201,26 +222,31 @@ export const appsAsync = {
         'start_app',
         async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
-            if ((getState() as RootState).remote.remote_id != undefined)
-                return
+            if ((getState() as RootState).remote.remote_id != undefined) return;
 
             const result = await AccessApplication({ storage_id });
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
-
-            await appDispatch(authenticate_session({ ref }));
             const { data, error } = await virtapi(
                 `rpc/get_app_metadata_from_volume`,
                 'POST',
                 { deploy_as: `${storage_id}` }
             );
             if (error) throw error;
-            const app_name = data.at(0)?.name as string
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(open_remote(storage_id));
+            const app_name = data.at(0)?.name as string;
 
-            warning_fullscreen();
+            if ((getState() as RootState).remote.old_version) {
+                openRemotePage(result.url, app_name);
+                return storage_id;
+            }
+            const url = new URL(result.url);
+            const ref = url.searchParams.get('ref');
+            if (ref == null) throw new Error('invalid ref');
+
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
+
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(storage_id));
+            await ready();
+
             return storage_id;
         }
     ),
@@ -258,7 +284,10 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         app_external: (state, action: PayloadAction<any>) => {
-            window.open(action.payload, '_blank');
+            //window.open(action.payload, '_blank');
+            setTimeout(() => {
+                window.open(action.payload, '_blank');
+            }, 0);
         },
         app_url: (state, action: PayloadAction<string | undefined>) => {
             const obj = state.apps.find((x) => x.id == 'edge');
@@ -298,7 +327,13 @@ export const appSlice = createSlice({
 
             state.apps = [...initialState.apps, ...app];
         },
+        app_stuck: (state, action: PayloadAction<string>) => {
+            const obj = state.apps.find((x) => action.payload == x.payload);
+            if (obj == undefined) return;
 
+            obj.menu = 'need_reset_app';
+            obj.action = 'reset_app';
+        },
         app_full: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find((x) => action.payload == x.id);
             if (obj == undefined) return;
@@ -312,9 +347,7 @@ export const appSlice = createSlice({
 
         app_close: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find((x) => action.payload == x.id);
-            if (obj == undefined) {
-                return;
-            }
+            if (obj == undefined) return;
 
             obj.hide = true;
             obj.max = null;
@@ -409,133 +442,59 @@ export const appSlice = createSlice({
                 fetch: appsAsync.reset_app,
                 hander: (state, action) => {
                     const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
+                        (x) => action.payload == x.payload
                     );
                     if (obj == undefined) return;
-
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
+                    obj.action = 'access_app';
+                    obj.menu = 'running_app';
+                    obj.ready = true;
                 }
             },
             {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
-                    );
-                    if (obj == undefined) return;
+                hander: (state, action) => {}
+            },
 
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
-                }
+            {
+                fetch: appsAsync.demo_app,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: appsAsync.install_app,
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.start_app,
                 hander: (state, action) => {
                     const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
+                        (x) => action.payload == x.payload
                     );
                     if (obj == undefined) return;
-
-                    if (obj.z != state.hz) {
-                        obj.hide = false;
-                        if (!obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                            obj.max = true;
-                        } else {
-                            obj.z = -1;
-                            obj.max = false;
-                        }
-                    } else {
-                        obj.max = !obj.max;
-                        obj.hide = false;
-                        if (obj.max) {
-                            state.hz += 1;
-                            obj.z = state.hz;
-                        } else {
-                            obj.z = -1;
-                            state.hz -= 1;
-                        }
-                    }
-
                     obj.ready = true;
                     obj.menu = 'running_app';
+                    obj.action = 'access_app';
                 }
-            },
-            {
-                fetch: appsAsync.demo_app,
-                hander: (state, action) => { }
-            },
-            {
-                fetch: appsAsync.install_app,
-                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.pause_app,
                 hander: (state, action) => {
                     const obj = state.apps.find(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
+                        (x) => action.payload == x.payload
                     );
-
+                    if (obj == undefined) return;
                     obj.ready = false;
                     obj.menu = 'paused_app';
+                    obj.action = 'start_app';
                 }
             },
             {
                 fetch: appsAsync.delete_app,
                 hander: (state, action) => {
-                    state.apps = state.apps.filter(
-                        (x) =>
-                            action.payload == x.payload &&
-                            x.action == 'access_app'
+                    const filtered = state.apps.findIndex(
+                        (x) => action.payload == x.payload
                     );
+                    if (filtered == -1) return;
+                    state.apps.splice(filtered, 1);
                 }
             },
             {

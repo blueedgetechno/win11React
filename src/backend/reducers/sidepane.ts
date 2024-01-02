@@ -20,45 +20,50 @@ const initialState: Data = {
     quicks: [
         {
             ui: true,
-            src: 'wifi',
-            name: 'WiFi',
-            state: 'network.wifi.state',
-            action: 'remote/toggle_remote'
+            src: 'FiVideoOff',
+            name: 'Video toggle',
+            state: 'active',
+            action: 'toggle_remote_async'
         },
         {
             ui: true,
-            src: 'bluetooth',
-            name: 'Bluetooth',
-            state: 'devices.bluetooth',
-            action: 'setting/setting_togg'
-        },
-        {
-            ui: true,
-            src: 'airplane',
-            name: 'Flight Mode',
+            src: 'MdOutlineResetTv',
+            name: 'Reset',
             state: 'network.airplane',
             action: 'remote/hard_reset'
         },
         {
             ui: true,
-            src: 'saver',
-            name: 'Battery Saver',
-            state: 'system.power.saver.state',
+            src: 'FaWindows',
+            name: 'Home screen',
+            action: 'remote/homescreen'
+        },
+        {
+            src: 'MdLoop',
+            name: 'Low Period',
+            state: 'low_ads',
+            action: 'remote/ads_period'
+        },
+        {
+            ui: true,
+            src: 'MdFullscreen',
+            name: 'Fullscreen',
+            state: 'fullscreen',
+            action: 'remote/fullscreen'
+        },
+        {
+            ui: true,
+            src: 'MdKeyboard',
+            name: 'Scan Code',
+            state: 'scancode',
             action: 'remote/scancode_toggle'
         },
         {
             ui: true,
-            src: 'sun',
-            name: 'Theme',
-            state: 'person.theme',
-            action: 'changeTheme'
-        },
-        {
-            ui: true,
-            src: 'nightlight',
-            name: 'Night Light',
-            state: 'system.display.nightlight.state',
-            action: 'setting/setting_togg'
+            src: 'FaExternalLinkAlt',
+            name: 'External tab',
+            state: 'old_version',
+            action: 'remote/remote_version'
         }
     ],
     notifications: [],
@@ -85,7 +90,7 @@ export const sidepaneSlice = createSlice({
         },
 
         sidepane_panethem: (state, action: PayloadAction<any>) => {
-            state.quicks[4].src = action.payload;
+            // state.quicks[4].src = action.payload;
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [action.payload, ...state.notifications];

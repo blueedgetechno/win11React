@@ -19,9 +19,9 @@
   "store.ratings": "Ratings and reviews",
   "store.description": "Description",
   "camera.take-photo": "Take photo",
-  "oobe.country": "Which region is closest to you?",
-  "oobe.keyboard": "I want to use cloud gaming for",
-  "oobe.anotherkeyboard": "If you also use another keyboard layout, you can add that next",
+  "getStarted.country": "Which region is closest to you?",
+  "getStarted.keyboard": "I want to use cloud gaming for",
+  "getStarted.anotherkeyboard": "If you also use another keyboard layout, you can add that next",
   "test": "ENlish",
   "error": {
     "suggest": "Please reload and try it again, in fews minutes",
@@ -34,6 +34,7 @@
     "NOT_PAUSED": "Game is running or installing, try again!",
     "PAUSED": "Game is pasued or installing, try again!",
     "NOT_PINGED": "Game is pasued, reload and run Start app!",
+    "REMOTE_TIMEOUT": "Remote request timed out, could you try run reset app?",
     "IS_LOCKED": "Your data is uploading to cloud, please wait a fews minutes",
     "NOT_FOUND": "Resources not found!",
     "TIME_OUT": "Installing timeout!"
@@ -74,5 +75,34 @@
       "reset_app": "Reset session",
       "access_app": "Access PC"
     }
+  },
+  "getStarted": {
+    "welcome_line1": "Welcome to Thinkmay cloud gaming",
+    "welcome_line2": "We will setup 15 minutes demo gameplay",
+    "welcome_line3": "before you subscribe for our service,",
+    "welcome_line4": "Is this the first time you try our service",
+    "have_account": "Have an account",
+    "sign_in": "Sign In",
+    "experiences": {
+      "comfortable": "Comfortable gameplay",
+      "hardcore": "Hardcore gameplay",
+      "professional": "rofessional work",
+      "explore": "Explore new technologies",
+      "dont_know": "I don't know yet"
+    },
+    "guideline": {
+      "title": "How to get the best experience",
+      "header_1": "You'll need an internet connection to continue the setting up your device.",
+      "header_2": "Once connected, you'll get the latest features and security updates.",
+      "content_1": "Turn off you VPN",
+      "content_2": "VPN downgrade",
+      "content_3": "Use 5Ghz wifi if possible",
+      "content_4": "5Ghz wifi will help you get better connection",
+      "content_5": "Contact our customer support",
+      "content_6": "If you have connectivity problems",
+      "content_7": "Join our community to request games",
+      "content_8": "Join our discord to get lastest updates",
+    },
+    "completed": "The setup has completed."
   }
 }

@@ -54,17 +54,35 @@ export type MenuOption =
     | 'desk_remote'
     | 'paused_app'
     | 'running_app'
+    | 'need_reset_app'
     | NodeType;
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
+        case 'need_reset_app':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Reset',
+                        action: 'reset_app',
+                        icon: 'reset'
+                    },
+                    {
+                        name: 'Shutdown',
+                        action: 'pause_app',
+                        icon: 'shutdown'
+                    }
+                ]
+            };
         case 'running_app':
             return {
                 width: '200px',
                 secwid: '200px',
                 data: [
                     {
-                        name: 'Access',
-                        action: 'access_app',
+                        name: 'Open',
+                        action: 'access_app'
                     },
                     {
                         name: 'Reset',
@@ -85,7 +103,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Access',
-                        action: 'access_storage',
+                        action: 'access_storage'
                     },
                     {
                         name: 'Pause',
@@ -98,11 +116,11 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         icon: 'delete'
                     },
                     {
-                        type: "hr",
+                        type: 'hr'
                     },
                     {
-                        name: 'Detail', 
-                        action: 'viewDetail', // TODO
+                        name: 'Detail',
+                        action: 'viewDetail' // TODO
                     }
                 ]
             };
@@ -113,7 +131,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'Access',
-                        action: 'access_volume',
+                        action: 'access_volume'
                     },
                     {
                         name: 'Stop',
@@ -122,7 +140,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Fork',
-                        action: 'fork_volume',
+                        action: 'fork_volume'
                     },
                     // { // PENDING
                     //     name: 'Migrate',
@@ -130,7 +148,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     // },
                     {
                         name: 'Set default os',
-                        action: 'default_os_volume',
+                        action: 'default_os_volume'
                     },
                     {
                         name: 'Delete',
@@ -138,11 +156,11 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         icon: 'delete'
                     },
                     {
-                        type: "hr",
+                        type: 'hr'
                     },
                     {
-                        name: 'Detail', 
-                        action: 'viewDetail', // TODO
+                        name: 'Detail',
+                        action: 'viewDetail' // TODO
                     }
                 ]
             };
@@ -175,8 +193,8 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         action: 'create_session'
                     },
                     {
-                        name: 'Detail', 
-                        action: '', // TODO
+                        name: 'Detail',
+                        action: '' // TODO
                     }
                 ]
             };
@@ -192,8 +210,8 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     {
                         name: 'Deactivate Session',
                         action: 'deactivate_session'
-                    },
-                ]  
+                    }
+                ]
             };
         case 'paused_app':
             return {
@@ -284,7 +302,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-        case 'subscriptions': 
+        case 'subscriptions':
             return {
                 width: '200px',
                 secwid: '200px',
@@ -294,11 +312,11 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         action: 'create_subscription'
                     }
                 ]
-            }
+            };
         case 'subscription':
             return {
                 width: '200px',
-                secwid: '200px',    
+                secwid: '200px',
                 data: [
                     {
                         name: 'Renew',
@@ -315,11 +333,11 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     {
                         name: 'Cancel',
                         action: 'cancel_subscription'
-                    },
+                    }
                 ]
-            }
+            };
         default:
-       return {
+            return {
                 width: '310px',
                 secwid: '200px',
                 data: []

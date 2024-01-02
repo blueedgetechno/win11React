@@ -76,10 +76,14 @@ export const CreateWorkerSession = async (worker_profile_id: string) => {
  * @param {'month' | 'week'} plan
  * @returns
  */
-export const AddSubscription = async ({email,free,plan}:{
-    email: string,
-    plan: string,
-    free: string
+export const AddSubscription = async ({
+    email,
+    free,
+    plan
+}: {
+    email: string;
+    plan: string;
+    free: string;
 }) => {
     const result = await SupabaseFuncInvoke('add_subscription', {
         email,
@@ -96,7 +100,10 @@ export const AddSubscription = async ({email,free,plan}:{
  * @param {string} email
  * @returns
  */
-export const ModifySubscription = async (input: {action: string, email: string}) => {
+export const ModifySubscription = async (input: {
+    action: string;
+    email: string;
+}) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
         ...input
     });
@@ -114,9 +121,9 @@ export const ModifySubscription = async (input: {action: string, email: string})
  */
 
 export const AdjustSubscription = async (input: {
-    email: string,
-    created_at: string,
-    ends_at: string
+    email: string;
+    created_at: string;
+    ends_at: string;
 }) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
         action: 'ADJUST',
@@ -302,11 +309,10 @@ export const ForkVolume = async (
 };
 
 export const PatchApp = async (input: {
-    app_id: number,
-    desc: string,
-    cluster_id: string
-}
-) => {
+    app_id: number;
+    desc: string;
+    cluster_id: string;
+}) => {
     const result = await SupabaseFuncInvoke('configure_application', {
         action: 'PATCH',
         ...input
@@ -386,14 +392,12 @@ export const FetchApplicationTemplates = async (id: number) => {
 };
 
 export async function FetchApp(app: any) {
-    const { data, error } = await virtapi(
-        `rpc/get_app_from_store`,
-        'POST',
-        { store_id: `${app.id}` }
-    );
+    const { data, error } = await virtapi(`rpc/get_app_from_store`, 'POST', {
+        store_id: `${app.id}`
+    });
     if (error) throw error;
 
-    return data
+    return data;
 }
 
 async function handleUpdateApp(app: any) {
@@ -428,10 +432,14 @@ async function handleInsertApp(newData: any) {
 }
 
 export async function HasAvailableCluster() {
-    const { data, error } = await virtapi('rpc/attachable_clusters', "POST", {})
+    const { data, error } = await virtapi(
+        'rpc/attachable_clusters',
+        'POST',
+        {}
+    );
     if (error) throw error;
 
-    const checking = data.at(0).total > 0
+    const checking = data.at(0).total > 0;
 
-    return checking
+    return checking;
 }

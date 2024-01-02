@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchStore } from '../../../backend/actions/background';
 import { validate_user_access } from '../../../backend/utils/checking';
@@ -15,8 +15,8 @@ import {
     install_app,
     useAppSelector
 } from '../../../backend/reducers';
-import './assets/store.scss';
 import { FetchApp } from '../../../backend/reducers/fetch';
+import './assets/store.scss';
 
 const emap = (v) => {
     v = Math.min(1 / v, 10);
@@ -220,7 +220,7 @@ const FrontPage = (props) => {
                               return (
                                   <div
                                       key={i}
-                                      className="ribcont rounded-md my-0 p-2 pb-2"
+                                      className="ribcont rounded-md p-1 pt-1 pb-0 ltShad prtclk"
                                       onClick={() => {
                                           props.app_click(game);
                                       }}
@@ -231,18 +231,44 @@ const FrontPage = (props) => {
                                       }}
                                   >
                                       <Image
-                                          className="mx-1 py-1 mb-6 rounded"
-                                          w={100}
-                                          h={100}
+                                          className="mb-3 rounded"
+                                          w={160}
+                                          h={160}
                                           absolute={true}
                                           src={game.icon}
                                       />
-                                      <div className="capitalize text-xs text-center font-semibold">
+                                      <div
+                                          className="capitalize text-xs text-center font-semibold"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
                                           {game.name}
                                       </div>
-                                      <div className="text-xs text-center font-regular">
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
                                           {game.steam_off
                                               ? 'Steam Offline'
+                                              : ''}
+                                      </div>
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
+                                          {game.volume_class.includes('LA')
+                                              ? 'Low availablity'
                                               : ''}
                                       </div>
                                   </div>
@@ -279,10 +305,8 @@ const DetailPage = ({ app }) => {
     const region = ['Hà Nội', 'India'];
 
     useEffect(() => {
-        FetchApp(app)
-            .then(x => SetOptions(x))
-    },[])
-
+        FetchApp(app).then((x) => SetOptions(x));
+    }, []);
 
     // useLayoutEffect(() => {
     //     const element = document.getElementById('storeScroll');
@@ -291,7 +315,7 @@ const DetailPage = ({ app }) => {
     // const dispatch = appDispatch();
 
     const download = async ({ id }, app) => {
-        if (!validate_user_access('month', 'week', 'admin')) return;
+        if (!validate_user_access('month', 'week', 'admin', 'day')) return;
 
         appDispatch(
             install_app({
@@ -388,7 +412,8 @@ const DetailPage = ({ app }) => {
                                     {validate_user_access(
                                         'month',
                                         'week',
-                                        'admin'
+                                        'admin',
+                                        'day'
                                     )
                                         ? `${x.gpu} ${x.region}`
                                         : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
@@ -575,7 +600,7 @@ const DownPage = ({ action }) => {
                 return (
                     <div
                         key={index}
-                        className="ribcont p-4 pt-8 ltShad prtclk"
+                        className="ribcont p-2 pt-2 ltShad prtclk"
                         onClick={() => {
                             action(app);
                         }}
@@ -587,17 +612,31 @@ const DownPage = ({ action }) => {
                         }}
                     >
                         <Image
-                            className="mx-4 mb-6 rounded"
-                            w={100}
-                            h={100}
+                            className="rounded mb-4"
+                            w={180}
+                            h={180}
                             src={app.icon}
                             ext
                         />
-                        <div className="capitalize text-xs text-center font-semibold">
+                        <div
+                            className="capitalize text-xs text-center font-semibold"
+                            style={{ color: app.steam_off ? '#313131' : '' }}
+                        >
                             {app.name}
                         </div>
-                        <div className="text-xs text-center font-regular">
+                        <div
+                            className="text-xs text-center font-regular"
+                            style={{ color: '#313131' }}
+                        >
                             {app.steam_off ? 'Steam Offline' : ''}
+                        </div>
+                        <div
+                            className="text-xs text-center font-regular"
+                            style={{ color: app.steam_off ? '#313131' : '' }}
+                        >
+                            {app.volume_class.includes('LA')
+                                ? 'Low availablity'
+                                : ''}
                         </div>
                     </div>
                 );
@@ -649,13 +688,13 @@ const DownPage = ({ action }) => {
                     : listDraftApp.map((i) => (
                           <div
                               key={i}
-                              className="animate-pulse ribcont p-4 pt-8 ltShad prtclk"
+                              className="animate-pulse ribcont p-8 pt-8 ltShad prtclk"
                               data-action="page2"
                           >
                               <Image
-                                  className="mx-4 mb-6 rounded bg-slate-200"
-                                  w={100}
-                                  h={100}
+                                  className="mx-5 mb-12 bg-slate-400"
+                                  w={200}
+                                  h={200}
                                   ext
                               />
                               <div className="capitalize text-xs text-center font-semibold"></div>

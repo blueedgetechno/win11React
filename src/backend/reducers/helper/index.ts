@@ -7,10 +7,8 @@ import {
 } from '@reduxjs/toolkit';
 
 import Dexie, { Table } from 'dexie';
-import { appDispatch, popup_close, popup_open, push_notification } from '..';
-import { externalLink } from '../../utils/constant';
+import { appDispatch, popup_close, popup_open } from '..';
 import { formatError } from '../../utils/formatErr';
-import { formatTitleNotify } from '../../utils/forrmatNotify';
 class TodoDB extends Dexie {
     data!: Table<{ timestamp: number; id: string; raw: any }, string>;
     constructor() {
@@ -23,12 +21,50 @@ class TodoDB extends Dexie {
 
 const db = new TodoDB();
 const PREFIX = (name: string) => `THINKMAY_${name}`;
+export async function SetPermanentCache<T>(
+    name: string,
+    raw: T
+): Promise<void> {
+    const timestamp = new Date().getTime();
+    if (db == null) {
+        localStorage.setItem(
+            PREFIX(name),
+            JSON.stringify({
+                timestamp,
+                raw
+            })
+        );
+    } else {
+        await db.data.where('id').equals(PREFIX(name)).delete();
+        await db.data.add({
+            id: PREFIX(name),
+            timestamp,
+            raw
+        });
+    }
+}
+export async function GetPermanentCache<T>(name: string): Promise<T | null> {
+    if (db == null) {
+        const data = localStorage.getItem(PREFIX(name));
+        try {
+            const { raw } = JSON.parse(data ?? '');
+            return raw;
+        } catch {
+            return null;
+        }
+    } else {
+        const { raw } =
+            (await db.data.where('id').equals(PREFIX(name)).first()) ?? {};
+        return raw;
+    }
+}
+
 export async function CacheRequest<T>(
     name: string,
     sec: number,
     req: () => Promise<T>
 ): Promise<T> {
-    sec = window.location.href.includes('localhost') ? 10 * 60 : sec
+    sec = window.location.href.includes('localhost') ? 10 * 60 : sec;
     const store = async (raw: any, timestamp: number) => {
         if (db == null) {
             localStorage.setItem(
@@ -84,14 +120,17 @@ export async function CacheRequest<T>(
 const isPending = (action: UnknownAction) =>
     action.type.endsWith('/pending') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isRejected = (action: UnknownAction) =>
     action.type.endsWith('/rejected') &&
     !action.type.includes('fetch') &&
+    !action.type.includes('setting') &&
     !action.type.includes('ping');
 
 export const isPendingAction =
@@ -149,25 +188,13 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isPendingAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => {
-                    appDispatch(
-                        push_notification({
-                            type: 'pending',
-                            title: formatTitleNotify(
-                                'pending',
-                                action.type.split('/').at(0)
-                            ),
-                            name: new Date().toUTCString(),
-                            urlToImage: action.type
-                        })
-                    );
+                const notify = async () =>
                     appDispatch(
                         popup_open({
                             type: 'notify',
-                            data: {}
+                            data: { loading: true }
                         })
-                    )
-                }
+                    );
 
                 setTimeout(notify, 100);
             }
@@ -175,50 +202,45 @@ export async function BuilderHelper<T, U, V>(
         .addMatcher(
             isRejectedAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => {
-                    // UserEvents(`request ${action.type .split('/') .at(0)} is failed`)
+                const notify = async () => {
                     appDispatch(
-                        push_notification({
-                            type: 'rejected',
-                            title: formatTitleNotify(
-                                'rejected',
-                                action.type.split('/').at(0)
-                            ),
-                            name: new Date().toUTCString(),
-                            content: formatError(action.error as Error),
-                            url: externalLink.DISCORD_LINK,
-                            urlToImage: action.type
+                        popup_open({
+                            type: 'complete',
+                            data: {
+                                success: false,
+                                content: formatError(action.error as Error)
+                            }
                         })
                     );
-                    appDispatch(
-                        popup_close()
-                    )
-                }
 
+                    await new Promise((r) => setTimeout(r, 3000));
+                    appDispatch(popup_close());
+                    appDispatch(popup_close());
+                };
 
-                setTimeout(notify, 100);
+                setTimeout(notify, 1000);
             }
         )
         .addMatcher(
             isFulfilledAction(handlers.map((x) => x.fetch.typePrefix)),
             (state, action) => {
-                const notify = () => {
-                    // UserEvents(`request ${action.type .split('/') .at(0)} is completed`)
+                const notify = async () => {
                     appDispatch(
-                        push_notification({
-                            type: 'fulfilled',
-                            title: formatTitleNotify(
-                                'success',
-                                action.type.split('/').at(0)
-                            ),
-                            name: new Date().toUTCString(),
-                            urlToImage: action.type
+                        popup_open({
+                            type: 'complete',
+                            data: {
+                                success: true,
+                                content: 'request completed'
+                            }
                         })
                     );
-                    appDispatch(popup_close())
-                }
 
-                setTimeout(notify, 100);
+                    await new Promise((r) => setTimeout(r, 3000));
+                    appDispatch(popup_close());
+                    appDispatch(popup_close());
+                };
+
+                setTimeout(notify, 1000);
             }
         );
 }

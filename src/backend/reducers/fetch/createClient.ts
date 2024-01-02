@@ -10,7 +10,8 @@ export enum CAUSE {
     VM_BOOTING_UP,
     PERMISSION_REQUIRED,
     NEED_WAIT,
-    INVALID_REQUEST
+    INVALID_REQUEST,
+    REMOTE_TIMEOUT
 }
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;

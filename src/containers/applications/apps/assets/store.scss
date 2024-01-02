@@ -149,7 +149,8 @@
   background: var(--rib-bg);
   margin: 0 6px;
   height: auto;
-  width: 120px;
+  width: 160px;
+  min-height: 230px;
   transform-origin: center;
   transition: all ease-in-out 200ms;
   color: var(--dark-txt);

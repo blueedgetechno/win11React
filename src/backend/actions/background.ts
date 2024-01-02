@@ -1,18 +1,24 @@
 import { DoDemo, FirstTime } from '.';
 import {
+    RootState,
     appDispatch,
     app_toggle,
     fetch_app,
     fetch_store,
     fetch_user,
     fetch_worker,
+    have_focus,
+    load_setting,
+    loose_focus,
     ping_session,
     setting_theme,
     sidepane_panethem,
+    store,
     update_available_cluster,
     wall_set
 } from '../reducers';
 import { HasAvailableCluster } from '../reducers/fetch';
+import { client } from '../reducers/remote';
 import { validate_user_access } from '../utils/checking';
 
 const loadSettings = async () => {
@@ -51,9 +57,32 @@ export const fetchStore = async () => {
 export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
+export const fetchSetting = async () => {
+    await appDispatch(load_setting());
+};
 
 export const available_cluster = async () => {
-    appDispatch(update_available_cluster(await HasAvailableCluster()));
+    const availability = await HasAvailableCluster();
+    if (store.getState().globals.service_available != availability)
+        appDispatch(update_available_cluster(availability));
+};
+
+let old_clipboard = '';
+const handleClipboard = async () => {
+    try {
+        if (client == null || !client?.ready()) return;
+
+        const clipboard = await navigator.clipboard.readText();
+        if (!(store.getState() as RootState).remote.focus)
+            appDispatch(have_focus());
+        if (clipboard == old_clipboard) return;
+
+        old_clipboard = clipboard;
+        client?.hid?.SetClipboard(clipboard);
+    } catch {
+        if ((store.getState() as RootState).remote.focus)
+            appDispatch(loose_focus());
+    }
 };
 
 const ping_remote = async () => {
@@ -66,12 +95,14 @@ export const preload = async () => {
         loadSettings(),
         fetchWorker(),
         fetchStore(),
-        fetchApp()
+        fetchSetting(),
+        fetchApp(),
+        available_cluster()
     ]);
 
     setInterval(ping_remote, 10 * 1000);
-    if (!validate_user_access('month', 'week', 'admin'))
-        return
+    setInterval(handleClipboard, 100);
 
-    setInterval(available_cluster, 30 * 1000);
+    if (validate_user_access('month', 'week', 'admin', 'day'))
+        setInterval(available_cluster, 30 * 1000);
 };

@@ -7,7 +7,11 @@ export const WidPane = () => {
     const img = useAppSelector((state) => state.wallpaper.src);
 
     return (
-        <div className="widPaneCont" data-hide={widget.banhide}>
+        <div
+            style={{ '--prefix': 'BAND' }}
+            className="widPaneCont"
+            data-hide={widget.banhide}
+        >
             <LazyComponent show={!widget.banhide}>
                 <div className="WidPane win11Scroll">
                     <div className="widtop">
@@ -48,7 +52,8 @@ export const WidPane = () => {
                                         >
                                             <div className="tpNews">
                                                 <div className="tpSource">
-                                                    {article.name ?? new Date().toUTCString()}
+                                                    {article.name ??
+                                                        new Date().toUTCString()}
                                                 </div>
                                                 <div className="tpTitle">
                                                     {article.title}

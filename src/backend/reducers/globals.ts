@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest, Confirms } from './helper';
 
@@ -201,22 +201,49 @@ const initialState = {
         }
     ],
 
-    games: [] as any[],
-    hasAvailableCluster: false
+    games: [] as Store[],
+    service_available: false
+};
+
+export type Store = {
+    id: string;
+    name: string;
+    icon: string;
+    type: 'APP' | 'GAME';
+    description: string;
+    screenshoots: string[];
+    feature: string;
+    steam_off: null | 'true';
+    volume_ids: string[];
+    volume_class?: 'LA' | 'HA';
 };
 
 export const storeAsync = {
-    fetch_store: createAsyncThunk('fetch_store', async (): Promise<any[]> => {
+    fetch_store: createAsyncThunk('fetch_store', async (): Promise<Store[]> => {
         return await CacheRequest('store', 30, async () => {
             const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
             if (error) throw error;
 
-            return data;
+            let stores = [];
+            for (let index = 0; index < data.length; index++) {
+                const appStore = data[index];
+                const volume = await virtapi('rpc/fetch_volume_class', 'POST', {
+                    volume_id: appStore.volume_ids[0]
+                });
+                if (volume.error) {
+                    // Not found volume_class
+                } else {
+                    appStore.volume_class = volume.data[0].volume_class;
+                }
+                stores.push(appStore);
+            }
+
+            return stores;
         });
     }),
     delete_store: createAsyncThunk(
         'delete_store',
-        async ({ store_id }: { store_id: number }): Promise<any[]> => {
+        async ({ store_id }: { store_id: number }): Promise<Store[]> => {
             await Confirms();
             const { error } = await virtapi(
                 `stores?id=eq.${store_id}`,
@@ -238,8 +265,8 @@ export const globalSlice = createSlice({
     name: 'global',
     initialState,
     reducers: {
-        update_available_cluster: (state, action) => {
-            state.hasAvailableCluster = action.payload
+        update_available_cluster: (state, action: PayloadAction<boolean>) => {
+            state.service_available = action.payload;
         }
     },
     extraReducers: (builder) => {
