@@ -342,7 +342,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.access_worker,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             }
         );
     }

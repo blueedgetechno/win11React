@@ -8,10 +8,7 @@ function AvailableCluster() {
         (state) => state.globals.service_available
     );
 
-    if (
-        !validate_user_access('month', 'week', 'admin', 'day')
-    )
-        return null;
+    if (!validate_user_access('month', 'week', 'admin', 'day')) return null;
 
     return (
         <div className="clusterInfo">

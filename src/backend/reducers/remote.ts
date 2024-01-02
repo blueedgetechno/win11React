@@ -203,6 +203,12 @@ export const remoteAsync = {
         else if (client == null) return;
         else if (!client.ready()) return;
 
+        const second = client?.hid?.last_active();
+        if (second > 3 * 60 && second < 5 * 60) {
+        } else if (second > 5 * 60) {
+            return;
+        }
+
         await supabase.rpc(`ping_session`, {
             session_id: store.getState().remote.auth?.id
         });
@@ -221,8 +227,12 @@ export const remoteAsync = {
 
         if (peers.length != store.getState().remote.peers.length)
             appDispatch(remoteSlice.actions.update_peers(peers));
-        if (store.getState().remote.prev_bitrate != store.getState().remote.bitrate ||
-            store.getState().remote.prev_framerate != store.getState().remote.framerate)
+        if (
+            store.getState().remote.prev_bitrate !=
+                store.getState().remote.bitrate ||
+            store.getState().remote.prev_framerate !=
+                store.getState().remote.framerate
+        )
             appDispatch(remoteSlice.actions.sync());
     },
     cache_setting: createAsyncThunk(
