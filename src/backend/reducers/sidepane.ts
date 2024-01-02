@@ -30,7 +30,7 @@ const initialState: Data = {
             src: 'MdOutlineResetTv',
             name: 'Reset',
             state: 'network.airplane',
-            action: 'remote/hard_reset'
+            action: 'hard_reset_async'
         },
         {
             ui: true,

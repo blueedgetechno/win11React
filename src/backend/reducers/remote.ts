@@ -6,6 +6,7 @@ import {
     audio_status,
     cache_setting,
     close_remote,
+    hard_reset,
     popup_close,
     popup_open,
     store,
@@ -308,7 +309,18 @@ export const remoteAsync = {
 
             return;
         }
-    )
+    ),
+    hard_reset_async: createAsyncThunk(
+        'hard_reset_async',
+        async (_: void, { getState }) => {
+            if (client == null) return;
+
+
+            appDispatch(hard_reset());
+            await ready()
+            return;
+        }
+    ),
 };
 
 export const remoteSlice = createSlice({
@@ -498,6 +510,10 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.toggle_remote_async,
                 hander: (state, action: PayloadAction<void>) => {}
+            },
+            {
+                fetch: remoteAsync.hard_reset_async,
+                hander: (state, action: PayloadAction<void>) => { }
             }
         );
     }
