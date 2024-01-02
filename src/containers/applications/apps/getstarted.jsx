@@ -29,7 +29,6 @@ export const Getstarted = () => {
     );
     const { t, i18n } = useTranslation();
 
-    //const [pageNo, setPageNo] = useState(3);
     const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
     useEffect(() => {
@@ -121,7 +120,9 @@ export const Getstarted = () => {
                                     className="yes_button base"
                                     onClick={LoginAndDemo}
                                 >
-                                    Next
+
+                                    {t('getStarted.demo')}
+
                                 </div>
                             </>
                         ) : null}
