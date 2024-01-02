@@ -157,7 +157,8 @@ export const {
     ping_session,
     load_setting,
     cache_setting,
-    toggle_remote_async
+    toggle_remote_async,
+    hard_reset_async
 } = remoteAsync;
 
 export { ready } from './remote';
