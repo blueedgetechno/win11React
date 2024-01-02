@@ -300,16 +300,15 @@ export const remoteAsync = {
         async (_: void, { getState }) => {
             if (!store.getState().remote.active) {
                 appDispatch(toggle_remote());
-                await sleep(2000)
-                return
-            };
+                await sleep(2000);
+                return;
+            }
 
             appDispatch(toggle_remote());
 
-            return
+            return;
         }
     )
-
 };
 
 export const remoteSlice = createSlice({
@@ -498,7 +497,7 @@ export const remoteSlice = createSlice({
             },
             {
                 fetch: remoteAsync.toggle_remote_async,
-                hander: (state, action: PayloadAction<void>) => { }
+                hander: (state, action: PayloadAction<void>) => {}
             }
         );
     }
