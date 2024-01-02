@@ -29,8 +29,8 @@ export const Getstarted = () => {
     );
     const { t, i18n } = useTranslation();
 
-    const [pageNo, setPageNo] = useState(3);
-    //const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
+    //const [pageNo, setPageNo] = useState(3);
+    const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
     useEffect(() => {
         if (pageNo != 5) return;
