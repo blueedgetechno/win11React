@@ -81,10 +81,10 @@
     "welcome_line2": "Bạn có 15 phút miễn phí trải nghiệm dịch vụ",
     "welcome_line3": "trước khi đăng kí",
     "welcome_line4": "Đây có phải lần đầu bạn ghé thăm Thinkmay^^",
-    "have_account": "Đã có tải khoản",
+    "have_account": "Đã có tài khoản",
     "sign_in": "Đăng nhập",
     "experiences": {
-      "comfortable": "Chơi game giả trí",
+      "comfortable": "Chơi game giải trí",
       "hardcore": "Chơi game hardcore",
       "professional": "Làm việc",
       "explore": "Khám phá công nghệ mới",
@@ -101,9 +101,10 @@
       "content_5": "Nhắn tin qua fanpage",
       "content_6": "Nếu bạn gặp vấn đề",
       "content_7": "Tham gia cộng đồng của Thinkmay",
-      "content_8": "Tham gia discord để cập nhật thông tin mới nhất cũng như yêu cầu tải game"
+      "content_8": "Để cập nhật thông tin mới nhất cũng như yêu cầu tải game"
     },
-    "completed": "Đã set-up xong, demo sẽ được mở sau ít phút"
+    "completed": "Đã set-up xong, demo sẽ được mở sau ít phút",
+    "demo": "Trải nghiệm"
   }
   
 }
