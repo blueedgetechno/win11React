@@ -156,7 +156,8 @@ export const {
     authenticate_session,
     ping_session,
     load_setting,
-    cache_setting
+    cache_setting,
+    toggle_remote_async
 } = remoteAsync;
 
 export { ready } from './remote';

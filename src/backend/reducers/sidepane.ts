@@ -23,7 +23,7 @@ const initialState: Data = {
             src: 'FiVideoOff',
             name: 'Video toggle',
             state: 'active',
-            action: 'remote/toggle_remote'
+            action: 'toggle_remote_async'
         },
         {
             ui: true,

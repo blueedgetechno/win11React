@@ -9,6 +9,7 @@ import {
     popup_close,
     popup_open,
     store,
+    toggle_remote,
     video_status
 } from '.';
 import { RemoteDesktopClient } from '../../../core/app';
@@ -16,6 +17,7 @@ import { EventCode } from '../../../core/models/keys.model';
 import { AddNotifier, ConnectionEvent } from '../../../core/utils/log';
 import { isMobile } from '../utils/checking';
 import { scanCodeApps } from '../utils/constant';
+import { sleep } from '../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
 
@@ -282,7 +284,22 @@ export const remoteAsync = {
 
             return result;
         }
+    ),
+    toggle_remote_async: createAsyncThunk(
+        'toggle_remote_async',
+        async (_: void, { getState }) => {
+            if (!store.getState().remote.active) {
+                appDispatch(toggle_remote());
+                await sleep(2000)
+                return
+            };
+
+            appDispatch(toggle_remote());
+
+            return
+        }
     )
+
 };
 
 export const remoteSlice = createSlice({
@@ -468,6 +485,10 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.cache_setting,
                 hander: (state, action: PayloadAction<void>) => {}
+            },
+            {
+                fetch: remoteAsync.toggle_remote_async,
+                hander: (state, action: PayloadAction<void>) => { }
             }
         );
     }
