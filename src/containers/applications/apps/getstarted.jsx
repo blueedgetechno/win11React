@@ -61,12 +61,11 @@ export const Getstarted = () => {
     }, [wnapp.hide, pageNo]);
 
     const experiences = [
-        "getStarted.experiences.comfortable",
-        "getStarted.experiences.hardcore",
-        "getStarted.experiences.professional",
-        "getStarted.experiences.explore",
-        "getStarted.experiences.dont_know",
-
+        'getStarted.experiences.comfortable',
+        'getStarted.experiences.hardcore',
+        'getStarted.experiences.professional',
+        'getStarted.experiences.explore',
+        'getStarted.experiences.dont_know'
     ];
 
     return (
@@ -114,7 +113,9 @@ export const Getstarted = () => {
 
                                 <div className="no_button base" onClick={login}>
                                     {t('getStarted.have_account')},{' '}
-                                    <span className="underline">{t('getStarted.sign_in')}</span>
+                                    <span className="underline">
+                                        {t('getStarted.sign_in')}
+                                    </span>
                                 </div>
                                 <div
                                     className="yes_button base"
@@ -240,40 +241,49 @@ export const Getstarted = () => {
 
                                             <br />
                                             {t('getStarted.guideline.header_2')}
-
                                         </div>
                                         <div className="ethernet_list">
                                             <div className="list_oobe_opt_wifi">
                                                 <div className="ethernet_list_opt_inr">
                                                     <div className="text_sml_black_wifi">
-                                                        {t('getStarted.guideline.content_1')}
+                                                        {t(
+                                                            'getStarted.guideline.content_1'
+                                                        )}
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        {t('getStarted.guideline.content_2')}
+                                                        {t(
+                                                            'getStarted.guideline.content_2'
+                                                        )}
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        {t('getStarted.guideline.content_3')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_3'
+                                                        )}
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        {t('getStarted.guideline.content_4')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_4'
+                                                        )}
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        {t('getStarted.guideline.content_5')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_5'
+                                                        )}
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        {t('getStarted.guideline.content_6')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_6'
+                                                        )}
                                                     </div>
                                                     <div className="text_sml_black_wifi">
-                                                        {t('getStarted.guideline.content_7')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_7'
+                                                        )}
                                                     </div>
                                                     <div className="header_sml_wifi">
-                                                        {t('getStarted.guideline.content_8')}
-
+                                                        {t(
+                                                            'getStarted.guideline.content_8'
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

@@ -72,6 +72,7 @@ export const workerAsync = {
     stop_volume: createAsyncThunk(
         'stop_volume',
         async (volume_id: string, { getState }): Promise<any> => {
+            volume_id = volume_id.split(' ').at(-1);
             await StopVolume(volume_id);
         }
     ),
@@ -81,6 +82,7 @@ export const workerAsync = {
             { volume_id }: { volume_id: string },
             { getState }
         ): Promise<any> => {
+            volume_id = volume_id.split(' ').at(-1);
             await DeleteVolume(volume_id);
         }
     ),
