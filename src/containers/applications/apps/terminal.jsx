@@ -99,7 +99,7 @@ export const WnTerminal = () => {
       if (arg.length) {
         tmpStack.push("Uninstalling app");
         var arg = arg.toString().split(" ");
-        var AppName = arg[arg.indexOf("-n") + 1];
+        var AppName = arg[1];
         tmpStack.push(AppName);
         var apps = document.getElementsByClassName("dskApp");
         var Mainmenu = "";
@@ -107,7 +107,7 @@ export const WnTerminal = () => {
           var app = apps[i];
           var Appcname = app.getElementsByClassName("appName")[0];
           var menu = app.getElementsByClassName("uicon")[0];
-          if (Appcname.innerHTML == "n") {
+          if (Appcname.innerHTML == appName) {
             var Mainmenu = menu;
             console.log(menu);
           }
