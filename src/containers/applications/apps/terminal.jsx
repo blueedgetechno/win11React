@@ -79,9 +79,9 @@ export const WnTerminal = () => {
       if (arg.length) {
         tmpStack.push("Installing app");
         var arg = arg.toString().split(" ");
-        var AppName = arg[1];
-        var IframeUrl = arg[2];
-        var IconUrl = arg[3];
+        var AppName = arg[0];
+        var IframeUrl = arg[1];
+        var IconUrl = arg[2];
         var Json = {
           name: AppName,
           icon: IconUrl,
@@ -99,7 +99,7 @@ export const WnTerminal = () => {
       if (arg.length) {
         tmpStack.push("Uninstalling app");
         var arg = arg.toString().split(" ");
-        var AppName = arg[1];
+        var AppName = arg[0];
         tmpStack.push(AppName);
         var apps = document.getElementsByClassName("dskApp");
         var Mainmenu = "";
