@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { TbLoader3 } from 'react-icons/tb';
 
-export function notify({ title, tips, loading }) {
+export function notify({ data: { title, tips, loading } }) {
     return (
         <div className="w-[330px] h-auto p-[14px]">
             <div className="notify-icon">

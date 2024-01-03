@@ -3,6 +3,7 @@ import {
     RootState,
     appDispatch,
     app_toggle,
+    check_worker,
     fetch_app,
     fetch_store,
     fetch_user,
@@ -85,10 +86,6 @@ const handleClipboard = async () => {
     }
 };
 
-const ping_remote = async () => {
-    ping_session();
-};
-
 export const preload = async () => {
     await Promise.all([
         fetchUser(),
@@ -100,7 +97,8 @@ export const preload = async () => {
         available_cluster()
     ]);
 
-    setInterval(ping_remote, 10 * 1000);
+    setInterval(check_worker, 30 * 1000);
+    setInterval(ping_session, 10 * 1000);
     setInterval(handleClipboard, 100);
 
     if (validate_user_access('month', 'week', 'admin', 'day'))

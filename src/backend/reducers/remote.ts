@@ -201,24 +201,21 @@ export function openRemotePage(url: string, appName?: string) {
 }
 
 export const remoteAsync = {
-    ping_session: async () => {
+    check_worker: async () => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
         else if (!client.ready()) return;
 
-        const second = client?.hid?.last_active();
-        if (second > 3 * 60 && second < 5 * 60) {
-        } else if (second > 5 * 60) {
-            return;
-        }
-
-        await supabase.rpc(`ping_session`, {
-            session_id: store.getState().remote.auth?.id
-        });
+        const session_id = store.getState().remote.auth?.id;
         const { data, error } = await supabase.rpc(`user_session_info`, {
-            session_id: store.getState().remote.auth?.id
+            session_id
         });
+        const { data: dat, error: err } = await supabase.rpc(
+            `fetch_worker_status`,
+            { session_id }
+        );
         if (error) return;
+        if (err) return;
 
         const peers = data.map((x) => {
             return {
@@ -230,6 +227,52 @@ export const remoteAsync = {
 
         if (peers.length != store.getState().remote.peers.length)
             appDispatch(remoteSlice.actions.update_peers(peers));
+
+        const result = dat.at(0);
+        if (result == undefined) return;
+        else if (!result.is_ping_worker_account) {
+            appDispatch(
+                popup_open({
+                    type: 'complete',
+                    data: {
+                        success: false,
+                        content: 'remote PC is not active'
+                    }
+                })
+            );
+
+            appDispatch(close_remote());
+            await sleep(3000);
+            appDispatch(popup_close());
+        }
+    },
+    ping_session: async () => {
+        if (!store.getState().remote.active) return;
+        else if (client == null) return;
+        else if (!client.ready()) return;
+        else if (client?.hid?.last_active() > 5 * 60) {
+            if (store.getState().popup.data_stack.length > 0) return;
+
+            appDispatch(
+                popup_open({
+                    type: 'notify',
+                    data: {
+                        loading: false,
+                        tips: false,
+                        title: 'please move your mouse'
+                    }
+                })
+            );
+
+            while (client?.hid?.last_active() > 2)
+                await new Promise((r) => setTimeout(r, 1000));
+
+            appDispatch(popup_close());
+        }
+
+        const session_id = store.getState().remote.auth?.id;
+        await supabase.rpc(`ping_session`, { session_id });
+
         if (
             store.getState().remote.prev_bitrate !=
                 store.getState().remote.bitrate ||
@@ -315,12 +358,11 @@ export const remoteAsync = {
         async (_: void, { getState }) => {
             if (client == null) return;
 
-
             appDispatch(hard_reset());
-            await ready()
+            await ready();
             return;
         }
-    ),
+    )
 };
 
 export const remoteSlice = createSlice({
@@ -513,7 +555,7 @@ export const remoteSlice = createSlice({
             },
             {
                 fetch: remoteAsync.hard_reset_async,
-                hander: (state, action: PayloadAction<void>) => { }
+                hander: (state, action: PayloadAction<void>) => {}
             }
         );
     }

@@ -35,8 +35,7 @@ export const StartMenu = () => {
             data-hide={start.hide}
             data-align={align}
             data-mobile={isMobile()}
-            style={{ "--prefix": "START" }}
-
+            style={{ '--prefix': 'START' }}
         >
             <>
                 <div className="stmenu p-[14px]">

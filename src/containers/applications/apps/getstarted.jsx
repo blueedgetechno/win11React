@@ -120,9 +120,7 @@ export const Getstarted = () => {
                                     className="yes_button base"
                                     onClick={LoginAndDemo}
                                 >
-
                                     {t('getStarted.demo')}
-
                                 </div>
                             </>
                         ) : null}
