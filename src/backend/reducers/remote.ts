@@ -7,6 +7,7 @@ import {
     cache_setting,
     close_remote,
     hard_reset,
+    load_setting,
     popup_close,
     popup_open,
     store,
@@ -20,7 +21,7 @@ import { isMobile } from '../utils/checking';
 import { scanCodeApps } from '../utils/constant';
 import { sleep } from '../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
-import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
+import { BuilderHelper, SetPermanentCache } from './helper';
 
 const size = () =>
     client != null
@@ -278,8 +279,11 @@ export const remoteAsync = {
                 store.getState().remote.bitrate ||
             store.getState().remote.prev_framerate !=
                 store.getState().remote.framerate
-        )
+        ) {
             appDispatch(remoteSlice.actions.sync());
+            return;
+        }
+        await appDispatch(load_setting());
     },
     cache_setting: createAsyncThunk(
         'cache_setting',
@@ -293,35 +297,40 @@ export const remoteAsync = {
             const {
                 data: {
                     session: {
-                        user: { user_metadata }
+                        user: { id }
                     }
                 },
                 error
             } = await supabase.auth.getSession();
-            if (error || user_metadata == undefined) return;
-
-            await supabase.auth.updateUser({
-                data: { ...user_metadata, setting: data }
+            if (error || id == undefined) return;
+            await supabase.rpc('update_user_setting', {
+                user_id: id,
+                bitrate,
+                low_ads,
+                framerate,
+                old_version
             });
         }
     ),
     load_setting: createAsyncThunk('load_setting', async (_: void) => {
-        const remote = await GetPermanentCache<Data>('setting');
-        if (remote) return remote;
-
         const {
             data: {
                 session: {
-                    user: {
-                        user_metadata: { setting }
-                    }
+                    user: { id }
                 }
             },
             error
         } = await supabase.auth.getSession();
-        if (error || setting == undefined) return initialState;
+        if (error || id == undefined) return initialState;
 
-        return setting;
+        {
+            const { data, error } = await supabase.rpc('get_user_setting', {
+                user_id: id
+            });
+
+            if (error || data == undefined) return initialState;
+            return data[0];
+        }
     }),
     authenticate_session: createAsyncThunk(
         'authenticate_session',
@@ -438,6 +447,7 @@ export const remoteSlice = createSlice({
             client?.SetPeriod(
                 (1000 / state.framerate) * (state.low_ads ? 2 : 10)
             );
+            setTimeout(() => appDispatch(cache_setting()), 500);
         },
         scancode_toggle: (state) => {
             state.scancode = !state.scancode;
