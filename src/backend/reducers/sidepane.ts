@@ -1,4 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { appDispatch, render_message, store } from '.';
+import { supabase } from './fetch/createClient';
+import { BuilderHelper, CacheRequest } from './helper';
 
 export type Notification = {
     urlToImage?: string;
@@ -8,10 +11,17 @@ export type Notification = {
     type: 'pending' | 'fulfilled' | 'rejected';
     content?: string;
 };
+export type Message = {
+    url?: string;
+
+    timestamp: string;
+    content: string;
+};
 
 type Data = {
-    quicks: any[];
     notifications: Notification[];
+    message: Message[];
+    quicks: any[];
     hide: boolean;
     banhide: boolean;
 };
@@ -67,10 +77,53 @@ const initialState: Data = {
         }
     ],
     notifications: [],
+    message: [],
 
     hide: true,
     banhide: true
 };
+
+
+export const sidepaneAsync = {
+    push_message: createAsyncThunk('push_message',
+        async (input: Message, { getState }): Promise<void> => {
+            const email = store.getState().user.email
+            const user_id = store.getState().user.id
+            await supabase
+                .from('generic_events')
+                .insert({
+                    type: 'MESSAGE',
+                    name: `message from user ${email}`,
+                    value: { user_id, ...input }
+                })
+        }),
+    handle_message: async payload => {
+        appDispatch(render_message(JSON.parse(payload.new.value)))
+    },
+    fetch_message: createAsyncThunk('fetch_message',
+        async (_: void, { getState }): Promise<Message[]> => {
+            supabase
+                .channel('schema-db-changes')
+                .on('postgres_changes', {
+                    event: "INSERT",
+                    schema: 'public',
+                    table: 'generic_events'
+                },sidepaneAsync.handle_message)
+                .subscribe()
+
+            return await CacheRequest('message', 30, async () => {
+                const { data, error } = await supabase
+                    .from('generic_events')
+                    .select('timestamp,value')
+                if (error)
+                    throw error
+
+                return data
+                    .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+                    .map(x => JSON.parse(x.value))
+            })
+        }),
+}
 
 export const sidepaneSlice = createSlice({
     name: 'sidepane',
@@ -88,13 +141,24 @@ export const sidepaneSlice = createSlice({
         sidepane_panehide: (state) => {
             state.hide = true;
         },
-
         sidepane_panethem: (state, action: PayloadAction<any>) => {
             // state.quicks[4].src = action.payload;
+        },
+        render_message: (state, action: PayloadAction<Message>) => {
+            state.message = [...state.message, action.payload];
+            state.banhide = false;
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [action.payload, ...state.notifications];
             state.banhide = false;
         }
+    },
+    extraReducers: (builder) => {
+        BuilderHelper(builder, {
+            fetch: sidepaneAsync.fetch_message,
+            hander: (state, action: PayloadAction<Message[]>) => {
+                state.message = [...state.message, ...action.payload];
+            }
+        });
     }
 });

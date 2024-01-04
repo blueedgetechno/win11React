@@ -8,7 +8,7 @@ import { menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
 import { remoteAsync, remoteSlice } from './remote.js';
 import { settSlice } from './settings.js';
-import { sidepaneSlice } from './sidepane';
+import { sidepaneAsync, sidepaneSlice } from './sidepane';
 import { menuSlice } from './startmenu';
 import { taskSlice } from './taskbar';
 import { userAsync, userSlice } from './user';
@@ -92,8 +92,10 @@ export const {
     sidepane_panetogg,
     sidepane_panehide,
     sidepane_panethem,
+    render_message,
     push_notification
 } = sidepaneSlice.actions;
+
 export const {
     toggle_remote,
     hard_reset,
@@ -161,6 +163,8 @@ export const {
     toggle_remote_async,
     hard_reset_async
 } = remoteAsync;
+
+export const { push_message,fetch_message } = sidepaneAsync;
 
 export { ready } from './remote';
 export const dispatch_generic = async ({

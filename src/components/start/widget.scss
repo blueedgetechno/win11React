@@ -8,7 +8,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  bottom: 12px;
+  bottom: 60px;
   width: 760px;
   max-width: 50vw;
   border-radius: 8px;
@@ -405,6 +405,16 @@
     //}
   }
 
+  .inputCont {
+    margin-top: 12px;
+
+    input {
+      width: 80%;
+      font-size: inherit;
+      background: inherit;
+      color: var(--med-dark);
+    }
+  }
   .allNewsCont {
     margin-top: 12px;
     display: grid;
@@ -421,10 +431,7 @@
     padding: 0 12px;
     border-radius: 6px;
     overflow: hidden;
-    background-color: var(--comp-txt);
-    background-repeat: no-repeat;
-    background-size: cover;
-    //background-position: center;
+    backdrop-filter: blur(5px) brightness(0.1);
     cursor: pointer;
 
     &::before {

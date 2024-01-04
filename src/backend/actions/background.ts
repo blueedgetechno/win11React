@@ -5,6 +5,7 @@ import {
     app_toggle,
     check_worker,
     fetch_app,
+    fetch_message,
     fetch_store,
     fetch_user,
     fetch_worker,
@@ -12,6 +13,7 @@ import {
     load_setting,
     loose_focus,
     ping_session,
+    render_message,
     setting_theme,
     sidepane_panethem,
     store,
@@ -19,6 +21,7 @@ import {
     wall_set
 } from '../reducers';
 import { HasAvailableCluster } from '../reducers/fetch';
+import { supabase } from '../reducers/fetch/createClient';
 import { client } from '../reducers/remote';
 import { validate_user_access } from '../utils/checking';
 
@@ -86,9 +89,14 @@ const handleClipboard = async () => {
     }
 };
 
+const fetchMessage = async () => {
+    await appDispatch(fetch_message())
+}
+
 export const preload = async () => {
     await Promise.all([
         fetchUser(),
+        fetchMessage(),
         loadSettings(),
         fetchWorker(),
         fetchStore(),
