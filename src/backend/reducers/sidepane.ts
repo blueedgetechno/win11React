@@ -91,7 +91,7 @@ export const sidepaneAsync = {
             const user_id = store.getState().user.id;
             await supabase.from('generic_events').insert({
                 type: 'MESSAGE',
-                name: `message from user ${email}`,
+                name: `message from user`,
                 value: { user_id, ...input }
             });
         }
