@@ -39,7 +39,7 @@ i18n.use(Backend) // load translations using http (default public/assets/locals/
 
         debug: false,
 
-        supportedLngs: availableLanguages,
+        whitelist: availableLanguages,
 
         interpolation: {
             escapeValue: false // no need for react. it escapes by default
