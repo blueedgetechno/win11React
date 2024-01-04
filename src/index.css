@@ -146,16 +146,20 @@ i[data-flip="true"] {
   top: 0;
   overflow: hidden;
 }
-.desktop[data-mobile="true"]{
-  width: calc(100vw - 52px); 
+
+.desktop[data-mobile="true"] {
+  width: calc(100vw - 52px);
   height: 100vh;
 }
+
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }
+
 .mdShad {
   box-shadow: 0 0 8px rgba(41, 41, 41, 0.1);
 }
+
 .ltShad {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
@@ -273,7 +277,11 @@ a {
   background: #010001;
   color: white;
 }
-
+.modalOverlay{
+  position: fixed;
+  inset: 0px;
+  backdrop-filter: blur(3px) brightness(0.5);
+}
 .modalContent {
   display: flex;
   flex-direction: column;
@@ -281,26 +289,25 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
-  /* bottom: -50%; */
   height: auto;
   width: auto;
   transform: translate(-50%, -50%);
-  border: 1px solid rgb(204, 204, 204);
-  background: rgb(255, 255, 255);
-  color: black;
-  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
   outline: none;
   overflow: hidden;
 }
+
 body[data-theme="dark"] .modalContent {
   border: 1px solid #1c1f2b;
-  background: #202020;
   color: #fff;
 }
+
 .selectText {
   user-select: text;
   -webkit-user-select: text;
 }
+
 .selectText::selection {
   /*content: none;  */
   background: inherit;

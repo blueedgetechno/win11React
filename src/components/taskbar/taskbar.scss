@@ -5,7 +5,7 @@
   display: flex;
   position: absolute;
   width: 100vw;
-  height: 48px;
+  height: 56px;
   color: var(--dark-txt);
   background: var(--bg1);
   -webkit-backdrop-filter: saturate(3) blur(20px);
@@ -22,10 +22,12 @@
     .tsbar {
       flex-direction: column;
       justify-content: center;
+
       .tsIcon {
         margin: unset;
       }
     }
+
     .taskright {
       flex-direction: column;
       height: auto;
@@ -45,9 +47,10 @@ body[data-theme="dark"] {
     --bg2: rgba(255, 255, 255, 0.1);
   }
 
-  .tsIconInvert{
-      filter: invert(1);
-  } 
+  .tsIconInvert {
+    filter: invert(1);
+  }
+
   .taskIcon,
   .searchIcon img {
     filter: invert(1);
@@ -66,8 +69,10 @@ body[data-theme="dark"] {
   right: 0;
   width: auto;
   height: 100%;
-  margin-left: 10px;
+  //margin-left: 10px;
   display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .taskIcon {
@@ -103,11 +108,6 @@ body[data-theme="dark"] {
 
   &[data-side="center"] {
     align-items: center;
-
-    .widget {
-      position: absolute;
-      left: 8px;
-    }
   }
 
   &[data-side="left"] {
@@ -167,6 +167,7 @@ body[data-theme="dark"] {
   border: solid 1px transparent;
   height: 1rem;
 }
+
 .graybd:hover {
   border: solid 1px #a1a1a1;
   border-width: 0 0 0 2px;
@@ -176,12 +177,15 @@ body[data-theme="dark"] {
   0% {
     transform: scale(0);
   }
+
   40% {
     transform: scale(1.125);
   }
+
   70% {
     transform: scale(0.725);
   }
+
   100% {
     transform: scale(1);
   }

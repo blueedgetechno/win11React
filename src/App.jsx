@@ -1,125 +1,134 @@
-import React, { useEffect, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { useDispatch, useSelector } from "react-redux";
-import "./i18nextConf";
-import "./index.css";
-import { ErrorFallback } from "./error";
-import ActMenu from "./components/menu";
-import { CalnWid, DesktopApp, StartMenu, WidPane } from "./components/start";
-import Taskbar from "./components/taskbar";
-import { Background } from "./containers/background";
-import * as Applications from "./containers/applications";
-import * as Drafts from "./containers/applications/draft";
-import { LockScreen, BootScreen } from "./containers/background";
-import ReactModal from "react-modal";
-import Popup from "./components/popup";
-import { checkAvailableCluster, preload } from "./actions/preload";
-import { afterMath } from "./actions/index";
-import { isMobile } from "./utils/checking";
-import { UserSession } from "./actions/analytics";
-import AvailableCluster from "./components/shared/AvailableCluster";
+import { useEffect, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import ReactModal from 'react-modal';
+import { preload } from './backend/actions/background';
+import { FirstTime, afterMath } from './backend/actions/index';
+import {
+    appDispatch,
+    menu_show,
+    set_fullscreen,
+    useAppSelector
+} from './backend/reducers';
+import { isMobile } from './backend/utils/checking';
+import ActMenu from './components/menu';
+import AvailableCluster from './components/shared/AvailableCluster';
+import { DesktopApp, SidePane, StartMenu } from './components/start';
+import { WidPane } from './components/start/widget';
+import Taskbar from './components/taskbar';
+import * as Applications from './containers/applications';
+import { Background, BootScreen, LockScreen } from './containers/background';
+import Popup from './containers/popup';
+import { Remote } from './containers/remote';
+import { ErrorFallback } from './error';
+import './i18nextConf';
+import './index.css';
 
 function App() {
-  const apps = useSelector((state) => state.apps);
-  const user = useSelector((state) => state.user);
-  const wall = useSelector((state) => state.wallpaper);
+    const remote = useAppSelector((x) => x.remote);
+    const user = useAppSelector((state) => state.user);
 
-  const [showtaskbar, setShowtaskbar] = useState(true);
-  const [lockscreen, setLockscreen] = useState(true);
-  const [initialAlignvert] = useState(window.innerWidth < window.innerHeight);
-  const [alignvert, setalignvert] = useState(initialAlignvert);
+    const [lockscreen, setLockscreen] = useState(true);
 
-  ReactModal.setAppElement("#root");
-  const dispatch = useDispatch();
+    ReactModal.setAppElement('#root');
+    const dispatch = appDispatch;
 
-  window.onclick = afterMath;
-  window.oncontextmenu = (e) => {
-    afterMath(e);
-    e.preventDefault();
-    var data = {
-      top: e.clientY,
-      left: e.clientX,
+    const ctxmenu = (e) => {
+        afterMath(e);
+        e.preventDefault();
+        var data = {
+            top: e.clientY,
+            left: e.clientX
+        };
+
+        if (e.target.dataset.menu != null) {
+            data.menu = e.target.dataset.menu;
+            data.dataset = { ...e.target.dataset };
+            if (data.menu == 'desk' && remote.active) return;
+
+            dispatch(menu_show(data));
+        }
     };
 
-    if (e.target.dataset.menu != null) {
-      data.menu = e.target.dataset.menu;
-      data.attr = e.target.attributes;
-      data.dataset = e.target.dataset;
-      dispatch({
-        type: "MENUSHOW",
-        payload: data,
-      });
-    }
-  };
+    useEffect(() => {
+        window.history.replaceState({}, document.title, '/' + '');
+        preload().finally(async () => {
+            console.log('Loaded');
+            await new Promise((r) => setTimeout(r, 1000));
+            setLockscreen(false);
+        });
+    }, []);
+    useEffect(() => {
+        if (user.id == 'unknown') return;
 
-  useEffect(() => {
-    if (alignvert != initialAlignvert) window.location.reload(); //TODO, softer reload
-  }, [alignvert]);
+        window.onbeforeunload = (e) => {
+            const text = 'Are you sure (｡◕‿‿◕｡)';
+            e = e || window.event;
+            if (e) e.returnValue = text;
+            return text;
+        };
+    }, [user.id]);
 
-  useEffect(() => {
-    UserSession()
+    useEffect(() => {
+        if (remote.fullscreen) {
+            window.onclick = null;
+            window.oncontextmenu = (ev) => ev.preventDefault();
+        } else {
+            window.oncontextmenu = ctxmenu;
+            window.onclick = afterMath;
+        }
 
-    preload()
-      .then(() => {
-        console.log("Loaded");
-      })
-      .finally(async () => {
-        await new Promise((r) => setTimeout(r, 1000));
-        setLockscreen(false);
-      });
+        if (!remote.active) return;
 
-    
-    checkAvailableCluster()
-    if (isMobile()) setShowtaskbar(false);
+        const handleState = () => {
+            const fullscreen = document.fullscreenElement != null;
+            if (fullscreen == remote.fullscreen) return;
 
-    window.history.replaceState({}, document.title, "/" + "");
+            appDispatch(set_fullscreen(fullscreen));
+        };
 
-    const check = () => {
-      if (isMobile()) setalignvert(window.innerWidth < window.innerHeight);
-    };
+        const UIStateLoop = setInterval(handleState, 100);
+        return () => clearInterval(UIStateLoop);
+    }, [remote.active, remote.fullscreen]);
 
-    //const loop = setInterval(check,100)
-    //return () => {clearInterval(loop)}
-  }, []);
-
-  return (
-    <div className="App">
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {lockscreen ? <BootScreen /> : null}
-        {!user?.id || wall?.locked ? <LockScreen /> : null}
-        <div className="appwrap ">
-          <Background />
-          <>
-            <div className="desktop" data-menu="desk" data-mobile={isMobile()}>
-              <DesktopApp />
-              {Object.keys(Applications).map((key, idx) => {
-                var WinApp = Applications[key];
-                return <WinApp key={idx} />;
-              })}
-              {Object.keys(apps)
-                .filter((x) => x != "hz")
-                .map((key) => apps[key])
-                .map((app, i) => {
-                  if (!app.pwa) return;
-
-                  var WinApp = Drafts[app.data.type];
-                  return <WinApp key={i} icon={app.icon} {...app.data} />;
-                })}
-              <StartMenu />
-              <WidPane />
-              <CalnWid />
-            </div>
-            <Taskbar />
-            <ActMenu />
-            <Popup />
-
-
-          </>
+    return (
+        <div className="App">
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                {lockscreen ? <BootScreen /> : null}
+                {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
+                <div className="appwrap ">
+                    {remote.active ? (
+                        <Remote />
+                    ) : (
+                        <>
+                            <Background />
+                            <AvailableCluster />
+                        </>
+                    )}
+                    {!remote.fullscreen ? (
+                        <>
+                            <SidePane />
+                            <Taskbar />
+                            <ActMenu />
+                            <Popup />
+                            <WidPane />
+                            <StartMenu />
+                            <div
+                                className="desktop"
+                                data-menu="desk"
+                                data-mobile={isMobile()}
+                            >
+                                {!remote.active ? <DesktopApp /> : null}
+                                {Object.keys(Applications).map((key, idx) => {
+                                    var WinApp = Applications[key];
+                                    return <WinApp key={idx} />;
+                                })}
+                            </div>
+                        </>
+                    ) : null}
+                </div>
+            </ErrorBoundary>
         </div>
-        <AvailableCluster isBootScreen={lockscreen}/>
-      </ErrorBoundary>
-    </div>
-  );
+    );
 }
 
 export default App;

@@ -56,7 +56,7 @@
     }
 
     @for $i from 1 to 10 {
-      .navLink:nth-child(#{$i}).selected ~ .marker {
+      .navLink:nth-child(#{$i}).selected~.marker {
         transform: translateY(((40 * ($i - 1)) + 12) + px);
       }
     }
@@ -78,7 +78,7 @@
     }
   }
 
-  nav.open ~ main {
+  nav.open~main {
     margin-left: 240px;
   }
 
@@ -111,6 +111,7 @@
     svg {
       transition: all 0.1s;
     }
+
     &:active svg {
       transform: scaleX(0.67);
     }

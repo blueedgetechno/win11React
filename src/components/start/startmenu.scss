@@ -21,9 +21,11 @@
   &:focus {
     background: rgba(255, 255, 255, 0.24);
   }
+
   &:hover {
     background: rgba(255, 255, 255, 0.12);
   }
+
   &:focus {
     border: 1px dotted white;
   }
@@ -35,6 +37,7 @@
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
   }
 }
+
 .strBtn {
   width: 6rem;
 
@@ -61,12 +64,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  bottom: 12px;
+  bottom: 80px;
   max-width: 360px;
   width: 40%;
   min-width: 270px;
   height: min(100% - 24px, 460px);
   left: 0;
+
   &[data-align="center"] {
     margin-left: auto;
     margin-right: auto;
@@ -77,6 +81,7 @@
   &[data-align="left"] {
     left: 8px;
   }
+
   &[data-mobile="true"] {
     height: min(100% - 24px, 450px);
     font-size: 12px;
@@ -84,6 +89,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
   color: var(--dark-txt);
   background: var(--bg1);
   -webkit-backdrop-filter: blur(20px);
@@ -100,6 +106,7 @@
     pointer-events: none;
   }
 }
+
 body[data-theme="dark"] .startMenu {
   //--bg1: rgba(36, 36, 36, 0.8);
   //--bg2: rgba(255, 255, 255, 0.1);
@@ -108,14 +115,17 @@ body[data-theme="dark"] .startMenu {
   --bg2: #242424;
   --bg3: #313131;
   --bg4: #444;
+
   .uicon {
     filter: invert(1);
   }
+
   .blueicon {
     filter: brightness(4);
   }
 }
-.paymentApp{
+
+.paymentApp {
   --bg1: rgba(242, 242, 242, 0.9);
   --bg2: rgba(255, 255, 255, 0.9);
   --bg3: rgba(0, 0, 0, 0.033);
@@ -127,54 +137,58 @@ body[data-theme="dark"] .startMenu {
   max-height: 375px;
   max-width: 660px;
   background: var(--bg1);
+
   &[data-size="mini"] {
     top: 4%;
     left: 8%;
     width: 320px;
     height: 500px;
   }
+
   .paymentModal {
-  
+
     padding: 24px;
     display: flex;
     align-items: center;
     gap: 10px;
     justify-content: space-between;
-    
+
     width: 100%;
     height: 100%;
     color: var(--dark-txt);
     //background: var(--bg1);
-    background: linear-gradient(138deg,#060606 0%,rgb(117,3,146) 100%);
+    background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
     overflow: hidden;
     box-sizing: border-box;
-  
-    
+
+
     //&[data-size="mini"] {
     //  top: 4%;
     //  left: 8%;
     //  width: 320px;
     //  height: 500px;
     //}
-    .sub{
+    .sub {
       display: flex;
       flex-direction: column;
       border-radius: 4px;
-      padding: 24px 14px;  
+      padding: 24px 14px;
       background: var(--bg1);
       height: auto;
       -webkit-transform-origin: center;
       transform-origin: center;
       transition: all ease-in-out .2s;
       color: var(--dark-txt);
-      
-      
+
+
     }
-    .sub:nth-child(2){
+
+    .sub:nth-child(2) {
       background: linear-gradient(to right, rgb(247, 230, 123), rgb(200, 174, 84));
       color: black;
     }
-    .sub:hover{
+
+    .sub:hover {
       -webkit-transform: scale(1.06);
       transform: scale(1.06);
       -webkit-transform: translateY(-4px);
@@ -182,22 +196,24 @@ body[data-theme="dark"] .startMenu {
     }
   }
 
-  &[data-hide="true"]{
+  &[data-hide="true"] {
     z-index: -1 !important;
   }
 }
 
-.paypal-buttons{
-  min-width: 120px!important;
+.paypal-buttons {
+  min-width: 120px !important;
   max-width: 120px;
- 
+
 
 }
-.paypalCtn > iframe > .paypal-button-container{
+
+.paypalCtn>iframe>.paypal-button-container {
   max-width: 120px;
   min-width: 80px;
   background: red;
 }
+
 body[data-theme="dark"] .paymentApp {
 
   --bg1: #1c1c1c;
@@ -207,7 +223,8 @@ body[data-theme="dark"] .paymentApp {
   --rib-bg: #2f2e30b8;
 
 }
-.refundApp{
+
+.refundApp {
   --bg1: rgba(242, 242, 242, 0.9);
   --bg2: rgba(255, 255, 255, 0.9);
   --bg3: rgba(0, 0, 0, 0.033);
@@ -220,31 +237,37 @@ body[data-theme="dark"] .paymentApp {
   max-width: 660px;
   background: var(--fakeMica);
   color: var(--dark-txt);
+
   &[data-size="mini"] {
     top: 4%;
     left: 8%;
     width: 320px;
     height: 500px;
   }
-  .windowScreen{
+
+  .windowScreen {
     background: var(--bg1);
   }
-  .nameFill{
+
+  .nameFill {
     min-width: 80px;
 
   }
-  .row{
+
+  .row {
     display: flex;
     gap: 8px;
     align-items: center;
-    .ip{
+
+    .ip {
       flex: 1;
       height: 40px;
       border-radius: 4px;
       padding: 0 16px;
     }
   }
-  .br{
+
+  .br {
     border-right: 2px solid;
   }
 }
@@ -258,6 +281,7 @@ body[data-theme="dark"] .refundApp {
   --rib-bg: #2f2e30b8;
 
 }
+
 .allCont,
 .stmenu {
   position: relative;
@@ -277,6 +301,7 @@ body[data-theme="dark"] .refundApp {
   &[data-allapps="false"] {
     opacity: 1;
   }
+
   &[data-allapps="true"] {
     opacity: 0;
   }
@@ -577,15 +602,18 @@ body[data-theme="dark"] .refundApp {
   height: 8px;
   border-radius: 10px;
   overflow: hidden;
-  background: #dcdbdb; /* Light gray background */
+  background: #dcdbdb;
+  /* Light gray background */
   margin: 0 auto;
 }
 
 .loading-progress {
   height: 100%;
   width: 0;
-  background: linear-gradient(to right, #3498db, #2980b9); /* Blue gradient color */
-  transition: width 0.5s ease-in-out; /* Smooth transition animation */
+  background: linear-gradient(to right, #3498db, #2980b9);
+  /* Blue gradient color */
+  transition: width 0.5s ease-in-out;
+  /* Smooth transition animation */
 }
 
 .loading-text {

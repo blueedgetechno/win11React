@@ -1,48 +1,37 @@
-import React from 'react';
-import { hasAvailableCluster } from '../../utils/checking';
-import './index.scss'
-import { useSelector } from 'react-redux';
-import ringSound  from "/audio/ring2.mp3"
+import './index.scss';
+
+import { useEffect } from 'react';
 import useSound from 'use-sound';
+import { useAppSelector } from '../../backend/reducers';
+import { validate_user_access } from '../../backend/utils/checking';
+import ringSound from "/audio/ring2.mp3";
 
-import { isGreenList, isMobile } from "../../utils/checking";
-import { sleep } from '../../utils/sleep';
+function AvailableCluster() {
+	const [play] = useSound(ringSound, { volume: 0.1 });
+	const availableCluster = useAppSelector(
+		(state) => state.globals.service_available
+	);
 
-function AvailableCluster({isBootScreen}) {
-	//const [availableCluster, setAvailableCluster] = React.useState(false)
-	const user = useSelector((state) => state.user);
-	const availableCluster = useSelector((state) => state.globals.hasAvailableCluster);
-	const [play] = useSound(ringSound,{volume: 0.4});
-
-	React.useEffect(()=>{
+	useEffect(() => { 
 		availableCluster ? play() : null
+	}, [availableCluster])
 
-	},[availableCluster])
-
+	if (!validate_user_access('month', 'week', 'admin', 'day')) return null;
 	return (
-		<>
-			{
-				!isBootScreen && isGreenList() ?
-					<div className="clusterInfo">
-						{
-							availableCluster ? (
-								<><div className="pointer green">
-								</div>
-									<span className="text-[16px]">Còn máy</span></>
-							) : (
-								<>
-									<div className="pointer orange">
-									</div>
-									<span className="text-[16px]">Đang hết máy</span></>
-							)
-						}
-
-						<audio autoPlay-={true} auto src={ringSound}></audio>
-					</div>
-					: null
-			}
-
-		</>
+		<div className="clusterInfo">
+			{availableCluster ? (
+				<>
+					<div className="pointer green"></div>
+					<span className="text-[16px]">Available</span>
+				</>
+			) : (
+				<>
+					<div className="pointer orange"></div>
+					<span className="text-[16px]">Unavailable</span>
+				</>
+			)}
+			<audio src={ringSound}></audio>
+		</div>
 	);
 }
 

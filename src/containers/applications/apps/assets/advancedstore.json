@@ -31,7 +31,6 @@
       "feat": "Fast, Powerful Editing-Linting, multi-cursor editing, parameter hints, and other powerful editing features.\nOver 30,000 extensions, and growing - Enable additional languages, themes, debuggers, commands, and more. VS Code's growing community shares their secret sauce to improve your workflow.\nBuild any app type, using any programming language and framework, including JavaScript and TypeScript, Python, Java, C/C++, C#, Go, Rust, PHP, and many more, as well as many popular technologies.\nSupport for notebooks including Jupyter, for data science and Al development.\nBuilt-in support for Git source control management and integrations with GitHub for managing issues and pull requests.\nIntelligent Code Completion - IntelliSense and Al-driven IntelliCode offer completions for variables, methods, and imported modules.\nRich Debugging-Print debugging is a thing of the past. Use debugging tools directly in VS Code.\nWrite code from anywhere with the Visual Studio Code Remote extensions and support for GitHub Codespaces."
     }
   },
-
   {
     "name": "WSA",
     "icon": "https://android.blueedge.me/favicon.ico",
@@ -46,7 +45,6 @@
       "feat": "Use Android inside of Windows 11."
     }
   },
-
   {
     "name": "WSL",
     "icon": "https://raw.githubusercontent.com/win11react/store/main/store/img/wsl.jpg",
@@ -62,7 +60,6 @@
       "feat": "Run apps and more."
     }
   },
-
   {
     "name": "Jitsi Meet",
     "icon": "https://avatars.githubusercontent.com/u/3671647",
@@ -84,7 +81,9 @@
     "data": {
       "type": "IFrame",
       "url": "https://cstimer.net",
-      "gallery": ["https://cstimer.net/assets/home/home-screenshot-win.png"],
+      "gallery": [
+        "https://cstimer.net/assets/home/home-screenshot-win.png"
+      ],
       "desc": "Professional timing program designed for Rubik's Cube Speed Solvers.",
       "feat": "It provides: Amounts of scramble algorithms, including all WCA official events, varieties of twisty puzzles, training scramble for specific sub steps (e.g. F2L, OLL, PLL, ZBLL, and can filter cases), etc."
     }
@@ -677,7 +676,9 @@
     "data": {
       "type": "IFrame",
       "url": "https://cherrychrome.neocities.org/",
-      "gallery": [""],
+      "gallery": [
+        ""
+      ],
       "desc": "Get more search results!",
       "feat": "This 'browser' is a collection of others mixed together so you get more results"
     }
@@ -759,7 +760,9 @@
     "data": {
       "type": "IFrame",
       "url": "https://bemuse.ninja",
-      "gallery": ["http://bemuse.ninja/res/og-image.png"],
+      "gallery": [
+        "http://bemuse.ninja/res/og-image.png"
+      ],
       "desc": "Bemuse is web-based rhythm game.",
       "feat": "2 Gamemodes - Play with KEYBOARD or BMS CONTROLLER",
       "invert": true
@@ -772,7 +775,9 @@
     "data": {
       "type": "IFrame",
       "url": "https://https://taiko.bui.pm/",
-      "gallery": ["https://i.ytimg.com/vi/mx90x5wsDT0/hqdefault.jpg"],
+      "gallery": [
+        "https://i.ytimg.com/vi/mx90x5wsDT0/hqdefault.jpg"
+      ],
       "desc": "Taiko is one of the most iconic rhythm games, you can find. Play NOW, and become a drummer TODAY!",
       "feat": "Play simply with your keyboard, or connect a drum controller!",
       "invert": true
@@ -800,7 +805,9 @@
     "data": {
       "type": "IFrame",
       "url": "https://hypertabs.cc",
-      "gallery": ["https://images.app.goo.gl/g9SpKJptLP3e7UTb9"],
+      "gallery": [
+        "https://images.app.goo.gl/g9SpKJptLP3e7UTb9"
+      ],
       "desc": "A broswer with built in proxy and multitab support",
       "feat": "A proxy browser",
       "invert": true

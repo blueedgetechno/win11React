@@ -19,9 +19,9 @@
   "store.ratings": "Ratings and reviews",
   "store.description": "Description",
   "camera.take-photo": "Take photo",
-  "oobe.country": "Is this the right country or region?",
-  "oobe.keyboard": "Is this the right keyboard layout or input method?",
-  "oobe.anotherkeyboard": "If you also use another keyboard layout, you can add that next",
+  "getStarted.country": "Đâu là địa điểm gần nhất với bạn?",
+  "getStarted.use_case": "Bạn dùng Thinkmay cho:",
+  "getStarted.anotherkeyboard": "If you also use another keyboard layout, you can add that next",
   "test": "Vietnamese",
   "error": {
     "suggest": "Vui lòng thử lại sau ít phút",
@@ -34,6 +34,7 @@
     "NOT_PAUSED": "Game đang chạy",
     "PAUSED": "Game đã được paused!",
     "NOT_PINGED": "Game đã được pasued, reload và start app lại nhé!",
+    "REMOTE_TIMEOUT": "Yêu cầu kết nối hết hạn, bạn thử reset app nhé!",
     "IS_LOCKED": "Đang trong quá trình upload data lên cloud, quá trình này diễn ra trong ~15 phút !",
     "NOT_FOUND": "Không tìm thấy app yêu cầu.",
     "TIME_OUT": "Yêu cầu đã hết hạn. KHÔNG gửi lại yêu cầu để tránh lỗi data. RELOAD lại sau mỗi 1-2' cho đến khi game lên. Nếu quá 10' hãy báo lỗi cho page."
@@ -45,7 +46,8 @@
     "thanks": "Xin cảm ơn bạn ^^",
     "thankParaphrase": "Feedback của bạn sẽ giúp Thinkmay rất nhiều trong quá trình cải thiện sản phẩm, Luv <3",
     "LA": "Hàng chờ cao",
-    "withoutAcc": "Hộ trợ tài khoản"
+    "withoutAcc": "Hộ trợ tài khoản",
+    "closeDemo": "Đang đóng demo, bạn vui lòng truy cập fanpage để được hướng dẫn"
   },
   "timemanager": {
     "startAt": "Ngày bắt đầu",
@@ -58,5 +60,53 @@
   },
   "app": {
     "guideline": "Hướng dẫn"
+  },
+  "notify": {
+    "status": {
+      "pending": "Đang: ",
+      "success": "Thành công: ",
+      "rejected": "Có lỗi khi: "
+    },
+    "action": {
+      "fetch_app": "Load danh sách app",
+      "install_app": "Cài máy remote",
+      "demo_app": "Mở game trải nghiệm",
+      "start_app": "Mở máy remote",
+      "pause_app": "Tắt máy remote",
+      "delete_app": "Xóa máy remote",
+      "reset_app": "Reset máy remote",
+      "access_app": "Truy cập máy remote"
+    }
+  },
+  "getStarted": {
+    "welcome_line1": "Chào mừng bạn đến với Thinkmay - CloudPc đầu tiên tại Việt Nam",
+    "welcome_line2": "Bạn có 15 phút miễn phí trải nghiệm dịch vụ",
+    "welcome_line3": "trước khi đăng kí",
+    "welcome_line4": "Đây có phải lần đầu bạn ghé thăm Thinkmay^^",
+    "have_account": "Đã có tài khoản",
+    "sign_in": "Đăng nhập",
+    "experiences": {
+      "comfortable": "Chơi game giải trí",
+      "hardcore": "Chơi game hardcore",
+      "professional": "Làm việc",
+      "explore": "Khám phá công nghệ mới",
+      "dont_know": "Tôi chưa biết"
+    },
+    "guideline": {
+      "title": "Để có trải nghiệm tốt nhất hãy:",
+      "header_1": "Để tiếp tục set-up, bạn cần kết nối mạng ổn định",
+      "header_2": "Phiên bản mới sẽ được tự động cập nhật, ngay sau khi bạn kết nối",
+      "content_1": "Tắt VPN",
+      "content_2": "Nếu bạn ở Việt Nam",
+      "content_3": "Sử dụng wifi 5Ghz nếu có thể",
+      "content_4": "5Ghz sẽ giúp bạn có chất lượng kết nối tốt hơn",
+      "content_5": "Nhắn tin qua fanpage",
+      "content_6": "Nếu bạn gặp vấn đề",
+      "content_7": "Tham gia cộng đồng của Thinkmay",
+      "content_8": "Để cập nhật thông tin mới nhất cũng như yêu cầu tải game"
+    },
+    "completed": "Đã set-up xong, demo sẽ được mở sau ít phút",
+    "demo": "Trải nghiệm"
   }
+  
 }

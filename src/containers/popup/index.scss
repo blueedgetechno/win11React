@@ -1,0 +1,28 @@
+.notify-icon {
+	display: flex;
+	justify-content: center;
+	margin-top: 24px;
+
+	svg {
+		font-size: 50px;
+	}
+}
+
+
+.fullscreenModal{
+	color: #000000;
+	background: white;
+	.ctnButton{
+		display: flex;
+		align-items: center;
+		font-weight: 500;
+
+		.key{
+			border: 1px solid #5c4949;
+			padding: 6px;
+			margin: 0 8px; 
+			font-weight: 500;
+			
+		}
+	}
+}

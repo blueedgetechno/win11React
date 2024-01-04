@@ -111,7 +111,13 @@
           "img": "https://c.saavncdn.com/artists/Taylor_Swift_150x150.jpg",
           "name": "Daily Mix 5",
           "desc": "Taylor Swift, Katy Perry, Sophia Somajo and more",
-          "data": ["ywYcM5y0", "CW0maQeQ", "Bx-MHJzW", "r1L8gMRa", "3zP4JQOU"]
+          "data": [
+            "ywYcM5y0",
+            "CW0maQeQ",
+            "Bx-MHJzW",
+            "r1L8gMRa",
+            "3zP4JQOU"
+          ]
         }
       ]
     },
