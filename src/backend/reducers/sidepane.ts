@@ -83,47 +83,55 @@ const initialState: Data = {
     banhide: true
 };
 
-
 export const sidepaneAsync = {
-    push_message: createAsyncThunk('push_message',
+    push_message: createAsyncThunk(
+        'push_message',
         async (input: Message, { getState }): Promise<void> => {
-            const email = store.getState().user.email
-            const user_id = store.getState().user.id
-            await supabase
-                .from('generic_events')
-                .insert({
-                    type: 'MESSAGE',
-                    name: `message from user ${email}`,
-                    value: { user_id, ...input }
-                })
-        }),
-    handle_message: async payload => {
-        appDispatch(render_message(JSON.parse(payload.new.value)))
+            const email = store.getState().user.email;
+            const user_id = store.getState().user.id;
+            await supabase.from('generic_events').insert({
+                type: 'MESSAGE',
+                name: `message from user ${email}`,
+                value: { user_id, ...input }
+            });
+        }
+    ),
+    handle_message: async (payload) => {
+        appDispatch(render_message(JSON.parse(payload.new.value)));
     },
-    fetch_message: createAsyncThunk('fetch_message',
+    fetch_message: createAsyncThunk(
+        'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
             supabase
                 .channel('schema-db-changes')
-                .on('postgres_changes', {
-                    event: "INSERT",
-                    schema: 'public',
-                    table: 'generic_events'
-                },sidepaneAsync.handle_message)
-                .subscribe()
+                .on(
+                    'postgres_changes',
+                    {
+                        event: 'INSERT',
+                        schema: 'public',
+                        table: 'generic_events'
+                    },
+                    sidepaneAsync.handle_message
+                )
+                .subscribe();
 
             return await CacheRequest('message', 30, async () => {
                 const { data, error } = await supabase
                     .from('generic_events')
-                    .select('timestamp,value')
-                if (error)
-                    throw error
+                    .select('timestamp,value');
+                if (error) throw error;
 
                 return data
-                    .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-                    .map(x => JSON.parse(x.value))
-            })
-        }),
-}
+                    .sort(
+                        (a, b) =>
+                            new Date(a.timestamp).getTime() -
+                            new Date(b.timestamp).getTime()
+                    )
+                    .map((x) => JSON.parse(x.value));
+            });
+        }
+    )
+};
 
 export const sidepaneSlice = createSlice({
     name: 'sidepane',

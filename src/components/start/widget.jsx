@@ -1,21 +1,27 @@
 import { useRef } from 'react';
-import { appDispatch, push_message, useAppSelector } from '../../backend/reducers';
+import {
+    appDispatch,
+    push_message,
+    useAppSelector
+} from '../../backend/reducers';
 import { Icon, LazyComponent } from '../shared/general';
 import './widget.scss';
 
 export const WidPane = () => {
     const widget = useAppSelector((state) => state.sidepane);
     const img = useAppSelector((state) => state.wallpaper.src);
-    const value = useRef()
+    const value = useRef();
     const finish = () => {
         if (value.current.value.length > 0) {
-            appDispatch(push_message({
-                timestamp: new Date().toISOString(),
-                content: value.current.value
-            }))
-            value.current.value = null
+            appDispatch(
+                push_message({
+                    timestamp: new Date().toISOString(),
+                    content: value.current.value
+                })
+            );
+            value.current.value = null;
         }
-    }
+    };
 
     return (
         <div
@@ -40,10 +46,11 @@ export const WidPane = () => {
                                 {widget.notifications.map((article, i) => {
                                     return (
                                         <a
-                                            className={`articleCont  shadow-2xl ${article.type == 'pending'
+                                            className={`articleCont  shadow-2xl ${
+                                                article.type == 'pending'
                                                     ? 'load'
                                                     : null
-                                                }`}
+                                            }`}
                                             target="_blank"
                                             style={{
                                                 '--backgrad':
@@ -51,8 +58,8 @@ export const WidPane = () => {
                                                         ? '#8b670c'
                                                         : article.type ==
                                                             'rejected'
-                                                            ? '#c20c30'
-                                                            : '#0c41aa',
+                                                          ? '#c20c30'
+                                                          : '#0c41aa',
                                                 backgroundImage: `url(img/wallpaper/${img})`
                                             }}
                                             href={article.url}
@@ -90,8 +97,13 @@ export const WidPane = () => {
                                         >
                                             <div className="tpNews">
                                                 <div className="tpSource">
-                                                    {new Date(article.timestamp).toLocaleDateString() + '  ' +
-                                                    new Date(article.timestamp).toLocaleTimeString()}
+                                                    {new Date(
+                                                        article.timestamp
+                                                    ).toLocaleDateString() +
+                                                        '  ' +
+                                                        new Date(
+                                                            article.timestamp
+                                                        ).toLocaleTimeString()}
                                                 </div>
                                                 <div className="tpTitle">
                                                     {article.content}
@@ -105,7 +117,9 @@ export const WidPane = () => {
                                 <input
                                     className={`articleCont`}
                                     ref={value}
-                                    onKeyDown={e => e.key == 'Enter' ? finish() : null}
+                                    onKeyDown={(e) =>
+                                        e.key == 'Enter' ? finish() : null
+                                    }
                                     placeholder="Send us a message"
                                     type="text"
                                 />
