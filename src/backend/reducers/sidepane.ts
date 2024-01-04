@@ -14,6 +14,7 @@ export type Notification = {
 export type Message = {
     url?: string;
 
+    name: string,
     timestamp: string;
     content: string;
 };
@@ -97,7 +98,7 @@ export const sidepaneAsync = {
         }
     ),
     handle_message: async (payload) => {
-        appDispatch(render_message(JSON.parse(payload.new.value)));
+        appDispatch(render_message({...JSON.parse(payload.new.value),name:payload.new.name}));
     },
     fetch_message: createAsyncThunk(
         'fetch_message',
@@ -118,7 +119,7 @@ export const sidepaneAsync = {
             return await CacheRequest('message', 30, async () => {
                 const { data, error } = await supabase
                     .from('generic_events')
-                    .select('timestamp,value');
+                    .select('timestamp,value,name');
                 if (error) throw error;
 
                 return data
@@ -127,7 +128,7 @@ export const sidepaneAsync = {
                             new Date(a.timestamp).getTime() -
                             new Date(b.timestamp).getTime()
                     )
-                    .map((x) => JSON.parse(x.value));
+                    .map((x) => {return{...JSON.parse(x.value),name:x.name}});
             });
         }
     )

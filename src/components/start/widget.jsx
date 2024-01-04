@@ -94,6 +94,11 @@ export const WidPane = () => {
                                             rel="noopener noreferrer"
                                             key={i}
                                             loading="lazy"
+                                            style={
+                                                article.name.includes('from')
+                                                ? {}
+                                                : { '--backgrad': '#0066FF'  }
+                                            }
                                         >
                                             <div className="tpNews">
                                                 <div className="tpSource">
@@ -115,7 +120,7 @@ export const WidPane = () => {
                             </div>
                             <div className="inputCont relative flex ">
                                 <input
-                                    className={`articleCont`}
+                                    className={`messageCont`}
                                     ref={value}
                                     onKeyDown={(e) =>
                                         e.key == 'Enter' ? finish() : null
