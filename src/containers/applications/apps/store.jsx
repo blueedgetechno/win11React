@@ -16,6 +16,7 @@ import {
     useAppSelector
 } from '../../../backend/reducers';
 import { FetchApp } from '../../../backend/reducers/fetch';
+import { externalLink } from '../../../backend/utils/constant';
 import './assets/store.scss';
 
 const emap = (v) => {
@@ -404,20 +405,32 @@ const DetailPage = ({ app }) => {
                     Options.length > 0 ? (
                         Options.map((x) => (
                             <div key={x.id}>
-                                <div
-                                    className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
-                                    payload={x}
-                                    onClick={() => download(x, app)}
-                                >
-                                    {validate_user_access(
-                                        'month',
-                                        'week',
-                                        'admin',
-                                        'day'
-                                    )
-                                        ? `${x.gpu} ${x.region}`
-                                        : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
-                                </div>
+                                {validate_user_access(
+                                    'month',
+                                    'week',
+                                    'admin',
+                                    'day'
+                                ) ? (
+                                    <div
+                                        className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
+                                        payload={x}
+                                        onClick={() => download(x, app)}
+                                    >
+                                        {x.gpu} {x.region}
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
+                                        onClick={() =>
+                                            window.open(
+                                                externalLink.FACEBOOK_MESSAGE_LINK,
+                                                '_blank'
+                                            )
+                                        }
+                                    >
+                                        Đặt lịch trải nghiệm miễn phí
+                                    </div>
+                                )}
                             </div>
                         ))
                     ) : (

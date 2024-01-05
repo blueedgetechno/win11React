@@ -12,6 +12,8 @@ export const externalLink = {
     GITHUB_LINK: 'https://github.com/thinkonmay/thinkshare-v2',
     DISCORD_LINK: 'https://discord.gg/96BesGqXQk',
     FACEBOOK_LINK: 'https://www.facebook.com/thinkonmay',
+    FACEBOOK_MESSAGE_LINK:
+        'https://www.facebook.com/messages/t/105408644972153',
     MAILTO_ADDRESS: 'mailto:huyhoangdo@contact.thinkmay.net'
 };
 
