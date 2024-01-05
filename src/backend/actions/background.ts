@@ -90,8 +90,8 @@ const handleClipboard = async () => {
 };
 
 const fetchMessage = async () => {
-    await appDispatch(fetch_message())
-}
+    await appDispatch(fetch_message());
+};
 
 export const preload = async () => {
     await Promise.all([

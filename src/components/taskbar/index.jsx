@@ -59,7 +59,11 @@ const Taskbar = () => {
     }, []);
 
     return (
-        <div className="taskbar" data-mobile={isMobile()}>
+        <div
+            className="taskbar"
+            style={{ '--prefix': 'TASK' }}
+            data-mobile={isMobile()}
+        >
             <div className="tasksCont" data-side={tasks.align}>
                 <div className="tsbar" onMouseOut={hidePrev}>
                     <Icon

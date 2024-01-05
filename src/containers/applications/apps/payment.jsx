@@ -28,7 +28,7 @@ export const PaymentApp = () => {
             title: 'Start',
             for: 'Month',
             gpu: 'RTX 3060ti',
-            ram: '16GB',
+            ram: '16GB'
         },
         {
             name: 'month',
@@ -36,7 +36,7 @@ export const PaymentApp = () => {
             title: 'Standard',
             for: 'Month',
             gpu: 'RTX 3060ti',
-            ram: '16GB',
+            ram: '16GB'
         }
     ]);
 
@@ -46,10 +46,12 @@ export const PaymentApp = () => {
     const setup = async () => {
         const { data, error } = await supabase
             .from('plans')
-            .select('name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type')
+            .select(
+                'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
+            )
             .not('metadata->>total_time', 'is', null)
             .is('deleted_at', null);
-            
+
         if (error) throw error;
         setListSubs(
             ListSubs.map((sub) => {
@@ -57,7 +59,8 @@ export const PaymentApp = () => {
                     ...sub,
                     plan_id: data.find((x) => x.type == sub.type)?.id,
                     hours: data.find((x) => x.type == sub.type)?.total_time,
-                    price: data.find((x) => x.type == sub.type)?.price_in_vnd + 'k',
+                    price:
+                        data.find((x) => x.type == sub.type)?.price_in_vnd + 'k'
                 };
             })
         );

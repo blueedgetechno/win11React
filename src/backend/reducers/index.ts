@@ -164,7 +164,7 @@ export const {
     hard_reset_async
 } = remoteAsync;
 
-export const { push_message,fetch_message } = sidepaneAsync;
+export const { push_message, fetch_message } = sidepaneAsync;
 
 export { ready } from './remote';
 export const dispatch_generic = async ({

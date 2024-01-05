@@ -8,7 +8,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  bottom: 60px;
+  bottom: 200px;
   width: 760px;
   max-width: 50vw;
   border-radius: 8px;
@@ -405,16 +405,6 @@
     //}
   }
 
-  .inputCont {
-    margin-top: 12px;
-
-    input {
-      width: 80%;
-      font-size: inherit;
-      background: inherit;
-      color: var(--med-dark);
-    }
-  }
   .allNewsCont {
     margin-top: 12px;
     display: grid;
@@ -422,10 +412,12 @@
     grid-row-gap: 10px;
   }
 
+
+
   .articleCont {
     position: relative;
     z-index: 0;
-    min-height: 100px;
+    min-height: 50px;
     height: auto;
     max-height: 400px;
     padding: 0 12px;
@@ -442,7 +434,7 @@
       width: 100%;
       height: 100%;
       background: var(--dark-txt);
-      background: linear-gradient(transparent 16%, var(--backgrad) 90%);
+      background: linear-gradient(transparent 50%, var(--backgrad) 100%);
       z-index: -1;
     }
 
@@ -505,7 +497,7 @@
       width: 100%;
       height: 100%;
       background: var(--dark-txt);
-      background: linear-gradient(transparent 16%, var(--backgrad) 90%);
+      background: linear-gradient(transparent 16%, var(--backgrad) 100%);
       animation: gradient 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
       z-index: -1;
@@ -524,6 +516,56 @@
         background-position: 0% 50%;
         
       }
+    }
+  }
+}
+
+.inputCont {
+  --bg1: rgba(234, 234, 234, 0.25);
+  --bg2: rgba(255, 255, 255, 0.5);
+  --clr1: #fefefe;
+  --clrWeather: #fff3be;
+  --topStoriesClr: #c6a0ff;
+
+  position: absolute;
+  right: 12px;
+  height: 130px;
+  bottom: 60px;
+  width: 760px;
+  max-width: 50vw;
+  border-radius: 8px;
+  overflow: hidden;
+  transform: translateX(0);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 9999;
+
+  &[data-hide="true"] {
+    transform: translateX(+110%);
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+
+  .inputCont {
+    margin-left: 50px;
+    transform: translate(0, 50%);
+    .messageCont {
+      position: relative;
+      z-index: 0;
+      min-height: 100px;
+      height: auto;
+      max-height: 400px;
+      padding: 0 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      backdrop-filter: blur(5px) brightness(0.1);
+      cursor: pointer;
+    }
+    input {
+      width: 70%;
+      font-size: 20px;
+      background: inherit;
+      color: var(--med-dark);
     }
   }
 }

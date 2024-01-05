@@ -70,7 +70,12 @@ export const AboutWin = () => {
 
                         {/*<strong className="text-[20px] mb-[8px] mb-[12px] text-center">Phiên bản mới đã được update. Lưu Ý: </strong>
             <p className="text-[17px] mb-4">
-              1. App đã cài tại <strong>https://dev-thinkmay.netlify.app/.</strong> thì <strong>không cần xóa</strong>, có thể start và chơi lại bình thường.
+              Bạn có thể trải nghiệm tại đây: <a className="underline text-black font-medium" href="https://dev-thinkmay.netlify.app/." target="_blank" rel="noopener noreferrer">https://dev-thinkmay.netlify.app/.</a> ^^
+              <br />
+            </p>
+            <p className="text-[17px] mb-4"> 
+            Nếu thấy điểm nào cần cải thiện, bạn hãy cho Thinkmay xin góp ý để cải thiện nha. Luv :3
+
             </p>
             <p  className="text-[17px]">
               2. App đã cài tại <strong>https://app.thinkmay.net</strong> trước khi có thông báo này, <strong>bắt buộc xóa</strong> app và tải lại để tránh bị kẹt data.
