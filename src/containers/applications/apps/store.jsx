@@ -167,7 +167,7 @@ const FrontPage = (props) => {
     const vendors = useAppSelector((state) => state.globals.vendors);
     const games = useAppSelector((state) => state.globals.games);
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const [cover, setCover] = useState('');
     useEffect(() => {
@@ -299,7 +299,7 @@ const reviews = 5000;
 
 const DetailPage = ({ app }) => {
     const [dstate, setDown] = useState(0);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [Options, SetOptions] = useState([]);
     const user = useAppSelector((state) => state.user);
 

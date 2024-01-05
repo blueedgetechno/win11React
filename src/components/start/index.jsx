@@ -130,19 +130,6 @@ export const SidePane = () => {
         );
     }
 
-    const setBrightness = (e) => {
-        var brgt = e.target.value;
-        document.getElementById('brightoverlay').style.opacity =
-            (100 - brgt) / 100;
-        dispatch(
-            setting_setv({
-                path: 'system.display.brightness',
-                value: brgt
-            })
-        );
-        sliderBackground(bSlider, brgt);
-    };
-
     useEffect(() => {
         sidepane.quicks.map((item, i) => {
             if (item.src == 'nightlight') {
@@ -214,19 +201,7 @@ export const SidePane = () => {
                         );
                     })}
                 </div>
-                {/* <div className="sliderCont">
-                    <Icon className="mx-2" src="brightness" ui width={20} />
-                    <input
-                        className="sliders bSlider"
-                        onChange={setBrightness}
-                        type="range"
-                        min="10"
-                        max="100"
-                        defaultValue="100"
-                    />
-                </div> */}
                 <div className="sliderCont flex flex-col items-start">
-                    {/*<Icon className="mx-2" src="brightness" ui width={20} />*/}
                     <div className="flex items-center">
                         <MdVideoSettings className="mx-2 text-[1.3rem]" />
                         Quality

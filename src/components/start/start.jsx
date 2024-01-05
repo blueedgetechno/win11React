@@ -10,7 +10,7 @@ import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
 export const StartMenu = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const { align } = useAppSelector((state) => state.taskbar);
     const user = useAppSelector((state) => state.user);

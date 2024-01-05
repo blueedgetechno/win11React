@@ -10,6 +10,7 @@ import {
     dispatch_generic,
     menu_chng,
     menu_hide,
+    popup_open,
     setting_theme,
     sidepane_panethem,
     store,
@@ -177,4 +178,32 @@ export function DoDemo(): boolean {
 }
 export function CloseDemo() {
     localStorage.removeItem('THINKMAY_DEMO');
+}
+
+export async function focusRegion(element_id: string, content: string) {
+    appDispatch(
+        popup_open({
+            type: 'guidance',
+            data: { content }
+        })
+    );
+
+    const overlay = document.getElementById('brightoverlay');
+    const element = document.getElementById(element_id);
+    if (!element) return;
+
+    const { top, left, bottom, right } = element.getBoundingClientRect();
+    const x =
+        ((top + bottom) / (2 * document.documentElement.clientHeight)) * 100;
+    const y =
+        ((left + right) / (2 * document.documentElement.clientWidth)) * 100;
+    const css = `radial-gradient(circle at ${Math.round(y)}% ${Math.round(
+        x
+    )}%, rgba(0, 0, 0, 0), black 30%)`;
+    overlay.style.background = css;
+
+    while (store.getState().popup.data_stack.length > 0)
+        await new Promise((r) => setTimeout(r, 100));
+
+    overlay.style.background = '';
 }

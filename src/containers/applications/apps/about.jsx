@@ -1,6 +1,6 @@
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from '../../../components/shared/general';
 
@@ -15,7 +15,7 @@ export const AboutWin = () => {
         state.apps.apps.find((x) => x.id == 'about')
     );
     const dispatch = appDispatch;
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const action = () => {
         localStorage.setItem('openAboutThinkmay', false);
