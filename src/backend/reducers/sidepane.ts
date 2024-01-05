@@ -14,7 +14,7 @@ export type Notification = {
 export type Message = {
     url?: string;
 
-    name: string,
+    name: string;
     timestamp: string;
     content: string;
 };
@@ -98,7 +98,12 @@ export const sidepaneAsync = {
         }
     ),
     handle_message: async (payload) => {
-        appDispatch(render_message({...JSON.parse(payload.new.value),name:payload.new.name}));
+        appDispatch(
+            render_message({
+                ...JSON.parse(payload.new.value),
+                name: payload.new.name
+            })
+        );
     },
     fetch_message: createAsyncThunk(
         'fetch_message',
@@ -125,10 +130,12 @@ export const sidepaneAsync = {
                 return data
                     .sort(
                         (a, b) =>
-                            new Date(a.timestamp).getTime() -
-                            new Date(b.timestamp).getTime()
+                            new Date(b.timestamp).getTime() -
+                            new Date(a.timestamp).getTime()
                     )
-                    .map((x) => {return{...JSON.parse(x.value),name:x.name}});
+                    .map((x) => {
+                        return { ...JSON.parse(x.value), name: x.name };
+                    });
             });
         }
     )
@@ -154,7 +161,7 @@ export const sidepaneSlice = createSlice({
             // state.quicks[4].src = action.payload;
         },
         render_message: (state, action: PayloadAction<Message>) => {
-            state.message = [...state.message, action.payload];
+            state.message = [action.payload, ...state.message];
             state.banhide = false;
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
