@@ -25,6 +25,16 @@ const Popup = () => {
                     contentLabel="Modal"
                     className="modalContent "
                     overlayClassName="modalOverlay"
+                    onRequestClose={() =>
+                        popup.type == 'guidance'
+                            ? appDispatch(popup_close())
+                            : null
+                    }
+                    style={
+                        popup.type == 'guidance'
+                            ? { 'backdrop-filter': '' }
+                            : { 'backdrop-filter': 'blur(3px) brightness(0.5)' }
+                    }
                 >
                     <div className="selectText d-flex overflow-auto min-h-full">
                         {Object.keys(modals)

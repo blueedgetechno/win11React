@@ -49,7 +49,8 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export const { update_available_cluster } = globalSlice.actions;
+export const { update_available_cluster, update_language } =
+    globalSlice.actions;
 export const { user_delete } = userSlice.actions;
 export const { wall_next, wall_set, wall_lock, wall_unlock } =
     wallSlice.actions;
@@ -74,6 +75,8 @@ export const {
 } = menuSlice.actions;
 export const {
     app_toggle,
+    open_survey,
+    close_survey,
     app_add,
     app_stuck,
     app_close,

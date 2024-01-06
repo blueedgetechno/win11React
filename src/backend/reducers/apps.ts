@@ -11,7 +11,6 @@ import {
     scancode,
     toggle_remote
 } from '.';
-import { CloseDemo } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
@@ -148,7 +147,6 @@ export const appsAsync = {
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
             await ready();
-            CloseDemo();
         }
     ),
     access_app: createAsyncThunk(
@@ -272,10 +270,12 @@ export const appsAsync = {
 
 type Data = {
     hz: number;
+    survey: boolean;
     apps: AppData[];
 };
 const initialState: Data = {
     hz: 0,
+    survey: false,
     apps: allApps
 };
 
@@ -433,6 +433,12 @@ export const appSlice = createSlice({
                 state.hz += 1;
                 obj.z = state.hz;
             }
+        },
+        open_survey: (state) => {
+            state.survey = true;
+        },
+        close_survey: (state) => {
+            state.survey = false;
         }
     },
     extraReducers: (builder) => {

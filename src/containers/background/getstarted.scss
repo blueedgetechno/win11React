@@ -63,10 +63,6 @@
     overflow-x: hidden;
     overflow-y: scroll;
     animation: transition_effect 1.4s;
-
-    :nth-child(1){
-      background: rgb(175 175 175 / 20%);
-    }
   }
 
   .list_oobe_opt {
@@ -87,10 +83,6 @@
     margin-bottom: 6px;
   }
 
-  .list_oobe_opt:hover {
-    background: rgb(175 175 175 / 40%);
-  }
-
   #selected {
     background: var(--clrPrm);
     color: var(--alt-txt);
@@ -103,10 +95,10 @@
     height: 36px;
     cursor: pointer;
     width: max-content;
-    max-width: 110px;
+    // max-width: 110px;
 
     text-align: center;
-    //line-height: 36px;
+    line-height: 36px;
     position: absolute;
     font-size: 14px;
     right: 150px;
