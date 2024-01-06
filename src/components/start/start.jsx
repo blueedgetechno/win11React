@@ -1,17 +1,16 @@
-import { useTranslation } from 'react-i18next';
 import { changeTheme } from '../../backend/actions';
 import {
     appDispatch,
     useAppSelector,
     user_delete
 } from '../../backend/reducers';
+import { Contents } from '../../backend/reducers/locales';
 import { isMobile, validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
 export const StartMenu = () => {
-    const { t } = useTranslation();
-
+    const t = useAppSelector((state) => state.globals.translation);
     const { align } = useAppSelector((state) => state.taskbar);
     const user = useAppSelector((state) => state.user);
     const start = useAppSelector((state) => state.startmenu);
@@ -52,7 +51,7 @@ export const StartMenu = () => {
                     </div>
                     <h6>
                         {!validate_user_access('month', 'week', 'admin')
-                            ? t('timemanager.inActiveUser')
+                            ? t[Contents.INACTIVEUSER]
                             : null}
                     </h6>
                     <div className="h-full flex flex-col p-2" data-dock="true">
@@ -78,20 +77,20 @@ export const StartMenu = () => {
                         <div className="restWindow w-full  flex flex-col ">
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
-                                    {t('timemanager.startAt')}
+                                    {t[Contents.STARTAT]}
                                 </span>
                                 <span>{formatDate(usageTime?.start_time)}</span>
                             </div>
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
-                                    {t('timemanager.endAt')}
+                                    {t[Contents.ENDAT]}
                                 </span>
                                 <span>{formatDate(usageTime?.end_time)}</span>
                             </div>
                             <hr className="my-[14px]" />
                             <div className="w-full flex gap-4 justify-between  mt-0 md:mt-[14px]">
                                 <span className="text-left">
-                                    {t('timemanager.time')}
+                                    {t[Contents.TIME]}
                                 </span>
                                 <span>
                                     {usageTime?.total_time

@@ -1,7 +1,6 @@
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Image } from '../../../components/shared/general';
 
 import {
@@ -10,12 +9,13 @@ import {
     useAppSelector
 } from '../../../backend/reducers';
 import './assets/about.scss';
+import { Contents } from '../../../backend/reducers/locales';
 export const AboutWin = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'about')
     );
     const dispatch = appDispatch;
-    const { t } = useTranslation();
+    const t = useAppSelector((state) => state.globals.translation);
 
     const action = () => {
         localStorage.setItem('openAboutThinkmay', false);
@@ -158,7 +158,7 @@ export const AboutWin = () => {
                         })}
                     </div>
                     <div className="okbtn">
-                        <div onClick={action}>{t('I got it')} </div>
+                        <div onClick={action}>{t[Contents.INSTALLAPP]} </div>
                     </div>
                 </div>
             )}

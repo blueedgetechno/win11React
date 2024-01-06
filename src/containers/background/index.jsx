@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { DoDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
@@ -11,6 +10,7 @@ import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
 import './back.scss';
 
+import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
 
 export const Background = () => {
@@ -142,7 +142,7 @@ export const LockScreen = () => {
 };
 
 export const Getstarted = () => {
-    const { t, i18n } = useTranslation();
+    const t = useAppSelector((state) => state.globals.translation);
 
     const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
     const nextPage = () => setPageNo(pageNo + 1);
@@ -196,12 +196,12 @@ export const Getstarted = () => {
     const Signup = () => (
         <>
             <div className="no_button base" onClick={login}>
-                {t('getStarted.have_account')}
+                {t[Contents.HAVE_ACCOUNT]}
                 {', '}
-                {t('getStarted.sign_in')}
+                {t[Contents.SIGN_IN]}
             </div>
             <div className="yes_button base" onClick={LoginAndDemo}>
-                {t('getStarted.demo')}
+                {t[Contents.DEMO]}
             </div>
         </>
     );
@@ -223,13 +223,13 @@ export const Getstarted = () => {
                             Welcome to Thinkmay <br /> cloud gaming
                         </div>
                         <div>
-                            {t('getStarted.welcome_line2')}
+                            {t[Contents.WELCOME_LINE2]}
                             <br />
-                            {t('getStarted.welcome_line3')}
+                            {t[Contents.WELCOME_LINE3]}
                             <br />
                             <br />
                             <br />
-                            {t('getStarted.welcome_line4')}
+                            {t[Contents.WELCOME_LINE4]}
                             <br />
                         </div>
                     </div>
@@ -243,7 +243,9 @@ export const Getstarted = () => {
                 <>
                     <Logo />
                     <div className="right">
-                        <div className="header">{t('getStarted.country')}</div>
+                        <div className="header">
+                            {t[Contents.GETSTARTED_COUNTRY]}
+                        </div>
                         <div className="list_oobe mt-4 win11Scroll">
                             {countries.map((e, i) => {
                                 return (
@@ -280,17 +282,17 @@ export const Getstarted = () => {
                     </div>
                     <div className="right">
                         <div className="header">
-                            {t('getStarted.guideline.title')}
+                            {t[Contents.TITLE]}
                             <div className="header_sml">
-                                {t('getStarted.guideline.header_1')}
+                                {t[Contents.HEADER_1]}
 
                                 <br />
-                                {t('getStarted.guideline.header_2')}
+                                {t[Contents.HEADER_2]}
                             </div>
                             <div className="ethernet_list">
                                 <div className="list_oobe_opt_wifi">
                                     <div className="ethernet_list_opt_inr">
-                                        <div className="text_sml_black_wifi">
+                                        {/* <div className="text_sml_black_wifi">
                                             {t(
                                                 'getStarted.guideline.content_1'
                                             )}
@@ -329,7 +331,7 @@ export const Getstarted = () => {
                                             {t(
                                                 'getStarted.guideline.content_8'
                                             )}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +348,7 @@ export const Getstarted = () => {
                     <Logo />
                     <div className="right">
                         <div className="header mb-8">
-                            {t('getStarted.completed')}
+                            {t[Contents.COMPLETED]}
                         </div>
                         <Navigate />
                     </div>
@@ -367,7 +369,6 @@ export const Getstarted = () => {
                 <div className="restWindow flex-grow flex flex-col p-[24px]">
                     <div className="inner_fill_setup">
                         {pages.at(pageNo)?.content ?? pages.at(0).content}
-                        <navigate></navigate>
                     </div>
                 </div>
             </div>

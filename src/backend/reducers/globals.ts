@@ -1,6 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest, Confirms } from './helper';
+import { Contents, Languages, language } from './locales';
+
+export type Translation = Map<Languages, Map<Contents, string>>;
+const translation = language();
+
+export type TranslationResult = {
+    [key in Contents]: string;
+};
 
 const initialState = {
     lays: [
@@ -202,7 +210,8 @@ const initialState = {
     ],
 
     games: [] as Store[],
-    service_available: false
+    service_available: false,
+    translation: {} as TranslationResult
 };
 
 export type Store = {
@@ -265,6 +274,15 @@ export const globalSlice = createSlice({
     name: 'global',
     initialState,
     reducers: {
+        update_language: (state, action: PayloadAction<Languages>) => {
+            translation.forEach((val, key) => {
+                if (key != action.payload) return;
+
+                val.forEach((val, key) => {
+                    state.translation[key] = val;
+                });
+            });
+        },
         update_available_cluster: (state, action: PayloadAction<boolean>) => {
             state.service_available = action.payload;
         }
