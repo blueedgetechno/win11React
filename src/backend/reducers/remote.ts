@@ -328,7 +328,8 @@ export const remoteAsync = {
                 user_id: id
             });
 
-            if (error || data == undefined) return initialState;
+            if (error) throw error;
+            else if (data.length == 0) return initialState
             return data[0];
         }
     }),
