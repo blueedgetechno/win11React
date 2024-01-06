@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactModal from 'react-modal';
 import { preload } from './backend/actions/background';
-import { FirstTime, afterMath } from './backend/actions/index';
+import { FirstTime, RequestDemo, afterMath } from './backend/actions/index';
 import {
     appDispatch,
     menu_show,
+    open_survey,
     set_fullscreen,
     update_language,
     useAppSelector
@@ -31,6 +32,7 @@ import './index.css';
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
+    const survey = useAppSelector((state) => state.apps.survey);
 
     const [lockscreen, setLockscreen] = useState(true);
 
@@ -55,6 +57,7 @@ function App() {
     };
 
     useEffect(() => {
+        if (RequestDemo() || FirstTime()) appDispatch(open_survey());
         appDispatch(update_language('ENG'));
         window.history.replaceState({}, document.title, '/' + '');
         preload().finally(async () => {
@@ -101,7 +104,7 @@ function App() {
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
-                {true ? <Getstarted /> : null}
+                {survey ? <Getstarted /> : null}
                 <div className="appwrap ">
                     {remote.active ? (
                         <Remote />

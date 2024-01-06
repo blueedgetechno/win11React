@@ -1,8 +1,6 @@
-import { DoDemo, FirstTime } from '.';
 import {
     RootState,
     appDispatch,
-    app_toggle,
     check_worker,
     fetch_app,
     fetch_message,
@@ -13,7 +11,6 @@ import {
     load_setting,
     loose_focus,
     ping_session,
-    render_message,
     setting_theme,
     sidepane_panethem,
     store,
@@ -21,7 +18,6 @@ import {
     wall_set
 } from '../reducers';
 import { HasAvailableCluster } from '../reducers/fetch';
-import { supabase } from '../reducers/fetch/createClient';
 import { client } from '../reducers/remote';
 import { validate_user_access } from '../utils/checking';
 
@@ -45,9 +41,6 @@ const loadSettings = async () => {
 
 export const fetchApp = async () => {
     await appDispatch(fetch_app());
-
-    // TODO
-    if (DoDemo() || FirstTime()) appDispatch(app_toggle('getstarted'));
 };
 
 export const fetchWorker = async () => {

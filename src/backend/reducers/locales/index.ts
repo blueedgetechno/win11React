@@ -26,7 +26,6 @@ export enum Contents {
 
     CAMERA_TAKE_PHOTOR,
     GETSTARTED_COUNTRY,
-    GETSTARTED_USE_CASER,
     GETSTARTED_ANOTHERKEYBOARDR,
 
     TEST,
@@ -75,12 +74,24 @@ export enum Contents {
     WELCOME_LINE4,
     HAVE_ACCOUNT,
     SIGN_IN,
+
+    DEVICE_YOU_PLAY,
+    DEVICE_PC,
+    DEVICE_LAPTOP,
+    DEVICE_MACBOOK,
+    DEVICE_CHROMEBOOK,
+    DEVICE_IPHONE,
+    DEVICE_ANDROID,
+    DEVICE_TV,
+
+    WHAT_LOOK_FOR,
     COMFORTABLE,
     HARDCORE,
     PROFESSIONAL,
     EXPLORE,
     DONT_KNOW,
-    TITLE,
+
+    BEST_EXP,
     HEADER_1,
     HEADER_2,
     CONTENT_1,
@@ -91,7 +102,9 @@ export enum Contents {
     CONTENT_6,
     CONTENT_7,
     CONTENT_8,
-    COMPLETED,
+    SURVEY_COMPLETED,
+    FAIL_DEMO_REGION,
+    FAIL_DEMO_TEMP,
     DEMO
 }
 
@@ -192,11 +205,8 @@ export function language() {
     en.set(Contents.CAMERA_TAKE_PHOTOR, 'Take photo');
     vn.set(Contents.CAMERA_TAKE_PHOTOR, 'Take photo');
 
-    en.set(Contents.GETSTARTED_COUNTRY, 'Which region is closest to you?');
-    vn.set(Contents.GETSTARTED_COUNTRY, 'Đâu là địa điểm gần nhất với bạn?');
-
-    en.set(Contents.GETSTARTED_USE_CASER, 'I want to use cloud gaming for');
-    vn.set(Contents.GETSTARTED_USE_CASER, 'Bạn dùng Thinkmay cho ');
+    en.set(Contents.GETSTARTED_COUNTRY, "I'm from");
+    vn.set(Contents.GETSTARTED_COUNTRY, 'Tôi đang ở');
 
     en.set(
         Contents.GETSTARTED_ANOTHERKEYBOARDR,
@@ -420,14 +430,41 @@ export function language() {
     en.set(Contents.SIGN_IN, 'Sign In');
     vn.set(Contents.SIGN_IN, 'Đăng nhập');
 
-    en.set(Contents.COMFORTABLE, 'Comfortable gameplay');
-    vn.set(Contents.COMFORTABLE, 'Chơi game giải trí');
+    en.set(Contents.DEVICE_YOU_PLAY, 'I often game on');
+    vn.set(Contents.DEVICE_YOU_PLAY, 'Bạn thường chơi game bằng');
 
-    en.set(Contents.HARDCORE, 'Hardcore gameplay');
+    en.set(Contents.DEVICE_PC, 'PC');
+    vn.set(Contents.DEVICE_PC, 'Máy tính bàn Windows');
+
+    en.set(Contents.DEVICE_LAPTOP, 'Laptop');
+    vn.set(Contents.DEVICE_LAPTOP, 'Máy tính xách tay Windows');
+
+    en.set(Contents.DEVICE_MACBOOK, 'Macbook');
+    vn.set(Contents.DEVICE_MACBOOK, 'Macbook');
+
+    en.set(Contents.DEVICE_CHROMEBOOK, 'Chromebook');
+    vn.set(Contents.DEVICE_CHROMEBOOK, 'Chromebook');
+
+    en.set(Contents.DEVICE_IPHONE, 'IPhone');
+    vn.set(Contents.DEVICE_IPHONE, 'IPhone');
+
+    en.set(Contents.DEVICE_ANDROID, 'Android');
+    vn.set(Contents.DEVICE_ANDROID, 'Android');
+
+    en.set(Contents.DEVICE_TV, 'TV');
+    vn.set(Contents.DEVICE_TV, 'TV');
+
+    en.set(Contents.WHAT_LOOK_FOR, "I'm looking for");
+    vn.set(Contents.WHAT_LOOK_FOR, 'Tôi đang tìm kiếm trải nghiệm');
+
+    en.set(Contents.COMFORTABLE, 'Comfortable gaming experience');
+    vn.set(Contents.COMFORTABLE, 'Chơi game thư giãn');
+
+    en.set(Contents.HARDCORE, 'Hardcore gaming experience');
     vn.set(Contents.HARDCORE, 'Chơi game hardcore');
 
-    en.set(Contents.PROFESSIONAL, 'rofessional work');
-    vn.set(Contents.PROFESSIONAL, 'Làm việc');
+    en.set(Contents.PROFESSIONAL, 'Professional work');
+    vn.set(Contents.PROFESSIONAL, 'Làm việc chuyên nghiệp');
 
     en.set(Contents.EXPLORE, 'Explore new technologies');
     vn.set(Contents.EXPLORE, 'Khám phá công nghệ mới');
@@ -435,8 +472,8 @@ export function language() {
     en.set(Contents.DONT_KNOW, "I don't know yet");
     vn.set(Contents.DONT_KNOW, 'Tôi chưa biết');
 
-    en.set(Contents.TITLE, 'How to get the best experience');
-    vn.set(Contents.TITLE, 'Để có trải nghiệm tốt nhất hãy ');
+    en.set(Contents.BEST_EXP, 'How to get the best experience');
+    vn.set(Contents.BEST_EXP, 'Để có trải nghiệm tốt nhất hãy ');
 
     en.set(
         Contents.HEADER_1,
@@ -483,8 +520,23 @@ export function language() {
     en.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
     vn.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
 
-    en.set(Contents.COMPLETED, 'The setup has completed.');
-    vn.set(Contents.COMPLETED, 'The setup has completed.');
+    en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
+    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
+
+    en.set(
+        Contents.FAIL_DEMO_REGION,
+        'Your region has not yet been supported, join our community to get more infomation.'
+    );
+    vn.set(Contents.FAIL_DEMO_REGION, 'Khu vực của bạn chưa được hỗ trợ.');
+
+    en.set(Contents.FAIL_DEMO_TEMP, 'Demo gameplay is temporarily closed.');
+    vn.set(
+        Contents.FAIL_DEMO_TEMP,
+        'Demo gameplay tạm thời đang không mở cửa bạn đợi và thử lại vào lúc khác nhé.'
+    );
+
+    en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
+    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
 
     en.set(Contents.DEMO, 'Get demo');
     vn.set(Contents.DEMO, 'Get demo');

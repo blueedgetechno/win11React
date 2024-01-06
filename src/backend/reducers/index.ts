@@ -75,6 +75,8 @@ export const {
 } = menuSlice.actions;
 export const {
     app_toggle,
+    open_survey,
+    close_survey,
     app_add,
     app_stuck,
     app_close,

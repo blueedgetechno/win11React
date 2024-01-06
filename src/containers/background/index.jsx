@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { DoDemo, LoginAndDemo, login } from '../../backend/actions';
+import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
+    close_remote,
+    close_survey,
+    demo_app,
     useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
@@ -10,6 +13,7 @@ import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
 import './back.scss';
 
+import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
 
@@ -141,46 +145,153 @@ export const LockScreen = () => {
     );
 };
 
-export const Getstarted = () => {
+export const Getstarted = ({}) => {
     const t = useAppSelector((state) => state.globals.translation);
+    const { email, id } = useAppSelector((state) => state.user);
 
-    const [pageNo, setPageNo] = useState(DoDemo() ? 1 : 0);
-    const nextPage = () => setPageNo(pageNo + 1);
-    const prevPage = () => setPageNo(pageNo - 1);
+    const [result, SetResult] = useState([]);
+
+    const [pageNo, setPageNo] = useState(0);
+    const nextPage = () =>
+        setPageNo((old) => {
+            const current = pages.at(old);
+            if (current && current.survey)
+                SetResult((old) => [
+                    ...old,
+                    {
+                        question: current.data.question,
+                        selection: current.data.options.at(selection)
+                    }
+                ]);
+
+            return old + 1;
+        });
+    const prevPage = () =>
+        setPageNo((old) => {
+            const n = old != 0 ? old - 1 : old;
+            const current = pages.at(n);
+            if (current && current.survey)
+                SetResult((old) => {
+                    old.pop();
+                    return old;
+                });
+
+            return n;
+        });
+    const reportSurvey = async () => {
+        await supabase.from('generic_events').insert({
+            value: result,
+            name: `survey result from ${email}`,
+            type: 'SURVEY'
+        });
+    };
+    const endSurvey = async () => {
+        await reportSurvey();
+        appDispatch(close_survey());
+    };
+    const startDemo = async () => {
+        await reportSurvey();
+        appDispatch(close_survey());
+        await appDispatch(demo_app());
+        await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
+        appDispatch(close_remote());
+        CloseDemo();
+        // TODO after demo
+    };
 
     const [selection, Select] = useState(0);
+    useEffect(() => {
+        if (id != 'unknown') setPageNo(1);
+    }, [id]);
     useEffect(() => {
         const handle = (e) =>
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
                   ? Select((old) => old - 1)
-                  : e.key == 'ArrowDown'
-                    ? Select((old) => old + 1)
-                    : null;
+                  : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                      ? nextPage()
+                      : e.key == 'ArrowDown'
+                        ? Select((old) => old + 1)
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
         };
     }, []);
 
-    const experiences = [
-        'getStarted.experiences.comfortable',
-        'getStarted.experiences.hardcore',
-        'getStarted.experiences.professional',
-        'getStarted.experiences.explore',
-        'getStarted.experiences.dont_know'
+    const Survey = [
+        {
+            question: t[Contents.WHAT_LOOK_FOR],
+            options: [
+                t[Contents.COMFORTABLE],
+                t[Contents.HARDCORE],
+                t[Contents.PROFESSIONAL],
+                t[Contents.EXPLORE],
+                t[Contents.DONT_KNOW]
+            ]
+        },
+        {
+            question: t[Contents.DEVICE_YOU_PLAY],
+            options: [
+                t[Contents.DEVICE_PC],
+                t[Contents.DEVICE_LAPTOP],
+                t[Contents.DEVICE_MACBOOK],
+                t[Contents.DEVICE_CHROMEBOOK],
+                t[Contents.DEVICE_IPHONE],
+                t[Contents.DEVICE_ANDROID],
+                t[Contents.DEVICE_TV]
+            ]
+        },
+        {
+            question: t[Contents.GETSTARTED_COUNTRY],
+            options: [
+                'Vietnam',
+                'India',
+                'United States',
+                'Europe',
+                'South East Asia',
+                'East Asia',
+                'South America'
+            ]
+        }
     ];
 
-    const countries = [
-        'Vietnam',
-        'India',
-        'United States',
-        'Europe',
-        'South East Asia',
-        'East Asia',
-        'South America'
+    const suggestions = [
+        {
+            big: t[Contents.CONTENT_1],
+            small: t[Contents.CONTENT_2]
+        },
+        {
+            big: t[Contents.CONTENT_3],
+            small: t[Contents.CONTENT_4]
+        },
+        {
+            big: t[Contents.CONTENT_5],
+            small: t[Contents.CONTENT_6]
+        },
+        {
+            big: t[Contents.CONTENT_7],
+            small: t[Contents.CONTENT_8]
+        }
     ];
+
+    const Finish = () => (
+        <>
+            <div className="yes_button base" onClick={startDemo}>
+                Start Demo
+            </div>
+        </>
+    );
+    const Fail = () => (
+        <>
+            <div className="yes_button base" onClick={endSurvey}>
+                Explore
+            </div>
+        </>
+    );
 
     const Navigate = () => (
         <>
@@ -214,67 +325,7 @@ export const Getstarted = () => {
 
     const pages = [
         {
-            description: 'Welcome content',
-            content: (
-                <>
-                    <Logo />
-                    <div className="right">
-                        <div className="header mb-8">
-                            Welcome to Thinkmay <br /> cloud gaming
-                        </div>
-                        <div>
-                            {t[Contents.WELCOME_LINE2]}
-                            <br />
-                            {t[Contents.WELCOME_LINE3]}
-                            <br />
-                            <br />
-                            <br />
-                            {t[Contents.WELCOME_LINE4]}
-                            <br />
-                        </div>
-                    </div>
-                    <Signup />
-                </>
-            )
-        },
-        {
-            description: 'Survey',
-            content: (
-                <>
-                    <Logo />
-                    <div className="right">
-                        <div className="header">
-                            {t[Contents.GETSTARTED_COUNTRY]}
-                        </div>
-                        <div className="list_oobe mt-4 win11Scroll">
-                            {countries.map((e, i) => {
-                                return (
-                                    <div
-                                        key={i}
-                                        className="list_oobe_opt"
-                                        onMouseEnter={() => Select(i)}
-                                        style={
-                                            selection == i
-                                                ? {
-                                                      background:
-                                                          'rgb(175 175 175 / 40%)'
-                                                  }
-                                                : {}
-                                        }
-                                        onClick={() => nextPage()}
-                                    >
-                                        {e}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <Navigate />
-                    </div>
-                </>
-            )
-        },
-        {
-            description: 'guideline',
+            survey: false,
             content: (
                 <>
                     <div className="left">
@@ -282,56 +333,24 @@ export const Getstarted = () => {
                     </div>
                     <div className="right">
                         <div className="header">
-                            {t[Contents.TITLE]}
+                            {t[Contents.BEST_EXP]}
                             <div className="header_sml">
                                 {t[Contents.HEADER_1]}
-
                                 <br />
-                                {t[Contents.HEADER_2]}
                             </div>
                             <div className="ethernet_list">
                                 <div className="list_oobe_opt_wifi">
                                     <div className="ethernet_list_opt_inr">
-                                        {/* <div className="text_sml_black_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_1'
-                                            )}
-                                        </div>
-                                        <div className="header_sml_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_2'
-                                            )}
-                                        </div>
-                                        <div className="text_sml_black_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_3'
-                                            )}
-                                        </div>
-                                        <div className="header_sml_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_4'
-                                            )}
-                                        </div>
-                                        <div className="text_sml_black_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_5'
-                                            )}
-                                        </div>
-                                        <div className="header_sml_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_6'
-                                            )}
-                                        </div>
-                                        <div className="text_sml_black_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_7'
-                                            )}
-                                        </div>
-                                        <div className="header_sml_wifi">
-                                            {t(
-                                                'getStarted.guideline.content_8'
-                                            )}
-                                        </div> */}
+                                        {suggestions.map((x, i) => (
+                                            <div key={i}>
+                                                <div className="text_sml_black_wifi">
+                                                    {x.big}
+                                                </div>
+                                                <div className="header_sml_wifi">
+                                                    {x.small}
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -340,22 +359,88 @@ export const Getstarted = () => {
                     <Navigate />
                 </>
             )
-        },
-        {
-            description: 'final',
-            content: (
-                <>
-                    <Logo />
-                    <div className="right">
-                        <div className="header mb-8">
-                            {t[Contents.COMPLETED]}
-                        </div>
-                        <Navigate />
-                    </div>
-                </>
-            )
         }
     ];
+
+    pages.unshift(
+        ...Survey.map((x, i) => {
+            return {
+                survey: true,
+                data: x,
+                content: (
+                    <>
+                        <Logo />
+                        <div className="right">
+                            <div className="header">{x.question}</div>
+                            <div className="list_oobe mt-4 win11Scroll">
+                                {x.options.map((e, i) => {
+                                    return (
+                                        <div
+                                            key={i}
+                                            className="list_oobe_opt"
+                                            onMouseEnter={() => Select(i)}
+                                            style={
+                                                selection == i
+                                                    ? {
+                                                          background:
+                                                              'rgb(175 175 175 / 40%)'
+                                                      }
+                                                    : {}
+                                            }
+                                            onClick={() => nextPage()}
+                                        >
+                                            {e}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <Navigate />
+                        </div>
+                    </>
+                )
+            };
+        })
+    );
+
+    pages.unshift({
+        survey: false,
+        content: (
+            <>
+                <Logo />
+                <div className="right">
+                    <div className="header mb-8">
+                        Welcome to Thinkmay <br /> cloud gaming
+                    </div>
+                    <div>
+                        {t[Contents.WELCOME_LINE2]}
+                        <br />
+                        {t[Contents.WELCOME_LINE3]}
+                        <br />
+                        <br />
+                        {t[Contents.WELCOME_LINE4]}
+                        <br />
+                    </div>
+                </div>
+                <Signup />
+            </>
+        )
+    });
+
+    const [status, setStatus] = useState(null);
+    useEffect(() => {
+        if (pageNo != pages.length) return;
+
+        const region = result.find(
+            (x) => x.question == t[Contents.GETSTARTED_COUNTRY]
+        )?.selection;
+        if (region != 'Vietnam') setStatus(Contents.FAIL_DEMO_REGION);
+        else
+            virtapi('rpc/demo_is_active').then(({ data, error }) => {
+                if (error) setStatus(Contents.FAIL_DEMO_TEMP);
+                else if (data) setStatus(Contents.SURVEY_COMPLETED);
+                else setStatus(Contents.FAIL_DEMO_TEMP);
+            });
+    }, [pageNo, result]);
 
     return (
         <div
@@ -367,9 +452,27 @@ export const Getstarted = () => {
         >
             <div className="windowScreen flex flex-col" data-dock="true">
                 <div className="restWindow flex-grow flex flex-col p-[24px]">
-                    <div className="inner_fill_setup">
-                        {pages.at(pageNo)?.content ?? pages.at(0).content}
-                    </div>
+                    {status != null ? (
+                        <div className="inner_fill_setup">
+                            <>
+                                <Logo />
+                                <div className="right">
+                                    <div className="header mb-8">
+                                        {t[status]}
+                                    </div>
+                                    {status == Contents.SURVEY_COMPLETED ? (
+                                        <Finish />
+                                    ) : (
+                                        <Fail />
+                                    )}
+                                </div>
+                            </>
+                        </div>
+                    ) : (
+                        <div className="inner_fill_setup">
+                            {pages.at(pageNo)?.content}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

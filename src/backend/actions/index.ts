@@ -172,7 +172,7 @@ export function LoginAndDemo() {
 export function FirstTime(): boolean {
     return localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE';
 }
-export function DoDemo(): boolean {
+export function RequestDemo(): boolean {
     const result = localStorage.getItem('THINKMAY_DEMO') == 'TRUE';
     return result;
 }
