@@ -6,6 +6,7 @@ import {
     close_survey,
     demo_app,
     useAppSelector,
+    update_language,
     wall_unlock
 } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
@@ -224,6 +225,18 @@ export const Getstarted = ({}) => {
 
     const Survey = [
         {
+            question: t[Contents.GETSTARTED_COUNTRY],
+            options: [
+                'Vietnam',
+                'India',
+                'United States',
+                'Europe',
+                'South East Asia',
+                'East Asia',
+                'South America'
+            ]
+        },
+        {
             question: t[Contents.WHAT_LOOK_FOR],
             options: [
                 t[Contents.COMFORTABLE],
@@ -245,18 +258,6 @@ export const Getstarted = ({}) => {
                 t[Contents.DEVICE_TV]
             ]
         },
-        {
-            question: t[Contents.GETSTARTED_COUNTRY],
-            options: [
-                'Vietnam',
-                'India',
-                'United States',
-                'Europe',
-                'South East Asia',
-                'East Asia',
-                'South America'
-            ]
-        }
     ];
 
     const suggestions = [
@@ -428,11 +429,12 @@ export const Getstarted = ({}) => {
 
     const [status, setStatus] = useState(null);
     useEffect(() => {
-        if (pageNo != pages.length) return;
-
         const region = result.find(
             (x) => x.question == t[Contents.GETSTARTED_COUNTRY]
         )?.selection;
+        if (region == 'Vietnam') appDispatch(update_language('VN'));
+        if (pageNo != pages.length) return;
+
         if (region != 'Vietnam') setStatus(Contents.FAIL_DEMO_REGION);
         else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
