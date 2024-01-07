@@ -1,7 +1,8 @@
-import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 
 import { TbLoader3 } from 'react-icons/tb';
+import { useAppSelector } from '../../../backend/reducers';
+import { Contents } from '../../../backend/reducers/locales';
 
 export function notify({ data: { title, tips, loading } }) {
     return (
@@ -49,11 +50,12 @@ const LoadingProgressBar = () => {
 };
 
 const Protip = () => {
+    const t = useAppSelector((state) => state.globals.translation);
     const [currentTip, setCurrentTip] = useState(0);
     const listTip = [
-        i18next.t('info.installApp'),
-        i18next.t('info.pauseApp'),
-        i18next.t('error.ALREADY_DEPLOYED')
+        t[Contents.INSTALL_APP],
+        t[Contents.PAUSEAPP],
+        t[Contents.ALREADY_DEPLOYED]
     ];
 
     useEffect(() => {

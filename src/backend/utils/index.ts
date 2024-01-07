@@ -26,12 +26,6 @@ const apps: AppData[] = [
         payload: 'settings'
     },
     {
-        name: 'Get Started',
-        id: 'getstarted',
-        action: 'apps/app_toggle',
-        payload: 'getstarted'
-    },
-    {
         name: 'Worker Profile',
         id: 'worker',
         action: 'apps/app_toggle',

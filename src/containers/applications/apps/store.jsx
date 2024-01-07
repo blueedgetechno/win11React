@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { fetchStore } from '../../../backend/actions/background';
 import { validate_user_access } from '../../../backend/utils/checking';
 import {
@@ -16,6 +15,8 @@ import {
     useAppSelector
 } from '../../../backend/reducers';
 import { FetchApp } from '../../../backend/reducers/fetch';
+import { Contents } from '../../../backend/reducers/locales';
+import { externalLink } from '../../../backend/utils/constant';
 import './assets/store.scss';
 
 const emap = (v) => {
@@ -166,7 +167,7 @@ const FrontPage = (props) => {
     const vendors = useAppSelector((state) => state.globals.vendors);
     const games = useAppSelector((state) => state.globals.games);
 
-    const { t, i18n } = useTranslation();
+    const t = useAppSelector((state) => state.globals.translation);
 
     const [cover, setCover] = useState('');
     useEffect(() => {
@@ -209,9 +210,11 @@ const FrontPage = (props) => {
         flex justify-between noscroll overflow-x-scroll overflow-y-hidden"
             >
                 <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-                    <div className="text-xl">{t('store.featured-game')}</div>
+                    <div className="text-xl">
+                        {t[Contents.STORE_FEATURED_GAME]}
+                    </div>
                     <div className="text-xs mt-2">
-                        {t('store.featured-game.info')}
+                        {t[Contents.STORE_FEATURED_GAME_INFO]}
                     </div>
                 </div>
                 <div className="flex w-max pr-8">
@@ -298,7 +301,7 @@ const reviews = 5000;
 
 const DetailPage = ({ app }) => {
     const [dstate, setDown] = useState(0);
-    const { t, i18n } = useTranslation();
+    const t = useAppSelector((state) => state.globals.translation);
     const [Options, SetOptions] = useState([]);
     const user = useAppSelector((state) => state.user);
 
@@ -404,25 +407,37 @@ const DetailPage = ({ app }) => {
                     Options.length > 0 ? (
                         Options.map((x) => (
                             <div key={x.id}>
-                                <div
-                                    className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
-                                    payload={x}
-                                    onClick={() => download(x, app)}
-                                >
-                                    {validate_user_access(
-                                        'month',
-                                        'week',
-                                        'admin',
-                                        'day'
-                                    )
-                                        ? `${x.gpu} ${x.region}`
-                                        : 'Đang đóng demo ^^, Vui lòng liên hệ fanpage'}
-                                </div>
+                                {validate_user_access(
+                                    'month',
+                                    'week',
+                                    'admin',
+                                    'day'
+                                ) ? (
+                                    <div
+                                        className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
+                                        payload={x}
+                                        onClick={() => download(x, app)}
+                                    >
+                                        {x.gpu} {x.region}
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
+                                        onClick={() =>
+                                            window.open(
+                                                externalLink.FACEBOOK_MESSAGE_LINK,
+                                                '_blank'
+                                            )
+                                        }
+                                    >
+                                        Đặt lịch trải nghiệm miễn phí
+                                    </div>
+                                )}
                             </div>
                         ))
                     ) : (
                         <div className="instbtn mt-12 handcr !px-[16px] !py-[14px]">
-                            {t('store.app_not_available')}
+                            {t[Contents.APP_NOT_AVAILABLE]}
                         </div>
                     )
                 ) : (
@@ -509,7 +524,7 @@ const DetailPage = ({ app }) => {
                 </div>
                 <div className="briefcont py-2 pb-3">
                     <div className="text-xs font-semibold">
-                        {t('store.description')}
+                        {t[Contents.STORE_DESCRIPTIONR]}
                     </div>
                     <div className="text-xs mt-4">
                         <pre>{app?.description}</pre>
@@ -517,7 +532,7 @@ const DetailPage = ({ app }) => {
                 </div>
                 <div className="briefcont py-2 pb-3">
                     <div className="text-xs font-semibold">
-                        {t('store.ratings')}
+                        {t[Contents.STORE_RATINGSR]}
                     </div>
                     <div className="flex mt-4 items-center">
                         <div className="flex flex-col items-center">
@@ -560,7 +575,7 @@ const DetailPage = ({ app }) => {
                 </div>
                 <div className="briefcont py-2 pb-3">
                     <div className="text-xs font-semibold">
-                        {t('store.features')}
+                        {t[Contents.STORE_FEATURES]}
                     </div>
                     <div className="text-xs mt-4">
                         <pre>{app?.feature}</pre>

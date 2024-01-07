@@ -262,8 +262,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #000;
-  opacity: 0;
+  opacity: 0.9;
   pointer-events: none;
 }
 
@@ -280,7 +279,6 @@ a {
 .modalOverlay{
   position: fixed;
   inset: 0px;
-  backdrop-filter: blur(3px) brightness(0.5);
 }
 .modalContent {
   display: flex;

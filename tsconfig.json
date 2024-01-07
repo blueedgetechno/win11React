@@ -2,7 +2,6 @@
   "compilerOptions": {
     "types": [
       "vite/client",
-      "@webgpu/types"
     ],
     "target": "es5",
     "lib": [
