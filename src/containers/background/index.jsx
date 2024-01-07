@@ -5,8 +5,8 @@ import {
     close_remote,
     close_survey,
     demo_app,
-    useAppSelector,
     update_language,
+    useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
@@ -146,7 +146,7 @@ export const LockScreen = () => {
     );
 };
 
-export const Getstarted = ({}) => {
+export const Getstarted = ({ }) => {
     const t = useAppSelector((state) => state.globals.translation);
     const { email, id } = useAppSelector((state) => state.user);
 
@@ -209,14 +209,14 @@ export const Getstarted = ({}) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                  ? Select((old) => old - 1)
-                  : e.key == 'ArrowLeft'
-                    ? prevPage()
-                    : e.key == 'ArrowRight'
-                      ? nextPage()
-                      : e.key == 'ArrowDown'
-                        ? Select((old) => old + 1)
-                        : null;
+                    ? Select((old) => old - 1)
+                    : e.key == 'ArrowLeft'
+                        ? prevPage()
+                        : e.key == 'ArrowRight'
+                            ? nextPage()
+                            : e.key == 'ArrowDown'
+                                ? Select((old) => old + 1)
+                                : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -234,6 +234,16 @@ export const Getstarted = ({}) => {
                 'South East Asia',
                 'East Asia',
                 'South America'
+            ]
+        },
+        {
+            question: t[Contents.KNOW_THINKMAY_VIA],
+            options: [
+                'Facebook',
+                'Google Search',
+                'Youtube',
+                t[Contents.MY_FRIEND],
+                t[Contents.OTHER_SOURCE],
             ]
         },
         {
@@ -383,9 +393,9 @@ export const Getstarted = ({}) => {
                                             style={
                                                 selection == i
                                                     ? {
-                                                          background:
-                                                              'rgb(175 175 175 / 40%)'
-                                                      }
+                                                        background:
+                                                            'rgb(175 175 175 / 40%)'
+                                                    }
                                                     : {}
                                             }
                                             onClick={() => nextPage()}
