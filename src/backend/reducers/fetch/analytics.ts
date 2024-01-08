@@ -62,8 +62,8 @@ export function UserEvents(content: any) {
 }
 
 export async function UserSession(email: string) {
-    // if (window.location.href.includes('localhost'))
-    //     return
+    if (window.location.href.includes('localhost'))
+        return
     
     const session = crypto.randomUUID();
     localStorage.setItem('SESSION_ID', session);
