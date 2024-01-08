@@ -330,7 +330,7 @@ export const Getstarted = ({}) => {
 
     const Logo = () => (
         <div className="left">
-            <img alt="left image" id="left_img" src="logo.png" />
+            <img alt="left image" id="left_img" src="logo_white.png" />
         </div>
     );
 
@@ -340,7 +340,7 @@ export const Getstarted = ({}) => {
             content: (
                 <>
                     <div className="left">
-                        <img id="left_img" src="logo.png" />
+                        <img id="left_img" src="logo_white.png" />
                     </div>
                     <div className="right">
                         <div className="header">
