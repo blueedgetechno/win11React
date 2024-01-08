@@ -16,10 +16,17 @@ import { wallSlice } from './wallpaper';
 import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { UserEvents } from './fetch/analytics.js';
 
+const blacklist = [
+    'framerate',
+    'bitrate',
+]
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
     if (window.location.href.includes('localhost'))
         console.log({ ...(action as any) });
+    if (blacklist.filter(x => (action as any).type.includes(x)).length == 0)    
+        UserEvents(action as any);
 
     return await next(action);
 };

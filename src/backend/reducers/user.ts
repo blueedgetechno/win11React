@@ -39,7 +39,6 @@ export const userAsync = {
             } = await supabase.auth.getSession();
             if (error != null) throw error;
             let payloadUser: Data = { ...user };
-            await UserSession(user.email);
 
             const { data: plans, error: err } = await supabase.rpc(
                 'get_user_plans',

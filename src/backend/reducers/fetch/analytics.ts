@@ -52,22 +52,19 @@ export async function ContactUS({
         });
 }
 
-export async function UserEvents(content: string) {
-    const session = localStorage.getItem('SESSION_ID');
-
-    await createClient(sb.url, sb.key)
-        .from('generic_events')
-        .insert({
-            value: {
-                session_id: session,
-                value: content
-            },
-            name: `session action ${window.location.href}`,
-            type: 'ANALYTICS'
-        });
+const stack = [];
+let current_stack_length = 0;
+export function UserEvents(content: any) {
+    stack.push({
+        content,
+        timestamp: new Date().toISOString()
+    });
 }
 
 export async function UserSession(email: string) {
+    // if (window.location.href.includes('localhost'))
+    //     return
+    
     const session = crypto.randomUUID();
     localStorage.setItem('SESSION_ID', session);
     let ip = '';
@@ -79,17 +76,32 @@ export async function UserSession(email: string) {
                 .at(0) ?? '';
     } catch {}
 
+    const value = {
+        ip,
+        stack,
+        session_id: session,
+        browser: getBrowser(),
+        os: getOS(),
+        email: email ?? 'unknown'
+    };
     await createClient(sb.url, sb.key)
         .from('generic_events')
         .insert({
-            value: {
-                ip,
-                session_id: session,
-                browser: getBrowser(),
-                os: getOS(),
-                email: email ?? 'unknown'
-            },
+            value,
             name: `new session ${window.location.href}`,
             type: 'ANALYTICS'
         });
+
+    setInterval(async () => {
+        if (stack.length == current_stack_length) return;
+
+        console.log(stack);
+        value.stack = stack;
+        await createClient(sb.url, sb.key)
+            .from('generic_events')
+            .update({ value })
+            .eq('value->>session_id', session);
+
+        current_stack_length = stack.length;
+    }, 10 * 1000);
 }

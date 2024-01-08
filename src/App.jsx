@@ -11,6 +11,7 @@ import {
     update_language,
     useAppSelector
 } from './backend/reducers';
+import { UserSession } from './backend/reducers/fetch/analytics';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import AvailableCluster from './components/shared/AvailableCluster';
@@ -68,7 +69,7 @@ function App() {
     }, []);
     useEffect(() => {
         if (user.id == 'unknown') return;
-
+        UserSession(user.email);
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
