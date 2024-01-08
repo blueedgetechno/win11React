@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '@supabase/supabase-js';
 import { localStorageKey } from '../utils/constant';
-import { UserSession } from './fetch/analytics';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 

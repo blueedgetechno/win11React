@@ -11,6 +11,10 @@ export type Notification = {
     type: 'pending' | 'fulfilled' | 'rejected';
     content?: string;
 };
+export type Survey = {
+    question: string;
+    answer: string;
+};
 export type Message = {
     url?: string;
 
@@ -22,6 +26,8 @@ export type Message = {
 type Data = {
     notifications: Notification[];
     message: Message[];
+    surveys: Survey[];
+
     quicks: any[];
     hide: boolean;
     banhide: boolean;
@@ -79,6 +85,7 @@ const initialState: Data = {
     ],
     notifications: [],
     message: [],
+    surveys: [],
 
     hide: true,
     banhide: true
@@ -105,19 +112,38 @@ export const sidepaneAsync = {
             })
         );
     },
+    handle_survey: async (payload) => {
+        const data = JSON.parse(payload.new.value);
+        appDispatch(sidepaneSlice.actions.handle_survey(data.questions));
+    },
     fetch_message: createAsyncThunk(
         'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
             supabase
-                .channel('schema-db-changes')
+                .channel('schema-message-changes')
                 .on(
                     'postgres_changes',
                     {
                         event: 'INSERT',
                         schema: 'public',
+                        filter: 'type=eq.MESSAGE',
                         table: 'generic_events'
                     },
                     sidepaneAsync.handle_message
+                )
+                .subscribe();
+
+            supabase
+                .channel('schema-survey-changes')
+                .on(
+                    'postgres_changes',
+                    {
+                        event: 'INSERT',
+                        schema: 'public',
+                        filter: 'type=eq.SURVEY',
+                        table: 'generic_events'
+                    },
+                    sidepaneAsync.handle_survey
                 )
                 .subscribe();
 
@@ -163,6 +189,12 @@ export const sidepaneSlice = createSlice({
         render_message: (state, action: PayloadAction<Message>) => {
             state.message = [action.payload, ...state.message];
             state.banhide = false;
+        },
+        handle_survey: (state, action: PayloadAction<Survey[]>) => {
+            state.surveys = [...state.surveys, ...action.payload];
+        },
+        close_survey: (state) => {
+            state.surveys = [];
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [action.payload, ...state.notifications];
