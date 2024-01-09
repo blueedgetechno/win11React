@@ -157,7 +157,7 @@ export const Getstarted = ({}) => {
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
-            if (current && current.guidance)
+            if (current && current.survey)
                 SetResult((old) => [
                     ...old,
                     {
@@ -172,7 +172,7 @@ export const Getstarted = ({}) => {
         setPageNo((old) => {
             const n = old != 0 ? old - 1 : old;
             const current = pages.at(n);
-            if (current && current.guidance)
+            if (current && current.survey)
                 SetResult((old) => {
                     old.pop();
                     return old;
@@ -453,7 +453,7 @@ export const Getstarted = ({}) => {
                 else if (data) setStatus(Contents.SURVEY_COMPLETED);
                 else setStatus(Contents.FAIL_DEMO_TEMP);
             });
-    }, [pageNo, result,t]);
+    }, [pageNo, result]);
 
     return (
         <div
