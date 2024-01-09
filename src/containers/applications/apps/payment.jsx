@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
-import { Contents } from '../../../backend/reducers/locales';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
@@ -44,6 +43,13 @@ export const PaymentApp = () => {
             price: '20',
 
             name: 'month',
+        },
+        {
+            highlight: false,
+            title: 'Enterprise',
+            price: '',
+
+            name: 'Enterprise',
         }
     ]);
 
@@ -102,11 +108,14 @@ export const PaymentApp = () => {
                         ? <Payment onClose={() => setPaypage(false)}/>
                         : <div class="paymentContent ">
                             {ListSubs.map((sub, index) => (
-                                <div key={index} className="sub">
+                                <div key={index} className="sub relative">
 
                                     {
                                         sub.highlight
-                                            ? <p class="text-[13px] leading-4 text-center py-2 text-background">Most Popular</p>
+                                            ? <div className='rounded-[36px] bg-green-500 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]'>
+                                                <p class="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">Most Popular</p>
+
+                                            </div>
                                             : null
                                     }
 
@@ -123,13 +132,23 @@ export const PaymentApp = () => {
                                                 Perfect for passion projects &amp; simple websites.
                                             </p>
 
+                                            <hr className='border-[#504646]' />
                                             <div class=" text-foreground flex items-baseline text-5xl font-normal lg:text-4xl xl:text-4xl border-b border-default min-h-[175px] pt-10">
                                                 <div class="flex flex-col gap-1">
                                                     <div class="flex items-end gap-2">
                                                         <div>
                                                             <div class="flex items-end">
-                                                                <p class="mt-2 gradient-text-500 pb-1 text-5xl">${sub.price}</p>
-                                                                <p class="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ month / org</p>
+
+
+                                                                {
+                                                                    sub.title == 'Enterprise' ?
+                                                                        <p class="mt-2 gradient-text-500 pb-1 text-5xl">Contact Us</p>
+                                                                        :
+                                                                        <>
+                                                                            <p class="mt-2 gradient-text-500 pb-1 text-5xl">${sub.price}</p>
+                                                                            <p class="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ month / org</p>
+                                                                        </>
+                                                                }
                                                             </div>
                                                             <p class="-mt-2">
                                                                 <span class="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
@@ -140,8 +159,9 @@ export const PaymentApp = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <hr className='border-[#504646]' />
 
+                                        </div>
                                         <div class="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
                                             <p class="text-foreground-light text-[13px] mt-2 mb-4">Get started with:</p>
                                             <ul role="list" class="text-[13px] text-foreground-lighter">
@@ -158,9 +178,11 @@ export const PaymentApp = () => {
                                                 </div>
 
                                                 <a href="javascript:void(0)" onClick={payment}>
-                                                    <button type="button" class="relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-black">
+                                                    <button type="button" class="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]">
                                                         <span class="truncate">
-                                                            Get Started
+                                                            {
+                                                                sub.title == 'Enterprise' ? 'Contact Us' : 'Get Started'
+                                                            }
                                                         </span>
                                                     </button>
                                                 </a>
