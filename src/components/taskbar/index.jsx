@@ -130,7 +130,10 @@ const Taskbar = () => {
                         data-action="sidepane/sidepane_bandtogg"
                         style={{ '--prefix': 'BAND' }}
                     >
-                        <div className="text-xm font-semibold" style={{color: '#28bdb9'}}>
+                        <div
+                            className="text-xm font-semibold"
+                            style={{ color: '#28bdb9' }}
+                        >
                             {t[Contents.SUPPORT]}
                         </div>
                     </div>

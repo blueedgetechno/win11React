@@ -109,7 +109,10 @@ export enum Contents {
     FAIL_DEMO_REGION,
     FAIL_DEMO_TEMP,
     DEMO,
-    SUPPORT
+    SUPPORT,
+    BOOKING_DEMO,
+    DEMO_SUGGESSTION,
+    EXPLORE_WEB
 }
 
 export function language() {
@@ -546,17 +549,31 @@ export function language() {
     en.set(Contents.FAIL_DEMO_TEMP, 'Demo gameplay is temporarily closed.');
     vn.set(
         Contents.FAIL_DEMO_TEMP,
-        'Demo gameplay tạm thời đang không mở cửa bạn đợi và thử lại vào lúc khác nhé.'
+        'Trải nghiệm miễn phí sẽ mở vào khung giờ 7:00 tới 11:00 và 14:00 tới 17:00 hàng ngày.'
     );
 
     en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
     vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
 
     en.set(Contents.DEMO, 'Get demo');
-    vn.set(Contents.DEMO, 'Get demo');
+    vn.set(Contents.DEMO, 'Trải nghiệm');
 
     en.set(Contents.SUPPORT, 'Support now!');
     vn.set(Contents.SUPPORT, 'Hỗ trợ ngay!');
 
+    en.set(
+        Contents.DEMO_SUGGESSTION,
+        "If you'd like a demo at a different time, please book an appointment for better assistance."
+    );
+    vn.set(
+        Contents.DEMO_SUGGESSTION,
+        'Nếu bạn muốn trải nghiệm ở khung giờ khác, vui lòng đặt lịch để Thinkmay phục vụ tốt nhất.'
+    );
+
+    en.set(Contents.BOOKING_DEMO, 'Booking demo');
+    vn.set(Contents.BOOKING_DEMO, 'Đặt lịch');
+
+    en.set(Contents.EXPLORE_WEB, 'Explore Thinkmay');
+    vn.set(Contents.EXPLORE_WEB, 'Khám phá Thinkmay');
     return t;
 }
