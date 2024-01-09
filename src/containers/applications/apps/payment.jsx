@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { appDispatch, useAppSelector } from '../../../backend/reducers';
-import { ToolBar } from '../../../components/shared/general';
+import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 import { FUNDING } from '@paypal/react-paypal-js';
@@ -23,20 +23,25 @@ export const PaymentApp = () => {
 
     const [ListSubs, setListSubs] = useState([
         {
-            name: 'month',
-            type: 'start',
-            title: 'Start',
-            for: 'Month',
-            gpu: 'RTX 3060ti',
-            ram: '16GB'
+            highlight: false,
+            title: 'Trial',
+            price: '3',
+
+            name: 'week',
         },
         {
+            highlight: true,
+            title: 'Start',
+            price: '12',
+
             name: 'month',
-            type: 'standard',
+        },
+        {
+            highlight: false,
             title: 'Standard',
-            for: 'Month',
-            gpu: 'RTX 3060ti',
-            ram: '16GB'
+            price: '20',
+
+            name: 'month',
         }
     ]);
 
@@ -44,29 +49,29 @@ export const PaymentApp = () => {
         setup();
     }, []);
     const setup = async () => {
-        const { data, error } = await supabase
-            .from('plans')
-            .select(
-                'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
-            )
-            .not('metadata->>total_time', 'is', null)
-            .is('deleted_at', null);
+        // const { data, error } = await supabase
+        //     .from('plans')
+        //     .select(
+        //         'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
+        //     )
+        //     .not('metadata->>total_time', 'is', null)
+        //     .is('deleted_at', null);
 
-        if (error) throw error;
-        setListSubs(
-            ListSubs.map((sub) => {
-                return {
-                    ...sub,
-                    plan_id: data.find((x) => x.type == sub.type)?.id,
-                    hours: data.find((x) => x.type == sub.type)?.total_time,
-                    price:
-                        data.find((x) => x.type == sub.type)?.price_in_vnd + 'k'
-                };
-            })
-        );
+        // if (error) throw error;
+        // setListSubs(
+        //     ListSubs.map((sub) => {
+        //         return {
+        //             ...sub,
+        //             plan_id: data.find((x) => x.type == sub.type)?.id,
+        //             hours: data.find((x) => x.type == sub.type)?.total_time,
+        //             price:
+        //                 data.find((x) => x.type == sub.type)?.price_in_vnd + 'k'
+        //         };
+        //     })
+        // );
     };
 
-    const payment = async (data, actions) => {};
+    const payment = async (data, actions) => { };
 
     const subscribe = async (user, plan_id, actions) => {
         return actions.subscription.create({
@@ -89,7 +94,7 @@ export const PaymentApp = () => {
     return (
         <div
             className="paymentApp floatTab dpShad"
-            data-size={wnapp.size == 'full' ? 'mini' : wnapp.size}
+            data-size={wnapp.size}
             id={wnapp.id + 'App'}
             data-max={wnapp.max}
             style={{
@@ -104,101 +109,80 @@ export const PaymentApp = () => {
                 size={wnapp.size}
                 name="Payment"
             />
-            {/*<div className="windowScreen flex flex-col p-2" data-dock="true">*/}
-            <div>
-                <div className="paymentModal">
-                    {ListSubs.map((sub, index) => (
-                        <div key={index} className="sub">
-                            <p className="text-right">{sub.title}</p>
-                            <p className="pl-[25%] font-semibold text-[24px]">
-                                {sub.price}
-                            </p>
-                            <p className="pl-[30%] mb-[16px]">/{sub.for}</p>
-                            <ul className="list-none flex flex-col gap-[8px] px-[8px]">
-                                <li className="flex justify-between">
-                                    {' '}
-                                    <span className="inline-block min-w-[30px]">
-                                        GPU:
-                                    </span>{' '}
-                                    <span className="text-right">
-                                        {sub.gpu}
-                                    </span>
-                                </li>
-                                <li className="flex justify-between">
-                                    {' '}
-                                    <span className="inline-block min-w-[30px]">
-                                        RAM:
-                                    </span>{' '}
-                                    <span className="text-right">
-                                        {sub.ram}
-                                    </span>
-                                </li>
-                                <li className="flex justify-between">
-                                    {' '}
-                                    <span className="inline-block min-w-[30px]">
-                                        Hours:
-                                    </span>{' '}
-                                    <span className="text-right">
-                                        {sub.hours}
-                                    </span>
-                                </li>
-                                <li className="text-[10px] mt-[-8px]">
-                                    *giới hạn số giờ được sự dụng trong 1{' '}
-                                    {sub.for}.
-                                </li>
-                            </ul>
-                            <button
-                                className="mt-[24px] instbtn mx-auto handcr border-none h-[32px] !px-2"
-                                onClick={handlePayment({
-                                    type: sub.type,
-                                    price: sub.price
-                                })}
-                            >
-                                Chuyển Khoản
-                            </button>
-                            <div className="items-center flex flex-col items-center mt-4">
-                                {/* <PayPalScriptProvider options={initialOptions}>
-                                    {' '}
-                                    {FUNDING_SOURCES.map(
-                                        (fundingSource, index) => {
-                                            return (
-                                                <PayPalButtons
-                                                    key={index}
-                                                    className="max-w-[120px] min-w-[80px] mx-auto paypalCtn"
-                                                    fundingSource={
-                                                        fundingSource
-                                                    }
-                                                    disableMaxWidth={false}
-                                                    createSubscription={async (
-                                                        data,
-                                                        actions
-                                                    ) =>
-                                                        subscribe(
-                                                            user,
-                                                            sub.plan_id,
-                                                            actions
-                                                        )
-                                                    }
-                                                    onApprove={payment}
-                                                    style={{
-                                                        layout: 'vertical',
-                                                        shape: 'pill',
-                                                        color:
-                                                            fundingSource ==
-                                                            FUNDING.PAYLATER
-                                                                ? 'gold'
-                                                                : ''
-                                                    }}
-                                                />
-                                            );
-                                        }
-                                    )}
-                                </PayPalScriptProvider> */}
+            <div className="windowScreen">
+                <LazyComponent show={!wnapp.hide}>
+                    <div class="paymentContent ">
+                        {ListSubs.map((sub, index) => (
+                            <div key={index} className="sub">
+
+                                {
+                                    sub.highlight
+                                        ? <p class="text-[13px] leading-4 text-center py-2 text-background">Most Popular</p>
+                                        : null
+                                }
+
+                                <div class="flex flex-col overflow-hidden border h-full rounded-[4px]">
+                                    <div class="bg-surface-100 px-8 xl:px-4 2xl:px-8 pt-6 rounded-tr-[4px] rounded-tl-[4px] ">
+                                        <div class="mb-2 flex items-center gap-2">
+                                            <div class="flex items-center gap-2">
+                                                <h3 class="text-brand-600 text-2xl font-normal uppercase flex items-center gap-4 font-mono">
+                                                    {sub.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <p class="text-foreground-light my-4 text-sm border-b border-default pb-4 2xl:pr-4">
+                                            Perfect for passion projects &amp; simple websites.
+                                        </p>
+
+                                        <div class=" text-foreground flex items-baseline text-5xl font-normal lg:text-4xl xl:text-4xl border-b border-default min-h-[175px] pt-10">
+                                            <div class="flex flex-col gap-1">
+                                                <div class="flex items-end gap-2">
+                                                    <div>
+                                                        <div class="flex items-end">
+                                                            <p class="mt-2 gradient-text-500 pb-1 text-5xl">${sub.price}</p>
+                                                            <p class="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ month / org</p>
+                                                        </div>
+                                                        <p class="-mt-2">
+                                                            <span class="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
+                                                                Limit of 2 free organizations
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
+                                        <p class="text-foreground-light text-[13px] mt-2 mb-4">Get started with:</p>
+                                        <ul role="list" class="text-[13px] text-foreground-lighter">
+                                            <li class="flex items-center py-2 first:mt-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="sbui-icon text-brand h-4 w-4" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                                <span class="text-foreground mb-0 ml-3 ">Unlimited API requests</span>
+                                            </li>
+                                        </ul>
+                                        <div class="flex flex-col gap-6 mt-auto prose">
+                                            <div class="space-y-2 mt-12">
+                                                <p class="text-[13px] whitespace-pre-wrap">Free projects are paused after 1 week of inactivity.</p>
+                                            </div>
+
+                                            <a href="javascript:void(0)" onClick={payment}>
+                                                <button type="button" class="relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-black">
+                                                    <span class="truncate">
+                                                        Get Started
+                                                    </span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                </LazyComponent>
             </div>
         </div>
-    );
+    )
 };

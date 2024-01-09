@@ -133,10 +133,7 @@ body[data-theme="dark"] .startMenu {
   --rib-bg: #ffffffb8;
 
   min-width: 550px;
-  height: 375px;
-  max-height: 375px;
-  max-width: 660px;
-  background: var(--bg1);
+  background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
 
   &[data-size="mini"] {
     top: 4%;
@@ -145,33 +142,23 @@ body[data-theme="dark"] .startMenu {
     height: 500px;
   }
 
-  .paymentModal {
-
+  .paymentContent {
     padding: 24px;
     display: flex;
-    align-items: center;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     width: 100%;
     height: 100%;
+
     color: var(--dark-txt);
-    //background: var(--bg1);
-    background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
     overflow: hidden;
     box-sizing: border-box;
 
-
-    //&[data-size="mini"] {
-    //  top: 4%;
-    //  left: 8%;
-    //  width: 320px;
-    //  height: 500px;
-    //}
     .sub {
       display: flex;
       flex-direction: column;
-      border-radius: 4px;
+      border-radius: 30px;
       padding: 24px 14px;
       background: var(--bg1);
       height: auto;
@@ -179,20 +166,6 @@ body[data-theme="dark"] .startMenu {
       transform-origin: center;
       transition: all ease-in-out .2s;
       color: var(--dark-txt);
-
-
-    }
-
-    .sub:nth-child(2) {
-      background: linear-gradient(to right, rgb(247, 230, 123), rgb(200, 174, 84));
-      color: black;
-    }
-
-    .sub:hover {
-      -webkit-transform: scale(1.06);
-      transform: scale(1.06);
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
     }
   }
 
@@ -204,8 +177,6 @@ body[data-theme="dark"] .startMenu {
 .paypal-buttons {
   min-width: 120px !important;
   max-width: 120px;
-
-
 }
 
 .paypalCtn>iframe>.paypal-button-container {
