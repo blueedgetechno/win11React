@@ -12,8 +12,10 @@ import { isMobile } from '../../backend/utils/checking';
 import { clickDispatch } from '../../backend/utils/dispatch';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
+import { Contents } from '../../backend/reducers/locales';
 
 const Taskbar = () => {
+    const t = useAppSelector((state) => state.globals.translation);
     const dispatch = appDispatch;
     const remote = useAppSelector((state) => state.remote);
     const tasks = useAppSelector((state) => state.taskbar);
@@ -128,7 +130,9 @@ const Taskbar = () => {
                         data-action="sidepane/sidepane_bandtogg"
                         style={{ '--prefix': 'BAND' }}
                     >
-                        <TbBellRingingFilled />
+                        <div className="text-xm font-semibold" style={{color: '#28bdb9'}}>
+                            {t[Contents.SUPPORT]}
+                        </div>
                     </div>
                     <div
                         className="prtclk handcr my-1 px-1 hvlight flex rounded"

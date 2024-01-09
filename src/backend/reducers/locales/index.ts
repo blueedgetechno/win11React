@@ -108,7 +108,8 @@ export enum Contents {
     SURVEY_COMPLETED,
     FAIL_DEMO_REGION,
     FAIL_DEMO_TEMP,
-    DEMO
+    DEMO,
+    SUPPORT
 }
 
 export function language() {
@@ -242,7 +243,7 @@ export function language() {
     en.set(Contents.ALREADY_DEPLOYED, "You've installed 1 game");
     vn.set(
         Contents.ALREADY_DEPLOYED,
-        'Được install 3 game và 1 game chạy cùng 1 thời điểm. Xoá hoặc paused game cũ trước khi install/start game mới'
+        'Được install 3 app và chạy 1 app cùng một thời điểm. Delete hoặc pause app cũ trước khi install/ power on app mới'
     );
 
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
@@ -325,11 +326,11 @@ export function language() {
 
     en.set(
         Contents.PAUSEAPP,
-        'Tips, Right click => start app to play continuously'
+        'Tips, Right click => Power On app to play continuously'
     );
     vn.set(
         Contents.PAUSEAPP,
-        'Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!'
+        'Chuột phải => Power On app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy nhắn tin cho bọn mình để hỗ trợ!'
     );
 
     en.set(Contents.THANKS, 'Thanks you<3');
@@ -392,8 +393,8 @@ export function language() {
     en.set(Contents.FETCH_APP, 'Fetch your PC data');
     vn.set(Contents.FETCH_APP, 'Load danh sách app');
 
-    en.set(Contents.INSTALL_APP, 'Install PC remote');
-    vn.set(Contents.INSTALL_APP, 'Cài máy remote');
+    en.set(Contents.INSTALL_APP, 'Install PC to remote');
+    vn.set(Contents.INSTALL_APP, 'Cài máy để remote');
 
     en.set(Contents.DEMO_APP, 'Open demo PC');
     vn.set(Contents.DEMO_APP, 'Mở game trải nghiệm');
@@ -553,6 +554,9 @@ export function language() {
 
     en.set(Contents.DEMO, 'Get demo');
     vn.set(Contents.DEMO, 'Get demo');
+
+    en.set(Contents.SUPPORT, 'Support now!');
+    vn.set(Contents.SUPPORT, 'Hỗ trợ ngay!');
 
     return t;
 }
