@@ -453,7 +453,7 @@ export const Getstarted = ({}) => {
                 else if (data) setStatus(Contents.SURVEY_COMPLETED);
                 else setStatus(Contents.FAIL_DEMO_TEMP);
             });
-    }, [pageNo, result]);
+    }, [pageNo, result,t]);
 
     return (
         <div

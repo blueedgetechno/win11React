@@ -150,7 +150,8 @@ export const sidepaneAsync = {
             return await CacheRequest('message', 30, async () => {
                 const { data, error } = await supabase
                     .from('generic_events')
-                    .select('timestamp,value,name');
+                    .select('timestamp,value,name')
+                    .eq('type','MESSAGE');
                 if (error) throw error;
 
                 return data
