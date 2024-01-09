@@ -5,6 +5,8 @@ import './assets/store.scss';
 
 import { FUNDING } from '@paypal/react-paypal-js';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
+import { Contents } from '../../../backend/reducers/locales';
+import { Image } from '../../../components/shared/general';
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {
@@ -105,14 +107,14 @@ export const PaymentApp = () => {
             <div className="windowScreen">
                 <LazyComponent show={!wnapp.hide}>
                     {paypage
-                        ? <Payment onClose={() => setPaypage(false)}/>
+                        ? <Payment onClose={() => setPaypage(false)} />
                         : <div class="paymentContent ">
                             {ListSubs.map((sub, index) => (
                                 <div key={index} className="sub relative">
 
                                     {
                                         sub.highlight
-                                            ? <div className='rounded-[36px] bg-green-500 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]'>
+                                            ? <div className='rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]'>
                                                 <p class="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">Most Popular</p>
 
                                             </div>
@@ -201,10 +203,9 @@ export const PaymentApp = () => {
 
 
 
-const Payment = ({onClose}) => {
+const Payment = ({ onClose }) => {
     const t = useAppSelector((state) => state.globals.translation);
     const [result, SetResult] = useState([]);
-    const Survey = useAppSelector((state) => state.sidepane.surveys);
     const { email, id } = useAppSelector((state) => state.user);
 
     const [pageNo, setPageNo] = useState(0);
@@ -286,13 +287,34 @@ const Payment = ({onClose}) => {
         </>
     );
 
+    const QR = () => (
+        <div className="left">
+            <Image src="asset/payqr" />
+        </div>
+    );
     const Logo = () => (
         <div className="left">
             <img alt="left image" id="left_img" src="logo_white.png" />
         </div>
     );
 
-    const pages = Survey.map((x, i) => { });
+    const pages = [{
+        survey: false,
+        content:
+            <>
+                <QR />
+                <div className="right">
+                    <div className="header mb-8">
+                        Please make payment to the following bank account
+                    </div>
+                    <div>
+                        Account owner  : Do Van Dat - MB Bank
+                        Account number : 1502200344444
+                    </div>
+                </div>
+                <Navigate />
+            </>
+    }]
 
     pages.unshift({
         survey: false,
@@ -301,27 +323,27 @@ const Payment = ({onClose}) => {
                 <Logo />
                 <div className="right">
                     <div className="header mb-8">
-                        We will follow up with the payment process
+                        {t[Contents.PAYMENT_FOLLOW_UP_TITLE]}
                     </div>
                     <div>
-                        We will follow up with the payment process
-                        <br />
-                        <br />
-                        We will follow up with the payment process
+                        {t[Contents.PAYMENT_FOLLOW_UP_CONTENT]}
                         <br />
                     </div>
                 </div>
-                <Navigate/>
+                <Navigate />
             </>
         )
     });
 
     pages.push({
+        survey: false,
         content: (
             <>
                 <Logo />
                 <div className="right">
-                    <div className="header mb-8">{'Thank you'}</div>
+                    <div className="header mb-8">
+                        Thank you
+                    </div>
                     <Finish />
                 </div>
             </>

@@ -2,6 +2,10 @@ import { Translation } from '../globals';
 
 export type Languages = 'VN' | 'ENG';
 export enum Contents {
+    PAYMENT_FOLLOW_UP_TITLE,
+    PAYMENT_FOLLOW_UP_CONTENT,
+
+
     ABOUT_OPENSOURCE,
     ABOUT_NOTMICROSOFT,
     ABOUT_CREATIVE,
@@ -117,6 +121,13 @@ export function language() {
     t.set('VN', vn);
     const en = new Map<Contents, string>();
     t.set('ENG', en);
+
+    en.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'Owned');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'Owned');
+
+    en.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'Owned');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'Owned');
+
 
     en.set(
         Contents.ABOUT_OPENSOURCE,
