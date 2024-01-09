@@ -208,8 +208,9 @@ export function language() {
     en.set(Contents.CAMERA_TAKE_PHOTOR, 'Take photo');
     vn.set(Contents.CAMERA_TAKE_PHOTOR, 'Take photo');
 
+    // don't modify this
     en.set(Contents.GETSTARTED_COUNTRY, "I'm from");
-    vn.set(Contents.GETSTARTED_COUNTRY, 'Tôi đang ở');
+    vn.set(Contents.GETSTARTED_COUNTRY, "I'm from");
 
     en.set(Contents.MY_FRIEND, 'My friend introduce');
     vn.set(Contents.MY_FRIEND, 'Bạn bè giới thiệu');
