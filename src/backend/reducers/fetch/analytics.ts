@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './createClient';
 
 export function getOS() {
     let OSName = 'unknown';
@@ -43,31 +43,25 @@ export async function ContactUS({
     email: string;
     content: string;
 }) {
-    await createClient(sb.url, sb.key)
-        .from('generic_events')
-        .insert({
-            value: content,
-            name: `message from ${email}`,
-            type: 'MESSAGE'
-        });
+    await supabase.from('generic_events').insert({
+        value: content,
+        name: `message from ${email}`,
+        type: 'MESSAGE'
+    });
 }
 
-export async function UserEvents(content: string) {
-    const session = localStorage.getItem('SESSION_ID');
-
-    await createClient(sb.url, sb.key)
-        .from('generic_events')
-        .insert({
-            value: {
-                session_id: session,
-                value: content
-            },
-            name: `session action ${window.location.href}`,
-            type: 'ANALYTICS'
-        });
+const stack = [];
+let current_stack_length = 0;
+export function UserEvents(content: any) {
+    stack.push({
+        content,
+        timestamp: new Date().toISOString()
+    });
 }
 
 export async function UserSession(email: string) {
+    if (window.location.href.includes('localhost')) return;
+
     const session = crypto.randomUUID();
     localStorage.setItem('SESSION_ID', session);
     let ip = '';
@@ -79,17 +73,29 @@ export async function UserSession(email: string) {
                 .at(0) ?? '';
     } catch {}
 
-    await createClient(sb.url, sb.key)
-        .from('generic_events')
-        .insert({
-            value: {
-                ip,
-                session_id: session,
-                browser: getBrowser(),
-                os: getOS(),
-                email: email ?? 'unknown'
-            },
-            name: `new session ${window.location.href}`,
-            type: 'ANALYTICS'
-        });
+    const value = {
+        ip,
+        stack,
+        session_id: session,
+        browser: getBrowser(),
+        os: getOS(),
+        email: email ?? 'unknown'
+    };
+    await supabase.from('generic_events').insert({
+        value,
+        name: `new session ${window.location.href}`,
+        type: 'ANALYTICS'
+    });
+
+    setInterval(async () => {
+        if (stack.length == current_stack_length) return;
+
+        value.stack = stack;
+        await supabase
+            .from('generic_events')
+            .update({ value })
+            .eq('value->>session_id', session);
+
+        current_stack_length = stack.length;
+    }, 10 * 1000);
 }

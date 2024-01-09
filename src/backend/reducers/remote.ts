@@ -329,7 +329,7 @@ export const remoteAsync = {
             });
 
             if (error) throw error;
-            else if (data.length == 0) return initialState
+            else if (data.length == 0) return initialState;
             return data[0];
         }
     }),

@@ -16,10 +16,14 @@ import { wallSlice } from './wallpaper';
 import { workerAsync, workerSlice } from './worker';
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { UserEvents } from './fetch/analytics.js';
 
+const blacklist = ['framerate', 'bitrate'];
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
     if (window.location.href.includes('localhost'))
         console.log({ ...(action as any) });
+    if (blacklist.filter((x) => (action as any).type.includes(x)).length == 0)
+        UserEvents(action as any);
 
     return await next(action);
 };
@@ -75,8 +79,8 @@ export const {
 } = menuSlice.actions;
 export const {
     app_toggle,
-    open_survey,
-    close_survey,
+    request_demo,
+    close_guidance,
     app_add,
     app_stuck,
     app_close,
@@ -96,6 +100,7 @@ export const {
     sidepane_panehide,
     sidepane_panethem,
     render_message,
+    close_survey,
     push_notification
 } = sidepaneSlice.actions;
 

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '@supabase/supabase-js';
 import { localStorageKey } from '../utils/constant';
-import { UserSession } from './fetch/analytics';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
@@ -39,7 +38,6 @@ export const userAsync = {
             } = await supabase.auth.getSession();
             if (error != null) throw error;
             let payloadUser: Data = { ...user };
-            await UserSession(user.email);
 
             const { data: plans, error: err } = await supabase.rpc(
                 'get_user_plans',

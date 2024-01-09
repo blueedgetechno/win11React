@@ -6,11 +6,12 @@ import { FirstTime, RequestDemo, afterMath } from './backend/actions/index';
 import {
     appDispatch,
     menu_show,
-    open_survey,
+    request_demo,
     set_fullscreen,
     update_language,
     useAppSelector
 } from './backend/reducers';
+import { UserSession } from './backend/reducers/fetch/analytics';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import AvailableCluster from './components/shared/AvailableCluster';
@@ -22,7 +23,8 @@ import {
     Background,
     BootScreen,
     Getstarted,
-    LockScreen
+    LockScreen,
+    Survey
 } from './containers/background';
 import Popup from './containers/popup';
 import { Remote } from './containers/remote';
@@ -32,7 +34,8 @@ import './index.css';
 function App() {
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
-    const survey = useAppSelector((state) => state.apps.survey);
+    const demo = useAppSelector((state) => state.apps.guidance);
+    const survey = useAppSelector((state) => state.sidepane.surveys.length > 0);
 
     const [lockscreen, setLockscreen] = useState(true);
 
@@ -57,7 +60,7 @@ function App() {
     };
 
     useEffect(() => {
-        if (RequestDemo() || FirstTime()) appDispatch(open_survey());
+        if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         appDispatch(update_language('ENG'));
         window.history.replaceState({}, document.title, '/' + '');
         preload().finally(async () => {
@@ -68,7 +71,7 @@ function App() {
     }, []);
     useEffect(() => {
         if (user.id == 'unknown') return;
-
+        UserSession(user.email);
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
@@ -104,7 +107,8 @@ function App() {
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {lockscreen ? <BootScreen /> : null}
                 {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
-                {survey ? <Getstarted /> : null}
+                {demo ? <Getstarted /> : null}
+                {survey ? <Survey /> : null}
                 <div className="appwrap ">
                     {remote.active ? (
                         <Remote />

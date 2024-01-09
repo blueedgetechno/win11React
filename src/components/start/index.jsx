@@ -14,8 +14,6 @@ import {
     change_bitrate,
     change_framerate,
     menu_show,
-    setting_setv,
-    task_audo,
     useAppSelector
 } from '../../backend/reducers';
 import {

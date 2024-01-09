@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
+    close_guidance,
     close_remote,
-    close_survey,
     demo_app,
     update_language,
     useAppSelector,
+    close_survey,
     wall_unlock
 } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
@@ -146,7 +147,7 @@ export const LockScreen = () => {
     );
 };
 
-export const Getstarted = ({ }) => {
+export const Getstarted = ({}) => {
     const t = useAppSelector((state) => state.globals.translation);
     const { email, id } = useAppSelector((state) => state.user);
 
@@ -188,11 +189,11 @@ export const Getstarted = ({ }) => {
     };
     const endSurvey = async () => {
         await reportSurvey();
-        appDispatch(close_survey());
+        appDispatch(close_guidance());
     };
     const startDemo = async () => {
         await reportSurvey();
-        appDispatch(close_survey());
+        appDispatch(close_guidance());
         await appDispatch(demo_app());
         await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
         appDispatch(close_remote());
@@ -209,14 +210,14 @@ export const Getstarted = ({ }) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                    ? Select((old) => old - 1)
-                    : e.key == 'ArrowLeft'
-                        ? prevPage()
-                        : e.key == 'ArrowRight'
-                            ? nextPage()
-                            : e.key == 'ArrowDown'
-                                ? Select((old) => old + 1)
-                                : null;
+                  ? Select((old) => old - 1)
+                  : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                      ? nextPage()
+                      : e.key == 'ArrowDown'
+                        ? Select((old) => old + 1)
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -243,7 +244,7 @@ export const Getstarted = ({ }) => {
                 'Google Search',
                 'Youtube',
                 t[Contents.MY_FRIEND],
-                t[Contents.OTHER_SOURCE],
+                t[Contents.OTHER_SOURCE]
             ]
         },
         {
@@ -267,7 +268,7 @@ export const Getstarted = ({ }) => {
                 t[Contents.DEVICE_ANDROID],
                 t[Contents.DEVICE_TV]
             ]
-        },
+        }
     ];
 
     const suggestions = [
@@ -330,7 +331,7 @@ export const Getstarted = ({ }) => {
 
     const Logo = () => (
         <div className="left">
-            <img alt="left image" id="left_img" src="logo.png" />
+            <img alt="left image" id="left_img" src="logo_white.png" />
         </div>
     );
 
@@ -340,7 +341,7 @@ export const Getstarted = ({ }) => {
             content: (
                 <>
                     <div className="left">
-                        <img id="left_img" src="logo.png" />
+                        <img id="left_img" src="logo_white.png" />
                     </div>
                     <div className="right">
                         <div className="header">
@@ -393,9 +394,9 @@ export const Getstarted = ({ }) => {
                                             style={
                                                 selection == i
                                                     ? {
-                                                        background:
-                                                            'rgb(175 175 175 / 40%)'
-                                                    }
+                                                          background:
+                                                              'rgb(175 175 175 / 40%)'
+                                                      }
                                                     : {}
                                             }
                                             onClick={() => nextPage()}
@@ -485,6 +486,188 @@ export const Getstarted = ({ }) => {
                             {pages.at(pageNo)?.content}
                         </div>
                     )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const Survey = () => {
+    const t = useAppSelector((state) => state.globals.translation);
+    const [result, SetResult] = useState([]);
+    const Survey = useAppSelector((state) => state.sidepane.surveys);
+    const { email, id } = useAppSelector((state) => state.user);
+
+    const [pageNo, setPageNo] = useState(0);
+    const nextPage = () =>
+        setPageNo((old) => {
+            const current = pages.at(old);
+            if (current && current.guidance)
+                SetResult((old) => [
+                    ...old,
+                    {
+                        question: current.data.question,
+                        selection: current.data.options.at(selection)
+                    }
+                ]);
+
+            return old + 1;
+        });
+    const prevPage = () =>
+        setPageNo((old) => {
+            const n = old != 0 ? old - 1 : old;
+            const current = pages.at(n);
+            if (current && current.guidance)
+                SetResult((old) => {
+                    old.pop();
+                    return old;
+                });
+
+            return n;
+        });
+    const reportSurvey = async () => {
+        await supabase.from('generic_events').insert({
+            value: result,
+            name: `survey result from ${email}`,
+            type: 'SURVEY'
+        });
+    };
+
+    const finishSurvey = async () => {
+        await reportSurvey();
+        appDispatch(close_survey());
+    };
+
+    const [selection, Select] = useState(0);
+    useEffect(() => {
+        const handle = (e) =>
+            e.key == 'Enter'
+                ? nextPage()
+                : e.key == 'ArrowUp'
+                  ? Select((old) => old - 1)
+                  : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                      ? nextPage()
+                      : e.key == 'ArrowDown'
+                        ? Select((old) => old + 1)
+                        : null;
+        window.addEventListener('keydown', handle);
+        return () => {
+            window.removeEventListener('keydown', handle);
+        };
+    }, []);
+
+    const Finish = () => (
+        <>
+            <div className="yes_button base" onClick={finishSurvey}>
+                Continue
+            </div>
+        </>
+    );
+
+    const Navigate = () => (
+        <>
+            <div className="no_button base" onClick={prevPage}>
+                Back
+            </div>
+            <div className="yes_button base" onClick={nextPage}>
+                Next
+            </div>
+        </>
+    );
+
+    const Logo = () => (
+        <div className="left">
+            <img alt="left image" id="left_img" src="logo_white.png" />
+        </div>
+    );
+
+    const pages = Survey.map((x, i) => {
+        return {
+            survey: true,
+            data: x,
+            content: (
+                <>
+                    <Logo />
+                    <div className="right">
+                        <div className="header">{x.question}</div>
+                        <div className="list_oobe mt-4 win11Scroll">
+                            {x.options.map((e, i) => {
+                                return (
+                                    <div
+                                        key={i}
+                                        className="list_oobe_opt"
+                                        onMouseEnter={() => Select(i)}
+                                        style={
+                                            selection == i
+                                                ? {
+                                                      background:
+                                                          'rgb(175 175 175 / 40%)'
+                                                  }
+                                                : {}
+                                        }
+                                        onClick={() => nextPage()}
+                                    >
+                                        {e}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <Navigate />
+                    </div>
+                </>
+            )
+        };
+    });
+
+    pages.unshift({
+        survey: false,
+        content: (
+            <>
+                <Logo />
+                <div className="right">
+                    <div className="header mb-8">
+                        Welcome to Thinkmay <br /> cloud gaming
+                    </div>
+                    <div>
+                        {t[Contents.WELCOME_LINE2]}
+                        <br />
+                        {t[Contents.WELCOME_LINE3]}
+                        <br />
+                        {t[Contents.WELCOME_LINE4]}
+                        <br />
+                    </div>
+                </div>
+            </>
+        )
+    });
+
+    pages.push({
+        content: (
+            <>
+                <Logo />
+                <div className="right">
+                    <div className="header mb-8">{'Thank you'}</div>
+                    <Finish />
+                </div>
+            </>
+        )
+    });
+
+    return (
+        <div
+            className="getstarted floatTab dpShad"
+            data-size={true}
+            data-max={true}
+            style={{ zIndex: 999 }}
+            data-hide={false}
+        >
+            <div className="windowScreen flex flex-col" data-dock="true">
+                <div className="restWindow flex-grow flex flex-col p-[24px]">
+                    <div className="inner_fill_setup">
+                        {pages.at(pageNo)?.content}
+                    </div>
                 </div>
             </div>
         </div>

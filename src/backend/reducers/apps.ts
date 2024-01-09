@@ -270,12 +270,12 @@ export const appsAsync = {
 
 type Data = {
     hz: number;
-    survey: boolean;
+    guidance: boolean;
     apps: AppData[];
 };
 const initialState: Data = {
     hz: 0,
-    survey: false,
+    guidance: false,
     apps: allApps
 };
 
@@ -434,11 +434,11 @@ export const appSlice = createSlice({
                 obj.z = state.hz;
             }
         },
-        open_survey: (state) => {
-            state.survey = true;
+        request_demo: (state) => {
+            state.guidance = true;
         },
-        close_survey: (state) => {
-            state.survey = false;
+        close_guidance: (state) => {
+            state.guidance = false;
         }
     },
     extraReducers: (builder) => {

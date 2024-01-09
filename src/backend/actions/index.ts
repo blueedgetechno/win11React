@@ -26,10 +26,10 @@ export const refresh = async () => {
 
 export const afterMath = (event: any) => {
     var ess = [
-        ['START', 'startmenu/starthid'], // TODO
-        ['BAND', 'sidepane/sidepane_bandhide'],
-        ['PANE', 'sidepane/sidepane_panehide'],
-        ['MENU', 'menu/menu_hide']
+        ['START', 'startmenu/starthid', 'startmenu.hide'], // TODO
+        ['BAND', 'sidepane/sidepane_bandhide', 'sidepane.banhide'],
+        ['PANE', 'sidepane/sidepane_panehide', 'sidepane.hide'],
+        ['MENU', 'menu/menu_hide', 'menus.hide']
     ];
 
     var actionType = '';
@@ -41,13 +41,14 @@ export const afterMath = (event: any) => {
         '--prefix'
     );
 
+    const data = store.getState();
     ess.forEach((item) => {
         if (
             !actionType.startsWith(item[0]) &&
-            !actionType0.startsWith(item[0])
-        ) {
+            !actionType0.startsWith(item[0]) &&
+            !getTreeValue(data, item[2])
+        )
             appDispatch({ type: item[1], payload: {} });
-        }
     });
 };
 export const changeIconSize = (size: string, menu: any) => {
@@ -170,7 +171,10 @@ export function LoginAndDemo() {
     login();
 }
 export function FirstTime(): boolean {
-    return localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE';
+    return (
+        localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE' &&
+        !window.location.href.includes('localhost')
+    );
 }
 export function RequestDemo(): boolean {
     const result = localStorage.getItem('THINKMAY_DEMO') == 'TRUE';
