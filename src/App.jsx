@@ -70,7 +70,7 @@ function App() {
         });
     }, []);
     useEffect(() => {
-        if (user.id == 'unknown') return;
+        if (user.id == 'unknown' || isMobile()) return;
         UserSession(user.email);
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
