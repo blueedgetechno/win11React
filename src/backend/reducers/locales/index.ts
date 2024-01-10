@@ -112,7 +112,11 @@ export enum Contents {
     SURVEY_COMPLETED,
     FAIL_DEMO_REGION,
     FAIL_DEMO_TEMP,
-    DEMO
+    DEMO,
+    SUPPORT,
+    BOOKING_DEMO,
+    DEMO_SUGGESSTION,
+    EXPLORE_WEB
 }
 
 export function language() {
@@ -230,7 +234,7 @@ export function language() {
     vn.set(Contents.OTHER_SOURCE, 'Khác');
 
     en.set(Contents.KNOW_THINKMAY_VIA, 'I know thinkmay via');
-    vn.set(Contents.KNOW_THINKMAY_VIA, 'Tôi biết đến Thinkmay thông qua');
+    vn.set(Contents.KNOW_THINKMAY_VIA, 'Bạn biết đến Thinkmay thông qua');
 
     en.set(
         Contents.GETSTARTED_ANOTHERKEYBOARDR,
@@ -253,7 +257,7 @@ export function language() {
     en.set(Contents.ALREADY_DEPLOYED, "You've installed 1 game");
     vn.set(
         Contents.ALREADY_DEPLOYED,
-        'Được install 3 game và 1 game chạy cùng 1 thời điểm. Xoá hoặc paused game cũ trước khi install/start game mới'
+        'Được install 3 app và chạy 1 app cùng một thời điểm. Delete hoặc pause app cũ trước khi install/ power on app mới'
     );
 
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
@@ -336,11 +340,11 @@ export function language() {
 
     en.set(
         Contents.PAUSEAPP,
-        'Tips, Right click => start app to play continuously'
+        'Tips, Right click => Power On app to play continuously'
     );
     vn.set(
         Contents.PAUSEAPP,
-        'Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!'
+        'Chuột phải => Power On app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy nhắn tin cho bọn mình để hỗ trợ!'
     );
 
     en.set(Contents.THANKS, 'Thanks you<3');
@@ -403,8 +407,8 @@ export function language() {
     en.set(Contents.FETCH_APP, 'Fetch your PC data');
     vn.set(Contents.FETCH_APP, 'Load danh sách app');
 
-    en.set(Contents.INSTALL_APP, 'Install PC remote');
-    vn.set(Contents.INSTALL_APP, 'Cài máy remote');
+    en.set(Contents.INSTALL_APP, 'Install PC to remote');
+    vn.set(Contents.INSTALL_APP, 'Cài máy để remote');
 
     en.set(Contents.DEMO_APP, 'Open demo PC');
     vn.set(Contents.DEMO_APP, 'Mở game trải nghiệm');
@@ -479,7 +483,7 @@ export function language() {
     vn.set(Contents.DEVICE_TV, 'TV');
 
     en.set(Contents.WHAT_LOOK_FOR, "I'm looking for");
-    vn.set(Contents.WHAT_LOOK_FOR, 'Tôi đang tìm kiếm trải nghiệm');
+    vn.set(Contents.WHAT_LOOK_FOR, 'Bạn đang tìm kiếm trải nghiệm');
 
     en.set(Contents.COMFORTABLE, 'Comfortable gaming experience');
     vn.set(Contents.COMFORTABLE, 'Chơi game thư giãn');
@@ -494,7 +498,7 @@ export function language() {
     vn.set(Contents.EXPLORE, 'Khám phá công nghệ mới');
 
     en.set(Contents.DONT_KNOW, "I don't know yet");
-    vn.set(Contents.DONT_KNOW, 'Tôi chưa biết');
+    vn.set(Contents.DONT_KNOW, 'Mình chưa biết');
 
     en.set(Contents.BEST_EXP, 'How to get the best experience');
     vn.set(Contents.BEST_EXP, 'Để có trải nghiệm tốt nhất hãy ');
@@ -539,10 +543,10 @@ export function language() {
     vn.set(Contents.CONTENT_6, 'Nếu bạn gặp vấn đề');
 
     en.set(Contents.CONTENT_7, 'Join our community to request games');
-    vn.set(Contents.CONTENT_7, 'Tham gia cộng đồng của Thinkmay');
+    vn.set(Contents.CONTENT_7, 'Tham gia Discord của Thinkmay');
 
     en.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
-    vn.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
+    vn.set(Contents.CONTENT_8, 'Để nhận được thông báo sớm nhất');
 
     en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
     vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
@@ -556,14 +560,31 @@ export function language() {
     en.set(Contents.FAIL_DEMO_TEMP, 'Demo gameplay is temporarily closed.');
     vn.set(
         Contents.FAIL_DEMO_TEMP,
-        'Demo gameplay tạm thời đang không mở cửa bạn đợi và thử lại vào lúc khác nhé.'
+        'Trải nghiệm miễn phí sẽ mở vào khung giờ 7:00 tới 11:00 và 14:00 tới 17:00 hàng ngày.'
     );
 
     en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
     vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
 
     en.set(Contents.DEMO, 'Get demo');
-    vn.set(Contents.DEMO, 'Get demo');
+    vn.set(Contents.DEMO, 'Trải nghiệm');
 
+    en.set(Contents.SUPPORT, 'Support now!');
+    vn.set(Contents.SUPPORT, 'Hỗ trợ ngay!');
+
+    en.set(
+        Contents.DEMO_SUGGESSTION,
+        "If you'd like a demo at a different time, please book an appointment for better assistance."
+    );
+    vn.set(
+        Contents.DEMO_SUGGESSTION,
+        'Nếu bạn muốn trải nghiệm ở khung giờ khác, vui lòng đặt lịch để Thinkmay phục vụ tốt nhất.'
+    );
+
+    en.set(Contents.BOOKING_DEMO, 'Booking demo');
+    vn.set(Contents.BOOKING_DEMO, 'Đặt lịch');
+
+    en.set(Contents.EXPLORE_WEB, 'Explore Thinkmay');
+    vn.set(Contents.EXPLORE_WEB, 'Khám phá Thinkmay');
     return t;
 }

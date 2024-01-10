@@ -299,8 +299,17 @@ export const Getstarted = ({}) => {
     );
     const Fail = () => (
         <>
-            <div className="yes_button base" onClick={endSurvey}>
-                Explore
+            <div className="base">{t[Contents.DEMO_SUGGESSTION]}</div>
+            <div className="no_button base" onClick={endSurvey}>
+                {t[Contents.EXPLORE_WEB]}
+            </div>
+            <div
+                className="yes_button base"
+                onClick={() =>
+                    window.open(externalLink.FACEBOOK_MESSAGE_LINK, '_blank')
+                }
+            >
+                {t[Contents.BOOKING_DEMO]}
             </div>
         </>
     );

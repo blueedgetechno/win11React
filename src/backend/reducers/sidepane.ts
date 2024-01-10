@@ -151,7 +151,7 @@ export const sidepaneAsync = {
                 const { data, error } = await supabase
                     .from('generic_events')
                     .select('timestamp,value,name')
-                    .eq('type','MESSAGE');
+                    .eq('type', 'MESSAGE');
                 if (error) throw error;
 
                 return data
