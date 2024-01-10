@@ -558,8 +558,12 @@ export const remoteSlice = createSlice({
                         action.payload;
                     state.bitrate = bitrate;
                     state.framerate = framerate;
-                    state.old_version = old_version;
                     state.low_ads = low_ads;
+
+                    if (isMobile())
+                        return
+
+                    state.old_version = old_version;
                 }
             },
             {
