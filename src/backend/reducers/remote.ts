@@ -186,8 +186,7 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
 
-export function openRemotePage(url: string, appName?: string, newtab = true) {
-
+export function openRemotePage(url: string, appName?: string) {
     const open = `${url}&no_stretch=true${appName != undefined
             ? `&page=${appName}&scancode=${scanCodeApps.includes(
                 appName
@@ -195,7 +194,7 @@ export function openRemotePage(url: string, appName?: string, newtab = true) {
             : ''
         }`
 
-    if (!newtab) {
+    if (isMobile()) {
         document.location.href = open;
         return;
     }
