@@ -246,7 +246,7 @@ export function language() {
     en.set(Contents.ALREADY_DEPLOYED, "You've installed 1 game");
     vn.set(
         Contents.ALREADY_DEPLOYED,
-        'Được install 3 app và chạy 1 app cùng một thời điểm. Delete hoặc pause app cũ trước khi install/ power on app mới'
+        'Được cài 3 máy và chạy 1 máy cùng một thời điểm. Xóa hoặc tắt máy cũ trước khi mở máy mới'
     );
 
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
