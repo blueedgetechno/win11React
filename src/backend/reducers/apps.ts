@@ -12,7 +12,6 @@ import {
     toggle_remote
 } from '.';
 import { AppData, allApps } from '../utils';
-import { isMobile } from '../utils/checking';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
 import {
@@ -25,7 +24,7 @@ import {
     StartApplication,
     StopApplication
 } from './fetch';
-import { virtapi } from './fetch/createClient';
+import { CAUSE, virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 import { openRemotePage } from './remote';
 
@@ -123,7 +122,7 @@ export const appsAsync = {
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
@@ -143,7 +142,7 @@ export const appsAsync = {
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
@@ -175,7 +174,7 @@ export const appsAsync = {
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -205,7 +204,7 @@ export const appsAsync = {
             }
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -237,7 +236,7 @@ export const appsAsync = {
             }
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -458,16 +457,16 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
 
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             },
             {
                 fetch: appsAsync.start_app,

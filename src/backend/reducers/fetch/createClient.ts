@@ -11,7 +11,9 @@ export enum CAUSE {
     PERMISSION_REQUIRED,
     NEED_WAIT,
     INVALID_REQUEST,
-    REMOTE_TIMEOUT
+    REMOTE_TIMEOUT,
+
+    INVALID_REF
 }
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -53,7 +55,10 @@ const getCredentialHeader = async () => {
         data: { session },
         error
     } = await supabase.auth.getSession();
-    if (error) throw new Error('unauthorized');
+    if (error) throw new Error(JSON.stringify({
+        code: CAUSE.INVALID_AUTH_HEADER,
+        message: 'unauthorized'
+    }));
 
     return {
         access_token: session?.access_token
