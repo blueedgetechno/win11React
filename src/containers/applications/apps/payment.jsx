@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
-import { appDispatch, useAppSelector } from '../../../backend/reducers';
+import { useAppSelector } from '../../../backend/reducers';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import './assets/store.scss';
 
 import { FUNDING } from '@paypal/react-paypal-js';
+import { UserEvents } from '../../../backend/reducers/fetch/analytics';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
 import { Contents } from '../../../backend/reducers/locales';
 import { Image } from '../../../components/shared/general';
+
+const mb = '970422'
+const account_id = '1502200344444'
+const account_owner = 'DO VAN DAT'
+const model = 'BsXBiU7' //'sS1SemI'
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {
@@ -20,70 +26,91 @@ export const PaymentApp = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'payment')
     );
-    const user = useAppSelector((state) => state.user);
-    const dispatch = appDispatch;
-
     const [ListSubs, setListSubs] = useState([
         {
             highlight: false,
-            title: 'Trial',
+            title: 'trial',
             price: '3',
 
             name: 'week',
+            period: 'week',
+            description: 'Perfect to testing out cloud gaming experience',
+            bonus: [
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+            ]
         },
         {
             highlight: true,
-            title: 'Start',
+            title: 'start',
             price: '12',
 
 
             name: 'month',
+            period: 'week',
+            description: 'Perfect to testing out cloud gaming experience',
+            bonus: [
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+            ]
         },
         {
             highlight: false,
-            title: 'Standard',
+            title: 'standard',
             price: '20',
 
             name: 'month',
+            period: 'week',
+            description: 'Perfect to testing out cloud gaming experience',
+            bonus: [
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+                'We\'re are f*king love you',
+            ]
         },
-        {
-            highlight: false,
-            title: 'Enterprise',
-            price: '',
+        // {
+        //     highlight: false,
+        //     title: 'Enterprise',
+        //     price: '',
 
-            name: 'Enterprise',
-        }
+        //     name: 'Enterprise',
+        // }
     ]);
 
     useEffect(() => {
         setup();
     }, []);
     const setup = async () => {
-        // const { data, error } = await supabase
-        //     .from('plans')
-        //     .select(
-        //         'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
-        //     )
-        //     .not('metadata->>total_time', 'is', null)
-        //     .is('deleted_at', null);
+        const { data, error } = await supabase
+            .from('plans')
+            .select(
+                'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
+            )
+            .not('metadata->>total_time', 'is', null)
+            .is('deleted_at', null);
 
-        // if (error) throw error;
-        // setListSubs(
-        //     ListSubs.map((sub) => {
-        //         return {
-        //             ...sub,
-        //             plan_id: data.find((x) => x.type == sub.type)?.id,
-        //             hours: data.find((x) => x.type == sub.type)?.total_time,
-        //             price:
-        //                 data.find((x) => x.type == sub.type)?.price_in_vnd + 'k'
-        //         };
-        //     })
-        // );
+        if (error) throw error;
+        setListSubs(
+            ListSubs.map((sub) => {
+                return { ...sub, ...data.find((x) => x.type == sub.title) };
+            })
+        );
     };
 
-    const [paypage, setPaypage] = useState(false)
-    const payment = async (data, actions) => {
-        setPaypage(true)
+    const [paypage, setPaypage] = useState(null)
+    const payment = async (price_in_vnd) => {
+        setPaypage(price_in_vnd)
     };
 
     return (
@@ -106,55 +133,60 @@ export const PaymentApp = () => {
             />
             <div className="windowScreen">
                 <LazyComponent show={!wnapp.hide}>
-                    {paypage
-                        ? <Payment onClose={() => setPaypage(false)} />
-                        : <div class="paymentContent ">
+                    {paypage != null
+                        ? <Payment price={paypage} onClose={() => setPaypage(null)} />
+                        : <div className="paymentContent ">
                             {ListSubs.map((sub, index) => (
                                 <div key={index} className="sub relative">
 
                                     {
                                         sub.highlight
                                             ? <div className='rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]'>
-                                                <p class="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">Most Popular</p>
+                                                <p className="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">Most Popular</p>
 
                                             </div>
                                             : null
                                     }
 
-                                    <div class="flex flex-col overflow-hidden border h-full rounded-[4px]">
-                                        <div class="bg-surface-100 px-8 xl:px-4 2xl:px-8 pt-6 rounded-tr-[4px] rounded-tl-[4px] ">
-                                            <div class="mb-2 flex items-center gap-2">
-                                                <div class="flex items-center gap-2">
-                                                    <h3 class="text-brand-600 text-2xl font-normal uppercase flex items-center gap-4 font-mono">
-                                                        {sub.name}
+                                    <div className="flex flex-col overflow-hidden border h-full rounded-[4px]">
+                                        <div className="bg-surface-100 px-8 xl:px-4 2xl:px-8 pt-6 rounded-tr-[4px] rounded-tl-[4px] ">
+                                            <div className="mb-2 flex items-center gap-2">
+                                                <div className="flex items-center gap-2">
+                                                    <h3 className="text-brand-600 text-2xl font-normal uppercase flex items-center gap-4 font-mono">
+                                                        {sub.title}
                                                     </h3>
                                                 </div>
                                             </div>
-                                            <p class="text-foreground-light my-4 text-sm border-b border-default pb-4 2xl:pr-4">
-                                                Perfect for passion projects &amp; simple websites.
+                                            <p className="text-foreground-light my-4 text-sm border-b border-default pb-4 2xl:pr-4">
+                                                {sub.description}
                                             </p>
 
                                             <hr className='border-[#504646]' />
-                                            <div class=" text-foreground flex items-baseline text-5xl font-normal lg:text-4xl xl:text-4xl border-b border-default min-h-[175px] pt-10">
-                                                <div class="flex flex-col gap-1">
-                                                    <div class="flex items-end gap-2">
+                                            <div className=" text-foreground flex items-baseline text-5xl font-normal lg:text-4xl xl:text-4xl border-b border-default min-h-[175px] pt-10">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-end gap-2">
                                                         <div>
-                                                            <div class="flex items-end">
+                                                            <div className="flex items-end">
 
 
                                                                 {
                                                                     sub.title == 'Enterprise' ?
-                                                                        <p class="mt-2 gradient-text-500 pb-1 text-5xl">Contact Us</p>
+                                                                        <p className="mt-2 gradient-text-500 pb-1 text-5xl">Contact Us</p>
                                                                         :
                                                                         <>
-                                                                            <p class="mt-2 gradient-text-500 pb-1 text-5xl">${sub.price}</p>
-                                                                            <p class="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ month / org</p>
+                                                                            <p className="mt-2 gradient-text-500 pb-1 text-5xl">{
+                                                                                sub.price_in_vnd
+                                                                                    ? `${sub.price_in_vnd}k VND`
+                                                                                    : `\$${sub.price}`}
+
+                                                                            </p>
+                                                                            <p className="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ {sub.period} </p>
                                                                         </>
                                                                 }
                                                             </div>
-                                                            <p class="-mt-2">
-                                                                <span class="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
-                                                                    Limit of 2 free organizations
+                                                            <p className="-mt-2">
+                                                                <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
+                                                                    Limit of {sub.total_time} hours
                                                                 </span>
                                                             </p>
                                                         </div>
@@ -164,26 +196,34 @@ export const PaymentApp = () => {
                                             <hr className='border-[#504646]' />
 
                                         </div>
-                                        <div class="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
-                                            <p class="text-foreground-light text-[13px] mt-2 mb-4">Get started with:</p>
-                                            <ul role="list" class="text-[13px] text-foreground-lighter">
-                                                <li class="flex items-center py-2 first:mt-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="sbui-icon text-brand h-4 w-4" aria-hidden="true">
-                                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                                    </svg>
-                                                    <span class="text-foreground mb-0 ml-3 ">Unlimited API requests</span>
-                                                </li>
-                                            </ul>
-                                            <div class="flex flex-col gap-6 mt-auto prose">
-                                                <div class="space-y-2 mt-12">
-                                                    <p class="text-[13px] whitespace-pre-wrap">Free projects are paused after 1 week of inactivity.</p>
+                                        <div className="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
+                                            <p className="text-foreground-light text-[13px] mt-2 mb-4">Get started with:</p>
+
+                                            {sub.bonus.map((x, i) =>
+                                                <ul key={i} role="list" className="text-[13px] text-foreground-lighter">
+                                                    <li className="flex items-center py-2 first:mt-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sbui-icon text-brand h-4 w-4" aria-hidden="true">
+                                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                                        </svg>
+                                                        <span className="text-foreground mb-0 ml-3 ">{x}</span>
+                                                    </li>
+                                                </ul>
+                                            )}
+
+                                            <div className="flex flex-col gap-6 mt-auto prose">
+                                                <div className="space-y-2 mt-12">
+                                                    <p className="text-[13px] whitespace-pre-wrap">
+                                                        {/* Free projects are paused after 1 week of inactivity. */}
+                                                    </p>
                                                 </div>
 
-                                                <a href="javascript:void(0)" onClick={payment}>
-                                                    <button type="button" class="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]">
-                                                        <span class="truncate">
+                                                <a onClick={() => payment(sub.price_in_vnd)}>
+                                                    <button type="button" className="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]">
+                                                        <span className="truncate">
                                                             {
-                                                                sub.title == 'Enterprise' ? 'Contact Us' : 'Get Started'
+                                                                sub.title == 'Enterprise' 
+                                                                ? 'Contact Us' 
+                                                                : 'Get Started'
                                                             }
                                                         </span>
                                                     </button>
@@ -203,65 +243,45 @@ export const PaymentApp = () => {
 
 
 
-const Payment = ({ onClose }) => {
+const Payment = ({ onClose, price }) => {
     const t = useAppSelector((state) => state.globals.translation);
-    const [result, SetResult] = useState([]);
-    const { email, id } = useAppSelector((state) => state.user);
+    const { id } = useAppSelector((state) => state.user);
 
     const [pageNo, setPageNo] = useState(0);
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
-            if (current && current.guidance)
-                SetResult((old) => [
-                    ...old,
-                    {
-                        question: current.data.question,
-                        selection: current.data.options.at(selection)
-                    }
-                ]);
-
-            return old + 1;
+            return (pages.length - 1 != old) ? old + 1 : old;
         });
     const prevPage = () =>
         setPageNo((old) => {
             const n = old != 0 ? old - 1 : old;
             const current = pages.at(n);
-            if (current && current.guidance)
-                SetResult((old) => {
-                    old.pop();
-                    return old;
-                });
-
             return n;
         });
-    const reportSurvey = async () => {
-        await supabase.from('generic_events').insert({
-            value: result,
-            name: `survey result from ${email}`,
-            type: 'SURVEY'
-        });
-    };
-
     const finishSurvey = async () => {
-        // await reportSurvey();
+        UserEvents({ type: `finish_payment` })
         onClose()
     };
 
-    const [selection, Select] = useState(0);
+    const [qrurl, setQR] = useState(null);
     useEffect(() => {
+        const url = new URL(`https://img.vietqr.io/image/${mb}-${account_id}-${model}.png`)
+        url.searchParams.append('ammount', price * 1000)
+        url.searchParams.append('accountName', account_owner)
+        url.searchParams.append('addInfo', `thinkmay ${id.replaceAll('-', ' ')}`)
+        setQR(url.toString())
+
+
+
         const handle = (e) =>
             e.key == 'Enter'
                 ? nextPage()
-                : e.key == 'ArrowUp'
-                    ? Select((old) => old - 1)
-                    : e.key == 'ArrowLeft'
-                        ? prevPage()
-                        : e.key == 'ArrowRight'
-                            ? nextPage()
-                            : e.key == 'ArrowDown'
-                                ? Select((old) => old + 1)
-                                : null;
+                : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                        ? nextPage()
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -287,9 +307,11 @@ const Payment = ({ onClose }) => {
         </>
     );
 
+
+
     const QR = () => (
         <div className="left">
-            <Image src="asset/payqr" />
+            <Image absolute src={qrurl} />
         </div>
     );
     const Logo = () => (
@@ -305,11 +327,7 @@ const Payment = ({ onClose }) => {
                 <QR />
                 <div className="right">
                     <div className="header mb-8">
-                        Please make payment to the following bank account
-                    </div>
-                    <div>
-                        Account owner  : Do Van Dat - MB Bank
-                        Account number : 1502200344444
+                        {t[Contents.PAYMENT_FOLLOW_UP_TITLE1]}
                     </div>
                 </div>
                 <Navigate />
@@ -342,7 +360,7 @@ const Payment = ({ onClose }) => {
                 <Logo />
                 <div className="right">
                     <div className="header mb-8">
-                        Thank you
+                        {t[Contents.PAYMENT_FOLLOW_UP_DONE]}
                     </div>
                     <Finish />
                 </div>

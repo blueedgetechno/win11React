@@ -3,7 +3,9 @@ import { Translation } from '../globals';
 export type Languages = 'VN' | 'ENG';
 export enum Contents {
     PAYMENT_FOLLOW_UP_TITLE,
+    PAYMENT_FOLLOW_UP_TITLE1,
     PAYMENT_FOLLOW_UP_CONTENT,
+    PAYMENT_FOLLOW_UP_DONE,
 
 
     ABOUT_OPENSOURCE,
@@ -126,11 +128,19 @@ export function language() {
     const en = new Map<Contents, string>();
     t.set('ENG', en);
 
-    en.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'Owned');
-    vn.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'Owned');
+    en.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'We will help you setup the payment for thinknmay service');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'Chúng mình sẽ hỗ trợ bạn thực hiện thanh toán dịch vụ');
 
-    en.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'Owned');
-    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE, 'Owned');
+    en.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'At the moment, you can pay us using bank transfer (VietQR, ZaloPay)');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_CONTENT, 'Hiện tại, bạn có thể thanh toán thông qua chuyển khoản ngân hàng (VietQR, ZaloPay)');
+
+
+    en.set(Contents.PAYMENT_FOLLOW_UP_TITLE1, 'Please make payment to the following bank account');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE1, 'Bạn chuyển khoản th');
+
+    en.set(Contents.PAYMENT_FOLLOW_UP_DONE, 'Thank you for your payment, it will take us a few hours to verify your transaction');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_DONE, 'Cảm ơn bạn đã thanh toán dịch vụ thinkmay, chúng mình sẽ cần một vài giờ để xác minh giao dịch trên');
+
 
 
     en.set(
