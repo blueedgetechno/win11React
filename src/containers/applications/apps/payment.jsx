@@ -329,6 +329,11 @@ const Payment = ({ onClose, price }) => {
                     <div className="header mb-8">
                         {t[Contents.PAYMENT_FOLLOW_UP_TITLE1]}
                     </div>
+                    <p>
+                        MB Bank <br />
+                        Tên Chủ Tk: DO VAN DAT <br />
+                        Số TK: 1502200344444
+                    </p>
                 </div>
                 <Navigate />
             </>

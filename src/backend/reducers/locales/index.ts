@@ -136,7 +136,7 @@ export function language() {
 
 
     en.set(Contents.PAYMENT_FOLLOW_UP_TITLE1, 'Please make payment to the following bank account');
-    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE1, 'Bạn chuyển khoản th');
+    vn.set(Contents.PAYMENT_FOLLOW_UP_TITLE1, 'Bạn chuyển khoản đến số tài khoản sau');
 
     en.set(Contents.PAYMENT_FOLLOW_UP_DONE, 'Thank you for your payment, it will take us a few hours to verify your transaction');
     vn.set(Contents.PAYMENT_FOLLOW_UP_DONE, 'Cảm ơn bạn đã thanh toán dịch vụ thinkmay, chúng mình sẽ cần một vài giờ để xác minh giao dịch trên');
