@@ -12,6 +12,7 @@ import {
     toggle_remote
 } from '.';
 import { AppData, allApps } from '../utils';
+import { isMobile } from '../utils/checking';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
 import {
@@ -117,6 +118,10 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
 
+            if (isMobile()) {
+                return openRemotePage(result.url, app_name, false);
+
+            }
             if ((getState() as RootState).remote.old_version)
                 return openRemotePage(result.url, app_name);
 
@@ -137,6 +142,9 @@ export const appsAsync = {
         'demo_app',
         async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
+            if (isMobile()) {
+                return openRemotePage(result.url, false);
+            }
             if ((getState() as RootState).remote.old_version)
                 return openRemotePage(result.url);
 
@@ -167,7 +175,11 @@ export const appsAsync = {
             );
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
+            if (isMobile()) {
+                openRemotePage(result.url, app_name, false);
+                return storage_id;
 
+            }
             if ((getState() as RootState).remote.old_version) {
                 openRemotePage(result.url, app_name);
                 return storage_id;
@@ -199,6 +211,11 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
 
+            if (isMobile()) {
+                openRemotePage(result.url, app_name, false);
+                return storage_id;
+
+            }
             if ((getState() as RootState).remote.old_version) {
                 openRemotePage(result.url, app_name);
                 return storage_id;
@@ -231,6 +248,11 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
 
+            if (isMobile()) {
+                openRemotePage(result.url, app_name, false);
+                return storage_id;
+
+            }
             if ((getState() as RootState).remote.old_version) {
                 openRemotePage(result.url, app_name);
                 return storage_id;
