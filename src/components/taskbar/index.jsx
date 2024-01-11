@@ -151,7 +151,12 @@ const Taskbar = () => {
                                 width={16}
                             />
                         ) : null}
-                        <MdVideoSettings />
+                        <div
+                            className="text-xm font-semibold"
+                            style={{ color: 'white' }}
+                        >
+                            {t[Contents.SETTING]}
+                        </div>
                     </div>
                 </>
                 <div className="taskDate m-1 handcr prtclk rounded hvlight">

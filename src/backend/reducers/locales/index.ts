@@ -112,7 +112,8 @@ export enum Contents {
     SUPPORT,
     BOOKING_DEMO,
     DEMO_SUGGESSTION,
-    EXPLORE_WEB
+    EXPLORE_WEB,
+    SETTING
 }
 
 export function language() {
@@ -575,5 +576,8 @@ export function language() {
 
     en.set(Contents.EXPLORE_WEB, 'Explore Thinkmay');
     vn.set(Contents.EXPLORE_WEB, 'Khám phá Thinkmay');
+
+    en.set(Contents.SETTING, 'Setting');
+    vn.set(Contents.SETTING, 'Cài đặt');
     return t;
 }
