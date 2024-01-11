@@ -1,7 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, render_message, store } from '.';
+import { appDispatch, render_message, store, useAppSelector } from '.';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
+import { Contents } from './locales';
 
 export type Notification = {
     urlToImage?: string;
@@ -38,47 +39,47 @@ const initialState: Data = {
         {
             ui: true,
             src: 'FiVideoOff',
-            name: 'Video toggle',
+            name: [Contents.VIDEO_TOGGLE],
             state: 'active',
             action: 'toggle_remote_async'
         },
         {
             ui: true,
             src: 'MdOutlineResetTv',
-            name: 'Reset',
+            name: [Contents.RESET_VIDEO],
             state: 'network.airplane',
             action: 'hard_reset_async'
         },
         {
             ui: true,
             src: 'FaWindows',
-            name: 'Home screen',
+            name: [Contents.HOMESCREEN],
             action: 'remote/homescreen'
         },
         {
             src: 'MdLoop',
-            name: 'Low Period',
+            name: [Contents.LOW_PERIOD],
             state: 'low_ads',
             action: 'remote/ads_period'
         },
         {
             ui: true,
             src: 'MdFullscreen',
-            name: 'Fullscreen',
+            name: [Contents.FULLSCREEN],
             state: 'fullscreen',
             action: 'remote/fullscreen'
         },
         {
             ui: true,
             src: 'MdKeyboard',
-            name: 'Scan Code',
+            name: [Contents.SCAN_CODE],
             state: 'scancode',
             action: 'remote/scancode_toggle'
         },
         {
             ui: true,
             src: 'FaExternalLinkAlt',
-            name: 'External tab',
+            name: [Contents.EXTERNAL_TAB],
             state: 'old_version',
             action: 'remote/remote_version'
         }

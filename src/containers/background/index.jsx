@@ -292,6 +292,14 @@ export const Getstarted = ({}) => {
 
     const Finish = () => (
         <>
+            <div className="base text-xm font-semibold">
+                {t[Contents.DEMO_TUTORIAL_HEAD]}
+            </div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_1]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_2]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
             <div className="yes_button base" onClick={startDemo}>
                 Start Demo
             </div>
@@ -299,7 +307,6 @@ export const Getstarted = ({}) => {
     );
     const Fail = () => (
         <>
-            <div className="base">{t[Contents.DEMO_SUGGESSTION]}</div>
             <div className="no_button base" onClick={endSurvey}>
                 {t[Contents.EXPLORE_WEB]}
             </div>
@@ -458,9 +465,10 @@ export const Getstarted = ({}) => {
         if (region != 'Vietnam') setStatus(Contents.FAIL_DEMO_REGION);
         else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
-                if (error) setStatus(Contents.FAIL_DEMO_TEMP);
-                else if (data) setStatus(Contents.SURVEY_COMPLETED);
-                else setStatus(Contents.FAIL_DEMO_TEMP);
+                // if (error) setStatus(Contents.FAIL_DEMO_TEMP);
+                // else if (data)
+                setStatus(Contents.SURVEY_COMPLETED);
+                // else setStatus(Contents.FAIL_DEMO_TEMP);
             });
     }, [pageNo, result]);
 

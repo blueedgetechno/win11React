@@ -113,7 +113,22 @@ export enum Contents {
     BOOKING_DEMO,
     DEMO_SUGGESSTION,
     EXPLORE_WEB,
-    SETTING
+    SETTING,
+    LOW_PERIOD,
+    VIDEO_TOGGLE,
+    RESET_VIDEO,
+    HOMESCREEN,
+    FULLSCREEN,
+    SCAN_CODE,
+    EXTERNAL_TAB,
+    QUALITY,
+    FRAMERATE,
+    DEMO_TUTORIAL_HEAD,
+    DEMO_TUTORIAL_1,
+    DEMO_TUTORIAL_2,
+    DEMO_TUTORIAL_3,
+    DEMO_TUTORIAL_4,
+    DEMO_TUTORIAL_5
 }
 
 export function language() {
@@ -539,7 +554,7 @@ export function language() {
     vn.set(Contents.CONTENT_8, 'Để nhận được thông báo sớm nhất');
 
     en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
-    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
+    vn.set(Contents.SURVEY_COMPLETED, 'Máy demo đã sẵn sàng.');
 
     en.set(
         Contents.FAIL_DEMO_REGION,
@@ -552,9 +567,6 @@ export function language() {
         Contents.FAIL_DEMO_TEMP,
         'Trải nghiệm miễn phí sẽ mở vào khung giờ 7:00 tới 11:00 và 14:00 tới 17:00 hàng ngày.'
     );
-
-    en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
-    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
 
     en.set(Contents.DEMO, 'Get demo');
     vn.set(Contents.DEMO, 'Trải nghiệm');
@@ -571,6 +583,36 @@ export function language() {
         'Nếu bạn muốn trải nghiệm ở khung giờ khác, vui lòng đặt lịch để Thinkmay phục vụ tốt nhất.'
     );
 
+    en.set(Contents.DEMO_TUTORIAL_HEAD, 'User manual');
+    vn.set(Contents.DEMO_TUTORIAL_HEAD, 'Hướng dẫn sử dụng');
+
+    en.set(Contents.DEMO_TUTORIAL_1, '- Your game locate at volume D');
+    vn.set(Contents.DEMO_TUTORIAL_1, '- Game demo nằm ở ổ D.');
+
+    en.set(Contents.DEMO_TUTORIAL_2, '- Adjust quality and fps');
+    vn.set(
+        Contents.DEMO_TUTORIAL_2,
+        '- Đừng quên chỉnh "Chất lượng", "FPS" và "Làm mới liên tục" phù hợp với điều kiện mạng.'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_3, '- Fix keyboard is not working');
+    vn.set(
+        Contents.DEMO_TUTORIAL_3,
+        '- Click "Fix kẹt phím" nếu game không nhận bàn phím.'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_4, '- Fullscreen');
+    vn.set(
+        Contents.DEMO_TUTORIAL_4,
+        '- Bật "toàn màn hình" khi chơi game (hoặc Ctrl Shift F).'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_5, '- Support now!');
+    vn.set(
+        Contents.DEMO_TUTORIAL_5,
+        '- Click "Hỗ trợ ngay" nếu cần hỗ trợ kỹ thuật..'
+    );
+
     en.set(Contents.BOOKING_DEMO, 'Booking demo');
     vn.set(Contents.BOOKING_DEMO, 'Đặt lịch');
 
@@ -579,5 +621,32 @@ export function language() {
 
     en.set(Contents.SETTING, 'Setting');
     vn.set(Contents.SETTING, 'Cài đặt');
+
+    en.set(Contents.VIDEO_TOGGLE, 'Show/Hide Video');
+    vn.set(Contents.VIDEO_TOGGLE, 'Ẩn/ hiện remote');
+
+    en.set(Contents.RESET_VIDEO, 'Reset Video');
+    vn.set(Contents.RESET_VIDEO, 'Reset đường truyền');
+
+    en.set(Contents.HOMESCREEN, 'Hide windows');
+    vn.set(Contents.HOMESCREEN, 'Ẩn game/app');
+
+    en.set(Contents.LOW_PERIOD, 'Auto refresh');
+    vn.set(Contents.LOW_PERIOD, 'Làm mới liên tục');
+
+    en.set(Contents.FULLSCREEN, 'Fullscreen');
+    vn.set(Contents.FULLSCREEN, 'Toàn màn hình');
+
+    en.set(Contents.SCAN_CODE, 'Fix keyboard');
+    vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');
+
+    en.set(Contents.EXTERNAL_TAB, 'Open external tab');
+    vn.set(Contents.EXTERNAL_TAB, 'Mở tab riêng');
+
+    en.set(Contents.QUALITY, 'Quality');
+    vn.set(Contents.QUALITY, 'MBps: Chất lượng video -> tốc độ mạng');
+
+    en.set(Contents.FRAMERATE, 'FPS');
+    vn.set(Contents.FRAMERATE, 'FPS: Số khung hình hiển thị/ giây');
     return t;
 }

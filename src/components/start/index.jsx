@@ -25,6 +25,7 @@ import { Icon } from '../shared/general';
 import './searchpane.scss';
 import './sidepane.scss';
 import './startmenu.scss';
+import { Contents } from '../../backend/reducers/locales';
 export * from './start';
 
 export const DesktopApp = () => {
@@ -105,6 +106,7 @@ export const SidePane = () => {
     const sidepane = useAppSelector((state) => state.sidepane);
     const setting = useAppSelector((state) => state.setting);
     const remote = useAppSelector((state) => state.remote);
+    const t = useAppSelector((state) => state.globals.translation);
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
@@ -194,18 +196,17 @@ export const SidePane = () => {
                                         />
                                     )}
                                 </div>
-                                <div className="qktext">{qk.name}</div>
+                                <div className="qktext">{t[qk.name]}</div>
                             </div>
                         );
                     })}
                 </div>
                 <div className="sliderCont flex flex-col items-start">
-                    <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
-                        Quality
+                    <div className="flex items-center pb-2">
+                        {t[Contents.QUALITY]}
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
-                        <span>Low</span>
+                        <span>1</span>
                         <input
                             className="sliders bitrateSlider"
                             onChange={setBitrate}
@@ -214,15 +215,14 @@ export const SidePane = () => {
                             max="100"
                             value={remote.bitrate}
                         />
-                        <span>High</span>
+                        <span>100</span>
                     </div>
 
-                    <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
-                        Framerate
+                    <div className="flex items-center pb-2">
+                        {t[Contents.FRAMERATE]}
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
-                        <span>Low</span>
+                        <span>1</span>
                         <input
                             className="sliders framerateSlider"
                             onChange={setFramerate}
@@ -231,7 +231,7 @@ export const SidePane = () => {
                             max="100"
                             value={remote.framerate}
                         />
-                        <span>High</span>
+                        <span>100</span>
                     </div>
                 </div>
             </div>

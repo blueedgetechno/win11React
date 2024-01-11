@@ -71,7 +71,7 @@ const apps: AppData[] = [
 var { taskbar, desktop } = {
     taskbar: ['Store'],
     desktop: [
-        'Settings',
+        // 'Settings', TODO
         'Worker Profile',
         'Browser',
         'Discord',
