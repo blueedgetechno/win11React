@@ -196,16 +196,9 @@ export const Getstarted = ({}) => {
         await reportSurvey();
         appDispatch(close_guidance());
         await appDispatch(demo_app());
-        CloseDemo();
-
-        if (isMobile()) {
-            CloseDemo();
-            return
-        }
-
         await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
         appDispatch(close_remote());
-        // CloseDemo();
+        CloseDemo();
         // TODO after demo
     };
 

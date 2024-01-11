@@ -253,8 +253,11 @@ export function language() {
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
     vn.set(Contents.NOT_ALLOW, 'Tài khoản chưa đăng kí dịch vụ.');
 
-    en.set(Contents.RUN_OUT_OF_GPU_STOCK, "We are running out of computer!");
-    vn.set(Contents.RUN_OUT_OF_GPU_STOCK, 'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!');
+    en.set(Contents.RUN_OUT_OF_GPU_STOCK, 'We are running out of computer!');
+    vn.set(
+        Contents.RUN_OUT_OF_GPU_STOCK,
+        'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!'
+    );
 
     en.set(Contents.NOT_READY, "Installing, wait 3-5' until game logo appears");
     vn.set(
@@ -292,14 +295,8 @@ export function language() {
         'Yêu cầu kết nối hết hạn, bạn thử reset app nhé!'
     );
 
-    en.set(
-        Contents.UNKNOWN_ERROR,
-        'Unknown error happened'
-    );
-    vn.set(
-        Contents.UNKNOWN_ERROR,
-        'Lỗi không xác định đã xảy ra'
-    );
+    en.set(Contents.UNKNOWN_ERROR, 'Unknown error happened');
+    vn.set(Contents.UNKNOWN_ERROR, 'Lỗi không xác định đã xảy ra');
 
     en.set(
         Contents.IS_LOCKED,

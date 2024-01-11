@@ -7,9 +7,9 @@ export function complete({ data: { success, content } }) {
                 {success ? <MdOutlineDone /> : <MdRemoveCircle />}
             </div>
             <p className="text-center text-[1.6rem] font-bold mb-[8px]">
-                {success ? 'Success' : <span >Failure</span>}
+                {success ? 'Success' : <span>Failure</span>}
             </p>
-            <div className='text-center text-[1.4rem]'>
+            <div className="text-center text-[1.4rem]">
                 <Content content={content} />
             </div>
         </div>

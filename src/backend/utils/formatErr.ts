@@ -19,7 +19,7 @@ map.set(CAUSE.NEED_WAIT, Contents.STORE_DESCRIPTIONR);
 map.set(CAUSE.INVALID_REQUEST, Contents.STORE_DESCRIPTIONR);
 
 export function formatError(error: Error) {
-    const t = store.getState().globals.translation
+    const t = store.getState().globals.translation;
 
     const err = JSON.parse(error.message) as {
         message: string;
@@ -32,11 +32,11 @@ export function formatError(error: Error) {
 const listErr = [
     {
         msg: 'ran out of hardware',
-        text: [Contents.RUN_OUT_OF_GPU_STOCK, Contents.SUGGEST,]
+        text: [Contents.RUN_OUT_OF_GPU_STOCK, Contents.SUGGEST]
     },
     {
         msg: 'ran out of gpu',
-        text: [Contents.RUN_OUT_OF_GPU_STOCK, Contents.SUGGEST,]
+        text: [Contents.RUN_OUT_OF_GPU_STOCK, Contents.SUGGEST]
     },
     {
         msg: 'is locked',
@@ -65,7 +65,7 @@ const listErr = [
 ];
 const includesErr = (err = '') => {
     let errFormat = '';
-    const t = store.getState().globals.translation
+    const t = store.getState().globals.translation;
 
     for (let i = 0; i < listErr.length; i++) {
         if (JSON.stringify(err)?.includes(listErr[i].msg)) {

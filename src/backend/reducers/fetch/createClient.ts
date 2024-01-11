@@ -55,10 +55,13 @@ const getCredentialHeader = async () => {
         data: { session },
         error
     } = await supabase.auth.getSession();
-    if (error) throw new Error(JSON.stringify({
-        code: CAUSE.INVALID_AUTH_HEADER,
-        message: 'unauthorized'
-    }));
+    if (error)
+        throw new Error(
+            JSON.stringify({
+                code: CAUSE.INVALID_AUTH_HEADER,
+                message: 'unauthorized'
+            })
+        );
 
     return {
         access_token: session?.access_token

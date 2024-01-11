@@ -11,6 +11,7 @@ import {
     scancode,
     toggle_remote
 } from '.';
+import { CloseDemo } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
@@ -118,11 +119,12 @@ export const appsAsync = {
             const app_name = data.at(0)?.name as string;
 
             if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url, app_name);
+                return openRemotePage(result.url, { app_name });
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
@@ -137,12 +139,18 @@ export const appsAsync = {
         'demo_app',
         async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
-            if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url, '', true);
+            if ((getState() as RootState).remote.old_version) {
+                CloseDemo();
+                return openRemotePage(result.url, {
+                    app_name: 'Thinkmay Demo',
+                    demoSession: true
+                });
+            }
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
@@ -168,13 +176,14 @@ export const appsAsync = {
             if (error) throw error;
             const app_name = data.at(0)?.name as string;
             if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, app_name);
+                openRemotePage(result.url, { app_name });
                 return storage_id;
             }
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -199,12 +208,13 @@ export const appsAsync = {
             const app_name = data.at(0)?.name as string;
 
             if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, app_name);
+                openRemotePage(result.url, { app_name });
                 return storage_id;
             }
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -231,12 +241,13 @@ export const appsAsync = {
             const app_name = data.at(0)?.name as string;
 
             if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, app_name);
+                openRemotePage(result.url, { app_name });
                 return storage_id;
             }
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
@@ -457,16 +468,16 @@ export const appSlice = createSlice({
             },
             {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
 
             {
                 fetch: appsAsync.demo_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.install_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: appsAsync.start_app,
