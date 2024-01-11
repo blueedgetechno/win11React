@@ -13,6 +13,7 @@ import {
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
+import { isMobile } from '../../backend/utils/checking';
 import './back.scss';
 
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
@@ -195,6 +196,11 @@ export const Getstarted = ({}) => {
         await reportSurvey();
         appDispatch(close_guidance());
         await appDispatch(demo_app());
+        if (isMobile()) {
+            CloseDemo();
+            return
+        }
+
         await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
         appDispatch(close_remote());
         CloseDemo();
