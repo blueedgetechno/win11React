@@ -300,9 +300,7 @@ export const Getstarted = ({}) => {
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
-            <div className="yes_button base" onClick={startDemo}>
-                Start Demo
-            </div>
+            <StartDemoBtn startDemo={startDemo} />
         </>
     );
     const Fail = () => (
@@ -344,6 +342,46 @@ export const Getstarted = ({}) => {
             </div>
         </>
     );
+
+    const StartDemoBtn = ({ startDemo }) => {
+        const [isDemoStarted, setIsDemoStarted] = useState(false);
+        const [countdown, setCountdown] = useState(10);
+
+        useEffect(() => {
+            let timer;
+
+            if (!isDemoStarted && countdown > 0) {
+                timer = setInterval(() => {
+                    setCountdown((prevCountdown) => prevCountdown - 1);
+                }, 1000);
+            }
+
+            return () => {
+                clearInterval(timer);
+            };
+        }, [isDemoStarted, countdown]);
+
+        useEffect(() => {
+            if (countdown === 0) {
+                setIsDemoStarted(true);
+                setCountdown(10);
+            }
+        }, [countdown]);
+
+        return (
+            <div>
+                {isDemoStarted ? (
+                    <div className="base yes_button" onClick={startDemo}>
+                        {t[Contents.START_DEMO]}
+                    </div>
+                ) : (
+                    <div className="no_button" style={{ right: '39px' }}>
+                        {t[Contents.READ_USER_MANUAL]} {countdown}s
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     const Logo = () => (
         <div className="left">
