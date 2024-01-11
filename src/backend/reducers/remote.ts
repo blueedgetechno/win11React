@@ -186,11 +186,11 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
 
-export function openRemotePage(url: string, appName?: string) {
+export function openRemotePage(url: string, appName?: string, demeSession = false) {
     const open = `${url}&no_stretch=true${appName != undefined
             ? `&page=${appName}&scancode=${scanCodeApps.includes(
                 appName
-            )}`
+        )}&demo=${demeSession}`
             : ''
         }`
 

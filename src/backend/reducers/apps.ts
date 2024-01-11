@@ -138,7 +138,7 @@ export const appsAsync = {
         async (arg: {}, { getState }): Promise<void> => {
             const result = await DemoApplication();
             if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url);
+                return openRemotePage(result.url, '', true);
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
