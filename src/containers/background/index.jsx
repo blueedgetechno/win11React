@@ -4,16 +4,16 @@ import {
     appDispatch,
     close_guidance,
     close_remote,
+    close_survey,
     demo_app,
     update_language,
     useAppSelector,
-    close_survey,
     wall_unlock
 } from '../../backend/reducers';
+import { isMobile } from '../../backend/utils/checking';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
-import { isMobile } from '../../backend/utils/checking';
 import './back.scss';
 
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
@@ -196,6 +196,8 @@ export const Getstarted = ({}) => {
         await reportSurvey();
         appDispatch(close_guidance());
         await appDispatch(demo_app());
+        CloseDemo();
+
         if (isMobile()) {
             CloseDemo();
             return
@@ -203,7 +205,7 @@ export const Getstarted = ({}) => {
 
         await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
         appDispatch(close_remote());
-        CloseDemo();
+        // CloseDemo();
         // TODO after demo
     };
 
