@@ -6,17 +6,19 @@ export function complete({ data: { success, content } }) {
             <div className="notify-icon">
                 {success ? <MdOutlineDone /> : <MdRemoveCircle />}
             </div>
-            <p className="text-center text-[1.2rem] mb-[24px]">
-                {success ? 'Success' : 'Failure'}
+            <p className="text-center text-[1.6rem] font-bold mb-[8px]">
+                {success ? 'Success' : <span>Failure</span>}
             </p>
-            <Content content={content} />
+            <div className="text-center text-[1.4rem]">
+                <Content content={content} />
+            </div>
         </div>
     );
 }
 
 const Content = ({ content }) => {
     return (
-        <div className="mt-[14px]">
+        <div className="mt-[8px]">
             <p>{content}</p>
         </div>
     );

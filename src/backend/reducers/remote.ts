@@ -186,18 +186,28 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
 
-export function openRemotePage(url: string, appName?: string) {
+export function openRemotePage(
+    url: string,
+    options?: {
+        app_name?: string;
+        demoSession?: boolean;
+    }
+) {
+    const Url = new URL(url);
+    Url.searchParams.set('no_stretch', 'true');
+    if (store.getState().remote.scancode)
+        Url.searchParams.set('scancode', `true`);
+    if (options?.demoSession) Url.searchParams.set('demo', `true`);
+    if (options?.app_name) Url.searchParams.set('page', options.app_name);
+
+    const open = Url.toString();
+    if (isMobile()) {
+        document.location.href = open;
+        return;
+    }
+
     setTimeout(() => {
-        window.open(
-            `${url}&no_stretch=true${
-                appName != undefined
-                    ? `&page=${appName}&scancode=${scanCodeApps.includes(
-                          appName
-                      )}`
-                    : ''
-            }`,
-            '_blank'
-        );
+        window.open(open, '_blank');
     }, 0);
 }
 
@@ -552,8 +562,11 @@ export const remoteSlice = createSlice({
                         action.payload;
                     state.bitrate = bitrate;
                     state.framerate = framerate;
-                    state.old_version = old_version;
                     state.low_ads = low_ads;
+
+                    if (isMobile()) return;
+
+                    state.old_version = old_version;
                 }
             },
             {

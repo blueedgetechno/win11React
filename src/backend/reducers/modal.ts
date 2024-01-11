@@ -3,7 +3,7 @@ type PopupData =
           type: 'complete';
           data: {
               success: boolean;
-              content: string;
+              content: string | Contents;
           };
       }
     | {
@@ -30,6 +30,7 @@ const initialState: Data = {
 };
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Contents } from './locales';
 export const modalSlice = createSlice({
     name: 'popup',
     initialState,

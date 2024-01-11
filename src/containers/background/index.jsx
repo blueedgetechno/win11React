@@ -4,12 +4,13 @@ import {
     appDispatch,
     close_guidance,
     close_remote,
+    close_survey,
     demo_app,
     update_language,
     useAppSelector,
-    close_survey,
     wall_unlock
 } from '../../backend/reducers';
+import { isMobile } from '../../backend/utils/checking';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
