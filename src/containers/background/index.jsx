@@ -195,7 +195,7 @@ export const Getstarted = ({}) => {
         await reportSurvey();
         appDispatch(close_guidance());
         await appDispatch(demo_app());
-        await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
+        await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
         appDispatch(close_remote());
         CloseDemo();
         // TODO after demo
@@ -295,7 +295,6 @@ export const Getstarted = ({}) => {
             <div className="base text-xm font-semibold">
                 {t[Contents.DEMO_TUTORIAL_HEAD]}
             </div>
-            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_1]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_2]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>

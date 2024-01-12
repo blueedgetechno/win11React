@@ -205,7 +205,7 @@ export const SidePane = () => {
                     <div className="flex items-center pb-2">
                         {t[Contents.QUALITY]}
                     </div>
-                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
+                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px] pb-5">
                         <span>1</span>
                         <input
                             className="sliders bitrateSlider"
