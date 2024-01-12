@@ -52,11 +52,11 @@ const LoadingProgressBar = () => {
 
 const Protip = () => {
     const t = useAppSelector((state) => state.globals.translation);
-    const isGreenList = validate_user_access('month', 'week') // check Demo user
+    const isGreenList = validate_user_access('month', 'week'); // check Demo user
 
-    const [currentTip, setCurrentTip] = useState(0); 
+    const [currentTip, setCurrentTip] = useState(0);
 
-    const QUANTITY_TIP = 3
+    const QUANTITY_TIP = 3;
     const listUserTip = [
         t[Contents.INSTALL_APP],
         t[Contents.PAUSEAPP],
@@ -64,10 +64,13 @@ const Protip = () => {
     ];
 
     const listDemoTip = [
-        'Mở setting góc dưới bên phải',
-        'Bắt buộc: Fullsreen khi chơi game',
+        t[Contents.PRO_TIP_DEMO_0],
+        t[Contents.PRO_TIP_DEMO_1],
+        t[Contents.PRO_TIP_DEMO_2],
+        t[Contents.PRO_TIP_DEMO_3],
+        'Nên Fullsreen khi chơi game',
         'Click fix bàn phím nếu không di chuyển được khi chơi game'
-    ]
+    ];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -81,10 +84,10 @@ const Protip = () => {
     return (
         <div className="mt-[14px]">
             <strong>Pro tip:</strong>
-            <p>{
-                isGreenList ? listUserTip[currentTip]
-                    : listDemoTip[currentTip]
-            }
+            <p>
+                {isGreenList
+                    ? listUserTip[currentTip]
+                    : listDemoTip[currentTip]}
             </p>
         </div>
     );

@@ -129,7 +129,11 @@ export enum Contents {
     DEMO_TUTORIAL_2,
     DEMO_TUTORIAL_3,
     DEMO_TUTORIAL_4,
-    DEMO_TUTORIAL_5
+    DEMO_TUTORIAL_5,
+    PRO_TIP_DEMO_0,
+    PRO_TIP_DEMO_1,
+    PRO_TIP_DEMO_2,
+    PRO_TIP_DEMO_3
 }
 
 export function language() {
@@ -655,5 +659,30 @@ export function language() {
 
     en.set(Contents.FRAMERATE, 'FPS');
     vn.set(Contents.FRAMERATE, 'FPS: Số khung hình hiển thị/ giây');
+
+    en.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Demo time is 15 minutes, if you want more demo, click "Support Now"'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Thời gian Demo là 15 phút, nếu muốn demo thêm hãy click "Hỗ Trợ Ngay"'
+    );
+
+    en.set(Contents.PRO_TIP_DEMO_1, 'Open settings in the lower right corner');
+    vn.set(Contents.PRO_TIP_DEMO_1, 'Mở "Setting" góc dưới bên phải');
+
+    en.set(Contents.PRO_TIP_DEMO_2, 'Full screen when playing games');
+    vn.set(Contents.PRO_TIP_DEMO_2, 'Nên bật "Toàn màn hình" khi chơi game');
+
+    en.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Support now" to receive the earliest technical support'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Hỗ trợ ngay" để được hỗ trợ kỹ thuật sớm nhất.'
+    );
+
     return t;
 }
