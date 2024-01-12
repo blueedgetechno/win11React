@@ -5,6 +5,7 @@ import './assets/store.scss';
 
 import { FUNDING } from '@paypal/react-paypal-js';
 import { supabase } from '../../../backend/reducers/fetch/createClient';
+import { externalLink } from '../../../backend/utils/constant';
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {
@@ -149,10 +150,16 @@ export const PaymentApp = () => {
                             </ul>
                             <button
                                 className="mt-[24px] instbtn mx-auto handcr border-none h-[32px] !px-2"
-                                onClick={handlePayment({
-                                    type: sub.type,
-                                    price: sub.price
-                                })}
+                                // onClick={handlePayment({ //TODO
+                                //     type: sub.type,
+                                //     price: sub.price
+                                // })}
+                                onClick={() =>
+                                    window.open(
+                                        externalLink.FACEBOOK_MESSAGE_LINK,
+                                        '_blank'
+                                    )
+                                }
                             >
                                 Chuyển Khoản
                             </button>

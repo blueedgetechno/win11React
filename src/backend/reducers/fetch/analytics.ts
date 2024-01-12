@@ -52,10 +52,7 @@ export async function ContactUS({
 
 const stack = [];
 let current_stack_length = 0;
-export function UserEvents(content: {
-    type: string,
-    payload: any
-}) {
+export function UserEvents(content: { type: string; payload: any }) {
     stack.push({
         content,
         timestamp: new Date().toISOString()

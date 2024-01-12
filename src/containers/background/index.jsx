@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
+    app_toggle,
     close_guidance,
     close_remote,
     close_survey,
@@ -199,6 +200,7 @@ export const Getstarted = ({}) => {
         appDispatch(close_remote());
         CloseDemo();
         // TODO after demo
+        appDispatch(app_toggle('payment'));
     };
 
     const [selection, Select] = useState(0);
@@ -509,7 +511,6 @@ const StartDemoBtn = ({ startDemo }) => {
     const [isDemoStarted, setIsDemoStarted] = useState(false);
     const [countdown, setCountdown] = useState(10);
     const t = useAppSelector((state) => state.globals.translation);
-
 
     useEffect(() => {
         if (!isDemoStarted && countdown > 0) {
