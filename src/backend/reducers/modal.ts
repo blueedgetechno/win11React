@@ -24,7 +24,7 @@ type PopupData =
         type: 'subscription';
         data: {
             type: 'add' | 'update'
-            email?: string
+            id?: string
         };
     };
 

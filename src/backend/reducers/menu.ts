@@ -331,7 +331,13 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Upgrade',
-                        action: 'upgrade_subscription'
+                        action: 'popup_open',
+                        payload: {
+                            type: 'subscription',
+                            data: {
+                                type: 'update'
+                            }
+                        }
                     },
                     {
                         name: 'Adjust',

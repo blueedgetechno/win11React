@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { create_subscription, popup_close } from "../../../backend/reducers";
+import { GetSubscription } from "../../../backend/reducers/fetch";
+import { findUserEmailById } from "../../../backend/utils/findUserEmail";
+
+export function subscription(props) {
+	const { data } = props
 
 
-export function subscription() {
 	return (
 		<div className="subscription w-[320px] bg-slate-500">
-			<AddSub></AddSub>
+			{
+				data.type == 'add' ?
+					<AddSub></AddSub>
+					:
+					<UpdateSub data={data}></UpdateSub>
+
+			}
 		</div>
 	);
 }
@@ -37,12 +47,14 @@ const AddSub = () => {
 		if (formData.email == '' || formData.price == '') {
 			setErr(true)
 		}
-		console.log('Form data:', formData);
 
-		// Do something with the form data, e.g., send it to a server
-		// ...
+		const formatData = {
+			email: formData.email,
+			plan: formData.sub,
+			free: formData.free_sub,
+		}
 
-		await dispatch(create_subscription(formData))
+		await dispatch(create_subscription(formatData))
 		setFormData(initAddSub)
 		dispatch(popup_close())
 	};
@@ -109,23 +121,44 @@ const AddSub = () => {
 
 	)
 }
-const UpdateSub = () => {
-	const [formData, setFormData] = useState({
-		email: '',
-		action: 'CANCEL', // Set a default value for the select
-		price_upgrade: '',
-	});
 
+const initUpdateSub = {
+	email: '',
+	action: 'CANCEL', // Set a default value for the select
+	price_upgrade: '',
+	created_sub: '',
+	end_sub: '',
+}
+const UpdateSub = (props) => {
+	const [formData, setFormData] = useState(initUpdateSub);
+
+	const { data } = props
+
+	useEffect(() => {
+		const updateSub = async () => {
+			const { email, account_id } = findUserEmailById(data.id)
+			const subInfo = await GetSubscription(account_id)
+
+			setFormData(prev => ({
+				...prev,
+				email: email,
+				created_sub: subInfo.created_at,
+				end_sub: subInfo.ends_at
+			}))
+		}
+		updateSub()
+	}, [data])
 	const handleChange = (event) => {
 		setFormData({ ...formData, [event.target.name]: event.target.value });
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault(); // Prevent default form submission
 
 		// Access the form data here
-		console.log('Form data:', formData);
-
+		await dispatch(upgrade_subscription_subscription(formData))
+		setFormData(initUpdateSub)
+		dispatch(popup_close())
 		// Do something with the form data, e.g., send it to a server
 		// ...
 	};
@@ -167,6 +200,16 @@ const UpdateSub = () => {
 						value={formData.priceUpgrade}
 						onChange={handleChange}
 					/>
+				</label>
+
+				<label htmlFor="">
+					<span for="created_sub">Start Time</span>
+					<input onChange={handleChange} type="date" id="created_sub" name="created_sub" value={formData.created_sub} />
+				</label>
+				<label htmlFor="">
+
+					<span for="end_sub">End Time</span>
+					<input onChange={handleChange} type="date" id="end_sub" name="end_sub" value={formData.end_sub} />
 				</label>
 				<button className="instbtn save" type="submit">
 					Save

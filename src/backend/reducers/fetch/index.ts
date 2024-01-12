@@ -461,3 +461,32 @@ export async function HasAvailableCluster() {
 
     return checking;
 }
+
+
+interface Subscription {
+    id: string,
+    created_at: string,
+    ends_at: string
+}
+export async function GetSubscription(account_id): Promise<Subscription> {
+    const { data, error } = await supabase
+        .from('subscriptions')
+        .select('id, created_at, ends_at')
+        .eq('account_id', account_id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+
+    if (error) throw error;
+
+    if (data.length == 0)
+        throw "Not found any subscription"
+
+    const formatData = {
+        id: data.at(0).id,
+        created_at: new Date(data.at(0).created_at).toISOString().split('T')[0],
+        ends_at: new Date(data.at(0).ends_at).toISOString().split('T')[0],
+    }
+    return formatData
+
+
+}
