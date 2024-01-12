@@ -508,6 +508,8 @@ export const Getstarted = ({}) => {
 const StartDemoBtn = ({ startDemo }) => {
     const [isDemoStarted, setIsDemoStarted] = useState(false);
     const [countdown, setCountdown] = useState(10);
+    const t = useAppSelector((state) => state.globals.translation);
+
 
     useEffect(() => {
         if (!isDemoStarted && countdown > 0) {
