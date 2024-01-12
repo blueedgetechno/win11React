@@ -130,6 +130,9 @@ export enum Contents {
     DEMO_TUTORIAL_3,
     DEMO_TUTORIAL_4,
     DEMO_TUTORIAL_5,
+
+    START_DEMO,
+    READ_USER_MANUAL,
     PRO_TIP_DEMO_0,
     PRO_TIP_DEMO_1,
     PRO_TIP_DEMO_2,
@@ -621,7 +624,7 @@ export function language() {
     en.set(Contents.DEMO_TUTORIAL_5, '- Support now!');
     vn.set(
         Contents.DEMO_TUTORIAL_5,
-        '- Click "Hỗ trợ ngay" nếu cần hỗ trợ kỹ thuật..'
+        '- Click "Hỗ trợ ngay" nếu cần hỗ trợ kỹ thuật.'
     );
 
     en.set(Contents.BOOKING_DEMO, 'Booking demo');
@@ -660,6 +663,11 @@ export function language() {
     en.set(Contents.FRAMERATE, 'FPS');
     vn.set(Contents.FRAMERATE, 'FPS: Số khung hình hiển thị/ giây');
 
+    en.set(Contents.START_DEMO, 'Start Demo');
+    vn.set(Contents.START_DEMO, 'Bắt Đầu');
+
+    en.set(Contents.READ_USER_MANUAL, 'Will start in ');
+    vn.set(Contents.READ_USER_MANUAL, 'Sẽ bắt đầu sau ');
     en.set(
         Contents.PRO_TIP_DEMO_0,
         'Demo time is 15 minutes, if you want more demo, click "Support Now"'

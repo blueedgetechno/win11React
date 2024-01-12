@@ -10,7 +10,6 @@ import {
     useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
-import { isMobile } from '../../backend/utils/checking';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
@@ -301,9 +300,7 @@ export const Getstarted = ({}) => {
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
-            <div className="yes_button base" onClick={startDemo}>
-                Start Demo
-            </div>
+            <StartDemoBtn startDemo={startDemo} />
         </>
     );
     const Fail = () => (
@@ -467,9 +464,8 @@ export const Getstarted = ({}) => {
         else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
-                    else if (data)
-                setStatus(Contents.SURVEY_COMPLETED);
-                    else setStatus(Contents.FAIL_DEMO_TEMP);
+                else if (data) setStatus(Contents.SURVEY_COMPLETED);
+                else setStatus(Contents.FAIL_DEMO_TEMP);
             });
     }, [pageNo, result]);
 
@@ -506,6 +502,43 @@ export const Getstarted = ({}) => {
                     )}
                 </div>
             </div>
+        </div>
+    );
+};
+
+const StartDemoBtn = ({ startDemo }) => {
+    const [isDemoStarted, setIsDemoStarted] = useState(false);
+    const [countdown, setCountdown] = useState(10);
+
+    useEffect(() => {
+        if (!isDemoStarted && countdown > 0) {
+            const timer = setInterval(() => {
+                setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
+            return () => {
+                clearInterval(timer);
+            };
+        }
+    }, [isDemoStarted, countdown]);
+
+    useEffect(() => {
+        if (countdown === 0) {
+            setIsDemoStarted(true);
+            setCountdown(10);
+        }
+    }, [countdown]);
+
+    return (
+        <div>
+            {isDemoStarted ? (
+                <div className="base yes_button" onClick={startDemo}>
+                    {t[Contents.START_DEMO]}
+                </div>
+            ) : (
+                <div className="no_button" style={{ right: '39px' }}>
+                    {t[Contents.READ_USER_MANUAL]} {countdown}s
+                </div>
+            )}
         </div>
     );
 };
