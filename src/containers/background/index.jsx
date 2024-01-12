@@ -10,7 +10,6 @@ import {
     useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
-import { isMobile } from '../../backend/utils/checking';
 import { externalLink } from '../../backend/utils/constant';
 import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
@@ -344,46 +343,6 @@ export const Getstarted = ({}) => {
         </>
     );
 
-    const StartDemoBtn = ({ startDemo }) => {
-        const [isDemoStarted, setIsDemoStarted] = useState(false);
-        const [countdown, setCountdown] = useState(10);
-
-        useEffect(() => {
-            let timer;
-
-            if (!isDemoStarted && countdown > 0) {
-                timer = setInterval(() => {
-                    setCountdown((prevCountdown) => prevCountdown - 1);
-                }, 1000);
-            }
-
-            return () => {
-                clearInterval(timer);
-            };
-        }, [isDemoStarted, countdown]);
-
-        useEffect(() => {
-            if (countdown === 0) {
-                setIsDemoStarted(true);
-                setCountdown(10);
-            }
-        }, [countdown]);
-
-        return (
-            <div>
-                {isDemoStarted ? (
-                    <div className="base yes_button" onClick={startDemo}>
-                        {t[Contents.START_DEMO]}
-                    </div>
-                ) : (
-                    <div className="no_button" style={{ right: '39px' }}>
-                        {t[Contents.READ_USER_MANUAL]} {countdown}s
-                    </div>
-                )}
-            </div>
-        );
-    };
-
     const Logo = () => (
         <div className="left">
             <img alt="left image" id="left_img" src="logo_white.png" />
@@ -544,6 +503,43 @@ export const Getstarted = ({}) => {
                     )}
                 </div>
             </div>
+        </div>
+    );
+};
+
+const StartDemoBtn = ({ startDemo }) => {
+    const [isDemoStarted, setIsDemoStarted] = useState(false);
+    const [countdown, setCountdown] = useState(10);
+
+    useEffect(() => {
+        if (!isDemoStarted && countdown > 0) {
+            const timer = setInterval(() => {
+                setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
+            return () => {
+                clearInterval(timer);
+            };
+        }
+    }, [isDemoStarted, countdown]);
+
+    useEffect(() => {
+        if (countdown === 0) {
+            setIsDemoStarted(true);
+            setCountdown(10);
+        }
+    }, [countdown]);
+
+    return (
+        <div>
+            {isDemoStarted ? (
+                <div className="base yes_button" onClick={startDemo}>
+                    {t[Contents.START_DEMO]}
+                </div>
+            ) : (
+                <div className="no_button" style={{ right: '39px' }}>
+                    {t[Contents.READ_USER_MANUAL]} {countdown}s
+                </div>
+            )}
         </div>
     );
 };
