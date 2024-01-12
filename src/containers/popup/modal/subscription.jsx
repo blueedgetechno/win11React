@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { create_subscription, popup_close } from "../../../backend/reducers";
+import { create_subscription, popup_close, upgrade_subscription } from "../../../backend/reducers";
 import { GetSubscription } from "../../../backend/reducers/fetch";
 import { findUserEmailById } from "../../../backend/utils/findUserEmail";
 
@@ -156,7 +156,7 @@ const UpdateSub = (props) => {
 		event.preventDefault(); // Prevent default form submission
 
 		// Access the form data here
-		await dispatch(upgrade_subscription_subscription(formData))
+		await dispatch(upgrade_subscription(formData))
 		setFormData(initUpdateSub)
 		dispatch(popup_close())
 		// Do something with the form data, e.g., send it to a server
