@@ -26,3 +26,44 @@
 		}
 	}
 }
+
+.modalContent{
+	.subscription{
+		input{
+			height: 40px;
+			width: 100%;
+			flex: 1;
+			padding: 0 8px;
+			border-radius: 4px;
+		}
+		select{
+			height: 40px;
+			width: 100%;
+			padding: 0 8px;
+			border-radius: 4px;
+
+		}
+		button{
+			height: 40px;
+			cursor: pointer;
+		}
+		.updateSub{
+			label{
+				display: flex;
+				gap: 8px;
+				align-items: center;
+
+				span{
+					display: inline-block;
+					min-width: 60px;
+
+				}
+			}
+			.save{
+				width: 70%;
+				margin: 0 auto;
+				margin-top: 16px;
+			}
+		}
+	}
+}

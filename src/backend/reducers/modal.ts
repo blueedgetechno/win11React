@@ -19,14 +19,24 @@ type PopupData =
               loading: boolean;
               tips?: boolean;
           };
-      };
+    }
+    | {
+        type: 'subscription';
+        data: {
+            type: 'add' | 'update'
+            email: string
+        };
+    };
 
 type Data = {
     data_stack: PopupData[];
 };
 
 const initialState: Data = {
-    data_stack: []
+    data_stack: [{
+        type: 'subscription',
+        data: ''
+    }]
 };
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
