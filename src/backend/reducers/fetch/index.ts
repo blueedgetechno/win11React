@@ -1,6 +1,6 @@
 import { sleep } from '../../utils/sleep';
 import { RenderNode } from '../../utils/tree';
-import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
+import { CAUSE, SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
@@ -161,7 +161,13 @@ export const DownloadApplication = async (
             }
         );
 
-        if (res.length == 0) throw new Error('Resource not found!');
+        if (res.length == 0)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: 'resource not found'
+                })
+            );
         else if (res.at(0).storage_id != null) {
             storageId = res.at(0).storage_id;
             break;
@@ -186,7 +192,13 @@ export const StartApplication = async (storage_id: string) => {
             storage_id
         });
 
-        if (error) throw new Error(error.message);
+        if (error)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: error.message
+                })
+            );
         else if (data == true) break;
         else await sleep(TIME_SLEEP);
     }
@@ -266,7 +278,13 @@ export const StopApplication = async (storage_id: string) => {
             storage_id: storage_id
         });
 
-        if (error) throw new Error(error.message);
+        if (error)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: error.message
+                })
+            );
         else if (data == false) break;
 
         await sleep(10 * 1000);

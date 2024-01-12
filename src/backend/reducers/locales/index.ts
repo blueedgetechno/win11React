@@ -43,6 +43,7 @@ export enum Contents {
     PAUSED,
     NOT_PINGED,
     REMOTE_TIMEOUT,
+    UNKNOWN_ERROR,
     IS_LOCKED,
     NOT_FOUND,
     TIME_OUT,
@@ -131,7 +132,11 @@ export enum Contents {
     DEMO_TUTORIAL_5,
 
     START_DEMO,
-    READ_USER_MANUAL
+    READ_USER_MANUAL,
+    PRO_TIP_DEMO_0,
+    PRO_TIP_DEMO_1,
+    PRO_TIP_DEMO_2,
+    PRO_TIP_DEMO_3
 }
 
 export function language() {
@@ -265,14 +270,17 @@ export function language() {
     en.set(Contents.ALREADY_DEPLOYED, "You've installed 1 game");
     vn.set(
         Contents.ALREADY_DEPLOYED,
-        'Được install 3 app và chạy 1 app cùng một thời điểm. Delete hoặc pause app cũ trước khi install/ power on app mới'
+        'Được cài 3 máy và chạy 1 máy cùng một thời điểm. Xóa hoặc tắt máy cũ trước khi mở máy mới'
     );
 
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
     vn.set(Contents.NOT_ALLOW, 'Tài khoản chưa đăng kí dịch vụ.');
 
-    en.set(Contents.RUN_OUT_OF_GPU_STOCK, "We've run out of Gpu stock");
-    vn.set(Contents.RUN_OUT_OF_GPU_STOCK, 'Hệ thống đang hết máy có game!');
+    en.set(Contents.RUN_OUT_OF_GPU_STOCK, 'We are running out of computer!');
+    vn.set(
+        Contents.RUN_OUT_OF_GPU_STOCK,
+        'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!'
+    );
 
     en.set(Contents.NOT_READY, "Installing, wait 3-5' until game logo appears");
     vn.set(
@@ -309,6 +317,9 @@ export function language() {
         Contents.REMOTE_TIMEOUT,
         'Yêu cầu kết nối hết hạn, bạn thử reset app nhé!'
     );
+
+    en.set(Contents.UNKNOWN_ERROR, 'Unknown error happened');
+    vn.set(Contents.UNKNOWN_ERROR, 'Lỗi không xác định đã xảy ra');
 
     en.set(
         Contents.IS_LOCKED,
@@ -657,5 +668,29 @@ export function language() {
 
     en.set(Contents.READ_USER_MANUAL, 'Will start in ');
     vn.set(Contents.READ_USER_MANUAL, 'Sẽ bắt đầu sau ');
+    en.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Demo time is 15 minutes, if you want more demo, click "Support Now"'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Thời gian Demo là 15 phút, nếu muốn demo thêm hãy click "Hỗ Trợ Ngay"'
+    );
+
+    en.set(Contents.PRO_TIP_DEMO_1, 'Open settings in the lower right corner');
+    vn.set(Contents.PRO_TIP_DEMO_1, 'Mở "Setting" góc dưới bên phải');
+
+    en.set(Contents.PRO_TIP_DEMO_2, 'Full screen when playing games');
+    vn.set(Contents.PRO_TIP_DEMO_2, 'Nên bật "Toàn màn hình" khi chơi game');
+
+    en.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Support now" to receive the earliest technical support'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Hỗ trợ ngay" để được hỗ trợ kỹ thuật sớm nhất.'
+    );
+
     return t;
 }

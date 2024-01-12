@@ -24,6 +24,7 @@ import {
     StopApplication,
     StopVolume
 } from './fetch';
+import { CAUSE } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 import { openRemotePage } from './remote';
 
@@ -62,7 +63,8 @@ export const workerAsync = {
 
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(volume_id));
@@ -127,7 +129,8 @@ export const workerAsync = {
                 return openRemotePage(result.url);
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
@@ -171,7 +174,8 @@ export const workerAsync = {
                 return openRemotePage(result.url);
             const url = new URL(result.url);
             const ref = url.searchParams.get('ref');
-            if (ref == null) throw new Error('invalid ref');
+            if (ref == null)
+                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(worker_profile_id));
