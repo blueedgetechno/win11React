@@ -464,9 +464,8 @@ export const Getstarted = ({}) => {
         else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
-                    else if (data)
-                setStatus(Contents.SURVEY_COMPLETED);
-                    else setStatus(Contents.FAIL_DEMO_TEMP);
+                else if (data) setStatus(Contents.SURVEY_COMPLETED);
+                else setStatus(Contents.FAIL_DEMO_TEMP);
             });
     }, [pageNo, result]);
 
