@@ -24,7 +24,7 @@ type PopupData =
         type: 'subscription';
         data: {
             type: 'add' | 'update'
-            email: string
+            email?: string
         };
     };
 
@@ -33,10 +33,7 @@ type Data = {
 };
 
 const initialState: Data = {
-    data_stack: [{
-        type: 'subscription',
-        data: ''
-    }]
+    data_stack: []
 };
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';

@@ -1,22 +1,27 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { create_subscription, popup_close } from "../../../backend/reducers";
 
 
 export function subscription() {
 	return (
-		<div className="subscription w-[320px]">
+		<div className="subscription w-[320px] bg-slate-500">
 			<AddSub></AddSub>
 		</div>
 	);
 }
 
+const initAddSub = {
+	email: '',
+	sub: 'day', // Set a default value for the select
+	price: '',
+	free_sub: false
+}
 const AddSub = () => {
-	const [formData, setFormData] = useState({
-		email: '',
-		sub: 'day', // Set a default value for the select
-		price: '',
-		free_sub: false
-	});
+	const [formData, setFormData] = useState(initAddSub);
 	const [err, setErr] = useState()
+	const dispatch = useDispatch();
+
 	const handleChange = (event) => {
 		setErr(false)
 
@@ -27,7 +32,7 @@ const AddSub = () => {
 		});
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault(); // Prevent default form submission
 		if (formData.email == '' || formData.price == '') {
 			setErr(true)
@@ -36,6 +41,10 @@ const AddSub = () => {
 
 		// Do something with the form data, e.g., send it to a server
 		// ...
+
+		await dispatch(create_subscription(formData))
+		setFormData(initAddSub)
+		dispatch(popup_close())
 	};
 
 	return (

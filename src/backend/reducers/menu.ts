@@ -309,7 +309,14 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'New Subscription',
-                        action: 'create_subscription'
+                        action: 'popup_open',
+                        payload: {
+                            type: 'subscription',
+                            data: {
+                                type: 'add'
+                            }
+                        }
+
                     }
                 ]
             };
