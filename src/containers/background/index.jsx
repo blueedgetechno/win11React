@@ -19,6 +19,7 @@ import './back.scss';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
+import { UserEvents } from '../../backend/reducers/fetch/analytics';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -158,7 +159,7 @@ export const Getstarted = ({}) => {
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
-            if (current && current.survey)
+            if (current && current.survey) {
                 SetResult((old) => [
                     ...old,
                     {
@@ -166,7 +167,10 @@ export const Getstarted = ({}) => {
                         selection: current.data.options.at(selection)
                     }
                 ]);
-
+                UserEvents({
+                    type: `demo/page${old}`
+                });
+            }
             return old + 1;
         });
     const prevPage = () =>

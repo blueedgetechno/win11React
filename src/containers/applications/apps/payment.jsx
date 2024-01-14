@@ -9,10 +9,10 @@ import { supabase } from '../../../backend/reducers/fetch/createClient';
 import { Contents } from '../../../backend/reducers/locales';
 import { Image } from '../../../components/shared/general';
 
-const mb = '970422'
-const account_id = '1502200344444'
-const account_owner = 'DO VAN DAT'
-const model = 'BsXBiU7' //'sS1SemI'
+const mb = '970422';
+const account_id = '1502200344444';
+const account_owner = 'DO VAN DAT';
+const model = 'BsXBiU7'; //'sS1SemI'
 
 const FUNDING_SOURCES = [FUNDING.PAYPAL, FUNDING.CARD, FUNDING.PAYU];
 const initialOptions = {
@@ -33,22 +33,21 @@ export const PaymentApp = () => {
             price: '3',
 
             name: 'week',
-period: 'week',
+            period: 'week',
             description: 'Perfect to testing out cloud gaming experience',
             bonus: [
                 'Facebook Messenger support',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
+                "We're f*king love you",
+                "We're f*king love you",
+                "We're f*king love you",
+                "We're f*king love you",
+                "We're f*king love you"
             ]
         },
         {
             highlight: true,
             title: 'start',
             price: '12',
-
 
             name: 'month',
             period: 'week',
@@ -72,7 +71,7 @@ period: 'week',
                 'Request new game in 1 week',
                 'Request change availability of game'
             ]
-        },
+        }
         // {
         //     highlight: false,
         //     title: 'Enterprise',
@@ -102,9 +101,9 @@ period: 'week',
         );
     };
 
-    const [paypage, setPaypage] = useState(null)
+    const [paypage, setPaypage] = useState(null);
     const payment = async (price_in_vnd) => {
-        setPaypage(price_in_vnd)
+        setPaypage(price_in_vnd);
     };
 
     return (
@@ -127,20 +126,22 @@ period: 'week',
             />
             <div className="windowScreen">
                 <LazyComponent show={!wnapp.hide}>
-                    {paypage != null
-                        ? <Payment price={paypage} onClose={() => setPaypage(null)} />
-                        : <div className="paymentContent ">
+                    {paypage != null ? (
+                        <Payment
+                            price={paypage}
+                            onClose={() => setPaypage(null)}
+                        />
+                    ) : (
+                        <div className="paymentContent ">
                             {ListSubs.map((sub, index) => (
                                 <div key={index} className="sub relative">
-
-                                    {
-                                        sub.highlight
-                                            ? <div className='rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]'>
-                                                <p className="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">Most Popular</p>
-
-                                            </div>
-                                            : null
-                                    }
+                                    {sub.highlight ? (
+                                        <div className="rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]">
+                                            <p className="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">
+                                                Most Popular
+                                            </p>
+                                        </div>
+                                    ) : null}
 
                                     <div className="flex flex-col overflow-hidden border h-full rounded-[4px]">
                                         <div className="bg-surface-100 px-8 xl:px-4 2xl:px-8 pt-6 rounded-tr-[4px] rounded-tl-[4px] ">
@@ -155,54 +156,82 @@ period: 'week',
                                                 {sub.description}
                                             </p>
 
-                                            <hr className='border-[#504646]' />
+                                            <hr className="border-[#504646]" />
                                             <div className=" text-foreground flex items-baseline text-5xl font-normal lg:text-4xl xl:text-4xl border-b border-default min-h-[175px] pt-10">
                                                 <div className="flex flex-col gap-1">
                                                     <div className="flex items-end gap-2">
                                                         <div>
                                                             <div className="flex items-end">
-
-
-                                                                {
-                                                                    sub.title == 'Enterprise' ?
-                                                                        <p className="mt-2 gradient-text-500 pb-1 text-5xl">Contact Us</p>
-                                                                        :
-                                                                        <>
-                                                                            <p className="mt-2 gradient-text-500 pb-1 text-5xl">{
-                                                                                sub.price_in_vnd
-                                                                                    ? `${sub.price_in_vnd}k VND`
-                                                                                    : `\$${sub.price}`}
-
-                                                                            </p>
-                                                                            <p className="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">/ {sub.period} </p>
-                                                                        </>
-                                                                }
+                                                                {sub.title ==
+                                                                'Enterprise' ? (
+                                                                    <p className="mt-2 gradient-text-500 pb-1 text-5xl">
+                                                                        Contact
+                                                                        Us
+                                                                    </p>
+                                                                ) : (
+                                                                    <>
+                                                                        <p className="mt-2 gradient-text-500 pb-1 text-5xl">
+                                                                            {sub.price_in_vnd
+                                                                                ? `${sub.price_in_vnd}k VND`
+                                                                                : `\$${sub.price}`}
+                                                                        </p>
+                                                                        <p className="text-foreground-lighter mb-1.5 ml-1 text-[13px] leading-4">
+                                                                            /{' '}
+                                                                            {
+                                                                                sub.period
+                                                                            }{' '}
+                                                                        </p>
+                                                                    </>
+                                                                )}
                                                             </div>
                                                             <p className="-mt-2">
                                                                 <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
-                                                                    Limit of {sub.total_time} hours
+                                                                    Limit of{' '}
+                                                                    {
+                                                                        sub.total_time
+                                                                    }{' '}
+                                                                    hours
                                                                 </span>
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr className='border-[#504646]' />
-
+                                            <hr className="border-[#504646]" />
                                         </div>
                                         <div className="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
-                                            <p className="text-foreground-light text-[13px] mt-2 mb-4">Get started with:</p>
+                                            <p className="text-foreground-light text-[13px] mt-2 mb-4">
+                                                Get started with:
+                                            </p>
 
-                                            {sub.bonus.map((x, i) =>
-                                                <ul key={i} role="list" className="text-[13px] text-foreground-lighter">
+                                            {sub.bonus.map((x, i) => (
+                                                <ul
+                                                    key={i}
+                                                    role="list"
+                                                    className="text-[13px] text-foreground-lighter"
+                                                >
                                                     <li className="flex items-center py-2 first:mt-0">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sbui-icon text-brand h-4 w-4" aria-hidden="true">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="3"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            className="sbui-icon text-brand h-4 w-4"
+                                                            aria-hidden="true"
+                                                        >
                                                             <polyline points="20 6 9 17 4 12"></polyline>
                                                         </svg>
-                                                        <span className="text-foreground mb-0 ml-3 ">{x}</span>
+                                                        <span className="text-foreground mb-0 ml-3 ">
+                                                            {x}
+                                                        </span>
                                                     </li>
                                                 </ul>
-                                            )}
+                                            ))}
 
                                             <div className="flex flex-col gap-6 mt-auto prose">
                                                 <div className="space-y-2 mt-12">
@@ -211,14 +240,22 @@ period: 'week',
                                                     </p>
                                                 </div>
 
-                                                <a onClick={() => payment(sub.price_in_vnd)}>
-                                                    <button type="button" className="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]">
+                                                <a
+                                                    onClick={() =>
+                                                        payment(
+                                                            sub.price_in_vnd
+                                                        )
+                                                    }
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        className="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]"
+                                                    >
                                                         <span className="truncate">
-                                                            {
-                                                                sub.title == 'Enterprise' 
-                                                                ? 'Contact Us' 
-                                                                : 'Get Started'
-                                                            }
+                                                            {sub.title ==
+                                                            'Enterprise'
+                                                                ? 'Contact Us'
+                                                                : 'Get Started'}
                                                         </span>
                                                     </button>
                                                 </a>
@@ -228,14 +265,12 @@ period: 'week',
                                 </div>
                             ))}
                         </div>
-                    }
+                    )}
                 </LazyComponent>
             </div>
-        </div >
-    )
+        </div>
+    );
 };
-
-
 
 const Payment = ({ onClose, price }) => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -245,7 +280,7 @@ const Payment = ({ onClose, price }) => {
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
-            return (pages.length - 1 != old) ? old + 1 : old;
+            return pages.length - 1 != old ? old + 1 : old;
         });
     const prevPage = () =>
         setPageNo((old) => {
@@ -254,28 +289,31 @@ const Payment = ({ onClose, price }) => {
             return n;
         });
     const finishSurvey = async () => {
-        UserEvents({ type: `finish_payment` })
-        onClose()
+        UserEvents({ type: `finish_payment` });
+        onClose();
     };
 
     const [qrurl, setQR] = useState(null);
     useEffect(() => {
-        const url = new URL(`https://img.vietqr.io/image/${mb}-${account_id}-${model}.png`)
-        url.searchParams.append('ammount', price * 1000)
-        url.searchParams.append('accountName', account_owner)
-        url.searchParams.append('addInfo', `thinkmay ${id.replaceAll('-', ' ')}`)
-        setQR(url.toString())
-
-
+        const url = new URL(
+            `https://img.vietqr.io/image/${mb}-${account_id}-${model}.png`
+        );
+        url.searchParams.append('ammount', price * 1000);
+        url.searchParams.append('accountName', account_owner);
+        url.searchParams.append(
+            'addInfo',
+            `thinkmay ${id.replaceAll('-', ' ')}`
+        );
+        setQR(url.toString());
 
         const handle = (e) =>
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowLeft'
-                    ? prevPage()
-                    : e.key == 'ArrowRight'
-                        ? nextPage()
-                        : null;
+                  ? prevPage()
+                  : e.key == 'ArrowRight'
+                    ? nextPage()
+                    : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -301,8 +339,6 @@ const Payment = ({ onClose, price }) => {
         </>
     );
 
-
-
     const QR = () => (
         <div className="left">
             <Image absolute src={qrurl} />
@@ -314,24 +350,27 @@ const Payment = ({ onClose, price }) => {
         </div>
     );
 
-    const pages = [{
-        survey: false,
-        content:
-            <>
-                <QR />
-                <div className="right">
-                    <div className="header mb-8">
-                        {t[Contents.PAYMENT_FOLLOW_UP_TITLE1]}
+    const pages = [
+        {
+            survey: false,
+            content: (
+                <>
+                    <QR />
+                    <div className="right">
+                        <div className="header mb-8">
+                            {t[Contents.PAYMENT_FOLLOW_UP_TITLE1]}
+                        </div>
+                        <p>
+                            MB Bank <br />
+                            Tên Chủ Tk: DO VAN DAT <br />
+                            Số TK: 1502200344444
+                        </p>
                     </div>
-                    <p>
-                        MB Bank <br />
-                        Tên Chủ Tk: DO VAN DAT <br />
-                        Số TK: 1502200344444
-                    </p>
-                </div>
-                <Navigate />
-            </>
-    }]
+                    <Navigate />
+                </>
+            )
+        }
+    ];
 
     pages.unshift({
         survey: false,
@@ -368,7 +407,7 @@ const Payment = ({ onClose, price }) => {
     });
 
     return (
-        <div className="getstarted floatTab dpShad" >
+        <div className="getstarted floatTab dpShad">
             <div className="windowScreen flex flex-col" data-dock="true">
                 <div className="restWindow flex-grow flex flex-col p-[24px]">
                     <div className="inner_fill_setup">
@@ -376,6 +415,6 @@ const Payment = ({ onClose, price }) => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
