@@ -33,10 +33,10 @@ export const PaymentApp = () => {
             price: '3',
 
             name: 'week',
-            period: 'week',
+period: 'week',
             description: 'Perfect to testing out cloud gaming experience',
             bonus: [
-                'We\'re are f*king love you',
+                'Facebook Messenger support',
                 'We\'re are f*king love you',
                 'We\'re are f*king love you',
                 'We\'re are f*king love you',
@@ -54,12 +54,10 @@ export const PaymentApp = () => {
             period: 'week',
             description: 'Perfect to testing out cloud gaming experience',
             bonus: [
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
+                'Everything in the Trial plan, plus:',
+                'In App support',
+                'Request new game in 2 week',
+                "Steam account support if you don't have one"
             ]
         },
         {
@@ -68,15 +66,11 @@ export const PaymentApp = () => {
             price: '20',
 
             name: 'month',
-            period: 'week',
             description: 'Perfect to testing out cloud gaming experience',
             bonus: [
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
-                'We\'re are f*king love you',
+                'Everything in the Start plan, plus:',
+                'Request new game in 1 week',
+                'Request change availability of game'
             ]
         },
         // {
