@@ -39,7 +39,7 @@
   #left_img {
     width: 230px;
     height: 230px;
-    animation: transition_effect_pop 1s;
+    //animation: transition_effect_pop 1s;
   }
 
   .right {
@@ -71,8 +71,8 @@
     display: flex;
     border-radius: 4px;
     margin-bottom: 6px;
+    cursor: pointer;
 
-    
   }
 
   .list_oobe_opt_wifi {
@@ -102,7 +102,7 @@
     position: absolute;
     font-size: 14px;
     right: 150px;
-    animation: transition_effect 1.4s;
+    //animation: transition_effect 1.4s;
     bottom: 37px;
     &:hover{
       opacity: 0.85;
@@ -120,9 +120,13 @@
     font-size: 14px;
     font-weight: 500;
     right: 35px;
-    cursor: default;
-    animation: transition_effect 1.4s;
+    cursor: pointer;
+    //animation: transition_effect 1.4s;
     bottom: 37px;
+
+    &:hover{
+      opacity: 0.7;
+    }
   }
 
   .setup_settings {
