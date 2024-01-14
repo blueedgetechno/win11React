@@ -462,11 +462,10 @@ export async function HasAvailableCluster() {
     return checking;
 }
 
-
 interface Subscription {
-    id: string,
-    created_at: string,
-    ends_at: string
+    id: string;
+    created_at: string;
+    ends_at: string;
 }
 export async function GetSubscription(account_id): Promise<Subscription> {
     const { data, error } = await supabase
@@ -474,77 +473,65 @@ export async function GetSubscription(account_id): Promise<Subscription> {
         .select('id, created_at, ends_at')
         .eq('account_id', account_id)
         .order('created_at', { ascending: false })
-        .limit(1)
+        .limit(1);
 
     if (error) throw error;
 
-    if (data.length == 0)
-        throw "Not found any subscription"
+    if (data.length == 0) throw 'Not found any subscription';
 
     const formatData = {
         id: data.at(0).id,
         created_at: new Date(data.at(0).created_at).toISOString().split('T')[0],
-        ends_at: new Date(data.at(0).ends_at).toISOString().split('T')[0],
-    }
-    return formatData
-
-
+        ends_at: new Date(data.at(0).ends_at).toISOString().split('T')[0]
+    };
+    return formatData;
 }
-
 
 export async function GetUserIdByEmail(email): Promise<string> {
     const { data, error } = await supabase
         .from('user_profile')
         .select('account_id')
         .eq('email', email)
-        .limit(1)
+        .limit(1);
 
     if (error) throw error;
 
-    if (data.length == 0)
-        throw "Not found any user"
+    if (data.length == 0) throw 'Not found any user';
 
-    return data.at(0).account_id
-
-
+    return data.at(0).account_id;
 }
 
 interface UserSetting {
-    bitrate: number,
-    low_ads: boolean,
-    framerate: number,
-    old_version: boolean
+    bitrate: number;
+    low_ads: boolean;
+    framerate: number;
+    old_version: boolean;
 }
 export async function GetUserSetting(account_id: string): Promise<UserSetting> {
-    const { data, error } = await supabase.rpc(
-        'get_user_setting', {
+    const { data, error } = await supabase.rpc('get_user_setting', {
         user_id: account_id
-    }
-    )
+    });
 
     if (error) throw error;
 
-    if (data.length == 0)
-        throw "Not found any user"
+    if (data.length == 0) throw 'Not found any user';
 
-    return data.at(0)
-
-
+    return data.at(0);
 }
 
 interface UserSettingUpdate {
-    user_id: string,
-    bitrate: number,
-    framerate: number,
-    low_ads: boolean,
-    old_version: boolean
+    user_id: string;
+    bitrate: number;
+    framerate: number;
+    low_ads: boolean;
+    old_version: boolean;
 }
-export async function UpdateUserSetting(params: UserSettingUpdate): Promise<void> {
-    const { data, error } = await supabase.rpc(
-        'update_user_setting', {
+export async function UpdateUserSetting(
+    params: UserSettingUpdate
+): Promise<void> {
+    const { data, error } = await supabase.rpc('update_user_setting', {
         ...params
-    }
-    )
+    });
 
     if (error) throw error;
 }

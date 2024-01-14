@@ -202,17 +202,20 @@ export const SidePane = () => {
                         );
                     })}
 
-                    {
-                        validate_user_access('admin')
-                            ?
-                            <div className='qkGrp'>
-                                <button className='qkbtn handcr prtclk' onClick={() => {
-                                    dispatch(popup_open({ type: 'user_config' }))
-                                }}>User Config</button>
-
-                            </div>
-                            : null
-                    }
+                    {validate_user_access('admin') ? (
+                        <div className="qkGrp">
+                            <button
+                                className="qkbtn handcr prtclk"
+                                onClick={() => {
+                                    dispatch(
+                                        popup_open({ type: 'user_config' })
+                                    );
+                                }}
+                            >
+                                User Config
+                            </button>
+                        </div>
+                    ) : null}
                 </div>
                 <div className="sliderCont flex flex-col items-start">
                     <div className="flex items-center pb-2">

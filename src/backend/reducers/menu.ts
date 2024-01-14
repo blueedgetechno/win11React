@@ -316,7 +316,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                                 type: 'add'
                             }
                         }
-
                     }
                 ]
             };

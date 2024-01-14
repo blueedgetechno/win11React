@@ -48,9 +48,9 @@ const initialState: WorkerType = {
 };
 
 interface NewSubscription {
-    email: string
-    plan: string
-    free: string
+    email: string;
+    plan: string;
+    free: string;
 }
 
 export const workerAsync = {
@@ -192,9 +192,7 @@ export const workerAsync = {
     create_subscription: createAsyncThunk(
         'create_subscription',
         async (data: NewSubscription): Promise<any> => {
-            const { email,
-                plan,
-                free } = data
+            const { email, plan, free } = data;
 
             await AddSubscription({
                 email,

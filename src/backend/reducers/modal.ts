@@ -19,17 +19,18 @@ type PopupData =
               loading: boolean;
               tips?: boolean;
           };
-    }
+      }
     | {
-        type: 'subscription';
-        data: {
-            type: 'add' | 'update'
-            id?: string
-        };
-    } | {
-        type: 'user_config';
-        data: any;
-    };
+          type: 'subscription';
+          data: {
+              type: 'add' | 'update';
+              id?: string;
+          };
+      }
+    | {
+          type: 'user_config';
+          data: any;
+      };
 
 type Data = {
     data_stack: PopupData[];

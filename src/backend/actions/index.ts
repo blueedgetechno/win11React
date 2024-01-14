@@ -136,18 +136,17 @@ export const menuDispatch = async (event: Event) => {
         payload: any;
     };
     if (dataset.action == undefined) return;
-    let payload = store.getState().menus.dataset?.payload
+    let payload = store.getState().menus.dataset?.payload;
 
     if (dataset.action == 'popup_open') {
-        const payloadParse = JSON.parse(dataset.payload)
+        const payloadParse = JSON.parse(dataset.payload);
         payload = {
             ...payloadParse,
             data: {
                 id: store.getState().menus.dataset?.payload,
                 ...payloadParse.data
             }
-        }
-
+        };
     }
 
     appDispatch(menu_hide());
