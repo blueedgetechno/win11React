@@ -204,6 +204,7 @@ export const Getstarted = ({}) => {
         appDispatch(close_remote());
         CloseDemo();
         // TODO after demo
+        appDispatch(app_toggle('feedback'));
         appDispatch(app_toggle('payment'));
     };
 
