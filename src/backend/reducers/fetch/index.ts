@@ -490,3 +490,61 @@ export async function GetSubscription(account_id): Promise<Subscription> {
 
 
 }
+
+
+export async function GetUserIdByEmail(email): Promise<string> {
+    const { data, error } = await supabase
+        .from('user_profile')
+        .select('account_id')
+        .eq('email', email)
+        .limit(1)
+
+    if (error) throw error;
+
+    if (data.length == 0)
+        throw "Not found any user"
+
+    return data.at(0).account_id
+
+
+}
+
+interface UserSetting {
+    bitrate: number,
+    low_ads: boolean,
+    framerate: number,
+    old_version: boolean
+}
+export async function GetUserSetting(account_id: string): Promise<UserSetting> {
+    const { data, error } = await supabase.rpc(
+        'get_user_setting', {
+        user_id: account_id
+    }
+    )
+
+    if (error) throw error;
+
+    if (data.length == 0)
+        throw "Not found any user"
+
+    return data.at(0)
+
+
+}
+
+interface UserSettingUpdate {
+    user_id: string,
+    bitrate: number,
+    framerate: number,
+    low_ads: boolean,
+    old_version: boolean
+}
+export async function UpdateUserSetting(params: UserSettingUpdate): Promise<void> {
+    const { data, error } = await supabase.rpc(
+        'update_user_setting', {
+        ...params
+    }
+    )
+
+    if (error) throw error;
+}
