@@ -26,6 +26,9 @@ type PopupData =
             type: 'add' | 'update'
             id?: string
         };
+    } | {
+        type: 'user_config';
+        data: any;
     };
 
 type Data = {
