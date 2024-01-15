@@ -69,7 +69,7 @@ export async function UserSession(email: string) {
             (await (await fetch('https://icanhazip.com/')).text())
                 .split('\n')
                 .at(0) ?? '';
-    } catch { }
+    } catch {}
 
     const value = {
         ip,
@@ -86,11 +86,9 @@ export async function UserSession(email: string) {
             type: 'ANALYTICS'
         })
         .select('id');
-    if (error || data?.length == 0)
-        return
+    if (error || data?.length == 0) return;
 
-
-    const session = data.at(0).id
+    const session = data.at(0).id;
     setInterval(async () => {
         if (stack.length == current_stack_length) return;
 
