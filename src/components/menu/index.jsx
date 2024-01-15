@@ -56,7 +56,7 @@ export const ActMenu = () => {
                         data-dsb={opt.dsb}
                         onClick={menuclickDispatch}
                         data-action={opt.action}
-                        data-payload={JSON.stringify(opt.payload)}
+                        data-payload={opt.payload}
                         data-pid={parentId}
                     >
                         {menudata.ispace != false ? (

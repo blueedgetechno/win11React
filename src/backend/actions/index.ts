@@ -136,24 +136,12 @@ export const menuDispatch = async (event: Event) => {
         payload: any;
     };
     if (dataset.action == undefined) return;
-    let payload = store.getState().menus.dataset?.payload;
-
-    if (dataset.action == 'popup_open') {
-        const payloadParse = JSON.parse(dataset.payload);
-        payload = {
-            ...payloadParse,
-            data: {
-                id: store.getState().menus.dataset?.payload,
-                ...payloadParse.data
-            }
-        };
-    }
 
     appDispatch(menu_hide());
 
     dispatch_generic({
         type: dataset.action,
-        payload: payload
+        payload: store.getState().menus.dataset?.payload
     });
 };
 
@@ -223,4 +211,24 @@ export async function focusRegion(element_id: string, content: string) {
         await new Promise((r) => setTimeout(r, 100));
 
     overlay.style.background = '';
+}
+export const showUpdateSubscription = (account_id: string) => {
+
+    appDispatch(popup_open({
+        type: 'subscription',
+        data: {
+            type: 'update',
+            id: account_id
+        }
+    }))
+
+}
+export const showAddSubscription = () => {
+
+    appDispatch(popup_open({
+        type: 'subscription',
+        data: {
+            type: 'add'
+        }
+    }))
 }
