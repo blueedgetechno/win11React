@@ -17,6 +17,11 @@ const Popup = () => {
             state.popup.data_stack.at(-1)
     );
 
+    const closeModal = () => {
+        popup.type == 'guidance' || popup.type == 'subscription'
+            ? appDispatch(popup_close())
+            : null;
+    };
     return (
         <>
             {popup != undefined ? (
@@ -25,11 +30,7 @@ const Popup = () => {
                     contentLabel="Modal"
                     className="modalContent "
                     overlayClassName="modalOverlay"
-                    onRequestClose={() =>
-                        popup.type == 'guidance'
-                            ? appDispatch(popup_close())
-                            : null
-                    }
+                    onRequestClose={closeModal}
                     style={
                         popup.type == 'guidance'
                             ? { 'backdrop-filter': '' }

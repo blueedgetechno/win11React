@@ -47,6 +47,12 @@ const initialState: WorkerType = {
     hid: 0
 };
 
+interface NewSubscription {
+    email: string;
+    plan: string;
+    free: string;
+}
+
 export const workerAsync = {
     fetch_worker: createAsyncThunk('fetch_worker', async (): Promise<any> => {
         return await CacheRequest('worker', 90, async () => {
@@ -185,10 +191,9 @@ export const workerAsync = {
 
     create_subscription: createAsyncThunk(
         'create_subscription',
-        async (): Promise<any> => {
-            let email = '';
-            let plan = '';
-            let free = '';
+        async (data: NewSubscription): Promise<any> => {
+            const { email, plan, free } = data;
+
             await AddSubscription({
                 email,
                 plan,

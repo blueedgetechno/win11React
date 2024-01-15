@@ -3,7 +3,6 @@ import { AiOutlineCloudDownload } from 'react-icons/ai';
 import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
-import { MdVideoSettings } from 'react-icons/md';
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
@@ -14,8 +13,11 @@ import {
     change_bitrate,
     change_framerate,
     menu_show,
+    popup_open,
     useAppSelector
 } from '../../backend/reducers';
+import { Contents } from '../../backend/reducers/locales';
+import { validate_user_access } from '../../backend/utils/checking';
 import {
     clickDispatch,
     customClickDispatch
@@ -25,7 +27,6 @@ import { Icon } from '../shared/general';
 import './searchpane.scss';
 import './sidepane.scss';
 import './startmenu.scss';
-import { Contents } from '../../backend/reducers/locales';
 export * from './start';
 
 export const DesktopApp = () => {
@@ -200,6 +201,21 @@ export const SidePane = () => {
                             </div>
                         );
                     })}
+
+                    {validate_user_access('admin') ? (
+                        <div className="qkGrp">
+                            <button
+                                className="qkbtn handcr prtclk"
+                                onClick={() => {
+                                    dispatch(
+                                        popup_open({ type: 'user_config' })
+                                    );
+                                }}
+                            >
+                                User Config
+                            </button>
+                        </div>
+                    ) : null}
                 </div>
                 <div className="sliderCont flex flex-col items-start">
                     <div className="flex items-center pb-2">
