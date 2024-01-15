@@ -309,7 +309,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 data: [
                     {
                         name: 'New Subscription',
-                        action: 'showAddSubscription',
+                        action: 'showAddSubscription'
                     }
                 ]
             };
@@ -324,7 +324,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Upgrade',
-                        action: 'showUpdateSubscription',
+                        action: 'showUpdateSubscription'
                     },
                     {
                         name: 'Adjust',

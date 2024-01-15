@@ -213,22 +213,23 @@ export async function focusRegion(element_id: string, content: string) {
     overlay.style.background = '';
 }
 export const showUpdateSubscription = (account_id: string) => {
-
-    appDispatch(popup_open({
-        type: 'subscription',
-        data: {
-            type: 'update',
-            id: account_id
-        }
-    }))
-
-}
+    appDispatch(
+        popup_open({
+            type: 'subscription',
+            data: {
+                type: 'update',
+                id: account_id
+            }
+        })
+    );
+};
 export const showAddSubscription = () => {
-
-    appDispatch(popup_open({
-        type: 'subscription',
-        data: {
-            type: 'add'
-        }
-    }))
-}
+    appDispatch(
+        popup_open({
+            type: 'subscription',
+            data: {
+                type: 'add'
+            }
+        })
+    );
+};
