@@ -168,7 +168,8 @@ export const Getstarted = ({}) => {
                     }
                 ]);
                 UserEvents({
-                    type: `demo/page${old}`
+                    type: `demo/page`,
+                    payload: `${old}`
                 });
             }
             return old + 1;
