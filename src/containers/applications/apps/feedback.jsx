@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { detectBrowserAndOS } from '../../../backend/utils/detectBrower';
-import { app_toggle, useAppSelector } from '../../../backend/reducers';
+import { appDispatch, app_close, app_toggle, useAppSelector } from '../../../backend/reducers';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import { externalLink } from '../../../backend/utils/constant';
 
@@ -136,6 +136,8 @@ export const FeedbackApp = () => {
         //         })
         //     }
         // );
+        appDispatch(app_close('feedback'));
+        appDispatch(app_toggle('payment'));
     };
     const isSelector = (key) => {
         return {
@@ -173,6 +175,7 @@ export const FeedbackApp = () => {
                 <div className="flex p-2 items-center justify-between">
                     {listFeedBack.map((icon) => (
                         <div
+                            key={icon.value}
                             onClick={() => {
                                 handleSelectFeeling(icon.value);
                             }}
@@ -194,6 +197,7 @@ export const FeedbackApp = () => {
                 <div className="flex flex-wrap gap-1 justify-between mt-2">
                     {listErr.map((err) => (
                         <div
+                            key={err.value}
                             style={isSelector(err.value)}
                             onClick={() => {
                                 handleSelectErr(err.value);
@@ -210,6 +214,7 @@ export const FeedbackApp = () => {
                             return err.data.map((detail) => {
                                 return (
                                     <div
+                                        key={detail.value}
                                         style={isSelector(detail.value)}
                                         onClick={() => {
                                             handleSelectErr(detail.value);
@@ -237,7 +242,6 @@ export const FeedbackApp = () => {
                     className="mt-4 mx-auto instbtn w-[120px] h-[40px]"
                     onClick={() => {
                         submitFeedback();
-                        console.log(selector.feeling)
                         if(selector.feeling != 'good' && selector.feeling != 'amazing')
                             window.open(externalLink.FACEBOOK_MESSAGE_LINK, '_blank')
                     }}
