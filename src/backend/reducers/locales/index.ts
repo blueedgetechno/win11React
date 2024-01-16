@@ -2,6 +2,11 @@ import { Translation } from '../globals';
 
 export type Languages = 'VN' | 'ENG';
 export enum Contents {
+    PAYMENT_FOLLOW_UP_TITLE,
+    PAYMENT_FOLLOW_UP_TITLE1,
+    PAYMENT_FOLLOW_UP_CONTENT,
+    PAYMENT_FOLLOW_UP_DONE,
+
     ABOUT_OPENSOURCE,
     ABOUT_NOTMICROSOFT,
     ABOUT_CREATIVE,
@@ -43,6 +48,7 @@ export enum Contents {
     PAUSED,
     NOT_PINGED,
     REMOTE_TIMEOUT,
+    UNKNOWN_ERROR,
     IS_LOCKED,
     NOT_FOUND,
     TIME_OUT,
@@ -108,7 +114,34 @@ export enum Contents {
     SURVEY_COMPLETED,
     FAIL_DEMO_REGION,
     FAIL_DEMO_TEMP,
-    DEMO
+    DEMO,
+    SUPPORT,
+    BOOKING_DEMO,
+    DEMO_SUGGESSTION,
+    EXPLORE_WEB,
+    SETTING,
+    LOW_PERIOD,
+    VIDEO_TOGGLE,
+    RESET_VIDEO,
+    HOMESCREEN,
+    FULLSCREEN,
+    SCAN_CODE,
+    EXTERNAL_TAB,
+    QUALITY,
+    FRAMERATE,
+    DEMO_TUTORIAL_HEAD,
+    DEMO_TUTORIAL_1,
+    DEMO_TUTORIAL_2,
+    DEMO_TUTORIAL_3,
+    DEMO_TUTORIAL_4,
+    DEMO_TUTORIAL_5,
+
+    START_DEMO,
+    READ_USER_MANUAL,
+    PRO_TIP_DEMO_0,
+    PRO_TIP_DEMO_1,
+    PRO_TIP_DEMO_2,
+    PRO_TIP_DEMO_3
 }
 
 export function language() {
@@ -117,6 +150,42 @@ export function language() {
     t.set('VN', vn);
     const en = new Map<Contents, string>();
     t.set('ENG', en);
+
+    en.set(
+        Contents.PAYMENT_FOLLOW_UP_TITLE,
+        'We will help you setup the payment for thinknmay service'
+    );
+    vn.set(
+        Contents.PAYMENT_FOLLOW_UP_TITLE,
+        'Chúng mình sẽ hỗ trợ bạn thực hiện thanh toán dịch vụ'
+    );
+
+    en.set(
+        Contents.PAYMENT_FOLLOW_UP_CONTENT,
+        'At the moment, you can pay us using bank transfer (VietQR, ZaloPay)'
+    );
+    vn.set(
+        Contents.PAYMENT_FOLLOW_UP_CONTENT,
+        'Hiện tại, bạn có thể thanh toán thông qua chuyển khoản ngân hàng (VietQR, ZaloPay)'
+    );
+
+    en.set(
+        Contents.PAYMENT_FOLLOW_UP_TITLE1,
+        'Please make payment to the following bank account'
+    );
+    vn.set(
+        Contents.PAYMENT_FOLLOW_UP_TITLE1,
+        'Bạn chuyển khoản đến số tài khoản sau'
+    );
+
+    en.set(
+        Contents.PAYMENT_FOLLOW_UP_DONE,
+        'Thank you for your payment, it will take us a few hours to verify your transaction'
+    );
+    vn.set(
+        Contents.PAYMENT_FOLLOW_UP_DONE,
+        'Cảm ơn bạn đã thanh toán dịch vụ thinkmay, chúng mình sẽ cần một vài giờ để xác minh giao dịch trên'
+    );
 
     en.set(
         Contents.ABOUT_OPENSOURCE,
@@ -219,7 +288,7 @@ export function language() {
     vn.set(Contents.OTHER_SOURCE, 'Khác');
 
     en.set(Contents.KNOW_THINKMAY_VIA, 'I know thinkmay via');
-    vn.set(Contents.KNOW_THINKMAY_VIA, 'Tôi biết đến Thinkmay thông qua');
+    vn.set(Contents.KNOW_THINKMAY_VIA, 'Bạn biết đến Thinkmay thông qua');
 
     en.set(
         Contents.GETSTARTED_ANOTHERKEYBOARDR,
@@ -242,14 +311,17 @@ export function language() {
     en.set(Contents.ALREADY_DEPLOYED, "You've installed 1 game");
     vn.set(
         Contents.ALREADY_DEPLOYED,
-        'Được install 3 game và 1 game chạy cùng 1 thời điểm. Xoá hoặc paused game cũ trước khi install/start game mới'
+        'Được cài 3 máy và chạy 1 máy cùng một thời điểm. Xóa hoặc tắt máy cũ trước khi mở máy mới'
     );
 
     en.set(Contents.NOT_ALLOW, "Your account doesn't register our services");
     vn.set(Contents.NOT_ALLOW, 'Tài khoản chưa đăng kí dịch vụ.');
 
-    en.set(Contents.RUN_OUT_OF_GPU_STOCK, "We've run out of Gpu stock");
-    vn.set(Contents.RUN_OUT_OF_GPU_STOCK, 'Hệ thống đang hết máy có game!');
+    en.set(Contents.RUN_OUT_OF_GPU_STOCK, 'We are running out of computer!');
+    vn.set(
+        Contents.RUN_OUT_OF_GPU_STOCK,
+        'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!'
+    );
 
     en.set(Contents.NOT_READY, "Installing, wait 3-5' until game logo appears");
     vn.set(
@@ -286,6 +358,9 @@ export function language() {
         Contents.REMOTE_TIMEOUT,
         'Yêu cầu kết nối hết hạn, bạn thử reset app nhé!'
     );
+
+    en.set(Contents.UNKNOWN_ERROR, 'Unknown error happened');
+    vn.set(Contents.UNKNOWN_ERROR, 'Lỗi không xác định đã xảy ra');
 
     en.set(
         Contents.IS_LOCKED,
@@ -325,11 +400,11 @@ export function language() {
 
     en.set(
         Contents.PAUSEAPP,
-        'Tips, Right click => start app to play continuously'
+        'Tips, Right click => Power On app to play continuously'
     );
     vn.set(
         Contents.PAUSEAPP,
-        'Chuột phải => start app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy cho bọn mình xin feedback để cải thiện nhé!'
+        'Chuột phải => Power On app khi muốn chơi lại tiến trình cũ, Nếu gặp vấn đề hãy nhắn tin cho bọn mình để hỗ trợ!'
     );
 
     en.set(Contents.THANKS, 'Thanks you<3');
@@ -392,8 +467,8 @@ export function language() {
     en.set(Contents.FETCH_APP, 'Fetch your PC data');
     vn.set(Contents.FETCH_APP, 'Load danh sách app');
 
-    en.set(Contents.INSTALL_APP, 'Install PC remote');
-    vn.set(Contents.INSTALL_APP, 'Cài máy remote');
+    en.set(Contents.INSTALL_APP, 'Install PC to remote');
+    vn.set(Contents.INSTALL_APP, 'Cài máy để remote');
 
     en.set(Contents.DEMO_APP, 'Open demo PC');
     vn.set(Contents.DEMO_APP, 'Mở game trải nghiệm');
@@ -468,7 +543,7 @@ export function language() {
     vn.set(Contents.DEVICE_TV, 'TV');
 
     en.set(Contents.WHAT_LOOK_FOR, "I'm looking for");
-    vn.set(Contents.WHAT_LOOK_FOR, 'Tôi đang tìm kiếm trải nghiệm');
+    vn.set(Contents.WHAT_LOOK_FOR, 'Bạn đang tìm kiếm trải nghiệm');
 
     en.set(Contents.COMFORTABLE, 'Comfortable gaming experience');
     vn.set(Contents.COMFORTABLE, 'Chơi game thư giãn');
@@ -483,7 +558,7 @@ export function language() {
     vn.set(Contents.EXPLORE, 'Khám phá công nghệ mới');
 
     en.set(Contents.DONT_KNOW, "I don't know yet");
-    vn.set(Contents.DONT_KNOW, 'Tôi chưa biết');
+    vn.set(Contents.DONT_KNOW, 'Mình chưa biết');
 
     en.set(Contents.BEST_EXP, 'How to get the best experience');
     vn.set(Contents.BEST_EXP, 'Để có trải nghiệm tốt nhất hãy ');
@@ -528,13 +603,13 @@ export function language() {
     vn.set(Contents.CONTENT_6, 'Nếu bạn gặp vấn đề');
 
     en.set(Contents.CONTENT_7, 'Join our community to request games');
-    vn.set(Contents.CONTENT_7, 'Tham gia cộng đồng của Thinkmay');
+    vn.set(Contents.CONTENT_7, 'Tham gia Discord của Thinkmay');
 
     en.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
-    vn.set(Contents.CONTENT_8, 'Join our discord to get lastest updates');
+    vn.set(Contents.CONTENT_8, 'Để nhận được thông báo sớm nhất');
 
     en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
-    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
+    vn.set(Contents.SURVEY_COMPLETED, 'Máy demo đã sẵn sàng.');
 
     en.set(
         Contents.FAIL_DEMO_REGION,
@@ -545,14 +620,118 @@ export function language() {
     en.set(Contents.FAIL_DEMO_TEMP, 'Demo gameplay is temporarily closed.');
     vn.set(
         Contents.FAIL_DEMO_TEMP,
-        'Demo gameplay tạm thời đang không mở cửa bạn đợi và thử lại vào lúc khác nhé.'
+        'Trải nghiệm miễn phí sẽ mở vào khung giờ 7:00 tới 11:00 và 14:00 tới 17:00 hàng ngày.'
     );
 
-    en.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
-    vn.set(Contents.SURVEY_COMPLETED, 'The setup has completed.');
-
     en.set(Contents.DEMO, 'Get demo');
-    vn.set(Contents.DEMO, 'Get demo');
+    vn.set(Contents.DEMO, 'Trải nghiệm');
+
+    en.set(Contents.SUPPORT, 'Support now!');
+    vn.set(Contents.SUPPORT, 'Hỗ trợ ngay!');
+
+    en.set(
+        Contents.DEMO_SUGGESSTION,
+        "If you'd like a demo at a different time, please book an appointment for better assistance."
+    );
+    vn.set(
+        Contents.DEMO_SUGGESSTION,
+        'Nếu bạn muốn trải nghiệm ở khung giờ khác, vui lòng đặt lịch để Thinkmay phục vụ tốt nhất.'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_HEAD, 'User manual');
+    vn.set(Contents.DEMO_TUTORIAL_HEAD, 'Hướng dẫn sử dụng');
+
+    en.set(Contents.DEMO_TUTORIAL_1, '- Your game locate at volume D');
+    vn.set(Contents.DEMO_TUTORIAL_1, '- Game demo nằm ở ổ D.');
+
+    en.set(Contents.DEMO_TUTORIAL_2, '- Adjust quality and fps');
+    vn.set(
+        Contents.DEMO_TUTORIAL_2,
+        '- Đừng quên chỉnh "Chất lượng", "FPS" và "Làm mới liên tục" phù hợp với điều kiện mạng.'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_3, '- Fix keyboard is not working');
+    vn.set(
+        Contents.DEMO_TUTORIAL_3,
+        '- Click "Fix kẹt phím" nếu game không nhận bàn phím.'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_4, '- Fullscreen');
+    vn.set(
+        Contents.DEMO_TUTORIAL_4,
+        '- Bật "toàn màn hình" khi chơi game (hoặc Ctrl Shift F).'
+    );
+
+    en.set(Contents.DEMO_TUTORIAL_5, '- Support now!');
+    vn.set(
+        Contents.DEMO_TUTORIAL_5,
+        '- Click "Hỗ trợ ngay" nếu cần hỗ trợ kỹ thuật.'
+    );
+
+    en.set(Contents.BOOKING_DEMO, 'Booking demo');
+    vn.set(Contents.BOOKING_DEMO, 'Đặt lịch');
+
+    en.set(Contents.EXPLORE_WEB, 'Explore Thinkmay');
+    vn.set(Contents.EXPLORE_WEB, 'Khám phá Thinkmay');
+
+    en.set(Contents.SETTING, 'Setting');
+    vn.set(Contents.SETTING, 'Cài đặt');
+
+    en.set(Contents.VIDEO_TOGGLE, 'Show/Hide Video');
+    vn.set(Contents.VIDEO_TOGGLE, 'Ẩn/ hiện remote');
+
+    en.set(Contents.RESET_VIDEO, 'Reset Video');
+    vn.set(Contents.RESET_VIDEO, 'Reset đường truyền');
+
+    en.set(Contents.HOMESCREEN, 'Hide windows');
+    vn.set(Contents.HOMESCREEN, 'Ẩn game/app');
+
+    en.set(Contents.LOW_PERIOD, 'Auto refresh');
+    vn.set(Contents.LOW_PERIOD, 'Làm mới liên tục');
+
+    en.set(Contents.FULLSCREEN, 'Fullscreen');
+    vn.set(Contents.FULLSCREEN, 'Toàn màn hình');
+
+    en.set(Contents.SCAN_CODE, 'Fix keyboard');
+    vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');
+
+    en.set(Contents.EXTERNAL_TAB, 'Open external tab');
+    vn.set(Contents.EXTERNAL_TAB, 'Mở tab riêng');
+
+    en.set(Contents.QUALITY, 'Quality');
+    vn.set(Contents.QUALITY, 'MBps: Chất lượng video -> tốc độ mạng');
+
+    en.set(Contents.FRAMERATE, 'FPS');
+    vn.set(Contents.FRAMERATE, 'FPS: Số khung hình hiển thị/ giây');
+
+    en.set(Contents.START_DEMO, 'Start Demo');
+    vn.set(Contents.START_DEMO, 'Bắt Đầu');
+
+    en.set(Contents.READ_USER_MANUAL, 'Will start in ');
+    vn.set(Contents.READ_USER_MANUAL, 'Sẽ bắt đầu sau ');
+    en.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Demo time is 15 minutes, if you want more demo, click "Support Now"'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_0,
+        'Thời gian Demo là 15 phút, nếu muốn demo thêm hãy click "Hỗ Trợ Ngay"'
+    );
+
+    en.set(Contents.PRO_TIP_DEMO_1, 'Open settings in the lower right corner');
+    vn.set(Contents.PRO_TIP_DEMO_1, 'Mở "Setting" góc dưới bên phải');
+
+    en.set(Contents.PRO_TIP_DEMO_2, 'Full screen when playing games');
+    vn.set(Contents.PRO_TIP_DEMO_2, 'Nên bật "Toàn màn hình" khi chơi game');
+
+    en.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Support now" to receive the earliest technical support'
+    );
+    vn.set(
+        Contents.PRO_TIP_DEMO_3,
+        'Click "Hỗ trợ ngay" để được hỗ trợ kỹ thuật sớm nhất.'
+    );
 
     return t;
 }

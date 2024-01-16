@@ -52,7 +52,7 @@ export async function ContactUS({
 
 const stack = [];
 let current_stack_length = 0;
-export function UserEvents(content: any) {
+export function UserEvents(content: { type: string; payload: any }) {
     stack.push({
         content,
         timestamp: new Date().toISOString()
@@ -62,8 +62,6 @@ export function UserEvents(content: any) {
 export async function UserSession(email: string) {
     if (window.location.href.includes('localhost')) return;
 
-    const session = crypto.randomUUID();
-    localStorage.setItem('SESSION_ID', session);
     let ip = '';
 
     try {
@@ -76,17 +74,21 @@ export async function UserSession(email: string) {
     const value = {
         ip,
         stack,
-        session_id: session,
         browser: getBrowser(),
         os: getOS(),
         email: email ?? 'unknown'
     };
-    await supabase.from('generic_events').insert({
-        value,
-        name: `new session ${window.location.href}`,
-        type: 'ANALYTICS'
-    });
+    const { data, error } = await supabase
+        .from('generic_events')
+        .insert({
+            value,
+            name: `new session ${window.location.href}`,
+            type: 'ANALYTICS'
+        })
+        .select('id');
+    if (error || data?.length == 0) return;
 
+    const session = data.at(0).id;
     setInterval(async () => {
         if (stack.length == current_stack_length) return;
 
@@ -94,7 +96,7 @@ export async function UserSession(email: string) {
         await supabase
             .from('generic_events')
             .update({ value })
-            .eq('value->>session_id', session);
+            .eq('id', session);
 
         current_stack_length = stack.length;
     }, 10 * 1000);

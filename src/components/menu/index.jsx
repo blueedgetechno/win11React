@@ -1,9 +1,7 @@
-import React from 'react';
 import { menuDispatch } from '../../backend/actions';
 import { useAppSelector } from '../../backend/reducers';
 import { Icon } from '../shared/general';
 import './menu.scss';
-import { customClickDispatch } from '../../backend/utils/dispatch';
 
 export const ActMenu = () => {
     const menu = useAppSelector((state) => state.menus);

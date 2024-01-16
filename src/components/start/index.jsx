@@ -3,7 +3,6 @@ import { AiOutlineCloudDownload } from 'react-icons/ai';
 import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
-import { MdVideoSettings } from 'react-icons/md';
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
@@ -14,8 +13,11 @@ import {
     change_bitrate,
     change_framerate,
     menu_show,
+    popup_open,
     useAppSelector
 } from '../../backend/reducers';
+import { Contents } from '../../backend/reducers/locales';
+import { validate_user_access } from '../../backend/utils/checking';
 import {
     clickDispatch,
     customClickDispatch
@@ -105,6 +107,7 @@ export const SidePane = () => {
     const sidepane = useAppSelector((state) => state.sidepane);
     const setting = useAppSelector((state) => state.setting);
     const remote = useAppSelector((state) => state.remote);
+    const t = useAppSelector((state) => state.globals.translation);
     const [pnstates, setPnstate] = useState([]);
     const dispatch = appDispatch;
 
@@ -194,18 +197,32 @@ export const SidePane = () => {
                                         />
                                     )}
                                 </div>
-                                <div className="qktext">{qk.name}</div>
+                                <div className="qktext">{t[qk.name]}</div>
                             </div>
                         );
                     })}
+
+                    {validate_user_access('admin') ? (
+                        <div className="qkGrp">
+                            <button
+                                className="qkbtn handcr prtclk"
+                                onClick={() => {
+                                    dispatch(
+                                        popup_open({ type: 'user_config' })
+                                    );
+                                }}
+                            >
+                                User Config
+                            </button>
+                        </div>
+                    ) : null}
                 </div>
                 <div className="sliderCont flex flex-col items-start">
-                    <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
-                        Quality
+                    <div className="flex items-center pb-2">
+                        {t[Contents.QUALITY]}
                     </div>
-                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
-                        <span>Low</span>
+                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px] pb-5">
+                        <span>1</span>
                         <input
                             className="sliders bitrateSlider"
                             onChange={setBitrate}
@@ -214,15 +231,14 @@ export const SidePane = () => {
                             max="100"
                             value={remote.bitrate}
                         />
-                        <span>High</span>
+                        <span>100</span>
                     </div>
 
-                    <div className="flex items-center">
-                        <MdVideoSettings className="mx-2 text-[1.3rem]" />
-                        Framerate
+                    <div className="flex items-center pb-2">
+                        {t[Contents.FRAMERATE]}
                     </div>
                     <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
-                        <span>Low</span>
+                        <span>1</span>
                         <input
                             className="sliders framerateSlider"
                             onChange={setFramerate}
@@ -231,7 +247,7 @@ export const SidePane = () => {
                             max="100"
                             value={remote.framerate}
                         />
-                        <span>High</span>
+                        <span>100</span>
                     </div>
                 </div>
             </div>

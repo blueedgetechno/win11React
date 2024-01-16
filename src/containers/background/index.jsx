@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
+    app_toggle,
     close_guidance,
     close_remote,
+    close_survey,
     demo_app,
     update_language,
     useAppSelector,
-    close_survey,
     wall_unlock
 } from '../../backend/reducers';
 import { externalLink } from '../../backend/utils/constant';
@@ -18,6 +19,7 @@ import './back.scss';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
+import { UserEvents } from '../../backend/reducers/fetch/analytics';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -157,7 +159,7 @@ export const Getstarted = ({}) => {
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
-            if (current && current.survey)
+            if (current && current.survey) {
                 SetResult((old) => [
                     ...old,
                     {
@@ -165,7 +167,11 @@ export const Getstarted = ({}) => {
                         selection: current.data.options.at(selection)
                     }
                 ]);
-
+                UserEvents({
+                    type: `demo/page`,
+                    payload: `${old}`
+                });
+            }
             return old + 1;
         });
     const prevPage = () =>
@@ -195,10 +201,11 @@ export const Getstarted = ({}) => {
         await reportSurvey();
         appDispatch(close_guidance());
         await appDispatch(demo_app());
-        await new Promise((r) => setTimeout(r, 5 * 60 * 1000));
+        await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
         appDispatch(close_remote());
         CloseDemo();
         // TODO after demo
+        appDispatch(app_toggle('payment'));
     };
 
     const [selection, Select] = useState(0);
@@ -292,15 +299,28 @@ export const Getstarted = ({}) => {
 
     const Finish = () => (
         <>
-            <div className="yes_button base" onClick={startDemo}>
-                Start Demo
+            <div className="base text-xm font-semibold">
+                {t[Contents.DEMO_TUTORIAL_HEAD]}
             </div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_2]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
+            <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
+            <StartDemoBtn startDemo={startDemo} />
         </>
     );
     const Fail = () => (
         <>
-            <div className="yes_button base" onClick={endSurvey}>
-                Explore
+            <div className="no_button base" onClick={endSurvey}>
+                {t[Contents.EXPLORE_WEB]}
+            </div>
+            <div
+                className="yes_button base"
+                onClick={() =>
+                    window.open(externalLink.FACEBOOK_MESSAGE_LINK, '_blank')
+                }
+            >
+                {t[Contents.BOOKING_DEMO]}
             </div>
         </>
     );
@@ -488,6 +508,44 @@ export const Getstarted = ({}) => {
                     )}
                 </div>
             </div>
+        </div>
+    );
+};
+
+const StartDemoBtn = ({ startDemo }) => {
+    const [isDemoStarted, setIsDemoStarted] = useState(false);
+    const [countdown, setCountdown] = useState(10);
+    const t = useAppSelector((state) => state.globals.translation);
+
+    useEffect(() => {
+        if (!isDemoStarted && countdown > 0) {
+            const timer = setInterval(() => {
+                setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
+            return () => {
+                clearInterval(timer);
+            };
+        }
+    }, [isDemoStarted, countdown]);
+
+    useEffect(() => {
+        if (countdown === 0) {
+            setIsDemoStarted(true);
+            setCountdown(10);
+        }
+    }, [countdown]);
+
+    return (
+        <div>
+            {isDemoStarted ? (
+                <div className="base yes_button" onClick={startDemo}>
+                    {t[Contents.START_DEMO]}
+                </div>
+            ) : (
+                <div className="no_button" style={{ right: '39px' }}>
+                    {t[Contents.READ_USER_MANUAL]} {countdown}s
+                </div>
+            )}
         </div>
     );
 };

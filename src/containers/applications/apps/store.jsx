@@ -223,7 +223,7 @@ const FrontPage = (props) => {
                               return (
                                   <div
                                       key={i}
-                                      className="ribcont rounded-md p-1 pt-1 pb-0 ltShad prtclk"
+                                      className="ribcont rounded-md p-1 pt-1 ltShad prtclk"
                                       onClick={() => {
                                           props.app_click(game);
                                       }}
@@ -234,9 +234,9 @@ const FrontPage = (props) => {
                                       }}
                                   >
                                       <Image
-                                          className="mb-3 rounded"
-                                          w={160}
-                                          h={160}
+                                          className="mb-0.5 rounded"
+                                          w={148}
+                                          h={177}
                                           absolute={true}
                                           src={game.icon}
                                       />
@@ -615,7 +615,7 @@ const DownPage = ({ action }) => {
                 return (
                     <div
                         key={index}
-                        className="ribcont p-2 pt-2 ltShad prtclk"
+                        className="ribcont p-1 pt-1 ltShad prtclk"
                         onClick={() => {
                             action(app);
                         }}
@@ -627,8 +627,8 @@ const DownPage = ({ action }) => {
                         }}
                     >
                         <Image
-                            className="rounded mb-4"
-                            w={180}
+                            className="rounded mb-2"
+                            w={150}
                             h={180}
                             src={app.icon}
                             ext

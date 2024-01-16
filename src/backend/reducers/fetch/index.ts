@@ -1,6 +1,6 @@
 import { sleep } from '../../utils/sleep';
 import { RenderNode } from '../../utils/tree';
-import { SupabaseFuncInvoke, supabase, virtapi } from './createClient';
+import { CAUSE, SupabaseFuncInvoke, supabase, virtapi } from './createClient';
 
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
@@ -161,7 +161,13 @@ export const DownloadApplication = async (
             }
         );
 
-        if (res.length == 0) throw new Error('Resource not found!');
+        if (res.length == 0)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: 'resource not found'
+                })
+            );
         else if (res.at(0).storage_id != null) {
             storageId = res.at(0).storage_id;
             break;
@@ -186,7 +192,13 @@ export const StartApplication = async (storage_id: string) => {
             storage_id
         });
 
-        if (error) throw new Error(error.message);
+        if (error)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: error.message
+                })
+            );
         else if (data == true) break;
         else await sleep(TIME_SLEEP);
     }
@@ -266,7 +278,13 @@ export const StopApplication = async (storage_id: string) => {
             storage_id: storage_id
         });
 
-        if (error) throw new Error(error.message);
+        if (error)
+            throw new Error(
+                JSON.stringify({
+                    code: CAUSE.API_CALL,
+                    message: error.message
+                })
+            );
         else if (data == false) break;
 
         await sleep(10 * 1000);
@@ -442,4 +460,78 @@ export async function HasAvailableCluster() {
     const checking = data.at(0).total > 0;
 
     return checking;
+}
+
+interface Subscription {
+    id: string;
+    created_at: string;
+    ends_at: string;
+}
+export async function GetSubscription(account_id): Promise<Subscription> {
+    const { data, error } = await supabase
+        .from('subscriptions')
+        .select('id, created_at, ends_at')
+        .eq('account_id', account_id)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+    if (error) throw error;
+
+    if (data.length == 0) throw 'Not found any subscription';
+
+    const formatData = {
+        id: data.at(0).id,
+        created_at: new Date(data.at(0).created_at).toISOString().split('T')[0],
+        ends_at: new Date(data.at(0).ends_at).toISOString().split('T')[0]
+    };
+    return formatData;
+}
+
+export async function GetUserIdByEmail(email): Promise<string> {
+    const { data, error } = await supabase
+        .from('user_profile')
+        .select('account_id')
+        .eq('email', email)
+        .limit(1);
+
+    if (error) throw error;
+
+    if (data.length == 0) throw 'Not found any user';
+
+    return data.at(0).account_id;
+}
+
+interface UserSetting {
+    bitrate: number;
+    low_ads: boolean;
+    framerate: number;
+    old_version: boolean;
+}
+export async function GetUserSetting(account_id: string): Promise<UserSetting> {
+    const { data, error } = await supabase.rpc('get_user_setting', {
+        user_id: account_id
+    });
+
+    if (error) throw error;
+
+    if (data.length == 0) throw 'Not found any user';
+
+    return data.at(0);
+}
+
+interface UserSettingUpdate {
+    user_id: string;
+    bitrate: number;
+    framerate: number;
+    low_ads: boolean;
+    old_version: boolean;
+}
+export async function UpdateUserSetting(
+    params: UserSettingUpdate
+): Promise<void> {
+    const { data, error } = await supabase.rpc('update_user_setting', {
+        ...params
+    });
+
+    if (error) throw error;
 }

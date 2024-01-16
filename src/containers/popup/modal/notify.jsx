@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { TbLoader3 } from 'react-icons/tb';
 import { useAppSelector } from '../../../backend/reducers';
 import { Contents } from '../../../backend/reducers/locales';
+import { validate_user_access } from '../../../backend/utils/checking';
 
 export function notify({ data: { title, tips, loading } }) {
     return (
@@ -51,16 +52,29 @@ const LoadingProgressBar = () => {
 
 const Protip = () => {
     const t = useAppSelector((state) => state.globals.translation);
+    const isGreenList = validate_user_access('month', 'week'); // check Demo user
+
     const [currentTip, setCurrentTip] = useState(0);
-    const listTip = [
+
+    const QUANTITY_TIP = 3;
+    const listUserTip = [
         t[Contents.INSTALL_APP],
         t[Contents.PAUSEAPP],
         t[Contents.ALREADY_DEPLOYED]
     ];
 
+    const listDemoTip = [
+        t[Contents.PRO_TIP_DEMO_0],
+        t[Contents.PRO_TIP_DEMO_1],
+        t[Contents.PRO_TIP_DEMO_2],
+        t[Contents.PRO_TIP_DEMO_3],
+        'Nên Fullsreen khi chơi game',
+        'Click fix bàn phím nếu không di chuyển được khi chơi game'
+    ];
+
     useEffect(() => {
         const interval = setInterval(() => {
-            const randomNumber = Math.floor(Math.random() * 3);
+            const randomNumber = Math.floor(Math.random() * QUANTITY_TIP);
 
             setCurrentTip(randomNumber);
         }, 5 * 1000);
@@ -70,7 +84,11 @@ const Protip = () => {
     return (
         <div className="mt-[14px]">
             <strong>Pro tip:</strong>
-            <p>{listTip[currentTip]}</p>
+            <p>
+                {isGreenList
+                    ? listUserTip[currentTip]
+                    : listDemoTip[currentTip]}
+            </p>
         </div>
     );
 };

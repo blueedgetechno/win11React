@@ -3,7 +3,7 @@ type PopupData =
           type: 'complete';
           data: {
               success: boolean;
-              content: string;
+              content: string | Contents;
           };
       }
     | {
@@ -19,6 +19,17 @@ type PopupData =
               loading: boolean;
               tips?: boolean;
           };
+      }
+    | {
+          type: 'subscription';
+          data: {
+              type: 'add' | 'update';
+              id?: string;
+          };
+      }
+    | {
+          type: 'user_config';
+          data: any;
       };
 
 type Data = {
@@ -30,6 +41,7 @@ const initialState: Data = {
 };
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Contents } from './locales';
 export const modalSlice = createSlice({
     name: 'popup',
     initialState,
