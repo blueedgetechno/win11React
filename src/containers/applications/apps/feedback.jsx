@@ -10,6 +10,7 @@ import {
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import { externalLink } from '../../../backend/utils/constant';
 import { Contents } from '../../../backend/reducers/locales';
+import { UserEvents } from '../../../backend/reducers/fetch/analytics';
 
 const listFeedBack = [
     {
@@ -142,6 +143,17 @@ export const FeedbackApp = () => {
                 })
             }
         );
+        UserEvents({
+            type: 'feedback',
+            payload: {
+                email: user.email,
+                os,
+                browser,
+                feeling: issues.feeling,
+                issue: issues.issue,
+                detail: issues.detail
+            }
+        })
         appDispatch(app_close('feedback'));
         appDispatch(app_toggle('payment'));
     };
