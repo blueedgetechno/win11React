@@ -205,7 +205,7 @@ export const Getstarted = ({}) => {
         appDispatch(close_remote());
         CloseDemo();
         // TODO after demo
-        appDispatch(app_toggle('payment'));
+        appDispatch(app_toggle('feedback'));
     };
 
     const [selection, Select] = useState(0);
