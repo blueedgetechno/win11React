@@ -9,25 +9,26 @@ import {
 } from '../../../backend/reducers';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import { externalLink } from '../../../backend/utils/constant';
+import { Contents } from '../../../backend/reducers/locales';
 
 const listFeedBack = [
     {
-        name: 'Terrible',
+        name: Contents.FB_TERRIBLE,
         value: 'terrible',
         src: 'img/icon/terrible.png'
     },
     {
-        name: 'Bad',
+        name: Contents.FB_BAD,
         value: 'bad',
         src: 'img/icon/bad.png'
     },
     {
-        name: 'Good',
+        name: Contents.FB_GOOD,
         value: 'good',
         src: 'img/icon/good.png'
     },
     {
-        name: 'Amazing',
+        name: Contents.FB_AMAZING,
         value: 'amazing',
         src: 'img/icon/amazing.png'
     }
@@ -35,58 +36,59 @@ const listFeedBack = [
 
 const listErr = [
     {
-        name: 'Điều khiển',
+        name: Contents.FB_CONTROL,
         value: 'control',
         data: [
             {
-                name: 'Bàn phím',
+                name: Contents.FB_KEYBOARD,
                 value: 'keybroad'
             },
             {
-                name: 'Chuột',
+                name: Contents.FB_MOUSE,
                 value: 'mouse'
             },
             {
-                name: 'Tay cầm',
+                name: Contents.FB_GAMEPAD,
                 value: 'gamepad'
             },
             {
-                name: 'Cảm ứng',
+                name: Contents.FB_TOUCH,
                 value: 'touch'
             }
         ]
     },
     {
-        name: 'Kết nối',
+        name: Contents.FB_CONNECT,
         value: 'connect',
         data: [
             {
-                name: 'Màn hình đen',
+                name: Contents.FB_BLACKSCREEN,
                 value: 'blackscreen'
             },
             {
-                name: 'Lag',
+                name: Contents.FB_LAG,
                 value: 'lag'
             },
             {
-                name: 'Không hiện video',
+                name: Contents.FB_NOSHOWVIDEO,
                 value: 'videonoshow'
             }
         ]
     },
     {
-        name: 'Game',
+        name: Contents.FB_GAME,
         value: 'Game',
         data: []
     },
     {
-        name: 'Khác',
+        name: Contents.FB_OTHER,
         value: 'others',
         data: []
     }
 ];
 
 export const FeedbackApp = () => {
+    const t = useAppSelector((state) => state.globals.translation);
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'feedback')
     );
@@ -196,13 +198,13 @@ export const FeedbackApp = () => {
                                         className="icon"
                                     />
                                 </div>
-                                <p className="text-[12px] pt-2">{icon.name}</p>
+                                <p className="text-[12px] pt-2">{t[icon.name]}</p>
                             </div>
                         ))}
                     </div>
                     <hr className="my-[6px]" />
                     <p className="text-[14px] text-white">
-                        Bạn gặp vấn đề với:
+                        {t[Contents.FB_ISSUE]}
                     </p>
                     <div className="flex flex-wrap gap-1 justify-between mt-2">
                         {listErr.map((err) => (
@@ -214,7 +216,7 @@ export const FeedbackApp = () => {
                                 }}
                                 className="p-1 text-center rounded-full border border-solid border-gray-700 ] text-[12px] text-white"
                             >
-                                {err.name}
+                                {t[err.name]}
                             </div>
                         ))}
                     </div>
@@ -231,14 +233,14 @@ export const FeedbackApp = () => {
                                             }}
                                             className="p-1 m-auto text-center rounded-full border border-solid border-gray-700 ] text-[12px] text-white"
                                         >
-                                            {detail.name}
+                                            {t[detail.name]}
                                         </div>
                                     );
                                 });
                             }
                         })}
                     </div>
-                    <p className="text-[14px] mb-2 text-white">Chi Tiết:</p>
+                    <p className="text-[14px] mb-2 text-white">{t[Contents.FB_DETAIL]}</p>
                     <div className="border-solid border h-full rounded-md">
                         <textarea
                             className="noteText"
@@ -263,7 +265,7 @@ export const FeedbackApp = () => {
                                 );
                         }}
                     >
-                        Submit
+                        {t[Contents.FB_SUBMIT]}
                     </button>
                 </LazyComponent>
             </div>
