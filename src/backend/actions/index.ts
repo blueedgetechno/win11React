@@ -157,8 +157,8 @@ export const login = async () => {
         options: {
             redirectTo,
             queryParams: {
-                access_type: 'offline',
-                prompt: 'consent'
+                access_type: 'offline'
+                // prompt: 'consent'
             }
         }
     });
@@ -174,7 +174,7 @@ export function LoginAndDemo() {
 export function FirstTime(): boolean {
     return (
         localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE' &&
-        !window.location.href.includes('localhost')
+        !window.location.href.includes('localhosttt')
     );
 }
 export function RequestDemo(): boolean {
