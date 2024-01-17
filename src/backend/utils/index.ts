@@ -50,6 +50,12 @@ const apps: AppData[] = [
         payload: 'payment'
     },
     {
+        name: 'Feedback',
+        id: 'feedback',
+        action: 'apps/app_toggle',
+        payload: 'feedback'
+    },
+    {
         name: 'Guideline',
         id: 'about',
         action: 'apps/app_url',
@@ -77,7 +83,8 @@ var { taskbar, desktop } = {
         'Discord',
         'Thinkmay Fanpage',
         'Store',
-        'Payment'
+        'Payment',
+        'Feedback'
     ]
 };
 

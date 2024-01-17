@@ -152,6 +152,7 @@ export const appsAsync = {
             if (ref == null)
                 throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
+            appDispatch(scancode(true))
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote('demo'));
             await ready();
