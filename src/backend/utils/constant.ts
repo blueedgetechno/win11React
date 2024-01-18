@@ -25,7 +25,9 @@ export const scanCodeApps = [
     'Resident Evil 4',
     'Red Dead Redemption 2',
     'Elden Ring',
-    'God of War'
+    'God of War',
+    'FC Online',
+    'Counter-Strike 2'
 ];
 
 export const localStorageKey = {
