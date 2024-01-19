@@ -174,7 +174,7 @@ export function LoginAndDemo() {
 export function FirstTime(): boolean {
     return (
         localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE' &&
-        !window.location.href.includes('localhosttt')
+        !window.location.href.includes('localhost')
     );
 }
 export function RequestDemo(): boolean {
