@@ -92,7 +92,7 @@ function App() {
         if (!remote.active) return;
 
         const handleState = () => {
-            const fullscreen = document.fullscreenElement != null;
+            const fullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement
             if (fullscreen == remote.fullscreen) return;
 
             appDispatch(set_fullscreen(fullscreen));

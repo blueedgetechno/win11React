@@ -48,10 +48,9 @@ export const Remote = () => {
 
     useEffect(() => {
         const handleState = () => {
-            const fullscreen = document.fullscreenElement != null;
-            const havingPtrLock = document.pointerLockElement != null;
-            if (fullscreen && !havingPtrLock)
-                remoteVideo.current.requestPointerLock();
+            const fullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement
+            const havingPtrLock = document.pointerLockElement;
+            if (fullscreen && !havingPtrLock) remoteVideo.current.requestPointerLock();
             else if (!fullscreen && havingPtrLock) document.exitPointerLock();
         };
 
