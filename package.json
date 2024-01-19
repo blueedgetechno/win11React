@@ -71,7 +71,7 @@
     "postcss": "^8.4.33",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.4.1",
-    "vite": "3.0.4",
+    "vite": "3.2.8",
     "vite-plugin-pwa": "^0.12.8"
   }
 }
