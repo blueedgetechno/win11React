@@ -157,8 +157,8 @@ export const login = async () => {
         options: {
             redirectTo,
             queryParams: {
-                access_type: 'offline',
-                prompt: 'consent'
+                access_type: 'offline'
+                // prompt: 'consent'
             }
         }
     });
