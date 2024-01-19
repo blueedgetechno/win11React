@@ -49,16 +49,16 @@ export const Remote = () => {
 
     useEffect(() => {
         const handleState = () => {
-            const pointerlock = () => {
-                const elem = remoteVideo.current
+            const pointerlock = async () => {
+                const elem = document.getElementById('remote_video')
                 const fun = elem.requestPointerLock || elem.mozRequestPointerLock ||
                     elem.webkitRequestPointerLock || function () { /* nop */ };
-                fun()
+                await fun()
             }
-            const exitpointerlock = () => {
+            const exitpointerlock = async () => {
                 const fun = document.exitPointerLock || document.mozExitPointerLock ||
                     document.webkitExitPointerLock || function () { /* nop */ };
-                fun()
+                await fun()
             }
 
             const fullscreen =
@@ -100,6 +100,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
+                id={'remote_video'}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted
