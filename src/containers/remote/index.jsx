@@ -48,15 +48,10 @@ export const Remote = () => {
 
 
     const pointerlock = () => {
-        const elem = remoteVideo.current
-        const fun = elem.requestPointerLock || elem.mozRequestPointerLock ||
-            elem.webkitRequestPointerLock || function () { /* nop */ };
-        fun()
+        remoteVideo.current.requestPointerLock()
     }
     const exitpointerlock = () => {
-        const fun = document.exitPointerLock || document.mozExitPointerLock ||
-            document.webkitExitPointerLock || function () { /* nop */ };
-        fun()
+        document.exitPointerLock()
     }
 
     useEffect(() => {
