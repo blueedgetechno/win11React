@@ -47,12 +47,14 @@ export const Remote = () => {
     }, [remote.fullscreen]);
 
     const pointerlock = (elem) => {
-        elem.requestPointerLock = elem.requestPointerLock || elem.mozRequestPointerLock ||
+        const fun = elem.requestPointerLock || elem.mozRequestPointerLock ||
             elem.webkitRequestPointerLock || function () { /* nop */ };
+        fun()
     }
     const exitpointerlock = () => {
-        document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock ||
+        const fun = document.exitPointerLock || document.mozExitPointerLock ||
             document.webkitExitPointerLock || function () { /* nop */ };
+        fun()
     }
 
     useEffect(() => {
