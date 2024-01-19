@@ -17,15 +17,33 @@ export const Remote = () => {
         SetupWebRTC();
     }, [remote.active]);
 
+
+    const fullscreen = async () => {
+        const elem = document.documentElement
+        if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            await elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            await elem.msRequestFullscreen();
+        }
+    }
+
+    const exitfullscreen = async () => {
+        if (document.exitFullscreen) {
+            await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            await document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            await document.msExitFullscreen();
+        }
+    }
+
     useEffect(() => {
         const job = remote.fullscreen
-            ? document.documentElement.requestFullscreen
-                ? document.documentElement.requestFullscreen()
-                : null
-            : document.exitFullscreen
-              ? document.exitFullscreen()
-              : null;
-        job?.catch(() => {});
+            ? fullscreen()
+            : exitfullscreen()
+        job?.catch(() => { });
     }, [remote.fullscreen]);
 
     useEffect(() => {
