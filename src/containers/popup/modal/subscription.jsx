@@ -128,16 +128,17 @@ const AddSub = () => {
 
 const initUpdateSub = {
     email: '',
-    action: 'CANCEL', // Set a default value for the select
+    action: 'UPGRADE', // Set a default value for the select
     price_upgrade: '',
-    created_sub: '',
-    end_sub: ''
+    created_at: '',
+    ends_at: ''
 };
 const UpdateSub = (props) => {
     const [formData, setFormData] = useState(initUpdateSub);
 
     const { data } = props;
 
+    const dispatch = useDispatch();
     useEffect(() => {
         const updateSub = async () => {
             const { email, account_id } = findUserEmailById(data.id);
@@ -146,8 +147,8 @@ const UpdateSub = (props) => {
             setFormData((prev) => ({
                 ...prev,
                 email: email,
-                created_sub: subInfo.created_at,
-                end_sub: subInfo.ends_at
+                created_at: subInfo.created_at,
+                ends_at: subInfo.ends_at
             }));
         };
         updateSub();
@@ -160,7 +161,11 @@ const UpdateSub = (props) => {
         event.preventDefault(); // Prevent default form submission
 
         // Access the form data here
-        await dispatch(upgrade_subscription(formData));
+        await dispatch(upgrade_subscription({
+            ...formData,
+            created_at: new Date(formData.created_at),
+            ends_at: new Date(formData.ends_at)
+        }));
         setFormData(initUpdateSub);
         dispatch(popup_close());
         // Do something with the form data, e.g., send it to a server
@@ -195,6 +200,7 @@ const UpdateSub = (props) => {
                         <option value="CANCEL">Cancel</option>
                         <option value="RENEW">Renew</option>
                         <option value="UPGRADE">Upgrade</option>
+                        <option value="ADJUST">Adjust</option>
                     </select>
                 </label>
                 <label className="flex gap-4" htmlFor="">
@@ -209,23 +215,23 @@ const UpdateSub = (props) => {
                 </label>
 
                 <label htmlFor="">
-                    <span for="created_sub">Start Time</span>
+                    <span for="created_at">Start Time</span>
                     <input
                         onChange={handleChange}
                         type="date"
-                        id="created_sub"
-                        name="created_sub"
-                        value={formData.created_sub}
+                        id="created_at"
+                        name="created_at"
+                        value={formData.created_at}
                     />
                 </label>
                 <label htmlFor="">
-                    <span for="end_sub">End Time</span>
+                    <span for="ends_at">End Time</span>
                     <input
                         onChange={handleChange}
                         type="date"
-                        id="end_sub"
-                        name="end_sub"
-                        value={formData.end_sub}
+                        id="ends_at"
+                        name="ends_at"
+                        value={formData.ends_at}
                     />
                 </label>
                 <button className="instbtn save" type="submit">

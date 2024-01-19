@@ -18,6 +18,7 @@ import {
     DeleteVolume,
     FetchAuthorizedWorkers,
     ForkVolume,
+    IModifySubscriptionAction,
     ModifySubscription,
     PatchApp,
     SetDefaultOsVolume,
@@ -212,11 +213,10 @@ export const workerAsync = {
     ),
     upgrade_subscription: createAsyncThunk(
         'upgrade_subscription',
-        async (email: string, { getState }): Promise<any> => {
-            await ModifySubscription({
-                action: 'UPGRADE',
-                email
-            });
+        async (data: IModifySubscriptionAction, { getState }): Promise<any> => {
+            await ModifySubscription(
+                data
+            );
         }
     ),
     cancel_subscription: createAsyncThunk(

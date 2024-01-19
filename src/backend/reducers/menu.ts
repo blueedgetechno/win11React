@@ -327,10 +327,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         action: 'showUpdateSubscription'
                     },
                     {
-                        name: 'Adjust',
-                        action: 'adjust_subscription'
-                    },
-                    {
                         name: 'Cancel',
                         action: 'cancel_subscription'
                     }
