@@ -46,19 +46,21 @@ export const Remote = () => {
         job?.catch(() => { });
     }, [remote.fullscreen]);
 
-    const pointerlock = (elem) => {
-        const fun = elem.requestPointerLock || elem.mozRequestPointerLock ||
-            elem.webkitRequestPointerLock || function () { /* nop */ };
-        fun()
-    }
-    const exitpointerlock = () => {
-        const fun = document.exitPointerLock || document.mozExitPointerLock ||
-            document.webkitExitPointerLock || function () { /* nop */ };
-        fun()
-    }
 
     useEffect(() => {
         const handleState = () => {
+            const pointerlock = () => {
+                const elem = remoteVideo.current
+                const fun = elem.requestPointerLock || elem.mozRequestPointerLock ||
+                    elem.webkitRequestPointerLock || function () { /* nop */ };
+                fun()
+            }
+            const exitpointerlock = () => {
+                const fun = document.exitPointerLock || document.mozExitPointerLock ||
+                    document.webkitExitPointerLock || function () { /* nop */ };
+                fun()
+            }
+
             const fullscreen =
                 (document.fullscreenElement != null) ||
                 (document.webkitFullscreenElement != null) ||
@@ -68,7 +70,7 @@ export const Remote = () => {
                 (document.mozPointerLockElement != null) ||
                 (document.webkitPointerLockElement != null)
 
-            if (fullscreen && !havingPtrLock) pointerlock(remoteVideo.current)
+            if (fullscreen && !havingPtrLock) pointerlock()
             else if (!fullscreen && havingPtrLock) exitpointerlock();
         };
 
