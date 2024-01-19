@@ -46,15 +46,28 @@ export const Remote = () => {
         job?.catch(() => { });
     }, [remote.fullscreen]);
 
+    const pointerlock = (elem) => {
+        elem.requestPointerLock = elem.requestPointerLock || elem.mozRequestPointerLock ||
+            elem.webkitRequestPointerLock || function () { /* nop */ };
+    }
+    const exitpointerlock = () => {
+        document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock ||
+            document.webkitExitPointerLock || function () { /* nop */ };
+    }
+
     useEffect(() => {
         const handleState = () => {
-            const fullscreen = 
-                (document.fullscreenElement != null) || 
-                (document.webkitFullscreenElement != null) || 
+            const fullscreen =
+                (document.fullscreenElement != null) ||
+                (document.webkitFullscreenElement != null) ||
                 (document.mozFullScreenElement != null)
-            const havingPtrLock = document.pointerLockElement != null;
-            if (fullscreen && !havingPtrLock) remoteVideo.current.requestPointerLock();
-            else if (!fullscreen && havingPtrLock) document.exitPointerLock();
+            const havingPtrLock =
+                (document.pointerLockElement != null) ||
+                (document.mozPointerLockElement != null) ||
+                (document.webkitPointerLockElement != null)
+
+            if (fullscreen && !havingPtrLock) pointerlock(remoteVideo.current)
+            else if (!fullscreen && havingPtrLock) exitpointerlock();
         };
 
         const UIStateLoop = setInterval(handleState, 100);
