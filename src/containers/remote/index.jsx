@@ -65,7 +65,8 @@ export const Remote = () => {
                 (document.mozPointerLockElement != null) ||
                 (document.webkitPointerLockElement != null)
 
-            if (!fullscreen && havingPtrLock) exitpointerlock();
+            if (fullscreen && !havingPtrLock) pointerlock()
+            else if (!fullscreen && havingPtrLock) exitpointerlock();
         };
 
         const UIStateLoop = setInterval(handleState, 100);
@@ -94,7 +95,6 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
-                onClick={pointerlock}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted
