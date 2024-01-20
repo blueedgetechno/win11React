@@ -94,16 +94,15 @@ export const AddSubscription = async ({
     return result;
 };
 
-/**
- *
- * @param {'CANCEL' | 'RENEW' | 'UPGRADE'} action
- * @param {string} email
- * @returns
- */
-export const ModifySubscription = async (input: {
-    action: string;
-    email: string;
-}) => {
+export interface IModifySubscriptionAction {
+    action: 'CANCEL' | 'RENEW' | 'UPGRADE' | 'ADJUST'
+    email: string
+    created_at?: string
+    ends_at?: string
+    price_upgrade?: string
+
+}
+export const ModifySubscription = async (input: IModifySubscriptionAction) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
         ...input
     });
