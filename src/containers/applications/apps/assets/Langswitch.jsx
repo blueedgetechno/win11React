@@ -1,48 +1,37 @@
-import React, { useLayoutEffect } from "react";
-import { useDispatch } from "react-redux";
-import { update_language } from "../../../../backend/reducers";
+import { useLayoutEffect, useState } from "react";
+import { appDispatch, update_language } from "../../../../backend/reducers";
 import { localStorageKey } from "../../../../backend/utils/constant";
 
+const allowed = ['ENG', 'VN']
 function LangSwitch() {
-    const [languageValue, setLanguageValue] = React.useState('');
-    // React.useLayoutEffect(() => {
-    //     const localLng = localStorage.getItem('language') ?? i18next.language;
-    //     setLanguageValue(localLng);
-    //     i18next.changeLanguage(localLng);
-    // }, []);
-    const dispatch = useDispatch()
+    const [languageValue, setLanguageValue] = useState('');
 
     useLayoutEffect(() => {
-        const languageLocal = localStorage.getItem(localStorageKey.language) ?? 'ENG'
-        setLanguageValue(languageLocal)
-        dispatch(update_language(languageLocal));
+        let languageLocal = localStorage.getItem(localStorageKey.language) ?? 'ENG'
+        if (!allowed.includes(languageLocal))
+            languageLocal = 'ENG'
 
+        setLanguageValue(languageLocal)
+        appDispatch(update_language(languageLocal));
     }, [])
+
+    const updateLanguage = (e) => {
+        const language = e.target.value
+        if (!allowed.includes(language))
+            return
+
+        localStorage.setItem('language', language);
+        setLanguageValue(language);
+        appDispatch(update_language(language));
+    }
     return (
         <div className="langSwitcher langSwitcherTile">
             <select
                 value={languageValue}
-                onChange={(e) => {
-                    localStorage.setItem('language', e.target.value);
-                    setLanguageValue(e.target.value);
-                    dispatch(update_language(e.target.value));
-                }}
+                onChange={updateLanguage}
             >
                 <option value="ENG">English</option>
                 <option value="VN">Vietnamese</option>
-                {/*<option value="da">Danish</option>
-         <option value="de">German</option>
-         <option value="es">Spanish</option>
-         <option value="fr">French</option>
-         <option value="hi">Hindi</option>
-         <option value="hu">Hungarian</option>
-         <option value="ja">Japanese</option>
-         <option value="ko">Korean</option>
-         <option value="nl">Dutch</option>
-         <option value="ru">Russian</option>
-         <option value="tr">Turkish</option>
-         <option value="zh">Chinese</option>
-         <option value="si">Sinhala</option>*/}
             </select>
         </div>
     );
