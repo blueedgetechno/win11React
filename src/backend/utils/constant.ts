@@ -34,5 +34,6 @@ export const localStorageKey = {
     user: 'USER1',
     store: 'STORE',
     app: 'APP',
-    request: 'REQUESTCACHE'
+    request: 'REQUESTCACHE',
+    language: 'language'
 };
