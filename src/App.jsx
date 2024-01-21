@@ -8,7 +8,6 @@ import {
     menu_show,
     request_demo,
     set_fullscreen,
-    update_language,
     useAppSelector
 } from './backend/reducers';
 import { UserSession } from './backend/reducers/fetch/analytics';
@@ -61,7 +60,6 @@ function App() {
 
     useEffect(() => {
         if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-        appDispatch(update_language('ENG'));
         window.history.replaceState({}, document.title, '/' + '');
         preload().finally(async () => {
             console.log('Loaded');
