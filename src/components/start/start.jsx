@@ -13,6 +13,8 @@ export const StartMenu = () => {
     const t = useAppSelector((state) => state.globals.translation);
     const { align } = useAppSelector((state) => state.taskbar);
     const user = useAppSelector((state) => state.user);
+    const usageTime = user?.usageTime;
+
     const start = useAppSelector((state) => state.startmenu);
     const thm = useAppSelector((state) => state.setting.person.theme);
     var icon = thm == 'light' ? 'sun' : 'moon';
@@ -25,8 +27,6 @@ export const StartMenu = () => {
         });
     };
 
-    const usageTime = user?.usageTime;
-    const total_time = usageTime?.total_time;
 
     return (
         <div

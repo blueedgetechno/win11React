@@ -84,7 +84,6 @@ var { taskbar, desktop } = {
         'Thinkmay Fanpage',
         'Store',
         'Payment',
-        'Feedback'
     ]
 };
 
