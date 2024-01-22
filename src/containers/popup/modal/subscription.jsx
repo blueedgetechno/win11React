@@ -161,11 +161,13 @@ const UpdateSub = (props) => {
         event.preventDefault(); // Prevent default form submission
 
         // Access the form data here
-        await dispatch(upgrade_subscription({
-            ...formData,
-            created_at: new Date(formData.created_at),
-            ends_at: new Date(formData.ends_at)
-        }));
+        await dispatch(
+            upgrade_subscription({
+                ...formData,
+                created_at: new Date(formData.created_at),
+                ends_at: new Date(formData.ends_at)
+            })
+        );
         setFormData(initUpdateSub);
         dispatch(popup_close());
         // Do something with the form data, e.g., send it to a server

@@ -469,8 +469,7 @@ export const Getstarted = ({}) => {
         if (region != 'Vietnam') {
             setStatus(Contents.FAIL_DEMO_REGION);
             appDispatch(update_language('ENG'));
-        }
-        else
+        } else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
                 else if (data) setStatus(Contents.SURVEY_COMPLETED);

@@ -17,53 +17,53 @@ export const Remote = () => {
         SetupWebRTC();
     }, [remote.active]);
 
-
     const fullscreen = async () => {
-        const elem = document.documentElement
+        const elem = document.documentElement;
         if (elem.requestFullscreen) {
             await elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
+        } else if (elem.webkitRequestFullscreen) {
+            /* Safari */
             await elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
+        } else if (elem.msRequestFullscreen) {
+            /* IE11 */
             await elem.msRequestFullscreen();
         }
-    }
+    };
 
     const exitfullscreen = async () => {
         if (document.exitFullscreen) {
             await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
+        } else if (document.webkitExitFullscreen) {
+            /* Safari */
             await document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
+        } else if (document.msExitFullscreen) {
+            /* IE11 */
             await document.msExitFullscreen();
         }
-    }
+    };
 
     useEffect(() => {
-        const job = remote.fullscreen
-            ? fullscreen()
-            : exitfullscreen()
-        job?.catch(() => { });
+        const job = remote.fullscreen ? fullscreen() : exitfullscreen();
+        job?.catch(() => {});
     }, [remote.fullscreen]);
 
-
     const pointerlock = () => {
-        remoteVideo.current.requestPointerLock()
-    }
+        remoteVideo.current.requestPointerLock();
+    };
     const exitpointerlock = () => {
-        document.exitPointerLock()
-    }
+        document.exitPointerLock();
+    };
 
     useEffect(() => {
         const handleState = () => {
             const fullscreen =
-                (document.fullscreenElement != null) ||
-                (document.webkitFullscreenElement != null) ||
-                (document.mozFullScreenElement != null)
+                document.fullscreenElement != null ||
+                document.webkitFullscreenElement != null ||
+                document.mozFullScreenElement != null;
             const havingPtrLock =
-                (document.pointerLockElement != null) ||
-                (document.mozPointerLockElement != null) ||
-                (document.webkitPointerLockElement != null)
+                document.pointerLockElement != null ||
+                document.mozPointerLockElement != null ||
+                document.webkitPointerLockElement != null;
 
             if (!fullscreen && havingPtrLock) exitpointerlock();
         };

@@ -214,9 +214,7 @@ export const workerAsync = {
     upgrade_subscription: createAsyncThunk(
         'upgrade_subscription',
         async (data: IModifySubscriptionAction, { getState }): Promise<any> => {
-            await ModifySubscription(
-                data
-            );
+            await ModifySubscription(data);
         }
     ),
     cancel_subscription: createAsyncThunk(

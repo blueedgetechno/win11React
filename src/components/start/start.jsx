@@ -27,7 +27,6 @@ export const StartMenu = () => {
         });
     };
 
-
     return (
         <div
             className="startMenu dpShad"

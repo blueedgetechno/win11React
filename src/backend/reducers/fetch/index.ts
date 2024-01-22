@@ -95,12 +95,11 @@ export const AddSubscription = async ({
 };
 
 export interface IModifySubscriptionAction {
-    action: 'CANCEL' | 'RENEW' | 'UPGRADE' | 'ADJUST'
-    email: string
-    created_at?: string
-    ends_at?: string
-    price_upgrade?: string
-
+    action: 'CANCEL' | 'RENEW' | 'UPGRADE' | 'ADJUST';
+    email: string;
+    created_at?: string;
+    ends_at?: string;
+    price_upgrade?: string;
 }
 export const ModifySubscription = async (input: IModifySubscriptionAction) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {

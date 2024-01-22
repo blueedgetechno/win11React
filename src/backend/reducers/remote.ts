@@ -18,10 +18,10 @@ import { RemoteDesktopClient } from '../../../core/app';
 import { EventCode } from '../../../core/models/keys.model';
 import { AddNotifier, ConnectionEvent } from '../../../core/utils/log';
 import { isMobile } from '../utils/checking';
-import { scanCodeApps } from '../utils/constant';
 import { sleep } from '../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper, SetPermanentCache } from './helper';
+import { getBrowser, getOS, getResolution } from '../../../core/utils/platform';
 
 const size = () =>
     client != null
@@ -350,7 +350,12 @@ export const remoteAsync = {
                 'session_authenticate',
                 {
                     reference: ref,
-                    metadata: {}
+                    metadata: {
+                        platform: getOS(),
+                        browser: getBrowser(),
+                        resolution: getResolution(),
+                        url: window.location.href
+                    }
                 },
                 { uref }
             );

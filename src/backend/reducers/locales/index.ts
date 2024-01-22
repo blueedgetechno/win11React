@@ -751,67 +751,61 @@ export function language() {
         'Click "Hỗ trợ ngay" để được hỗ trợ kỹ thuật sớm nhất.'
     );
 
-
     // -----------------------------------------------
     // FEEDBACK
-    en.set(Contents.FB_TERRIBLE, 'Terrible')
-    vn.set(Contents.FB_TERRIBLE, 'Rất tệ')
-    
-    en.set(Contents.FB_BAD, 'Bad')
-    vn.set(Contents.FB_BAD, 'Tệ')
-    
-    en.set(Contents.FB_GOOD, 'Good')
-    vn.set(Contents.FB_GOOD, 'Tốt')
+    en.set(Contents.FB_TERRIBLE, 'Terrible');
+    vn.set(Contents.FB_TERRIBLE, 'Rất tệ');
 
-    en.set(Contents.FB_AMAZING, 'Amazing')
-    vn.set(Contents.FB_AMAZING, 'Tuyệt vời')
+    en.set(Contents.FB_BAD, 'Bad');
+    vn.set(Contents.FB_BAD, 'Tệ');
 
-    en.set(Contents.FB_CONTROL, 'Control')
-    vn.set(Contents.FB_CONTROL, 'Điều khiển')
-    
-    en.set(Contents.FB_KEYBOARD, 'Keyboard')
-    vn.set(Contents.FB_KEYBOARD, 'Bàn phím')
-    
-    en.set(Contents.FB_MOUSE, 'Mouse')
-    vn.set(Contents.FB_MOUSE, 'Chuột')
+    en.set(Contents.FB_GOOD, 'Good');
+    vn.set(Contents.FB_GOOD, 'Tốt');
 
-    en.set(Contents.FB_GAMEPAD, 'Gamepad')
-    vn.set(Contents.FB_GAMEPAD, 'Tay cầm')
-    
-    en.set(Contents.FB_TOUCH, 'Touch')
-    vn.set(Contents.FB_TOUCH, 'Cảm ứng')
+    en.set(Contents.FB_AMAZING, 'Amazing');
+    vn.set(Contents.FB_AMAZING, 'Tuyệt vời');
 
-    en.set(Contents.FB_CONNECT, 'Connect')
-    vn.set(Contents.FB_CONNECT, 'Kết nối')
+    en.set(Contents.FB_CONTROL, 'Control');
+    vn.set(Contents.FB_CONTROL, 'Điều khiển');
 
-    en.set(Contents.FB_BLACKSCREEN, 'Black screen')
-    vn.set(Contents.FB_BLACKSCREEN, 'Màn hình đen')
+    en.set(Contents.FB_KEYBOARD, 'Keyboard');
+    vn.set(Contents.FB_KEYBOARD, 'Bàn phím');
 
-    en.set(Contents.FB_LAG, 'Lag')
-    vn.set(Contents.FB_LAG, 'Lag')
+    en.set(Contents.FB_MOUSE, 'Mouse');
+    vn.set(Contents.FB_MOUSE, 'Chuột');
 
+    en.set(Contents.FB_GAMEPAD, 'Gamepad');
+    vn.set(Contents.FB_GAMEPAD, 'Tay cầm');
 
-    en.set(Contents.FB_NOSHOWVIDEO, 'No show video')
-    vn.set(Contents.FB_NOSHOWVIDEO, 'Không hiện máy tính')
-    
-    
-    
+    en.set(Contents.FB_TOUCH, 'Touch');
+    vn.set(Contents.FB_TOUCH, 'Cảm ứng');
 
-    en.set(Contents.FB_GAME, 'Game')
-    vn.set(Contents.FB_GAME, 'Game')
+    en.set(Contents.FB_CONNECT, 'Connect');
+    vn.set(Contents.FB_CONNECT, 'Kết nối');
 
-    en.set(Contents.FB_OTHER, 'Other')
-    vn.set(Contents.FB_OTHER, 'Khác')
-   
-    en.set(Contents.FB_ISSUE, 'You have problems with:')
-    vn.set(Contents.FB_ISSUE, 'Bạn gặp vấn đề với:')
+    en.set(Contents.FB_BLACKSCREEN, 'Black screen');
+    vn.set(Contents.FB_BLACKSCREEN, 'Màn hình đen');
 
+    en.set(Contents.FB_LAG, 'Lag');
+    vn.set(Contents.FB_LAG, 'Lag');
 
-    en.set(Contents.FB_SUBMIT, 'Submit')
-    vn.set(Contents.FB_SUBMIT, 'Gửi')
+    en.set(Contents.FB_NOSHOWVIDEO, 'No show video');
+    vn.set(Contents.FB_NOSHOWVIDEO, 'Không hiện máy tính');
 
-    en.set(Contents.FB_DETAIL, 'Detail:')
-    vn.set(Contents.FB_DETAIL, 'Chi Tiết:')
-    
+    en.set(Contents.FB_GAME, 'Game');
+    vn.set(Contents.FB_GAME, 'Game');
+
+    en.set(Contents.FB_OTHER, 'Other');
+    vn.set(Contents.FB_OTHER, 'Khác');
+
+    en.set(Contents.FB_ISSUE, 'You have problems with:');
+    vn.set(Contents.FB_ISSUE, 'Bạn gặp vấn đề với:');
+
+    en.set(Contents.FB_SUBMIT, 'Submit');
+    vn.set(Contents.FB_SUBMIT, 'Gửi');
+
+    en.set(Contents.FB_DETAIL, 'Detail:');
+    vn.set(Contents.FB_DETAIL, 'Chi Tiết:');
+
     return t;
 }
