@@ -16,10 +16,10 @@ import Battery from '../../components/shared/Battery';
 import { Icon, Image } from '../../components/shared/general';
 import './back.scss';
 
+import { UserEvents } from '../../backend/reducers/fetch/analytics';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
-import { UserEvents } from '../../backend/reducers/fetch/analytics';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -466,7 +466,10 @@ export const Getstarted = ({}) => {
         if (region == 'Vietnam') appDispatch(update_language('VN'));
         if (pageNo != pages.length) return;
 
-        if (region != 'Vietnam') setStatus(Contents.FAIL_DEMO_REGION);
+        if (region != 'Vietnam') {
+            setStatus(Contents.FAIL_DEMO_REGION);
+            appDispatch(update_language('ENG'));
+        }
         else
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
