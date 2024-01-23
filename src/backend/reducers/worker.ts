@@ -52,6 +52,7 @@ interface NewSubscription {
     email: string;
     plan: string;
     free: string;
+    price: string;
 }
 
 export const workerAsync = {
@@ -193,12 +194,13 @@ export const workerAsync = {
     create_subscription: createAsyncThunk(
         'create_subscription',
         async (data: NewSubscription): Promise<any> => {
-            const { email, plan, free } = data;
+            const { email, plan, free, price } = data;
 
             await AddSubscription({
                 email,
                 plan,
-                free
+                free,
+                price
             });
         }
     ),

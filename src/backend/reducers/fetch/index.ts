@@ -79,16 +79,20 @@ export const CreateWorkerSession = async (worker_profile_id: string) => {
 export const AddSubscription = async ({
     email,
     free,
-    plan
+    plan,
+    price
 }: {
     email: string;
     plan: string;
     free: string;
+        price: string;
+
 }) => {
     const result = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,
-        free
+        free,
+        price,
     });
     if (result instanceof Error) throw result;
     return result;
