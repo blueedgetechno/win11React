@@ -54,7 +54,9 @@ const AddSub = () => {
         const formatData = {
             email: formData.email,
             plan: formData.sub,
-            free: formData.free_sub
+            free: formData.free_sub,
+            price: formData.price
+
         };
 
         await dispatch(create_subscription(formatData));
