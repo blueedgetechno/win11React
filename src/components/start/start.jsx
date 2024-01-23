@@ -13,7 +13,7 @@ export const StartMenu = () => {
     const t = useAppSelector((state) => state.globals.translation);
     const { align } = useAppSelector((state) => state.taskbar);
     const user = useAppSelector((state) => state.user);
-    const usageTime = user?.usageTime;
+    const stats = useAppSelector((state) => state.user.stat);
 
     const start = useAppSelector((state) => state.startmenu);
     const thm = useAppSelector((state) => state.setting.person.theme);
@@ -78,13 +78,13 @@ export const StartMenu = () => {
                                 <span className="text-left">
                                     {t[Contents.STARTAT]}
                                 </span>
-                                <span>{formatDate(usageTime?.start_time)}</span>
+                                <span>{formatDate(stats?.start_time)}</span>
                             </div>
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
                                     {t[Contents.ENDAT]}
                                 </span>
-                                <span>{formatDate(usageTime?.end_time)}</span>
+                                <span>{formatDate(stats?.end_time)}</span>
                             </div>
                             <hr className="my-[14px]" />
                             <div className="w-full flex gap-4 justify-between  mt-0 md:mt-[14px]">
@@ -92,11 +92,7 @@ export const StartMenu = () => {
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {usageTime?.total_time
-                                        ? usageTime?.total_time.toFixed(1) +
-                                          '/' +
-                                          usageTime?.package
-                                        : 'Invalid'}
+                                    {stats?.total_time.toFixed(1) + 'h'}
                                 </span>
                             </div>
                         </div>

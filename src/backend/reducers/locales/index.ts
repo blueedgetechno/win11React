@@ -458,8 +458,8 @@ export function language() {
     en.set(Contents.ENDAT, 'End');
     vn.set(Contents.ENDAT, 'Ngày hết hạn');
 
-    en.set(Contents.TIME, 'Time used');
-    vn.set(Contents.TIME, 'Thời gian sử dụng');
+    en.set(Contents.TIME, 'Total usage');
+    vn.set(Contents.TIME, 'Tổng thời gian sử dụng');
 
     en.set(Contents.INACTIVEUSER, 'Account is inactive!');
     vn.set(
