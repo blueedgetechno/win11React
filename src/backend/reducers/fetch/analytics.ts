@@ -1,3 +1,4 @@
+import { getResolution } from '../../../../core/utils/platform';
 import { supabase } from './createClient';
 
 export function getOS() {
@@ -74,9 +75,11 @@ export async function UserSession(email: string) {
     const value = {
         ip,
         stack,
-        browser: getBrowser(),
         os: getOS(),
-        email: email ?? 'unknown'
+        browser: getBrowser(),
+        resolution: getResolution(),
+        email: email ?? 'unknown',
+        url: window.location.href
     };
     const { data, error } = await supabase
         .from('generic_events')
