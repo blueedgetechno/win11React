@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     appDispatch,
     menu_hide,
@@ -6,9 +6,9 @@ import {
     worker_prev
 } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
+import { customClickDispatch } from '../../../backend/utils/dispatch';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
-import { customClickDispatch } from '../../../backend/utils/dispatch';
 
 export const Worker = () => {
     const wnapp = useAppSelector((state) =>
@@ -138,7 +138,21 @@ const ContentArea = ({ searchtxt, data }) => {
 
         return list;
     };
+    const renderName = (type, id) => {
+        let name
+        let workerFound = data.cdata.find((x) => id == x.id)?.info ?? {}
+        switch (type) {
+            case 'storage':
+                name = workerFound.owner
+                break;
 
+            default:
+                name = id
+                break;
+        }
+
+        return name
+    }
     return (
         <div
             className="contentarea"
@@ -169,7 +183,7 @@ const ContentArea = ({ searchtxt, data }) => {
                                             item.info
                                         )}`}
                                     />
-                                    <span>{item.id}</span>
+                                    <span>{renderName(item.type, item.id)}</span>
                                 </div>
                             )
                         );
