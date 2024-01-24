@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { afterMath } from '../../../backend/actions';
 import {
     appDispatch,
     menu_hide,
@@ -85,6 +86,7 @@ export const Worker = () => {
 
 const ContentArea = ({ searchtxt, data }) => {
     const [selected, setSelect] = useState({});
+    const timeoutRef = useRef(null);
 
     const dispatch = appDispatch;
     const handleClick = (e) => {
@@ -110,7 +112,26 @@ const ContentArea = ({ searchtxt, data }) => {
             dispatch(worker_prev());
         }
     };
+    const handleTouchStart = (e) => {
+        afterMath(e);
+        timeoutRef.current = setTimeout(() => {
+            e.preventDefault();
+            var touch = e.touches[0] || e.changedTouches[0];
 
+            var data = {
+                top: touch.clientY,
+                left: touch.clientX
+            };
+            data.menu = e.target.dataset.menu;
+            data.dataset = { ...e.target.dataset };
+            dispatch(menu_show(data));
+        }, 300); // 1000 milliseconds = 1 second
+    };
+
+    const handleTouchEnd = () => {
+        clearTimeout(timeoutRef.current);
+        //setHolding(false);
+    };
     const renderIconName = (info) => {
         if (info.state == 'STOPPED') return 'worker_disconnect';
         if (info.state == 'RUNNING') return 'worker_connect';
@@ -177,6 +198,8 @@ const ContentArea = ({ searchtxt, data }) => {
                                     data-focus={selected.id == item.id}
                                     onClick={handleClick}
                                     onDoubleClick={handleDouble}
+                                    onTouchStart={handleTouchStart}
+                                    onTouchEnd={handleTouchEnd}
                                 >
                                     <Image
                                         src={`icon/win/${renderIconName(
