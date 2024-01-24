@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { LoginAndDemo, login } from '../../backend/actions';
+import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
     app_toggle,
     close_guidance,
+    close_remote,
     close_survey,
     update_language,
     useAppSelector,
@@ -18,6 +19,7 @@ import { UserEvents } from '../../backend/reducers/fetch/analytics';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
 import './getstarted.scss';
+import { sleep } from '../../backend/utils/sleep';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -154,6 +156,10 @@ export const Getstarted = ({}) => {
     const [result, SetResult] = useState([]);
 
     const [pageNo, setPageNo] = useState(0);
+    const [orderNumberDemo, setOrderNumberDemo] = useState(1)
+    const [waitTimeDemo, setWaitTimeDemo] = useState(5)
+    const [isDemoAllowed, setDemoAllowed] = useState(true)
+
     const nextPage = () =>
         setPageNo((old) => {
             const current = pages.at(old);
@@ -198,41 +204,51 @@ export const Getstarted = ({}) => {
     const startDemo = async () => {
         await reportSurvey();
         appDispatch(close_guidance());
-        const join_demo = await join_demo_queue();
-
-        if(join_demo == false){
-            // show ui not allow demo because have demo 1 time
-        }
-
-        const {current_demo, your_order_number, will_demo_in} = await check_wait_time_to_demo();
-
-
-
-        // await appDispatch(demo_app());
-        // await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
-        // appDispatch(close_remote());
-        // CloseDemo();
-
+        await appDispatch(demo_app());
+        await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
+        appDispatch(close_remote());
+        CloseDemo();
 
         // TODO after demo
         appDispatch(app_toggle('feedback'));
     };
 
     const join_demo_queue = async() => {
-        return await supabase
+        const demo_status = await supabase
             .rpc('join_demo_queue', 
-                { new_demo_value : {
-                    email,
-                    account_id: id,
-                    ping_demo_at: new Date().toISOString()
-                }})
-    }
+            { new_demo_value : {
+                email,
+                account_id: id,
+                ping_demo_at: new Date().toISOString()
+            }})
 
-    const check_wait_time_to_demo = async() => {
-        await supabase
-            .rpc('current_demo_user', {
-                user_id: id
-            })
+        switch (demo_status.data){
+            case 'CURRENT_DEMO': 
+                setOrderNumberDemo(0)
+                setWaitTimeDemo(0)
+            return;
+            case 'UPDATE_PING':
+            case 'JOIN_QUEUE_DEMO':
+            break;
+            case 'FINISHED_DEMO':
+                setOrderNumberDemo(999)
+                setWaitTimeDemo(999)
+                setDemoAllowed(false)
+            break;
+        }
+
+        while(true){
+            const {data, error} = await supabase
+                .rpc('current_demo_user', {
+                    user_id: id
+                })
+
+            setOrderNumberDemo(data[0]['your_order_number'])
+            setWaitTimeDemo(data[0]['will_demo_in'])
+
+            await sleep(15 * 1000)
+        }
+        
     }
 
     const [selection, Select] = useState(0);
@@ -333,7 +349,7 @@ export const Getstarted = ({}) => {
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
-            <StartDemoBtn startDemo={startDemo} />
+            <StartDemoBtn startDemo={startDemo} waitTimeDemo={waitTimeDemo} isDemoAllowed={isDemoAllowed} />
         </>
     );
     const Fail = () => (
@@ -500,9 +516,16 @@ export const Getstarted = ({}) => {
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
                 else if (data) setStatus(Contents.SURVEY_COMPLETED);
-                                else setStatus(Contents.FAIL_DEMO_TEMP);
+                else setStatus(Contents.FAIL_DEMO_TEMP);
             });
     }, [pageNo, result]);
+
+    useEffect(() => {
+        if (status != Contents.SURVEY_COMPLETED)
+            return;
+        join_demo_queue();
+
+    }, [status])
 
     return (
         <div
@@ -521,10 +544,18 @@ export const Getstarted = ({}) => {
                                 <div className="right">
                                     <div className="header mb-8">
 
-                                        {status == Contents.SURVEY_COMPLETED ? <>
-                                            <h3 className='text-3xl'>{t[Contents.DEMO_QUEUED]} 3</h3>
+                                        {status == Contents.SURVEY_COMPLETED ? 
+                                        (isDemoAllowed ? 
+                                        <>
+                                            <h3 className='text-3xl'>{t[Contents.DEMO_QUEUED]} {orderNumberDemo}</h3>
                                             <p className='text-base italic'>{t[Contents.DEMO_NOTE]}</p>
-                                        </> : t[status]}
+                                        </>:
+                                        <>
+                                            <h3 className='text-3xl'>{t[Contents.ALREADY_DEMO]}</h3>
+                                        </>
+                                        )
+                                        
+                                        : t[status]}
                                     </div>
                                     {status == Contents.SURVEY_COMPLETED ? (
                                         <Finish />
@@ -545,9 +576,9 @@ export const Getstarted = ({}) => {
     );
 };
 
-const StartDemoBtn = ({ startDemo }) => {
+const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed }) => {
     const [isDemoStarted, setIsDemoStarted] = useState(false);
-    const [countdown, setCountdown] = useState(10);
+    const [countdown, setCountdown] = useState(parseInt(waitTimeDemo*60));
     const t = useAppSelector((state) => state.globals.translation);
 
     useEffect(() => {
@@ -561,6 +592,7 @@ const StartDemoBtn = ({ startDemo }) => {
         }
     }, [isDemoStarted, countdown]);
 
+
     useEffect(() => {
         if (countdown === 0) {
             setIsDemoStarted(true);
@@ -570,14 +602,22 @@ const StartDemoBtn = ({ startDemo }) => {
 
     return (
         <div>
-            {isDemoStarted ? (
+            {
+            isDemoStarted ? (
                 <div className="base yes_button" onClick={startDemo}>
                     {t[Contents.START_DEMO]}
                 </div>
-            ) : (
+            ) : 
+            (
+                isDemoAllowed ? (
                 <div className="no_button" style={{ right: '39px' }}>
                     {t[Contents.READ_USER_MANUAL]} {countdown}s
                 </div>
+                ) : (
+                <div className="no_button base" style={{ right: '39px' }}>
+                    {t[Contents.EXPLORE_WEB]}
+                </div>
+                )
             )}
         </div>
     );
