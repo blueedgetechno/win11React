@@ -6,6 +6,7 @@ import {
     close_guidance,
     close_remote,
     close_survey,
+    demo_app,
     update_language,
     useAppSelector,
     wall_unlock
