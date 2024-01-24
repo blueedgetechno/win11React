@@ -159,7 +159,9 @@ export enum Contents {
     FB_OTHER,
     FB_ISSUE,
     FB_SUBMIT,
-    FB_DETAIL
+    FB_DETAIL,
+    DEMO_QUEUED,
+    DEMO_NOTE
 }
 
 export function language() {
@@ -807,5 +809,10 @@ export function language() {
     en.set(Contents.FB_DETAIL, 'Detail:');
     vn.set(Contents.FB_DETAIL, 'Chi Tiết:');
 
+    en.set(Contents.DEMO_QUEUED, 'Your demo turns are:');
+    vn.set(Contents.DEMO_QUEUED, 'Lượt demo của bạn là:');
+
+    en.set(Contents.DEMO_NOTE, '*Exiting the page will forfeit the demo turn.');
+    vn.set(Contents.DEMO_NOTE, '*Thoát trang sẽ mất lượt demo');
     return t;
 }

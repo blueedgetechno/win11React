@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
+import { LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
     app_toggle,
     close_guidance,
-    close_remote,
     close_survey,
-    demo_app,
     update_language,
     useAppSelector,
     wall_unlock
@@ -328,7 +326,7 @@ export const Getstarted = ({}) => {
 
     const Finish = () => (
         <>
-            <div className="base text-xm font-semibold">
+            <div className="base text-xl font-semibold">
                 {t[Contents.DEMO_TUTORIAL_HEAD]}
             </div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_2]}</div>
@@ -522,7 +520,11 @@ export const Getstarted = ({}) => {
                                 <Logo />
                                 <div className="right">
                                     <div className="header mb-8">
-                                        {t[status]}
+
+                                        {status == Contents.SURVEY_COMPLETED ? <>
+                                            <h3 className='text-3xl'>{t[Contents.DEMO_QUEUED]} 3</h3>
+                                            <p className='text-base italic'>{t[Contents.DEMO_NOTE]}</p>
+                                        </> : t[status]}
                                     </div>
                                     {status == Contents.SURVEY_COMPLETED ? (
                                         <Finish />
