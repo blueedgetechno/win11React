@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { afterMath } from '../../../backend/actions';
 import {
     appDispatch,
     menu_hide,
@@ -6,9 +7,9 @@ import {
     worker_prev
 } from '../../../backend/reducers';
 import { combineText } from '../../../backend/utils/combineText';
+import { customClickDispatch } from '../../../backend/utils/dispatch';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
 import './assets/fileexpo.scss';
-import { customClickDispatch } from '../../../backend/utils/dispatch';
 
 export const Worker = () => {
     const wnapp = useAppSelector((state) =>
@@ -85,6 +86,7 @@ export const Worker = () => {
 
 const ContentArea = ({ searchtxt, data }) => {
     const [selected, setSelect] = useState({});
+    const timeoutRef = useRef(null);
 
     const dispatch = appDispatch;
     const handleClick = (e) => {
@@ -110,7 +112,26 @@ const ContentArea = ({ searchtxt, data }) => {
             dispatch(worker_prev());
         }
     };
+    const handleTouchStart = (e) => {
+        afterMath(e);
+        timeoutRef.current = setTimeout(() => {
+            e.preventDefault();
+            var touch = e.touches[0] || e.changedTouches[0];
 
+            var data = {
+                top: touch.clientY,
+                left: touch.clientX
+            };
+            data.menu = e.target.dataset.menu;
+            data.dataset = { ...e.target.dataset };
+            dispatch(menu_show(data));
+        }, 300); // 1000 milliseconds = 1 second
+    };
+
+    const handleTouchEnd = () => {
+        clearTimeout(timeoutRef.current);
+        //setHolding(false);
+    };
     const renderIconName = (info) => {
         if (info.state == 'STOPPED') return 'worker_disconnect';
         if (info.state == 'RUNNING') return 'worker_connect';
@@ -138,7 +159,21 @@ const ContentArea = ({ searchtxt, data }) => {
 
         return list;
     };
+    const renderName = (type, id) => {
+        let name
+        let workerFound = data.cdata.find((x) => id == x.id)?.info ?? {}
+        switch (type) {
+            case 'storage':
+                name = workerFound.owner
+                break;
 
+            default:
+                name = id
+                break;
+        }
+
+        return name
+    }
     return (
         <div
             className="contentarea"
@@ -163,13 +198,15 @@ const ContentArea = ({ searchtxt, data }) => {
                                     data-focus={selected.id == item.id}
                                     onClick={handleClick}
                                     onDoubleClick={handleDouble}
+                                    onTouchStart={handleTouchStart}
+                                    onTouchEnd={handleTouchEnd}
                                 >
                                     <Image
                                         src={`icon/win/${renderIconName(
                                             item.info
                                         )}`}
                                     />
-                                    <span>{item.id}</span>
+                                    <span>{renderName(item.type, item.id)}</span>
                                 </div>
                             )
                         );

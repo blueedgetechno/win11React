@@ -229,6 +229,13 @@
   }
 }
 
+@media (1px < width < 700px) {
+  .contentarea{
+    .subinfo{
+      display: none;
+    }
+  }
+}
 .contentarea {
   display: flex;
 
