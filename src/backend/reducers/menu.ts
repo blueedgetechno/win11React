@@ -120,7 +120,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Detail',
-                        action: 'showWorkerDetail' // TODO
+                        action: 'viewDetail' // TODO
                     }
                 ]
             };
@@ -160,7 +160,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Detail',
-                        action: 'showWorkerDetail' // TODO
+                        action: 'viewDetail' // TODO
                     }
                 ]
             };
