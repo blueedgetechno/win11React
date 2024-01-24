@@ -200,13 +200,42 @@ export const Getstarted = ({}) => {
     const startDemo = async () => {
         await reportSurvey();
         appDispatch(close_guidance());
-        await appDispatch(demo_app());
-        await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
-        appDispatch(close_remote());
-        CloseDemo();
+        const join_demo = await join_demo_queue();
+
+        if(join_demo == false){
+            // show ui not allow demo because have demo 1 time
+        }
+
+        const {current_demo, your_order_number, will_demo_in} = await check_wait_time_to_demo();
+
+
+
+        // await appDispatch(demo_app());
+        // await new Promise((r) => setTimeout(r, 10 * 60 * 1000));
+        // appDispatch(close_remote());
+        // CloseDemo();
+
+
         // TODO after demo
         appDispatch(app_toggle('feedback'));
     };
+
+    const join_demo_queue = async() => {
+        return await supabase
+            .rpc('join_demo_queue', 
+                { new_demo_value : {
+                    email,
+                    account_id: id,
+                    ping_demo_at: new Date().toISOString()
+                }})
+    }
+
+    const check_wait_time_to_demo = async() => {
+        await supabase
+            .rpc('current_demo_user', {
+                user_id: id
+            })
+    }
 
     const [selection, Select] = useState(0);
     useEffect(() => {
@@ -473,7 +502,7 @@ export const Getstarted = ({}) => {
             virtapi('rpc/demo_is_active').then(({ data, error }) => {
                 if (error) setStatus(Contents.FAIL_DEMO_TEMP);
                 else if (data) setStatus(Contents.SURVEY_COMPLETED);
-                else setStatus(Contents.FAIL_DEMO_TEMP);
+                                else setStatus(Contents.FAIL_DEMO_TEMP);
             });
     }, [pageNo, result]);
 
