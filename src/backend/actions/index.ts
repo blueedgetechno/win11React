@@ -149,6 +149,24 @@ export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
 
+export const loginWithEmail(email,password){
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+    })
+}
+
+export const signUpWithEmail(email, password){
+    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
+    const { data, error } = await supabase.auth.signUp({
+        email: email
+        password: password,
+        options: {
+          emailRedirectTo: redirectTo
+        }
+      })
+}
+
 export const login = async () => {
     localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
