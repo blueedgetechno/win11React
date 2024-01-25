@@ -56,7 +56,6 @@ const AddSub = () => {
             plan: formData.sub,
             free: formData.free_sub,
             price: formData.price
-
         };
 
         await dispatch(create_subscription(formatData));

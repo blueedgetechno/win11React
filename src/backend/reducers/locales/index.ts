@@ -816,10 +816,8 @@ export function language() {
     en.set(Contents.DEMO_NOTE, '*Exiting the page will forfeit the demo turn.');
     vn.set(Contents.DEMO_NOTE, '*Thoát trang sẽ mất lượt demo');
 
-
     en.set(Contents.ALREADY_DEMO, 'You are already demo services');
     vn.set(Contents.ALREADY_DEMO, 'Bạn đã demo rồi 😎');
 
-    
     return t;
 }

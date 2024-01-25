@@ -157,9 +157,9 @@ export const Getstarted = ({}) => {
     const [result, SetResult] = useState([]);
 
     const [pageNo, setPageNo] = useState(0);
-    const [orderNumberDemo, setOrderNumberDemo] = useState(1)
-    const [waitTimeDemo, setWaitTimeDemo] = useState(5)
-    const [isDemoAllowed, setDemoAllowed] = useState(true)
+    const [orderNumberDemo, setOrderNumberDemo] = useState(1);
+    const [waitTimeDemo, setWaitTimeDemo] = useState(5);
+    const [isDemoAllowed, setDemoAllowed] = useState(true);
 
     const nextPage = () =>
         setPageNo((old) => {
@@ -214,43 +214,41 @@ export const Getstarted = ({}) => {
         appDispatch(app_toggle('feedback'));
     };
 
-    const join_demo_queue = async() => {
-        const demo_status = await supabase
-            .rpc('join_demo_queue', 
-            { new_demo_value : {
+    const join_demo_queue = async () => {
+        const demo_status = await supabase.rpc('join_demo_queue', {
+            new_demo_value: {
                 email,
                 account_id: id,
                 ping_demo_at: new Date().toISOString()
-            }})
+            }
+        });
 
-        switch (demo_status.data){
-            case 'CURRENT_DEMO': 
-                setOrderNumberDemo(0)
-                setWaitTimeDemo(0)
-            return;
+        switch (demo_status.data) {
+            case 'CURRENT_DEMO':
+                setOrderNumberDemo(0);
+                setWaitTimeDemo(0);
+                return;
             case 'UPDATE_PING':
             case 'JOIN_QUEUE_DEMO':
-            break;
+                break;
             case 'FINISHED_DEMO':
-                setOrderNumberDemo(999)
-                setWaitTimeDemo(999)
-                setDemoAllowed(false)
-            break;
+                setOrderNumberDemo(999);
+                setWaitTimeDemo(999);
+                setDemoAllowed(false);
+                break;
         }
 
-        while(true){
-            const {data, error} = await supabase
-                .rpc('current_demo_user', {
-                    user_id: id
-                })
+        while (true) {
+            const { data, error } = await supabase.rpc('current_demo_user', {
+                user_id: id
+            });
 
-            setOrderNumberDemo(data[0]['your_order_number'])
-            setWaitTimeDemo(data[0]['will_demo_in'])
+            setOrderNumberDemo(data[0]['your_order_number']);
+            setWaitTimeDemo(data[0]['will_demo_in']);
 
-            await sleep(15 * 1000)
+            await sleep(15 * 1000);
         }
-        
-    }
+    };
 
     const [selection, Select] = useState(0);
     useEffect(() => {
@@ -350,7 +348,11 @@ export const Getstarted = ({}) => {
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_3]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_4]}</div>
             <div className="base mt-2">{t[Contents.DEMO_TUTORIAL_5]}</div>
-            <StartDemoBtn startDemo={startDemo} waitTimeDemo={waitTimeDemo} isDemoAllowed={isDemoAllowed} />
+            <StartDemoBtn
+                startDemo={startDemo}
+                waitTimeDemo={waitTimeDemo}
+                isDemoAllowed={isDemoAllowed}
+            />
         </>
     );
     const Fail = () => (
@@ -522,11 +524,9 @@ export const Getstarted = ({}) => {
     }, [pageNo, result]);
 
     useEffect(() => {
-        if (status != Contents.SURVEY_COMPLETED)
-            return;
+        if (status != Contents.SURVEY_COMPLETED) return;
         join_demo_queue();
-
-    }, [status])
+    }, [status]);
 
     return (
         <div
@@ -544,19 +544,37 @@ export const Getstarted = ({}) => {
                                 <Logo />
                                 <div className="right">
                                     <div className="header mb-8">
-
-                                        {status == Contents.SURVEY_COMPLETED ? 
-                                        (isDemoAllowed ? 
-                                        <>
-                                            <h3 className='text-3xl'>{t[Contents.DEMO_QUEUED]} {orderNumberDemo}</h3>
-                                            <p className='text-base italic'>{t[Contents.DEMO_NOTE]}</p>
-                                        </>:
-                                        <>
-                                            <h3 className='text-3xl'>{t[Contents.ALREADY_DEMO]}</h3>
-                                        </>
-                                        )
-                                        
-                                        : t[status]}
+                                        {status == Contents.SURVEY_COMPLETED ? (
+                                            isDemoAllowed ? (
+                                                <>
+                                                    <h3 className="text-3xl">
+                                                        {
+                                                            t[
+                                                                Contents
+                                                                    .DEMO_QUEUED
+                                                            ]
+                                                        }{' '}
+                                                        {orderNumberDemo}
+                                                    </h3>
+                                                    <p className="text-base italic">
+                                                        {t[Contents.DEMO_NOTE]}
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <h3 className="text-3xl">
+                                                        {
+                                                            t[
+                                                                Contents
+                                                                    .ALREADY_DEMO
+                                                            ]
+                                                        }
+                                                    </h3>
+                                                </>
+                                            )
+                                        ) : (
+                                            t[status]
+                                        )}
                                     </div>
                                     {status == Contents.SURVEY_COMPLETED ? (
                                         <Finish />
@@ -579,7 +597,7 @@ export const Getstarted = ({}) => {
 
 const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed }) => {
     const [isDemoStarted, setIsDemoStarted] = useState(false);
-    const [countdown, setCountdown] = useState(parseInt(waitTimeDemo*60));
+    const [countdown, setCountdown] = useState(parseInt(waitTimeDemo * 60));
     const t = useAppSelector((state) => state.globals.translation);
 
     useEffect(() => {
@@ -593,7 +611,6 @@ const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed }) => {
         }
     }, [isDemoStarted, countdown]);
 
-
     useEffect(() => {
         if (countdown === 0) {
             setIsDemoStarted(true);
@@ -603,22 +620,18 @@ const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed }) => {
 
     return (
         <div>
-            {
-            isDemoStarted ? (
+            {isDemoStarted ? (
                 <div className="base yes_button" onClick={startDemo}>
                     {t[Contents.START_DEMO]}
                 </div>
-            ) : 
-            (
-                isDemoAllowed ? (
+            ) : isDemoAllowed ? (
                 <div className="no_button" style={{ right: '39px' }}>
                     {t[Contents.READ_USER_MANUAL]} {countdown}s
                 </div>
-                ) : (
+            ) : (
                 <div className="no_button base" style={{ right: '39px' }}>
                     {t[Contents.EXPLORE_WEB]}
                 </div>
-                )
             )}
         </div>
     );
