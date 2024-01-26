@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
+import { CloseDemo, login } from '../../backend/actions';
 import {
     appDispatch,
     app_toggle,
@@ -19,8 +19,8 @@ import './back.scss';
 import { UserEvents } from '../../backend/reducers/fetch/analytics';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
-import './getstarted.scss';
 import { sleep } from '../../backend/utils/sleep';
+import './getstarted.scss';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -160,6 +160,7 @@ export const Getstarted = ({}) => {
     const [orderNumberDemo, setOrderNumberDemo] = useState(1);
     const [waitTimeDemo, setWaitTimeDemo] = useState(5);
     const [isDemoAllowed, setDemoAllowed] = useState(true);
+    const [selectLoginOption, setSelectLoginOption] = useState(false);
 
     const nextPage = () =>
         setPageNo((old) => {
@@ -382,18 +383,40 @@ export const Getstarted = ({}) => {
         </>
     );
 
-    const Signup = () => (
-        <>
-            <div className="no_button base" onClick={login}>
-                {t[Contents.HAVE_ACCOUNT]}
-                {', '}
-                {t[Contents.SIGN_IN]}
-            </div>
-            <div className="yes_button base" onClick={LoginAndDemo}>
-                {t[Contents.DEMO]}
-            </div>
-        </>
-    );
+    const Signup = () =>
+        selectLoginOption ? (
+            <>
+                <div className="base no_button">
+                    <Icon src="facebook" width={40} />
+                </div>
+                <div className="base no_button">
+                    <Icon src="discord" width={40} />
+                </div>
+                <div className="base no_button">
+                    <Icon src="google" width={40} />
+                </div>
+            </>
+        ) : (
+            <>
+                <div
+                    className="no_button base"
+                    onClick={() => setSelectLoginOption(true)}
+
+                    // login
+                >
+                    {t[Contents.HAVE_ACCOUNT]}
+                    {', '}
+                    {t[Contents.SIGN_IN]}
+                </div>
+                <div
+                    className="yes_button base"
+                    onClick={() => setSelectLoginOption(true)}
+                    // LoginAndDemo
+                >
+                    {t[Contents.DEMO]}
+                </div>
+            </>
+        );
 
     const Logo = () => (
         <div className="left">
