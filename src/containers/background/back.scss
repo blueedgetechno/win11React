@@ -154,6 +154,21 @@
       background: rgba(255, 255, 255, 0.33);
     }
   }
+
+  .ctn_btn_login{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    button{
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      :hover{
+        opacity: 0.7;
+      }
+    }
+  }
 }
 
 .lockOpt {

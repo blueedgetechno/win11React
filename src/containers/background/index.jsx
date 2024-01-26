@@ -19,8 +19,8 @@ import './back.scss';
 import { UserEvents } from '../../backend/reducers/fetch/analytics';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
-import './getstarted.scss';
 import { sleep } from '../../backend/utils/sleep';
+import './getstarted.scss';
 
 export const Background = () => {
     const wall = useAppSelector((state) => state.wallpaper);
@@ -64,7 +64,7 @@ export const LockScreen = () => {
         setLock(true);
     };
 
-    const proceed = async () => {
+    const proceed = async (provider) => {
         if (user.id != 'unknown') {
             setUnLock(true);
             dispatch(wall_unlock());
@@ -72,7 +72,7 @@ export const LockScreen = () => {
             return;
         }
 
-        await login();
+        await login(provider);
     };
 
     return (
@@ -116,11 +116,43 @@ export const LockScreen = () => {
                 <div className="mt-2 text-2xl font-medium text-gray-200">
                     {user?.email ?? ''}
                 </div>
-                <div
-                    className="flex items-center mt-6 signInBtn"
-                    onClick={proceed}
+                {/*<
                 >
                     {user.id != 'unknown' ? ' Enter' : 'Continue with Google'}
+                </>*/}
+
+                <div className="ctn_btn_login mt-8">
+                    {user?.id != 'unknown' ? (
+                        <div
+                            className="flex items-center mt-6 signInBtn"
+                            onClick={proceed}
+                        >
+                            Enter
+                        </div>
+                    ) : (
+                        <>
+                            <span className="text-base text-white font-medium">
+                                Continue with
+                            </span>
+                            <div className="flex gap-[8px]">
+                                {/* <button className="base fb_button">
+                                        <Icon src="facebook1" width={64} />
+                                    </button> */}
+                                <button
+                                    className="base discord_button"
+                                    onClick={() => proceed('discord')}
+                                >
+                                    <Icon src="discord" width={64} />
+                                </button>
+                                <button
+                                    className="base gg_button"
+                                    onClick={() => proceed('google')}
+                                >
+                                    <Icon src="google" width={64} />
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -160,6 +192,9 @@ export const Getstarted = ({}) => {
     const [orderNumberDemo, setOrderNumberDemo] = useState(1);
     const [waitTimeDemo, setWaitTimeDemo] = useState(5);
     const [isDemoAllowed, setDemoAllowed] = useState(true);
+    const [selectLoginOption, setSelectLoginOption] = useState(
+        'DEMO' | 'INUSE'
+    );
 
     const nextPage = () =>
         setPageNo((old) => {
@@ -247,6 +282,14 @@ export const Getstarted = ({}) => {
             setWaitTimeDemo(data[0]['will_demo_in']);
 
             await sleep(15 * 1000);
+        }
+    };
+
+    const login_process = async (provider) => {
+        if (selectLoginOption == 'INUSE') {
+            login(provider);
+        } else if (selectLoginOption == 'DEMO') {
+            LoginAndDemo(provider);
         }
     };
 
@@ -382,18 +425,49 @@ export const Getstarted = ({}) => {
         </>
     );
 
-    const Signup = () => (
-        <>
-            <div className="no_button base" onClick={login}>
-                {t[Contents.HAVE_ACCOUNT]}
-                {', '}
-                {t[Contents.SIGN_IN]}
+    const Signup = () =>
+        selectLoginOption ? (
+            <div className="ctn_login_btn">
+                <span className="text-base">Continue with</span>
+                <div className="flex gap-[8px]">
+                    {/* <button className="base fb_button" onClick={() => login_process("facebook")}>
+                        <Icon src="facebook1" width={40} />
+                    </button> */}
+                    <button
+                        className="base discord_button"
+                        onClick={() => login_process('discord')}
+                    >
+                        <Icon src="discord" width={40} />
+                    </button>
+                    <button
+                        className="base gg_button"
+                        onClick={() => login_process('google')}
+                    >
+                        <Icon src="google" width={40} />
+                    </button>
+                </div>
             </div>
-            <div className="yes_button base" onClick={LoginAndDemo}>
-                {t[Contents.DEMO]}
-            </div>
-        </>
-    );
+        ) : (
+            <>
+                <div
+                    className="no_button base"
+                    onClick={() => setSelectLoginOption('INUSE')}
+
+                    // login
+                >
+                    {t[Contents.HAVE_ACCOUNT]}
+                    {', '}
+                    {t[Contents.SIGN_IN]}
+                </div>
+                <div
+                    className="yes_button base"
+                    onClick={() => setSelectLoginOption('DEMO')}
+                    // LoginAndDemo
+                >
+                    {t[Contents.DEMO]}
+                </div>
+            </>
+        );
 
     const Logo = () => (
         <div className="left">

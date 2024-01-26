@@ -160,20 +160,20 @@ const ContentArea = ({ searchtxt, data }) => {
         return list;
     };
     const renderName = (type, id) => {
-        let name
-        let workerFound = data.cdata.find((x) => id == x.id)?.info ?? {}
+        let name;
+        let workerFound = data.cdata.find((x) => id == x.id)?.info ?? {};
         switch (type) {
             case 'storage':
-                name = workerFound.owner
+                name = workerFound.owner;
                 break;
 
             default:
-                name = id
+                name = id;
                 break;
         }
 
-        return name
-    }
+        return name;
+    };
     return (
         <div
             className="contentarea"
@@ -206,7 +206,9 @@ const ContentArea = ({ searchtxt, data }) => {
                                             item.info
                                         )}`}
                                     />
-                                    <span>{renderName(item.type, item.id)}</span>
+                                    <span>
+                                        {renderName(item.type, item.id)}
+                                    </span>
                                 </div>
                             )
                         );

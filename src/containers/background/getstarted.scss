@@ -129,6 +129,33 @@
     }
   }
 
+  .ctn_login_btn {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    //background: var(--clrPrm);
+    //color: var(--alt-txt);
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+    position: absolute;
+    font-size: 14px;
+    font-weight: 500;
+    right: 9%;
+    //animation: transition_effect 1.4s;
+    bottom: 37px;
+
+    button{
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      :hover{
+        opacity: 0.9;
+      }
+    }
+  }
+
   .setup_settings {
     display: flex;
     position: absolute;

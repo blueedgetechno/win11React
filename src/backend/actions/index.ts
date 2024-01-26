@@ -149,17 +149,38 @@ export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
 
-export const login = async () => {
+export const loginWithEmail = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+};
+
+export const signUpWithEmail = async (email: string, password: string) => {
+    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            emailRedirectTo: redirectTo
+        }
+    });
+};
+
+export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: provider,
         options: {
             redirectTo,
-            queryParams: {
-                access_type: 'offline'
-                // prompt: 'consent'
-            }
+            queryParams:
+                provider == 'google'
+                    ? {
+                          access_type: 'offline'
+                          // prompt: 'consent'
+                      }
+                    : undefined
         }
     });
     if (error) {
@@ -167,9 +188,9 @@ export const login = async () => {
     }
 };
 
-export function LoginAndDemo() {
+export function LoginAndDemo(provider: 'google' | 'facebook' | 'discord') {
     localStorage.setItem('THINKMAY_DEMO', 'TRUE');
-    login();
+    login(provider);
 }
 export function FirstTime(): boolean {
     return (
@@ -234,10 +255,8 @@ export const showAddSubscription = () => {
     );
 };
 
-
 export const showWorkerDetail = (id) => {
-
-    const modalData = store.getState().worker.cdata.find((x) => id == x.id)
+    const modalData = store.getState().worker.cdata.find((x) => id == x.id);
 
     appDispatch(
         popup_open({
@@ -245,4 +264,4 @@ export const showWorkerDetail = (id) => {
             data: modalData
         })
     );
-}
+};

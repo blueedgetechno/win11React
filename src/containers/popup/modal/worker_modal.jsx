@@ -16,9 +16,9 @@ export const worker_modal = (info) => {
                     :<span> {typeof data[key] !== 'object' && data[key]}</span>
                     <div
                         style={{
-                            padding: 16,
+                            padding: 16
                         }}
-                        className='bg-slate-500'
+                        className="bg-slate-500"
                     >
                         {typeof data[key] == 'object' &&
                             renderDetailWorker(data[key])}
@@ -30,6 +30,9 @@ export const worker_modal = (info) => {
         return list;
     };
 
-    return <div className="max-h-[70vh] bg-slate-500">{renderDetailWorker(info)}</div>;
+    return (
+        <div className="max-h-[70vh] bg-slate-500">
+            {renderDetailWorker(info)}
+        </div>
+    );
 };
-
