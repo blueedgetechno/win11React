@@ -251,3 +251,16 @@ export const showAddSubscription = () => {
         })
     );
 };
+
+
+export const showWorkerDetail = (id) => {
+
+    const modalData = store.getState().worker.cdata.find((x) => id == x.id)
+
+    appDispatch(
+        popup_open({
+            type: 'worker_modal',
+            data: modalData
+        })
+    );
+}
