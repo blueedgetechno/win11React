@@ -116,11 +116,37 @@ export const LockScreen = () => {
                 <div className="mt-2 text-2xl font-medium text-gray-200">
                     {user?.email ?? ''}
                 </div>
-                <div
-                    className="flex items-center mt-6 signInBtn"
-                    onClick={proceed}
+                {/*<
                 >
                     {user.id != 'unknown' ? ' Enter' : 'Continue with Google'}
+                </>*/}
+
+                <div className='ctn_btn_login mt-8'>
+                    {
+                        user?.id != 'unknown' ? 
+                            <div
+                                className="flex items-center mt-6 signInBtn"
+                                onClick={proceed}
+                            >
+                                Enter
+                            </div>
+                            :
+                            <>
+                                <span className='text-base text-white font-medium'>Continue with</span>
+                                <div className='flex gap-[8px]'>
+                                    <button className="base fb_button">
+                                        <Icon src="facebook.webp" width={64} />
+                                    </button>
+                                    <button className="base discord_button">
+                                        <Icon src="discord" width={64} />
+                                    </button>
+                                    <button className="base gg_button">
+                                        <Icon src="google" width={64} />
+                                    </button>
+                                </div>
+                            </>
+                    }
+
                 </div>
             </div>
 
@@ -385,17 +411,20 @@ export const Getstarted = ({}) => {
 
     const Signup = () =>
         selectLoginOption ? (
-            <>
-                <div className="base no_button">
-                    <Icon src="facebook" width={40} />
+            <div className='ctn_login_btn'>
+                <span className='text-base'>Continue with</span>
+                <div className='flex gap-[8px]'>
+                    <button className="base fb_button">
+                        <Icon src="facebook.webp" width={40} />
+                    </button>
+                    <button className="base discord_button">
+                        <Icon src="discord" width={40} />
+                    </button>
+                    <button className="base gg_button">
+                        <Icon src="google" width={40} />
+                    </button>
                 </div>
-                <div className="base no_button">
-                    <Icon src="discord" width={40} />
-                </div>
-                <div className="base no_button">
-                    <Icon src="google" width={40} />
-                </div>
-            </>
+            </div>
         ) : (
             <>
                 <div
