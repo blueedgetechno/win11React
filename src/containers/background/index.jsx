@@ -64,7 +64,7 @@ export const LockScreen = () => {
         setLock(true);
     };
 
-    const proceed = async () => {
+    const proceed = async (provider) => {
         if (user.id != 'unknown') {
             setUnLock(true);
             dispatch(wall_unlock());
@@ -72,7 +72,7 @@ export const LockScreen = () => {
             return;
         }
 
-        await login();
+        await login(provider);
     };
 
     return (
@@ -121,32 +121,38 @@ export const LockScreen = () => {
                     {user.id != 'unknown' ? ' Enter' : 'Continue with Google'}
                 </>*/}
 
-                <div className='ctn_btn_login mt-8'>
-                    {
-                        user?.id != 'unknown' ? 
-                            <div
-                                className="flex items-center mt-6 signInBtn"
-                                onClick={proceed}
-                            >
-                                Enter
-                            </div>
-                            :
-                            <>
-                                <span className='text-base text-white font-medium'>Continue with</span>
-                                <div className='flex gap-[8px]'>
-                                    <button className="base fb_button">
+                <div className="ctn_btn_login mt-8">
+                    {user?.id != 'unknown' ? (
+                        <div
+                            className="flex items-center mt-6 signInBtn"
+                            onClick={proceed}
+                        >
+                            Enter
+                        </div>
+                    ) : (
+                        <>
+                            <span className="text-base text-white font-medium">
+                                Continue with
+                            </span>
+                            <div className="flex gap-[8px]">
+                                {/* <button className="base fb_button">
                                         <Icon src="facebook1" width={64} />
-                                    </button>
-                                    <button className="base discord_button">
-                                        <Icon src="discord" width={64} />
-                                    </button>
-                                    <button className="base gg_button">
-                                        <Icon src="google" width={64} />
-                                    </button>
-                                </div>
-                            </>
-                    }
-
+                                    </button> */}
+                                <button
+                                    className="base discord_button"
+                                    onClick={() => proceed('discord')}
+                                >
+                                    <Icon src="discord" width={64} />
+                                </button>
+                                <button
+                                    className="base gg_button"
+                                    onClick={() => proceed('google')}
+                                >
+                                    <Icon src="google" width={64} />
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -186,7 +192,9 @@ export const Getstarted = ({}) => {
     const [orderNumberDemo, setOrderNumberDemo] = useState(1);
     const [waitTimeDemo, setWaitTimeDemo] = useState(5);
     const [isDemoAllowed, setDemoAllowed] = useState(true);
-    const [selectLoginOption, setSelectLoginOption] = useState('DEMO'|'INUSE');
+    const [selectLoginOption, setSelectLoginOption] = useState(
+        'DEMO' | 'INUSE'
+    );
 
     const nextPage = () =>
         setPageNo((old) => {
@@ -277,13 +285,13 @@ export const Getstarted = ({}) => {
         }
     };
 
-    const login_process = async(provider) => {
-        if(selectLoginOption == 'INUSE'){
-            login(provider )
-        } else if (selectLoginOption == 'DEMO'){
-            LoginAndDemo(provider)
+    const login_process = async (provider) => {
+        if (selectLoginOption == 'INUSE') {
+            login(provider);
+        } else if (selectLoginOption == 'DEMO') {
+            LoginAndDemo(provider);
         }
-    }
+    };
 
     const [selection, Select] = useState(0);
     useEffect(() => {
@@ -419,16 +427,22 @@ export const Getstarted = ({}) => {
 
     const Signup = () =>
         selectLoginOption ? (
-            <div className='ctn_login_btn'>
-                <span className='text-base'>Continue with</span>
-                <div className='flex gap-[8px]'>
+            <div className="ctn_login_btn">
+                <span className="text-base">Continue with</span>
+                <div className="flex gap-[8px]">
                     {/* <button className="base fb_button" onClick={() => login_process("facebook")}>
                         <Icon src="facebook1" width={40} />
                     </button> */}
-                    <button className="base discord_button" onClick={() => login_process("discord")}>
+                    <button
+                        className="base discord_button"
+                        onClick={() => login_process('discord')}
+                    >
                         <Icon src="discord" width={40} />
                     </button>
-                    <button className="base gg_button" onClick={() => login_process("google")}>
+                    <button
+                        className="base gg_button"
+                        onClick={() => login_process('google')}
+                    >
                         <Icon src="google" width={40} />
                     </button>
                 </div>

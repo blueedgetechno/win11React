@@ -30,11 +30,11 @@ type PopupData =
     | {
           type: 'user_config';
           data: any;
-    }
+      }
     | {
-        type: 'worker_modal';
-        data: any;
-    };
+          type: 'worker_modal';
+          data: any;
+      };
 
 type Data = {
     data_stack: PopupData[];
