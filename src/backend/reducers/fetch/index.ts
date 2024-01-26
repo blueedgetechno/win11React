@@ -79,31 +79,32 @@ export const CreateWorkerSession = async (worker_profile_id: string) => {
 export const AddSubscription = async ({
     email,
     free,
-    plan
+    plan,
+    price
 }: {
     email: string;
     plan: string;
     free: string;
+    price: string;
 }) => {
     const result = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,
-        free
+        free,
+        price
     });
     if (result instanceof Error) throw result;
     return result;
 };
 
-/**
- *
- * @param {'CANCEL' | 'RENEW' | 'UPGRADE'} action
- * @param {string} email
- * @returns
- */
-export const ModifySubscription = async (input: {
-    action: string;
+export interface IModifySubscriptionAction {
+    action: 'CANCEL' | 'RENEW' | 'UPGRADE' | 'ADJUST';
     email: string;
-}) => {
+    created_at?: string;
+    ends_at?: string;
+    price_upgrade?: string;
+}
+export const ModifySubscription = async (input: IModifySubscriptionAction) => {
     const result = await SupabaseFuncInvoke('modify_subscription', {
         ...input
     });

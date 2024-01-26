@@ -120,7 +120,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Detail',
-                        action: 'viewDetail' // TODO
+                        action: 'showWorkerDetail' // TODO
                     }
                 ]
             };
@@ -160,7 +160,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     },
                     {
                         name: 'Detail',
-                        action: 'viewDetail' // TODO
+                        action: 'showWorkerDetail' // TODO
                     }
                 ]
             };
@@ -325,10 +325,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     {
                         name: 'Upgrade',
                         action: 'showUpdateSubscription'
-                    },
-                    {
-                        name: 'Adjust',
-                        action: 'adjust_subscription'
                     },
                     {
                         name: 'Cancel',

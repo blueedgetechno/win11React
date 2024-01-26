@@ -14,11 +14,13 @@ const Popup = () => {
                 (x) => x.type == 'complete' && !x.data.success
             ) ??
             state.popup.data_stack.find((x) => x.type == 'notify') ??
-            state.popup.data_stack.at(-1)
+            state.popup.data_stack.at 
+            ? state.popup.data_stack.at(-1)
+            : undefined
     );
 
     const closeModal = () => {
-        popup.type == 'guidance' || popup.type == 'subscription'
+        popup.type == 'guidance' || popup.type == 'subscription' || popup.type == 'worker_modal'
             ? appDispatch(popup_close())
             : null;
     };

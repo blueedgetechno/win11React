@@ -83,8 +83,7 @@ var { taskbar, desktop } = {
         'Discord',
         'Thinkmay Fanpage',
         'Store',
-        'Payment',
-        'Feedback'
+        'Payment'
     ]
 };
 

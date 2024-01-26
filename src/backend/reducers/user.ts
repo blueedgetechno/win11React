@@ -6,15 +6,15 @@ import { BuilderHelper, CacheRequest } from './helper';
 
 type Data = User & {
     plans?: string[];
-    greenlist?: boolean;
-    usageTime?: UsageTime;
+    stat?: UsageTime;
 };
 interface UsageTime {
-    email: string;
-    end_time: string;
-    package: string;
+    plan_name: string,
     start_time: string;
+    end_time: string;
+
     total_time: number;
+    daily_usage: string;
 }
 const initialState: Data = {
     id: 'unknown',
@@ -24,7 +24,6 @@ const initialState: Data = {
     app_metadata: {},
     user_metadata: {},
     plans: [],
-    greenlist: false
 };
 
 export const userAsync = {
@@ -55,14 +54,14 @@ export const userAsync = {
                     ) != undefined
             ) {
                 const { data, error } = await supabase.rpc(
-                    'get_usage_time_user',
+                    'query_user_statistic',
                     {
-                        user_id: payloadUser.id
+                        email: user.email
                     }
                 );
                 if (error) return;
 
-                payloadUser.usageTime = data?.at(0);
+                payloadUser.stat = data?.at(0);
             }
 
             return {
@@ -80,7 +79,7 @@ export const userSlice = createSlice({
         user_delete: (state) => {
             state.id = initialState.id;
             state.email = initialState.email;
-            state.usageTime = initialState.usageTime;
+            state.stat = initialState.stat;
             supabase.auth.signOut();
             localStorage.removeItem(localStorageKey.user);
         }
@@ -92,8 +91,7 @@ export const userSlice = createSlice({
                 state.id = action.payload.id;
                 state.email = action.payload.email;
                 state.plans = action.payload.plans;
-                state.greenlist = action.payload.greenlist;
-                state.usageTime = action.payload.usageTime;
+                state.stat = action.payload.stat ;
             }
         });
     }

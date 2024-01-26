@@ -153,7 +153,7 @@ export const FeedbackApp = () => {
                 issue: issues.issue,
                 detail: issues.detail
             }
-        })
+        });
         appDispatch(app_close('feedback'));
         appDispatch(app_toggle('payment'));
     };
@@ -210,7 +210,9 @@ export const FeedbackApp = () => {
                                         className="icon"
                                     />
                                 </div>
-                                <p className="text-[12px] pt-2">{t[icon.name]}</p>
+                                <p className="text-[12px] pt-2">
+                                    {t[icon.name]}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -252,7 +254,9 @@ export const FeedbackApp = () => {
                             }
                         })}
                     </div>
-                    <p className="text-[14px] mb-2 text-white">{t[Contents.FB_DETAIL]}</p>
+                    <p className="text-[14px] mb-2 text-white">
+                        {t[Contents.FB_DETAIL]}
+                    </p>
                     <div className="border-solid border h-full rounded-md">
                         <textarea
                             className="noteText"

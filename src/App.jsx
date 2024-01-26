@@ -8,7 +8,6 @@ import {
     menu_show,
     request_demo,
     set_fullscreen,
-    update_language,
     useAppSelector
 } from './backend/reducers';
 import { UserSession } from './backend/reducers/fetch/analytics';
@@ -61,7 +60,6 @@ function App() {
 
     useEffect(() => {
         if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-        appDispatch(update_language('ENG'));
         window.history.replaceState({}, document.title, '/' + '');
         preload().finally(async () => {
             console.log('Loaded');
@@ -92,7 +90,10 @@ function App() {
         if (!remote.active) return;
 
         const handleState = () => {
-            const fullscreen = document.fullscreenElement != null;
+            const fullscreen =
+                document.fullscreenElement != null ||
+                document.webkitFullscreenElement != null ||
+                document.mozFullScreenElement != null;
             if (fullscreen == remote.fullscreen) return;
 
             appDispatch(set_fullscreen(fullscreen));

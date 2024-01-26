@@ -159,7 +159,10 @@ export enum Contents {
     FB_OTHER,
     FB_ISSUE,
     FB_SUBMIT,
-    FB_DETAIL
+    FB_DETAIL,
+    DEMO_QUEUED,
+    DEMO_NOTE,
+    ALREADY_DEMO
 }
 
 export function language() {
@@ -458,8 +461,8 @@ export function language() {
     en.set(Contents.ENDAT, 'End');
     vn.set(Contents.ENDAT, 'Ngày hết hạn');
 
-    en.set(Contents.TIME, 'Time used');
-    vn.set(Contents.TIME, 'Thời gian sử dụng');
+    en.set(Contents.TIME, 'Total usage');
+    vn.set(Contents.TIME, 'Tổng thời gian sử dụng');
 
     en.set(Contents.INACTIVEUSER, 'Account is inactive!');
     vn.set(
@@ -751,67 +754,70 @@ export function language() {
         'Click "Hỗ trợ ngay" để được hỗ trợ kỹ thuật sớm nhất.'
     );
 
-
     // -----------------------------------------------
     // FEEDBACK
-    en.set(Contents.FB_TERRIBLE, 'Terrible')
-    vn.set(Contents.FB_TERRIBLE, 'Rất tệ')
-    
-    en.set(Contents.FB_BAD, 'Bad')
-    vn.set(Contents.FB_BAD, 'Tệ')
-    
-    en.set(Contents.FB_GOOD, 'Good')
-    vn.set(Contents.FB_GOOD, 'Tốt')
+    en.set(Contents.FB_TERRIBLE, 'Terrible');
+    vn.set(Contents.FB_TERRIBLE, 'Rất tệ');
 
-    en.set(Contents.FB_AMAZING, 'Amazing')
-    vn.set(Contents.FB_AMAZING, 'Tuyệt vời')
+    en.set(Contents.FB_BAD, 'Bad');
+    vn.set(Contents.FB_BAD, 'Tệ');
 
-    en.set(Contents.FB_CONTROL, 'Control')
-    vn.set(Contents.FB_CONTROL, 'Điều khiển')
-    
-    en.set(Contents.FB_KEYBOARD, 'Keyboard')
-    vn.set(Contents.FB_KEYBOARD, 'Bàn phím')
-    
-    en.set(Contents.FB_MOUSE, 'Mouse')
-    vn.set(Contents.FB_MOUSE, 'Chuột')
+    en.set(Contents.FB_GOOD, 'Good');
+    vn.set(Contents.FB_GOOD, 'Tốt');
 
-    en.set(Contents.FB_GAMEPAD, 'Gamepad')
-    vn.set(Contents.FB_GAMEPAD, 'Tay cầm')
-    
-    en.set(Contents.FB_TOUCH, 'Touch')
-    vn.set(Contents.FB_TOUCH, 'Cảm ứng')
+    en.set(Contents.FB_AMAZING, 'Amazing');
+    vn.set(Contents.FB_AMAZING, 'Tuyệt vời');
 
-    en.set(Contents.FB_CONNECT, 'Connect')
-    vn.set(Contents.FB_CONNECT, 'Kết nối')
+    en.set(Contents.FB_CONTROL, 'Control');
+    vn.set(Contents.FB_CONTROL, 'Điều khiển');
 
-    en.set(Contents.FB_BLACKSCREEN, 'Black screen')
-    vn.set(Contents.FB_BLACKSCREEN, 'Màn hình đen')
+    en.set(Contents.FB_KEYBOARD, 'Keyboard');
+    vn.set(Contents.FB_KEYBOARD, 'Bàn phím');
 
-    en.set(Contents.FB_LAG, 'Lag')
-    vn.set(Contents.FB_LAG, 'Lag')
+    en.set(Contents.FB_MOUSE, 'Mouse');
+    vn.set(Contents.FB_MOUSE, 'Chuột');
 
+    en.set(Contents.FB_GAMEPAD, 'Gamepad');
+    vn.set(Contents.FB_GAMEPAD, 'Tay cầm');
 
-    en.set(Contents.FB_NOSHOWVIDEO, 'No show video')
-    vn.set(Contents.FB_NOSHOWVIDEO, 'Không hiện máy tính')
-    
-    
-    
+    en.set(Contents.FB_TOUCH, 'Touch');
+    vn.set(Contents.FB_TOUCH, 'Cảm ứng');
 
-    en.set(Contents.FB_GAME, 'Game')
-    vn.set(Contents.FB_GAME, 'Game')
+    en.set(Contents.FB_CONNECT, 'Connect');
+    vn.set(Contents.FB_CONNECT, 'Kết nối');
 
-    en.set(Contents.FB_OTHER, 'Other')
-    vn.set(Contents.FB_OTHER, 'Khác')
-   
-    en.set(Contents.FB_ISSUE, 'You have problems with:')
-    vn.set(Contents.FB_ISSUE, 'Bạn gặp vấn đề với:')
+    en.set(Contents.FB_BLACKSCREEN, 'Black screen');
+    vn.set(Contents.FB_BLACKSCREEN, 'Màn hình đen');
 
+    en.set(Contents.FB_LAG, 'Lag');
+    vn.set(Contents.FB_LAG, 'Lag');
 
-    en.set(Contents.FB_SUBMIT, 'Submit')
-    vn.set(Contents.FB_SUBMIT, 'Gửi')
+    en.set(Contents.FB_NOSHOWVIDEO, 'No show video');
+    vn.set(Contents.FB_NOSHOWVIDEO, 'Không hiện máy tính');
 
-    en.set(Contents.FB_DETAIL, 'Detail:')
-    vn.set(Contents.FB_DETAIL, 'Chi Tiết:')
-    
+    en.set(Contents.FB_GAME, 'Game');
+    vn.set(Contents.FB_GAME, 'Game');
+
+    en.set(Contents.FB_OTHER, 'Other');
+    vn.set(Contents.FB_OTHER, 'Khác');
+
+    en.set(Contents.FB_ISSUE, 'You have problems with:');
+    vn.set(Contents.FB_ISSUE, 'Bạn gặp vấn đề với:');
+
+    en.set(Contents.FB_SUBMIT, 'Submit');
+    vn.set(Contents.FB_SUBMIT, 'Gửi');
+
+    en.set(Contents.FB_DETAIL, 'Detail:');
+    vn.set(Contents.FB_DETAIL, 'Chi Tiết:');
+
+    en.set(Contents.DEMO_QUEUED, 'Your demo turns are:');
+    vn.set(Contents.DEMO_QUEUED, 'Số thự tự DEMO của bạn là:');
+
+    en.set(Contents.DEMO_NOTE, '*Exiting the page will forfeit the demo turn.');
+    vn.set(Contents.DEMO_NOTE, '*Thoát trang sẽ mất lượt demo');
+
+    en.set(Contents.ALREADY_DEMO, 'You are already demo services');
+    vn.set(Contents.ALREADY_DEMO, 'Bạn đã demo rồi 😎');
+
     return t;
 }

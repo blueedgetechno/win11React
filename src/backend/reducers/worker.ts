@@ -18,6 +18,7 @@ import {
     DeleteVolume,
     FetchAuthorizedWorkers,
     ForkVolume,
+    IModifySubscriptionAction,
     ModifySubscription,
     PatchApp,
     SetDefaultOsVolume,
@@ -51,6 +52,7 @@ interface NewSubscription {
     email: string;
     plan: string;
     free: string;
+    price: string;
 }
 
 export const workerAsync = {
@@ -192,12 +194,13 @@ export const workerAsync = {
     create_subscription: createAsyncThunk(
         'create_subscription',
         async (data: NewSubscription): Promise<any> => {
-            const { email, plan, free } = data;
+            const { email, plan, free, price } = data;
 
             await AddSubscription({
                 email,
                 plan,
-                free
+                free,
+                price
             });
         }
     ),
@@ -212,11 +215,8 @@ export const workerAsync = {
     ),
     upgrade_subscription: createAsyncThunk(
         'upgrade_subscription',
-        async (email: string, { getState }): Promise<any> => {
-            await ModifySubscription({
-                action: 'UPGRADE',
-                email
-            });
+        async (data: IModifySubscriptionAction, { getState }): Promise<any> => {
+            await ModifySubscription(data);
         }
     ),
     cancel_subscription: createAsyncThunk(
