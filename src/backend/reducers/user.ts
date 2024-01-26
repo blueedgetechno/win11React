@@ -56,7 +56,7 @@ export const userAsync = {
                 const { data, error } = await supabase.rpc(
                     'query_user_statistic',
                     {
-                        user_id: payloadUser.id
+                        email: user.email
                     }
                 );
                 if (error) return;
