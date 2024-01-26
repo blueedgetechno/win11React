@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CloseDemo, login } from '../../backend/actions';
+import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
     appDispatch,
     app_toggle,
@@ -135,7 +135,7 @@ export const LockScreen = () => {
                                 <span className='text-base text-white font-medium'>Continue with</span>
                                 <div className='flex gap-[8px]'>
                                     <button className="base fb_button">
-                                        <Icon src="facebook.webp" width={64} />
+                                        <Icon src="facebook1" width={64} />
                                     </button>
                                     <button className="base discord_button">
                                         <Icon src="discord" width={64} />
@@ -186,7 +186,7 @@ export const Getstarted = ({}) => {
     const [orderNumberDemo, setOrderNumberDemo] = useState(1);
     const [waitTimeDemo, setWaitTimeDemo] = useState(5);
     const [isDemoAllowed, setDemoAllowed] = useState(true);
-    const [selectLoginOption, setSelectLoginOption] = useState(false);
+    const [selectLoginOption, setSelectLoginOption] = useState('DEMO'|'INUSE');
 
     const nextPage = () =>
         setPageNo((old) => {
@@ -276,6 +276,14 @@ export const Getstarted = ({}) => {
             await sleep(15 * 1000);
         }
     };
+
+    const login_process = async(provider) => {
+        if(selectLoginOption == 'INUSE'){
+            login(provider )
+        } else if (selectLoginOption == 'DEMO'){
+            LoginAndDemo(provider)
+        }
+    }
 
     const [selection, Select] = useState(0);
     useEffect(() => {
@@ -414,13 +422,13 @@ export const Getstarted = ({}) => {
             <div className='ctn_login_btn'>
                 <span className='text-base'>Continue with</span>
                 <div className='flex gap-[8px]'>
-                    <button className="base fb_button">
-                        <Icon src="facebook.webp" width={40} />
-                    </button>
-                    <button className="base discord_button">
+                    {/* <button className="base fb_button" onClick={() => login_process("facebook")}>
+                        <Icon src="facebook1" width={40} />
+                    </button> */}
+                    <button className="base discord_button" onClick={() => login_process("discord")}>
                         <Icon src="discord" width={40} />
                     </button>
-                    <button className="base gg_button">
+                    <button className="base gg_button" onClick={() => login_process("google")}>
                         <Icon src="google" width={40} />
                     </button>
                 </div>
@@ -429,7 +437,7 @@ export const Getstarted = ({}) => {
             <>
                 <div
                     className="no_button base"
-                    onClick={() => setSelectLoginOption(true)}
+                    onClick={() => setSelectLoginOption('INUSE')}
 
                     // login
                 >
@@ -439,7 +447,7 @@ export const Getstarted = ({}) => {
                 </div>
                 <div
                     className="yes_button base"
-                    onClick={() => setSelectLoginOption(true)}
+                    onClick={() => setSelectLoginOption('DEMO')}
                     // LoginAndDemo
                 >
                     {t[Contents.DEMO]}

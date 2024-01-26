@@ -167,17 +167,17 @@ export const signUpWithEmail = async(email: string, password: string) => {
       })
 };
 
-export const login = async () => {
+export const login = async (provider: 'google'|'facebook'|'discord') => {
     localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
     const redirectTo = import.meta.env.VITE_REDIRECT_TO;
     const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: provider,
         options: {
             redirectTo,
-            queryParams: {
+            queryParams: provider == 'google' ? {
                 access_type: 'offline'
                 // prompt: 'consent'
-            }
+            }: undefined
         }
     });
     if (error) {
@@ -185,9 +185,9 @@ export const login = async () => {
     }
 };
 
-export function LoginAndDemo() {
+export function LoginAndDemo(provider: 'google'|'facebook'|'discord') {
     localStorage.setItem('THINKMAY_DEMO', 'TRUE');
-    login();
+    login(provider);
 }
 export function FirstTime(): boolean {
     return (
