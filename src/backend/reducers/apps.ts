@@ -195,6 +195,18 @@ export const appsAsync = {
             return storage_id;
         }
     ),
+    direct_access: createAsyncThunk(
+        'direct_access',
+        async (
+            { ref, app_name }: { ref: string; app_name?: string },
+            { getState }
+        ): Promise<void> => {
+            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
+            await appDispatch(authenticate_session({ ref }));
+            appDispatch(open_remote(app_name ?? 'unknown'));
+            await ready();
+        }
+    ),
     reset_app: createAsyncThunk(
         'reset_app',
         async (storage_id: string, { getState }): Promise<string> => {

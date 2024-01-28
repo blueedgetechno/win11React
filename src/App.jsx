@@ -5,6 +5,7 @@ import { preload } from './backend/actions/background';
 import { FirstTime, RequestDemo, afterMath } from './backend/actions/index';
 import {
     appDispatch,
+    direct_access,
     menu_show,
     request_demo,
     set_fullscreen,
@@ -60,7 +61,6 @@ function App() {
 
     useEffect(() => {
         if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-        window.history.replaceState({}, document.title, '/' + '');
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
@@ -69,7 +69,13 @@ function App() {
     }, []);
     useEffect(() => {
         if (user.id == 'unknown' || isMobile()) return;
+        const url = new URL(window.location.href).searchParams;
+        const ref = url.get('ref');
+        const app_name = url.get('page');
+        if (ref != null) appDispatch(direct_access({ ref, app_name }));
+
         UserSession(user.email);
+        window.history.replaceState({}, document.title, '/' + '');
         window.onbeforeunload = (e) => {
             const text = 'Are you sure (｡◕‿‿◕｡)';
             e = e || window.event;
