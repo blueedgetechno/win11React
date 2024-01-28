@@ -60,28 +60,52 @@ function App() {
     };
 
     useEffect(() => {
-        if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
             setLockscreen(false);
         });
     }, []);
+
     useEffect(() => {
-        if (user.id == 'unknown' || isMobile()) return;
         const url = new URL(window.location.href).searchParams;
         const ref = url.get('ref');
         const app_name = url.get('page');
-        if (ref != null) appDispatch(direct_access({ ref, app_name }));
 
-        UserSession(user.email);
-        window.history.replaceState({}, document.title, '/' + '');
-        window.onbeforeunload = (e) => {
-            const text = 'Are you sure (｡◕‿‿◕｡)';
-            e = e || window.event;
-            if (e) e.returnValue = text;
-            return text;
-        };
+
+        if (user.id != 'unknown')
+            UserSession(user.email);
+
+        if (ref != null && user.id != 'unknown') {
+            appDispatch(direct_access({ ref, app_name }));
+            window.history.replaceState({}, document.title, '/' + '');
+            window.onbeforeunload = (e) => {
+                const text = 'Are you sure (｡◕‿‿◕｡)';
+                e = e || window.event;
+                if (e) e.returnValue = text;
+                return text;
+            };
+        } else if (ref != null && user.id == 'unknown') {
+            localStorage.setItem('reference_cache', JSON.stringify({ ref, app_name }))
+            window.history.replaceState({}, document.title, '/' + '');
+        } else if (ref == null && user.id != 'unknown') {
+            window.onbeforeunload = (e) => {
+                const text = 'Are you sure (｡◕‿‿◕｡)';
+                e = e || window.event;
+                if (e) e.returnValue = text;
+                return text;
+            };
+
+            try {
+                const { ref, app_name } = JSON.parse(localStorage.getItem('reference_cache'))
+                if (ref != null) appDispatch(direct_access({ ref, app_name }));
+                localStorage.removeItem('reference_cache')
+                return
+            } catch { }
+            if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+        } else if (ref == null && user.id == 'unknown')
+            if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+
     }, [user.id]);
 
     useEffect(() => {
