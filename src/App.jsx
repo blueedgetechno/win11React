@@ -37,7 +37,7 @@ function App() {
     const demo = useAppSelector((state) => state.apps.guidance);
     const survey = useAppSelector((state) => state.sidepane.surveys.length > 0);
 
-    const [lockscreen, setLockscreen] = useState(true);
+    const [booting, setLockscreen] = useState(true);
 
     ReactModal.setAppElement('#root');
     const dispatch = appDispatch;
@@ -136,9 +136,12 @@ function App() {
     return (
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-                {lockscreen ? <BootScreen /> : null}
-                {user.id == 'unknown' && !FirstTime() ? <LockScreen /> : null}
-                {demo ? <Getstarted /> : null}
+                {booting ? <BootScreen /> : null}
+                {demo ? <Getstarted /> :
+                    user.id == 'unknown'
+                        ? <LockScreen />
+                        : null
+                }
                 {survey ? <Survey /> : null}
                 <div className="appwrap ">
                     {remote.active ? (
