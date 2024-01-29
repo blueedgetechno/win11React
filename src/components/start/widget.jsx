@@ -23,13 +23,11 @@ export const WidPane = () => {
         }
     };
 
+    if (widget.banhide) return <></>;
+
     return (
         <>
-            <div
-                style={{ '--prefix': 'BAND' }}
-                className="widPaneCont"
-                data-hide={widget.banhide}
-            >
+            <div style={{ '--prefix': 'BAND' }} className="widPaneCont">
                 <LazyComponent show={!widget.banhide}>
                     <div className="WidPane win11Scroll">
                         <div className="widtop">
@@ -47,20 +45,21 @@ export const WidPane = () => {
                                     {widget.notifications.map((article, i) => {
                                         return (
                                             <a
-                                                className={`articleCont  shadow-2xl ${article.type == 'pending'
+                                                className={`articleCont  shadow-2xl ${
+                                                    article.type == 'pending'
                                                         ? 'load'
                                                         : null
-                                                    }`}
+                                                }`}
                                                 target="_blank"
                                                 style={{
                                                     '--backgrad':
                                                         article.type ==
-                                                            'pending'
+                                                        'pending'
                                                             ? '#8b670c'
                                                             : article.type ==
                                                                 'rejected'
-                                                                ? '#c20c30'
-                                                                : '#0c41aa',
+                                                              ? '#c20c30'
+                                                              : '#0c41aa',
                                                     backgroundImage: `url(img/wallpaper/${img})`
                                                 }}
                                                 href={article.url}
@@ -98,14 +97,16 @@ export const WidPane = () => {
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
-                                                        { (article.name.includes( 'from' ) 
-                                                            ? 'thinkmay' 
-                                                            : 'you')
-                                                            + '  ' +
+                                                        {(article.name.includes(
+                                                            'from'
+                                                        )
+                                                            ? 'thinkmay'
+                                                            : 'you') +
+                                                            '  ' +
                                                             new Date(
                                                                 article.timestamp
-                                                            ).toLocaleDateString() 
-                                                            + '  ' +
+                                                            ).toLocaleDateString() +
+                                                            '  ' +
                                                             new Date(
                                                                 article.timestamp
                                                             ).toLocaleTimeString()}

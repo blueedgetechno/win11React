@@ -7,7 +7,7 @@ import { assign } from '../../backend/reducers/remote';
 import './remote.scss';
 
 export const Remote = () => {
-    const relative_mouse = useAppSelector(x => x.remote.relative_mouse)
+    const relative_mouse = useAppSelector((x) => x.remote.relative_mouse);
     const wall = useAppSelector((state) => state.wallpaper);
     const remote = useAppSelector((store) => store.remote);
     const remoteVideo = useRef(null);

@@ -12,33 +12,6 @@
   backdrop-filter: saturate(3) blur(20px);
   bottom: 0;
   z-index: 10000;
-
-  &[data-mobile="true"] {
-    top: 0;
-    right: 0;
-    width: 52px;
-    height: 100vh;
-
-    .tsbar {
-      flex-direction: column;
-      justify-content: center;
-
-      .tsIcon {
-        margin: unset;
-      }
-    }
-
-    .taskright {
-      flex-direction: column;
-      height: auto;
-      top: 12px;
-
-
-      .taskDate {
-        padding: 0;
-      }
-    }
-  }
 }
 
 body[data-theme="dark"] {
@@ -69,7 +42,6 @@ body[data-theme="dark"] {
   right: 0;
   width: auto;
   height: 100%;
-  //margin-left: 10px;
   display: flex;
   align-items: center;
   gap: 4px;
