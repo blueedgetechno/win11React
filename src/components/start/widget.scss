@@ -14,7 +14,6 @@
   border-radius: 8px;
   overflow: hidden;
   transform: translateX(0);
-  backdrop-filter: blur(20px);
   transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
   z-index: 9999;
 
@@ -423,7 +422,7 @@
     padding: 0 12px;
     border-radius: 6px;
     overflow: hidden;
-    backdrop-filter: blur(5px) brightness(0.1);
+    backdrop-filter: brightness(0.6);
     cursor: pointer;
 
     &::before {
@@ -536,7 +535,7 @@
   border-radius: 8px;
   overflow: hidden;
   transform: translateX(0);
-  backdrop-filter: blur(20px);
+  backdrop-filter: brightness(0.5);
   transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
   z-index: 9999;
 
@@ -558,7 +557,6 @@
       padding: 0 12px;
       border-radius: 6px;
       overflow: hidden;
-      backdrop-filter: blur(5px) brightness(0.1);
       cursor: pointer;
     }
     input {

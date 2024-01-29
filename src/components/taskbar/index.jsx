@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { TbBellRingingFilled } from 'react-icons/tb';
+import useSound from 'use-sound';
+import ringSound from '/audio/ring2.mp3';
 
-import { MdVideoSettings } from 'react-icons/md';
 import {
     appDispatch,
     task_hide,
     task_show,
     useAppSelector
 } from '../../backend/reducers';
+import { Contents } from '../../backend/reducers/locales';
 import { isMobile } from '../../backend/utils/checking';
 import { clickDispatch } from '../../backend/utils/dispatch';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
-import { Contents } from '../../backend/reducers/locales';
 
 const Taskbar = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -60,12 +60,22 @@ const Taskbar = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const [play] = useSound(ringSound, { volume: 0.1 });
+    const availableCluster = useAppSelector(
+        (state) => state.globals.service_available
+    );
+
+    useEffect(() => {
+        availableCluster ? play() : null;
+    }, [availableCluster]);
+
     return (
         <div
             className="taskbar"
             style={{ '--prefix': 'TASK' }}
             data-mobile={isMobile()}
         >
+            <audio src={ringSound}></audio>
             <div className="tasksCont" data-side={tasks.align}>
                 <div className="tsbar" onMouseOut={hidePrev}>
                     <Icon
@@ -124,6 +134,11 @@ const Taskbar = () => {
             </div>
             <div className="taskright">
                 <>
+                    {availableCluster ? (
+                        <div className="pointer green"></div>
+                    ) : (
+                        <div className="pointer orange"></div>
+                    )}
                     <div
                         className="px-2 prtclk handcr hvlight flex "
                         onClick={clickDispatch}

@@ -47,21 +47,20 @@ export const WidPane = () => {
                                     {widget.notifications.map((article, i) => {
                                         return (
                                             <a
-                                                className={`articleCont  shadow-2xl ${
-                                                    article.type == 'pending'
+                                                className={`articleCont  shadow-2xl ${article.type == 'pending'
                                                         ? 'load'
                                                         : null
-                                                }`}
+                                                    }`}
                                                 target="_blank"
                                                 style={{
                                                     '--backgrad':
                                                         article.type ==
-                                                        'pending'
+                                                            'pending'
                                                             ? '#8b670c'
                                                             : article.type ==
                                                                 'rejected'
-                                                              ? '#c20c30'
-                                                              : '#0c41aa',
+                                                                ? '#c20c30'
+                                                                : '#0c41aa',
                                                     backgroundImage: `url(img/wallpaper/${img})`
                                                 }}
                                                 href={article.url}
@@ -95,24 +94,18 @@ export const WidPane = () => {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 key={i}
-                                                loading="lazy"
-                                                style={
-                                                    article.name.includes(
-                                                        'from'
-                                                    )
-                                                        ? {}
-                                                        : {
-                                                              '--backgrad':
-                                                                  '#0066FF'
-                                                          }
-                                                }
+                                                // loading="lazy"
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
-                                                        {new Date(
-                                                            article.timestamp
-                                                        ).toLocaleDateString() +
-                                                            '  ' +
+                                                        { (article.name.includes( 'from' ) 
+                                                            ? 'thinkmay' 
+                                                            : 'you')
+                                                            + '  ' +
+                                                            new Date(
+                                                                article.timestamp
+                                                            ).toLocaleDateString() 
+                                                            + '  ' +
                                                             new Date(
                                                                 article.timestamp
                                                             ).toLocaleTimeString()}

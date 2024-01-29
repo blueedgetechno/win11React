@@ -14,7 +14,6 @@ import {
 import { UserSession } from './backend/reducers/fetch/analytics';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
-import AvailableCluster from './components/shared/AvailableCluster';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
 import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
@@ -149,7 +148,6 @@ function App() {
                     ) : (
                         <>
                             <Background />
-                            <AvailableCluster />
                         </>
                     )}
                     {!remote.fullscreen ? (
