@@ -14,7 +14,6 @@ import {
 import { UserSession } from './backend/reducers/fetch/analytics';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
-import AvailableCluster from './components/shared/AvailableCluster';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
 import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
@@ -59,10 +58,16 @@ function App() {
         }
     };
 
+    const [loadingText, setloadingText] = useState('Booting your device');
     useEffect(() => {
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
+            while (isMobile() && window.screen.width < window.screen.height) {
+                setloadingText('Please rotate your phone');
+                await new Promise((r) => setTimeout(r, 1000));
+            }
+
             setLockscreen(false);
         });
     }, []);
@@ -72,9 +77,7 @@ function App() {
         const ref = url.get('ref');
         const app_name = url.get('page');
 
-
-        if (user.id != 'unknown')
-            UserSession(user.email);
+        if (user.id != 'unknown') UserSession(user.email);
 
         if (ref != null && user.id != 'unknown') {
             appDispatch(direct_access({ ref, app_name }));
@@ -86,7 +89,10 @@ function App() {
                 return text;
             };
         } else if (ref != null && user.id == 'unknown') {
-            localStorage.setItem('reference_cache', JSON.stringify({ ref, app_name }))
+            localStorage.setItem(
+                'reference_cache',
+                JSON.stringify({ ref, app_name })
+            );
             window.history.replaceState({}, document.title, '/' + '');
         } else if (ref == null && user.id != 'unknown') {
             window.onbeforeunload = (e) => {
@@ -97,15 +103,16 @@ function App() {
             };
 
             try {
-                const { ref, app_name } = JSON.parse(localStorage.getItem('reference_cache'))
+                const { ref, app_name } = JSON.parse(
+                    localStorage.getItem('reference_cache')
+                );
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
-                localStorage.removeItem('reference_cache')
-                return
+                localStorage.removeItem('reference_cache');
+                return;
             } catch { }
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         } else if (ref == null && user.id == 'unknown')
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-
     }, [user.id]);
 
     useEffect(() => {
@@ -136,43 +143,32 @@ function App() {
     return (
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-                {booting ? <BootScreen /> : null}
-                {demo ? <Getstarted /> :
-                    user.id == 'unknown'
-                        ? <LockScreen />
-                        : null
-                }
+                {booting ? <BootScreen loadingText={loadingText} /> : null}
+                {demo ? (
+                    <Getstarted />
+                ) : user.id == 'unknown' ? (
+                    <LockScreen />
+                ) : null}
                 {survey ? <Survey /> : null}
                 <div className="appwrap ">
-                    {remote.active ? (
-                        <Remote />
-                    ) : (
-                        <>
-                            <Background />
-                            <AvailableCluster />
-                        </>
-                    )}
-                    {!remote.fullscreen ? (
-                        <>
-                            <SidePane />
-                            <Taskbar />
-                            <ActMenu />
-                            <Popup />
-                            <WidPane />
-                            <StartMenu />
-                            <div
-                                className="desktop"
-                                data-menu="desk"
-                                data-mobile={isMobile()}
-                            >
-                                {!remote.active ? <DesktopApp /> : null}
-                                {Object.keys(Applications).map((key, idx) => {
-                                    var WinApp = Applications[key];
-                                    return <WinApp key={idx} />;
-                                })}
-                            </div>
-                        </>
-                    ) : null}
+                    {remote.active
+                        ? <Remote />
+                        : <Background />}
+                    <Taskbar />
+                    <ActMenu />
+                    <WidPane />
+                    <StartMenu />
+                    <SidePane />
+                    <Popup />
+                    {!remote.active ?
+                        <div className="desktop" data-menu="desk">
+                            <DesktopApp />
+                            {Object.keys(Applications).map((key, idx) => {
+                                var WinApp = Applications[key];
+                                return <WinApp key={idx} />;
+                            })}
+                        </div>
+                    : null}
                 </div>
             </ErrorBoundary>
         </div>

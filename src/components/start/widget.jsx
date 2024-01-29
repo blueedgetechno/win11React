@@ -23,13 +23,11 @@ export const WidPane = () => {
         }
     };
 
+    if (widget.banhide) return <></>;
+
     return (
         <>
-            <div
-                style={{ '--prefix': 'BAND' }}
-                className="widPaneCont"
-                data-hide={widget.banhide}
-            >
+            <div style={{ '--prefix': 'BAND' }} className="widPaneCont">
                 <LazyComponent show={!widget.banhide}>
                     <div className="WidPane win11Scroll">
                         <div className="widtop">
@@ -95,23 +93,19 @@ export const WidPane = () => {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 key={i}
-                                                loading="lazy"
-                                                style={
-                                                    article.name.includes(
-                                                        'from'
-                                                    )
-                                                        ? {}
-                                                        : {
-                                                              '--backgrad':
-                                                                  '#0066FF'
-                                                          }
-                                                }
+                                                // loading="lazy"
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
-                                                        {new Date(
-                                                            article.timestamp
-                                                        ).toLocaleDateString() +
+                                                        {(article.name.includes(
+                                                            'from'
+                                                        )
+                                                            ? 'thinkmay'
+                                                            : 'you') +
+                                                            '  ' +
+                                                            new Date(
+                                                                article.timestamp
+                                                            ).toLocaleDateString() +
                                                             '  ' +
                                                             new Date(
                                                                 article.timestamp

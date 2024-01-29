@@ -13,31 +13,10 @@
   bottom: 0;
   z-index: 10000;
 
-  &[data-mobile="true"] {
-    top: 0;
-    right: 0;
-    width: 52px;
-    height: 100vh;
-
-    .tsbar {
-      flex-direction: column;
-      justify-content: center;
-
-      .tsIcon {
-        margin: unset;
-      }
-    }
-
-    .taskright {
-      flex-direction: column;
-      height: auto;
-      top: 12px;
-
-
-      .taskDate {
-        padding: 0;
-      }
-    }
+  &[data-remote="true"] {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
@@ -65,11 +44,19 @@ body[data-theme="dark"] {
 
 .taskright {
   position: absolute;
+
+  &[data-remote="true"] {
+    --bg1: rgba(32, 32, 32, 0.75);
+    --bg2: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: saturate(3) blur(20px);
+    backdrop-filter: saturate(3) blur(20px);
+    border-radius: 15px;
+  }
+
   top: 0;
   right: 0;
   width: auto;
   height: 100%;
-  //margin-left: 10px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -98,6 +85,26 @@ body[data-theme="dark"] {
     text-align: center;
     font-weight: 400;
   }
+}
+
+.pointer {
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  box-shadow: 0px 0px 10px 4px currentColor;
+  border-radius: 100%;
+  margin-left: 20px;
+
+  &.green {
+    color: #70FE63;
+
+  }
+
+  &.orange {
+    color: #ce7b3d;
+
+  }
+
 }
 
 .tasksCont {

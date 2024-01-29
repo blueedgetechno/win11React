@@ -34,11 +34,14 @@ export const Background = () => {
     );
 };
 
-export const BootScreen = () => {
+export const BootScreen = ({ loadingText }) => {
     return (
         <div className="bootscreen">
             <div>
                 <Image src="asset/bootlogo" w={180} />
+                <div className="text-xl font-semibold text-gray-100">
+                    {loadingText}
+                </div>
                 <div className="mt-48" id="loader">
                     <svg
                         className="progressRing"
@@ -278,18 +281,22 @@ export const Getstarted = ({}) => {
                 user_id: id
             });
 
-            if(error){
-                return new Error(`Failed to found this user in current demo ${error.message}`)
+            if (error) {
+                return new Error(
+                    `Failed to found this user in current demo ${error.message}`
+                );
             }
 
-            if(data.length == 0){
-                return new Error(`Not found this user in current demo ${error.message}`)
+            if (data.length == 0) {
+                return new Error(
+                    `Not found this user in current demo ${error.message}`
+                );
             }
 
             setOrderNumberDemo(data[0]['your_order_number']);
             setWaitTimeDemo(data[0]['will_demo_in']);
 
-            if(data[0]['will_demo_in'] < 10){
+            if (data[0]['will_demo_in'] < 10) {
                 break;
             }
 
@@ -682,7 +689,12 @@ export const Getstarted = ({}) => {
     );
 };
 
-const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed, endSurvey }) => {
+const StartDemoBtn = ({
+    startDemo,
+    waitTimeDemo,
+    isDemoAllowed,
+    endSurvey
+}) => {
     const [isDemoStarted, setIsDemoStarted] = useState(false);
     const [countdown, setCountdown] = useState(parseInt(waitTimeDemo * 60));
     const t = useAppSelector((state) => state.globals.translation);
@@ -716,7 +728,11 @@ const StartDemoBtn = ({ startDemo, waitTimeDemo, isDemoAllowed, endSurvey }) => 
                     {t[Contents.READ_USER_MANUAL]} {countdown}s
                 </div>
             ) : (
-                <div className="no_button base" style={{ right: '39px' }} onClick={endSurvey}>
+                <div
+                    className="no_button base"
+                    style={{ right: '39px' }}
+                    onClick={endSurvey}
+                >
                     {t[Contents.EXPLORE_WEB]}
                 </div>
             )}

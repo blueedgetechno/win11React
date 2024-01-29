@@ -16,21 +16,3 @@
   font-weight: 500;
 }
 
-.pointer {
-  width: 18px;
-  height: 18px;
-  background: currentColor;
-  box-shadow: 0px 0px 10px 4px currentColor;
-  border-radius: 100%;
-
-  &.green {
-    color: #70FE63;
-
-  }
-
-  &.orange {
-    color: #ce7b3d;
-
-  }
-
-}
