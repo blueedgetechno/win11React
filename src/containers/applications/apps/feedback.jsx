@@ -192,7 +192,7 @@ export const FeedbackApp = () => {
                     <h6 className="text-center mb-4 text-[14px] text-white">
                         Feedback
                     </h6>
-                    <div className="flex p-2 items-center justify-between">
+                    <div className="flex p-2 items-center justify-around">
                         {listFeedBack.map((icon) => (
                             <div
                                 key={icon.value}
@@ -210,17 +210,17 @@ export const FeedbackApp = () => {
                                         className="icon"
                                     />
                                 </div>
-                                <p className="text-[12px] pt-2">
+                                <p className="text-[20px] pt-4">
                                     {t[icon.name]}
                                 </p>
                             </div>
                         ))}
                     </div>
-                    <hr className="my-[6px]" />
-                    <p className="text-[14px] text-white">
+                    <hr className="my-[20px]" />
+                    <p className="text-[24px] text-white">
                         {t[Contents.FB_ISSUE]}
                     </p>
-                    <div className="flex flex-wrap gap-1 justify-between mt-2">
+                    <div className="flex flex-wrap gap-1 justify-around mt-2">
                         {listErr.map((err) => (
                             <div
                                 key={err.value}
@@ -228,7 +228,7 @@ export const FeedbackApp = () => {
                                 onClick={() => {
                                     handleSelectErr(err.value);
                                 }}
-                                className="p-1 text-center rounded-full border border-solid border-gray-700 ] text-[12px] text-white"
+                                className="p-4 text-center rounded-full border-solid border-gray-400 ] text-[24px] text-white"
                             >
                                 {t[err.name]}
                             </div>
@@ -245,7 +245,7 @@ export const FeedbackApp = () => {
                                             onClick={() => {
                                                 handleSelectErr(detail.value);
                                             }}
-                                            className="p-1 m-auto text-center rounded-full border border-solid border-gray-700 ] text-[12px] text-white"
+                                            className="p-4 m-auto text-center rounded-full border border-solid border-gray-400 ] text-[24px] text-white"
                                         >
                                             {t[detail.name]}
                                         </div>
@@ -254,12 +254,12 @@ export const FeedbackApp = () => {
                             }
                         })}
                     </div>
-                    <p className="text-[14px] mb-2 text-white">
+                    <p className="text-[24px] text-white">
                         {t[Contents.FB_DETAIL]}
                     </p>
-                    <div className="border-solid border h-full rounded-md">
+                    <div className="border-solid border h-full rounded-md m-10 border-white">
                         <textarea
-                            className="noteText"
+                            className="noteText text-[24px]"
                             value={selector.text}
                             onInput={(e) => {
                                 handleInput(e.target.value);
@@ -267,7 +267,7 @@ export const FeedbackApp = () => {
                         ></textarea>
                     </div>
                     <button
-                        className="mt-4 mx-auto instbtn w-[120px] h-[40px]"
+                        className="mt-4 mb-10 mx-auto instbtn w-[400px] h-[180px]"
                         onClick={() => {
                             submitFeedback();
                             if (

@@ -64,11 +64,6 @@ body[data-theme="dark"] .aboutApp {
 }
 
 .feedbackApp {
-  max-width: 300px;
-  max-height: 450px;
-  min-width: 225px;
-  min-height: 270px;
-
   &[data-size="mini"] {
     top: 20%;
     left: 50%;
@@ -77,8 +72,8 @@ body[data-theme="dark"] .aboutApp {
   }
 
   .icon {
-    width: 25px;
-    height: 25px;
+    width: 100px;
+    height: 100px;
     transition: linear all 0.2s;
 
     &[data-select="true"] {
