@@ -71,7 +71,7 @@ const Taskbar = () => {
     return (
         <div className="taskbar"
             data-remote={remote.active}
-            style={{ '--prefix': 'TASK' }}>
+            style={!remote.active ? { '--prefix': 'TASK' } : {}}>
             <audio src={ringSound}></audio>
             {remote.active ? null :
                 <div className="tasksCont" data-side={tasks.align}>
