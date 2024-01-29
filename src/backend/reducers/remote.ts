@@ -139,6 +139,7 @@ type Data = {
 
     active: boolean;
     fullscreen: boolean;
+    relative_mouse: boolean;
     focus: boolean;
 
     scancode: boolean;
@@ -168,6 +169,7 @@ const initialState: Data = {
     low_ads: true,
     scancode: false,
     fullscreen: false,
+    relative_mouse: true,
     old_version: isMobile(),
 
     bitrate: 0,
@@ -487,6 +489,9 @@ export const remoteSlice = createSlice({
         },
         fullscreen: (state) => {
             if (state.active) state.fullscreen = !state.fullscreen;
+        },
+        relative_mouse: (state) => {
+            state.relative_mouse = !state.relative_mouse;
         },
         sync: (state) => {
             if (state.bitrate != state.prev_bitrate)

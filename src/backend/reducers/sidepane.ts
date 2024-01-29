@@ -82,6 +82,13 @@ const initialState: Data = {
             name: [Contents.EXTERNAL_TAB],
             state: 'old_version',
             action: 'remote/remote_version'
+        },
+        {
+            ui: true,
+            src: 'FaMousePointer',
+            name: [Contents.RELATIVE_MOUSE],
+            state: 'relative_mouse',
+            action: 'remote/relative_mouse'
         }
     ],
     notifications: [],

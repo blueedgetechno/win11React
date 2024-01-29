@@ -125,6 +125,7 @@ export enum Contents {
     RESET_VIDEO,
     HOMESCREEN,
     FULLSCREEN,
+    RELATIVE_MOUSE,
     SCAN_CODE,
     EXTERNAL_TAB,
     QUALITY,
@@ -712,6 +713,9 @@ export function language() {
 
     en.set(Contents.FULLSCREEN, 'Fullscreen');
     vn.set(Contents.FULLSCREEN, 'Toàn màn hình');
+
+    en.set(Contents.RELATIVE_MOUSE, 'Use server mouse');
+    vn.set(Contents.RELATIVE_MOUSE, 'Dùng chuột server');
 
     en.set(Contents.SCAN_CODE, 'Fix keyboard');
     vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');

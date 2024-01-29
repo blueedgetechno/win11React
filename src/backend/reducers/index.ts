@@ -119,6 +119,7 @@ export const {
     fullscreen,
     set_fullscreen,
     homescreen,
+    relative_mouse,
     audio_status,
     video_status,
     update_connection_path,
