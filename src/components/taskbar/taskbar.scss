@@ -12,6 +12,12 @@
   backdrop-filter: saturate(3) blur(20px);
   bottom: 0;
   z-index: 10000;
+
+  &[data-remote="true"] {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 body[data-theme="dark"] {
@@ -38,6 +44,15 @@ body[data-theme="dark"] {
 
 .taskright {
   position: absolute;
+
+  &[data-remote="true"] {
+    --bg1: rgba(32, 32, 32, 0.75);
+    --bg2: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: saturate(3) blur(20px);
+    backdrop-filter: saturate(3) blur(20px);
+    border-radius: 15px;
+  }
+
   top: 0;
   right: 0;
   width: auto;
@@ -78,6 +93,7 @@ body[data-theme="dark"] {
   background: currentColor;
   box-shadow: 0px 0px 10px 4px currentColor;
   border-radius: 100%;
+  margin-left: 20px;
 
   &.green {
     color: #70FE63;

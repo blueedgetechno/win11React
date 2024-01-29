@@ -109,7 +109,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch {}
+            } catch { }
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         } else if (ref == null && user.id == 'unknown')
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
@@ -151,30 +151,24 @@ function App() {
                 ) : null}
                 {survey ? <Survey /> : null}
                 <div className="appwrap ">
-                    {remote.active ? (
-                        <Remote />
-                    ) : (
-                        <>
-                            <Background />
-                        </>
-                    )}
-                    {!remote.fullscreen ? (
-                        <>
-                            <SidePane />
-                            <Taskbar />
-                            <ActMenu />
-                            <Popup />
-                            <WidPane />
-                            <StartMenu />
-                            <div className="desktop" data-menu="desk">
-                                {!remote.active ? <DesktopApp /> : null}
-                                {Object.keys(Applications).map((key, idx) => {
-                                    var WinApp = Applications[key];
-                                    return <WinApp key={idx} />;
-                                })}
-                            </div>
-                        </>
-                    ) : null}
+                    {remote.active
+                        ? <Remote />
+                        : <Background />}
+                    <Taskbar />
+                    <ActMenu />
+                    <WidPane />
+                    <StartMenu />
+                    <SidePane />
+                    <Popup />
+                    {!remote.active ?
+                        <div className="desktop" data-menu="desk">
+                            <DesktopApp />
+                            {Object.keys(Applications).map((key, idx) => {
+                                var WinApp = Applications[key];
+                                return <WinApp key={idx} />;
+                            })}
+                        </div>
+                    : null}
                 </div>
             </ErrorBoundary>
         </div>

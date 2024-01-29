@@ -9,7 +9,6 @@ import {
     useAppSelector
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
-import { isMobile } from '../../backend/utils/checking';
 import { clickDispatch } from '../../backend/utils/dispatch';
 import { Icon } from '../shared/general';
 import './taskbar.scss';
@@ -70,65 +69,70 @@ const Taskbar = () => {
     }, [availableCluster]);
 
     return (
-        <div className="taskbar" style={{ '--prefix': 'TASK' }}>
+        <div className="taskbar"
+            data-remote={remote.active}
+            style={{ '--prefix': 'TASK' }}>
             <audio src={ringSound}></audio>
-            <div className="tasksCont" data-side={tasks.align}>
-                <div className="tsbar" onMouseOut={hidePrev}>
-                    <Icon
-                        className="tsIcon tsIconInvert"
-                        src="home"
-                        width={24}
-                        click="startmenu/startogg"
-                        style={{ '--prefix': 'START' }}
-                    />
+            {remote.active ? null :
+                <div className="tasksCont" data-side={tasks.align}>
+                    <div className="tsbar" onMouseOut={hidePrev}>
+                        <Icon
+                            className="tsIcon tsIconInvert"
+                            src="home"
+                            width={24}
+                            click="startmenu/startogg"
+                            style={{ '--prefix': 'START' }}
+                        />
 
-                    {defaultapps.map((task, i) => {
-                        const isHidden = task.hide;
-                        const isActive = task.z == apps.hz;
-                        return (
-                            <div
-                                key={i}
-                                onMouseOver={
-                                    (!isActive && !isHidden && showPrev) || null
-                                }
-                                value={task.id}
-                            >
-                                <Icon
-                                    className="tsIcon"
-                                    width={24}
-                                    open={isHidden ? null : true}
-                                    click="apps/app_toggle"
-                                    active={isActive}
-                                    payload={task.id}
-                                    src={task.id}
-                                />
-                            </div>
-                        );
-                    })}
-                    {tempapps.map((key, i) => {
-                        const isActive = key.z == apps.hz;
-                        return (
-                            <div
-                                key={i}
-                                onMouseOver={(!isActive && showPrev) || null}
-                                value={key.icon}
-                            >
-                                <Icon
-                                    className="tsIcon"
-                                    width={24}
-                                    active={isActive}
-                                    click={key.action}
-                                    payload={key.payload}
-                                    menu={key.action}
-                                    open="true"
-                                    src={key.id}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <div className="taskright">
+                        {defaultapps.map((task, i) => {
+                            const isHidden = task.hide;
+                            const isActive = task.z == apps.hz;
+                            return (
+                                <div
+                                    key={i}
+                                    onMouseOver={
+                                        (!isActive && !isHidden && showPrev) || null
+                                    }
+                                    value={task.id}
+                                >
+                                    <Icon
+                                        className="tsIcon"
+                                        width={24}
+                                        open={isHidden ? null : true}
+                                        click="apps/app_toggle"
+                                        active={isActive}
+                                        payload={task.id}
+                                        src={task.id}
+                                    />
+                                </div>
+                            );
+                        })}
+                        {tempapps.map((key, i) => {
+                            const isActive = key.z == apps.hz;
+                            return (
+                                <div
+                                    key={i}
+                                    onMouseOver={(!isActive && showPrev) || null}
+                                    value={key.icon}
+                                >
+                                    <Icon
+                                        className="tsIcon"
+                                        width={24}
+                                        active={isActive}
+                                        click={key.action}
+                                        payload={key.payload}
+                                        menu={key.action}
+                                        open="true"
+                                        src={key.id}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>}
+            <div className="taskright"
+                data-remote={remote.active}
+            >
                 <>
                     {availableCluster ? (
                         <div className="pointer green"></div>
