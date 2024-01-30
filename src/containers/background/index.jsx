@@ -492,7 +492,13 @@ export const Getstarted = ({}) => {
 
     const Logo = () => (
         <div className="left">
-            <img alt="left image" id="left_img" src="logo_white.png" />
+            <div className="grid grid-col pb-20">
+                <img alt="left image" id="left_img" src="logo_white.png" />
+                <div className="header" style={{ paddingTop: 0 }}>
+                    {t[Contents.THINKMAY_HEADER]}
+                </div>
+                <div className="header_sml">{t[Contents.THINKMAY_DESC]}</div>
+            </div>
         </div>
     );
 
@@ -502,7 +508,19 @@ export const Getstarted = ({}) => {
             content: (
                 <>
                     <div className="left">
-                        <img id="left_img" src="logo_white.png" />
+                        <div className="grid grid-col pb-20">
+                            <img
+                                alt="left image"
+                                id="left_img"
+                                src="logo_white.png"
+                            />
+                            <div className="header" style={{ paddingTop: 0 }}>
+                                {t[Contents.THINKMAY_HEADER]}
+                            </div>
+                            <div className="header_sml">
+                                {t[Contents.THINKMAY_DESC]}
+                            </div>
+                        </div>
                     </div>
                     <div className="right">
                         <div className="header">
@@ -829,6 +847,10 @@ export const Survey = () => {
     const Logo = () => (
         <div className="left">
             <img alt="left image" id="left_img" src="logo_white.png" />
+            <div className="header" style={{ paddingTop: 0 }}>
+                {t[Contents.THINKMAY_HEADER]}
+            </div>
+            <div className="header_sml">{t[Contents.THINKMAY_DESC]}</div>
         </div>
     );
 
