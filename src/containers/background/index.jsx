@@ -35,12 +35,13 @@ export const Background = () => {
 };
 
 export const BootScreen = ({ loadingText }) => {
+    const t = useAppSelector(state => state.globals.translation)
     return (
         <div className="bootscreen">
             <div>
                 <Image src="asset/bootlogo" w={180} />
-                <div className="text-xl font-semibold text-gray-100">
-                    {loadingText}
+                <div className="text-l font-semibold text-gray-100">
+                    {t[loadingText]}
                 </div>
                 <div className="mt-48" id="loader">
                     <svg

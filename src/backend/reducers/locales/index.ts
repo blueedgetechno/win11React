@@ -7,6 +7,7 @@ export enum Contents {
     PAYMENT_FOLLOW_UP_CONTENT,
     PAYMENT_FOLLOW_UP_DONE,
 
+    BOOTING,
     ROTATE_PHONE,
 
     ABOUT_OPENSOURCE,
@@ -282,6 +283,9 @@ export function language() {
 
     en.set(Contents.STORE_FREE, 'FREE');
     vn.set(Contents.STORE_FREE, 'FREE');
+
+    en.set(Contents.BOOTING, 'Your device is booting');
+    vn.set(Contents.BOOTING, 'Thinkmay đang khởi động, bạn đợi chút nhé');
 
     en.set(Contents.ROTATE_PHONE, 'Please rotate your phone horizontally to continue');
     vn.set(Contents.ROTATE_PHONE, 'Hãy xoay ngang màn hình để tiếp tục sử dụng');

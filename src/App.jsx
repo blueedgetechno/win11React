@@ -12,6 +12,7 @@ import {
     useAppSelector
 } from './backend/reducers';
 import { UserSession } from './backend/reducers/fetch/analytics';
+import { Contents } from './backend/reducers/locales';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
@@ -29,7 +30,6 @@ import Popup from './containers/popup';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './index.css';
-import { Contents } from './backend/reducers/locales';
 
 function App() {
     const remote = useAppSelector((x) => x.remote);
@@ -59,14 +59,15 @@ function App() {
         }
     };
 
-    const [loadingText, setloadingText] = useState('Booting your device');
-    const t = useAppSelector(state => state.globals.translation)
+    const [loadingText, setloadingText] = useState(Contents.BOOTING);
     useEffect(() => {
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
-            while (isMobile() && window.screen.width < window.screen.height) {
-                setloadingText(t[Contents.ROTATE_PHONE]);
+            const now = new Date().getTime()
+            const timeout = () => new Date().getTime() - now > 5 * 1000
+            while (isMobile() && window.screen.width < window.screen.height && !timeout()) {
+                setloadingText(Contents.ROTATE_PHONE);
                 await new Promise((r) => setTimeout(r, 1000));
             }
 
@@ -170,7 +171,7 @@ function App() {
                                 return <WinApp key={idx} />;
                             })}
                         </div>
-                    : null}
+                        : null}
                 </div>
             </ErrorBoundary>
         </div>
