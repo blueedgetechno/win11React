@@ -18,7 +18,6 @@ export const Remote = () => {
         SetupWebRTC();
     }, [remote.active]);
 
-
     const pointerlock = () => {
         remoteVideo.current.requestPointerLock();
     };
@@ -43,7 +42,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
-                onClick={relative_mouse ? pointerlock : () => { }}
+                onClick={relative_mouse ? pointerlock : () => {}}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted

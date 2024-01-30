@@ -289,8 +289,14 @@ export function language() {
     en.set(Contents.BOOTING, 'Your device is booting');
     vn.set(Contents.BOOTING, 'Thinkmay đang khởi động, bạn đợi chút nhé');
 
-    en.set(Contents.ROTATE_PHONE, 'Please rotate your phone horizontally to continue');
-    vn.set(Contents.ROTATE_PHONE, 'Hãy xoay ngang màn hình để tiếp tục sử dụng');
+    en.set(
+        Contents.ROTATE_PHONE,
+        'Please rotate your phone horizontally to continue'
+    );
+    vn.set(
+        Contents.ROTATE_PHONE,
+        'Hãy xoay ngang màn hình để tiếp tục sử dụng'
+    );
 
     en.set(Contents.STORE_OWNED, 'Owned');
     vn.set(Contents.STORE_OWNED, 'Owned');

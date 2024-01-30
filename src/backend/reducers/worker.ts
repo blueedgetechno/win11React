@@ -362,7 +362,7 @@ export const workerSlice = createSlice({
             {
                 fetch: workerAsync.fork_volume,
                 hander: (state, action) => {}
-            },
+            }
         );
     }
 });

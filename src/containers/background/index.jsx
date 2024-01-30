@@ -35,7 +35,7 @@ export const Background = () => {
 };
 
 export const BootScreen = ({ loadingText }) => {
-    const t = useAppSelector(state => state.globals.translation)
+    const t = useAppSelector((state) => state.globals.translation);
     return (
         <div className="bootscreen">
             <div>

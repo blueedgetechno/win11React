@@ -33,16 +33,13 @@ import { ErrorFallback } from './error';
 import './index.css';
 
 function App() {
+    ReactModal.setAppElement('#root');
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
     const demo = useAppSelector((state) => state.apps.guidance);
     const survey = useAppSelector((state) => state.sidepane.surveys.length > 0);
-    const pointerLock = useAppSelector(state => state.remote.pointer_lock)
-
+    const pointerLock = useAppSelector((state) => state.remote.pointer_lock);
     const [booting, setLockscreen] = useState(true);
-
-    ReactModal.setAppElement('#root');
-    const dispatch = appDispatch;
 
     const ctxmenu = (e) => {
         afterMath(e);
@@ -57,7 +54,7 @@ function App() {
             data.dataset = { ...e.target.dataset };
             if (data.menu == 'desk' && remote.active) return;
 
-            dispatch(menu_show(data));
+            appDispatch(menu_show(data));
         }
     };
 
@@ -66,9 +63,13 @@ function App() {
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
-            const now = new Date().getTime()
-            const timeout = () => new Date().getTime() - now > 5 * 1000
-            while (isMobile() && window.screen.width < window.screen.height && !timeout()) {
+            const now = new Date().getTime();
+            const timeout = () => new Date().getTime() - now > 10 * 1000;
+            while (
+                isMobile() &&
+                window.screen.width < window.screen.height &&
+                !timeout()
+            ) {
                 setloadingText(Contents.ROTATE_PHONE);
                 await new Promise((r) => setTimeout(r, 1000));
             }
@@ -114,7 +115,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch { }
+            } catch {}
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         } else if (ref == null && user.id == 'unknown')
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
@@ -155,7 +156,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => { });
+        job?.catch(() => {});
 
         const handleState = () => {
             const fullscreen =
@@ -187,11 +188,14 @@ function App() {
                 document.webkitPointerLockElement != null;
 
             if (!fullscreen && havingPtrLock) exitpointerlock();
-            if (havingPtrLock != remote.pointer_lock) appDispatch(pointer_lock(havingPtrLock));
+            if (havingPtrLock != remote.pointer_lock)
+                appDispatch(pointer_lock(havingPtrLock));
         };
 
         const UIStateLoop = setInterval(handleState, 100);
-        return () => {   clearInterval(UIStateLoop) };
+        return () => {
+            clearInterval(UIStateLoop);
+        };
     }, [remote.pointer_lock]);
 
     return (
@@ -205,19 +209,18 @@ function App() {
                 ) : null}
                 {survey ? <Survey /> : null}
                 <div className="appwrap ">
-                    {pointerLock ? null 
-                    : <>
-                        <Taskbar />
-                        <ActMenu />
-                        <WidPane />
-                        <StartMenu />
-                        <SidePane />
-                        <Popup />
-                    </>}
-                    {remote.active
-                        ? <Remote />
-                        : <Background />}
-                    {!remote.active ?
+                    {pointerLock ? null : (
+                        <>
+                            <Taskbar />
+                            <ActMenu />
+                            <WidPane />
+                            <StartMenu />
+                            <SidePane />
+                            <Popup />
+                        </>
+                    )}
+                    {remote.active ? <Remote /> : <Background />}
+                    {!remote.active ? (
                         <div className="desktop" data-menu="desk">
                             <DesktopApp />
                             {Object.keys(Applications).map((key, idx) => {
@@ -225,7 +228,7 @@ function App() {
                                 return <WinApp key={idx} />;
                             })}
                         </div>
-                        : null}
+                    ) : null}
                 </div>
             </ErrorBoundary>
         </div>

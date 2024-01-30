@@ -56,7 +56,9 @@ const Taskbar = () => {
         const interval = setInterval(() => {
             setTime(new Date());
         }, 1000);
-        return () => { clearInterval(interval) };
+        return () => {
+            clearInterval(interval);
+        };
     }, []);
 
     const [play] = useSound(ringSound, { volume: 0.1 });
@@ -69,11 +71,13 @@ const Taskbar = () => {
     }, [availableCluster]);
 
     return (
-        <div className="taskbar"
+        <div
+            className="taskbar"
             data-remote={remote.active}
-            style={!remote.active ? { '--prefix': 'TASK' } : {}}>
+            style={!remote.active ? { '--prefix': 'TASK' } : {}}
+        >
             <audio src={ringSound}></audio>
-            {remote.active ? null :
+            {remote.active ? null : (
                 <div className="tasksCont" data-side={tasks.align}>
                     <div className="tsbar" onMouseOut={hidePrev}>
                         <Icon
@@ -91,7 +95,8 @@ const Taskbar = () => {
                                 <div
                                     key={i}
                                     onMouseOver={
-                                        (!isActive && !isHidden && showPrev) || null
+                                        (!isActive && !isHidden && showPrev) ||
+                                        null
                                     }
                                     value={task.id}
                                 >
@@ -112,7 +117,9 @@ const Taskbar = () => {
                             return (
                                 <div
                                     key={i}
-                                    onMouseOver={(!isActive && showPrev) || null}
+                                    onMouseOver={
+                                        (!isActive && showPrev) || null
+                                    }
                                     value={key.icon}
                                 >
                                     <Icon
@@ -129,10 +136,9 @@ const Taskbar = () => {
                             );
                         })}
                     </div>
-                </div>}
-            <div className="taskright"
-                data-remote={remote.active}
-            >
+                </div>
+            )}
+            <div className="taskright" data-remote={remote.active}>
                 <>
                     {availableCluster ? (
                         <div className="pointer green"></div>
