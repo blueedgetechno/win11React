@@ -119,17 +119,14 @@ export async function CacheRequest<T>(
 
 const isPending = (action: UnknownAction) =>
     action.type.endsWith('/pending') &&
-    !action.type.includes('fetch') &&
     !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled') &&
-    !action.type.includes('fetch') &&
     !action.type.includes('setting') &&
     !action.type.includes('ping');
 const isRejected = (action: UnknownAction) =>
     action.type.endsWith('/rejected') &&
-    !action.type.includes('fetch') &&
     !action.type.includes('setting') &&
     !action.type.includes('ping');
 
@@ -218,7 +215,7 @@ export async function BuilderHelper<T, U, V>(
                     appDispatch(popup_close());
                 };
 
-                setTimeout(notify, 1000);
+                setTimeout(notify, 100);
             }
         )
         .addMatcher(
@@ -235,12 +232,12 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                    await new Promise((r) => setTimeout(r, 3000));
+                    await new Promise((r) => setTimeout(r, 1000));
                     appDispatch(popup_close());
                     appDispatch(popup_close());
                 };
 
-                setTimeout(notify, 1000);
+                setTimeout(notify, 100);
             }
         );
 }

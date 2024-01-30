@@ -18,62 +18,10 @@ export const Remote = () => {
         SetupWebRTC();
     }, [remote.active]);
 
-    const fullscreen = async () => {
-        const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            await elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-            /* Safari */
-            await elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            /* IE11 */
-            await elem.msRequestFullscreen();
-        }
-    };
-
-    const exitfullscreen = async () => {
-        if (document.exitFullscreen) {
-            await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            /* Safari */
-            await document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            /* IE11 */
-            await document.msExitFullscreen();
-        }
-    };
-
-    useEffect(() => {
-        const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => {});
-    }, [remote.fullscreen]);
 
     const pointerlock = () => {
         remoteVideo.current.requestPointerLock();
     };
-    const exitpointerlock = () => {
-        document.exitPointerLock();
-    };
-
-    useEffect(() => {
-        const handleState = () => {
-            const fullscreen =
-                document.fullscreenElement != null ||
-                document.webkitFullscreenElement != null ||
-                document.mozFullScreenElement != null;
-            const havingPtrLock =
-                document.pointerLockElement != null ||
-                document.mozPointerLockElement != null ||
-                document.webkitPointerLockElement != null;
-
-            if (!fullscreen && havingPtrLock) exitpointerlock();
-        };
-
-        const UIStateLoop = setInterval(handleState, 100);
-        return () => {
-            clearInterval(UIStateLoop);
-        };
-    }, []);
 
     const SetupWebRTC = () => {
         const video = new VideoWrapper(remoteVideo.current);
@@ -95,7 +43,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
-                onClick={relative_mouse ? pointerlock : () => {}}
+                onClick={relative_mouse ? pointerlock : () => { }}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted

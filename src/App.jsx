@@ -9,6 +9,7 @@ import {
     menu_show,
     request_demo,
     set_fullscreen,
+    pointer_lock,
     useAppSelector
 } from './backend/reducers';
 import { UserSession } from './backend/reducers/fetch/analytics';
@@ -36,6 +37,7 @@ function App() {
     const user = useAppSelector((state) => state.user);
     const demo = useAppSelector((state) => state.apps.guidance);
     const survey = useAppSelector((state) => state.sidepane.surveys.length > 0);
+    const pointerLock = useAppSelector(state => state.remote.pointer_lock)
 
     const [booting, setLockscreen] = useState(true);
 
@@ -118,6 +120,31 @@ function App() {
             if (RequestDemo() || FirstTime()) appDispatch(request_demo());
     }, [user.id]);
 
+    const fullscreen = async () => {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            /* Safari */
+            await elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            /* IE11 */
+            await elem.msRequestFullscreen();
+        }
+    };
+
+    const exitfullscreen = async () => {
+        if (document.exitFullscreen) {
+            await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            /* Safari */
+            await document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            /* IE11 */
+            await document.msExitFullscreen();
+        }
+    };
+
     useEffect(() => {
         if (remote.fullscreen) {
             window.onclick = null;
@@ -127,7 +154,8 @@ function App() {
             window.onclick = afterMath;
         }
 
-        if (!remote.active) return;
+        const job = remote.fullscreen ? fullscreen() : exitfullscreen();
+        job?.catch(() => { });
 
         const handleState = () => {
             const fullscreen =
@@ -141,7 +169,30 @@ function App() {
 
         const UIStateLoop = setInterval(handleState, 100);
         return () => clearInterval(UIStateLoop);
-    }, [remote.active, remote.fullscreen]);
+    }, [remote.fullscreen]);
+
+    const exitpointerlock = () => {
+        document.exitPointerLock();
+    };
+
+    useEffect(() => {
+        const handleState = () => {
+            const fullscreen =
+                document.fullscreenElement != null ||
+                document.webkitFullscreenElement != null ||
+                document.mozFullScreenElement != null;
+            const havingPtrLock =
+                document.pointerLockElement != null ||
+                document.mozPointerLockElement != null ||
+                document.webkitPointerLockElement != null;
+
+            if (!fullscreen && havingPtrLock) exitpointerlock();
+            if (havingPtrLock != remote.pointer_lock) appDispatch(pointer_lock(havingPtrLock));
+        };
+
+        const UIStateLoop = setInterval(handleState, 100);
+        return () => {   clearInterval(UIStateLoop) };
+    }, [remote.pointer_lock]);
 
     return (
         <div className="App">
@@ -154,15 +205,18 @@ function App() {
                 ) : null}
                 {survey ? <Survey /> : null}
                 <div className="appwrap ">
+                    {pointerLock ? null 
+                    : <>
+                        <Taskbar />
+                        <ActMenu />
+                        <WidPane />
+                        <StartMenu />
+                        <SidePane />
+                        <Popup />
+                    </>}
                     {remote.active
                         ? <Remote />
                         : <Background />}
-                    <Taskbar />
-                    <ActMenu />
-                    <WidPane />
-                    <StartMenu />
-                    <SidePane />
-                    <Popup />
                     {!remote.active ?
                         <div className="desktop" data-menu="desk">
                             <DesktopApp />

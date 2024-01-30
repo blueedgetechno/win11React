@@ -113,11 +113,11 @@ export const workerAsync = {
         'fork_volume',
         async (volume_id: string, { getState }): Promise<any> => {
             volume_id = volume_id.split(' ').at(-1);
-            let cluster_id = 'todo';
-            let gpu_model = 'todo';
-            let vcpus = 'todo';
-            let ram = 'todo';
-            let description = 'todo';
+            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
+            let gpu_model = 'RTX 3060Ti';
+            let vcpus = '8';
+            let ram = '8';
+            let description = `fork volume ${new Date().toUTCString()}`;
             await ForkVolume(
                 volume_id,
                 cluster_id,
@@ -245,15 +245,17 @@ export const workerAsync = {
     release_app: createAsyncThunk(
         'release_app',
         async (store_id: number, { getState }): Promise<any> => {
-            let vol_speed = '';
-            let vol_availability = '';
-            let gpu_model = '';
-            let desc = '';
-            let vcpus = '';
-            let ram = '';
-            let vdriver = '';
-            let hidevm = '';
-            let cluster_id = '';
+            let vol_speed = 'HOT';
+            let vol_availability = 'HA';
+
+            let vdriver = true;
+            let hidevm = false;
+
+            let desc = `release ${new Date().toUTCString()}`;
+            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
+            let gpu_model = 'RTX 3060Ti';
+            let vcpus = '8';
+            let ram = '8';
             await ConfigureApplication({
                 vol_speed,
                 vol_availability,
@@ -352,7 +354,15 @@ export const workerSlice = createSlice({
             {
                 fetch: workerAsync.access_worker,
                 hander: (state, action) => {}
-            }
+            },
+            {
+                fetch: workerAsync.release_app,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.fork_volume,
+                hander: (state, action) => {}
+            },
         );
     }
 });

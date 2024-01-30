@@ -56,7 +56,7 @@ const Taskbar = () => {
         const interval = setInterval(() => {
             setTime(new Date());
         }, 1000);
-        return () => clearInterval(interval);
+        return () => { clearInterval(interval) };
     }, []);
 
     const [play] = useSound(ringSound, { volume: 0.1 });

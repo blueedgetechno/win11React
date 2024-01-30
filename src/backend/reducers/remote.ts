@@ -83,7 +83,6 @@ export const ready = async () => {
         await new Promise((r) => setTimeout(r, 1000));
     }
 
-    await new Promise((r) => setTimeout(r, 1000));
     appDispatch(remoteSlice.actions.sync());
     appDispatch(popup_close());
 };
@@ -139,6 +138,7 @@ type Data = {
 
     active: boolean;
     fullscreen: boolean;
+    pointer_lock: boolean;
     relative_mouse: boolean;
     focus: boolean;
 
@@ -169,7 +169,8 @@ const initialState: Data = {
     low_ads: true,
     scancode: false,
     fullscreen: false,
-    relative_mouse: true,
+    pointer_lock: false,
+    relative_mouse: false,
     old_version: isMobile(),
 
     bitrate: 0,
@@ -429,12 +430,14 @@ export const remoteSlice = createSlice({
             }
 
             state.active = true;
+            state.fullscreen = true;
             state.remote_id = action.payload;
         },
         toggle_remote: (state) => {
             if (!state.active) {
                 if (state.remote_id == undefined) return;
 
+                state.fullscreen = true;
                 state.connection = {
                     audio: 'started',
                     video: 'started',
@@ -480,15 +483,18 @@ export const remoteSlice = createSlice({
         homescreen: () => {
             WindowD();
         },
-        set_fullscreen: (state, action: PayloadAction<boolean>) => {
-            state.fullscreen = action.payload;
-        },
         remote_version: (state) => {
             state.old_version = !state.old_version;
             setTimeout(() => appDispatch(cache_setting()), 500);
         },
+        set_fullscreen: (state, action: PayloadAction<boolean>) => {
+            state.fullscreen = action.payload;
+        },
         fullscreen: (state) => {
-            if (state.active) state.fullscreen = !state.fullscreen;
+            state.fullscreen = !state.fullscreen;
+        },
+        pointer_lock: (state, action: PayloadAction<boolean>) => {
+            state.pointer_lock = action.payload;
         },
         relative_mouse: (state) => {
             state.relative_mouse = !state.relative_mouse;

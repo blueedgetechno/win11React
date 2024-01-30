@@ -118,6 +118,7 @@ export const {
     change_framerate,
     fullscreen,
     set_fullscreen,
+    pointer_lock,
     homescreen,
     relative_mouse,
     audio_status,

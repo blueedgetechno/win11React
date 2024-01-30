@@ -34,7 +34,7 @@ const LoadingProgressBar = () => {
             }
         }, 3.5 * 1000);
 
-        return () => clearInterval(interval);
+        return () => { clearInterval(interval) };
     }, [loading]);
 
     return (
@@ -79,7 +79,7 @@ const Protip = () => {
             setCurrentTip(randomNumber);
         }, 5 * 1000);
 
-        return () => clearInterval(interval);
+        return () => { clearInterval(interval) };
     }, []);
     return (
         <div className="mt-[14px]">

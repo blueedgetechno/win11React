@@ -725,8 +725,8 @@ export function language() {
     en.set(Contents.FULLSCREEN, 'Fullscreen');
     vn.set(Contents.FULLSCREEN, 'Toàn màn hình');
 
-    en.set(Contents.RELATIVE_MOUSE, 'Use server mouse');
-    vn.set(Contents.RELATIVE_MOUSE, 'Dùng chuột server');
+    en.set(Contents.RELATIVE_MOUSE, 'Gaming mode');
+    vn.set(Contents.RELATIVE_MOUSE, 'Chế độ gaming');
 
     en.set(Contents.SCAN_CODE, 'Fix keyboard');
     vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');
