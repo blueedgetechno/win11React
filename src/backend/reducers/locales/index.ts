@@ -162,7 +162,9 @@ export enum Contents {
     FB_DETAIL,
     DEMO_QUEUED,
     DEMO_NOTE,
-    ALREADY_DEMO
+    ALREADY_DEMO,
+    THINKMAY_HEADER,
+    THINKMAY_DESC
 }
 
 export function language() {
@@ -818,6 +820,18 @@ export function language() {
 
     en.set(Contents.ALREADY_DEMO, 'You are already demo services');
     vn.set(Contents.ALREADY_DEMO, 'Bạn đã demo rồi 😎');
+
+    en.set(Contents.THINKMAY_HEADER, 'Thinkmay - Cloud PC');
+    vn.set(Contents.THINKMAY_HEADER, 'Thinkmay - Cloud PC');
+
+    en.set(
+        Contents.THINKMAY_DESC,
+        'Play AAA Games, professionally graphic work on any device.'
+    );
+    vn.set(
+        Contents.THINKMAY_DESC,
+        'Chơi game khủng, làm đồ họa nặng trên mọi thiết bị.'
+    );
 
     return t;
 }
