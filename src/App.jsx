@@ -29,6 +29,7 @@ import Popup from './containers/popup';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
 import './index.css';
+import { Contents } from './backend/reducers/locales';
 
 function App() {
     const remote = useAppSelector((x) => x.remote);
@@ -59,12 +60,13 @@ function App() {
     };
 
     const [loadingText, setloadingText] = useState('Booting your device');
+    const t = useAppSelector(state => state.globals.translation)
     useEffect(() => {
         preload().finally(async () => {
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
             while (isMobile() && window.screen.width < window.screen.height) {
-                setloadingText('Please rotate your phone');
+                setloadingText(t[Contents.ROTATE_PHONE]);
                 await new Promise((r) => setTimeout(r, 1000));
             }
 
