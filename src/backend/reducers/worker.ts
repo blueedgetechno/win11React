@@ -360,7 +360,51 @@ export const workerSlice = createSlice({
                 hander: (state, action) => {}
             },
             {
+                fetch: workerAsync.patch_app,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.cancel_subscription,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.adjust_subscription,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.renew_subscription,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.create_subscription,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.upgrade_subscription,
+                hander: (state, action) => {}
+            },
+            {
                 fetch: workerAsync.fork_volume,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.access_storage,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.delete_storage,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.stop_storage,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.stop_volume,
+                hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.delete_volume,
                 hander: (state, action) => {}
             }
         );
