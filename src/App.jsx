@@ -7,13 +7,14 @@ import {
     appDispatch,
     direct_access,
     menu_show,
+    pointer_lock,
     request_demo,
     set_fullscreen,
-    pointer_lock,
     useAppSelector
 } from './backend/reducers';
 import { UserSession } from './backend/reducers/fetch/analytics';
 import { Contents } from './backend/reducers/locales';
+import { client } from './backend/reducers/remote';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
@@ -115,10 +116,11 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch {}
-            if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-        } else if (ref == null && user.id == 'unknown')
-            if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+            } catch { }
+            // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+        } else if (ref == null && user.id == 'unknown') {
+            // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+        }
     }, [user.id]);
 
     const fullscreen = async () => {
@@ -156,7 +158,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => {});
+        job?.catch(() => { });
 
         const handleState = () => {
             const fullscreen =
@@ -188,8 +190,7 @@ function App() {
                 document.webkitPointerLockElement != null;
 
             if (!fullscreen && havingPtrLock) exitpointerlock();
-            if (havingPtrLock != remote.pointer_lock)
-                appDispatch(pointer_lock(havingPtrLock));
+            if (havingPtrLock != remote.pointer_lock) appDispatch(pointer_lock(havingPtrLock));
         };
 
         const UIStateLoop = setInterval(handleState, 100);

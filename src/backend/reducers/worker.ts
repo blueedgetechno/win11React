@@ -88,20 +88,14 @@ export const workerAsync = {
     ),
     delete_volume: createAsyncThunk(
         'delete_volume',
-        async (
-            volume_id: string,
-            { getState }
-        ): Promise<any> => {
+        async (volume_id: string, { getState }): Promise<any> => {
             volume_id = volume_id.split(' ').at(-1);
             await DeleteVolume(volume_id);
         }
     ),
     default_os_volume: createAsyncThunk(
         'default_os_volume',
-        async (
-            volume_id: string, 
-            { getState }
-        ): Promise<any> => {
+        async (volume_id: string, { getState }): Promise<any> => {
             let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
             await SetDefaultOsVolume(volume_id, cluster_id);
         }
@@ -355,59 +349,59 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.access_worker,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.release_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.patch_app,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.cancel_subscription,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.adjust_subscription,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.renew_subscription,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.create_subscription,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.upgrade_subscription,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.fork_volume,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.access_storage,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.delete_storage,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.stop_storage,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.stop_volume,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
             {
                 fetch: workerAsync.delete_volume,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             }
         );
     }
