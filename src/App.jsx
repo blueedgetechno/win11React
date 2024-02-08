@@ -5,6 +5,7 @@ import { preload } from './backend/actions/background';
 import { FirstTime, RequestDemo, afterMath } from './backend/actions/index';
 import {
     appDispatch,
+    app_toggle,
     direct_access,
     menu_show,
     pointer_lock,
@@ -76,6 +77,7 @@ function App() {
             }
 
             setLockscreen(false);
+            appDispatch(app_toggle('payment'))
         });
     }, []);
 
