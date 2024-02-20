@@ -28,9 +28,11 @@ export const StartMenu = () => {
         });
     };
 
-    const additionalTime = +stats.additional_time ?? 0
-    const planUsageTime = +stats.plan_usage_time ?? 0
-    const totalTime = planUsageTime + additionalTime
+    const additionalTime = stats?.additional_time ?? 0
+    const planUsageTime = stats?.plan_usage_time ?? 0
+    const usageTime = +stats?.total_time ?? 0
+    const totalTime = +planUsageTime + +additionalTime
+
     return (
         <div
             className="startMenu dpShad"
@@ -93,13 +95,13 @@ export const StartMenu = () => {
                                 <span className="text-left">
                                     {t[Contents.PLAN_USAGE_TIME]}
                                 </span>
-                                <span>{stats?.plan_usage_time ?? 0}h</span>
+                                <span>{planUsageTime}h</span>
                             </div>
                             <div className="w-full flex gap-4 justify-between mt-1 items-end">
                                 <span className="text-left">
                                     {t[Contents.ADDITIONAL_TIME]}
                                 </span>
-                                <span>{stats?.additional_time ?? 0}h</span>
+                                <span>{additionalTime}h</span>
                             </div>
                             <hr className="my-[14px]" />
                             <div className="w-full flex gap-4 justify-between  mt-0 md:mt-[14px]">
@@ -107,7 +109,7 @@ export const StartMenu = () => {
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {stats?.total_time.toFixed(1) ? stats?.total_time.toFixed(1) : 0}h
+                                    {stats?.total_time ? stats?.total_time.toFixed(1) : 0}h
 
                                     / {
                                         totalTime + 'h'
