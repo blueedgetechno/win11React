@@ -19,7 +19,6 @@ export const StartMenu = () => {
     const thm = useAppSelector((state) => state.setting.person.theme);
     var icon = thm == 'light' ? 'sun' : 'moon';
 
-    console.log(user);
     const formatDate = (dateStr) => {
         return new Date(dateStr).toLocaleDateString('en-GB', {
             month: 'numeric',
@@ -30,7 +29,6 @@ export const StartMenu = () => {
 
     const additionalTime = stats?.additional_time ?? 0
     const planUsageTime = stats?.plan_usage_time ?? 0
-    const usageTime = +stats?.total_time ?? 0
     const totalTime = +planUsageTime + +additionalTime
 
     return (
