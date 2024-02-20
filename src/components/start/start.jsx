@@ -27,9 +27,9 @@ export const StartMenu = () => {
         });
     };
 
-    const additionalTime = stats?.additional_time ?? 0
-    const planUsageTime = stats?.plan_usage_time ?? 0
-    const totalTime = +planUsageTime + +additionalTime
+    const additionalTime = stats?.additional_time ?? 0;
+    const planUsageTime = stats?.plan_usage_time ?? 0;
+    const totalTime = +planUsageTime + +additionalTime;
 
     return (
         <div
@@ -107,11 +107,10 @@ export const StartMenu = () => {
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {stats?.total_time ? stats?.total_time.toFixed(1) : 0}h
-
-                                    / {
-                                        totalTime + 'h'
-                                    }
+                                    {stats?.total_time
+                                        ? stats?.total_time.toFixed(1)
+                                        : 0}
+                                    h / {totalTime + 'h'}
                                 </span>
                             </div>
                         </div>

@@ -77,7 +77,7 @@ function App() {
             }
 
             setLockscreen(false);
-            appDispatch(app_toggle('payment'))
+            appDispatch(app_toggle('payment'));
         });
     }, []);
 
@@ -118,7 +118,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch { }
+            } catch {}
             // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         } else if (ref == null && user.id == 'unknown') {
             // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
@@ -160,7 +160,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => { });
+        job?.catch(() => {});
 
         const handleState = () => {
             const fullscreen =
@@ -192,7 +192,8 @@ function App() {
                 document.webkitPointerLockElement != null;
 
             if (!fullscreen && havingPtrLock) exitpointerlock();
-            if (havingPtrLock != remote.pointer_lock) appDispatch(pointer_lock(havingPtrLock));
+            if (havingPtrLock != remote.pointer_lock)
+                appDispatch(pointer_lock(havingPtrLock));
         };
 
         const UIStateLoop = setInterval(handleState, 100);

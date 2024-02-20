@@ -53,7 +53,7 @@ interface NewSubscription {
     plan: string;
     free: string;
     price: string;
-    additional_time: number
+    additional_time: number;
 }
 
 export const workerAsync = {

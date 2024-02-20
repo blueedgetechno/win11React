@@ -853,21 +853,9 @@ export function language() {
         Contents.THINKMAY_DESC,
         'Chơi game khủng, làm đồ họa nặng trên mọi thiết bị.'
     );
-    en.set(
-        Contents.PLAN_USAGE_TIME,
-        'Plan usage time'
-    );
-    vn.set(
-        Contents.PLAN_USAGE_TIME,
-        'Thời gian của gói'
-    );
-    en.set(
-        Contents.ADDITIONAL_TIME,
-        'Additional time'
-    );
-    vn.set(
-        Contents.ADDITIONAL_TIME,
-        'Thời gian cộng thêm'
-    );
+    en.set(Contents.PLAN_USAGE_TIME, 'Plan usage time');
+    vn.set(Contents.PLAN_USAGE_TIME, 'Thời gian của gói');
+    en.set(Contents.ADDITIONAL_TIME, 'Additional time');
+    vn.set(Contents.ADDITIONAL_TIME, 'Thời gian cộng thêm');
     return t;
 }
