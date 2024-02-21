@@ -80,18 +80,21 @@ export const AddSubscription = async ({
     email,
     free,
     plan,
-    price
+    price,
+    additional_time
 }: {
     email: string;
     plan: string;
     free: string;
     price: string;
+    additional_time: number;
 }) => {
     const result = await SupabaseFuncInvoke('add_subscription', {
         email,
         plan,
         free,
-        price
+        price,
+        additional_time
     });
     if (result instanceof Error) throw result;
     return result;

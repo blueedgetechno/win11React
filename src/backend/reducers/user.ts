@@ -15,6 +15,8 @@ interface UsageTime {
 
     total_time: number;
     daily_usage: string;
+    additional_time: string;
+    plan_usage_time: string;
 }
 const initialState: Data = {
     id: 'unknown',

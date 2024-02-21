@@ -5,7 +5,7 @@ import {
     user_delete
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
-import { isMobile, validate_user_access } from '../../backend/utils/checking';
+import { validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
@@ -26,6 +26,10 @@ export const StartMenu = () => {
             year: 'numeric'
         });
     };
+
+    const additionalTime = stats?.additional_time ?? 0;
+    const planUsageTime = stats?.plan_usage_time ?? 0;
+    const totalTime = +planUsageTime + +additionalTime;
 
     return (
         <div
@@ -85,13 +89,28 @@ export const StartMenu = () => {
                                 </span>
                                 <span>{formatDate(stats?.end_time)}</span>
                             </div>
+                            <div className="w-full flex gap-4 justify-between mt-3 items-end">
+                                <span className="text-left">
+                                    {t[Contents.PLAN_USAGE_TIME]}
+                                </span>
+                                <span>{planUsageTime}h</span>
+                            </div>
+                            <div className="w-full flex gap-4 justify-between mt-1 items-end">
+                                <span className="text-left">
+                                    {t[Contents.ADDITIONAL_TIME]}
+                                </span>
+                                <span>{additionalTime}h</span>
+                            </div>
                             <hr className="my-[14px]" />
                             <div className="w-full flex gap-4 justify-between  mt-0 md:mt-[14px]">
                                 <span className="text-left">
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {stats?.total_time.toFixed(1) + 'h'}
+                                    {stats?.total_time
+                                        ? stats?.total_time.toFixed(1)
+                                        : 0}
+                                    h / {totalTime + 'h'}
                                 </span>
                             </div>
                         </div>

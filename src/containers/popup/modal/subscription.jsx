@@ -26,7 +26,8 @@ const initAddSub = {
     email: '',
     sub: 'day', // Set a default value for the select
     price: '',
-    free_sub: false
+    free_sub: false,
+    additional_time: 0
 };
 const AddSub = () => {
     const [formData, setFormData] = useState(initAddSub);
@@ -55,7 +56,8 @@ const AddSub = () => {
             email: formData.email,
             plan: formData.sub,
             free: formData.free_sub,
-            price: formData.price
+            price: formData.price,
+            additional_time: formData.additional_time
         };
 
         await dispatch(create_subscription(formatData));
@@ -107,6 +109,16 @@ const AddSub = () => {
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
+                    />
+                </label>
+                <label htmlFor="additional_time">
+                    <span>Additional time</span>
+                    <input
+                        type="text"
+                        id="additional_time"
+                        name="additional_time"
+                        onChange={handleChange}
+                        value={formData.additional_time}
                     />
                 </label>
                 <label htmlFor="free_sub">

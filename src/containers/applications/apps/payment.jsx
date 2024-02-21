@@ -35,9 +35,7 @@ export const PaymentApp = () => {
             name: 'week',
             period: 'month',
             description: 'Perfect to get started using Cloud PC',
-            bonus: [
-                'Normal customer support priority',
-            ]
+            bonus: ['Normal customer support priority']
         },
         {
             highlight: true,
@@ -52,7 +50,7 @@ export const PaymentApp = () => {
                 '1 year Thinkmay Personal Cloud Storage (1TB)',
                 '1 year OneDrive / Google Drive (1TB)',
                 '1 year Thinkmay Steam account',
-                'Highest priority feature request',
+                'Highest priority feature request'
             ]
         },
         {
@@ -69,7 +67,7 @@ export const PaymentApp = () => {
                 '1 year Thinkmay Steam account',
                 'Multitasking Cloud PC',
                 'Account management system for business',
-                'Highest priority feature request',
+                'Highest priority feature request'
             ]
         }
     ]);
@@ -179,13 +177,13 @@ export const PaymentApp = () => {
                                                             </div>
                                                             <p className="-mt-2">
                                                                 <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
-                                                                    {
-                                                                        sub.title == 'Enterprise'
+                                                                    {sub.title ==
+                                                                    'Enterprise'
                                                                         ? 'charge based on number of account'
-                                                                        : sub.title == 'one year plan'
-                                                                        ?  `Unlimited remote usage`
-                                                                        : `Limit of ${sub.total_time} hours`
-                                                                    }
+                                                                        : sub.title ==
+                                                                            'one year plan'
+                                                                          ? `Unlimited remote usage`
+                                                                          : `Limit of ${sub.total_time} hours`}
                                                                 </span>
                                                             </p>
                                                         </div>
