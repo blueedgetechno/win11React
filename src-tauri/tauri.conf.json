@@ -12,7 +12,18 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": true,
+      "shell": {
+        "scope": [
+          {
+            "name": "powershell",
+            "cmd": "powershell",
+            "args": [
+              "**"
+            ]
+          }
+        ]
+      }
     },
     "bundle": {
       "active": true,
