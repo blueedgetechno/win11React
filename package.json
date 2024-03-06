@@ -5,7 +5,9 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
+    "tauri": "tauri",
     "start": "vite --port 3000",
+    "dev": "vite --port 3000",
     "build": "prettier --write \"./**/*.{jsx,ts,js,tsx}\" && tsc && vite build"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@paypal/react-paypal-js": "^8.1.3",
     "@supabase/supabase-js": "^2.24.0",
+    "@tauri-apps/cli": "^1.5.10",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/redux-logger": "^3.0.12",
