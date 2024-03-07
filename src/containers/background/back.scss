@@ -157,6 +157,7 @@
 
   .ctn_btn_login{
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 16px;
     button{
@@ -169,6 +170,54 @@
       }
     }
   }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-form {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input[type='text'],
+    input[type='password'] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+  
+    .btn-login {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    &:hover {
+      background-color: #0056b3;
+    }
+    }
+    
+    
+    
+  }
+  
 }
 
 .lockOpt {
@@ -236,3 +285,5 @@
   background: rgb(144, 144, 144);
   background: linear-gradient(224deg, rgb(56 56 56 / 33%) 0%, rgb(255 255 255 / 33%) 100%);
 }
+
+

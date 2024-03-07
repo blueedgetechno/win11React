@@ -83,7 +83,7 @@ export const LockScreen = () => {
         <div
             className={'lockscreen slowfadein'}
             data-unlock={unlocked}
-            style={{ backgroundImage: `url(${`img/wallpaper/lock.png`})` }}
+            style={{ backgroundImage: `url(img/wallpaper/lock.png)` }}
             onClick={action}
             data-blur={lock}
         >
@@ -135,26 +135,33 @@ export const LockScreen = () => {
                         </div>
                     ) : (
                         <>
-                            <span className="text-base text-white font-medium">
-                                Continue with
-                            </span>
-                            <div className="flex gap-[8px]">
-                                {/* <button className="base fb_button">
-                                        <Icon src="facebook1" width={64} />
-                                    </button> */}
-                                <button
-                                    className="base discord_button"
-                                    onClick={() => proceed('discord')}
-                                >
-                                    <Icon src="discord" width={64} />
-                                </button>
-                                <button
-                                    className="base gg_button"
-                                    onClick={() => proceed('google')}
-                                >
-                                    <Icon src="google" width={64} />
-                                </button>
-                            </div>
+                                <div>
+                                    <span className="text-base text-white font-medium">
+                                        Continue with
+                                    </span>
+                                    <div className="flex gap-[8px]">
+                                        {/* <button className="base fb_button">
+                                            <Icon src="facebook1" width={64} />
+                                        </button> */}
+                                        <button
+                                            className="base discord_button"
+                                            onClick={() => proceed('discord')}
+                                        >
+                                            <Icon src="discord" width={64} />
+                                        </button>
+                                        <button
+                                            className="base gg_button"
+                                            onClick={() => proceed('google')}
+                                        >
+                                            <Icon src="google" width={64} />
+                                        </button>
+                                    </div>
+
+
+
+                                </div>
+                                <LoginForm></LoginForm>
+
                         </>
                     )}
                 </div>
@@ -186,7 +193,7 @@ export const LockScreen = () => {
     );
 };
 
-export const Getstarted = ({}) => {
+export const Getstarted = ({ }) => {
     const t = useAppSelector((state) => state.globals.translation);
     const { email, id } = useAppSelector((state) => state.user);
 
@@ -322,14 +329,14 @@ export const Getstarted = ({}) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                  ? Select((old) => old - 1)
-                  : e.key == 'ArrowLeft'
-                    ? prevPage()
-                    : e.key == 'ArrowRight'
-                      ? nextPage()
-                      : e.key == 'ArrowDown'
-                        ? Select((old) => old + 1)
-                        : null;
+                    ? Select((old) => old - 1)
+                    : e.key == 'ArrowLeft'
+                        ? prevPage()
+                        : e.key == 'ArrowRight'
+                            ? nextPage()
+                            : e.key == 'ArrowDown'
+                                ? Select((old) => old + 1)
+                                : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -474,7 +481,7 @@ export const Getstarted = ({}) => {
                     className="no_button base"
                     onClick={() => setSelectLoginOption('INUSE')}
 
-                    // login
+                        // login
                 >
                     {t[Contents.HAVE_ACCOUNT]}
                     {', '}
@@ -483,7 +490,7 @@ export const Getstarted = ({}) => {
                 <div
                     className="yes_button base"
                     onClick={() => setSelectLoginOption('DEMO')}
-                    // LoginAndDemo
+                        // LoginAndDemo
                 >
                     {t[Contents.DEMO]}
                 </div>
@@ -573,9 +580,9 @@ export const Getstarted = ({}) => {
                                             style={
                                                 selection == i
                                                     ? {
-                                                          background:
-                                                              'rgb(175 175 175 / 40%)'
-                                                      }
+                                                        background:
+                                                            'rgb(175 175 175 / 40%)'
+                                                    }
                                                     : {}
                                             }
                                             onClick={() => nextPage()}
@@ -663,8 +670,8 @@ export const Getstarted = ({}) => {
                                                     <h3 className="text-3xl">
                                                         {
                                                             t[
-                                                                Contents
-                                                                    .DEMO_QUEUED
+                                                            Contents
+                                                                .DEMO_QUEUED
                                                             ]
                                                         }{' '}
                                                         {orderNumberDemo}
@@ -811,14 +818,14 @@ export const Survey = () => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                  ? Select((old) => old - 1)
-                  : e.key == 'ArrowLeft'
-                    ? prevPage()
-                    : e.key == 'ArrowRight'
-                      ? nextPage()
-                      : e.key == 'ArrowDown'
-                        ? Select((old) => old + 1)
-                        : null;
+                    ? Select((old) => old - 1)
+                    : e.key == 'ArrowLeft'
+                        ? prevPage()
+                        : e.key == 'ArrowRight'
+                            ? nextPage()
+                            : e.key == 'ArrowDown'
+                                ? Select((old) => old + 1)
+                                : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -873,9 +880,9 @@ export const Survey = () => {
                                         style={
                                             selection == i
                                                 ? {
-                                                      background:
-                                                          'rgb(175 175 175 / 40%)'
-                                                  }
+                                                    background:
+                                                        'rgb(175 175 175 / 40%)'
+                                                }
                                                 : {}
                                         }
                                         onClick={() => nextPage()}
@@ -941,6 +948,47 @@ export const Survey = () => {
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+const LoginForm = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Here you can implement your login logic
+        console.log('Username:', username);
+        console.log('Password:', password);
+    };
+
+    return (
+        <div className="login-container">
+            <form className="login-form" onSubmit={handleLogin}>
+                <h2>Login</h2>
+                <div className="form-group">
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button className='btn-login' type="submit">Login</button>
+            </form>
         </div>
     );
 };
