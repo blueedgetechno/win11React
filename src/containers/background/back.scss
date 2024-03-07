@@ -169,12 +169,25 @@
         opacity: 0.7;
       }
     }
+
+    .ml_button{
+      width: 120px;
+      display: flex;
+      align-items: center;
+      background: #1acac1;
+      justify-content: center;
+      border-radius: 80px;
+      font-weight: 500;
+      border: 2px solid;
+    }
   }
 
   .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all  0.1s ease-in;
+    transform: scale(1.1);
     .login-form {
       background-color: #f0f0f0;
       padding: 20px;

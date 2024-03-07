@@ -61,6 +61,7 @@ export const BootScreen = ({ loadingText }) => {
 export const LockScreen = () => {
     const [lock, setLock] = useState(false);
     const [unlocked, setUnLock] = useState(false);
+    const [showLoginForm, setLoginForm] = useState(false);
 
     const user = useAppSelector((state) => state.user);
     const dispatch = appDispatch;
@@ -79,7 +80,7 @@ export const LockScreen = () => {
         await login(provider);
     };
 
-    const direct_access = async () => {};
+    const direct_access = async () => { };
 
     const moonlight_access = async () => {
         const command = new Command('Moonlight', [
@@ -161,32 +162,46 @@ export const LockScreen = () => {
                         </div>
                     ) : (
                         <>
-                                <div>
-                                    <span className="text-base text-white font-medium">
-                                        Continue with
-                                    </span>
-                                    <div className="flex gap-[8px]">
-                                        {/* <button className="base fb_button">
+                                {
+                                    showLoginForm ?
+                                        <LoginForm
+                                            close={() => setLoginForm(false)}
+
+                                        ></LoginForm>
+
+                                        :
+                                        <div>
+                                            <span className="text-base text-white font-medium">
+                                                Continue with
+                                            </span>
+                                            <div className="flex gap-[8px]">
+                                                {/* <button className="base fb_button">
                                             <Icon src="facebook1" width={64} />
                                         </button> */}
-                                        <button
-                                            className="base discord_button"
-                                            onClick={() => proceed('discord')}
-                                        >
-                                            <Icon src="discord" width={64} />
-                                        </button>
-                                        <button
-                                            className="base gg_button"
-                                            onClick={() => proceed('google')}
-                                        >
-                                            <Icon src="google" width={64} />
-                                        </button>
-                                    </div>
+                                                <button
+                                                    className="base discord_button"
+                                                    onClick={() => proceed('discord')}
+                                                >
+                                                    <Icon src="discord" width={64} />
+                                                </button>
+                                                <button
+                                                    className="base gg_button"
+                                                    onClick={() => proceed('google')}
+                                                >
+                                                    <Icon src="google" width={64} />
+                                                </button>
+
+                                                <butotn className="base ml_button" onClick={() => {
+                                                    setLoginForm(true)
+                                                }}>Monlight</butotn>
+                                            </div>
 
 
 
-                                </div>
-                                <LoginForm></LoginForm>
+                                        </div>
+
+                                }
+
 
                         </>
                     )}
@@ -978,7 +993,7 @@ export const Survey = () => {
     );
 };
 
-const LoginForm = () => {
+const LoginForm = ({ close }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -1013,7 +1028,12 @@ const LoginForm = () => {
                         required
                     />
                 </div>
-                <button className='btn-login' type="submit">Login</button>
+                <div className='flex gap-2'>
+
+                    <button className='btn-login' type="submit">Login</button>
+
+                    <button onClick={close} className='bg-slate-600' type='button'>Close</button>
+                </div>
             </form>
         </div>
     );
