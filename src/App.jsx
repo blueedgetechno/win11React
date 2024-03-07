@@ -30,7 +30,6 @@ import {
 import Popup from './containers/popup';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
-import { Command } from '@tauri-apps/api/shell';
 import './index.css';
 
 function App() {
@@ -62,11 +61,6 @@ function App() {
     const [loadingText, setloadingText] = useState(Contents.BOOTING);
     useEffect(() => {
         preload().finally(async () => {
-            const command = new Command('powershell', '--version');
-            command.stderr.addListener("data",data => { console.log(data) })
-            const out = await command.spawn()
-
-
             console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
             const now = new Date().getTime();
@@ -122,7 +116,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch { }
+            } catch {}
             // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
         } else if (ref == null && user.id == 'unknown') {
             // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
@@ -164,7 +158,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => { });
+        job?.catch(() => {});
 
         const handleState = () => {
             const fullscreen =

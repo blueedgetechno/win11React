@@ -1,3 +1,4 @@
+import { Command } from '@tauri-apps/api/shell';
 import { useEffect, useState } from 'react';
 import { CloseDemo, LoginAndDemo, login } from '../../backend/actions';
 import {
@@ -11,15 +12,14 @@ import {
     useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
-import { externalLink } from '../../backend/utils/constant';
-import Battery from '../../components/shared/Battery';
-import { Icon, Image } from '../../components/shared/general';
-import './back.scss';
-
 import { UserEvents } from '../../backend/reducers/fetch/analytics';
 import { supabase, virtapi } from '../../backend/reducers/fetch/createClient';
 import { Contents } from '../../backend/reducers/locales';
+import { externalLink } from '../../backend/utils/constant';
 import { sleep } from '../../backend/utils/sleep';
+import Battery from '../../components/shared/Battery';
+import { Icon, Image } from '../../components/shared/general';
+import './back.scss';
 import './getstarted.scss';
 
 export const Background = () => {
@@ -77,6 +77,32 @@ export const LockScreen = () => {
         }
 
         await login(provider);
+    };
+
+    const direct_access = async () => {};
+
+    const moonlight_access = async () => {
+        const command = new Command('Moonlight', [
+            '--username',
+            '123',
+            '--password',
+            '456'
+        ]);
+        command.stderr.addListener('data', (data) => {
+            console.log(data);
+        });
+        command.stdout.addListener('data', (data) => {
+            console.log(data);
+        });
+        command
+            .spawn()
+            .then((x) => {
+                console.log(x);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        return;
     };
 
     return (
