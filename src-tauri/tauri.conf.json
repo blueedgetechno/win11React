@@ -16,11 +16,14 @@
       "shell": {
         "scope": [
           {
+            "name": "Moonlight",
+            "cmd": "./moonlight/Moonlight.exe",
+            "args": true
+          },
+          {
             "name": "powershell",
             "cmd": "powershell",
-            "args": [
-              "**"
-            ]
+            "args": [ "$PWD" ]
           }
         ]
       }
