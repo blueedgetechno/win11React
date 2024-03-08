@@ -8,6 +8,9 @@ import {
     close_remote,
     close_survey,
     demo_app,
+    local_access,
+    open_remote,
+    ready,
     update_language,
     useAppSelector,
     wall_unlock
@@ -80,7 +83,7 @@ export const LockScreen = () => {
         await login(provider);
     };
 
-    const direct_access = async () => { };
+    const direct_access = async () => {};
 
     const moonlight_access = async () => {
         const command = new Command('Moonlight', [
@@ -162,47 +165,38 @@ export const LockScreen = () => {
                         </div>
                     ) : (
                         <>
-                                {
-                                    showLoginForm ?
-                                        <LoginForm
-                                            close={() => setLoginForm(false)}
+                            {showLoginForm ? (
+                                <LoginForm
+                                    close={() => setLoginForm(false)}
+                                ></LoginForm>
+                            ) : (
+                                <div>
+                                    <span className="text-base text-white font-medium">
+                                        Continue with
+                                    </span>
+                                    <div className="flex gap-[8px]">
+                                        <button
+                                            className="base discord_button"
+                                            onClick={() => proceed('discord')}
+                                        >
+                                            <Icon src="discord" width={64} />
+                                        </button>
+                                        <button
+                                            className="base gg_button"
+                                            onClick={() => proceed('google')}
+                                        >
+                                            <Icon src="google" width={64} />
+                                        </button>
 
-                                        ></LoginForm>
-
-                                        :
-                                        <div>
-                                            <span className="text-base text-white font-medium">
-                                                Continue with
-                                            </span>
-                                            <div className="flex gap-[8px]">
-                                                {/* <button className="base fb_button">
-                                            <Icon src="facebook1" width={64} />
-                                        </button> */}
-                                                <button
-                                                    className="base discord_button"
-                                                    onClick={() => proceed('discord')}
-                                                >
-                                                    <Icon src="discord" width={64} />
-                                                </button>
-                                                <button
-                                                    className="base gg_button"
-                                                    onClick={() => proceed('google')}
-                                                >
-                                                    <Icon src="google" width={64} />
-                                                </button>
-
-                                                <butotn className="base ml_button" onClick={() => {
-                                                    setLoginForm(true)
-                                                }}>Monlight</butotn>
-                                            </div>
-
-
-
-                                        </div>
-
-                                }
-
-
+                                        <butotn
+                                            className="base ml_button"
+                                            onClick={() => setLoginForm(true)}
+                                        >
+                                            Monlight
+                                        </butotn>
+                                    </div>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>
@@ -234,7 +228,7 @@ export const LockScreen = () => {
     );
 };
 
-export const Getstarted = ({ }) => {
+export const Getstarted = ({}) => {
     const t = useAppSelector((state) => state.globals.translation);
     const { email, id } = useAppSelector((state) => state.user);
 
@@ -370,14 +364,14 @@ export const Getstarted = ({ }) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                    ? Select((old) => old - 1)
-                    : e.key == 'ArrowLeft'
-                        ? prevPage()
-                        : e.key == 'ArrowRight'
-                            ? nextPage()
-                            : e.key == 'ArrowDown'
-                                ? Select((old) => old + 1)
-                                : null;
+                  ? Select((old) => old - 1)
+                  : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                      ? nextPage()
+                      : e.key == 'ArrowDown'
+                        ? Select((old) => old + 1)
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -522,7 +516,7 @@ export const Getstarted = ({ }) => {
                     className="no_button base"
                     onClick={() => setSelectLoginOption('INUSE')}
 
-                        // login
+                    // login
                 >
                     {t[Contents.HAVE_ACCOUNT]}
                     {', '}
@@ -531,7 +525,7 @@ export const Getstarted = ({ }) => {
                 <div
                     className="yes_button base"
                     onClick={() => setSelectLoginOption('DEMO')}
-                        // LoginAndDemo
+                    // LoginAndDemo
                 >
                     {t[Contents.DEMO]}
                 </div>
@@ -621,9 +615,9 @@ export const Getstarted = ({ }) => {
                                             style={
                                                 selection == i
                                                     ? {
-                                                        background:
-                                                            'rgb(175 175 175 / 40%)'
-                                                    }
+                                                          background:
+                                                              'rgb(175 175 175 / 40%)'
+                                                      }
                                                     : {}
                                             }
                                             onClick={() => nextPage()}
@@ -711,8 +705,8 @@ export const Getstarted = ({ }) => {
                                                     <h3 className="text-3xl">
                                                         {
                                                             t[
-                                                            Contents
-                                                                .DEMO_QUEUED
+                                                                Contents
+                                                                    .DEMO_QUEUED
                                                             ]
                                                         }{' '}
                                                         {orderNumberDemo}
@@ -859,14 +853,14 @@ export const Survey = () => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowUp'
-                    ? Select((old) => old - 1)
-                    : e.key == 'ArrowLeft'
-                        ? prevPage()
-                        : e.key == 'ArrowRight'
-                            ? nextPage()
-                            : e.key == 'ArrowDown'
-                                ? Select((old) => old + 1)
-                                : null;
+                  ? Select((old) => old - 1)
+                  : e.key == 'ArrowLeft'
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                      ? nextPage()
+                      : e.key == 'ArrowDown'
+                        ? Select((old) => old + 1)
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
@@ -921,9 +915,9 @@ export const Survey = () => {
                                         style={
                                             selection == i
                                                 ? {
-                                                    background:
-                                                        'rgb(175 175 175 / 40%)'
-                                                }
+                                                      background:
+                                                          'rgb(175 175 175 / 40%)'
+                                                  }
                                                 : {}
                                         }
                                         onClick={() => nextPage()}
@@ -997,11 +991,11 @@ const LoginForm = ({ close }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Here you can implement your login logic
-        console.log('Username:', username);
-        console.log('Password:', password);
+        await appDispatch(local_access({address: username }));
+        appDispatch(open_remote());
+        await ready()
     };
 
     return (
@@ -1018,21 +1012,18 @@ const LoginForm = ({ close }) => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
+                    <button className="btn-login" type="submit">
+                        Login
+                    </button>
 
-                    <button className='btn-login' type="submit">Login</button>
-
-                    <button onClick={close} className='bg-slate-600' type='button'>Close</button>
+                    <button
+                        onClick={close}
+                        className="bg-slate-600"
+                        type="button"
+                    >
+                        Close
+                    </button>
                 </div>
             </form>
         </div>

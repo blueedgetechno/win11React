@@ -169,6 +169,7 @@ export const {
     authenticate_session,
     ping_session,
     check_worker,
+    local_access,
     load_setting,
     cache_setting,
     toggle_remote_async,

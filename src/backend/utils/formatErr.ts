@@ -21,12 +21,16 @@ map.set(CAUSE.INVALID_REQUEST, Contents.STORE_DESCRIPTIONR);
 export function formatError(error: Error) {
     const t = store.getState().globals.translation;
 
-    const err = JSON.parse(error.message) as {
-        message: string;
-        code: CAUSE;
-    };
-    if (err.code == 0) return includesErr(err.message);
-    else return t[map.get(err.code)] ?? includesErr(err.message);
+    try {
+        const err = JSON.parse(error.message) as {
+            message: string;
+            code: CAUSE;
+        };
+        if (err.code == 0) return includesErr(err.message);
+        else return t[map.get(err.code)] ?? includesErr(err.message);
+    } catch {
+        return error.message
+    }
 }
 
 const listErr = [

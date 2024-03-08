@@ -206,7 +206,7 @@ function App() {
                 {booting ? <BootScreen loadingText={loadingText} /> : null}
                 {demo ? (
                     <Getstarted />
-                ) : user.id == 'unknown' ? (
+                ) : user.id == 'unknown' && !remote.active ? (
                     <LockScreen />
                 ) : null}
                 {survey ? <Survey /> : null}

@@ -17,11 +17,11 @@ import {
 import { RemoteDesktopClient } from '../../../core/app';
 import { EventCode } from '../../../core/models/keys.model';
 import { AddNotifier, ConnectionEvent } from '../../../core/utils/log';
+import { getBrowser, getOS, getResolution } from '../../../core/utils/platform';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
 import { BuilderHelper, SetPermanentCache } from './helper';
-import { getBrowser, getOS, getResolution } from '../../../core/utils/platform';
 
 const size = () =>
     client != null
@@ -116,12 +116,10 @@ type ConnectStatus =
 
 export type AuthSessionResp = {
     id: string;
-    email: string;
     webrtc: RTCConfiguration;
     signaling: {
         audioURL: string;
         videoURL: string;
-        dataURL: string;
     };
 };
 
@@ -298,6 +296,74 @@ export const remoteAsync = {
         }
         await appDispatch(load_setting());
     },
+    local_access: createAsyncThunk(
+        'local_access',
+        async (
+            { address }: { address: string },
+            { getState }
+        ): Promise<AuthSessionResp> => {
+            let turn_addr = '';
+            try {
+                await fetch(`http://${address}/info`, { method: 'GET' });
+            } catch {
+                let resp = await fetch(`http://${address}/initialize`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        thinkmay: {
+                            account_id: "123"
+                        },
+                        turn: {
+                            username: 'abc',
+                            password: 'bcd',
+                            max_port: 65535,
+                            min_port: 60000
+                        }
+                    })
+                });
+
+                const port = ((await resp.json()) as { turn_port: number })
+                    .turn_port;
+                const addr = address.split(':');
+                turn_addr = `${addr.at(0)}:${port}`;
+            }
+
+            let resp = await fetch(`http://${address}/info`, { method: 'GET' });
+            console.log(resp.json());
+
+            const ret: AuthSessionResp = {
+                id: undefined,
+                webrtc: {
+                    iceServers: [
+                        {
+                            urls: `stun:${turn_addr}`
+                        },
+                        {
+                            urls: `turn:${turn_addr}`,
+                            username: 'abc',
+                            credential: 'bcd'
+                        }
+                    ]
+                },
+                signaling: {
+                    audioURL: `ws://${address}/handshake/client?token=audio`,
+                    videoURL: `ws://${address}/handshake/client?token=video`,
+                }
+            };
+
+            resp = await fetch(`http://${address}/new`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: 0,
+                    timestamp: new Date().toISOString(),
+                    thinkmay: {
+                        webrtcConfig: JSON.stringify(ret.webrtc)
+                    }
+                })
+            });
+
+            return ret;
+        }
+    ),
     cache_setting: createAsyncThunk(
         'cache_setting',
         async (_: void, { getState }) => {
@@ -567,6 +633,12 @@ export const remoteSlice = createSlice({
             builder,
             {
                 fetch: remoteAsync.authenticate_session,
+                hander: (state, action: PayloadAction<AuthSessionResp>) => {
+                    state.auth = action.payload;
+                }
+            },
+            {
+                fetch: remoteAsync.local_access,
                 hander: (state, action: PayloadAction<AuthSessionResp>) => {
                     state.auth = action.payload;
                 }
