@@ -1,3 +1,6 @@
 [submodule "core"]
 	path = core
 	url = https://github.com/thinkonmay/thinkremote-browser-core
+[submodule "src-tauri"]
+	path = src-tauri
+	url = https://github.com/thinkonmay/moonlight-tauri-react
