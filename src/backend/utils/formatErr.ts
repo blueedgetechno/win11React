@@ -29,7 +29,7 @@ export function formatError(error: Error) {
         if (err.code == 0) return includesErr(err.message);
         else return t[map.get(err.code)] ?? includesErr(err.message);
     } catch {
-        return error.message
+        return error.message;
     }
 }
 

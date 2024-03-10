@@ -299,69 +299,32 @@ export const remoteAsync = {
     local_access: createAsyncThunk(
         'local_access',
         async (
-            { address }: { address: string },
+            {
+                address,
+                turn_port,
+                ws_port
+            }: { address: string; turn_port: number; ws_port: number },
             { getState }
         ): Promise<AuthSessionResp> => {
-            let turn_addr = '';
-            try {
-                await fetch(`http://${address}/info`, { method: 'GET' });
-            } catch {
-                let resp = await fetch(`http://${address}/initialize`, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        thinkmay: {
-                            account_id: "123"
-                        },
-                        turn: {
-                            username: 'abc',
-                            password: 'bcd',
-                            max_port: 65535,
-                            min_port: 60000
-                        }
-                    })
-                });
-
-                const port = ((await resp.json()) as { turn_port: number })
-                    .turn_port;
-                const addr = address.split(':');
-                turn_addr = `${addr.at(0)}:${port}`;
-            }
-
-            let resp = await fetch(`http://${address}/info`, { method: 'GET' });
-            console.log(resp.json());
-
-            const ret: AuthSessionResp = {
+            return {
                 id: undefined,
                 webrtc: {
                     iceServers: [
                         {
-                            urls: `stun:${turn_addr}`
+                            urls: `stun:${address}:${turn_port}`
                         },
                         {
-                            urls: `turn:${turn_addr}`,
+                            urls: `turn:${address}:${turn_port}`,
                             username: 'abc',
                             credential: 'bcd'
                         }
                     ]
                 },
                 signaling: {
-                    audioURL: `ws://${address}/handshake/client?token=audio`,
-                    videoURL: `ws://${address}/handshake/client?token=video`,
+                    audioURL: `ws://${address}:${ws_port}/handshake/client?token=audio`,
+                    videoURL: `ws://${address}:${ws_port}/handshake/client?token=video`
                 }
             };
-
-            resp = await fetch(`http://${address}/new`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: 0,
-                    timestamp: new Date().toISOString(),
-                    thinkmay: {
-                        webrtcConfig: JSON.stringify(ret.webrtc)
-                    }
-                })
-            });
-
-            return ret;
         }
     ),
     cache_setting: createAsyncThunk(
