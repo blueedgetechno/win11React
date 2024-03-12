@@ -139,6 +139,7 @@ type Data = {
     pointer_lock: boolean;
     relative_mouse: boolean;
     focus: boolean;
+    local: boolean;
 
     scancode: boolean;
     low_ads: boolean;
@@ -162,6 +163,7 @@ type Data = {
 };
 
 const initialState: Data = {
+    local: false,
     focus: true,
     active: false,
     low_ads: true,
@@ -521,6 +523,9 @@ export const remoteSlice = createSlice({
         },
         fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
+        },
+        local_remote: (state, action: PayloadAction<boolean>) => {
+            state.local = action.payload;
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;

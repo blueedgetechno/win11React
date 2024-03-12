@@ -26,7 +26,8 @@
     "strict": false,
   },
   "include": [
-    "src"
+    "src",
+    "src-tauri/**.ts"
   ],
   "exclude": [
     "core/**"

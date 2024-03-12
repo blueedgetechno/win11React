@@ -8,6 +8,7 @@ import {
     close_remote,
     close_survey,
     demo_app,
+    local_remote,
     update_language,
     useAppSelector,
     wall_unlock
@@ -194,6 +195,9 @@ export const LockScreen = () => {
                         </a>
                         <a target="_blank" href={externalLink.FACEBOOK_LINK}>
                             <Icon src="facebook" width={40} />
+                        </a>
+                        <a onClick={() => appDispatch(local_remote(true))}>
+                            <Icon src="search" width={40} />
                         </a>
                     </div>
                 </div>

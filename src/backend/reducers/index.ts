@@ -110,6 +110,7 @@ export const {
     open_remote,
     loose_focus,
     have_focus,
+    local_remote,
     scancode,
     scancode_toggle,
     ads_period,
