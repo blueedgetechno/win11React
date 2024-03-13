@@ -3,6 +3,7 @@ import {
     CloseSession,
     ConfigureDaemon,
     GetRequest,
+    StartMoonlight,
     StartThinkmay,
     WS_PORT
 } from '../../../../src-tauri/tauri';
@@ -24,7 +25,14 @@ export function Local() {
         await ConfigureDaemon(address, true);
     };
 
-    const handleLogin = async (e) => {
+    const handleMoonlight = async (e) => {
+        e.preventDefault();
+        const req = await ConfigureDaemon(address, false);
+        const uuid = await StartMoonlight(req);
+        setUUID(uuid);
+    };
+
+    const handleThinkmay = async (e) => {
         e.preventDefault();
         const req = await ConfigureDaemon(address, false);
         const uuid = await StartThinkmay(req);
@@ -65,8 +73,19 @@ export function Local() {
                             />
                         </div>
                         <div className="ctn-btn">
-                            <button className="btn-login" onClick={handleLogin}>
-                                Login
+                            <button
+                                className="btn-login"
+                                onClick={handleMoonlight}
+                            >
+                                Moonlight
+                            </button>
+                        </div>
+                        <div className="ctn-btn">
+                            <button
+                                className="btn-login"
+                                onClick={handleThinkmay}
+                            >
+                                Thinkmay
                             </button>
                         </div>
                         <div className="ctn-btn">
