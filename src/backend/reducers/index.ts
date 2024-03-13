@@ -105,6 +105,7 @@ export const {
 } = sidepaneSlice.actions;
 
 export const {
+    local_access,
     toggle_remote,
     hard_reset,
     open_remote,
@@ -170,7 +171,6 @@ export const {
     authenticate_session,
     ping_session,
     check_worker,
-    local_access,
     load_setting,
     cache_setting,
     toggle_remote_async,

@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { detectBrowserAndOS } from '../../../backend/utils/detectBrower';
+import { useSelector } from 'react-redux';
 import {
     appDispatch,
     app_close,
     app_toggle,
     useAppSelector
 } from '../../../backend/reducers';
-import { LazyComponent, ToolBar } from '../../../components/shared/general';
-import { externalLink } from '../../../backend/utils/constant';
-import { Contents } from '../../../backend/reducers/locales';
 import { UserEvents } from '../../../backend/reducers/fetch/analytics';
+import { Contents } from '../../../backend/reducers/locales';
+import { externalLink } from '../../../backend/utils/constant';
+import { detectBrowserAndOS } from '../../../backend/utils/detectBrower';
+import { LazyComponent, ToolBar } from '../../../components/shared/general';
 
 const listFeedBack = [
     {

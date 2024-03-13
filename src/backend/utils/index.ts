@@ -38,6 +38,12 @@ const apps: AppData[] = [
         payload: 'edge'
     },
     {
+        name: 'Local Connect',
+        id: 'local',
+        action: 'apps/app_toggle',
+        payload: 'local'
+    },
+    {
         name: 'Store',
         id: 'store',
         action: 'apps/app_toggle',
@@ -77,9 +83,9 @@ const apps: AppData[] = [
 var { taskbar, desktop } = {
     taskbar: ['Store'],
     desktop: [
-        // 'Settings', TODO
         'Worker Profile',
         'Browser',
+        'Local Connect',
         'Discord',
         'Thinkmay Fanpage',
         'Store',

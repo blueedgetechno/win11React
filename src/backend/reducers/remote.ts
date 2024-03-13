@@ -298,37 +298,6 @@ export const remoteAsync = {
         }
         await appDispatch(load_setting());
     },
-    local_access: createAsyncThunk(
-        'local_access',
-        async (
-            {
-                address,
-                turn_port,
-                ws_port
-            }: { address: string; turn_port: number; ws_port: number },
-            { getState }
-        ): Promise<AuthSessionResp> => {
-            return {
-                id: undefined,
-                webrtc: {
-                    iceServers: [
-                        {
-                            urls: `stun:${address}:${turn_port}`
-                        },
-                        {
-                            urls: `turn:${address}:${turn_port}`,
-                            username: 'abc',
-                            credential: 'bcd'
-                        }
-                    ]
-                },
-                signaling: {
-                    audioURL: `ws://${address}:${ws_port}/handshake/client?token=audio`,
-                    videoURL: `ws://${address}:${ws_port}/handshake/client?token=video`
-                }
-            };
-        }
-    ),
     cache_setting: createAsyncThunk(
         'cache_setting',
         async (_: void, { getState }) => {
@@ -428,6 +397,25 @@ export const remoteSlice = createSlice({
     name: 'remote',
     initialState,
     reducers: {
+        local_access: (
+            state,
+            {
+                payload: { address, rtc_config, ws_port }
+            }: PayloadAction<{
+                address: string;
+                ws_port: number;
+                rtc_config: RTCConfiguration;
+            }>
+        ) => {
+            state.auth = {
+                id: undefined,
+                webrtc: rtc_config,
+                signaling: {
+                    audioURL: `ws://${address}:${ws_port}/handshake/client?token=audio`,
+                    videoURL: `ws://${address}:${ws_port}/handshake/client?token=video`
+                }
+            };
+        },
         loose_focus: (state) => {
             state.focus = false;
             client?.hid?.ResetKeyStuck();
@@ -601,12 +589,6 @@ export const remoteSlice = createSlice({
             builder,
             {
                 fetch: remoteAsync.authenticate_session,
-                hander: (state, action: PayloadAction<AuthSessionResp>) => {
-                    state.auth = action.payload;
-                }
-            },
-            {
-                fetch: remoteAsync.local_access,
                 hander: (state, action: PayloadAction<AuthSessionResp>) => {
                     state.auth = action.payload;
                 }
