@@ -411,8 +411,8 @@ export const remoteSlice = createSlice({
                 id: undefined,
                 webrtc: rtc_config,
                 signaling: {
-                    audioURL: `ws://${address}:${ws_port}/handshake/client?token=audio`,
-                    videoURL: `ws://${address}:${ws_port}/handshake/client?token=video`
+                    audioURL: `http://${address}:${ws_port}/handshake/client?token=audio`,
+                    videoURL: `http://${address}:${ws_port}/handshake/client?token=video`
                 }
             };
         },
