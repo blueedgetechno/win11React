@@ -27,7 +27,7 @@ const size = () =>
     client != null
         ? client.video.video.videoHeight * client.video.video.videoWidth
         : 1920 * 1080;
-export const MAX_BITRATE = () => (10000 / (1920 * 1080)) * size();
+export const MAX_BITRATE = () => (20000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
 export const MAX_FRAMERATE = 120;
 export const MIN_FRAMERATE = 40;
