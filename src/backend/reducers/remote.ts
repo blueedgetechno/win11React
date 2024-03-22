@@ -400,7 +400,7 @@ export const remoteSlice = createSlice({
         local_access: (
             state,
             {
-                payload: { address, rtc_config, ws_port,target }
+                payload: { address, rtc_config, ws_port, target }
             }: PayloadAction<{
                 address: string;
                 ws_port: number;

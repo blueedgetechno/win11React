@@ -36,13 +36,13 @@ export function Local() {
         setComputer(null);
         setInfo(null);
 
-        const computer = await ConfigureDaemon(address)
+        const computer = await ConfigureDaemon(address);
         setComputer(computer);
 
-        const info = await GetInfo(computer)
+        const info = await GetInfo(computer);
         setInfo(info);
 
-        const sessions = await Sessions(computer)
+        const sessions = await Sessions(computer);
         setSessions(sessions);
     };
     const handleReset = async (e) => {
@@ -51,12 +51,9 @@ export function Local() {
     };
     const connect = async (e) => {
         e.preventDefault();
-        if (mode == 'thinkmay')
-            handleThinkmay(e)
-        else if (mode == 'thinkmay')
-            handleMoonlight(e)
-        else if (mode == 'virtdaemon')
-            handleVirtdaemon(e)
+        if (mode == 'thinkmay') handleThinkmay(e);
+        else if (mode == 'moonlight') handleMoonlight(e);
+        else if (mode == 'virtdaemon') handleVirtdaemon(e);
     };
 
     const handleMoonlight = async (e) => {
@@ -70,11 +67,11 @@ export function Local() {
         e.preventDefault();
         const req = await ConfigureDaemon(address);
         const uuid = await StartThinkmay(req, info);
-        const info = GetRequest(uuid);
+        const reqinf = GetRequest(uuid);
         appDispatch(
             local_access({
-                rtc_config: info.computer.rtc_config,
-                address: info.computer.address,
+                rtc_config: reqinf.computer.rtc_config,
+                address: reqinf.computer.address,
                 ws_port: WS_PORT
             })
         );
@@ -84,10 +81,9 @@ export function Local() {
 
     const handleVirtdaemon = async (e) => {
         e.preventDefault();
-        if (target == undefined)
-            return
+        if (target == undefined) return;
 
-        console.log(target)
+        console.log(target);
         const uuid = await StartThinkmay(computer, target);
         const info = GetRequest(uuid);
         appDispatch(
@@ -111,130 +107,168 @@ export function Local() {
                             <h2>Connect to VM </h2>
                         </div>
                         <div className="form-group">
-                            <label >IP address</label>
-                            <input placeholder="IP address" type="text" id="ipAddress" required onChange={(val) => setAddr(val.target.value)} />
-                            <button className="btn-login" onClick={handleConfigure} >
+                            <label>IP address</label>
+                            <input
+                                placeholder="IP address"
+                                type="text"
+                                id="ipAddress"
+                                required
+                                onChange={(val) => setAddr(val.target.value)}
+                            />
+                            <button
+                                className="btn-login"
+                                onClick={handleConfigure}
+                            >
                                 Initialize
                             </button>
-                            <button className="btn-login" onClick={handleReset} >
+                            <button className="btn-login" onClick={handleReset}>
                                 Reset
                             </button>
                         </div>
                         <div className="ctn-btn">
-                            <button className="btn-login" onClick={() => setMode('moonlight')} >
+                            <button
+                                className="btn-login"
+                                onClick={() => setMode('moonlight')}
+                            >
                                 Moonlight
                             </button>
-                            <button className="btn-login" onClick={() => setMode('thinkmay')} >
+                            <button
+                                className="btn-login"
+                                onClick={() => setMode('thinkmay')}
+                            >
                                 Thinkmay
                             </button>
-                            <button className="btn-login" onClick={() => setMode('virtdaemon')} >
+                            <button
+                                className="btn-login"
+                                onClick={() => setMode('virtdaemon')}
+                            >
                                 Virtdaemon
                             </button>
                         </div>
                         <div className="form-group">
-                            {
-                                mode == 'moonlight'
-                                    ?
-                                    <div className="form-group">
-                                        <label >Bitrate (MBps)</label>
-                                        <input placeholder="Bitrate (MBps)" type="number" id="bitrate" required defaultValue="6" />
-                                        <label >Height</label>
-                                        <input placeholder="Height" type="number" id="height" required defaultValue="1080" />
-                                        <label >Width</label>
-                                        <input placeholder="Width" type="number" id="width" required defaultValue="1920" />
-                                    </div>
-                                    : mode == 'thinkmay'
-                                        ?
-                                        <div className="form-group">
-                                            <label >Bitrate (MBps)</label>
-                                            <input placeholder="Bitrate (MBps)" type="number" id="bitrate" required defaultValue="6" />
-                                            <label >Height</label>
-                                            <input placeholder="Height" type="number" id="height" required defaultValue="1080" />
-                                            <label >Width</label>
-                                            <input placeholder="Width" type="number" id="width" required defaultValue="1920" />
-                                        </div>
-                                        : mode == 'virtdaemon'
-                                            ? <div className="form-group">
-                                                <label >IP</label>
-                                                <input type="string" required onChange={x => setTarget(info?.VMs.find(y => x.target.value == y.PrivateIP))} />
-                                            </div>
-                                            : null
-                            }
+                            {mode == 'moonlight' ? (
+                                <div className="form-group">
+                                    <label>Bitrate (MBps)</label>
+                                    <input
+                                        placeholder="Bitrate (MBps)"
+                                        type="number"
+                                        id="bitrate"
+                                        required
+                                        defaultValue="6"
+                                    />
+                                    <label>Height</label>
+                                    <input
+                                        placeholder="Height"
+                                        type="number"
+                                        id="height"
+                                        required
+                                        defaultValue="1080"
+                                    />
+                                    <label>Width</label>
+                                    <input
+                                        placeholder="Width"
+                                        type="number"
+                                        id="width"
+                                        required
+                                        defaultValue="1920"
+                                    />
+                                </div>
+                            ) : mode == 'thinkmay' ? (
+                                <div className="form-group">
+                                </div>
+                            ) : mode == 'virtdaemon' ? (
+                                <div className="form-group">
+                                    <label>IP</label>
+                                    <input
+                                        type="string"
+                                        required
+                                        onChange={(x) =>
+                                            setTarget(
+                                                info?.VMs.find(
+                                                    (y) =>
+                                                        x.target.value ==
+                                                        y.PrivateIP
+                                                )
+                                            )
+                                        }
+                                    />
+                                </div>
+                            ) : null}
                         </div>
 
-                        {mode != null
-                            ? <div className="ctn-btn">
-                                <button className="btn-login" onClick={connect} >
+                        {mode != null ? (
+                            <div className="ctn-btn">
+                                <button className="btn-login" onClick={connect}>
                                     Connect
                                 </button>
                             </div>
-                            : null
-                        }
+                        ) : null}
                     </div>
                     <div className="logs">
-                        {
-                            info != null
-                                ?
-                                <div className="log">
-                                    <h6 className="logTitle">Info</h6>
-                                    <div className="logContent">
-                                        <p className="logText" id="serverLog">
-                                            {stringify({ ...info, VMs: undefined }).split('\n').map(x =>
+                        {info != null ? (
+                            <div className="log">
+                                <h6 className="logTitle">Info</h6>
+                                <div className="logContent">
+                                    <p className="logText" id="serverLog">
+                                        {stringify({ ...info, VMs: undefined })
+                                            .split('\n')
+                                            .map((x) => (
                                                 <>
                                                     {x} <br /> <br />
                                                 </>
-                                            )}
-                                        </p>
-                                    </div>
+                                            ))}
+                                    </p>
                                 </div>
-                                : null
-                        }
-                        {
-                            info?.VMs?.map((val, index) =>
-                                <div className="log" key={index}>
-                                    <h6 className="logTitle">Info VM {val.PrivateIP}</h6>
-                                    <div className="logContent">
-                                        <p className="logText" id="serverLog">
-                                            {stringify(val).split('\n').map(x =>
+                            </div>
+                        ) : null}
+                        {info?.VMs?.map((val, index) => (
+                            <div className="log" key={index}>
+                                <h6 className="logTitle">
+                                    Info VM {val.PrivateIP}
+                                </h6>
+                                <div className="logContent">
+                                    <p className="logText" id="serverLog">
+                                        {stringify(val)
+                                            .split('\n')
+                                            .map((x) => (
                                                 <>
-                                                    {x} <br /><br />
+                                                    {x} <br />
+                                                    <br />
                                                 </>
-                                            )}
-                                        </p>
-                                    </div>
+                                            ))}
+                                    </p>
                                 </div>
-                            )
-                        }
-                        {
-                            mode == 'moonlight'
-                                ? <div className="log">
-                                    <h6 className="logTitle">Moonlight log</h6>
-                                    <div className="logContent">
-                                        <p className="logText" id="moonlightLog">
-                                        </p>
-                                    </div>
+                            </div>
+                        ))}
+                        {mode == 'moonlight' ? (
+                            <div className="log">
+                                <h6 className="logTitle">Moonlight log</h6>
+                                <div className="logContent">
+                                    <p
+                                        className="logText"
+                                        id="moonlightLog"
+                                    ></p>
                                 </div>
-                                : null
-                        }
-                        {
-                            sessions.length != 0
-                                ?
-                                <div className="log">
-                                    <h6 className="logTitle">Sessions</h6>
-                                    <div className="logContent">
-                                        <p className="logText" id="serverLog">
-                                            {stringify(sessions).split('\n').map(x =>
+                            </div>
+                        ) : null}
+                        {sessions.length != 0 ? (
+                            <div className="log">
+                                <h6 className="logTitle">Sessions</h6>
+                                <div className="logContent">
+                                    <p className="logText" id="serverLog">
+                                        {stringify(sessions)
+                                            .split('\n')
+                                            .map((x) => (
                                                 <>
-                                                    {x} <br /><br />
+                                                    {x} <br />
+                                                    <br />
                                                 </>
-                                            )}
-                                        </p>
-                                    </div>
+                                            ))}
+                                    </p>
                                 </div>
-                                : null
-                        }
+                            </div>
+                        ) : null}
                     </div>
-
                 </div>
             </div>
         </div>
