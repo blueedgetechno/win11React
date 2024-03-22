@@ -4,12 +4,31 @@
 	box-sizing: border-box;
 }
 
-.login-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: all 0.1s ease-in;
-	transform: scale(1.1);
+
+
+.localApp &[data-hide="true"] {
+	z-index: -1 !important;
+}
+
+.localApp &[data-size="mini"] {
+	top: 4%;
+	left: 8%;
+	width: 320px;
+	height: 500px;
+}
+
+.localApp {
+	--bg1: rgba(242, 242, 242, 0.9);
+	--bg2: rgba(255, 255, 255, 0.9);
+	--bg3: rgba(0, 0, 0, 0.033);
+	--bg4: #f7f7f7;
+	--rib-bg: #ffffffb8;
+
+	min-width: 550px;
+	background: var(--bg4);
+
+
+
 
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
 		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -17,13 +36,45 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	width: 100vw;
-	height: 90vh;
+	height: 100vh;
+
+
+
+
+
+}
+
+.localContent {
+	padding: 24px;
+	padding-top: 50px;
+	display: flex;
+	gap: 10px;
+	justify-content: space-evenly;
+
+	width: 100%;
+	height: 100%;
+
+	color: var(--dark-txt);
+	overflow: hidden;
+	box-sizing: border-box;
+
+}
+
+.login-container {
+	max-width: 70%;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.1s ease-in;
+	transform: scale(1.1);
+
 }
 
 .login-container .login-form {
 
-	max-width: 320px;
-	width: 90%;
+	width: 50%;
+	margin-right: 50px;
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -53,16 +104,15 @@
 .login-container input[type='text'],
 .login-container input[type='password'] {
 	width: 100%;
-	padding: 8px 0;
-	outline: none;
-	border: unset;
-	border-bottom: 2px solid gray;
+	border: 1px solid;
+	padding: 8px;
+	border-radius: 4px;
 }
 
 .ctn-btn {
 	margin-top: 32px;
 	display: flex;
-	justify-content: end;
+	justify-content: space-between;
 }
 
 .login-container .btn-login {
@@ -80,4 +130,47 @@
 
 .login-container .btn-login :hover {
 	background-color: #0056b3;
+}
+
+
+.logs {
+	flex: 1;
+	width: 50%;
+}
+
+.logTitle {
+	color: var(--dark-txt);
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.log {
+	height: 100px;
+	margin-top: 30px;
+}
+
+.logTitle {
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+.logContent {
+	border: 4px solid;
+	height: 80%;
+	background-color: rgb(16, 16, 16);
+	padding: 8px;
+	border-radius: 12px;
+	overflow-y: scroll;
+	color: rgb(243 244 246);
+
+}
+
+body[data-theme="dark"] .localApp {
+
+	--bg1: #1c1c1c;
+	--bg2: #242424;
+	--bg3: #313131;
+	--bg4: #444;
+	--rib-bg: #2f2e30b8;
+
 }

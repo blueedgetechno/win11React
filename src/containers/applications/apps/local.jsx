@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { stringify } from 'yaml';
 import {
-    CloseSession,
     ConfigureDaemon,
+    GetInfo,
     GetRequest,
+    ResetDaemon,
+    Sessions,
     StartMoonlight,
     StartThinkmay,
     WS_PORT
@@ -18,24 +21,55 @@ import './assets/local.css';
 
 export function Local() {
     const [address, setAddr] = useState('');
+
+    const [target, setTarget] = useState(null);
+    const [computer, setComputer] = useState(null);
+    const [info, setInfo] = useState(null);
+    const [sessions, setSessions] = useState([]);
+
+    const [mode, setMode] = useState(null);
     const [uuid, setUUID] = useState(null);
 
     const handleConfigure = async (e) => {
         e.preventDefault();
-        await ConfigureDaemon(address, true);
+
+        setComputer(null);
+        setInfo(null);
+
+        const computer = await ConfigureDaemon(address)
+        setComputer(computer);
+
+        const info = await GetInfo(computer)
+        setInfo(info);
+
+        const sessions = await Sessions(computer)
+        setSessions(sessions);
+    };
+    const handleReset = async (e) => {
+        e.preventDefault();
+        await ResetDaemon(address, true);
+    };
+    const connect = async (e) => {
+        e.preventDefault();
+        if (mode == 'thinkmay')
+            handleThinkmay(e)
+        else if (mode == 'thinkmay')
+            handleMoonlight(e)
+        else if (mode == 'virtdaemon')
+            handleVirtdaemon(e)
     };
 
     const handleMoonlight = async (e) => {
         e.preventDefault();
-        const req = await ConfigureDaemon(address, false);
+        const req = await ConfigureDaemon(address);
         const uuid = await StartMoonlight(req);
         setUUID(uuid);
     };
 
     const handleThinkmay = async (e) => {
         e.preventDefault();
-        const req = await ConfigureDaemon(address, false);
-        const uuid = await StartThinkmay(req);
+        const req = await ConfigureDaemon(address);
+        const uuid = await StartThinkmay(req, info);
         const info = GetRequest(uuid);
         appDispatch(
             local_access({
@@ -48,71 +82,161 @@ export function Local() {
         setUUID(uuid);
     };
 
-    const handleClose = async (e) => {
+    const handleVirtdaemon = async (e) => {
         e.preventDefault();
-        await CloseSession(uuid);
-        setUUID(null);
+        if (target == undefined)
+            return
+
+        console.log(target)
+        const uuid = await StartThinkmay(computer, target);
+        const info = GetRequest(uuid);
+        appDispatch(
+            local_access({
+                rtc_config: info.computer.rtc_config,
+                address: info.computer.address,
+                target: target.PrivateIP,
+                ws_port: WS_PORT
+            })
+        );
+        appDispatch(open_remote('local'));
+        setUUID(uuid);
     };
 
     return (
-        <div className="login-container">
-            {uuid == null ? (
-                <>
-                    <form className="login-form">
+        <div className="localApp">
+            <div className="localContent">
+                <div className="login-container">
+                    <div className="login-form">
                         <div className="title">
-                            <h2>Login </h2>
-                            {/* <p className="subTitle">to continue to Thinkmay </p> */}
+                            <h2>Connect to VM </h2>
                         </div>
                         <div className="form-group">
-                            <input
-                                onChange={(val) => setAddr(val.target.value)}
-                                placeholder="Address"
-                                type="text"
-                                id="address"
-                                required
-                            />
+                            <label >IP address</label>
+                            <input placeholder="IP address" type="text" id="ipAddress" required onChange={(val) => setAddr(val.target.value)} />
+                            <button className="btn-login" onClick={handleConfigure} >
+                                Initialize
+                            </button>
+                            <button className="btn-login" onClick={handleReset} >
+                                Reset
+                            </button>
                         </div>
                         <div className="ctn-btn">
-                            <button
-                                className="btn-login"
-                                onClick={handleMoonlight}
-                            >
+                            <button className="btn-login" onClick={() => setMode('moonlight')} >
                                 Moonlight
                             </button>
-                        </div>
-                        <div className="ctn-btn">
-                            <button
-                                className="btn-login"
-                                onClick={handleThinkmay}
-                            >
+                            <button className="btn-login" onClick={() => setMode('thinkmay')} >
                                 Thinkmay
                             </button>
-                        </div>
-                        <div className="ctn-btn">
-                            <button
-                                className="btn-login"
-                                onClick={handleConfigure}
-                            >
-                                Configure
+                            <button className="btn-login" onClick={() => setMode('virtdaemon')} >
+                                Virtdaemon
                             </button>
                         </div>
-                    </form>
-                </>
-            ) : (
-                <>
-                    <form className="login-form" onSubmit={handleClose}>
-                        <div className="title">
-                            <h2>Login </h2>
-                            <p className="subTitle">to continue to Thinkmay </p>
+                        <div className="form-group">
+                            {
+                                mode == 'moonlight'
+                                    ?
+                                    <div className="form-group">
+                                        <label >Bitrate (MBps)</label>
+                                        <input placeholder="Bitrate (MBps)" type="number" id="bitrate" required defaultValue="6" />
+                                        <label >Height</label>
+                                        <input placeholder="Height" type="number" id="height" required defaultValue="1080" />
+                                        <label >Width</label>
+                                        <input placeholder="Width" type="number" id="width" required defaultValue="1920" />
+                                    </div>
+                                    : mode == 'thinkmay'
+                                        ?
+                                        <div className="form-group">
+                                            <label >Bitrate (MBps)</label>
+                                            <input placeholder="Bitrate (MBps)" type="number" id="bitrate" required defaultValue="6" />
+                                            <label >Height</label>
+                                            <input placeholder="Height" type="number" id="height" required defaultValue="1080" />
+                                            <label >Width</label>
+                                            <input placeholder="Width" type="number" id="width" required defaultValue="1920" />
+                                        </div>
+                                        : mode == 'virtdaemon'
+                                            ? <div className="form-group">
+                                                <label >IP</label>
+                                                <input type="string" required onChange={x => setTarget(info?.VMs.find(y => x.target.value == y.PrivateIP))} />
+                                            </div>
+                                            : null
+                            }
                         </div>
-                        <div className="ctn-btn">
-                            <button className="btn-login" type="submit">
-                                Close
-                            </button>
-                        </div>
-                    </form>
-                </>
-            )}
+
+                        {mode != null
+                            ? <div className="ctn-btn">
+                                <button className="btn-login" onClick={connect} >
+                                    Connect
+                                </button>
+                            </div>
+                            : null
+                        }
+                    </div>
+                    <div className="logs">
+                        {
+                            info != null
+                                ?
+                                <div className="log">
+                                    <h6 className="logTitle">Info</h6>
+                                    <div className="logContent">
+                                        <p className="logText" id="serverLog">
+                                            {stringify({ ...info, VMs: undefined }).split('\n').map(x =>
+                                                <>
+                                                    {x} <br /> <br />
+                                                </>
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
+                                : null
+                        }
+                        {
+                            info?.VMs?.map((val, index) =>
+                                <div className="log" key={index}>
+                                    <h6 className="logTitle">Info VM {val.PrivateIP}</h6>
+                                    <div className="logContent">
+                                        <p className="logText" id="serverLog">
+                                            {stringify(val).split('\n').map(x =>
+                                                <>
+                                                    {x} <br /><br />
+                                                </>
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        {
+                            mode == 'moonlight'
+                                ? <div className="log">
+                                    <h6 className="logTitle">Moonlight log</h6>
+                                    <div className="logContent">
+                                        <p className="logText" id="moonlightLog">
+                                        </p>
+                                    </div>
+                                </div>
+                                : null
+                        }
+                        {
+                            sessions.length != 0
+                                ?
+                                <div className="log">
+                                    <h6 className="logTitle">Sessions</h6>
+                                    <div className="logContent">
+                                        <p className="logText" id="serverLog">
+                                            {stringify(sessions).split('\n').map(x =>
+                                                <>
+                                                    {x} <br /><br />
+                                                </>
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
+                                : null
+                        }
+                    </div>
+
+                </div>
+            </div>
         </div>
     );
 }

@@ -7,7 +7,7 @@ import { Local } from './containers/applications/apps/local';
 
 const root = createRoot(document.getElementById('root'));
 const Redirect = () => {
-    const local = useAppSelector((x) => x.remote.local);
+    const local = useAppSelector((x) => x.remote.local && !x.remote.active);
     return local ? <Local /> : <App />;
 };
 

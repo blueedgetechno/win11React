@@ -400,10 +400,11 @@ export const remoteSlice = createSlice({
         local_access: (
             state,
             {
-                payload: { address, rtc_config, ws_port }
+                payload: { address, rtc_config, ws_port,target }
             }: PayloadAction<{
                 address: string;
                 ws_port: number;
+                target: string;
                 rtc_config: RTCConfiguration;
             }>
         ) => {
@@ -411,8 +412,8 @@ export const remoteSlice = createSlice({
                 id: undefined,
                 webrtc: rtc_config,
                 signaling: {
-                    audioURL: `http://${address}:${ws_port}/handshake/client?token=audio`,
-                    videoURL: `http://${address}:${ws_port}/handshake/client?token=video`
+                    audioURL: `http://${address}:${ws_port}/handshake/client?token=audio&target=${target}`,
+                    videoURL: `http://${address}:${ws_port}/handshake/client?token=video&target=${target}`
                 }
             };
         },
