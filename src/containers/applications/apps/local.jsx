@@ -47,7 +47,7 @@ export function Local() {
     };
     const handleReset = async (e) => {
         e.preventDefault();
-        await ResetDaemon(address, true);
+        await ResetDaemon(address);
     };
     const connect = async (e) => {
         e.preventDefault();
