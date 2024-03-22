@@ -217,6 +217,7 @@ export function openRemotePage(
 export const remoteAsync = {
     check_worker: async () => {
         if (!store.getState().remote.active) return;
+        else if (store.getState().remote.remote_id == 'local') return;
         else if (client == null) return;
         else if (!client.ready()) return;
 
@@ -263,6 +264,7 @@ export const remoteAsync = {
     ping_session: async () => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
+        else if (store.getState().remote.remote_id == 'local') return;
         else if (!client.ready()) return;
         else if (client?.hid?.last_active() > 5 * 60) {
             if (store.getState().popup.data_stack.length > 0) return;
