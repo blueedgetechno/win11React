@@ -13,11 +13,9 @@ import {
     change_bitrate,
     change_framerate,
     menu_show,
-    popup_open,
     useAppSelector
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
-import { validate_user_access } from '../../backend/utils/checking';
 import {
     clickDispatch,
     customClickDispatch
@@ -202,20 +200,6 @@ export const SidePane = () => {
                         );
                     })}
 
-                    {validate_user_access('admin') ? (
-                        <div className="qkGrp">
-                            <button
-                                className="qkbtn handcr prtclk"
-                                onClick={() => {
-                                    dispatch(
-                                        popup_open({ type: 'user_config' })
-                                    );
-                                }}
-                            >
-                                User Config
-                            </button>
-                        </div>
-                    ) : null}
                 </div>
                 <div className="sliderCont flex flex-col items-start">
                     <div className="flex items-center pb-2">

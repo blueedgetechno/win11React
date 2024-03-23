@@ -12,10 +12,7 @@ export type Notification = {
     type: 'pending' | 'fulfilled' | 'rejected';
     content?: string;
 };
-export type Survey = {
-    question: string;
-    answer: string;
-};
+
 export type Message = {
     url?: string;
 
@@ -27,7 +24,6 @@ export type Message = {
 type Data = {
     notifications: Notification[];
     message: Message[];
-    surveys: Survey[];
 
     quicks: any[];
     hide: boolean;
@@ -201,12 +197,6 @@ export const sidepaneSlice = createSlice({
         render_message: (state, action: PayloadAction<Message>) => {
             state.message = [action.payload, ...state.message];
             state.banhide = false;
-        },
-        handle_survey: (state, action: PayloadAction<Survey[]>) => {
-            state.surveys = [...state.surveys, ...action.payload];
-        },
-        close_survey: (state) => {
-            state.surveys = [];
         },
         push_notification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [action.payload, ...state.notifications];

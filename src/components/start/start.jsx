@@ -5,7 +5,6 @@ import {
     user_delete
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
-import { validate_user_access } from '../../backend/utils/checking';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
 import { Icon } from '../shared/general';
 
@@ -42,20 +41,13 @@ export const StartMenu = () => {
                 <div className="stmenu p-[14px]">
                     <div className="pinnedApps mt-[16px] text-center font-semibold pb-1 flex items-center justify-center gap-2">
                         <span>{user.email ?? 'Admin'}</span>
-                        {validate_user_access('month', 'week', 'admin') ? (
-                            <Icon
-                                className="quickIcon"
-                                //ui={true}
-                                src={'active'}
-                                width={14}
-                            />
-                        ) : null}
+                        <Icon
+                            className="quickIcon"
+                            //ui={true}
+                            src={'active'}
+                            width={14}
+                        />
                     </div>
-                    <h6>
-                        {!validate_user_access('month', 'week', 'admin')
-                            ? t[Contents.INACTIVEUSER]
-                            : null}
-                    </h6>
                     <div className="h-full flex flex-col p-2" data-dock="true">
                         <div className="w-full flex gap-4 justify-between my-[14px] ">
                             <span>Language</span>
@@ -72,7 +64,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                    //invert={pnstates[idx] ? true : null}
+                                //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>

@@ -19,7 +19,6 @@ import {
 } from '../reducers';
 import { HasAvailableCluster } from '../reducers/fetch';
 import { client } from '../reducers/remote';
-import { validate_user_access } from '../utils/checking';
 
 const loadSettings = async () => {
     let thm = localStorage.getItem('theme');
@@ -90,18 +89,9 @@ export const preload = async () => {
     await Promise.all([
         fetchUser(),
         fetchMessage(),
-        loadSettings(),
-        fetchWorker(),
-        fetchStore(),
-        fetchSetting(),
-        fetchApp(),
-        available_cluster()
     ]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(ping_session, 10 * 1000);
     setInterval(handleClipboard, 100);
-
-    if (validate_user_access('month', 'week', 'admin', 'day'))
-        setInterval(available_cluster, 30 * 1000);
 };

@@ -100,7 +100,6 @@ export const {
     sidepane_panehide,
     sidepane_panethem,
     render_message,
-    close_survey,
     push_notification
 } = sidepaneSlice.actions;
 

@@ -23,9 +23,7 @@ import * as Applications from './containers/applications';
 import {
     Background,
     BootScreen,
-    Getstarted,
     LockScreen,
-    Survey
 } from './containers/background';
 import Popup from './containers/popup';
 import { Remote } from './containers/remote';
@@ -36,8 +34,6 @@ function App() {
     ReactModal.setAppElement('#root');
     const remote = useAppSelector((x) => x.remote);
     const user = useAppSelector((state) => state.user);
-    const demo = useAppSelector((state) => state.apps.guidance);
-    const survey = useAppSelector((state) => state.sidepane.surveys.length > 0);
     const pointerLock = useAppSelector((state) => state.remote.pointer_lock);
     const [booting, setLockscreen] = useState(true);
 
@@ -116,10 +112,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch {}
-            // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
-        } else if (ref == null && user.id == 'unknown') {
-            // if (RequestDemo() || FirstTime()) appDispatch(request_demo());
+            } catch { }
         }
     }, [user.id]);
 
@@ -158,7 +151,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => {});
+        job?.catch(() => { });
 
         const handleState = () => {
             const fullscreen =
@@ -204,12 +197,9 @@ function App() {
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {booting ? <BootScreen loadingText={loadingText} /> : null}
-                {demo ? (
-                    <Getstarted />
-                ) : user.id == 'unknown' && !remote.active ? (
-                    <LockScreen />
-                ) : null}
-                {survey ? <Survey /> : null}
+                {user.id == 'unknown' && !remote.active
+                    ? <LockScreen />
+                    : null}
                 <div className="appwrap ">
                     {pointerLock ? null : (
                         <>

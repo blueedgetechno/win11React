@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { TbLoader3 } from 'react-icons/tb';
 import { useAppSelector } from '../../../backend/reducers';
 import { Contents } from '../../../backend/reducers/locales';
-import { validate_user_access } from '../../../backend/utils/checking';
 
 export function notify({ data: { title, tips, loading } }) {
     return (
@@ -54,7 +53,6 @@ const LoadingProgressBar = () => {
 
 const Protip = () => {
     const t = useAppSelector((state) => state.globals.translation);
-    const isGreenList = validate_user_access('month', 'week'); // check Demo user
 
     const [currentTip, setCurrentTip] = useState(0);
 
@@ -89,9 +87,7 @@ const Protip = () => {
         <div className="mt-[14px]">
             <strong>Pro tip:</strong>
             <p>
-                {isGreenList
-                    ? listUserTip[currentTip]
-                    : listDemoTip[currentTip]}
+                {listUserTip[currentTip]}
             </p>
         </div>
     );

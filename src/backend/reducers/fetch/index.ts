@@ -1,6 +1,6 @@
 import { sleep } from '../../utils/sleep';
 import { RenderNode } from '../../utils/tree';
-import { CAUSE, SupabaseFuncInvoke, supabase, virtapi } from './createClient';
+import { CAUSE, SupabaseFuncInvoke, supabase } from './createClient';
 
 const COUNT_ERR_RPC = 10;
 const TIME_SLEEP = 10 * 1000;
@@ -143,44 +143,7 @@ export const DownloadApplication = async (
     speed: string,
     safe: string
 ) => {
-    const result = await SupabaseFuncInvoke<{ volume_ids: string[] }>(
-        'launch_application',
-        {
-            action: 'SETUP',
-            app_template_id: app_template_id,
-            option: { availability, speed, safe }
-        }
-    );
-    if (result instanceof Error) {
-        throw result;
-    }
 
-    let storageId = 0;
-    for (let i = 0; i < 100; i++) {
-        const { data: res, error } = await virtapi(
-            `rpc/binding_storage`,
-            'POST',
-            {
-                volume_id: result.volume_ids.at(0)
-            }
-        );
-
-        if (res.length == 0)
-            throw new Error(
-                JSON.stringify({
-                    code: CAUSE.API_CALL,
-                    message: 'resource not found'
-                })
-            );
-        else if (res.at(0).storage_id != null) {
-            storageId = res.at(0).storage_id;
-            break;
-        }
-
-        await sleep(TIME_SLEEP);
-    }
-
-    return `${storageId}`;
 };
 
 export const StartApplication = async (storage_id: string) => {
@@ -414,56 +377,18 @@ export const FetchApplicationTemplates = async (id: number) => {
 };
 
 export async function FetchApp(app: any) {
-    const { data, error } = await virtapi(`rpc/get_app_from_store`, 'POST', {
-        store_id: `${app.id}`
-    });
-    if (error) throw error;
 
-    return data;
+
 }
 
 async function handleUpdateApp(app: any) {
-    const { id, name, icon, description, feature, screenshoots } = app;
-    const { error } = await virtapi(`stores?id=eq.${id}`, 'PATCH', {
-        name: name,
-        icon: icon,
-        metadata: {
-            description: description,
-            feature: feature,
-            screenshoots: screenshoots
-        }
-    });
-
-    if (error) throw error;
 }
 
 async function handleInsertApp(newData: any) {
-    // const { name, icon, description, type, feature, screenshoots } =
-    //     newData;
-    // const resp = await virtapi(`stores`, 'POST', {
-    //     name: name,
-    //     icon: icon,
-    //     type: type,
-    //     metadata: {
-    //         description: description,
-    //         feature: feature,
-    //         screenshoots: screenshoots
-    //     }
-    // });
-    // if (resp.status != 200) throw await resp.text();
 }
 
 export async function HasAvailableCluster() {
-    const { data, error } = await virtapi(
-        'rpc/attachable_clusters',
-        'POST',
-        {}
-    );
-    if (error) throw error;
-
-    const checking = data.at(0).total > 0;
-
-    return checking;
+    return true;
 }
 
 interface Subscription {

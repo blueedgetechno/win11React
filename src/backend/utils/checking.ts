@@ -1,9 +1,5 @@
 import { store } from '../reducers';
 
-export const validate_user_access = (...plans: string[]) => {
-    const user = store.getState().user;
-    return plans.find((x) => user.plans.includes(x)) != undefined;
-};
 
 export const isMobile = () => {
     let check = false;

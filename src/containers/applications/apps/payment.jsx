@@ -76,20 +76,7 @@ export const PaymentApp = () => {
         setup();
     }, []);
     const setup = async () => {
-        const { data, error } = await supabase
-            .from('plans')
-            .select(
-                'name,metadata->paypal->>id, metadata->>price_in_vnd, metadata->>total_time, metadata->>type'
-            )
-            .not('metadata->>total_time', 'is', null)
-            .is('deleted_at', null);
-
-        if (error) throw error;
-        setListSubs(
-            ListSubs.map((sub) => {
-                return { ...sub, ...data.find((x) => x.type == sub.title) };
-            })
-        );
+        // TODO
     };
 
     const [paypage, setPaypage] = useState(null);

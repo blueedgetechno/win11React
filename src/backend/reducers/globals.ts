@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { virtapi } from './fetch/createClient';
-import { BuilderHelper, CacheRequest, Confirms } from './helper';
+import { BuilderHelper } from './helper';
 import { Contents, Languages, language } from './locales';
 
 export type Translation = Map<Languages, Map<Contents, string>>;
@@ -229,45 +228,7 @@ export type Store = {
 
 export const storeAsync = {
     fetch_store: createAsyncThunk('fetch_store', async (): Promise<Store[]> => {
-        return await CacheRequest('store', 30, async () => {
-            const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
-            if (error) throw error;
-
-            let stores = [];
-            for (let index = 0; index < data.length; index++) {
-                const appStore = data[index];
-                const volume = await virtapi('rpc/fetch_volume_class', 'POST', {
-                    volume_id: appStore.volume_ids[0]
-                });
-                if (volume.error) {
-                    // Not found volume_class
-                } else {
-                    appStore.volume_class = volume.data[0].volume_class;
-                }
-                stores.push(appStore);
-            }
-
-            return stores;
-        });
     }),
-    delete_store: createAsyncThunk(
-        'delete_store',
-        async ({ store_id }: { store_id: number }): Promise<Store[]> => {
-            await Confirms();
-            const { error } = await virtapi(
-                `stores?id=eq.${store_id}`,
-                'DELETE'
-            );
-            if (error) throw error;
-
-            return await CacheRequest('store', 30, async () => {
-                const { data, error } = await virtapi(`rpc/fetch_store`, 'GET');
-                if (error) throw error;
-
-                return data;
-            });
-        }
-    )
 };
 
 export const globalSlice = createSlice({

@@ -5,78 +5,26 @@ import {
     authenticate_session,
     close_remote,
     desk_add,
-    fetch_app,
     open_remote,
     ready,
-    scancode,
-    toggle_remote
+    scancode
 } from '.';
-import { CloseDemo } from '../actions';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
 import { RenderNode } from '../utils/tree';
 import {
-    AccessApplication,
     DeleteApplication,
-    DemoApplication,
-    DownloadApplication,
     FetchUserApplication,
-    ResetApplication,
     StartApplication,
     StopApplication
 } from './fetch';
-import { CAUSE, virtapi } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
-import { openRemotePage } from './remote';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
         const result = await CacheRequest('apps', 30, async () => {
             return new RenderNode(await FetchUserApplication()).mapAsync(
-                ['pending', 'storage'],
-                async (storage) => {
-                    if (storage.type == 'pending')
-                        return {
-                            id: 'win/down',
-                            name: `Installing`,
-                            action: 'apps/app_error',
 
-                            payload: {},
-                            installing: true,
-                            ready: false
-                        } as AppData;
-
-                    const { data, error } = await virtapi(
-                        `rpc/get_app_metadata_from_volume`,
-                        'POST',
-                        { deploy_as: `${storage.id}` }
-                    );
-                    if (error) throw error;
-
-                    const icon = (data as any[]).at(0) ?? {
-                        name: 'Game Pause',
-                        icon: 'win/down'
-                    };
-
-                    // id in store. +  icon: url img, => view
-                    // metatada: Meta in store.
-                    // pause check by storage.data.lenghth > 0.
-                    return {
-                        id: icon.icon,
-                        name: `${icon.name} ${storage.id}`,
-                        ready: storage.data.length != 0,
-                        action:
-                            storage.data.length != 0
-                                ? 'access_app'
-                                : 'start_app',
-                        menu:
-                            storage.data.length != 0
-                                ? 'running_app'
-                                : 'paused_app',
-
-                        payload: storage.id
-                    } as AppData;
-                }
             );
         });
 
@@ -100,93 +48,13 @@ export const appsAsync = {
             },
             { getState }
         ): Promise<void> => {
-            const storage_id = await DownloadApplication(
-                app_template_id,
-                availability,
-                speed,
-                safe
-            );
-
-            if ((getState() as RootState).remote.remote_id != undefined) return;
-
-            const result = await AccessApplication({ storage_id });
-            const { data, error } = await virtapi(
-                `rpc/get_app_metadata_from_volume`,
-                'POST',
-                { deploy_as: `${storage_id}` }
-            );
-            if (error) throw error;
-            const app_name = data.at(0)?.name as string;
-
-            if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url, { app_name });
-
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
-            await ready();
-
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            appDispatch(fetch_app());
         }
     ),
 
-    demo_app: createAsyncThunk(
-        'demo_app',
-        async (arg: {}, { getState }): Promise<void> => {
-            const result = await DemoApplication();
-            if ((getState() as RootState).remote.old_version) {
-                CloseDemo();
-                return openRemotePage(result.url, {
-                    app_name: 'Thinkmay Demo',
-                    demoSession: true
-                });
-            }
-
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            appDispatch(scancode(true));
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote('demo'));
-            await ready();
-        }
-    ),
     access_app: createAsyncThunk(
         'access_app',
         async (storage_id: string, { getState }): Promise<string> => {
-            if ((getState() as RootState).remote.remote_id == storage_id) {
-                appDispatch(toggle_remote());
-                await ready();
-                return;
-            }
 
-            appDispatch(close_remote());
-            const result = await AccessApplication({ storage_id });
-            const { data, error } = await virtapi(
-                `rpc/get_app_metadata_from_volume`,
-                'POST',
-                { deploy_as: `${storage_id}` }
-            );
-            if (error) throw error;
-            const app_name = data.at(0)?.name as string;
-            if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, { app_name });
-                return storage_id;
-            }
-
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
             await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
@@ -207,36 +75,6 @@ export const appsAsync = {
             await ready();
         }
     ),
-    reset_app: createAsyncThunk(
-        'reset_app',
-        async (storage_id: string, { getState }): Promise<string> => {
-            appDispatch(close_remote());
-            const result = await ResetApplication({ storage_id });
-            const { data, error } = await virtapi(
-                `rpc/get_app_metadata_from_volume`,
-                'POST',
-                { deploy_as: `${storage_id}` }
-            );
-            if (error) throw error;
-            const app_name = data.at(0)?.name as string;
-
-            if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, { app_name });
-                return storage_id;
-            }
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
-            await ready();
-            return storage_id;
-        }
-    ),
 
     start_app: createAsyncThunk(
         'start_app',
@@ -244,23 +82,7 @@ export const appsAsync = {
             await StartApplication(storage_id);
             if ((getState() as RootState).remote.remote_id != undefined) return;
 
-            const result = await AccessApplication({ storage_id });
-            const { data, error } = await virtapi(
-                `rpc/get_app_metadata_from_volume`,
-                'POST',
-                { deploy_as: `${storage_id}` }
-            );
-            if (error) throw error;
-            const app_name = data.at(0)?.name as string;
 
-            if ((getState() as RootState).remote.old_version) {
-                openRemotePage(result.url, { app_name });
-                return storage_id;
-            }
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
 
             appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
 
