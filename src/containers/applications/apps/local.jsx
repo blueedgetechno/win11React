@@ -8,6 +8,7 @@ import {
     Sessions,
     StartMoonlight,
     StartThinkmay,
+    StartVirtdaemon,
     WS_PORT
 } from '../../../../src-tauri/tauri';
 import {
@@ -53,7 +54,8 @@ export function Local() {
         e.preventDefault();
         if (mode == 'thinkmay') handleThinkmay(e);
         else if (mode == 'moonlight') handleMoonlight(e);
-        else if (mode == 'virtdaemon') handleVirtdaemon(e);
+        else if (mode == 'virtdaemon' && target == null) handleVirtdaemon(e);
+        else if (mode == 'virtdaemon' && target != null) connectVirtdaemon(e);
     };
 
     const handleMoonlight = async (e) => {
@@ -81,15 +83,17 @@ export function Local() {
 
     const handleVirtdaemon = async (e) => {
         e.preventDefault();
-        if (target == undefined) return;
-
-        console.log(target);
+        const target = await StartVirtdaemon(computer,info)
+        setTarget(target);
+    };
+    const connectVirtdaemon = async (e) => {
+        e.preventDefault();
         const uuid = await StartThinkmay(computer, target);
-        const info = GetRequest(uuid);
+        const req = GetRequest(uuid);
         appDispatch(
             local_access({
-                rtc_config: info.computer.rtc_config,
-                address: info.computer.address,
+                rtc_config: req.computer.rtc_config,
+                address: req.computer.address,
                 target: target.PrivateIP,
                 ws_port: WS_PORT
             })
@@ -178,20 +182,6 @@ export function Local() {
                                 </div>
                             ) : mode == 'virtdaemon' ? (
                                 <div className="form-group">
-                                    <label>IP</label>
-                                    <input
-                                        type="string"
-                                        required
-                                        onChange={(x) =>
-                                            setTarget(
-                                                info?.VMs.find(
-                                                    (y) =>
-                                                        x.target.value ==
-                                                        y.PrivateIP
-                                                )
-                                            )
-                                        }
-                                    />
                                 </div>
                             ) : null}
                         </div>
