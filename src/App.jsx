@@ -20,11 +20,7 @@ import { DesktopApp, SidePane, StartMenu } from './components/start';
 import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
 import * as Applications from './containers/applications';
-import {
-    Background,
-    BootScreen,
-    LockScreen,
-} from './containers/background';
+import { Background, BootScreen, LockScreen } from './containers/background';
 import Popup from './containers/popup';
 import { Remote } from './containers/remote';
 import { ErrorFallback } from './error';
@@ -112,7 +108,7 @@ function App() {
                 if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch { }
+            } catch {}
         }
     }, [user.id]);
 
@@ -151,7 +147,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => { });
+        job?.catch(() => {});
 
         const handleState = () => {
             const fullscreen =
@@ -197,9 +193,7 @@ function App() {
         <div className="App">
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 {booting ? <BootScreen loadingText={loadingText} /> : null}
-                {user.id == 'unknown' && !remote.active
-                    ? <LockScreen />
-                    : null}
+                {user.id == 'unknown' && !remote.active ? <LockScreen /> : null}
                 <div className="appwrap ">
                     {pointerLock ? null : (
                         <>

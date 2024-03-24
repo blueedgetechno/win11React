@@ -199,7 +199,6 @@ export const SidePane = () => {
                             </div>
                         );
                     })}
-
                 </div>
                 <div className="sliderCont flex flex-col items-start">
                     <div className="flex items-center pb-2">

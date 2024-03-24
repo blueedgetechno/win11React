@@ -4,14 +4,14 @@ import { localStorageKey } from '../utils/constant';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 
-type Data = User
+type Data = User;
 const initialState: Data = {
     id: 'unknown',
     email: '',
     aud: 'unknown',
     created_at: 'unknown',
     app_metadata: {},
-    user_metadata: {},
+    user_metadata: {}
 };
 
 export const userAsync = {

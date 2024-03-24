@@ -142,9 +142,7 @@ export const DownloadApplication = async (
     availability: string,
     speed: string,
     safe: string
-) => {
-
-};
+) => {};
 
 export const StartApplication = async (storage_id: string) => {
     const result = await SupabaseFuncInvoke('request_application', {
@@ -376,16 +374,11 @@ export const FetchApplicationTemplates = async (id: number) => {
         .filter((x) => x != undefined);
 };
 
-export async function FetchApp(app: any) {
+export async function FetchApp(app: any) {}
 
+async function handleUpdateApp(app: any) {}
 
-}
-
-async function handleUpdateApp(app: any) {
-}
-
-async function handleInsertApp(newData: any) {
-}
+async function handleInsertApp(newData: any) {}
 
 export async function HasAvailableCluster() {
     return true;

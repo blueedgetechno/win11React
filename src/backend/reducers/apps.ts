@@ -22,14 +22,11 @@ import { BuilderHelper, CacheRequest } from './helper';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
-        const result = await CacheRequest('apps', 30, async () => {
-            return new RenderNode(await FetchUserApplication()).mapAsync(
-
-            );
-        });
-
-        appDispatch(desk_add(result.map((x) => x.id)));
-        return result;
+        // const result = await CacheRequest('apps', 30, async () => {
+        //     return new RenderNode(await FetchUserApplication()).mapAsync();
+        // });
+        // appDispatch(desk_add(result.map((x) => x.id)));
+        return [];
     }),
 
     install_app: createAsyncThunk(
@@ -47,16 +44,13 @@ export const appsAsync = {
                 safe: string;
             },
             { getState }
-        ): Promise<void> => {
-        }
+        ): Promise<void> => {}
     ),
 
     access_app: createAsyncThunk(
         'access_app',
         async (storage_id: string, { getState }): Promise<string> => {
-
-
-            await appDispatch(authenticate_session({ ref }));
+            // await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
             await ready();
 
@@ -82,11 +76,8 @@ export const appsAsync = {
             await StartApplication(storage_id);
             if ((getState() as RootState).remote.remote_id != undefined) return;
 
-
-
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-
-            await appDispatch(authenticate_session({ ref }));
+            // appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
+            // await appDispatch(authenticate_session({ ref }));
             appDispatch(open_remote(storage_id));
             await ready();
 
@@ -290,24 +281,7 @@ export const appSlice = createSlice({
         BuilderHelper<Data, any, any>(
             builder,
             {
-                fetch: appsAsync.reset_app,
-                hander: (state, action) => {
-                    const obj = state.apps.find(
-                        (x) => action.payload == x.payload
-                    );
-                    if (obj == undefined) return;
-                    obj.action = 'access_app';
-                    obj.menu = 'running_app';
-                    obj.ready = true;
-                }
-            },
-            {
                 fetch: appsAsync.access_app,
-                hander: (state, action) => {}
-            },
-
-            {
-                fetch: appsAsync.demo_app,
                 hander: (state, action) => {}
             },
             {

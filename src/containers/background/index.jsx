@@ -70,7 +70,7 @@ export const LockScreen = () => {
         await login(provider);
     };
 
-    const direct_access = async () => { };
+    const direct_access = async () => {};
 
     const moonlight_access = async () => {
         const command = new Command('Moonlight', [

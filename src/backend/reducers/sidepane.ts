@@ -89,7 +89,6 @@ const initialState: Data = {
     ],
     notifications: [],
     message: [],
-    surveys: [],
 
     hide: true,
     banhide: true
@@ -116,10 +115,6 @@ export const sidepaneAsync = {
             })
         );
     },
-    handle_survey: async (payload) => {
-        const data = JSON.parse(payload.new.value);
-        appDispatch(sidepaneSlice.actions.handle_survey(data.questions));
-    },
     fetch_message: createAsyncThunk(
         'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
@@ -134,20 +129,6 @@ export const sidepaneAsync = {
                         table: 'generic_events'
                     },
                     sidepaneAsync.handle_message
-                )
-                .subscribe();
-
-            supabase
-                .channel('schema-survey-changes')
-                .on(
-                    'postgres_changes',
-                    {
-                        event: 'INSERT',
-                        schema: 'public',
-                        filter: 'type=eq.SURVEY',
-                        table: 'generic_events'
-                    },
-                    sidepaneAsync.handle_survey
                 )
                 .subscribe();
 

@@ -1,6 +1,5 @@
 import { store } from '../reducers';
 
-
 export const isMobile = () => {
     let check = false;
     (function (a) {

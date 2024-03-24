@@ -215,77 +215,77 @@ const FrontPage = (props) => {
                 <div className="flex w-max pr-8">
                     {games.length > 0
                         ? games.map((game, i) => {
-                            return (
-                                <div
-                                    key={i}
-                                    className="ribcont rounded-md p-1 pt-1 ltShad prtclk"
-                                    onClick={() => {
-                                        props.app_click(game);
-                                    }}
-                                    style={{
-                                        background: game.steam_off
-                                            ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
-                                            : ''
-                                    }}
-                                >
-                                    <Image
-                                        className="mb-0.5 rounded"
-                                        w={148}
-                                        h={177}
-                                        absolute={true}
-                                        src={game.icon}
-                                    />
-                                    <div
-                                        className="capitalize text-xs text-center font-semibold"
-                                        style={{
-                                            color: game.steam_off
-                                                ? '#313131'
-                                                : ''
-                                        }}
-                                    >
-                                        {game.name}
-                                    </div>
-                                    <div
-                                        className="text-xs text-center font-regular"
-                                        style={{
-                                            color: game.steam_off
-                                                ? '#313131'
-                                                : ''
-                                        }}
-                                    >
-                                        {game.steam_off
-                                            ? 'Steam Offline'
-                                            : ''}
-                                    </div>
-                                    <div
-                                        className="text-xs text-center font-regular"
-                                        style={{
-                                            color: game.steam_off
-                                                ? '#313131'
-                                                : ''
-                                        }}
-                                    >
-                                        {game.volume_class.includes('LA')
-                                            ? 'Low availablity'
-                                            : ''}
-                                    </div>
-                                </div>
-                            );
-                        })
+                              return (
+                                  <div
+                                      key={i}
+                                      className="ribcont rounded-md p-1 pt-1 ltShad prtclk"
+                                      onClick={() => {
+                                          props.app_click(game);
+                                      }}
+                                      style={{
+                                          background: game.steam_off
+                                              ? 'linear-gradient(to right, #f7e67b, #c8ae54)'
+                                              : ''
+                                      }}
+                                  >
+                                      <Image
+                                          className="mb-0.5 rounded"
+                                          w={148}
+                                          h={177}
+                                          absolute={true}
+                                          src={game.icon}
+                                      />
+                                      <div
+                                          className="capitalize text-xs text-center font-semibold"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
+                                          {game.name}
+                                      </div>
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
+                                          {game.steam_off
+                                              ? 'Steam Offline'
+                                              : ''}
+                                      </div>
+                                      <div
+                                          className="text-xs text-center font-regular"
+                                          style={{
+                                              color: game.steam_off
+                                                  ? '#313131'
+                                                  : ''
+                                          }}
+                                      >
+                                          {game.volume_class.includes('LA')
+                                              ? 'Low availablity'
+                                              : ''}
+                                      </div>
+                                  </div>
+                              );
+                          })
                         : listDraftApp.map((i) => (
-                            <div
-                                key={i}
-                                className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
-                            >
-                                <Image
-                                    className="mx-1 rounded bg-slate-200"
-                                    w={100}
-                                    h={100}
-                                    ext
-                                />
-                                <div className="capitalize text-xs text-center font-semibold"></div>
-                            </div>
-                        ))}
+                              <div
+                                  key={i}
+                                  className="ribcont animate-pulse rounded-md my-0 p-2 pb-2"
+                              >
+                                  <Image
+                                      className="mx-1 rounded bg-slate-200"
+                                      w={100}
+                                      h={100}
+                                      ext
+                                  />
+                                  <div className="capitalize text-xs text-center font-semibold"></div>
+                              </div>
+                          ))}
                 </div>
             </div>
         </div>
@@ -400,7 +400,6 @@ const DetailPage = ({ app }) => {
                     Options.length > 0 ? (
                         Options.map((x) => (
                             <div key={x.id}>
-
                                 <div
                                     className="instbtn mt-12 handcr !px-[16px] !py-[14px]"
                                     payload={x}
@@ -408,7 +407,6 @@ const DetailPage = ({ app }) => {
                                 >
                                     {x.gpu} {x.region}
                                 </div>
-
                             </div>
                         ))
                     ) : (
@@ -529,7 +527,7 @@ const DetailPage = ({ app }) => {
                                                         emap(
                                                             Math.abs(stars - x)
                                                         ) *
-                                                        100 +
+                                                            100 +
                                                         '%',
                                                     padding: '3px 0'
                                                 }}
@@ -670,20 +668,20 @@ const DownPage = ({ action }) => {
                 {storeApps.length > 0
                     ? renderSearchResult()
                     : listDraftApp.map((i) => (
-                        <div
-                            key={i}
-                            className="animate-pulse ribcont p-8 pt-8 ltShad prtclk"
-                            data-action="page2"
-                        >
-                            <Image
-                                className="mx-5 mb-12 bg-slate-400"
-                                w={200}
-                                h={200}
-                                ext
-                            />
-                            <div className="capitalize text-xs text-center font-semibold"></div>
-                        </div>
-                    ))}
+                          <div
+                              key={i}
+                              className="animate-pulse ribcont p-8 pt-8 ltShad prtclk"
+                              data-action="page2"
+                          >
+                              <Image
+                                  className="mx-5 mb-12 bg-slate-400"
+                                  w={200}
+                                  h={200}
+                                  ext
+                              />
+                              <div className="capitalize text-xs text-center font-semibold"></div>
+                          </div>
+                      ))}
             </div>
         </div>
     );

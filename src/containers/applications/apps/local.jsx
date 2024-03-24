@@ -83,7 +83,7 @@ export function Local() {
 
     const handleVirtdaemon = async (e) => {
         e.preventDefault();
-        const target = await StartVirtdaemon(computer,info)
+        const target = await StartVirtdaemon(computer, info);
         setTarget(target);
     };
     const connectVirtdaemon = async (e) => {
@@ -178,11 +178,9 @@ export function Local() {
                                     />
                                 </div>
                             ) : mode == 'thinkmay' ? (
-                                <div className="form-group">
-                                </div>
+                                <div className="form-group"></div>
                             ) : mode == 'virtdaemon' ? (
-                                <div className="form-group">
-                                </div>
+                                <div className="form-group"></div>
                             ) : null}
                         </div>
 

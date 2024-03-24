@@ -131,12 +131,10 @@ export const {
 export const {
     fetch_app,
     install_app,
-    demo_app,
     direct_access,
     start_app,
     pause_app,
     delete_app,
-    reset_app,
     access_app
 } = appsAsync;
 export const {

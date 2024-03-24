@@ -227,8 +227,10 @@ export type Store = {
 };
 
 export const storeAsync = {
-    fetch_store: createAsyncThunk('fetch_store', async (): Promise<Store[]> => {
-    }),
+    fetch_store: createAsyncThunk(
+        'fetch_store',
+        async (): Promise<Store[]> => []
+    )
 };
 
 export const globalSlice = createSlice({

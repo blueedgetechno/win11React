@@ -86,9 +86,7 @@ const Protip = () => {
     return (
         <div className="mt-[14px]">
             <strong>Pro tip:</strong>
-            <p>
-                {listUserTip[currentTip]}
-            </p>
+            <p>{listUserTip[currentTip]}</p>
         </div>
     );
 };
