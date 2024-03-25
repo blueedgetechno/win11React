@@ -66,14 +66,12 @@ export type StartRequest = {
 
 export async function StartVirtdaemon(
     computer: Computer,
-    target: string
 ): Promise<any> {
     const { PrivateIP: address } = computer;
 
     const id = crypto.randomUUID();
     const req: StartRequest = {
         id,
-        target,
         vm: {
             GPUs: ['GA104 [GeForce RTX 3060 Ti Lite Hash Rate]'],
             CPU: '8',
@@ -91,8 +89,7 @@ export async function StartVirtdaemon(
 
     if (!resp.ok) throw new Error(resp.data as string);
 
-    const result = JSON.parse(resp.data as string);
-    return result.vm.result;
+    return;
 }
 
 export type Session = {

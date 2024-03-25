@@ -13,9 +13,10 @@ import {
     GetInfo,
     ParseRequest,
     StartRequest,
-    StartThinkmay
+    StartThinkmay,
+    StartVirtdaemon
 } from './fetch/local';
-import { BuilderHelper } from './helper';
+import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
 
 type WorkerType = {
     data: any;
@@ -40,11 +41,15 @@ export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
         async (_: void, { getState }): Promise<void> => {
-            const node = new RenderNode((getState() as RootState).worker.data);
-            node.iterate((x) => {
+            const old_cache = await GetPermanentCache('local_connections')
+            const node = new RenderNode(old_cache);
+            await node.iterateAsync(async (x) => {
                 if (x.type == 'local_worker' && x.info.PrivateIP != undefined)
-                    appDispatch(fetch_local_worker(x.info.PrivateIP));
+                    await appDispatch(fetch_local_worker(x.info.PrivateIP));
             });
+
+            const new_cache = (getState() as RootState).worker.data
+            await SetPermanentCache('local_connections',new_cache)
         }
     ),
     fetch_local_worker: createAsyncThunk(
@@ -80,6 +85,20 @@ export const workerAsync = {
             await appDispatch(fetch_local_worker(computer.PrivateIP));
         }
     ),
+    worker_vm_create: createAsyncThunk(
+        'worker_vm_create',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            let computer: Computer = null;
+            node.iterate((node) => {
+                if (input == node.id && node.type == 'local_worker')
+                    computer = node.info;
+            });
+
+            await StartVirtdaemon(computer);
+            appDispatch(fetch_local_worker(computer.PrivateIP));
+        }
+    ),
     worker_session_create: createAsyncThunk(
         'worker_session_create',
         async (input: string, { getState }): Promise<any> => {
@@ -97,7 +116,7 @@ export const workerAsync = {
         }
     ),
     worker_session_access: createAsyncThunk(
-        'worker_session_create',
+        'worker_session_access',
         async (input: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
             let computer: Computer = null;

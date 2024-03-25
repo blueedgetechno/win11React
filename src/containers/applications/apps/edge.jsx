@@ -14,14 +14,6 @@ export const EdgeMenu = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'edge')
     );
-    // const wnapp = {
-    //     id: 'browser',
-    //     size: 99,
-    //     hide: false,
-    //     max: false,
-    //     z: 99,
-    //     name: 'Browser'
-    // }
     const [url, setUrl] = useState('https://www.google.com/?igu=1');
     const [ierror, setErr] = useState(true);
     const [isTyping, setTyping] = useState(false);

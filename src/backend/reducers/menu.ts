@@ -139,6 +139,10 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                 secwid: '200px',
                 data: [
                     {
+                        name: 'Create VM',
+                        action: 'worker_vm_create'
+                    },
+                    {
                         name: 'Thinkmay remote desktop',
                         action: 'worker_session_create'
                     }

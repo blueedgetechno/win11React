@@ -4,21 +4,18 @@ import {
     appDispatch,
     authenticate_session,
     close_remote,
-    desk_add,
     open_remote,
     ready,
     scancode
 } from '.';
 import { AppData, allApps } from '../utils';
 import { scanCodeApps } from '../utils/constant';
-import { RenderNode } from '../utils/tree';
 import {
     DeleteApplication,
-    FetchUserApplication,
     StartApplication,
     StopApplication
 } from './fetch';
-import { BuilderHelper, CacheRequest } from './helper';
+import { BuilderHelper } from './helper';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
