@@ -12,8 +12,10 @@ import {
     Computer,
     GetInfo,
     ParseRequest,
+    Session,
     StartRequest,
     StartThinkmay,
+    StartThinkmayOnVM,
     StartVirtdaemon
 } from './fetch/local';
 import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
@@ -65,40 +67,6 @@ export const workerAsync = {
             return fromComputer(result).any();
         }
     ),
-    worker_session_close: createAsyncThunk(
-        'worker_session_close',
-        async (input: string, { getState }): Promise<any> => {
-            const node = new RenderNode((getState() as RootState).worker.data);
-            let computer: Computer = null;
-            let session: StartRequest = null;
-            node.iterate((node) => {
-                if (input == node.id && node.type == 'session')
-                    session = node.info;
-                else if (
-                    node.type == 'local_worker' &&
-                    node.data.find((x) => x.id == input)
-                )
-                    computer = node.info;
-            });
-
-            await CloseSession(computer, session);
-            await appDispatch(fetch_local_worker(computer.PrivateIP));
-        }
-    ),
-    worker_vm_create: createAsyncThunk(
-        'worker_vm_create',
-        async (input: string, { getState }): Promise<any> => {
-            const node = new RenderNode((getState() as RootState).worker.data);
-            let computer: Computer = null;
-            node.iterate((node) => {
-                if (input == node.id && node.type == 'local_worker')
-                    computer = node.info;
-            });
-
-            await StartVirtdaemon(computer);
-            appDispatch(fetch_local_worker(computer.PrivateIP));
-        }
-    ),
     worker_session_create: createAsyncThunk(
         'worker_session_create',
         async (input: string, { getState }): Promise<any> => {
@@ -122,7 +90,7 @@ export const workerAsync = {
             let computer: Computer = null;
             let session: StartRequest = null;
             node.iterate((node) => {
-                if (input == node.id && node.type == 'session')
+                if (input == node.id && node.type == 'local_session')
                     session = node.info;
                 else if (
                     node.type == 'local_worker' &&
@@ -135,7 +103,84 @@ export const workerAsync = {
             appDispatch(local_access(result));
             appDispatch(open_remote(node.id));
         }
-    )
+    ),
+    worker_session_close: createAsyncThunk(
+        'worker_session_close',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            const computer = node.findParent<Computer>(input,'host_worker')?.info
+                          ?? node.findParent<Computer>(input,'local_worker')?.info
+            if (computer == undefined)
+                throw new Error('invalid tree')
+
+            await CloseSession(computer, {id: input});
+            await appDispatch(fetch_local_worker(computer.PrivateIP));
+        }
+    ),
+    worker_vm_create: createAsyncThunk(
+        'worker_vm_create',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            const computer: Computer = node.find<Computer>(input).info
+            if (computer == undefined) 
+                throw new Error('invalid tree')
+
+            await StartVirtdaemon(computer);
+            appDispatch(fetch_local_worker(computer.PrivateIP));
+        }
+    ),
+    vm_session_create: createAsyncThunk(
+        'vm_session_create',
+        async (ip: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+
+            const host = node.findParent<Computer>(ip,'host_worker');
+            const vm_session = node.findParent<StartRequest>(ip,'local_session');
+
+            if (host == undefined) 
+                throw new Error('invalid tree')
+            else if (vm_session == undefined) 
+                throw new Error('invalid tree')
+
+            const result = await StartThinkmayOnVM(host.info,vm_session.id)
+            appDispatch(local_access(result));
+            appDispatch(open_remote('local'));
+            appDispatch(fetch_local_worker(host.info.PrivateIP));
+        }
+    ),
+    vm_session_access: createAsyncThunk(
+        'vm_session_access',
+        async (id: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            const host = node.findParent(id,'host_worker')
+            if (host == undefined) 
+                throw new Error('invalid tree')
+                
+            console.log(host)
+        }
+    ),
+    vm_session_close: createAsyncThunk(
+        'worker_session_close',
+        async (id: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+
+            let vm_ss_id : string | null = null
+            let vm_session: StartRequest = null;
+            node.iterate((node) => {
+                if (node.data.find(x => x.id == id) && node.type == 'local_session') {
+                    vm_session = node.info;
+                    vm_ss_id = node.id
+                }
+            });
+
+            let host: Computer = null;
+            node.iterate((node) => {
+                if (node.data.find(x => x.id == vm_ss_id) && node.type == 'host_worker')
+                    host = node.info;
+            });
+
+        }
+    ),
 };
 
 export const workerSlice = createSlice({

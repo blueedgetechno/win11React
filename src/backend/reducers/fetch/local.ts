@@ -97,6 +97,70 @@ export type Session = {
     videoUrl: string;
     rtc_config: RTCConfiguration;
 };
+
+export async function StartThinkmayOnVM(computer: Computer, target: string,): Promise<Session> {
+    const { PrivateIP: address } = computer;
+
+    const turn = {
+        minPort: WS_PORT,
+        maxPort: 65535,
+        port: getRandomInt(WS_PORT, 65535),
+        username: crypto.randomUUID(),
+        password: crypto.randomUUID()
+    };
+
+    const thinkmay = {
+        stunAddress: `stun:${address}:${turn.port}`,
+        turnAddress: `turn:${address}:${turn.port}`,
+        username: turn.username,
+        password: turn.password
+    };
+
+    const display = {
+        ScreenWidth: 1920,
+        ScreenHeight: 1080
+    };
+
+    const id = crypto.randomUUID();
+    const req: StartRequest = {
+        id,
+        target,
+        thinkmay,
+        turn,
+        display
+    };
+
+    const resp = await client.post(
+        `http://${address}:${WS_PORT}/new`,
+        Body.json(req),
+        {
+            responseType: ResponseType.JSON
+        }
+    );
+
+    if (!resp.ok) throw new Error(resp.data as string);
+
+    return {
+        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
+            (resp.data as any).thinkmay.audioToken
+        }&target=${target}`,
+        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
+            (resp.data as any).thinkmay.videoToken
+        }&target=${target}`,
+        rtc_config: {
+            iceServers: [
+                {
+                    urls: `stun:${address}:${turn.port}`
+                },
+                {
+                    urls: `turn:${address}:${turn.port}`,
+                    username: turn.username,
+                    credential: turn.password
+                }
+            ]
+        }
+    };
+}
 export async function StartThinkmay(computer: Computer): Promise<Session> {
     const { PrivateIP: address } = computer;
 

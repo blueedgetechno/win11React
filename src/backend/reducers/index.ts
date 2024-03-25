@@ -139,7 +139,10 @@ export const {
     worker_session_close,
     worker_session_create,
     worker_vm_create,
-    worker_refresh
+    worker_refresh,
+    vm_session_create,
+    vm_session_access,
+    vm_session_close,
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;

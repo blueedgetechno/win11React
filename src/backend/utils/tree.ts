@@ -4,7 +4,7 @@ export type TreeResult = {
     tree: RenderNode<any>;
 };
 
-export type NodeType = 'session' | 'local_worker' | 'reject';
+export type NodeType = 'vm_session'|'local_session'| 'host_worker'| 'vm_worker' | 'local_worker' | 'reject';
 
 export class RenderNode<T> {
     id: string;
@@ -57,6 +57,26 @@ export class RenderNode<T> {
             element.iterate(predecate);
         }
     }
+    find<U>(child_id: string): RenderNode<U> | undefined {
+        let node : RenderNode<U> | undefined = undefined
+        this.iterate(child => {
+            if (node == null && child_id == child.id) 
+                node = child
+        })
+        return node
+    }
+    findParent<U>(child_id: string, parent_type: NodeType): RenderNode<U> | undefined {
+        let parent : RenderNode<U> | undefined = undefined
+        this.iterate(node => {
+            if (node.type == parent_type) {
+                node.iterate(child => {
+                    if (parent == null && child_id == child.id) 
+                        parent = node
+                })
+            }
+        })
+        return parent
+    }
 
     async mapAsync<U>(
         types: NodeType[],
@@ -87,15 +107,26 @@ export class RenderNode<T> {
 export function fromComputer(computer: Computer): RenderNode<Computer> {
     const node = new RenderNode<Computer>();
     node.id = computer.PrivateIP;
-    node.type = 'local_worker';
     node.info = {
         ...computer,
         Sessions: undefined
     };
+
+    if (node.info.Hostname?.includes('ATLAS')) 
+        node.type = 'vm_worker';
+    else if (node.info.Hostname?.includes('ubuntu')) 
+        node.type = 'host_worker';
+    else 
+        node.type = 'local_worker';
+
     computer.Sessions?.forEach((x) => {
         const child = new RenderNode<StartRequest>();
         child.id = x.id;
-        child.type = 'session';
+        if (node.type == 'vm_worker') 
+            child.type = 'vm_session';
+        else 
+            child.type = 'local_session';
+
         child.info = { ...x, vm: undefined };
         if (x.vm != undefined) child.data.push(fromComputer(x.vm));
         node.data.push(child);

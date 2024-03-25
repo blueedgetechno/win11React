@@ -133,7 +133,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-        case 'local_worker':
+        case 'host_worker':
             return {
                 width: '200px',
                 secwid: '200px',
@@ -142,13 +142,46 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         name: 'Create VM',
                         action: 'worker_vm_create'
                     },
+                ]
+            };
+        case 'vm_worker':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Thinkmay remote desktop',
+                        action: 'vm_session_create'
+                    },
+                ]
+            };
+        case 'local_worker':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
                     {
                         name: 'Thinkmay remote desktop',
                         action: 'worker_session_create'
                     }
                 ]
             };
-        case 'session':
+        case 'vm_session':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Access session',
+                        action: 'vm_session_access'
+                    },
+                    {
+                        name: 'Close session',
+                        action: 'vm_session_close'
+                    }
+                ]
+            };
+        case 'local_session':
             return {
                 width: '200px',
                 secwid: '200px',
