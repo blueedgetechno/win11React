@@ -49,32 +49,9 @@ const initialState: Data = {
     }
 };
 
-export type MenuOption =
-    | 'desk'
-    | 'desk_remote'
-    | 'paused_app'
-    | 'running_app'
-    | 'need_reset_app'
-    | NodeType;
+export type MenuOption = 'desk' | 'paused_app' | 'running_app' | NodeType;
 function menu_conversion(menu: MenuOption): MenuOpt {
     switch (menu) {
-        case 'need_reset_app':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Reset',
-                        action: 'reset_app',
-                        icon: 'reset'
-                    },
-                    {
-                        name: 'Shutdown',
-                        action: 'pause_app',
-                        icon: 'shutdown'
-                    }
-                ]
-            };
         case 'running_app':
             return {
                 width: '200px',
@@ -96,123 +73,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-        case 'storage':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Access',
-                        action: 'access_storage'
-                    },
-                    {
-                        name: 'Pause',
-                        action: 'stop_storage',
-                        icon: 'shutdown'
-                    },
-                    {
-                        name: 'Delete',
-                        action: 'delete_storage',
-                        icon: 'delete'
-                    },
-                    {
-                        type: 'hr'
-                    },
-                    {
-                        name: 'Detail',
-                        action: 'showWorkerDetail' // TODO
-                    }
-                ]
-            };
-        case 'volume':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Access',
-                        action: 'access_volume'
-                    },
-                    {
-                        name: 'Stop',
-                        action: 'stop_volume',
-                        icon: 'shutdown'
-                    },
-                    {
-                        name: 'Fork',
-                        action: 'fork_volume'
-                    },
-                    // { // PENDING
-                    //     name: 'Migrate',
-                    //     action: ''
-                    // },
-                    {
-                        name: 'Set default os',
-                        action: 'default_os_volume'
-                    },
-                    {
-                        name: 'Delete',
-                        action: 'delete_volume',
-                        icon: 'delete'
-                    },
-                    {
-                        type: 'hr'
-                    },
-                    {
-                        name: 'Detail',
-                        action: 'showWorkerDetail' // TODO
-                    }
-                ]
-            };
-        case 'application':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Release',
-                        action: 'release_app'
-                    },
-                    {
-                        name: 'Patch',
-                        action: 'patch_app'
-                    }
-                ]
-            };
-        case 'worker':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Access',
-                        action: 'access_worker'
-                    },
-                    {
-                        name: 'Create Session',
-                        action: 'create_session'
-                    },
-                    {
-                        name: 'Detail',
-                        action: '' // TODO
-                    }
-                ]
-            };
-        case 'worker_session':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Access',
-                        action: 'access_worker'
-                    },
-                    {
-                        name: 'Deactivate Session',
-                        action: 'deactivate_session'
-                    }
-                ]
-            };
         case 'paused_app':
             return {
                 width: '200px',
@@ -227,35 +87,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                         name: 'Delete',
                         action: 'delete_app',
                         icon: 'delete'
-                    }
-                ]
-            };
-        case 'desk_remote':
-            return {
-                width: '200px',
-                secwid: '200px',
-                data: [
-                    {
-                        name: 'Fullscreen',
-                        action: 'fullscreen',
-                        payload: true
-                    },
-                    {
-                        type: 'hr'
-                    },
-                    {
-                        name: 'Display settings',
-                        icon: 'display',
-                        type: 'svg',
-                        action: 'SETTINGS',
-                        payload: 'full'
-                    },
-                    {
-                        name: 'Personalize',
-                        icon: 'personalize',
-                        type: 'svg',
-                        action: 'SETTINGS',
-                        payload: 'full'
                     }
                 ]
             };
@@ -302,36 +133,33 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-        case 'subscriptions':
+        case 'local_worker':
             return {
                 width: '200px',
                 secwid: '200px',
                 data: [
                     {
-                        name: 'New Subscription',
-                        action: 'showAddSubscription'
+                        name: 'Thinkmay remote desktop',
+                        action: 'worker_session_create'
                     }
                 ]
             };
-        case 'subscription':
+        case 'session':
             return {
                 width: '200px',
                 secwid: '200px',
                 data: [
                     {
-                        name: 'Renew',
-                        action: 'renew_subscription'
+                        name: 'Access session',
+                        action: 'worker_session_access'
                     },
                     {
-                        name: 'Upgrade',
-                        action: 'showUpdateSubscription'
-                    },
-                    {
-                        name: 'Cancel',
-                        action: 'cancel_subscription'
+                        name: 'Close session',
+                        action: 'worker_session_close'
                     }
                 ]
             };
+
         default:
             return {
                 width: '310px',

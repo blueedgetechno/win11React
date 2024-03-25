@@ -106,12 +106,10 @@ export const appsAsync = {
 
 type Data = {
     hz: number;
-    guidance: boolean;
     apps: AppData[];
 };
 const initialState: Data = {
     hz: 0,
-    guidance: false,
     apps: allApps
 };
 
@@ -162,13 +160,6 @@ export const appSlice = createSlice({
             });
 
             state.apps = [...initialState.apps, ...app];
-        },
-        app_stuck: (state, action: PayloadAction<string>) => {
-            const obj = state.apps.find((x) => action.payload == x.payload);
-            if (obj == undefined) return;
-
-            obj.menu = 'need_reset_app';
-            obj.action = 'reset_app';
         },
         app_full: (state, action: PayloadAction<string>) => {
             const obj = state.apps.find((x) => action.payload == x.id);
@@ -269,12 +260,6 @@ export const appSlice = createSlice({
                 state.hz += 1;
                 obj.z = state.hz;
             }
-        },
-        request_demo: (state) => {
-            state.guidance = true;
-        },
-        close_guidance: (state) => {
-            state.guidance = false;
         }
     },
     extraReducers: (builder) => {

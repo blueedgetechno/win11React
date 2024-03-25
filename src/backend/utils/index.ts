@@ -38,12 +38,6 @@ const apps: AppData[] = [
         payload: 'edge'
     },
     {
-        name: 'Local Connect',
-        id: 'local',
-        action: 'apps/app_toggle',
-        payload: 'local'
-    },
-    {
         name: 'Store',
         id: 'store',
         action: 'apps/app_toggle',

@@ -1,4 +1,4 @@
-import { getResolution } from '../../../../core/utils/platform';
+import { getResolution } from '../../../../src-tauri/core/utils/platform';
 import { supabase } from './createClient';
 
 export function getOS() {

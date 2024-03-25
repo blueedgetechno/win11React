@@ -1,33 +1,21 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    RootState,
     appDispatch,
-    authenticate_session,
+    fetch_local_worker,
+    local_access,
     open_remote,
-    ready
+    RootState
 } from '.';
-import { RenderNode } from '../utils/tree';
+import { fromComputer, RenderNode } from '../utils/tree';
 import {
-    AccessApplication,
-    AddSubscription,
-    AdjustSubscription,
-    ConfigureApplication,
-    CreateWorkerSession,
-    DeactivateWorkerSession,
-    DeleteApplication,
-    DeleteVolume,
-    FetchAuthorizedWorkers,
-    ForkVolume,
-    IModifySubscriptionAction,
-    ModifySubscription,
-    PatchApp,
-    SetDefaultOsVolume,
-    StopApplication,
-    StopVolume
-} from './fetch';
-import { CAUSE } from './fetch/createClient';
-import { BuilderHelper, CacheRequest } from './helper';
-import { openRemotePage } from './remote';
+    CloseSession,
+    Computer,
+    GetInfo,
+    ParseRequest,
+    StartRequest,
+    StartThinkmay
+} from './fetch/local';
+import { BuilderHelper } from './helper';
 
 type WorkerType = {
     data: any;
@@ -39,7 +27,7 @@ type WorkerType = {
 };
 
 const initialState: WorkerType = {
-    data: null,
+    data: new RenderNode<{}>().any(),
 
     cpath: '',
     cdata: [],
@@ -48,237 +36,85 @@ const initialState: WorkerType = {
     hid: 0
 };
 
-interface NewSubscription {
-    email: string;
-    plan: string;
-    free: string;
-    price: string;
-    additional_time: number;
-}
-
 export const workerAsync = {
-    fetch_worker: createAsyncThunk('fetch_worker', async (): Promise<any> => {
-        return await CacheRequest('worker', 90, async () => {
-            return new RenderNode(await FetchAuthorizedWorkers()).any();
-        });
-    }),
-    access_volume: createAsyncThunk(
-        'access_volume',
-        async (volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(' ').at(-1);
-            const result = await AccessApplication({ volume_id });
-            if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url);
-
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(volume_id));
-            await ready();
-        }
-    ),
-    stop_volume: createAsyncThunk(
-        'stop_volume',
-        async (volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(' ').at(-1);
-            await StopVolume(volume_id);
-        }
-    ),
-    delete_volume: createAsyncThunk(
-        'delete_volume',
-        async (volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(' ').at(-1);
-            await DeleteVolume(volume_id);
-        }
-    ),
-    default_os_volume: createAsyncThunk(
-        'default_os_volume',
-        async (volume_id: string, { getState }): Promise<any> => {
-            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
-            await SetDefaultOsVolume(volume_id, cluster_id);
-        }
-    ),
-    // migrate_volume: createAsyncThunk(
-    //     'fetch_worker',
-    //     async (arg, { getState }): Promise<any> => {
-    //         // await MigrateVolume(volume, cluster_id);
-    //     }
-    // ),
-    fork_volume: createAsyncThunk(
-        'fork_volume',
-        async (volume_id: string, { getState }): Promise<any> => {
-            volume_id = volume_id.split(' ').at(-1);
-            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
-            let gpu_model = 'RTX 3060Ti';
-            let vcpus = '8';
-            let ram = '8';
-            let description = `fork volume ${new Date().toUTCString()}`;
-            await ForkVolume(
-                volume_id,
-                cluster_id,
-                gpu_model,
-                vcpus,
-                ram,
-                description
-            );
-        }
-    ),
-
-    access_storage: createAsyncThunk(
-        'access_storage',
-        async (storage_id: string, { getState }): Promise<any> => {
-            const result = await AccessApplication({ storage_id });
-            if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url);
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
-            await ready();
-        }
-    ),
-    stop_storage: createAsyncThunk(
-        //TODO
-        'stop_storage',
-        async (storage_id: string, { getState }) => {
-            await StopApplication(storage_id);
-        }
-    ),
-    delete_storage: createAsyncThunk(
-        //TODO
-        'delete_storage',
-        async (storage_id: string, { getState }) => {
-            await DeleteApplication(storage_id);
-        }
-    ),
-
-    create_session: createAsyncThunk(
-        'create_session',
-        async (worker_session_id: string, { getState }): Promise<any> => {
-            await CreateWorkerSession(worker_session_id);
-        }
-    ),
-
-    deactivate_session: createAsyncThunk(
-        'deactivate_session',
-        async (worker_session_id: string, { getState }): Promise<any> => {
-            await DeactivateWorkerSession(worker_session_id);
-        }
-    ),
-
-    access_worker: createAsyncThunk(
-        'access_worker',
-        async (worker_profile_id: string, { getState }): Promise<any> => {
-            const result = await CreateWorkerSession(worker_profile_id);
-            if ((getState() as RootState).remote.old_version)
-                return openRemotePage(result.url);
-            const url = new URL(result.url);
-            const ref = url.searchParams.get('ref');
-            if (ref == null)
-                throw new Error(JSON.stringify({ code: CAUSE.INVALID_REF }));
-
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(worker_profile_id));
-            await ready();
-        }
-    ),
-
-    create_subscription: createAsyncThunk(
-        'create_subscription',
-        async (data: NewSubscription): Promise<any> => {
-            const { email, plan, free, price, additional_time } = data;
-
-            await AddSubscription({
-                email,
-                plan,
-                free,
-                price,
-                additional_time
+    worker_refresh: createAsyncThunk(
+        'worker_refresh',
+        async (_: void, { getState }): Promise<void> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            node.iterate((x) => {
+                if (x.type == 'local_worker' && x.info.PrivateIP != undefined)
+                    appDispatch(fetch_local_worker(x.info.PrivateIP));
             });
         }
     ),
-    renew_subscription: createAsyncThunk(
-        'renew_subscription',
-        async (email: string, { getState }): Promise<any> => {
-            await ModifySubscription({
-                action: 'RENEW',
-                email
-            });
-        }
-    ),
-    upgrade_subscription: createAsyncThunk(
-        'upgrade_subscription',
-        async (data: IModifySubscriptionAction, { getState }): Promise<any> => {
-            await ModifySubscription(data);
-        }
-    ),
-    cancel_subscription: createAsyncThunk(
-        'cancel_subscription',
-        async (email: string, { getState }): Promise<any> => {
-            await ModifySubscription({
-                action: 'CANCEL',
-                email
-            });
-        }
-    ),
+    fetch_local_worker: createAsyncThunk(
+        'fetch_local_worker',
+        async (address: string): Promise<any> => {
+            const result = await GetInfo(address);
+            if (result instanceof Error) {
+                const node = new RenderNode<{}>();
+                node.id = address;
+                return node.any();
+            }
 
-    adjust_subscription: createAsyncThunk(
-        'adjust_subscription',
-        async (email: string, { getState }): Promise<any> => {
-            let created_at = '';
-            let ends_at = '';
-
-            await AdjustSubscription({
-                email,
-                created_at,
-                ends_at
-            });
+            return fromComputer(result).any();
         }
     ),
-    release_app: createAsyncThunk(
-        'release_app',
-        async (store_id: number, { getState }): Promise<any> => {
-            let vol_speed = 'HOT';
-            let vol_availability = 'HA';
-
-            let vdriver = true;
-            let hidevm = false;
-
-            let desc = `release ${new Date().toUTCString()}`;
-            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
-            let gpu_model = 'RTX 3060Ti';
-            let vcpus = '8';
-            let ram = '8';
-            await ConfigureApplication({
-                vol_speed,
-                vol_availability,
-                gpu_model,
-                desc,
-                store_id,
-                vcpus,
-                ram,
-                vdriver,
-                hidevm,
-                cluster_id
+    worker_session_close: createAsyncThunk(
+        'worker_session_close',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            let computer: Computer = null;
+            let session: StartRequest = null;
+            node.iterate((node) => {
+                if (input == node.id && node.type == 'session')
+                    session = node.info;
+                else if (
+                    node.type == 'local_worker' &&
+                    node.data.find((x) => x.id == input)
+                )
+                    computer = node.info;
             });
+
+            await CloseSession(computer, session);
+            await appDispatch(fetch_local_worker(computer.PrivateIP));
         }
     ),
-    patch_app: createAsyncThunk(
-        'patch_app',
-        async (app_id: number, { getState }): Promise<any> => {
-            let desc = `patch app ${new Date().toUTCString()}`;
-            let cluster_id = '09793ad1-82e5-46ad-8183-f72e7e9fe85c';
-            await PatchApp({
-                app_id,
-                desc,
-                cluster_id
+    worker_session_create: createAsyncThunk(
+        'worker_session_create',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            let computer: Computer = null;
+            node.iterate((node) => {
+                if (input == node.id && node.type == 'local_worker')
+                    computer = node.info;
             });
+
+            const result = await StartThinkmay(computer);
+            appDispatch(local_access(result));
+            appDispatch(open_remote(node.id));
+            appDispatch(fetch_local_worker(computer.PrivateIP));
+        }
+    ),
+    worker_session_access: createAsyncThunk(
+        'worker_session_create',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            let computer: Computer = null;
+            let session: StartRequest = null;
+            node.iterate((node) => {
+                if (input == node.id && node.type == 'session')
+                    session = node.info;
+                else if (
+                    node.type == 'local_worker' &&
+                    node.data.find((x) => x.id == input)
+                )
+                    computer = node.info;
+            });
+
+            const result = ParseRequest(computer, session);
+            appDispatch(local_access(result));
+            appDispatch(open_remote(node.id));
         }
     )
 };
@@ -323,88 +159,38 @@ export const workerSlice = createSlice({
         }
     },
     extraReducers: (build) => {
-        BuilderHelper<WorkerType, any, any>(
-            build,
-            {
-                fetch: workerAsync.fetch_worker,
-                hander: (state, action) => {
-                    state.data = action.payload;
-                    const paths = state.cpath
-                        .split('/')
-                        .filter((x) => x.length > 0);
-                    if (paths.length == 0) {
-                        state.cdata = new RenderNode(state.data).data.map((x) =>
-                            x.any()
-                        );
-                        return;
-                    }
+        BuilderHelper<WorkerType, any, any>(build, {
+            fetch: workerAsync.fetch_local_worker,
+            hander: (state, action) => {
+                let target = new RenderNode<any>(state.data);
 
-                    let temp: RenderNode<any>[] = [];
-                    let target: RenderNode<any> = state.data;
-                    paths.forEach((x) => {
-                        temp = new RenderNode(target).data;
-                        target = temp.find((y) => y.id == x) ?? target;
-                    });
+                const node = new RenderNode<Computer>(action.payload);
+                const overlapp = target.data.findIndex((x) => x.id == node.id);
+                if (overlapp == -1 && node.type != 'reject')
+                    target.data.push(node);
+                else if (overlapp == -1 && node.type == 'reject') return;
+                else if (node.type == 'reject')
+                    target.data = target.data.filter((v, i) => i != overlapp);
+                else target.data[overlapp] = node;
 
+                state.data = target.any();
+
+                const paths = state.cpath
+                    .split('/')
+                    .filter((x) => x.length > 0);
+                if (paths.length == 0) {
+                    state.cdata = target.data.map((x) => x.any());
+                } else {
+                    paths.forEach(
+                        (x) =>
+                            (target =
+                                new RenderNode(target).data.find(
+                                    (y) => y.id == x
+                                ) ?? target)
+                    );
                     state.cdata = target.data.map((x) => x.any());
                 }
-            },
-            {
-                fetch: workerAsync.access_worker,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.release_app,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.patch_app,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.cancel_subscription,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.adjust_subscription,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.renew_subscription,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.create_subscription,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.upgrade_subscription,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.fork_volume,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.access_storage,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.delete_storage,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.stop_storage,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.stop_volume,
-                hander: (state, action) => {}
-            },
-            {
-                fetch: workerAsync.delete_volume,
-                hander: (state, action) => {}
             }
-        );
+        });
     }
 });

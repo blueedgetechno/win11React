@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { login } from '../../backend/actions';
 import {
     appDispatch,
-    local_remote,
     useAppSelector,
     wall_unlock
 } from '../../backend/reducers';
@@ -185,9 +184,6 @@ export const LockScreen = () => {
                         </a>
                         <a target="_blank" href={externalLink.FACEBOOK_LINK}>
                             <Icon src="facebook" width={40} />
-                        </a>
-                        <a onClick={() => appDispatch(local_remote(true))}>
-                            <Icon src="search" width={40} />
                         </a>
                     </div>
                 </div>

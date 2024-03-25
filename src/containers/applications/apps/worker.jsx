@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { afterMath } from '../../../backend/actions';
 import {
     appDispatch,
+    fetch_local_worker,
     menu_hide,
     useAppSelector,
     worker_prev
@@ -16,13 +17,16 @@ export const Worker = () => {
         state.apps.apps.find((x) => x.id == 'worker')
     );
     const files = useAppSelector((state) => state.worker);
-    const [searchtxt, setShText] = useState('');
 
+    const [ip, setIP] = useState('');
+    const handleIPChanges = (e) => setIP(e.target.value);
+    const handleEnter = () => appDispatch(fetch_local_worker(ip));
+
+    const [searchtxt, setShText] = useState('');
+    const handleSearchChange = (e) => setShText(e.target.value);
     useEffect(() => {
         setShText('');
     }, [files.cpath]);
-
-    const handleSearchChange = (e) => setShText(e.target.value);
 
     return (
         <div
@@ -61,6 +65,30 @@ export const Worker = () => {
                                 onChange={() => {}}
                             />
                         </div>
+                        <div className="srchbar">
+                            <Icon
+                                className="searchIcon"
+                                src="search"
+                                width={12}
+                            />
+                            <input
+                                type="text"
+                                onChange={handleIPChanges}
+                                onKeyDown={(e) =>
+                                    e.key == 'Enter' ? handleEnter() : null
+                                }
+                                value={ip}
+                                placeholder="Enter worker IP"
+                            />
+                            <Icon
+                                className="navIcon hvtheme"
+                                fafa="faArrowUp"
+                                width={14}
+                                onClick={handleEnter}
+                                pr
+                            />
+                        </div>
+
                         <div className="srchbar">
                             <Icon
                                 className="searchIcon"
@@ -247,7 +275,7 @@ const Ribbon = () => {
                 <div className="drdwcont flex">
                     <Icon
                         src="refresh"
-                        click={'fetch_worker'}
+                        click={'worker_refresh'}
                         ui
                         width={18}
                         margin="0 6px"

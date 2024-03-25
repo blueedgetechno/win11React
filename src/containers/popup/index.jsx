@@ -19,11 +19,7 @@ const Popup = () => {
     );
 
     const closeModal = () => {
-        popup.type == 'guidance' ||
-        popup.type == 'subscription' ||
-        popup.type == 'worker_modal'
-            ? appDispatch(popup_close())
-            : null;
+        popup.type == 'guidance' ? appDispatch(popup_close()) : null;
     };
     return (
         <>

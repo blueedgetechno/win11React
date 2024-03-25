@@ -67,7 +67,6 @@ function App() {
             }
 
             setLockscreen(false);
-            appDispatch(app_toggle('payment'));
         });
     }, []);
 

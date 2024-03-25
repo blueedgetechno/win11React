@@ -2,7 +2,6 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     RootState,
     appDispatch,
-    app_stuck,
     audio_status,
     cache_setting,
     close_remote,
@@ -14,10 +13,17 @@ import {
     toggle_remote,
     video_status
 } from '.';
-import { RemoteDesktopClient } from '../../../core/app';
-import { EventCode } from '../../../core/models/keys.model';
-import { AddNotifier, ConnectionEvent } from '../../../core/utils/log';
-import { getBrowser, getOS, getResolution } from '../../../core/utils/platform';
+import { RemoteDesktopClient } from '../../../src-tauri/core/app';
+import { EventCode } from '../../../src-tauri/core/models/keys.model';
+import {
+    AddNotifier,
+    ConnectionEvent
+} from '../../../src-tauri/core/utils/log';
+import {
+    getBrowser,
+    getOS,
+    getResolution
+} from '../../../src-tauri/core/utils/platform';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
@@ -70,7 +76,6 @@ export const ready = async () => {
         if (now - start > 60 * 1000) {
             const id = store.getState().remote.remote_id;
             appDispatch(popup_close());
-            appDispatch(app_stuck(id));
             appDispatch(close_remote());
             throw new Error(
                 JSON.stringify({
@@ -217,7 +222,7 @@ export function openRemotePage(
 export const remoteAsync = {
     check_worker: async () => {
         if (!store.getState().remote.active) return;
-        else if (store.getState().remote.remote_id == 'local') return;
+        else if (store.getState().remote.local) return;
         else if (client == null) return;
         else if (!client.ready()) return;
 
@@ -264,7 +269,7 @@ export const remoteAsync = {
     ping_session: async () => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
-        else if (store.getState().remote.remote_id == 'local') return;
+        else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
         else if (client?.hid?.last_active() > 5 * 60) {
             if (store.getState().popup.data_stack.length > 0) return;
@@ -402,19 +407,20 @@ export const remoteSlice = createSlice({
         local_access: (
             state,
             {
-                payload: { audioUrl,videoUrl, rtc_config }
+                payload: { audioUrl, videoUrl, rtc_config }
             }: PayloadAction<{
                 audioUrl: string;
                 videoUrl: string;
                 rtc_config: RTCConfiguration;
             }>
         ) => {
+            state.local = true;
             state.auth = {
                 id: undefined,
                 webrtc: rtc_config,
                 signaling: {
                     audioUrl,
-                    videoUrl,
+                    videoUrl
                 }
             };
         },
@@ -514,9 +520,6 @@ export const remoteSlice = createSlice({
         fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
         },
-        local_remote: (state, action: PayloadAction<boolean>) => {
-            state.local = action.payload;
-        },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
         },
@@ -593,6 +596,7 @@ export const remoteSlice = createSlice({
                 fetch: remoteAsync.authenticate_session,
                 hander: (state, action: PayloadAction<AuthSessionResp>) => {
                     state.auth = action.payload;
+                    state.local = false;
                 }
             },
             {

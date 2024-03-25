@@ -6,7 +6,6 @@ import {
     fetch_message,
     fetch_store,
     fetch_user,
-    fetch_worker,
     have_focus,
     load_setting,
     loose_focus,
@@ -40,10 +39,6 @@ const loadSettings = async () => {
 
 export const fetchApp = async () => {
     await appDispatch(fetch_app());
-};
-
-export const fetchWorker = async () => {
-    await appDispatch(fetch_worker());
 };
 
 export const fetchStore = async () => {

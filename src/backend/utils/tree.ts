@@ -1,42 +1,28 @@
+import { Computer, StartRequest } from '../reducers/fetch/local';
+
 export type TreeResult = {
     tree: RenderNode<any>;
 };
 
-export type NodeType =
-    | 'holder'
-    | 'user'
-    | 'storage'
-    | 'pending'
-    | 'admin'
-    | 'vendor'
-    | 'subscriptions'
-    | 'subscription'
-    | 'cluster'
-    | 'application'
-    | 'volume'
-    | 'proxy'
-    | 'worker'
-    | 'worker_session'
-    | 'user_session'
-    | '';
+export type NodeType = 'session' | 'local_worker' | 'reject';
 
 export class RenderNode<T> {
-    id: string | number;
+    id: string;
     type: NodeType;
     data: RenderNode<any>[] = [];
     info: T;
 
     constructor(str?: any) {
         if (str == undefined) {
-            this.id = -1;
-            this.type = '';
+            this.id = '';
+            this.type = 'reject';
             this.data = [];
             this.info = {} as T;
             return;
         }
 
         const { id, type, data, info } = str as {
-            id: string | number;
+            id: string;
             type: NodeType;
             data: any[];
             info: T;
@@ -96,4 +82,24 @@ export class RenderNode<T> {
     any(): any {
         return JSON.parse(JSON.stringify(this));
     }
+}
+
+export function fromComputer(computer: Computer): RenderNode<Computer> {
+    const node = new RenderNode<Computer>();
+    node.id = computer.PrivateIP;
+    node.type = 'local_worker';
+    node.info = {
+        ...computer,
+        Sessions: undefined
+    };
+    computer.Sessions?.forEach((x) => {
+        const child = new RenderNode<StartRequest>();
+        child.id = x.id;
+        child.type = 'session';
+        child.info = { ...x, vm: undefined };
+        if (x.vm != undefined) child.data.push(fromComputer(x.vm));
+        node.data.push(child);
+    });
+
+    return node;
 }

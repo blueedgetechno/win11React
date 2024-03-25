@@ -79,10 +79,7 @@ export const {
 } = menuSlice.actions;
 export const {
     app_toggle,
-    request_demo,
-    close_guidance,
     app_add,
-    app_stuck,
     app_close,
     app_external,
     app_showdesk,
@@ -110,7 +107,6 @@ export const {
     open_remote,
     loose_focus,
     have_focus,
-    local_remote,
     scancode,
     scancode_toggle,
     ads_period,
@@ -138,29 +134,11 @@ export const {
     access_app
 } = appsAsync;
 export const {
-    fetch_worker,
-    access_worker,
-
-    access_volume,
-    stop_volume,
-    delete_volume,
-    default_os_volume,
-    fork_volume,
-
-    access_storage,
-    stop_storage,
-    delete_storage,
-
-    create_session,
-    deactivate_session,
-
-    create_subscription,
-    renew_subscription,
-    adjust_subscription,
-    upgrade_subscription,
-
-    patch_app,
-    release_app
+    fetch_local_worker,
+    worker_session_access,
+    worker_session_close,
+    worker_session_create,
+    worker_refresh
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
