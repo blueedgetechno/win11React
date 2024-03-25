@@ -4,7 +4,7 @@ export type TreeResult = {
     tree: RenderNode<any>;
 };
 
-export type NodeType = 'vm_session'|'local_session'| 'host_worker'| 'vm_worker' | 'local_worker' | 'reject';
+export type NodeType = 'vm_session'|'host_session'|'local_session'| 'host_worker'| 'vm_worker' | 'local_worker' | 'reject';
 
 export class RenderNode<T> {
     id: string;
@@ -112,7 +112,7 @@ export function fromComputer(computer: Computer): RenderNode<Computer> {
         Sessions: undefined
     };
 
-    if (node.info.Hostname?.includes('ATLAS')) 
+    if (node.info.Hostname?.includes('ATLAS') && node.info.PrivateIP?.includes('10.10.')) 
         node.type = 'vm_worker';
     else if (node.info.Hostname?.includes('ubuntu')) 
         node.type = 'host_worker';
@@ -124,6 +124,8 @@ export function fromComputer(computer: Computer): RenderNode<Computer> {
         child.id = x.id;
         if (node.type == 'vm_worker') 
             child.type = 'vm_session';
+        else if (node.type == 'host_worker') 
+            child.type = 'host_session';
         else 
             child.type = 'local_session';
 

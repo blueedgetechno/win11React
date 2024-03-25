@@ -101,10 +101,9 @@ export const {
 } = sidepaneSlice.actions;
 
 export const {
-    local_access,
+    remote_connect,
     toggle_remote,
     hard_reset,
-    open_remote,
     loose_focus,
     have_focus,
     scancode,
@@ -127,7 +126,6 @@ export const {
 export const {
     fetch_app,
     install_app,
-    direct_access,
     start_app,
     pause_app,
     delete_app,
@@ -147,7 +145,6 @@ export const {
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const {
-    authenticate_session,
     ping_session,
     check_worker,
     load_setting,

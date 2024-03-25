@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     appDispatch,
     fetch_local_worker,
-    local_access,
-    open_remote,
+    remote_connect,
     RootState
 } from '.';
 import { fromComputer, RenderNode } from '../utils/tree';
@@ -12,7 +11,7 @@ import {
     Computer,
     GetInfo,
     ParseRequest,
-    Session,
+    ParseVMRequest,
     StartRequest,
     StartThinkmay,
     StartThinkmayOnVM,
@@ -71,37 +70,27 @@ export const workerAsync = {
         'worker_session_create',
         async (input: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
-            let computer: Computer = null;
-            node.iterate((node) => {
-                if (input == node.id && node.type == 'local_worker')
-                    computer = node.info;
-            });
+            const computer = node.findParent<Computer>(input,'local_worker')?.info;
 
             const result = await StartThinkmay(computer);
-            appDispatch(local_access(result));
-            appDispatch(open_remote(node.id));
             appDispatch(fetch_local_worker(computer.PrivateIP));
+            appDispatch(remote_connect(result));
         }
     ),
     worker_session_access: createAsyncThunk(
         'worker_session_access',
         async (input: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
-            let computer: Computer = null;
-            let session: StartRequest = null;
-            node.iterate((node) => {
-                if (input == node.id && node.type == 'local_session')
-                    session = node.info;
-                else if (
-                    node.type == 'local_worker' &&
-                    node.data.find((x) => x.id == input)
-                )
-                    computer = node.info;
-            });
+            const computer = node.findParent<Computer>(input,'local_worker')?.info;
+            const session = node.findParent<StartRequest>(input,'local_session')?.info;
+
+            if (computer == undefined)
+                throw new Error('invalid tree')
+            if (session == undefined)
+                throw new Error('invalid tree')
 
             const result = ParseRequest(computer, session);
-            appDispatch(local_access(result));
-            appDispatch(open_remote(node.id));
+            appDispatch(remote_connect(result));
         }
     ),
     worker_session_close: createAsyncThunk(
@@ -110,10 +99,14 @@ export const workerAsync = {
             const node = new RenderNode((getState() as RootState).worker.data);
             const computer = node.findParent<Computer>(input,'host_worker')?.info
                           ?? node.findParent<Computer>(input,'local_worker')?.info
+            const session = node.find<StartRequest>(input)?.info
+
             if (computer == undefined)
                 throw new Error('invalid tree')
+            if (session == undefined)
+                throw new Error('invalid tree')
 
-            await CloseSession(computer, {id: input});
+            await CloseSession(computer, session);
             await appDispatch(fetch_local_worker(computer.PrivateIP));
         }
     ),
@@ -135,7 +128,7 @@ export const workerAsync = {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const host = node.findParent<Computer>(ip,'host_worker');
-            const vm_session = node.findParent<StartRequest>(ip,'local_session');
+            const vm_session = node.findParent<StartRequest>(ip,'host_session');
 
             if (host == undefined) 
                 throw new Error('invalid tree')
@@ -143,41 +136,48 @@ export const workerAsync = {
                 throw new Error('invalid tree')
 
             const result = await StartThinkmayOnVM(host.info,vm_session.id)
-            appDispatch(local_access(result));
-            appDispatch(open_remote('local'));
+            appDispatch(remote_connect(result));
             appDispatch(fetch_local_worker(host.info.PrivateIP));
         }
     ),
     vm_session_access: createAsyncThunk(
         'vm_session_access',
-        async (id: string, { getState }): Promise<any> => {
+        async (input: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
-            const host = node.findParent(id,'host_worker')
-            if (host == undefined) 
+            const computer = node.findParent<Computer>(input,'host_worker')?.info;
+            const session = node.find<StartRequest>(input)?.info;
+            const vm_session_id = node.findParent<StartRequest>(input,'host_session')?.info.id
+
+            if (computer == undefined)
                 throw new Error('invalid tree')
-                
-            console.log(host)
+            if (session == undefined)
+                throw new Error('invalid tree')
+            if (vm_session_id == undefined)
+                throw new Error('invalid tree')
+
+            const result = ParseVMRequest(computer, {...session,target: vm_session_id});
+            appDispatch(remote_connect(result));
         }
     ),
     vm_session_close: createAsyncThunk(
-        'worker_session_close',
+        'vm_session_close',
         async (id: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
+            const computer = node.findParent<Computer>(id,'host_worker')?.info
+                          ?? node.findParent<Computer>(id,'local_worker')?.info
+            if (computer == undefined)
+                throw new Error('invalid tree')
 
-            let vm_ss_id : string | null = null
-            let vm_session: StartRequest = null;
-            node.iterate((node) => {
-                if (node.data.find(x => x.id == id) && node.type == 'local_session') {
-                    vm_session = node.info;
-                    vm_ss_id = node.id
-                }
-            });
+            const session = node.find<StartRequest>(id)?.info
+            if (session == undefined)
+                throw new Error('invalid tree')
 
-            let host: Computer = null;
-            node.iterate((node) => {
-                if (node.data.find(x => x.id == vm_ss_id) && node.type == 'host_worker')
-                    host = node.info;
-            });
+            const vm_session_id = node.findParent<StartRequest>(id,'host_session')?.info.id
+            if (vm_session_id == undefined)
+                throw new Error('invalid tree')
+
+            await CloseSession(computer, {...session,target: vm_session_id});
+            await appDispatch(fetch_local_worker(computer.PrivateIP));
 
         }
     ),

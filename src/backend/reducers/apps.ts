@@ -1,15 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    RootState,
     appDispatch,
-    authenticate_session,
     close_remote,
-    open_remote,
-    ready,
-    scancode
+    ready
 } from '.';
 import { AppData, allApps } from '../utils';
-import { scanCodeApps } from '../utils/constant';
 import {
     DeleteApplication,
     StartApplication,
@@ -19,26 +14,15 @@ import { BuilderHelper } from './helper';
 
 export const appsAsync = {
     fetch_app: createAsyncThunk('fetch_app', async (): Promise<any[]> => {
-        // const result = await CacheRequest('apps', 30, async () => {
-        //     return new RenderNode(await FetchUserApplication()).mapAsync();
-        // });
-        // appDispatch(desk_add(result.map((x) => x.id)));
         return [];
     }),
 
     install_app: createAsyncThunk(
         'install_app',
-        async (
-            {
+        async ({
                 app_template_id,
-                availability,
-                speed,
-                safe
             }: {
                 app_template_id: string;
-                availability: string;
-                speed: string;
-                safe: string;
             },
             { getState }
         ): Promise<void> => {}
@@ -47,37 +31,17 @@ export const appsAsync = {
     access_app: createAsyncThunk(
         'access_app',
         async (storage_id: string, { getState }): Promise<string> => {
-            // await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
             await ready();
-
             return storage_id;
         }
     ),
-    direct_access: createAsyncThunk(
-        'direct_access',
-        async (
-            { ref, app_name }: { ref: string; app_name?: string },
-            { getState }
-        ): Promise<void> => {
-            appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(app_name ?? 'unknown'));
-            await ready();
-        }
-    ),
+
 
     start_app: createAsyncThunk(
         'start_app',
         async (storage_id: string, { getState }) => {
             await StartApplication(storage_id);
-            if ((getState() as RootState).remote.remote_id != undefined) return;
-
-            // appDispatch(scancode(scanCodeApps.includes(app_name ?? 'unknown')));
-            // await appDispatch(authenticate_session({ ref }));
-            appDispatch(open_remote(storage_id));
             await ready();
-
             return storage_id;
         }
     ),

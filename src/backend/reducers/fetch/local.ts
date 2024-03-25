@@ -248,6 +248,35 @@ export function ParseRequest(
     };
 }
 
+export function ParseVMRequest(
+    computer: Computer,
+    session: StartRequest
+): Session {
+    const { PrivateIP: address } = computer;
+    const { turn, thinkmay, target } = session;
+
+    return {
+        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
+            thinkmay.audioToken
+        }&target=${target}`,
+        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
+            thinkmay.videoToken
+        }&target=${target}`,
+        rtc_config: {
+            iceServers: [
+                {
+                    urls: `stun:${address}:${turn.port}`
+                },
+                {
+                    urls: `turn:${address}:${turn.port}`,
+                    username: turn.username,
+                    credential: turn.password
+                }
+            ]
+        }
+    };
+}
+
 type MoonlightStreamConfig = {
     bitrate?: number;
     width?: number;

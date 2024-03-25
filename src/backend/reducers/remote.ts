@@ -74,7 +74,6 @@ export const ready = async () => {
     while (client == null || !client?.ready()) {
         const now = new Date().getTime();
         if (now - start > 60 * 1000) {
-            const id = store.getState().remote.remote_id;
             appDispatch(popup_close());
             appDispatch(close_remote());
             throw new Error(
@@ -137,8 +136,6 @@ export type Metric = {
 };
 
 type Data = {
-    remote_id?: string;
-
     active: boolean;
     fullscreen: boolean;
     pointer_lock: boolean;
@@ -353,27 +350,6 @@ export const remoteAsync = {
             return data[0];
         }
     }),
-    authenticate_session: createAsyncThunk(
-        'authenticate_session',
-        async ({ ref, uref }: { ref: string; uref?: string }) => {
-            const result = await SupabaseFuncInvoke<AuthSessionResp>(
-                'session_authenticate',
-                {
-                    reference: ref,
-                    metadata: {
-                        platform: getOS(),
-                        browser: getBrowser(),
-                        resolution: getResolution(),
-                        url: window.location.href
-                    }
-                },
-                { uref }
-            );
-            if (result instanceof Error) throw result;
-
-            return result;
-        }
-    ),
     toggle_remote_async: createAsyncThunk(
         'toggle_remote_async',
         async (_: void, { getState }) => {
@@ -404,7 +380,7 @@ export const remoteSlice = createSlice({
     name: 'remote',
     initialState,
     reducers: {
-        local_access: (
+        remote_connect: (
             state,
             {
                 payload: { audioUrl, videoUrl, rtc_config }
@@ -422,25 +398,8 @@ export const remoteSlice = createSlice({
                     audioUrl,
                     videoUrl
                 }
-            };
-        },
-        loose_focus: (state) => {
-            state.focus = false;
-            client?.hid?.ResetKeyStuck();
-        },
-        have_focus: (state) => {
-            state.focus = true;
-        },
-        close_remote: (state) => {
-            state.remote_id = undefined;
-            state.active = false;
-            state.auth = undefined;
-            state.connection = undefined;
-            state.metrics = undefined;
-            state.fullscreen = false;
-            setTimeout(() => client?.Close(), 100);
-        },
-        open_remote: (state, action: PayloadAction<string>) => {
+            };            
+            
             if (!state.active) {
                 state.connection = {
                     audio: 'started',
@@ -458,11 +417,24 @@ export const remoteSlice = createSlice({
 
             state.active = true;
             state.fullscreen = true;
-            state.remote_id = action.payload;
+        },
+        loose_focus: (state) => {
+            state.focus = false;
+            client?.hid?.ResetKeyStuck();
+        },
+        have_focus: (state) => {
+            state.focus = true;
+        },
+        close_remote: (state) => {
+            state.active = false;
+            state.auth = undefined;
+            state.connection = undefined;
+            state.metrics = undefined;
+            state.fullscreen = false;
+            setTimeout(() => client?.Close(), 100);
         },
         toggle_remote: (state) => {
             if (!state.active) {
-                if (state.remote_id == undefined) return;
 
                 state.fullscreen = true;
                 state.connection = {
@@ -592,13 +564,6 @@ export const remoteSlice = createSlice({
     extraReducers: (builder) => {
         BuilderHelper<Data, any, any>(
             builder,
-            {
-                fetch: remoteAsync.authenticate_session,
-                hander: (state, action: PayloadAction<AuthSessionResp>) => {
-                    state.auth = action.payload;
-                    state.local = false;
-                }
-            },
             {
                 fetch: remoteAsync.load_setting,
                 hander: (state, action: PayloadAction<any>) => {

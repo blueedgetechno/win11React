@@ -181,6 +181,17 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
+        case 'host_session':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Close session',
+                        action: 'worker_session_close'
+                    }
+                ]
+            };
         case 'local_session':
             return {
                 width: '200px',
@@ -196,7 +207,6 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
-
         default:
             return {
                 width: '310px',

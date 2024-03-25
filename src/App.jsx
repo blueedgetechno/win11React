@@ -5,8 +5,6 @@ import { preload } from './backend/actions/background';
 import { afterMath } from './backend/actions/index';
 import {
     appDispatch,
-    app_toggle,
-    direct_access,
     menu_show,
     pointer_lock,
     set_fullscreen,
@@ -78,7 +76,8 @@ function App() {
         if (user.id != 'unknown') UserSession(user.email);
 
         if (ref != null && user.id != 'unknown') {
-            appDispatch(direct_access({ ref, app_name }));
+            // TODO
+            // appDispatch(direct_access({ ref, app_name }));
             window.history.replaceState({}, document.title, '/' + '');
             window.onbeforeunload = (e) => {
                 const text = 'Are you sure (｡◕‿‿◕｡)';
@@ -104,10 +103,11 @@ function App() {
                 const { ref, app_name } = JSON.parse(
                     localStorage.getItem('reference_cache')
                 );
-                if (ref != null) appDispatch(direct_access({ ref, app_name }));
+                // TODO
+                // if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch {}
+            } catch { }
         }
     }, [user.id]);
 
@@ -146,7 +146,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => {});
+        job?.catch(() => { });
 
         const handleState = () => {
             const fullscreen =

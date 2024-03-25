@@ -1,4 +1,3 @@
-import { Command } from '@tauri-apps/api/shell';
 import { useState } from 'react';
 import { login } from '../../backend/actions';
 import {
@@ -67,32 +66,6 @@ export const LockScreen = () => {
         }
 
         await login(provider);
-    };
-
-    const direct_access = async () => {};
-
-    const moonlight_access = async () => {
-        const command = new Command('Moonlight', [
-            '--username',
-            '123',
-            '--password',
-            '456'
-        ]);
-        command.stderr.addListener('data', (data) => {
-            console.log(data);
-        });
-        command.stdout.addListener('data', (data) => {
-            console.log(data);
-        });
-        command
-            .spawn()
-            .then((x) => {
-                console.log(x);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        return;
     };
 
     return (
