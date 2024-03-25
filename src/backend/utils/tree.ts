@@ -104,11 +104,12 @@ export class RenderNode<T> {
     }
 }
 
-export function fromComputer(computer: Computer): RenderNode<Computer> {
+export function fromComputer(address: string,computer: Computer): RenderNode<Computer> {
     const node = new RenderNode<Computer>();
-    node.id = computer.PrivateIP;
+    node.id = address;
     node.info = {
         ...computer,
+        address, 
         Sessions: undefined
     };
 
@@ -130,7 +131,7 @@ export function fromComputer(computer: Computer): RenderNode<Computer> {
             child.type = 'local_session';
 
         child.info = { ...x, vm: undefined };
-        if (x.vm != undefined) child.data.push(fromComputer(x.vm));
+        if (x.vm != undefined) child.data.push(fromComputer(x.vm.PrivateIP,x.vm));
         node.data.push(child);
     });
 

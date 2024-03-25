@@ -42,15 +42,15 @@ export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
         async (_: void, { getState }): Promise<void> => {
-            const old_cache = await GetPermanentCache('local_connections')
-            const node = new RenderNode(old_cache);
-            await node.iterateAsync(async (x) => {
-                if (x.type == 'local_worker' && x.info.PrivateIP != undefined)
-                    await appDispatch(fetch_local_worker(x.info.PrivateIP));
-            });
+            // const old_cache = await GetPermanentCache('local_connections')
+            // const node = new RenderNode(old_cache);
+            // await node.iterateAsync(async (x) => {
+            //     if (x.type == 'local_worker' && x.info.PrivateIP != undefined)
+            //         await appDispatch(fetch_local_worker(x.info.));
+            // });
 
-            const new_cache = (getState() as RootState).worker.data
-            await SetPermanentCache('local_connections',new_cache)
+            // const new_cache = (getState() as RootState).worker.data
+            // await SetPermanentCache('local_connections',new_cache)
         }
     ),
     fetch_local_worker: createAsyncThunk(
@@ -63,7 +63,7 @@ export const workerAsync = {
                 return node.any();
             }
 
-            return fromComputer(result).any();
+            return fromComputer(address,result).any();
         }
     ),
     worker_session_create: createAsyncThunk(
@@ -73,7 +73,7 @@ export const workerAsync = {
             const computer = node.findParent<Computer>(input,'local_worker')?.info;
 
             const result = await StartThinkmay(computer);
-            appDispatch(fetch_local_worker(computer.PrivateIP));
+            appDispatch(fetch_local_worker(computer.address));
             appDispatch(remote_connect(result));
         }
     ),
@@ -107,7 +107,7 @@ export const workerAsync = {
                 throw new Error('invalid tree')
 
             await CloseSession(computer, session);
-            await appDispatch(fetch_local_worker(computer.PrivateIP));
+            await appDispatch(fetch_local_worker(computer.address));
         }
     ),
     worker_vm_create: createAsyncThunk(
@@ -119,7 +119,7 @@ export const workerAsync = {
                 throw new Error('invalid tree')
 
             await StartVirtdaemon(computer);
-            appDispatch(fetch_local_worker(computer.PrivateIP));
+            appDispatch(fetch_local_worker(computer.address));
         }
     ),
     vm_session_create: createAsyncThunk(
@@ -137,7 +137,7 @@ export const workerAsync = {
 
             const result = await StartThinkmayOnVM(host.info,vm_session.id)
             appDispatch(remote_connect(result));
-            appDispatch(fetch_local_worker(host.info.PrivateIP));
+            appDispatch(fetch_local_worker(host.info.address));
         }
     ),
     vm_session_access: createAsyncThunk(
@@ -177,7 +177,7 @@ export const workerAsync = {
                 throw new Error('invalid tree')
 
             await CloseSession(computer, {...session,target: vm_session_id});
-            await appDispatch(fetch_local_worker(computer.PrivateIP));
+            await appDispatch(fetch_local_worker(computer.address));
 
         }
     ),

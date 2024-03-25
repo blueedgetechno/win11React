@@ -6,6 +6,8 @@ getClient().then((x) => (client = x));
 export const WS_PORT = 60000;
 
 export type Computer = {
+    address?: string // private
+
     Hostname?: string;
     CPU?: string;
     RAM?: string;
@@ -67,7 +69,7 @@ export type StartRequest = {
 export async function StartVirtdaemon(
     computer: Computer,
 ): Promise<any> {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
 
     const id = crypto.randomUUID();
     const req: StartRequest = {
@@ -99,7 +101,7 @@ export type Session = {
 };
 
 export async function StartThinkmayOnVM(computer: Computer, target: string,): Promise<Session> {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
 
     const turn = {
         minPort: WS_PORT,
@@ -162,7 +164,7 @@ export async function StartThinkmayOnVM(computer: Computer, target: string,): Pr
     };
 }
 export async function StartThinkmay(computer: Computer): Promise<Session> {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
 
     const turn = {
         minPort: WS_PORT,
@@ -227,7 +229,7 @@ export function ParseRequest(
     computer: Computer,
     session: StartRequest
 ): Session {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
     const { turn, thinkmay } = session;
 
     return {
@@ -252,7 +254,7 @@ export function ParseVMRequest(
     computer: Computer,
     session: StartRequest
 ): Session {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
     const { turn, thinkmay, target } = session;
 
     return {
@@ -287,7 +289,7 @@ export async function StartMoonlight(
     options?: MoonlightStreamConfig,
     callback?: (type: 'stdout' | 'stderr', log: string) => void
 ): Promise<Child> {
-    const { PrivateIP: address } = computer;
+    const { address } = computer;
 
     const PORT = getRandomInt(60000, 65530);
     const sunshine = {
@@ -355,7 +357,7 @@ export async function CloseSession(
     req: StartRequest
 ): Promise<Error | 'SUCCESS'> {
     await client.post(
-        `http://${computer.PrivateIP}:${WS_PORT}/closed`,
+        `http://${computer.address}:${WS_PORT}/closed`,
         Body.json(req),
         {
             responseType: ResponseType.Text
