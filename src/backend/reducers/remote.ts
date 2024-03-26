@@ -3,7 +3,6 @@ import {
     RootState,
     appDispatch,
     audio_status,
-    cache_setting,
     close_remote,
     hard_reset,
     popup_close,
@@ -300,7 +299,7 @@ export const remoteAsync = {
             store.getState().remote.prev_framerate !=
                 store.getState().remote.framerate ||
             store.getState().remote.prev_framerate != size()
-        ) 
+        )
             appDispatch(remoteSlice.actions.internal_sync());
     },
     cache_setting: createAsyncThunk(
@@ -476,7 +475,7 @@ export const remoteSlice = createSlice({
         },
         remote_version: (state) => {
             state.old_version = !state.old_version;
-            setTimeout(() => appDispatch(cache_setting()), 500);
+            // setTimeout(() => appDispatch(cache_setting()), 500);
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
@@ -486,6 +485,8 @@ export const remoteSlice = createSlice({
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
+            if (client == null) return;
+            client.PointerVisible(action.payload)
         },
         relative_mouse: (state) => {
             state.relative_mouse = !state.relative_mouse;
