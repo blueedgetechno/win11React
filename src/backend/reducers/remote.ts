@@ -6,7 +6,6 @@ import {
     cache_setting,
     close_remote,
     hard_reset,
-    load_setting,
     popup_close,
     popup_open,
     store,
@@ -19,14 +18,9 @@ import {
     AddNotifier,
     ConnectionEvent
 } from '../../../src-tauri/core/utils/log';
-import {
-    getBrowser,
-    getOS,
-    getResolution
-} from '../../../src-tauri/core/utils/platform';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
-import { CAUSE, SupabaseFuncInvoke, supabase } from './fetch/createClient';
+import { CAUSE, supabase } from './fetch/createClient';
 import { BuilderHelper, SetPermanentCache } from './helper';
 
 const size = () =>
@@ -37,6 +31,7 @@ export const MAX_BITRATE = () => (20000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
 export const MAX_FRAMERATE = 120;
 export const MIN_FRAMERATE = 40;
+const ADS_RATIO = 2;
 
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
@@ -87,7 +82,7 @@ export const ready = async () => {
         await new Promise((r) => setTimeout(r, 1000));
     }
 
-    appDispatch(remoteSlice.actions.sync());
+    appDispatch(remoteSlice.actions.internal_sync());
     appDispatch(popup_close());
 };
 
@@ -144,13 +139,13 @@ type Data = {
     local: boolean;
 
     scancode: boolean;
-    low_ads: boolean;
     old_version: boolean;
 
     bitrate: number;
     prev_bitrate: number;
     framerate: number;
     prev_framerate: number;
+    prev_size: number;
 
     frame_drop?: boolean;
 
@@ -168,7 +163,6 @@ const initialState: Data = {
     local: false,
     focus: true,
     active: false,
-    low_ads: true,
     scancode: false,
     fullscreen: false,
     pointer_lock: false,
@@ -179,6 +173,7 @@ const initialState: Data = {
     prev_bitrate: 0,
     framerate: 0,
     prev_framerate: 0,
+    prev_size: 0,
     peers: []
 };
 
@@ -290,25 +285,31 @@ export const remoteAsync = {
 
         const session_id = store.getState().remote.auth?.id;
         await supabase.rpc(`ping_session`, { session_id });
+        // TODO
+        // await appDispatch(load_setting());
+        // await appDispatch(cache_setting());
+    },
+    sync: async () => {
+        if (!store.getState().remote.active) return;
+        else if (client == null) return;
+        else if (!client.ready()) return;
 
         if (
             store.getState().remote.prev_bitrate !=
                 store.getState().remote.bitrate ||
             store.getState().remote.prev_framerate !=
-                store.getState().remote.framerate
-        ) {
-            appDispatch(remoteSlice.actions.sync());
-            return;
-        }
-        await appDispatch(load_setting());
+                store.getState().remote.framerate ||
+            store.getState().remote.prev_framerate != size()
+        ) 
+            appDispatch(remoteSlice.actions.internal_sync());
     },
     cache_setting: createAsyncThunk(
         'cache_setting',
         async (_: void, { getState }) => {
-            const { bitrate, framerate, old_version, low_ads } = (
+            const { bitrate, framerate, old_version } = (
                 getState() as RootState
             ).remote;
-            const data = { bitrate, framerate, old_version, low_ads };
+            const data = { bitrate, framerate, old_version };
 
             await SetPermanentCache('setting', data);
             const {
@@ -323,7 +324,6 @@ export const remoteAsync = {
             await supabase.rpc('update_user_setting', {
                 user_id: id,
                 bitrate,
-                low_ads,
                 framerate,
                 old_version
             });
@@ -398,8 +398,8 @@ export const remoteSlice = createSlice({
                     audioUrl,
                     videoUrl
                 }
-            };            
-            
+            };
+
             if (!state.active) {
                 state.connection = {
                     audio: 'started',
@@ -435,7 +435,6 @@ export const remoteSlice = createSlice({
         },
         toggle_remote: (state) => {
             if (!state.active) {
-
                 state.fullscreen = true;
                 state.connection = {
                     audio: 'started',
@@ -462,13 +461,6 @@ export const remoteSlice = createSlice({
 
             client?.HardReset();
         },
-        ads_period: (state) => {
-            state.low_ads = !state.low_ads;
-            client?.SetPeriod(
-                (1000 / state.framerate) * (state.low_ads ? 2 : 10)
-            );
-            setTimeout(() => appDispatch(cache_setting()), 500);
-        },
         scancode_toggle: (state) => {
             state.scancode = !state.scancode;
             if (client) client.hid.scancode = state.scancode;
@@ -489,7 +481,7 @@ export const remoteSlice = createSlice({
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
         },
-        fullscreen: (state) => {
+        toggle_fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
@@ -498,8 +490,11 @@ export const remoteSlice = createSlice({
         relative_mouse: (state) => {
             state.relative_mouse = !state.relative_mouse;
         },
-        sync: (state) => {
-            if (state.bitrate != state.prev_bitrate)
+        internal_sync: (state) => {
+            if (
+                state.bitrate != state.prev_bitrate ||
+                state.prev_size != size()
+            )
                 client?.ChangeBitrate(
                     Math.round(
                         ((MAX_BITRATE() - MIN_BITRATE()) / 100) *
@@ -509,9 +504,7 @@ export const remoteSlice = createSlice({
                 );
             if (state.framerate != state.prev_framerate) {
                 client?.SetPeriod(
-                    Math.round(
-                        (1000 / state.framerate) * (state.low_ads ? 2 : 10)
-                    )
+                    Math.round((1000 / state.framerate) * ADS_RATIO)
                 );
                 client?.ChangeFramerate(
                     Math.round(
@@ -521,14 +514,10 @@ export const remoteSlice = createSlice({
                     )
                 );
             }
-            if (
-                state.framerate != state.prev_framerate ||
-                state.bitrate != state.prev_bitrate
-            )
-                setTimeout(() => appDispatch(cache_setting()), 500);
 
             state.prev_framerate = state.framerate;
             state.prev_bitrate = state.bitrate;
+            state.prev_size = size();
         },
         change_framerate: (state, action: PayloadAction<number>) => {
             state.framerate = action.payload;
@@ -567,11 +556,9 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.load_setting,
                 hander: (state, action: PayloadAction<any>) => {
-                    const { bitrate, framerate, old_version, low_ads } =
-                        action.payload;
+                    const { bitrate, framerate, old_version } = action.payload;
                     state.bitrate = bitrate;
                     state.framerate = framerate;
-                    state.low_ads = low_ads;
 
                     if (isMobile()) return;
 

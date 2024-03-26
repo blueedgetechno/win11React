@@ -53,17 +53,11 @@ const initialState: Data = {
             action: 'remote/homescreen'
         },
         {
-            src: 'MdLoop',
-            name: [Contents.LOW_PERIOD],
-            state: 'low_ads',
-            action: 'remote/ads_period'
-        },
-        {
             ui: true,
             src: 'MdFullscreen',
             name: [Contents.FULLSCREEN],
             state: 'fullscreen',
-            action: 'remote/fullscreen'
+            action: 'remote/toggle_fullscreen'
         },
         {
             ui: true,

@@ -6,7 +6,7 @@ getClient().then((x) => (client = x));
 export const WS_PORT = 60000;
 
 export type Computer = {
-    address?: string // private
+    address?: string; // private
 
     Hostname?: string;
     CPU?: string;
@@ -66,9 +66,7 @@ export type StartRequest = {
     vm?: Computer;
 };
 
-export async function StartVirtdaemon(
-    computer: Computer,
-): Promise<any> {
+export async function StartVirtdaemon(computer: Computer): Promise<any> {
     const { address } = computer;
 
     const id = crypto.randomUUID();
@@ -100,7 +98,10 @@ export type Session = {
     rtc_config: RTCConfiguration;
 };
 
-export async function StartThinkmayOnVM(computer: Computer, target: string,): Promise<Session> {
+export async function StartThinkmayOnVM(
+    computer: Computer,
+    target: string
+): Promise<Session> {
     const { address } = computer;
 
     const turn = {
@@ -150,6 +151,7 @@ export async function StartThinkmayOnVM(computer: Computer, target: string,): Pr
             (resp.data as any).thinkmay.videoToken
         }&target=${target}`,
         rtc_config: {
+            iceTransportPolicy: 'relay',
             iceServers: [
                 {
                     urls: `stun:${address}:${turn.port}`
@@ -212,6 +214,7 @@ export async function StartThinkmay(computer: Computer): Promise<Session> {
             (resp.data as any).thinkmay.videoToken
         }`,
         rtc_config: {
+            iceTransportPolicy: 'all',
             iceServers: [
                 {
                     urls: `stun:${address}:${turn.port}`
@@ -236,6 +239,7 @@ export function ParseRequest(
         audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
         videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
         rtc_config: {
+            iceTransportPolicy: 'all',
             iceServers: [
                 {
                     urls: `stun:${address}:${turn.port}`
@@ -258,13 +262,10 @@ export function ParseVMRequest(
     const { turn, thinkmay, target } = session;
 
     return {
-        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            thinkmay.audioToken
-        }&target=${target}`,
-        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            thinkmay.videoToken
-        }&target=${target}`,
+        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
+        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
         rtc_config: {
+            iceTransportPolicy: 'relay', // preferred as VM often under double NAT
             iceServers: [
                 {
                     urls: `stun:${address}:${turn.port}`

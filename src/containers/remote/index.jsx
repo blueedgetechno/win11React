@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { AudioWrapper } from '../../../src-tauri/core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../src-tauri/core/pipeline/sink/video/wrapper';
-import { useAppSelector } from '../../backend/reducers';
+import { appDispatch, set_fullscreen, useAppSelector } from '../../backend/reducers';
 import { assign } from '../../backend/reducers/remote';
 import './remote.scss';
 
@@ -19,6 +19,7 @@ export const Remote = () => {
     }, [remote.active]);
 
     const pointerlock = () => {
+        appDispatch(set_fullscreen(true))
         remoteVideo.current.requestPointerLock();
     };
 
@@ -42,7 +43,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
-                onClick={relative_mouse ? pointerlock : () => {}}
+                onClick={relative_mouse ? pointerlock : () => { }}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted

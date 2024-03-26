@@ -4,7 +4,14 @@ export type TreeResult = {
     tree: RenderNode<any>;
 };
 
-export type NodeType = 'vm_session'|'host_session'|'local_session'| 'host_worker'| 'vm_worker' | 'local_worker' | 'reject';
+export type NodeType =
+    | 'vm_session'
+    | 'host_session'
+    | 'local_session'
+    | 'host_worker'
+    | 'vm_worker'
+    | 'local_worker'
+    | 'reject';
 
 export class RenderNode<T> {
     id: string;
@@ -58,24 +65,25 @@ export class RenderNode<T> {
         }
     }
     find<U>(child_id: string): RenderNode<U> | undefined {
-        let node : RenderNode<U> | undefined = undefined
-        this.iterate(child => {
-            if (node == null && child_id == child.id) 
-                node = child
-        })
-        return node
+        let node: RenderNode<U> | undefined = undefined;
+        this.iterate((child) => {
+            if (node == null && child_id == child.id) node = child;
+        });
+        return node;
     }
-    findParent<U>(child_id: string, parent_type: NodeType): RenderNode<U> | undefined {
-        let parent : RenderNode<U> | undefined = undefined
-        this.iterate(node => {
+    findParent<U>(
+        child_id: string,
+        parent_type: NodeType
+    ): RenderNode<U> | undefined {
+        let parent: RenderNode<U> | undefined = undefined;
+        this.iterate((node) => {
             if (node.type == parent_type) {
-                node.iterate(child => {
-                    if (parent == null && child_id == child.id) 
-                        parent = node
-                })
+                node.iterate((child) => {
+                    if (parent == null && child_id == child.id) parent = node;
+                });
             }
-        })
-        return parent
+        });
+        return parent;
     }
 
     async mapAsync<U>(
@@ -104,34 +112,36 @@ export class RenderNode<T> {
     }
 }
 
-export function fromComputer(address: string,computer: Computer): RenderNode<Computer> {
+export function fromComputer(
+    address: string,
+    computer: Computer
+): RenderNode<Computer> {
     const node = new RenderNode<Computer>();
     node.id = address;
     node.info = {
         ...computer,
-        address, 
+        address,
         Sessions: undefined
     };
 
-    if (node.info.Hostname?.includes('ATLAS') && node.info.PrivateIP?.includes('10.10.')) 
+    if (
+        node.info.Hostname?.includes('ATLAS') &&
+        !node.info.PrivateIP?.includes('192.168.1.')
+    )
         node.type = 'vm_worker';
-    else if (node.info.Hostname?.includes('ubuntu')) 
-        node.type = 'host_worker';
-    else 
-        node.type = 'local_worker';
+    else if (node.info.Hostname?.includes('ubuntu')) node.type = 'host_worker';
+    else node.type = 'local_worker';
 
     computer.Sessions?.forEach((x) => {
         const child = new RenderNode<StartRequest>();
         child.id = x.id;
-        if (node.type == 'vm_worker') 
-            child.type = 'vm_session';
-        else if (node.type == 'host_worker') 
-            child.type = 'host_session';
-        else 
-            child.type = 'local_session';
+        if (node.type == 'vm_worker') child.type = 'vm_session';
+        else if (node.type == 'host_worker') child.type = 'host_session';
+        else child.type = 'local_session';
 
         child.info = { ...x, vm: undefined };
-        if (x.vm != undefined) child.data.push(fromComputer(x.vm.PrivateIP,x.vm));
+        if (x.vm != undefined)
+            child.data.push(fromComputer(x.vm.PrivateIP, x.vm));
         node.data.push(child);
     });
 

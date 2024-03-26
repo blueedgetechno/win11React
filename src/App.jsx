@@ -107,7 +107,7 @@ function App() {
                 // if (ref != null) appDispatch(direct_access({ ref, app_name }));
                 localStorage.removeItem('reference_cache');
                 return;
-            } catch { }
+            } catch {}
         }
     }, [user.id]);
 
@@ -146,7 +146,7 @@ function App() {
         }
 
         const job = remote.fullscreen ? fullscreen() : exitfullscreen();
-        job?.catch(() => { });
+        job?.catch(() => {});
 
         const handleState = () => {
             const fullscreen =

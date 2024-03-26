@@ -108,11 +108,10 @@ export const {
     have_focus,
     scancode,
     scancode_toggle,
-    ads_period,
     close_remote,
     change_bitrate,
     change_framerate,
-    fullscreen,
+    toggle_fullscreen,
     set_fullscreen,
     pointer_lock,
     homescreen,
@@ -140,12 +139,13 @@ export const {
     worker_refresh,
     vm_session_create,
     vm_session_access,
-    vm_session_close,
+    vm_session_close
 } = workerAsync;
 export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const {
     ping_session,
+    sync,
     check_worker,
     load_setting,
     cache_setting,

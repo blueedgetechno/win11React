@@ -1,15 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-    appDispatch,
-    close_remote,
-    ready
-} from '.';
+import { appDispatch, close_remote, ready } from '.';
 import { AppData, allApps } from '../utils';
-import {
-    DeleteApplication,
-    StartApplication,
-    StopApplication
-} from './fetch';
+import { DeleteApplication, StartApplication, StopApplication } from './fetch';
 import { BuilderHelper } from './helper';
 
 export const appsAsync = {
@@ -19,8 +11,9 @@ export const appsAsync = {
 
     install_app: createAsyncThunk(
         'install_app',
-        async ({
-                app_template_id,
+        async (
+            {
+                app_template_id
             }: {
                 app_template_id: string;
             },
@@ -35,7 +28,6 @@ export const appsAsync = {
             return storage_id;
         }
     ),
-
 
     start_app: createAsyncThunk(
         'start_app',

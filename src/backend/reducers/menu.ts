@@ -141,7 +141,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     {
                         name: 'Create VM',
                         action: 'worker_vm_create'
-                    },
+                    }
                 ]
             };
         case 'vm_worker':
@@ -152,7 +152,7 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     {
                         name: 'Thinkmay remote desktop',
                         action: 'vm_session_create'
-                    },
+                    }
                 ]
             };
         case 'local_worker':

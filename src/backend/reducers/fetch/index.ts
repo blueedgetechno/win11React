@@ -1,8 +1,6 @@
 import { sleep } from '../../utils/sleep';
 import { CAUSE, SupabaseFuncInvoke, supabase } from './createClient';
 
-
-
 export const DownloadApplication = async (
     app_template_id: string,
     availability: string,
@@ -15,8 +13,6 @@ export const StartApplication = async (storage_id: string) => {
         action: 'START',
         storage_id: storage_id
     });
-
-
 
     return result;
 };
@@ -60,10 +56,8 @@ export async function HasAvailableCluster() {
     return true;
 }
 
-
 interface UserSetting {
     bitrate: number;
-    low_ads: boolean;
     framerate: number;
     old_version: boolean;
 }
@@ -83,7 +77,6 @@ interface UserSettingUpdate {
     user_id: string;
     bitrate: number;
     framerate: number;
-    low_ads: boolean;
     old_version: boolean;
 }
 export async function UpdateUserSetting(
