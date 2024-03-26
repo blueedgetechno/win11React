@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import i18next from "i18next";
 import login from "../../../components/login";
+import { installApp, delApp } from "../../../actions";
 
-import { ToolBar } from "../../../utils/general";
+import { Icon, ToolBar } from "../../../utils/general";
 import dirs from "./assets/dir.json";
 
 export const WnTerminal = () => {
@@ -73,6 +74,50 @@ export const WnTerminal = () => {
     } else if (type == "eval") {
       if (arg.length) {
         tmpStack.push(eval(arg).toString());
+      }
+    } else if (type == "install") {
+      if (arg.length) {
+        tmpStack.push("Installing app");
+        var arg = arg.toString().split(" ");
+        console.log(arg);
+        var AppName = arg[0];
+        var IframeUrl = arg[1];
+        var IconUrl = arg[2];
+        var Json = {
+          name: AppName,
+          icon: IconUrl,
+          type: "game",
+          data: {
+            type: "IFrame",
+            url: IframeUrl,
+            invert: true,
+          },
+        };
+        installApp(Json);
+        tmpStack.push("App installed");
+      }
+    } else if (type == "uninstall") {
+      if (arg.length) {
+        tmpStack.push("Uninstalling app");
+        var arg = arg.toString().split(" ");
+        var AppName = arg[0];
+        tmpStack.push(AppName);
+        var apps = document.getElementsByClassName("dskApp");
+        var Mainmenu = "";
+        for (let i = 0; i < apps.length; i++) {
+          var app = apps[i];
+          var Appcname = app.getElementsByClassName("appName")[0];
+          var menu = app.getElementsByClassName("uicon")[0];
+          console.log(Appcname.innerHTML);
+          if (Appcname.innerHTML == AppName) {
+            var Mainmenu = menu;
+            console.log(menu);
+          }
+        }
+        console.log(Mainmenu);
+
+        delApp("delete", Mainmenu);
+        tmpStack.push("App uninstalled");
       }
     } else if (type == "python") {
       if (arg.length) {
@@ -272,6 +317,8 @@ export const WnTerminal = () => {
         "VER            Displays the Windows version.",
         "PYTHON         EXECUTE PYTHON CODE.",
         "EVAL           RUNS JavaScript statements.",
+        "INSTALL        Instal a app with app name and iframe url",
+        "UNINSTALL      Uninstal a app with app name",
       ];
 
       for (var i = 0; i < helpArr.length; i++) {

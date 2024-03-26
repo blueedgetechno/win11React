@@ -123,7 +123,7 @@ export const delApp = (act, menu) => {
       var app = Object.keys(apps).filter((x) => apps[x].action == data.type);
       if (app) {
         app = apps[app];
-        if (app.pwa == true) {
+        if (app.pwa == true || app.pwa == False /*what is that for ?*/) {
           store.dispatch({ type: app.action, payload: "close" });
           store.dispatch({ type: "DELAPP", payload: app.icon });
 
