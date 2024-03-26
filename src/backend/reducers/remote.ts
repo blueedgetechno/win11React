@@ -486,7 +486,7 @@ export const remoteSlice = createSlice({
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
             if (client == null) return;
-            client.PointerVisible(action.payload)
+            client.PointerVisible(action.payload);
         },
         relative_mouse: (state) => {
             state.relative_mouse = !state.relative_mouse;
