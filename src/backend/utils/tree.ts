@@ -5,6 +5,7 @@ export type TreeResult = {
 };
 
 export type NodeType =
+    | 'volume'
     | 'vm_session'
     | 'host_session'
     | 'local_session'
@@ -144,6 +145,17 @@ export function fromComputer(
             child.data.push(fromComputer(x.vm.PrivateIP, x.vm));
         node.data.push(child);
     });
+
+
+    if (node.type == 'host_worker') {
+        computer.Volumes?.forEach(x => {
+            const child = new RenderNode<{}>();
+            child.id = x;
+            child.type = 'volume';
+            child.info = {}
+            node.data.push(child);
+        })
+    }
 
     return node;
 }

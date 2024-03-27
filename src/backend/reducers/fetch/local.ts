@@ -18,6 +18,7 @@ export type Computer = {
 
     GPUs: string[];
     Sessions?: StartRequest[];
+    Volumes?: string[];
 };
 
 export async function GetInfo(ip: string): Promise<Computer | Error> {
@@ -66,7 +67,7 @@ export type StartRequest = {
     vm?: Computer;
 };
 
-export async function StartVirtdaemon(computer: Computer): Promise<any> {
+export async function StartVirtdaemon(computer: Computer, volume_id? : string): Promise<any> {
     const { address } = computer;
 
     const id = crypto.randomUUID();
@@ -74,6 +75,7 @@ export async function StartVirtdaemon(computer: Computer): Promise<any> {
         id,
         vm: {
             GPUs: ['GA104 [GeForce RTX 3060 Ti Lite Hash Rate]'],
+            Volumes: volume_id != undefined ? [volume_id] : [],
             CPU: '8',
             RAM: '8'
         }

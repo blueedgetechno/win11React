@@ -136,6 +136,7 @@ export const {
     worker_session_close,
     worker_session_create,
     worker_vm_create,
+    worker_vm_create_from_volume,
     worker_refresh,
     vm_session_create,
     vm_session_access,

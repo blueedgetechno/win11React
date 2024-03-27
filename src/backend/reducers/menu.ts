@@ -144,6 +144,17 @@ function menu_conversion(menu: MenuOption): MenuOpt {
                     }
                 ]
             };
+        case 'volume':
+            return {
+                width: '200px',
+                secwid: '200px',
+                data: [
+                    {
+                        name: 'Create VM',
+                        action: 'worker_vm_create_from_volume'
+                    }
+                ]
+            };
         case 'vm_worker':
             return {
                 width: '200px',

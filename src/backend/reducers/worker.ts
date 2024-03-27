@@ -12,7 +12,7 @@ import {
     StartThinkmayOnVM,
     StartVirtdaemon
 } from './fetch/local';
-import { BuilderHelper, GetPermanentCache, SetPermanentCache } from './helper';
+import { BuilderHelper } from './helper';
 
 type WorkerType = {
     data: any;
@@ -114,6 +114,17 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             await StartVirtdaemon(computer);
+            appDispatch(fetch_local_worker(computer.address));
+        }
+    ),
+    worker_vm_create_from_volume: createAsyncThunk(
+        'worker_vm_create_from_volume',
+        async (input: string, { getState }): Promise<any> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+            const computer: Computer = node.findParent<Computer>(input,'host_worker').info;
+            if (computer == undefined) throw new Error('invalid tree');
+
+            await StartVirtdaemon(computer,input);
             appDispatch(fetch_local_worker(computer.address));
         }
     ),
