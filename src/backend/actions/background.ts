@@ -2,22 +2,16 @@ import {
     RootState,
     appDispatch,
     check_worker,
-    fetch_app,
-    fetch_message,
-    fetch_store,
     fetch_user,
     have_focus,
-    load_setting,
     loose_focus,
     ping_session,
     setting_theme,
     sidepane_panethem,
     store,
     sync,
-    update_available_cluster,
     wall_set
 } from '../reducers';
-import { HasAvailableCluster } from '../reducers/fetch';
 import { client } from '../reducers/remote';
 
 const loadSettings = async () => {
@@ -41,16 +35,11 @@ const loadSettings = async () => {
 export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
-export const fetchApp = async () => {
-};
-export const fetchStore = async () => {
-};
-export const fetchSetting = async () => {
-};
-export const available_cluster = async () => {
-};
-const fetchMessage = async () => {
-};
+export const fetchApp = async () => {};
+export const fetchStore = async () => {};
+export const fetchSetting = async () => {};
+export const available_cluster = async () => {};
+const fetchMessage = async () => {};
 
 let old_clipboard = '';
 const handleClipboard = async () => {
@@ -69,7 +58,6 @@ const handleClipboard = async () => {
             appDispatch(loose_focus());
     }
 };
-
 
 export const preload = async () => {
     await Promise.all([loadSettings(), fetchUser(), fetchMessage()]);

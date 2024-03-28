@@ -107,13 +107,11 @@ export const sidepaneAsync = {
     fetch_message: createAsyncThunk(
         'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
-
-
             // TODO
             // return await CacheRequest('message', 30, async () => {
             // });
 
-            return []
+            return [];
         }
     )
 };

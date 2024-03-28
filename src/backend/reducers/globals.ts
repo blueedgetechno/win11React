@@ -182,7 +182,6 @@ const initialState = {
     translation: {} as TranslationResult
 };
 
-
 export const globalSlice = createSlice({
     name: 'global',
     initialState,
@@ -199,5 +198,5 @@ export const globalSlice = createSlice({
         update_available_cluster: (state, action: PayloadAction<boolean>) => {
             state.service_available = action.payload;
         }
-    },
+    }
 });

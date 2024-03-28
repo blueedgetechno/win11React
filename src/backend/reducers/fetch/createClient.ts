@@ -16,5 +16,4 @@ export enum CAUSE {
     INVALID_REF
 }
 
-
 export const pb = new PocketBase('https://supabase.thinkmay.net');

@@ -140,7 +140,7 @@ export const PaymentApp = () => {
                                                         <div>
                                                             <div className="flex items-end">
                                                                 {sub.title ==
-                                                                    'Enterprise' ? (
+                                                                'Enterprise' ? (
                                                                     <p className="mt-2 gradient-text-500 pb-1 text-5xl">
                                                                         Contact
                                                                         Us
@@ -164,12 +164,12 @@ export const PaymentApp = () => {
                                                             <p className="-mt-2">
                                                                 <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
                                                                     {sub.title ==
-                                                                        'Enterprise'
+                                                                    'Enterprise'
                                                                         ? 'charge based on number of account'
                                                                         : sub.title ==
                                                                             'one year plan'
-                                                                            ? `Unlimited remote usage`
-                                                                            : `Limit of ${sub.total_time} hours`}
+                                                                          ? `Unlimited remote usage`
+                                                                          : `Limit of ${sub.total_time} hours`}
                                                                 </span>
                                                             </p>
                                                         </div>
@@ -232,7 +232,7 @@ export const PaymentApp = () => {
                                                     >
                                                         <span className="truncate">
                                                             {sub.title ==
-                                                                'Enterprise'
+                                                            'Enterprise'
                                                                 ? 'Contact Us'
                                                                 : 'Get Started'}
                                                         </span>
@@ -289,10 +289,10 @@ const Payment = ({ onClose, price }) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowLeft'
-                    ? prevPage()
-                    : e.key == 'ArrowRight'
-                        ? nextPage()
-                        : null;
+                  ? prevPage()
+                  : e.key == 'ArrowRight'
+                    ? nextPage()
+                    : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);

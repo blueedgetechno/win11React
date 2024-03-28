@@ -55,7 +55,7 @@ export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const { update_available_cluster, update_language } =
     globalSlice.actions;
-export const { user_delete,user_update } = userSlice.actions;
+export const { user_delete, user_update } = userSlice.actions;
 export const { wall_next, wall_set, wall_lock, wall_unlock } =
     wallSlice.actions;
 export const { task_audo, task_hide, task_show, task_toggle } =

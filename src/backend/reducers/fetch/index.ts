@@ -5,11 +5,9 @@ export const DownloadApplication = async (
     safe: string
 ) => {};
 
-export const StartApplication = async (storage_id: string) => {
-};
+export const StartApplication = async (storage_id: string) => {};
 
-export const DeleteApplication = async (storage_id: string) => {
-};
+export const DeleteApplication = async (storage_id: string) => {};
 
 export const StopApplication = async (storage_id: string) => {
     // TODO
@@ -28,7 +26,7 @@ export async function GetUserSetting(account_id: string): Promise<UserSetting> {
     return {
         bitrate: 100,
         framerate: 100,
-        old_version: false,
+        old_version: false
     };
 }
 
@@ -40,5 +38,4 @@ interface UserSettingUpdate {
 }
 export async function UpdateUserSetting(
     params: UserSettingUpdate
-): Promise<void> {
-}
+): Promise<void> {}
