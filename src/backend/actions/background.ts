@@ -38,25 +38,18 @@ const loadSettings = async () => {
     appDispatch(wall_set(thm == 'light' ? 0 : 1));
 };
 
-export const fetchApp = async () => {
-    await appDispatch(fetch_app());
-};
-
-export const fetchStore = async () => {
-    await appDispatch(fetch_store());
-};
-
 export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
-export const fetchSetting = async () => {
-    await appDispatch(load_setting());
+export const fetchApp = async () => {
 };
-
+export const fetchStore = async () => {
+};
+export const fetchSetting = async () => {
+};
 export const available_cluster = async () => {
-    const availability = await HasAvailableCluster();
-    if (store.getState().globals.service_available != availability)
-        appDispatch(update_available_cluster(availability));
+};
+const fetchMessage = async () => {
 };
 
 let old_clipboard = '';
@@ -77,12 +70,9 @@ const handleClipboard = async () => {
     }
 };
 
-const fetchMessage = async () => {
-    await appDispatch(fetch_message());
-};
 
 export const preload = async () => {
-    await Promise.all([fetchUser(), fetchMessage()]);
+    await Promise.all([loadSettings(), fetchUser(), fetchMessage()]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);

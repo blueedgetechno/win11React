@@ -1,3 +1,4 @@
+import PocketBase from 'pocketbase';
 
 export enum CAUSE {
     UNKNOWN,
@@ -14,3 +15,6 @@ export enum CAUSE {
 
     INVALID_REF
 }
+
+
+export const pb = new PocketBase('https://supabase.thinkmay.net');

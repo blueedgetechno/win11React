@@ -3,7 +3,7 @@ import * as actions from '.';
 import * as Actions from '../actions/index.js';
 import { appSlice, appsAsync } from './apps';
 import { deskSlice } from './desktop';
-import { globalSlice, storeAsync } from './globals';
+import { globalSlice } from './globals';
 import { menusSlice } from './menu';
 import { modalSlice as popupSlice } from './modal';
 import { remoteAsync, remoteSlice } from './remote.js';
@@ -55,7 +55,7 @@ export const appDispatch = store.dispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const { update_available_cluster, update_language } =
     globalSlice.actions;
-export const { user_delete } = userSlice.actions;
+export const { user_delete,user_update } = userSlice.actions;
 export const { wall_next, wall_set, wall_lock, wall_unlock } =
     wallSlice.actions;
 export const { task_audo, task_hide, task_show, task_toggle } =
@@ -142,7 +142,6 @@ export const {
     vm_session_access,
     vm_session_close
 } = workerAsync;
-export const { fetch_store } = storeAsync;
 export const { fetch_user } = userAsync;
 export const {
     ping_session,

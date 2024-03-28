@@ -13,9 +13,11 @@ import {
     setting_theme,
     sidepane_panethem,
     store,
+    user_update,
     wall_set
 } from '../reducers/index';
 import { fetchApp } from './background';
+import { pb } from '../reducers/fetch/createClient';
 
 export const refresh = async () => {
     appDispatch(desk_hide());
@@ -149,86 +151,13 @@ export const dispatchOutSide = (action: string, payload: any) => {
 };
 
 export const loginWithEmail = async (email: string, password: string) => {
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //     email: email,
-    //     password: password
-    // });
 };
 
 export const signUpWithEmail = async (email: string, password: string) => {
-    // const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-    // const { data, error } = await supabase.auth.signUp({
-    //     email: email,
-    //     password: password,
-    //     options: {
-    //         emailRedirectTo: redirectTo
-    //     }
-    // });
 };
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
-    // localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
-    // const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-    // const { error } = await supabase.auth.signInWithOAuth({
-    //     provider: provider,
-    //     options: {
-    //         redirectTo,
-    //         queryParams:
-    //             provider == 'google'
-    //                 ? {
-    //                       access_type: 'offline'
-    //                       // prompt: 'consent'
-    //                   }
-    //                 : undefined
-    //     }
-    // });
-    // if (error) {
-    //     throw error;
-    // }
+    const {record:{id}} = await pb.collection('users').authWithOAuth2({ provider: 'google' });
+    const record = await pb.collection('users').getOne(id)
+    appDispatch(user_update(record))
 };
-
-export function LoginAndDemo(provider: 'google' | 'facebook' | 'discord') {
-    localStorage.setItem('THINKMAY_DEMO', 'TRUE');
-    login(provider);
-}
-export function FirstTime(): boolean {
-    return (
-        localStorage.getItem('THINKMAY_NEW_USER') != 'FALSE' &&
-        !window.location.href.includes('localhost')
-    );
-}
-export function RequestDemo(): boolean {
-    const result = localStorage.getItem('THINKMAY_DEMO') == 'TRUE';
-    return result;
-}
-export function CloseDemo() {
-    localStorage.removeItem('THINKMAY_DEMO');
-}
-
-export async function focusRegion(element_id: string, content: string) {
-    appDispatch(
-        popup_open({
-            type: 'guidance',
-            data: { content }
-        })
-    );
-
-    const overlay = document.getElementById('brightoverlay');
-    const element = document.getElementById(element_id);
-    if (!element) return;
-
-    const { top, left, bottom, right } = element.getBoundingClientRect();
-    const x =
-        ((top + bottom) / (2 * document.documentElement.clientHeight)) * 100;
-    const y =
-        ((left + right) / (2 * document.documentElement.clientWidth)) * 100;
-    const css = `radial-gradient(circle at ${Math.round(y)}% ${Math.round(
-        x
-    )}%, rgba(0, 0, 0, 0), black 30%)`;
-    overlay.style.background = css;
-
-    while (store.getState().popup.data_stack.length > 0)
-        await new Promise((r) => setTimeout(r, 100));
-
-    overlay.style.background = '';
-}

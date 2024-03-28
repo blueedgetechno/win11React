@@ -178,32 +178,10 @@ const initialState = {
         ]
     ],
 
-    vendors: [],
-
-    games: [] as Store[],
     service_available: false,
     translation: {} as TranslationResult
 };
 
-export type Store = {
-    id: string;
-    name: string;
-    icon: string;
-    type: 'APP' | 'GAME';
-    description: string;
-    screenshoots: string[];
-    feature: string;
-    steam_off: null | 'true';
-    volume_ids: string[];
-    volume_class?: 'LA' | 'HA';
-};
-
-export const storeAsync = {
-    fetch_store: createAsyncThunk(
-        'fetch_store',
-        async (): Promise<Store[]> => []
-    )
-};
 
 export const globalSlice = createSlice({
     name: 'global',
@@ -222,12 +200,4 @@ export const globalSlice = createSlice({
             state.service_available = action.payload;
         }
     },
-    extraReducers: (builder) => {
-        BuilderHelper(builder, {
-            fetch: storeAsync.fetch_store,
-            hander: (state, action) => {
-                state.games = action.payload;
-            }
-        });
-    }
 });
