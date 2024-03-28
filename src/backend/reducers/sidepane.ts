@@ -1,7 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { appDispatch, render_message, store, useAppSelector } from '.';
-import { supabase } from './fetch/createClient';
-import { BuilderHelper, CacheRequest } from './helper';
+import { appDispatch, render_message, store } from '.';
+import { BuilderHelper } from './helper';
 import { Contents } from './locales';
 
 export type Notification = {
@@ -94,11 +93,7 @@ export const sidepaneAsync = {
         async (input: Message, { getState }): Promise<void> => {
             const email = store.getState().user.email;
             const user_id = store.getState().user.id;
-            await supabase.from('generic_events').insert({
-                type: 'MESSAGE',
-                name: `message from user`,
-                value: { user_id, ...input }
-            });
+            // TODO
         }
     ),
     handle_message: async (payload) => {
@@ -112,40 +107,13 @@ export const sidepaneAsync = {
     fetch_message: createAsyncThunk(
         'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
-            supabase
-                .channel('schema-message-changes')
-                .on(
-                    'postgres_changes',
-                    {
-                        event: 'INSERT',
-                        schema: 'public',
-                        filter: 'type=eq.MESSAGE',
-                        table: 'generic_events'
-                    },
-                    sidepaneAsync.handle_message
-                )
-                .subscribe();
 
-            return await CacheRequest('message', 30, async () => {
-                const { data, error } = await supabase
-                    .from('generic_events')
-                    .select('timestamp,value,name')
-                    .order('timestamp', { ascending: false })
-                    .eq('type', 'MESSAGE')
-                    .limit(10);
 
-                if (error) throw error;
+            // TODO
+            // return await CacheRequest('message', 30, async () => {
+            // });
 
-                return data
-                    .sort(
-                        (a, b) =>
-                            new Date(b.timestamp).getTime() -
-                            new Date(a.timestamp).getTime()
-                    )
-                    .map((x) => {
-                        return { ...JSON.parse(x.value), name: x.name };
-                    });
-            });
+            return []
         }
     )
 };

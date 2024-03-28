@@ -19,8 +19,8 @@ import {
 } from '../../../src-tauri/core/utils/log';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
-import { CAUSE, supabase } from './fetch/createClient';
-import { BuilderHelper, SetPermanentCache } from './helper';
+import { CAUSE } from './fetch/createClient';
+import { BuilderHelper } from './helper';
 
 const size = () =>
     client != null
@@ -217,45 +217,7 @@ export const remoteAsync = {
         else if (client == null) return;
         else if (!client.ready()) return;
 
-        const session_id = store.getState().remote.auth?.id;
-        const { data, error } = await supabase.rpc(`user_session_info`, {
-            session_id
-        });
-        const { data: dat, error: err } = await supabase.rpc(
-            `fetch_worker_status`,
-            { session_id }
-        );
-        if (error) return;
-        if (err) return;
-
-        const peers = data.map((x) => {
-            return {
-                email: x.email,
-                start_at: Date.parse(x.start_at),
-                last_check: Date.parse(x.last_check)
-            };
-        });
-
-        if (peers.length != store.getState().remote.peers.length)
-            appDispatch(remoteSlice.actions.update_peers(peers));
-
-        const result = dat.at(0);
-        if (result == undefined) return;
-        else if (!result.is_ping_worker_account) {
-            appDispatch(
-                popup_open({
-                    type: 'complete',
-                    data: {
-                        success: false,
-                        content: 'remote PC is not active'
-                    }
-                })
-            );
-
-            appDispatch(close_remote());
-            await sleep(3000);
-            appDispatch(popup_close());
-        }
+        // TODO
     },
     ping_session: async () => {
         if (!store.getState().remote.active) return;
@@ -282,11 +244,7 @@ export const remoteAsync = {
             appDispatch(popup_close());
         }
 
-        const session_id = store.getState().remote.auth?.id;
-        await supabase.rpc(`ping_session`, { session_id });
         // TODO
-        // await appDispatch(load_setting());
-        // await appDispatch(cache_setting());
     },
     sync: async () => {
         if (!store.getState().remote.active) return;
@@ -305,49 +263,11 @@ export const remoteAsync = {
     cache_setting: createAsyncThunk(
         'cache_setting',
         async (_: void, { getState }) => {
-            const { bitrate, framerate, old_version } = (
-                getState() as RootState
-            ).remote;
-            const data = { bitrate, framerate, old_version };
-
-            await SetPermanentCache('setting', data);
-            const {
-                data: {
-                    session: {
-                        user: { id }
-                    }
-                },
-                error
-            } = await supabase.auth.getSession();
-            if (error || id == undefined) return;
-            await supabase.rpc('update_user_setting', {
-                user_id: id,
-                bitrate,
-                framerate,
-                old_version
-            });
+            // TODO
         }
     ),
     load_setting: createAsyncThunk('load_setting', async (_: void) => {
-        const {
-            data: {
-                session: {
-                    user: { id }
-                }
-            },
-            error
-        } = await supabase.auth.getSession();
-        if (error || id == undefined) return initialState;
-
-        {
-            const { data, error } = await supabase.rpc('get_user_setting', {
-                user_id: id
-            });
-
-            if (error) throw error;
-            else if (data.length == 0) return initialState;
-            return data[0];
-        }
+        // TODO
     }),
     toggle_remote_async: createAsyncThunk(
         'toggle_remote_async',

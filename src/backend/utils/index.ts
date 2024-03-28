@@ -38,12 +38,6 @@ const apps: AppData[] = [
         payload: 'edge'
     },
     {
-        name: 'Store',
-        id: 'store',
-        action: 'apps/app_toggle',
-        payload: 'store'
-    },
-    {
         name: 'Payment',
         id: 'payment',
         action: 'apps/app_toggle',

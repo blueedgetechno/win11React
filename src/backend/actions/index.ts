@@ -1,5 +1,4 @@
 import 'sweetalert2/src/sweetalert2.scss';
-import { supabase } from '../reducers/fetch/createClient';
 import '../reducers/index';
 import {
     appDispatch,
@@ -150,42 +149,42 @@ export const dispatchOutSide = (action: string, payload: any) => {
 };
 
 export const loginWithEmail = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //     email: email,
+    //     password: password
+    // });
 };
 
 export const signUpWithEmail = async (email: string, password: string) => {
-    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-    const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-            emailRedirectTo: redirectTo
-        }
-    });
+    // const redirectTo = import.meta.env.VITE_REDIRECT_TO;
+    // const { data, error } = await supabase.auth.signUp({
+    //     email: email,
+    //     password: password,
+    //     options: {
+    //         emailRedirectTo: redirectTo
+    //     }
+    // });
 };
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
-    localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
-    const redirectTo = import.meta.env.VITE_REDIRECT_TO;
-    const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider,
-        options: {
-            redirectTo,
-            queryParams:
-                provider == 'google'
-                    ? {
-                          access_type: 'offline'
-                          // prompt: 'consent'
-                      }
-                    : undefined
-        }
-    });
-    if (error) {
-        throw error;
-    }
+    // localStorage.setItem('THINKMAY_NEW_USER', 'FALSE');
+    // const redirectTo = import.meta.env.VITE_REDIRECT_TO;
+    // const { error } = await supabase.auth.signInWithOAuth({
+    //     provider: provider,
+    //     options: {
+    //         redirectTo,
+    //         queryParams:
+    //             provider == 'google'
+    //                 ? {
+    //                       access_type: 'offline'
+    //                       // prompt: 'consent'
+    //                   }
+    //                 : undefined
+    //     }
+    // });
+    // if (error) {
+    //     throw error;
+    // }
 };
 
 export function LoginAndDemo(provider: 'google' | 'facebook' | 'discord') {

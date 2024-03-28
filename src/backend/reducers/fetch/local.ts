@@ -67,7 +67,10 @@ export type StartRequest = {
     vm?: Computer;
 };
 
-export async function StartVirtdaemon(computer: Computer, volume_id? : string): Promise<any> {
+export async function StartVirtdaemon(
+    computer: Computer,
+    volume_id?: string
+): Promise<any> {
     const { address } = computer;
 
     const id = crypto.randomUUID();

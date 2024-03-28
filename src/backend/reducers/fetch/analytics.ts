@@ -1,5 +1,4 @@
 import { getResolution } from '../../../../src-tauri/core/utils/platform';
-import { supabase } from './createClient';
 
 export function getOS() {
     let OSName = 'unknown';
@@ -32,11 +31,6 @@ export function getBrowser() {
     return 'unknown';
 }
 
-const sb = {
-    url: 'https://supabase.thinkmay.net',
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjk0MDE5NjAwLAogICJleHAiOiAxODUxODcyNDAwCn0.EpUhNso-BMFvAJLjYbomIddyFfN--u-zCf0Swj9Ac6E'
-};
-
 export async function ContactUS({
     email,
     content
@@ -44,11 +38,11 @@ export async function ContactUS({
     email: string;
     content: string;
 }) {
-    await supabase.from('generic_events').insert({
-        value: content,
-        name: `message from ${email}`,
-        type: 'MESSAGE'
-    });
+    // await supabase.from('generic_events').insert({
+    //     value: content,
+    //     name: `message from ${email}`,
+    //     type: 'MESSAGE'
+    // });
 }
 
 const stack = [];
@@ -81,26 +75,28 @@ export async function UserSession(email: string) {
         email: email ?? 'unknown',
         url: window.location.href
     };
-    const { data, error } = await supabase
-        .from('generic_events')
-        .insert({
-            value,
-            name: `new session ${window.location.href}`,
-            type: 'ANALYTICS'
-        })
-        .select('id');
-    if (error || data?.length == 0) return;
 
-    const session = data.at(0).id;
-    setInterval(async () => {
-        if (stack.length == current_stack_length) return;
+    // TODO
+    // const { data, error } = await supabase
+    //     .from('generic_events')
+    //     .insert({
+    //         value,
+    //         name: `new session ${window.location.href}`,
+    //         type: 'ANALYTICS'
+    //     })
+    //     .select('id');
+    // if (error || data?.length == 0) return;
 
-        value.stack = stack;
-        await supabase
-            .from('generic_events')
-            .update({ value })
-            .eq('id', session);
+    // const session = data.at(0).id;
+    // setInterval(async () => {
+    //     if (stack.length == current_stack_length) return;
 
-        current_stack_length = stack.length;
-    }, 10 * 1000);
+    //     value.stack = stack;
+    //     await supabase
+    //         .from('generic_events')
+    //         .update({ value })
+    //         .eq('id', session);
+
+    //     current_stack_length = stack.length;
+    // }, 10 * 1000);
 }

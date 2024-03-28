@@ -146,15 +146,14 @@ export function fromComputer(
         node.data.push(child);
     });
 
-
     if (node.type == 'host_worker') {
-        computer.Volumes?.forEach(x => {
+        computer.Volumes?.forEach((x) => {
             const child = new RenderNode<{}>();
             child.id = x;
             child.type = 'volume';
-            child.info = {}
+            child.info = {};
             node.data.push(child);
-        })
+        });
     }
 
     return node;

@@ -121,10 +121,13 @@ export const workerAsync = {
         'worker_vm_create_from_volume',
         async (input: string, { getState }): Promise<any> => {
             const node = new RenderNode((getState() as RootState).worker.data);
-            const computer: Computer = node.findParent<Computer>(input,'host_worker').info;
+            const computer: Computer = node.findParent<Computer>(
+                input,
+                'host_worker'
+            ).info;
             if (computer == undefined) throw new Error('invalid tree');
 
-            await StartVirtdaemon(computer,input);
+            await StartVirtdaemon(computer, input);
             appDispatch(fetch_local_worker(computer.address));
         }
     ),
