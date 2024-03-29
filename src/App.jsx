@@ -5,6 +5,7 @@ import { preload } from './backend/actions/background';
 import { afterMath } from './backend/actions/index';
 import {
     appDispatch,
+    direct_access,
     menu_show,
     pointer_lock,
     set_fullscreen,
@@ -50,8 +51,20 @@ function App() {
 
     const [loadingText, setloadingText] = useState(Contents.BOOTING);
     useEffect(() => {
+        const url = new URL(window.location.href).searchParams;
+        const ref = url.get('ref');
+        if (ref != null) {
+            appDispatch(direct_access({ ref }));
+            window.history.replaceState({}, document.title, '/' + '');
+            window.onbeforeunload = (e) => {
+                const text = 'Are you sure (｡◕‿‿◕｡)';
+                e = e || window.event;
+                if (e) e.returnValue = text;
+                return text;
+            };
+        }
+
         preload().finally(async () => {
-            console.log('Loaded');
             await new Promise((r) => setTimeout(r, 1000));
             const now = new Date().getTime();
             const timeout = () => new Date().getTime() - now > 10 * 1000;
@@ -69,46 +82,10 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const url = new URL(window.location.href).searchParams;
-        const ref = url.get('ref');
-        const app_name = url.get('page');
+        if (user.id == 'unknown') 
+            return
 
-        if (user.id != 'unknown') UserSession(user.email);
-
-        if (ref != null && user.id != 'unknown') {
-            // TODO
-            // appDispatch(direct_access({ ref, app_name }));
-            window.history.replaceState({}, document.title, '/' + '');
-            window.onbeforeunload = (e) => {
-                const text = 'Are you sure (｡◕‿‿◕｡)';
-                e = e || window.event;
-                if (e) e.returnValue = text;
-                return text;
-            };
-        } else if (ref != null && user.id == 'unknown') {
-            localStorage.setItem(
-                'reference_cache',
-                JSON.stringify({ ref, app_name })
-            );
-            window.history.replaceState({}, document.title, '/' + '');
-        } else if (ref == null && user.id != 'unknown') {
-            window.onbeforeunload = (e) => {
-                const text = 'Are you sure (｡◕‿‿◕｡)';
-                e = e || window.event;
-                if (e) e.returnValue = text;
-                return text;
-            };
-
-            try {
-                const { ref, app_name } = JSON.parse(
-                    localStorage.getItem('reference_cache')
-                );
-                // TODO
-                // if (ref != null) appDispatch(direct_access({ ref, app_name }));
-                localStorage.removeItem('reference_cache');
-                return;
-            } catch {}
-        }
+        UserSession(user.email);
     }, [user.id]);
 
     const fullscreen = async () => {

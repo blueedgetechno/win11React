@@ -102,6 +102,7 @@ export const {
 
 export const {
     remote_connect,
+    share_reference,
     toggle_remote,
     hard_reset,
     loose_focus,
@@ -115,11 +116,7 @@ export const {
     set_fullscreen,
     pointer_lock,
     homescreen,
-    relative_mouse,
-    audio_status,
-    video_status,
-    update_connection_path,
-    update_metrics
+    relative_mouse
 } = remoteSlice.actions;
 
 export const {
@@ -146,6 +143,8 @@ export const { fetch_user } = userAsync;
 export const {
     ping_session,
     sync,
+    direct_access,
+    save_reference,
     check_worker,
     load_setting,
     cache_setting,

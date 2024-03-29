@@ -31,20 +31,6 @@ export function getBrowser() {
     return 'unknown';
 }
 
-export async function ContactUS({
-    email,
-    content
-}: {
-    email: string;
-    content: string;
-}) {
-    // await supabase.from('generic_events').insert({
-    //     value: content,
-    //     name: `message from ${email}`,
-    //     type: 'MESSAGE'
-    // });
-}
-
 const stack = [];
 let current_stack_length = 0;
 export function UserEvents(content: { type: string; payload: any }) {

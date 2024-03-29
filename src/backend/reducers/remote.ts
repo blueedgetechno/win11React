@@ -2,24 +2,20 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     RootState,
     appDispatch,
-    audio_status,
     close_remote,
     hard_reset,
     popup_close,
     popup_open,
+    remote_connect,
     store,
-    toggle_remote,
-    video_status
+    toggle_remote
 } from '.';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { EventCode } from '../../../src-tauri/core/models/keys.model';
-import {
-    AddNotifier,
-    ConnectionEvent
-} from '../../../src-tauri/core/utils/log';
+import { AddNotifier } from '../../../src-tauri/core/utils/log';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
-import { CAUSE } from './fetch/createClient';
+import { CAUSE, pb } from './fetch/createClient';
 import { BuilderHelper } from './helper';
 
 const size = () =>
@@ -40,7 +36,6 @@ export const assign = (fun: () => RemoteDesktopClient) => {
     client.HandleMetrics = async (metrics) => {
         switch (metrics.type) {
             case 'VIDEO':
-                // appDispatch(update_metrics(metrics));
                 break;
             case 'FRAME_LOSS':
                 if ((store.getState() as RootState).remote.fullscreen) return;
@@ -85,25 +80,7 @@ export const ready = async () => {
     appDispatch(popup_close());
 };
 
-AddNotifier(async (message, text, source) => {
-    if (message == ConnectionEvent.WebRTCConnectionClosed)
-        source == 'audio'
-            ? appDispatch(audio_status('closed'))
-            : appDispatch(video_status('closed'));
-    if (message == ConnectionEvent.WebRTCConnectionDoneChecking)
-        source == 'audio'
-            ? appDispatch(audio_status('connected'))
-            : appDispatch(video_status('connected'));
-    if (message == ConnectionEvent.WebRTCConnectionChecking)
-        source == 'audio'
-            ? appDispatch(audio_status('connecting'))
-            : appDispatch(video_status('connecting'));
-
-    if (message == ConnectionEvent.ApplicationStarted) {
-        appDispatch(audio_status('started'));
-        appDispatch(video_status('started'));
-    }
-});
+AddNotifier(async (message, text, source) => {});
 
 type ConnectStatus =
     | 'not started'
@@ -138,7 +115,7 @@ type Data = {
     local: boolean;
 
     scancode: boolean;
-    old_version: boolean;
+    frame_drop: boolean;
 
     bitrate: number;
     prev_bitrate: number;
@@ -146,16 +123,8 @@ type Data = {
     prev_framerate: number;
     prev_size: number;
 
-    frame_drop?: boolean;
-
     auth?: AuthSessionResp;
-    metrics?: Metric;
-    peers: { email: string; last_check: number; start_at: number }[];
-    connection?: {
-        audio: ConnectStatus;
-        video: ConnectStatus;
-        paths: any[];
-    };
+    ref?: string;
 };
 
 const initialState: Data = {
@@ -166,14 +135,13 @@ const initialState: Data = {
     fullscreen: false,
     pointer_lock: false,
     relative_mouse: false,
-    old_version: isMobile(),
 
+    frame_drop: false,
     bitrate: 0,
     prev_bitrate: 0,
     framerate: 0,
     prev_framerate: 0,
-    prev_size: 0,
-    peers: []
+    prev_size: 0
 };
 
 export function WindowD() {
@@ -260,6 +228,28 @@ export const remoteAsync = {
         )
             appDispatch(remoteSlice.actions.internal_sync());
     },
+    direct_access: createAsyncThunk(
+        'direct_access',
+        async ({ ref }: { ref: string }) => {
+            const resultList = await pb
+                .collection('reference')
+                .getFirstListItem(`token = "${ref}"`);
+
+            appDispatch(remote_connect({ ...(resultList as any) }));
+        }
+    ),
+    save_reference: createAsyncThunk(
+        'save_reference',
+        async (info: {
+            audioUrl: string;
+            videoUrl: string;
+            rtc_config: RTCConfiguration;
+        }): Promise<string> => {
+            const token = crypto.randomUUID();
+            await pb.collection('reference').create({ ...info, token });
+            return token;
+        }
+    ),
     cache_setting: createAsyncThunk(
         'cache_setting',
         async (_: void, { getState }) => {
@@ -319,23 +309,17 @@ export const remoteSlice = createSlice({
                 }
             };
 
-            if (!state.active) {
-                state.connection = {
-                    audio: 'started',
-                    video: 'started',
-                    paths: []
-                };
-                state.metrics = {
-                    receivefps: [],
-                    decodefps: [],
-                    packetloss: [],
-                    bandwidth: [],
-                    buffer: []
-                };
-            }
-
             state.active = true;
             state.fullscreen = true;
+        },
+        share_reference: (state) => {
+            const token = state.ref;
+            console.log(token);
+            if (token == undefined) return;
+
+            navigator.clipboard.writeText(
+                `https://${window.location.host}/?ref=${token}`
+            );
         },
         loose_focus: (state) => {
             state.focus = false;
@@ -347,29 +331,13 @@ export const remoteSlice = createSlice({
         close_remote: (state) => {
             state.active = false;
             state.auth = undefined;
-            state.connection = undefined;
-            state.metrics = undefined;
             state.fullscreen = false;
             setTimeout(() => client?.Close(), 100);
         },
         toggle_remote: (state) => {
             if (!state.active) {
                 state.fullscreen = true;
-                state.connection = {
-                    audio: 'started',
-                    video: 'started',
-                    paths: []
-                };
-                state.metrics = {
-                    receivefps: [],
-                    decodefps: [],
-                    packetloss: [],
-                    bandwidth: [],
-                    buffer: []
-                };
             } else {
-                state.connection = undefined;
-                state.metrics = undefined;
                 state.fullscreen = false;
                 setTimeout(() => client?.Close(), 100);
             }
@@ -392,10 +360,6 @@ export const remoteSlice = createSlice({
         },
         homescreen: () => {
             WindowD();
-        },
-        remote_version: (state) => {
-            state.old_version = !state.old_version;
-            // setTimeout(() => appDispatch(cache_setting()), 500);
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
@@ -445,30 +409,6 @@ export const remoteSlice = createSlice({
         },
         change_bitrate: (state, action: PayloadAction<number>) => {
             state.bitrate = action.payload;
-        },
-        audio_status: (state, action: PayloadAction<ConnectStatus>) => {
-            if (state.connection != undefined)
-                state.connection.audio = action.payload;
-        },
-        video_status: (state, action: PayloadAction<ConnectStatus>) => {
-            if (state.connection != undefined)
-                state.connection.video = action.payload;
-        },
-        update_metrics: (state, action: PayloadAction<Metric>) => {
-            if (state.metrics != undefined) state.metrics = action.payload;
-        },
-        update_peers: (
-            state,
-            action: PayloadAction<
-                { email: string; last_check: number; start_at: number }[]
-            >
-        ) => {
-            if (!state.active) return;
-            state.peers = action.payload;
-        },
-        update_connection_path: (state, action: PayloadAction<any>) => {
-            if (state.connection != undefined)
-                state.connection.paths.push(action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -477,18 +417,22 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.load_setting,
                 hander: (state, action: PayloadAction<any>) => {
-                    const { bitrate, framerate, old_version } = action.payload;
+                    const { bitrate, framerate } = action.payload;
                     state.bitrate = bitrate;
                     state.framerate = framerate;
 
                     if (isMobile()) return;
-
-                    state.old_version = old_version;
                 }
             },
             {
                 fetch: remoteAsync.cache_setting,
                 hander: (state, action: PayloadAction<void>) => {}
+            },
+            {
+                fetch: remoteAsync.save_reference,
+                hander: (state, action: PayloadAction<string>) => {
+                    state.ref = action.payload;
+                }
             },
             {
                 fetch: remoteAsync.toggle_remote_async,

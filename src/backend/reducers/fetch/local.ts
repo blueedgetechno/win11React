@@ -3,7 +3,7 @@ import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
 let client: Client = null;
-getClient().then((x) => (client = x))
+getClient().then((x) => (client = x));
 async function internalFetch<T>(
     address: string,
     command: string,

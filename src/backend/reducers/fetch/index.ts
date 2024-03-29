@@ -20,13 +20,11 @@ export async function HasAvailableCluster() {
 interface UserSetting {
     bitrate: number;
     framerate: number;
-    old_version: boolean;
 }
 export async function GetUserSetting(account_id: string): Promise<UserSetting> {
     return {
         bitrate: 100,
-        framerate: 100,
-        old_version: false
+        framerate: 100
     };
 }
 
@@ -34,7 +32,6 @@ interface UserSettingUpdate {
     user_id: string;
     bitrate: number;
     framerate: number;
-    old_version: boolean;
 }
 export async function UpdateUserSetting(
     params: UserSettingUpdate

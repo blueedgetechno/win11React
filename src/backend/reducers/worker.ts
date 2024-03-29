@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { appDispatch, fetch_local_worker, remote_connect, RootState } from '.';
+import {
+    appDispatch,
+    fetch_local_worker,
+    remote_connect,
+    RootState,
+    save_reference
+} from '.';
 import { fromComputer, RenderNode } from '../utils/tree';
 import {
     CloseSession,
@@ -63,6 +69,7 @@ export const workerAsync = {
             const result = await StartThinkmay(computer);
             appDispatch(fetch_local_worker(computer.address));
             appDispatch(remote_connect(result));
+            await appDispatch(save_reference(result));
         }
     ),
     worker_session_access: createAsyncThunk(
@@ -81,6 +88,7 @@ export const workerAsync = {
 
             const result = ParseRequest(computer, session);
             appDispatch(remote_connect(result));
+            await appDispatch(save_reference(result));
         }
     ),
     worker_session_close: createAsyncThunk(
@@ -107,7 +115,7 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             await StartVirtdaemon(computer);
-            appDispatch(fetch_local_worker(computer.address));
+            await appDispatch(fetch_local_worker(computer.address));
         }
     ),
     worker_vm_create_from_volume: createAsyncThunk(
@@ -121,7 +129,7 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             await StartVirtdaemon(computer, input);
-            appDispatch(fetch_local_worker(computer.address));
+            await appDispatch(fetch_local_worker(computer.address));
         }
     ),
     vm_session_create: createAsyncThunk(
@@ -140,7 +148,8 @@ export const workerAsync = {
 
             const result = await StartThinkmayOnVM(host.info, vm_session.id);
             appDispatch(remote_connect(result));
-            appDispatch(fetch_local_worker(host.info.address));
+            await appDispatch(fetch_local_worker(host.info.address));
+            await appDispatch(save_reference(result));
         }
     ),
     vm_session_access: createAsyncThunk(
@@ -164,6 +173,7 @@ export const workerAsync = {
                 target: vm_session_id
             });
             appDispatch(remote_connect(result));
+            await appDispatch(save_reference(result));
         }
     ),
     vm_session_close: createAsyncThunk(

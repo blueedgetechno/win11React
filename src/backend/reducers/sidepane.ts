@@ -69,8 +69,8 @@ const initialState: Data = {
             ui: true,
             src: 'FaExternalLinkAlt',
             name: [Contents.EXTERNAL_TAB],
-            state: 'old_version',
-            action: 'remote/remote_version'
+            state: 'active',
+            action: 'remote/share_reference'
         },
         {
             ui: true,
