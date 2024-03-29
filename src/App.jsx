@@ -82,8 +82,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if (user.id == 'unknown') 
-            return
+        if (user.id == 'unknown') return;
 
         UserSession(user.email);
     }, [user.id]);

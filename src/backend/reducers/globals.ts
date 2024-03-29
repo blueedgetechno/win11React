@@ -194,9 +194,6 @@ export const globalSlice = createSlice({
                     state.translation[key] = val;
                 });
             });
-        },
-        update_available_cluster: (state, action: PayloadAction<boolean>) => {
-            state.service_available = action.payload;
         }
     }
 });

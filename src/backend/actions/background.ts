@@ -33,16 +33,14 @@ const loadSettings = async () => {
     appDispatch(wall_set(thm == 'light' ? 0 : 1));
 };
 
-export const fetchUser = async () => {
+const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
 export const fetchApp = async () => {
     await appDispatch(worker_refresh());
 };
 const fetchMessage = async () => {};
-
-export const fetchSetting = async () => {};
-export const available_cluster = async () => {};
+const fetchSetting = async () => {};
 
 let old_clipboard = '';
 const handleClipboard = async () => {
@@ -63,12 +61,7 @@ const handleClipboard = async () => {
 };
 
 export const preload = async () => {
-    await Promise.all([
-        loadSettings(),
-        fetchUser(),
-        fetchApp(),
-        fetchMessage()
-    ]);
+    await Promise.all([loadSettings(), fetchUser(), fetchApp()]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);

@@ -62,13 +62,13 @@ const Taskbar = () => {
     }, []);
 
     const [play] = useSound(ringSound, { volume: 0.1 });
-    const availableCluster = useAppSelector(
-        (state) => state.globals.service_available
+    const available = useAppSelector(
+        (state) => state.worker.data?.data?.at(0)?.info?.GPUs?.length > 0
     );
 
     useEffect(() => {
-        availableCluster ? play() : null;
-    }, [availableCluster]);
+        available ? play() : null;
+    }, [available]);
 
     return (
         <div
@@ -140,7 +140,7 @@ const Taskbar = () => {
             )}
             <div className="taskright" data-remote={remote.active}>
                 <>
-                    {availableCluster ? (
+                    {available ? (
                         <div className="pointer green"></div>
                     ) : (
                         <div className="pointer orange"></div>
