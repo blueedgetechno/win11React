@@ -36,15 +36,8 @@ const initialState: WorkerType = {
 export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
-        async (_: void, { getState }): Promise<void> => {
-            // const old_cache = await GetPermanentCache('local_connections')
-            // const node = new RenderNode(old_cache);
-            // await node.iterateAsync(async (x) => {
-            //     if (x.type == 'local_worker' && x.info.PrivateIP != undefined)
-            //         await appDispatch(fetch_local_worker(x.info.));
-            // });
-            // const new_cache = (getState() as RootState).worker.data
-            // await SetPermanentCache('local_connections',new_cache)
+        async (): Promise<void> => {
+            await appDispatch(fetch_local_worker(window.location.host));
         }
     ),
     fetch_local_worker: createAsyncThunk(

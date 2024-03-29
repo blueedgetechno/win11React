@@ -1,9 +1,59 @@
 import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/http';
 import { Child, Command } from '@tauri-apps/api/shell';
 
-let client: Client = null;
-getClient().then((x) => (client = x));
 export const WS_PORT = 60000;
+let client: Client = null;
+getClient().then((x) => (client = x))
+async function internalFetch<T>(
+    address: string,
+    command: string,
+    body?: any
+): Promise<T | Error> {
+    if (client != null) {
+        if (command == 'info') {
+            const { data, ok } = await client.get<T>(
+                `http://${address}:${WS_PORT}/info`,
+                {
+                    timeout: { secs: 3, nanos: 0 },
+                    responseType: ResponseType.JSON
+                }
+            );
+
+            if (!ok) return new Error('fail to request');
+
+            return data;
+        } else {
+            const { data, ok } = await client.post<T>(
+                `http://${address}:${WS_PORT}/${command}`,
+                Body.json(body),
+                {
+                    responseType: ResponseType.JSON
+                }
+            );
+
+            if (!ok) return new Error('fail to request');
+
+            return data;
+        }
+    } else {
+        if (command == 'info') {
+            const resp = await fetch(`https://${address}/info`);
+
+            if (!resp.ok) return new Error('fail to request');
+
+            return await resp.json();
+        } else {
+            const resp = await fetch(`https://${address}/${command}`, {
+                method: 'POST',
+                body: JSON.stringify(body)
+            });
+
+            if (!resp.ok) return new Error('fail to request');
+
+            return await resp.json();
+        }
+    }
+}
 
 export type Computer = {
     address?: string; // private
@@ -22,18 +72,7 @@ export type Computer = {
 };
 
 export async function GetInfo(ip: string): Promise<Computer | Error> {
-    try {
-        const { data, ok } = await client.get(`http://${ip}:${WS_PORT}/info`, {
-            timeout: { secs: 1, nanos: 0 },
-            responseType: ResponseType.JSON
-        });
-
-        if (!ok) return new Error(`error ${JSON.stringify(data)}`);
-
-        return data as any;
-    } catch (e) {
-        return new Error(e);
-    }
+    return await internalFetch<Computer>(ip, 'info');
 }
 
 export type StartRequest = {
@@ -84,15 +123,8 @@ export async function StartVirtdaemon(
         }
     };
 
-    const resp = await client.post(
-        `http://${address}:${WS_PORT}/new`,
-        Body.json(req),
-        {
-            responseType: ResponseType.Text
-        }
-    );
-
-    if (!resp.ok) throw new Error(resp.data as string);
+    const resp = await internalFetch(address, 'new', req);
+    if (resp instanceof Error) return resp;
 
     return;
 }
@@ -138,23 +170,18 @@ export async function StartThinkmayOnVM(
         display
     };
 
-    const resp = await client.post(
-        `http://${address}:${WS_PORT}/new`,
-        Body.json(req),
-        {
-            responseType: ResponseType.JSON
-        }
-    );
-
-    if (!resp.ok) throw new Error(resp.data as string);
+    const resp = await internalFetch<StartRequest>(address, 'new', req);
+    if (resp instanceof Error) throw resp;
 
     return {
-        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            (resp.data as any).thinkmay.audioToken
-        }&target=${target}`,
-        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            (resp.data as any).thinkmay.videoToken
-        }&target=${target}`,
+        audioUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`,
+        videoUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`,
         rtc_config: {
             iceTransportPolicy: 'relay',
             iceServers: [
@@ -201,23 +228,18 @@ export async function StartThinkmay(computer: Computer): Promise<Session> {
         display
     };
 
-    const resp = await client.post(
-        `http://${address}:${WS_PORT}/new`,
-        Body.json(req),
-        {
-            responseType: ResponseType.JSON
-        }
-    );
-
-    if (!resp.ok) throw new Error(resp.data as string);
+    const resp = await internalFetch<StartRequest>(address, 'new', req);
+    if (resp instanceof Error) throw resp;
 
     return {
-        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            (resp.data as any).thinkmay.audioToken
-        }`,
-        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${
-            (resp.data as any).thinkmay.videoToken
-        }`,
+        audioUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}`,
+        videoUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}`,
         rtc_config: {
             iceTransportPolicy: 'all',
             iceServers: [
@@ -241,8 +263,14 @@ export function ParseRequest(
     const { turn, thinkmay } = session;
 
     return {
-        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
-        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
+        audioUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${thinkmay.audioToken}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
+        videoUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${thinkmay.videoToken}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
         rtc_config: {
             iceTransportPolicy: 'all',
             iceServers: [
@@ -267,8 +295,14 @@ export function ParseVMRequest(
     const { turn, thinkmay, target } = session;
 
     return {
-        audioUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
-        videoUrl: `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
+        audioUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${thinkmay.audioToken}&target=${target}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
+        videoUrl:
+            client == null
+                ? `https://${address}/handshake/client?token=${thinkmay.videoToken}&target=${target}`
+                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
         rtc_config: {
             iceTransportPolicy: 'relay', // preferred as VM often under double NAT
             iceServers: [
@@ -317,16 +351,8 @@ export async function StartMoonlight(
         display
     };
 
-    const resp = await client.post(
-        `http://${address}:${WS_PORT}/new`,
-        Body.json(req),
-        {
-            responseType: ResponseType.JSON
-        }
-    );
-
-    if (!resp.ok) throw new Error(resp.data as string);
-    else console.log('/new request return ' + resp.data);
+    const resp = await internalFetch<StartRequest>(address, 'new', req);
+    if (resp instanceof Error) throw resp;
 
     const { username, password } = sunshine;
     const cmds = [
@@ -362,15 +388,8 @@ export async function CloseSession(
     computer: Computer,
     req: StartRequest
 ): Promise<Error | 'SUCCESS'> {
-    await client.post(
-        `http://${computer.address}:${WS_PORT}/closed`,
-        Body.json(req),
-        {
-            responseType: ResponseType.Text
-        }
-    );
-
-    return 'SUCCESS';
+    const resp = await internalFetch(computer.address, 'closed', req);
+    return resp instanceof Error ? resp : 'SUCCESS';
 }
 
 function getRandomInt(min: number, max: number) {

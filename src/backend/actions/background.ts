@@ -10,7 +10,8 @@ import {
     sidepane_panethem,
     store,
     sync,
-    wall_set
+    wall_set,
+    worker_refresh
 } from '../reducers';
 import { client } from '../reducers/remote';
 
@@ -35,11 +36,13 @@ const loadSettings = async () => {
 export const fetchUser = async () => {
     await appDispatch(fetch_user());
 };
-export const fetchApp = async () => {};
-export const fetchStore = async () => {};
+export const fetchApp = async () => {
+    await appDispatch(worker_refresh());
+};
+const fetchMessage = async () => {};
+
 export const fetchSetting = async () => {};
 export const available_cluster = async () => {};
-const fetchMessage = async () => {};
 
 let old_clipboard = '';
 const handleClipboard = async () => {
@@ -60,7 +63,12 @@ const handleClipboard = async () => {
 };
 
 export const preload = async () => {
-    await Promise.all([loadSettings(), fetchUser(), fetchMessage()]);
+    await Promise.all([
+        loadSettings(),
+        fetchUser(),
+        fetchApp(),
+        fetchMessage()
+    ]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);
