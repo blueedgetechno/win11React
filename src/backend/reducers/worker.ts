@@ -4,9 +4,12 @@ import {
     fetch_local_worker,
     remote_connect,
     RootState,
-    save_reference
+    save_reference,
+    vm_session_create,
+    worker_vm_create_from_volume
 } from '.';
 import { fromComputer, RenderNode } from '../utils/tree';
+import { pb } from './fetch/createClient';
 import {
     CloseSession,
     Computer,
@@ -44,6 +47,34 @@ export const workerAsync = {
         'worker_refresh',
         async (): Promise<void> => {
             await appDispatch(fetch_local_worker(window.location.host));
+        }
+    ),
+    claim_volume: createAsyncThunk(
+        'claim_volume',
+        async (_: void, { getState }): Promise<Computer> => {
+            const node = new RenderNode((getState() as RootState).worker.data);
+
+            const all = await pb.collection('volumes').getFullList<{
+                local_id: string;
+            }>();
+
+            const volume_id = all.at(0)?.local_id;
+            let result: RenderNode<Computer> | undefined = undefined;
+            node.iterate((x) => {
+                if (
+                    result == undefined &&
+                    (x.info as Computer)?.Volumes?.includes(volume_id)
+                )
+                    result = x;
+            });
+
+            if (result == undefined) throw new Error('worker not found');
+            else if (result.type == 'host_worker')
+                await appDispatch(worker_vm_create_from_volume(volume_id));
+            else if (result.type == 'vm_worker')
+                await appDispatch(vm_session_create(volume_id));
+
+            return result.info;
         }
     ),
     fetch_local_worker: createAsyncThunk(

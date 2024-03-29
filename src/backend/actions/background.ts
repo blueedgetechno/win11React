@@ -2,6 +2,7 @@ import {
     RootState,
     appDispatch,
     check_worker,
+    claim_volume,
     fetch_user,
     have_focus,
     loose_focus,
@@ -38,6 +39,7 @@ const fetchUser = async () => {
 };
 export const fetchApp = async () => {
     await appDispatch(worker_refresh());
+    await appDispatch(claim_volume());
 };
 const fetchMessage = async () => {};
 const fetchSetting = async () => {};

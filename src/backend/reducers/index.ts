@@ -20,8 +20,8 @@ import { UserEvents } from './fetch/analytics.js';
 
 const blacklist = ['framerate', 'bitrate'];
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
-    if (window.location.href.includes('localhost'))
-        console.log({ ...(action as any) });
+    // if (window.location.href.includes('localhost')) // TODO
+    console.log({ ...(action as any) });
     if (blacklist.filter((x) => (action as any).type.includes(x)).length == 0)
         UserEvents(action as any);
 
@@ -134,6 +134,7 @@ export const {
     worker_vm_create,
     worker_vm_create_from_volume,
     worker_refresh,
+    claim_volume,
     vm_session_create,
     vm_session_access,
     vm_session_close
