@@ -127,7 +127,7 @@ export function fromComputer(
 
     if (
         node.info.Hostname?.includes('ATLAS') &&
-        !node.info.PrivateIP?.includes('192.168.1.')
+        !node.info.address?.includes('192.168.1.')
     )
         node.type = 'vm_worker';
     else if (node.info.Hostname?.includes('ubuntu')) node.type = 'host_worker';
