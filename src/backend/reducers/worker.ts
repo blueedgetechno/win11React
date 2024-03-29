@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     appDispatch,
+    claim_volume,
     fetch_local_worker,
     remote_connect,
     RootState,
     save_reference,
+    vm_session_access,
     vm_session_create,
     worker_vm_create_from_volume
 } from '.';
@@ -69,10 +71,13 @@ export const workerAsync = {
             });
 
             if (result == undefined) throw new Error('worker not found');
-            else if (result.type == 'host_worker')
+            else if (result.type == 'host_worker') {
                 await appDispatch(worker_vm_create_from_volume(volume_id));
-            else if (result.type == 'vm_worker')
-                await appDispatch(vm_session_create(volume_id));
+                await appDispatch(claim_volume());
+            } else if (result.type == 'vm_worker' && result.data.length > 0)
+                await appDispatch(vm_session_access(result.data.at(0).id));
+            else if (result.type == 'vm_worker' && result.data.length == 0)
+                await appDispatch(vm_session_create(result.id));
 
             return result.info;
         }
