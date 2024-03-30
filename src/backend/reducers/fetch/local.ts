@@ -118,8 +118,8 @@ export async function StartVirtdaemon(
         vm: {
             GPUs: ['GA104 [GeForce RTX 3060 Ti Lite Hash Rate]'],
             Volumes: volume_id != undefined ? [volume_id] : [],
-            CPU: '8',
-            RAM: '8'
+            CPU: '16',
+            RAM: '16'
         }
     };
 
