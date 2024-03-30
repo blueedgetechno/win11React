@@ -48,7 +48,14 @@ export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
         async (): Promise<void> => {
-            await appDispatch(fetch_local_worker(window.location.host));
+            await appDispatch(
+                fetch_local_worker(
+                    window.location.host == 'localhost' ||
+                        window.location.host == 'tauri.localhost'
+                        ? 'supabase.thinkmay.net'
+                        : window.location.host
+                )
+            );
         }
     ),
     claim_volume: createAsyncThunk(
