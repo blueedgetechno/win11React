@@ -4,6 +4,7 @@ body {
   color: #fefeff;
   height: 100vh;
   margin: 0;
+  user-select: none;
 }
 
 #page {
@@ -92,4 +93,6 @@ h5 {
 
 a {
   color: #e1f0ff;
+  text-decoration: none;
+  border-bottom: 1px solid #fefeff;
 }
