@@ -1,6 +1,6 @@
 body {
-  font-family: Segoe UI;
-  background: #3973aa;
+  font-family: Segoe UI, sans-serif;
+  background: #0079d9;
   color: #fefeff;
   height: 100vh;
   margin: 0;
@@ -25,20 +25,24 @@ h2,
 h3,
 h4,
 h5 {
-  font-weight: normal;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   padding: 0;
   margin: 25px 0;
   margin-top: 0;
-  font-weight: 300;
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 8rem;
+  font-weight: 300;
   margin-bottom: 10px;
 }
 
 h2 {
-  font-size: 21px;
+  font-size: 29px;
+  line-height: 1.5em;
 }
 
 h4 {
