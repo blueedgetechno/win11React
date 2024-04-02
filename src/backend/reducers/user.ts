@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RecordModel } from 'pocketbase';
-import { BuilderHelper } from './helper';
 import { pb } from './fetch/createClient';
+import { BuilderHelper } from './helper';
 
 type Data = RecordModel;
 const initialState: Data = {
     id: 'unknown',
     collectionId: '',
+    email: '',
     collectionName: '',
     created: '',
     updated: ''
@@ -29,6 +30,7 @@ export const userSlice = createSlice({
             state.collectionName = action.payload.collectionName;
             state.created = action.payload.created;
             state.updated = action.payload.updated;
+            state.email = action.payload.email;
             state.expand = action.payload.expand;
         },
         user_delete: (state) => {
@@ -46,6 +48,7 @@ export const userSlice = createSlice({
                 state.created = action.payload.created;
                 state.updated = action.payload.updated;
                 state.expand = action.payload.expand;
+                state.email = action.payload.email;
             }
         });
     }
