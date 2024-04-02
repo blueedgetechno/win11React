@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "@supabase/supabase-js": "^2.41.1",
     "@tauri-apps/api": "^1.5.3",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",

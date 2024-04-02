@@ -240,7 +240,6 @@ export const workerAsync = {
             await CloseSession(computer, { ...session, target: vm_session_id });
             await appDispatch(fetch_local_worker(computer.address));
         }
-
     )
 };
 
