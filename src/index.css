@@ -276,10 +276,12 @@ a {
   background: #010001;
   color: white;
 }
-.modalOverlay{
+
+.modalOverlay {
   position: fixed;
   inset: 0px;
 }
+
 .modalContent {
   display: flex;
   flex-direction: column;
@@ -291,6 +293,7 @@ a {
   width: auto;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.6);
+  color: #f5f6f7;
   border-radius: 20px;
   outline: none;
   overflow: hidden;
