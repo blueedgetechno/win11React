@@ -283,43 +283,48 @@ export const workerSlice = createSlice({
         }
     },
     extraReducers: (build) => {
-        BuilderHelper<WorkerType, any, any>(build, {
-            fetch: workerAsync.fetch_local_worker,
-            hander: (state, action) => {
-                let target = new RenderNode<any>(state.data);
+        BuilderHelper<WorkerType, any, any>(
+            build,
+            {
+                fetch: workerAsync.fetch_local_worker,
+                hander: (state, action) => {
+                    let target = new RenderNode<any>(state.data);
 
-                const node = new RenderNode<Computer>(action.payload);
-                const overlapp = target.data.findIndex((x) => x.id == node.id);
-                if (overlapp == -1 && node.type != 'reject')
-                    target.data.push(node);
-                else if (overlapp == -1 && node.type == 'reject') return;
-                else if (node.type == 'reject')
-                    target.data = target.data.filter((v, i) => i != overlapp);
-                else target.data[overlapp] = node;
-
-                state.data = target.any();
-
-                const paths = state.cpath
-                    .split('/')
-                    .filter((x) => x.length > 0);
-                if (paths.length == 0) {
-                    state.cdata = target.data.map((x) => x.any());
-                } else {
-                    paths.forEach(
-                        (x) =>
-                        (target =
-                            new RenderNode(target).data.find(
-                                (y) => y.id == x
-                            ) ?? target)
+                    const node = new RenderNode<Computer>(action.payload);
+                    const overlapp = target.data.findIndex(
+                        (x) => x.id == node.id
                     );
-                    state.cdata = target.data.map((x) => x.any());
+                    if (overlapp == -1 && node.type != 'reject')
+                        target.data.push(node);
+                    else if (overlapp == -1 && node.type == 'reject') return;
+                    else if (node.type == 'reject')
+                        target.data = target.data.filter(
+                            (v, i) => i != overlapp
+                        );
+                    else target.data[overlapp] = node;
+
+                    state.data = target.any();
+
+                    const paths = state.cpath
+                        .split('/')
+                        .filter((x) => x.length > 0);
+                    if (paths.length == 0) {
+                        state.cdata = target.data.map((x) => x.any());
+                    } else {
+                        paths.forEach(
+                            (x) =>
+                                (target =
+                                    new RenderNode(target).data.find(
+                                        (y) => y.id == x
+                                    ) ?? target)
+                        );
+                        state.cdata = target.data.map((x) => x.any());
+                    }
                 }
-            }
-        },
+            },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => {
-                }
+                hander: (state, action) => {}
             }
         );
     }

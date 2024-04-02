@@ -1,4 +1,3 @@
-
 export const isMobile = () => {
     let check = false;
     (function (a) {
@@ -15,10 +14,9 @@ export const isMobile = () => {
     return check;
 };
 
-
 export const isDevEnv = () => {
-
-    return window.location.hostname =='localhost' 
-    || window.location.hostname =='tauri.localhost'
-
-}
+    return (
+        window.location.hostname == 'localhost' ||
+        window.location.hostname == 'tauri.localhost'
+    );
+};

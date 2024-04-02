@@ -39,7 +39,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -153,24 +153,24 @@ export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
 
-export const loginWithEmail = async (email: string, password: string) => { };
+export const loginWithEmail = async (email: string, password: string) => {};
 
-export const signUpWithEmail = async (email: string, password: string) => { };
+export const signUpWithEmail = async (email: string, password: string) => {};
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     const {
         record: { id }
-    } = await pb.collection('users').authWithOAuth2({ provider: 'google', window: null });
+    } = await pb
+        .collection('users')
+        .authWithOAuth2({ provider: 'google', window: null });
     const record = await pb.collection('users').getOne(id);
     appDispatch(user_update(record));
 };
 
-
 const getVolumeIdByEmail = async (): Promise<string> => {
-    let volumeId = ''
+    let volumeId = '';
 
-
-    const userEmail = store.getState().user.email
+    const userEmail = store.getState().user.email;
 
     const all = await pb.collection('volumes').getFullList<{
         local_id: string;
@@ -190,20 +190,16 @@ const getVolumeIdByEmail = async (): Promise<string> => {
             volumeFound = x;
     });
 
-    const host_session = node.findParent(volumeFound.id, "host_session")
-    return host_session.id ?? ''
-
-
-}
+    const host_session = node.findParent(volumeFound.id, 'host_session');
+    return host_session.id ?? '';
+};
 export const shutDownVm = async () => {
-    let volumeId = ''
+    let volumeId = '';
 
     // get volume id
-    volumeId = await getVolumeIdByEmail()
+    volumeId = await getVolumeIdByEmail();
     // call worker_ss_close
     await appDispatch(worker_session_close(volumeId));
 
-
     appDispatch(toggle_remote());
-
-}
+};
