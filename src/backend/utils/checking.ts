@@ -1,4 +1,3 @@
-import { store } from '../reducers';
 
 export const isMobile = () => {
     let check = false;
@@ -15,3 +14,11 @@ export const isMobile = () => {
     })(navigator.userAgent || navigator.vendor);
     return check;
 };
+
+
+export const isDevEnv = () => {
+
+    return window.location.hostname =='localhost' 
+    || window.location.hostname =='tauri.localhost'
+
+}
