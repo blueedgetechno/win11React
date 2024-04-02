@@ -170,7 +170,8 @@ export enum Contents {
     THINKMAY_HEADER,
     THINKMAY_DESC,
     PLAN_USAGE_TIME,
-    ADDITIONAL_TIME
+    ADDITIONAL_TIME,
+    SHUT_DOWN
 }
 
 export function language() {
@@ -857,5 +858,7 @@ export function language() {
     vn.set(Contents.PLAN_USAGE_TIME, 'Thời gian của gói');
     en.set(Contents.ADDITIONAL_TIME, 'Additional time');
     vn.set(Contents.ADDITIONAL_TIME, 'Thời gian cộng thêm');
+    en.set(Contents.SHUT_DOWN, 'Shut down');
+    vn.set(Contents.SHUT_DOWN, 'Shut down');
     return t;
 }
