@@ -240,7 +240,7 @@ export const workerAsync = {
             await CloseSession(computer, { ...session, target: vm_session_id });
             await appDispatch(fetch_local_worker(computer.address));
         }
-        
+
     )
 };
 
@@ -308,14 +308,20 @@ export const workerSlice = createSlice({
                 } else {
                     paths.forEach(
                         (x) =>
-                            (target =
-                                new RenderNode(target).data.find(
-                                    (y) => y.id == x
-                                ) ?? target)
+                        (target =
+                            new RenderNode(target).data.find(
+                                (y) => y.id == x
+                            ) ?? target)
                     );
                     state.cdata = target.data.map((x) => x.any());
                 }
             }
-        });
+        },
+            {
+                fetch: workerAsync.worker_session_close,
+                hander: (state, action) => {
+                }
+            }
+        );
     }
 });

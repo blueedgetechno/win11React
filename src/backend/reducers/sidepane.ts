@@ -78,6 +78,13 @@ const initialState: Data = {
             name: [Contents.RELATIVE_MOUSE],
             state: 'relative_mouse',
             action: 'remote/relative_mouse'
+        },
+        {
+            ui: true,
+            src: 'FaPowerOff',
+            name: [Contents.SHUT_DOWN],
+            state: 'shutdown',
+            action: 'shutDownVm'
         }
     ],
     notifications: [],
