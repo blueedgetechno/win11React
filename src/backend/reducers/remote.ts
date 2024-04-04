@@ -15,7 +15,7 @@ import { EventCode } from '../../../src-tauri/core/models/keys.model';
 import { AddNotifier } from '../../../src-tauri/core/utils/log';
 import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
-import { CAUSE, pb } from './fetch/createClient';
+import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
 
 const size = () =>
@@ -187,7 +187,7 @@ export const remoteAsync = {
 
         // TODO
     },
-    ping_session: async () => {
+    ping_session: async (session_id: number) => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
         else if (store.getState().remote.local) return;
@@ -204,12 +204,20 @@ export const remoteAsync = {
                         title: 'please move your mouse'
                     }
                 })
-            );
+            );  
 
             while (client?.hid?.last_active() > 2)
                 await new Promise((r) => setTimeout(r, 1000));
 
             appDispatch(popup_close());
+
+            const { error } = await supabase.rpc(`ping_session`, {
+                session_id
+            });
+
+            if (error) {
+                console.log('ping session error' + error.message);
+            }
         }
 
         // TODO

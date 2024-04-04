@@ -167,7 +167,7 @@ export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     appDispatch(user_update(record));
 };
 
-const getVolumeIdByEmail = async (): Promise<string> => {
+export const getVolumeIdByEmail = async (): Promise<string> => {
     let volumeId = '';
 
     const userEmail = store.getState().user.email;

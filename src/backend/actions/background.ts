@@ -1,3 +1,4 @@
+import { getVolumeIdByEmail } from '.';
 import {
     RootState,
     appDispatch,
@@ -14,6 +15,7 @@ import {
     wall_set,
     worker_refresh
 } from '../reducers';
+import { supabase } from '../reducers/fetch/createClient';
 import { client } from '../reducers/remote';
 
 const loadSettings = async () => {
@@ -65,8 +67,19 @@ const handleClipboard = async () => {
 export const preload = async () => {
     await Promise.all([loadSettings(), fetchUser(), fetchApp()]);
 
+    const volume_id = await getVolumeIdByEmail()
+
+    const { data, error } = await supabase.rpc("start_new_session", {
+        email: store.getState().user.email,
+        volume_id,
+    });
+
+    if (error) {
+        console.log("can not start new session remote");
+    }
+
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);
-    setInterval(ping_session, 10 * 1000);
+    setInterval(() => ping_session(data.at(0)), 10 * 1000);
     setInterval(handleClipboard, 100);
 };
