@@ -20,3 +20,14 @@ export const isDevEnv = () => {
         window.location.hostname == 'tauri.localhost'
     );
 };
+
+export const isAdmin = (email) => {
+
+    const listAdmin = [
+        'sieunhankiet@gmail.com',
+        'datdovan1502@gmail.com',
+        'thienvanlea1@gmail.com	'
+    ]
+
+    return (listAdmin.includes(email) ?? false)
+}

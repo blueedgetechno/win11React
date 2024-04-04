@@ -7,6 +7,7 @@ import {
     useAppSelector,
     worker_prev
 } from '../../../backend/reducers';
+import { isAdmin } from '../../../backend/utils/checking';
 import { combineText } from '../../../backend/utils/combineText';
 import { customClickDispatch } from '../../../backend/utils/dispatch';
 import { Icon, Image, ToolBar } from '../../../components/shared/general';
@@ -17,7 +18,7 @@ export const Worker = () => {
         state.apps.apps.find((x) => x.id == 'worker')
     );
     const files = useAppSelector((state) => state.worker);
-
+    const email = useAppSelector(state => state.user.email)
     const [ip, setIP] = useState('');
     const handleIPChanges = (e) => setIP(e.target.value);
     const handleEnter = () => appDispatch(fetch_local_worker(ip));
@@ -28,6 +29,8 @@ export const Worker = () => {
         setShText('');
     }, [files.cpath]);
 
+    console.log(email);
+    console.log(isAdmin(email));
     return (
         <div
             className="msfiles floatTab dpShad"
@@ -46,68 +49,74 @@ export const Worker = () => {
                 size={wnapp.size}
                 name={wnapp.name}
             />
-            <div className="windowScreen flex flex-col">
-                <Ribbon />
-                <div className="restWindow flex-grow flex flex-col">
-                    <div className="sec1">
-                        <Icon
-                            className="navIcon hvtheme"
-                            fafa="faArrowUp"
-                            width={14}
-                            click="worker/worker_prev"
-                            pr
-                        />
-                        <div className="path-bar noscroll" tabIndex="-1">
-                            <input
-                                className="path-field"
-                                type="text"
-                                value={files.cpath}
-                                onChange={() => {}}
-                            />
-                        </div>
-                        <div className="srchbar">
-                            <Icon
-                                className="searchIcon"
-                                src="search"
-                                width={12}
-                            />
-                            <input
-                                type="text"
-                                onChange={handleIPChanges}
-                                onKeyDown={(e) =>
-                                    e.key == 'Enter' ? handleEnter() : null
-                                }
-                                value={ip}
-                                placeholder="Enter worker IP"
-                            />
-                            <Icon
-                                className="navIcon hvtheme"
-                                fafa="faArrowUp"
-                                width={14}
-                                onClick={handleEnter}
-                                pr
-                            />
-                        </div>
+            {
+                isAdmin(email) ?
+                    <div className="windowScreen flex flex-col">
+                        <Ribbon />
+                        <div className="restWindow flex-grow flex flex-col">
+                            <div className="sec1">
+                                <Icon
+                                    className="navIcon hvtheme"
+                                    fafa="faArrowUp"
+                                    width={14}
+                                    click="worker/worker_prev"
+                                    pr
+                                />
+                                <div className="path-bar noscroll" tabIndex="-1">
+                                    <input
+                                        className="path-field"
+                                        type="text"
+                                        value={files.cpath}
+                                        onChange={() => { }}
+                                    />
+                                </div>
+                                <div className="srchbar">
+                                    <Icon
+                                        className="searchIcon"
+                                        src="search"
+                                        width={12}
+                                    />
+                                    <input
+                                        type="text"
+                                        onChange={handleIPChanges}
+                                        onKeyDown={(e) =>
+                                            e.key == 'Enter' ? handleEnter() : null
+                                        }
+                                        value={ip}
+                                        placeholder="Enter worker IP"
+                                    />
+                                    <Icon
+                                        className="navIcon hvtheme"
+                                        fafa="faArrowUp"
+                                        width={14}
+                                        onClick={handleEnter}
+                                        pr
+                                    />
+                                </div>
 
-                        <div className="srchbar">
-                            <Icon
-                                className="searchIcon"
-                                src="search"
-                                width={12}
-                            />
-                            <input
-                                type="text"
-                                onChange={handleSearchChange}
-                                value={searchtxt}
-                                placeholder="Search"
-                            />
+                                <div className="srchbar">
+                                    <Icon
+                                        className="searchIcon"
+                                        src="search"
+                                        width={12}
+                                    />
+                                    <input
+                                        type="text"
+                                        onChange={handleSearchChange}
+                                        value={searchtxt}
+                                        placeholder="Search"
+                                    />
+                                </div>
+                            </div>
+                            <div className="sec2">
+                                <ContentArea searchtxt={searchtxt} data={files} />
+                            </div>
                         </div>
                     </div>
-                    <div className="sec2">
-                        <ContentArea searchtxt={searchtxt} data={files} />
-                    </div>
-                </div>
-            </div>
+                    : <h1 className='m-auto'>Tính năng đang phát triển</h1>
+
+            }
+
         </div>
     );
 };
