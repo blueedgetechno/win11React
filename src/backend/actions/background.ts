@@ -4,6 +4,7 @@ import {
     appDispatch,
     check_worker,
     claim_volume,
+    fetch_message,
     fetch_user,
     have_focus,
     loose_focus,
@@ -43,7 +44,6 @@ export const fetchApp = async () => {
     await appDispatch(worker_refresh());
     await appDispatch(claim_volume());
 };
-const fetchMessage = async () => {};
 const fetchSetting = async () => {};
 
 let old_clipboard = '';
@@ -64,8 +64,17 @@ const handleClipboard = async () => {
     }
 };
 
+const fetchMessage = async () => {
+    await appDispatch(fetch_message());
+};
+
 export const preload = async () => {
-    await Promise.all([loadSettings(), fetchUser(), fetchApp()]);
+    await Promise.all([
+        loadSettings(),
+        fetchUser(),
+        fetchApp(),
+        fetchMessage()
+    ]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);

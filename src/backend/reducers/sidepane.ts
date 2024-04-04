@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { appDispatch, render_message, store } from '.';
-import { BuilderHelper } from './helper';
+import { supabase } from './fetch/createClient';
+import { BuilderHelper, CacheRequest } from './helper';
 import { Contents } from './locales';
 
 export type Notification = {
@@ -99,14 +100,17 @@ export const sidepaneAsync = {
         'push_message',
         async (input: Message, { getState }): Promise<void> => {
             const email = store.getState().user.email;
-            const user_id = store.getState().user.id;
-            // TODO
+            await supabase.from('generic_events').insert({
+                type: 'MESSAGE',
+                name: `message from user`,
+                value: { email, ...input }
+            });
         }
     ),
     handle_message: async (payload) => {
         appDispatch(
             render_message({
-                ...JSON.parse(payload.new.value),
+                ...payload.new.value,
                 name: payload.new.name
             })
         );
@@ -114,11 +118,40 @@ export const sidepaneAsync = {
     fetch_message: createAsyncThunk(
         'fetch_message',
         async (_: void, { getState }): Promise<Message[]> => {
-            // TODO
-            // return await CacheRequest('message', 30, async () => {
-            // });
+            supabase
+                .channel('schema-message-changes')
+                .on(
+                    'postgres_changes',
+                    {
+                        event: 'INSERT',
+                        schema: 'public',
+                        filter: 'type=eq.MESSAGE',
+                        table: 'generic_events'
+                    },
+                    sidepaneAsync.handle_message
+                )
+                .subscribe();
 
-            return [];
+            return await CacheRequest('message', 30, async () => {
+                const { data, error } = await supabase
+                    .from('generic_events')
+                    .select('timestamp,value,name')
+                    .order('timestamp', { ascending: false })
+                    .eq('type', 'MESSAGE')
+                    .limit(10);
+
+                if (error) throw error;
+
+                return data
+                    .sort(
+                        (a, b) =>
+                            new Date(b.timestamp).getTime() -
+                            new Date(a.timestamp).getTime()
+                    )
+                    .map((x) => {
+                        return { ...JSON.parse(x.value), name: x.name };
+                    });
+            });
         }
     )
 };
