@@ -27,7 +27,7 @@ export const StartMenu = () => {
     };
 
     const additionalTime = stats?.additional_time ?? 0;
-    const planUsageTime = stats?.plan_usage_time ?? 0;
+    const planUsageTime = stats?.plan_hour ?? 0;
     const totalTime = +planUsageTime + +additionalTime;
 
     return (
@@ -71,6 +71,12 @@ export const StartMenu = () => {
                         <div className="restWindow w-full  flex flex-col ">
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
+                                    {t[Contents.PLAN_NAME]}
+                                </span>
+                                <span>{stats?.plan_name}</span>
+                            </div>
+                            <div className="w-full flex gap-4 justify-between mt-1">
+                                <span className="text-left">
                                     {t[Contents.STARTAT]}
                                 </span>
                                 <span>{formatDate(stats?.start_time)}</span>
@@ -99,8 +105,8 @@ export const StartMenu = () => {
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {stats?.total_time
-                                        ? stats?.total_time.toFixed(1)
+                                    {stats?.usage_hour
+                                        ? stats?.usage_hour.toFixed(1)
                                         : 0}
                                     h / {totalTime + 'h'}
                                 </span>

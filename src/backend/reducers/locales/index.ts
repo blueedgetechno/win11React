@@ -63,6 +63,7 @@ export enum Contents {
     LA,
     WITHOUTACC,
     CLOSEDEMO,
+    PLAN_NAME,
     STARTAT,
     ENDAT,
     TIME,
@@ -475,6 +476,9 @@ export function language() {
         Contents.CLOSEDEMO,
         'Đang đóng demo, bạn vui lòng truy cập fanpage để được hướng dẫn'
     );
+
+    en.set(Contents.PLAN_NAME, 'Package');
+    vn.set(Contents.PLAN_NAME, 'Gói');
 
     en.set(Contents.STARTAT, 'Start at');
     vn.set(Contents.STARTAT, 'Ngày bắt đầu');
