@@ -30,6 +30,18 @@ export const StartMenu = () => {
     const planUsageTime = stats?.plan_hour ?? 0;
     const totalTime = +planUsageTime + +additionalTime;
 
+    const renderPlanName = (planName) => {
+        let name = ''
+        if (planName == 'month_01') {
+            name = "Cơ bản"
+        }
+        else if (planName == 'month_02') {
+            name = "Tiêu chuẩn"
+        }
+
+        return name
+    }
+
     return (
         <div
             className="startMenu dpShad"
@@ -64,7 +76,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                    //invert={pnstates[idx] ? true : null}
+                                //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>
@@ -73,7 +85,7 @@ export const StartMenu = () => {
                                 <span className="text-left">
                                     {t[Contents.PLAN_NAME]}
                                 </span>
-                                <span>{stats?.plan_name}</span>
+                                <span>{renderPlanName(stats?.plan_name)}</span>
                             </div>
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
