@@ -31,16 +31,15 @@ export const StartMenu = () => {
     const totalTime = +planUsageTime + +additionalTime;
 
     const renderPlanName = (planName) => {
-        let name = ''
+        let name = '';
         if (planName == 'month_01') {
-            name = "Cơ bản"
-        }
-        else if (planName == 'month_02') {
-            name = "Tiêu chuẩn"
+            name = 'Cơ bản';
+        } else if (planName == 'month_02') {
+            name = 'Tiêu chuẩn';
         }
 
-        return name
-    }
+        return name;
+    };
 
     return (
         <div
@@ -76,7 +75,7 @@ export const StartMenu = () => {
                                     ui={true}
                                     src={icon}
                                     width={14}
-                                //invert={pnstates[idx] ? true : null}
+                                    //invert={pnstates[idx] ? true : null}
                                 />
                             </div>
                         </div>

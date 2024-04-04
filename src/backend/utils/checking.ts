@@ -22,12 +22,11 @@ export const isDevEnv = () => {
 };
 
 export const isAdmin = (email) => {
-
     const listAdmin = [
         'sieunhankiet@gmail.com',
         'datdovan1502@gmail.com',
         'thienvanlea1@gmail.com	'
-    ]
+    ];
 
-    return (listAdmin.includes(email) ?? false)
-}
+    return listAdmin.includes(email) ?? false;
+};

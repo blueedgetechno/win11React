@@ -18,7 +18,7 @@ export const Worker = () => {
         state.apps.apps.find((x) => x.id == 'worker')
     );
     const files = useAppSelector((state) => state.worker);
-    const email = useAppSelector(state => state.user.email)
+    const email = useAppSelector((state) => state.user.email);
     const [ip, setIP] = useState('');
     const handleIPChanges = (e) => setIP(e.target.value);
     const handleEnter = () => appDispatch(fetch_local_worker(ip));
@@ -49,74 +49,72 @@ export const Worker = () => {
                 size={wnapp.size}
                 name={wnapp.name}
             />
-            {
-                isAdmin(email) ?
-                    <div className="windowScreen flex flex-col">
-                        <Ribbon />
-                        <div className="restWindow flex-grow flex flex-col">
-                            <div className="sec1">
+            {isAdmin(email) ? (
+                <div className="windowScreen flex flex-col">
+                    <Ribbon />
+                    <div className="restWindow flex-grow flex flex-col">
+                        <div className="sec1">
+                            <Icon
+                                className="navIcon hvtheme"
+                                fafa="faArrowUp"
+                                width={14}
+                                click="worker/worker_prev"
+                                pr
+                            />
+                            <div className="path-bar noscroll" tabIndex="-1">
+                                <input
+                                    className="path-field"
+                                    type="text"
+                                    value={files.cpath}
+                                    onChange={() => {}}
+                                />
+                            </div>
+                            <div className="srchbar">
+                                <Icon
+                                    className="searchIcon"
+                                    src="search"
+                                    width={12}
+                                />
+                                <input
+                                    type="text"
+                                    onChange={handleIPChanges}
+                                    onKeyDown={(e) =>
+                                        e.key == 'Enter' ? handleEnter() : null
+                                    }
+                                    value={ip}
+                                    placeholder="Enter worker IP"
+                                />
                                 <Icon
                                     className="navIcon hvtheme"
                                     fafa="faArrowUp"
                                     width={14}
-                                    click="worker/worker_prev"
+                                    onClick={handleEnter}
                                     pr
                                 />
-                                <div className="path-bar noscroll" tabIndex="-1">
-                                    <input
-                                        className="path-field"
-                                        type="text"
-                                        value={files.cpath}
-                                        onChange={() => { }}
-                                    />
-                                </div>
-                                <div className="srchbar">
-                                    <Icon
-                                        className="searchIcon"
-                                        src="search"
-                                        width={12}
-                                    />
-                                    <input
-                                        type="text"
-                                        onChange={handleIPChanges}
-                                        onKeyDown={(e) =>
-                                            e.key == 'Enter' ? handleEnter() : null
-                                        }
-                                        value={ip}
-                                        placeholder="Enter worker IP"
-                                    />
-                                    <Icon
-                                        className="navIcon hvtheme"
-                                        fafa="faArrowUp"
-                                        width={14}
-                                        onClick={handleEnter}
-                                        pr
-                                    />
-                                </div>
-
-                                <div className="srchbar">
-                                    <Icon
-                                        className="searchIcon"
-                                        src="search"
-                                        width={12}
-                                    />
-                                    <input
-                                        type="text"
-                                        onChange={handleSearchChange}
-                                        value={searchtxt}
-                                        placeholder="Search"
-                                    />
-                                </div>
                             </div>
-                            <div className="sec2">
-                                <ContentArea searchtxt={searchtxt} data={files} />
+
+                            <div className="srchbar">
+                                <Icon
+                                    className="searchIcon"
+                                    src="search"
+                                    width={12}
+                                />
+                                <input
+                                    type="text"
+                                    onChange={handleSearchChange}
+                                    value={searchtxt}
+                                    placeholder="Search"
+                                />
                             </div>
                         </div>
+                        <div className="sec2">
+                            <ContentArea searchtxt={searchtxt} data={files} />
+                        </div>
                     </div>
-                    : <h1 className='m-auto'>Tính năng đang phát triển</h1>
-
-            }
-
+                </div>
+            ) : (
+                <h1 className="m-auto">Tính năng đang phát triển</h1>
+            )}
         </div>
     );
 };
