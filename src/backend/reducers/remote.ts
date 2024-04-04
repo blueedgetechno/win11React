@@ -190,7 +190,7 @@ export const remoteAsync = {
     ping_session: async (session_id: number) => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
-        else if (store.getState().remote.local) return;
+        // else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
         else if (client?.hid?.last_active() > 5 * 60) {
             if (store.getState().popup.data_stack.length > 0) return;
@@ -204,23 +204,21 @@ export const remoteAsync = {
                         title: 'please move your mouse'
                     }
                 })
-            );  
+            );
 
             while (client?.hid?.last_active() > 2)
                 await new Promise((r) => setTimeout(r, 1000));
 
             appDispatch(popup_close());
-
-            const { error } = await supabase.rpc(`ping_session`, {
-                session_id
-            });
-
-            if (error) {
-                console.log('ping session error' + error.message);
-            }
         }
 
-        // TODO
+        const { error } = await supabase.rpc(`ping_session`, {
+            session_id
+        });
+
+        if (error) {
+            console.log('ping session error' + error.message);
+        }
     },
     sync: async () => {
         if (!store.getState().remote.active) return;

@@ -67,19 +67,23 @@ const handleClipboard = async () => {
 export const preload = async () => {
     await Promise.all([loadSettings(), fetchUser(), fetchApp()]);
 
-    const volume_id = await getVolumeIdByEmail()
+    const volume_id = await getVolumeIdByEmail();
 
-    const { data, error } = await supabase.rpc("start_new_session", {
+    const { data, error } = await supabase.rpc('start_new_session', {
         email: store.getState().user.email,
-        volume_id,
+        volume_id
     });
-
     if (error) {
-        console.log("can not start new session remote");
+        console.log('can not start new session remote');
     }
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);
-    setInterval(() => ping_session(data.at(0)), 10 * 1000);
+
+    if (data != null || data != undefined) {
+        setInterval(function () {
+            ping_session(data);
+        }, 5 * 1000);
+    }
     setInterval(handleClipboard, 100);
 };
