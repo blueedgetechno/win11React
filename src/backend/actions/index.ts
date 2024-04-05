@@ -167,11 +167,7 @@ export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     appDispatch(user_update(record));
 };
 
-export const getVolumeIdByEmail = async (): Promise<string> => {
-    let volumeId = '';
-
-    const userEmail = store.getState().user.email;
-
+export const getHostSessionIdByEmail = async (): Promise<string> => {
     const all = await pb.collection('volumes').getFullList<{
         local_id: string;
     }>();
@@ -193,11 +189,19 @@ export const getVolumeIdByEmail = async (): Promise<string> => {
     const host_session = node.findParent(volumeFound.id, 'host_session');
     return host_session.id ?? '';
 };
+
+export const getVolumeIdByEmail = async (): Promise<string> => {
+    const all = await pb.collection('volumes').getFullList<{
+        local_id: string;
+    }>();
+
+    return all.at(0)?.local_id ?? '';
+};
 export const shutDownVm = async () => {
     let volumeId = '';
 
     // get volume id
-    volumeId = await getVolumeIdByEmail();
+    volumeId = await getHostSessionIdByEmail();
     // call worker_ss_close
     await appDispatch(worker_session_close(volumeId));
 
