@@ -29,8 +29,6 @@ export const Worker = () => {
         setShText('');
     }, [files.cpath]);
 
-    console.log(email);
-    console.log(isAdmin(email));
     return (
         <div
             className="msfiles floatTab dpShad"
