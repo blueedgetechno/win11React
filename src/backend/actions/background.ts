@@ -2,6 +2,8 @@ import { getVolumeIdByEmail } from '.';
 import {
     RootState,
     appDispatch,
+    change_bitrate,
+    change_framerate,
     check_worker,
     claim_volume,
     fetch_message,
@@ -44,7 +46,25 @@ export const fetchApp = async () => {
     await appDispatch(worker_refresh());
     await appDispatch(claim_volume());
 };
-const fetchSetting = async () => {};
+const fetchSetting = async () => {
+    let bitrateLocal: number = +(localStorage.getItem('bitrate'))
+    let framerateLocal: number = +(localStorage.getItem('framerate'))
+
+    if (
+        bitrateLocal > 100
+        || bitrateLocal <= 0 ||
+        framerateLocal > 100 ||
+        framerateLocal <= 0
+    ) {
+        bitrateLocal = 50
+        framerateLocal = 50
+    }
+
+    appDispatch(change_bitrate(bitrateLocal));
+    appDispatch(change_framerate(framerateLocal));
+
+
+};
 
 let old_clipboard = '';
 const handleClipboard = async () => {
@@ -73,6 +93,7 @@ export const preload = async () => {
         loadSettings(),
         fetchUser(),
         fetchApp(),
+        fetchSetting(),
         fetchMessage()
     ]);
 
