@@ -34,7 +34,7 @@ export const PaymentApp = () => {
             name: 'week',
             period: 'month',
             description: 'Khởi đầu với CloudPc',
-            bonus: ['100GB storage', '8Gb ram', 'Rtx 3060ti']
+            bonus: ['100GB storage', '8GB ram', 'RTX 3060TI']
         },
         {
             highlight: true,
@@ -44,19 +44,19 @@ export const PaymentApp = () => {
 
             name: 'month',
             period: 'month',
-            description: 'Thoả mái sử dụng',
-            bonus: ['250GB storage', '12Gb ram', 'Rtx 3060ti']
+            description: 'Thoải mái sử dụng',
+            bonus: ['250GB storage', '12GB ram', 'RTX 3060TI']
         },
         {
             highlight: false,
-            title: 'Supper',
+            title: 'Super',
             price_in_vnd: '899',
             description: 'Tối ưu & tiết kiệm nhất',
             period: '3 months',
-            total_time: '120',
+            total_time: '125',
 
             name: 'Enterprise',
-            bonus: ['100GB storage', '12Gb ram', 'Rtx 3060ti']
+            bonus: ['100GB storage', '12GB ram', 'RTX 3060TI']
         }
     ]);
 
@@ -147,12 +147,12 @@ export const PaymentApp = () => {
                                                             <p className="-mt-2">
                                                                 <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
                                                                     {sub.title ==
-                                                                    'Enterprise'
+                                                                        'Enterprise'
                                                                         ? 'charge based on number of account'
                                                                         : sub.title ==
                                                                             'one year plan'
-                                                                          ? `Unlimited remote usage`
-                                                                          : `Giới hạn ${sub.total_time} giờ sử dụng trong tháng`}
+                                                                            ? `Unlimited remote usage`
+                                                                            : `Giới hạn ${sub.total_time} giờ sử dụng trong tháng`}
                                                                 </span>
                                                             </p>
                                                         </div>
@@ -215,7 +215,7 @@ export const PaymentApp = () => {
                                                     >
                                                         <span className="truncate">
                                                             {sub.title ==
-                                                            'Enterprise'
+                                                                'Enterprise'
                                                                 ? 'Contact Us'
                                                                 : 'Get Started'}
                                                         </span>
@@ -272,10 +272,10 @@ const Payment = ({ onClose, price }) => {
             e.key == 'Enter'
                 ? nextPage()
                 : e.key == 'ArrowLeft'
-                  ? prevPage()
-                  : e.key == 'ArrowRight'
-                    ? nextPage()
-                    : null;
+                    ? prevPage()
+                    : e.key == 'ArrowRight'
+                        ? nextPage()
+                        : null;
         window.addEventListener('keydown', handle);
         return () => {
             window.removeEventListener('keydown', handle);
