@@ -47,7 +47,7 @@ export const Worker = () => {
                 size={wnapp.size}
                 name={wnapp.name}
             />
-            {isAdmin(email) ? (
+            {isAdmin() ? (
                 <div className="windowScreen flex flex-col">
                     <Ribbon />
                     <div className="restWindow flex-grow flex flex-col">
