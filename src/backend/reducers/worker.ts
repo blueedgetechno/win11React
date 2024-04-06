@@ -51,12 +51,10 @@ export const workerAsync = {
         async (): Promise<void> => {
             await appDispatch(
                 fetch_local_worker(
-                    //window.location.host == 'localhost' ||
-                    //    window.location.host == 'tauri.localhost'
-                    //    ? 'supabase.thinkmay.net'
-                    //    : window.location.host
-                    'localhost:60000'
-
+                    window.location.host == 'localhost' ||
+                        window.location.host == 'tauri.localhost'
+                        ? 'supabase.thinkmay.net'
+                        : window.location.host
                 )
             );
         }
@@ -177,10 +175,15 @@ export const workerAsync = {
             const resp = await StartVirtdaemon(computer, input);
             if (resp instanceof Error) {
                 console.log(resp.message);
-                appDispatch(popup_open({ type: 'notify', data: { title: resp.message, loading: false } }))
+                appDispatch(
+                    popup_open({
+                        type: 'notify',
+                        data: { title: resp.message, loading: false }
+                    })
+                );
 
-                throw resp.message
-            };
+                throw resp.message;
+            }
             await appDispatch(fetch_local_worker(computer.address));
         }
     ),
