@@ -1,5 +1,3 @@
-import { pb } from '../reducers/fetch/createClient';
-
 export const isMobile = () => {
     let check = false;
     (function (a) {
@@ -23,6 +21,15 @@ export const isDevEnv = () => {
     );
 };
 
-export const isAdmin = () => {
-    return pb.authStore.model && !pb.authStore.model.collectionId;
+export const isAdmin = (email) => {
+    const listAdmin = [
+        'sieunhankiet@gmail.com',
+        'datdovan1502@gmail.com',
+        'thienvanlea1@gmail.com',
+        'huyhoangdo0205@gmail.com'
+    ];
+
+    // TODO: after release
+
+    return listAdmin.includes(email) ?? false;
 };
