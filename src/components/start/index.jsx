@@ -118,12 +118,11 @@ export const SidePane = () => {
 
     const setBitrate = (e) => {
         dispatch(change_bitrate(e.target.value));
-        localStorage.setItem('bitrate', e.target.value)
+        localStorage.setItem('bitrate', e.target.value);
     };
     const setFramerate = (e) => {
         dispatch(change_framerate(e.target.value));
-        localStorage.setItem('framerate', e.target.value)
-
+        localStorage.setItem('framerate', e.target.value);
     };
     function sliderBackground(elem, e) {
         elem.style.setProperty(

@@ -47,23 +47,21 @@ export const fetchApp = async () => {
     await appDispatch(claim_volume());
 };
 const fetchSetting = async () => {
-    let bitrateLocal: number = +(localStorage.getItem('bitrate'))
-    let framerateLocal: number = +(localStorage.getItem('framerate'))
+    let bitrateLocal: number = +localStorage.getItem('bitrate');
+    let framerateLocal: number = +localStorage.getItem('framerate');
 
     if (
-        bitrateLocal > 100
-        || bitrateLocal <= 0 ||
+        bitrateLocal > 100 ||
+        bitrateLocal <= 0 ||
         framerateLocal > 100 ||
         framerateLocal <= 0
     ) {
-        bitrateLocal = 50
-        framerateLocal = 50
+        bitrateLocal = 50;
+        framerateLocal = 50;
     }
 
     appDispatch(change_bitrate(bitrateLocal));
     appDispatch(change_framerate(framerateLocal));
-
-
 };
 
 let old_clipboard = '';
