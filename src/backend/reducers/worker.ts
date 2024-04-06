@@ -3,6 +3,7 @@ import {
     appDispatch,
     claim_volume,
     fetch_local_worker,
+    popup_open,
     remote_connect,
     RootState,
     save_reference,
@@ -50,10 +51,12 @@ export const workerAsync = {
         async (): Promise<void> => {
             await appDispatch(
                 fetch_local_worker(
-                    window.location.host == 'localhost' ||
-                        window.location.host == 'tauri.localhost'
-                        ? 'supabase.thinkmay.net'
-                        : window.location.host
+                    //window.location.host == 'localhost' ||
+                    //    window.location.host == 'tauri.localhost'
+                    //    ? 'supabase.thinkmay.net'
+                    //    : window.location.host
+                    'localhost:60000'
+
                 )
             );
         }
@@ -171,7 +174,13 @@ export const workerAsync = {
             ).info;
             if (computer == undefined) throw new Error('invalid tree');
 
-            await StartVirtdaemon(computer, input);
+            const resp = await StartVirtdaemon(computer, input);
+            if (resp instanceof Error) {
+                console.log(resp.message);
+                appDispatch(popup_open({ type: 'notify', data: { title: resp.message, loading: false } }))
+
+                throw resp.message
+            };
             await appDispatch(fetch_local_worker(computer.address));
         }
     ),
@@ -313,10 +322,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                                (target =
-                                    new RenderNode(target).data.find(
-                                        (y) => y.id == x
-                                    ) ?? target)
+                            (target =
+                                new RenderNode(target).data.find(
+                                    (y) => y.id == x
+                                ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -324,7 +333,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             }
         );
     }
