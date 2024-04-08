@@ -51,10 +51,12 @@ export const workerAsync = {
         async (): Promise<void> => {
             await appDispatch(
                 fetch_local_worker(
-                    window.location.host == 'localhost' ||
-                        window.location.host == 'tauri.localhost'
-                        ? 'supabase.thinkmay.net'
-                        : window.location.host
+                    //window.location.host == 'localhost' ||
+                    //    window.location.host == 'tauri.localhost'
+                    //    ? 'supabase.thinkmay.net'
+                    //    : window.location.host
+                    'localhost:60000'
+
                 )
             );
         }
@@ -173,6 +175,7 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             const resp = await StartVirtdaemon(computer, input);
+            console.log(resp);
             if (resp instanceof Error) {
                 console.log(resp.message);
                 appDispatch(

@@ -2,6 +2,7 @@ import { getVolumeIdByEmail } from '.';
 import {
     RootState,
     appDispatch,
+    app_toggle,
     change_bitrate,
     change_framerate,
     check_worker,
@@ -41,6 +42,7 @@ const loadSettings = async () => {
 
 const fetchUser = async () => {
     await appDispatch(fetch_user());
+    appDispatch(app_toggle('usermanager'))
 };
 export const fetchApp = async () => {
     await appDispatch(worker_refresh());

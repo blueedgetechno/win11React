@@ -86,11 +86,20 @@ body[data-theme="dark"] .aboutApp {
   }
 }
 
-.timeApp {
-  max-width: 185px;
+.userManagerApp {
+  max-width: 320px;
   max-height: 280px;
   min-width: 225px;
-  min-height: 270px;
+  min-height: 480px;
+  --bg1: rgba(242, 242, 242, 1);
+  --bg2: rgba(255, 255, 255, 1);
+  --bg3: rgba(0, 0, 0, 0.033);
+  --bg4: #aaa;
+  --roundRad: 8px;
+
+  color: var(--dark-txt);
+
+  background: var(--bg1);
 
   &[data-size="mini"] {
     top: 0%;
@@ -98,6 +107,11 @@ body[data-theme="dark"] .aboutApp {
     width: 25%;
     height: 50%;
   }
+}
+
+body[data-theme="dark"] .userManagerApp {
+  --bg1: #202020;
+  --bg2: #2b2b2b;
 }
 
 .calcHis {

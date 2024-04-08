@@ -1,12 +1,7 @@
-import { changeTheme } from '../../backend/actions';
 import {
-    appDispatch,
-    useAppSelector,
-    user_delete
+    useAppSelector
 } from '../../backend/reducers';
-import { Contents } from '../../backend/reducers/locales';
-import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
-import { Icon } from '../shared/general';
+import UserManager from '../shared/userManager';
 
 export const StartMenu = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -49,7 +44,7 @@ export const StartMenu = () => {
             style={{ '--prefix': 'START' }}
         >
             <>
-                <div className="stmenu p-[14px]">
+                {/*<div className="stmenu p-[14px]">
                     <div className="pinnedApps mt-[16px] text-center font-semibold pb-1 flex items-center justify-center gap-2">
                         <span>{user.email ?? 'Admin'}</span>
                         <Icon
@@ -146,7 +141,10 @@ export const StartMenu = () => {
                         </svg>
                         <span>Log Out</span>
                     </div>
-                </div>
+                </div>*/}
+
+
+                <UserManager></UserManager>
             </>
         </div>
     );
