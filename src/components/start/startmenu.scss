@@ -61,15 +61,12 @@
   --roundRad: 8px;
 
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  left: 0;
   bottom: 80px;
   max-width: 360px;
   width: 40%;
   min-width: 270px;
   height: min(100% - 24px, 460px);
-  left: 0;
 
   &[data-align="center"] {
     margin-left: auto;
