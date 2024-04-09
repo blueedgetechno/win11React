@@ -56,6 +56,12 @@ const apps: AppData[] = [
         payload: 'usermanager'
     },
     {
+        name: 'Connect YourPC',
+        id: 'connectPc',
+        action: 'apps/app_toggle',
+        payload: 'connectPc'
+    },
+    {
         name: 'Guideline',
         id: 'about',
         action: 'apps/app_url',
@@ -83,6 +89,7 @@ var { taskbar, desktop } = {
         'Discord',
         'Thinkmay Fanpage',
         'Store',
+        'Connect YourPC',
         'Payment',
         'Your Info'
     ]

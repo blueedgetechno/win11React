@@ -3,6 +3,7 @@ import './tabs.scss';
 import './tabs2.scss';
 import './wnapp.scss';
 
+export * from './apps/connect';
 export * from './apps/edge';
 export * from './apps/feedback';
 export * from './apps/payment';

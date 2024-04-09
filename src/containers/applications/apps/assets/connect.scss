@@ -1,0 +1,73 @@
+.connectToPcApp {
+	--bg1: rgba(242, 242, 242, 0.9);
+	--bg2: rgba(255, 255, 255, 0.9);
+	--bg3: rgba(0, 0, 0, 0.033);
+	--bg4: #aaa;
+	--rib-bg: #ffffffb8;
+
+	//background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
+	background: var(--bg1);
+
+	&[data-size="mini"] {
+		bottom: -10%;
+		right: 20%;
+		width: 500px;
+		height: 500px;
+	}
+
+	.connectAppContent {
+		background: linear-gradient(180deg, #040218 0%, #140B7E 100%);
+		padding: 16px;
+		overflow-y: scroll;
+		width: 100%;
+		height: 100%;
+
+		.content {
+			display: flex;
+			flex-direction: column;
+			margin: auto;
+			padding: 0 35px;
+			padding-top: 44px;
+			padding-bottom: 40px;
+			width: 353px;
+			height: 490px;
+			color: aliceblue;
+			border: 2px solid #AD00FF;
+			border-radius: 16px;
+			background: #050433;
+
+			.title {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				font-size: 22px;
+				font-weight: 600;
+				margin: 0 auto;
+			}
+
+			.spec {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+				font-size: 16.5px;
+			}
+
+			.connectBtn {
+				margin-top: 40px;
+				border-radius: 200px;
+				outline: none;
+				border: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #fff;
+				padding: 12px 56px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	&[data-hide="true"] {
+		z-index: -1 !important;
+	}
+}
