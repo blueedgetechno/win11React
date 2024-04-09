@@ -50,7 +50,14 @@ async function internalFetch<T>(
 
             if (!resp.ok) return new Error('fail to request');
 
-            return await resp.json();
+            const contentType = resp.headers.get('Content-Type');
+            if (contentType.includes('application/json')) {
+                return await resp.json(); // Parse as JSON
+            } else {
+                //@ts-ignore
+                return await resp.text(); // Treat as text
+            }
+            //return (await resp.json()) ;
         }
     }
 }
@@ -126,7 +133,7 @@ export async function StartVirtdaemon(
     const resp = await internalFetch(address, 'new', req);
     if (resp instanceof Error) return resp;
 
-    return;
+    return resp;
 }
 
 export type Session = {

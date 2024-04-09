@@ -81,7 +81,11 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                await appDispatch(worker_vm_create_from_volume(volume_id));
+                const resp = await appDispatch(worker_vm_create_from_volume(volume_id));
+                const check = resp.payload.includes('run out of gpu')
+                if (check) {
+                    throw new Error('run out of gpu')
+                }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
                 await appDispatch(vm_session_access(result.data.at(0).id));
@@ -187,6 +191,7 @@ export const workerAsync = {
                 throw resp.message;
             }
             await appDispatch(fetch_local_worker(computer.address));
+            return resp
         }
     ),
     vm_session_create: createAsyncThunk(
