@@ -1,4 +1,4 @@
-import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/https';
+import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/http';
 import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
