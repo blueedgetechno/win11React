@@ -1,4 +1,4 @@
-import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/http';
+import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/https';
 import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
@@ -12,7 +12,7 @@ async function internalFetch<T>(
     if (client != null) {
         if (command == 'info') {
             const { data, ok } = await client.get<T>(
-                `http://${address}:${WS_PORT}/info`,
+                `https://${address}:${WS_PORT}/info`,
                 {
                     timeout: { secs: 3, nanos: 0 },
                     responseType: ResponseType.JSON
@@ -24,7 +24,7 @@ async function internalFetch<T>(
             return data;
         } else {
             const { data, ok } = await client.post<T>(
-                `http://${address}:${WS_PORT}/${command}`,
+                `https://${address}:${WS_PORT}/${command}`,
                 Body.json(body),
                 {
                     responseType: ResponseType.JSON
@@ -37,13 +37,13 @@ async function internalFetch<T>(
         }
     } else {
         if (command == 'info') {
-            const resp = await fetch(`http://${address}/info`);
+            const resp = await fetch(`https://${address}/info`);
 
             if (!resp.ok) return new Error('fail to request');
 
             return await resp.json();
         } else {
-            const resp = await fetch(`http://${address}/${command}`, {
+            const resp = await fetch(`https://${address}/${command}`, {
                 method: 'POST',
                 body: JSON.stringify(body)
             });
@@ -183,12 +183,12 @@ export async function StartThinkmayOnVM(
     return {
         audioUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`,
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`,
         videoUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`,
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`,
         rtc_config: {
             iceTransportPolicy: 'relay',
             iceServers: [
@@ -241,12 +241,12 @@ export async function StartThinkmay(computer: Computer): Promise<Session> {
     return {
         audioUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${resp.thinkmay.audioToken}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}`,
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}`,
         videoUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${resp.thinkmay.videoToken}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}`,
+                ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}`,
         rtc_config: {
             iceTransportPolicy: 'all',
             iceServers: [
@@ -272,12 +272,12 @@ export function ParseRequest(
     return {
         audioUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${thinkmay.audioToken}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
+                ? `https://${address}/handshake/client?token=${thinkmay.audioToken}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
         videoUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${thinkmay.videoToken}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
+                ? `https://${address}/handshake/client?token=${thinkmay.videoToken}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
         rtc_config: {
             iceTransportPolicy: 'all',
             iceServers: [
@@ -304,12 +304,12 @@ export function ParseVMRequest(
     return {
         audioUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${thinkmay.audioToken}&target=${target}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
+                ? `https://${address}/handshake/client?token=${thinkmay.audioToken}&target=${target}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
         videoUrl:
             client == null
-                ? `http://${address}/handshake/client?token=${thinkmay.videoToken}&target=${target}`
-                : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
+                ? `https://${address}/handshake/client?token=${thinkmay.videoToken}&target=${target}`
+                : `https://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
         rtc_config: {
             iceTransportPolicy: 'relay', // preferred as VM often under double NAT
             iceServers: [

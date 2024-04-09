@@ -55,7 +55,6 @@ export const workerAsync = {
                         window.location.host == 'tauri.localhost'
                         ? 'supabase.thinkmay.net'
                         : window.location.host
-
                 )
             );
         }
@@ -81,10 +80,12 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                const resp = await appDispatch(worker_vm_create_from_volume(volume_id));
-                const check = resp.payload.includes('run out of gpu')
+                const resp = await appDispatch(
+                    worker_vm_create_from_volume(volume_id)
+                );
+                const check = resp.payload.includes('run out of gpu');
                 if (check) {
-                    throw new Error('run out of gpu')
+                    throw new Error('run out of gpu');
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
@@ -191,7 +192,7 @@ export const workerAsync = {
                 throw resp.message;
             }
             await appDispatch(fetch_local_worker(computer.address));
-            return resp
+            return resp;
         }
     ),
     vm_session_create: createAsyncThunk(
@@ -332,10 +333,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                            (target =
-                                new RenderNode(target).data.find(
-                                    (y) => y.id == x
-                                ) ?? target)
+                                (target =
+                                    new RenderNode(target).data.find(
+                                        (y) => y.id == x
+                                    ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -343,7 +344,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             }
         );
     }

@@ -1,6 +1,4 @@
-import {
-    useAppSelector
-} from '../../backend/reducers';
+import { useAppSelector } from '../../backend/reducers';
 import UserManager from '../shared/userManager';
 
 export const StartMenu = () => {
@@ -142,7 +140,6 @@ export const StartMenu = () => {
                         <span>Log Out</span>
                     </div>
                 </div>*/}
-
 
                 <UserManager></UserManager>
             </>
