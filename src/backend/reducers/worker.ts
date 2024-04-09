@@ -83,7 +83,7 @@ export const workerAsync = {
                 const resp = await appDispatch(
                     worker_vm_create_from_volume(volume_id)
                 );
-                const check = resp.payload.includes('run out of gpu');
+                const check = resp.payload.includes('ran out of gpu');
                 if (check) {
                     throw new Error('run out of gpu');
                 }
