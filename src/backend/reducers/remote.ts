@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    RootState,
     appDispatch,
     close_remote,
     hard_reset,
@@ -26,28 +25,11 @@ export const MAX_BITRATE = () => (20000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
 export const MAX_FRAMERATE = 120;
 export const MIN_FRAMERATE = 40;
-const ADS_RATIO = 2;
 
 export let client: RemoteDesktopClient | null = null;
 export const assign = (fun: () => RemoteDesktopClient) => {
     if (client != null) client.Close();
     client = fun();
-    client.HandleMetricRaw = async (data) => {};
-    client.HandleMetrics = async (metrics) => {
-        switch (metrics.type) {
-            case 'VIDEO':
-                break;
-            case 'FRAME_LOSS':
-                if ((store.getState() as RootState).remote.fullscreen) return;
-
-                appDispatch(remoteSlice.actions.framedrop(true));
-                await new Promise((r) => setTimeout(r, 100));
-                appDispatch(remoteSlice.actions.framedrop(false));
-                break;
-            default:
-                break;
-        }
-    };
 };
 export const ready = async () => {
     appDispatch(
@@ -332,6 +314,7 @@ export const remoteSlice = createSlice({
             client?.hid?.ResetKeyStuck();
         },
         have_focus: (state) => {
+            client?.ResetVideo();
             state.focus = true;
         },
         close_remote: (state) => {
@@ -383,9 +366,10 @@ export const remoteSlice = createSlice({
         },
         internal_sync: (state) => {
             if (
-                state.bitrate != state.prev_bitrate ||
-                state.prev_size != size()
-            )
+                (state.bitrate != state.prev_bitrate ||
+                state.prev_size != size()) &&
+                size() > 0
+            ) {
                 client?.ChangeBitrate(
                     Math.round(
                         ((MAX_BITRATE() - MIN_BITRATE()) / 100) *
@@ -393,10 +377,11 @@ export const remoteSlice = createSlice({
                             MIN_BITRATE()
                     )
                 );
+                state.prev_bitrate = state.bitrate;
+                state.prev_size = size();
+            }
+
             if (state.framerate != state.prev_framerate) {
-                client?.SetPeriod(
-                    Math.round((1000 / state.framerate) * ADS_RATIO)
-                );
                 client?.ChangeFramerate(
                     Math.round(
                         ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) *
@@ -404,11 +389,8 @@ export const remoteSlice = createSlice({
                             MIN_FRAMERATE
                     )
                 );
+                state.prev_framerate = state.framerate;
             }
-
-            state.prev_framerate = state.framerate;
-            state.prev_bitrate = state.bitrate;
-            state.prev_size = size();
         },
         change_framerate: (state, action: PayloadAction<number>) => {
             state.framerate = action.payload;
