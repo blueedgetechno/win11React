@@ -33,3 +33,12 @@ export const isAdmin = (email) => {
 
     return listAdmin.includes(email) ?? false;
 };
+
+export const isRunOutOfGpu = (respText: string): boolean => {
+    let check = true
+
+    check = JSON.stringify(respText).includes(' out of gpu');
+
+    return check
+
+}
