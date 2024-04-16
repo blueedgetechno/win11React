@@ -83,6 +83,8 @@
 
 @media (1px < width < 768px) {
 	.connectToPcApp {
+		border-radius: 0px;
+
 		&[data-size="mini"] {
 			top: 0;
 			right: 0;
