@@ -4,7 +4,13 @@ import { TbLoader3 } from 'react-icons/tb';
 import { useAppSelector } from '../../../backend/reducers';
 import { Contents } from '../../../backend/reducers/locales';
 
-export function notify({ data: { title, tips, loading } }) {
+export function notify({ data: { title, tips, loading, text } }) {
+    const t = useAppSelector((state) => state.globals.translation);
+    const [textTrans, setTextTrans] = useState('')
+    useEffect(() => {
+        setTextTrans(t[text])
+    }, [text])
+
     return (
         <div className="w-[330px] h-auto p-[14px]">
             <div className="notify-icon">
@@ -13,7 +19,7 @@ export function notify({ data: { title, tips, loading } }) {
             <p className="text-center text-[1.2rem] mb-[24px]">
                 {title ?? 'Please wait...'}
             </p>
-
+            {textTrans ? <p>{textTrans} </p> : null}
             {loading ?? true ? <LoadingProgressBar /> : null}
             {tips ?? true ? <Protip /> : null}
         </div>
@@ -56,15 +62,14 @@ const Protip = () => {
 
     const [currentTip, setCurrentTip] = useState(0);
 
-    const QUANTITY_TIP = 3;
+    const QUANTITY_TIP = 4;
 
     const listDemoTip = [
         t[Contents.PRO_TIP_DEMO_0],
         t[Contents.PRO_TIP_DEMO_1],
         t[Contents.PRO_TIP_DEMO_2],
         t[Contents.PRO_TIP_DEMO_3],
-        'Nên Fullsreen khi chơi game',
-        'Click fix bàn phím nếu không di chuyển được khi chơi game'
+
     ];
 
     useEffect(() => {

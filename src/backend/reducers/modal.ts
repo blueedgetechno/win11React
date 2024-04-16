@@ -1,25 +1,26 @@
 type PopupData =
     | {
-          type: 'complete';
-          data: {
-              success: boolean;
-              content: string | Contents;
-          };
-      }
+        type: 'complete';
+        data: {
+            success: boolean;
+            content: string | Contents;
+        };
+    }
     | {
-          type: 'guidance';
-          data: {
-              content: string;
-          };
-      }
+        type: 'guidance';
+        data: {
+            content: string;
+        };
+    }
     | {
-          type: 'notify';
-          data: {
-              title?: string;
-              loading: boolean;
-              tips?: boolean;
-          };
-      };
+        type: 'notify';
+        data: {
+            title?: string;
+            loading: boolean;
+            tips?: boolean;
+            text?: string;
+        };
+    };
 
 type Data = {
     data_stack: PopupData[];
