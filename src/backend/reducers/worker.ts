@@ -11,6 +11,7 @@ import {
     vm_session_create,
     worker_vm_create_from_volume
 } from '.';
+import { isRunOutOfGpu } from '../utils/checking';
 import { fromComputer, RenderNode } from '../utils/tree';
 import { pb } from './fetch/createClient';
 import {
@@ -61,7 +62,7 @@ export const workerAsync = {
     ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer> => {
+        async (_: void, { getState }): Promise<Computer | string> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -83,9 +84,8 @@ export const workerAsync = {
                 const resp = await appDispatch(
                     worker_vm_create_from_volume(volume_id)
                 );
-                const check = resp.payload.includes('ran out of gpu');
-                if (check) {
-                    throw new Error('run out of gpu');
+                if (isRunOutOfGpu(resp.payload)) {
+                    return ('ran out of gpu');
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
@@ -333,10 +333,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                                (target =
-                                    new RenderNode(target).data.find(
-                                        (y) => y.id == x
-                                    ) ?? target)
+                            (target =
+                                new RenderNode(target).data.find(
+                                    (y) => y.id == x
+                                ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -344,8 +344,13 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => {}
-            }
+                hander: (state, action) => { }
+            },
+            //{
+
+            //    fetch: workerAsync.claim_volume,
+            //    hander: (state, action) => { }
+            //}
         );
     }
 });
