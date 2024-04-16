@@ -59,7 +59,9 @@ const apps: AppData[] = [
         name: 'Connect YourPC',
         id: 'connectPc',
         action: 'apps/app_toggle',
-        payload: 'connectPc'
+        payload: 'connectPc',
+        max: false,
+        size: 'mini'
     },
     {
         name: 'Guideline',
@@ -96,9 +98,9 @@ var { taskbar, desktop } = {
 };
 
 apps.map((x) => {
-    x.size = 'full';
+    x.size = x.size ?? 'full';
     x.hide = true;
-    x.max = null;
+    x.max = x.max ?? null;
     x.z = 0;
 });
 
@@ -113,4 +115,5 @@ export const desktopApps = apps
     )
     .map((x) => x.id);
 
+console.log(apps);
 export const allApps = apps;
