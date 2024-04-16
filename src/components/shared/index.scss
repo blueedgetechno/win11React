@@ -26,3 +26,10 @@
   min-width: 270px;
   height: 100%;
 }
+
+@media (1px < width < 768px) {
+  .userManager {
+    font-size: 13.5px;
+    overflow: scroll;
+  }
+}

@@ -62,11 +62,12 @@
 
   position: absolute;
   left: 0;
-  bottom: 80px;
+  bottom: 60px;
   max-width: 360px;
   width: 40%;
   min-width: 270px;
-  height: min(100% - 24px, 460px);
+  max-height: 460px;
+  height: calc(100% - 62px);
 
   &[data-align="center"] {
     margin-left: auto;
@@ -311,7 +312,7 @@ body[data-theme="dark"] .refundApp {
 .menuBar {
   box-sizing: border-box;
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   padding: 0 24px;
   display: flex;
   flex-direction: row;
