@@ -1,84 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../../backend/reducers';
-import { Contents } from '../../../backend/reducers/locales';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
 import UserManager from '../../../components/shared/userManager';
-
-const listFeedBack = [
-    {
-        name: Contents.FB_TERRIBLE,
-        value: 'terrible',
-        src: 'img/icon/terrible.png'
-    },
-    {
-        name: Contents.FB_BAD,
-        value: 'bad',
-        src: 'img/icon/bad.png'
-    },
-    {
-        name: Contents.FB_GOOD,
-        value: 'good',
-        src: 'img/icon/good.png'
-    },
-    {
-        name: Contents.FB_AMAZING,
-        value: 'amazing',
-        src: 'img/icon/amazing.png'
-    }
-];
-
-const listErr = [
-    {
-        name: Contents.FB_CONTROL,
-        value: 'control',
-        data: [
-            {
-                name: Contents.FB_KEYBOARD,
-                value: 'keybroad'
-            },
-            {
-                name: Contents.FB_MOUSE,
-                value: 'mouse'
-            },
-            {
-                name: Contents.FB_GAMEPAD,
-                value: 'gamepad'
-            },
-            {
-                name: Contents.FB_TOUCH,
-                value: 'touch'
-            }
-        ]
-    },
-    {
-        name: Contents.FB_CONNECT,
-        value: 'connect',
-        data: [
-            {
-                name: Contents.FB_BLACKSCREEN,
-                value: 'blackscreen'
-            },
-            {
-                name: Contents.FB_LAG,
-                value: 'lag'
-            },
-            {
-                name: Contents.FB_NOSHOWVIDEO,
-                value: 'videonoshow'
-            }
-        ]
-    },
-    {
-        name: Contents.FB_GAME,
-        value: 'Game',
-        data: []
-    },
-    {
-        name: Contents.FB_OTHER,
-        value: 'others',
-        data: []
-    }
-];
 
 export const Usermanager = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -87,7 +10,6 @@ export const Usermanager = () => {
     );
     const user = useSelector((state) => state.user);
 
-    console.log(wnapp, 'test');
     return (
         <div
             className="userManagerApp floatTab dpShad"
