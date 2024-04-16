@@ -1,18 +1,21 @@
 .connectToPcApp {
-	--bg1: rgba(242, 242, 242, 0.9);
-	--bg2: rgba(255, 255, 255, 0.9);
+	--bg1: rgba(242, 242, 242, 1);
+	--bg2: rgba(255, 255, 255, 1);
 	--bg3: rgba(0, 0, 0, 0.033);
 	--bg4: #aaa;
 	--rib-bg: #ffffffb8;
 
 	//background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
 	background: var(--bg1);
+	color: var(--dark-txt);
 
 	&[data-size="mini"] {
-		bottom: -10%;
+		top: 1%;
 		right: 20%;
-		width: 500px;
-		height: 500px;
+		max-width: 768px;
+		max-height: 640px;
+		width: 100%;
+		height: 100%;
 	}
 
 	.connectAppContent {
@@ -55,7 +58,7 @@
 
 			.connectBtn {
 				margin-top: 40px;
-				border-radius: 200px;
+				border-radius: 8px;
 				outline: none;
 				border: none;
 				font-size: 18px;
@@ -70,4 +73,9 @@
 	&[data-hide="true"] {
 		z-index: -1 !important;
 	}
+}
+
+body[data-theme="dark"] .connectToPcApp {
+	--bg1: #202020;
+	--bg2: #2b2b2b;
 }
