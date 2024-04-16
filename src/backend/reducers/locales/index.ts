@@ -45,6 +45,7 @@ export enum Contents {
     ALREADY_DEPLOYED,
     NOT_ALLOW,
     RUN_OUT_OF_GPU_STOCK,
+    RUN_OUT_OF_GPU_STOCK_NOTIFY,
     NOT_READY,
     NOT_RUNNING,
     NOT_PAUSED,
@@ -364,6 +365,12 @@ export function language() {
     vn.set(
         Contents.RUN_OUT_OF_GPU_STOCK,
         'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!'
+    );
+
+    en.set(Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY, 'We are running out of computer. Please hold tab, it will notify & connect when free');
+    vn.set(
+        Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY,
+        'Hệ thống đang hết máy, sẽ thông báo & tự động kết nối khi có máy trống. Bạn giữ tab và đợi xíu ạ!'
     );
 
     en.set(Contents.NOT_READY, "Installing, wait 3-5' until game logo appears");
@@ -760,11 +767,11 @@ export function language() {
     vn.set(Contents.READ_USER_MANUAL, 'Sẽ bắt đầu sau ');
     en.set(
         Contents.PRO_TIP_DEMO_0,
-        'Demo time is 15 minutes, if you want more demo, click "Support Now"'
+        'Click "Fix keyboard if you can not move when playing game'
     );
     vn.set(
         Contents.PRO_TIP_DEMO_0,
-        'Thời gian Demo là 15 phút, nếu muốn demo thêm hãy click "Hỗ Trợ Ngay"'
+        'Click fix bàn phím nếu không di chuyển được khi chơi game"'
     );
 
     en.set(Contents.PRO_TIP_DEMO_1, 'Open settings in the lower right corner');
