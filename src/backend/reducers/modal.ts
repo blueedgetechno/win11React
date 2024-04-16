@@ -18,7 +18,7 @@ type PopupData =
             title?: string;
             loading: boolean;
             tips?: boolean;
-            text?: string;
+            text?: any;
         };
     };
 
