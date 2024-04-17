@@ -125,6 +125,10 @@ body[data-theme="dark"] .bandpane {
           &[data-state="true"] {
             background: var(--clrPrm);
           }
+
+          &:hover {
+            background: var(--bg4);
+          }
         }
 
         .qktext {
@@ -171,6 +175,7 @@ body[data-theme="dark"] .bandpane {
     .sliders {
       width: 100%;
       height: 4px;
+      cursor: pointer;
 
       &[type="range"] {
         --track-color: linear-gradient(90deg, var(--clrPrm) 100%, #888888 100%);
@@ -259,7 +264,7 @@ body[data-theme="dark"] .sidePane {
   --bg1: #1c1c1c;
   --bg2: #242424;
   --bg3: #313131;
-  --bg4: rgb(255 255 255 / 5%);
+  --bg4: rgb(255 255 255 / 3%);
   --sliderThumbClr: #454545;
 
   &.bd-blur {

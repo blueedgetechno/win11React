@@ -66,7 +66,7 @@ function UserManager() {
                                 ui={true}
                                 src={icon}
                                 width={14}
-                                //invert={pnstates[idx] ? true : null}
+                            //invert={pnstates[idx] ? true : null}
                             />
                         </div>
                     </div>
@@ -119,7 +119,7 @@ function UserManager() {
 
             <div className="menuBar">
                 <div
-                    className="flex prtclk items-center gap-2"
+                    className="w-full h-full flex cursor-pointer prtclk items-center justify-center gap-2"
                     onClick={() => appDispatch(user_delete())}
                     data-action="WALLSHUTDN"
                 >

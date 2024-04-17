@@ -181,7 +181,7 @@ const Taskbar = () => {
                         </div>
                     </div>
                 </>
-                <div className="taskDate p-2 m-1 handcr prtclk rounded hvlight">
+                <div className="taskDate p-2 m-1 prtclk rounded">
                     <div>
                         {time.toLocaleTimeString('en-US', {
                             hour: 'numeric',
