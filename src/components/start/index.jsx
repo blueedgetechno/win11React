@@ -20,7 +20,6 @@ import {
     clickDispatch,
     customClickDispatch
 } from '../../backend/utils/dispatch';
-import Battery from '../shared/Battery';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
 import './sidepane.scss';
@@ -160,8 +159,8 @@ export const SidePane = () => {
             className="sidePane dpShad"
             data-hide={sidepane.hide}
         >
-            <div className="quickSettings p-5 pb-8">
-                <div className="qkCont">
+            <div className="quickSettings ">
+                <div className="listBtn">
                     {sidepane.quicks.map((qk, idx) => {
                         return (
                             <div key={idx} className="qkGrp">
@@ -202,45 +201,54 @@ export const SidePane = () => {
                         );
                     })}
                 </div>
+
+                {/*<div className="shortCuts">
+                    <hr />
+                </div>*/}
                 <div className="sliderCont flex flex-col items-start">
-                    <div className="flex items-center pb-2">
-                        {t[Contents.QUALITY]}
-                    </div>
-                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px] pb-5">
-                        <span>1</span>
-                        <input
-                            className="sliders bitrateSlider"
-                            onChange={setBitrate}
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={remote.bitrate}
-                        />
-                        <span>100</span>
+                    <div className="containerSlider">
+
+                        <div className="sliderName">
+                            {t[Contents.QUALITY]}
+                        </div>
+                        <div className=" sliderWrapper">
+                            <span>1</span>
+                            <input
+                                className="sliders bitrateSlider"
+                                onChange={setBitrate}
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={remote.bitrate}
+                            />
+                            <span>100</span>
+                        </div>
                     </div>
 
-                    <div className="flex items-center pb-2">
-                        {t[Contents.FRAMERATE]}
-                    </div>
-                    <div className="flex flex-1 items-center gap-[4px] w-full text-[12px]">
-                        <span>1</span>
-                        <input
-                            className="sliders framerateSlider"
-                            onChange={setFramerate}
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={remote.framerate}
-                        />
-                        <span>100</span>
+                    <div className="containerSlider">
+                        <div className="sliderName">
+                            {t[Contents.FRAMERATE]}
+                        </div>
+                        <div className=" sliderWrapper">
+                            <span>1</span>
+                            <input
+                                className="sliders framerateSlider"
+                                onChange={setFramerate}
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={remote.framerate}
+                            />
+                            <span>100</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="p-1 bottomBar">
+            {/*<div className="p-1 bottomBar">
                 <div className="px-3 battery-sidepane">
                     <Battery pct />
                 </div>
-            </div>
+            </div>*/}
         </div>
     );
 };

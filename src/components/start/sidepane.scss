@@ -61,7 +61,9 @@ body[data-theme="dark"] .bandpane {
   position: absolute;
   bottom: 56px;
   right: 12px;
-  width: 360px;
+  width: 376px;
+  height: calc(100% - 56px);
+  max-height: 480px;
   border-radius: 0.5rem;
   color: var(--dark-txt);
   background: var(--bg1);
@@ -87,12 +89,21 @@ body[data-theme="dark"] .bandpane {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    --padding: 1.25rem;
 
-    .qkCont {
+    padding-top: calc(var(--padding) + 0.4rem);
+    padding-bottom: 2.4rem;
+
+    .listBtn {
       width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      /* gap: 16px; */
+      padding: 0 var(--padding);
+      row-gap: 24px;
+      column-gap: 16px;
+      justify-items: center;
+      margin-bottom: 36px;
 
       .qkGrp {
         display: flex;
@@ -119,7 +130,8 @@ body[data-theme="dark"] .bandpane {
         .qktext {
           width: max-content;
           font-size: 0.75em;
-          margin: 0.5rem 0 1.33rem 0;
+          text-align: center;
+          margin-top: 0.5rem;
         }
       }
     }
@@ -129,6 +141,32 @@ body[data-theme="dark"] .bandpane {
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 20px;
+    padding: 0 var(--padding);
+
+    .containerSlider {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .sliderName {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+
+    }
+
+    .sliderWrapper {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 4px;
+      width: 100%;
+      font-size: 0.7rem;
+    }
 
     .sliders {
       width: 100%;
