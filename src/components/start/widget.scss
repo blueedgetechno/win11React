@@ -43,12 +43,16 @@
     }
 
     .title {
+      width: 100%;
       height: 48px;
+      background-color: #f3f4f5;
+      border-bottom: 1px solid #e3e4e6;
+      color: #030303;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       font-size: 1.2rem;
-      color: var(--txt-col);
     }
 
     .widgetCont {
@@ -484,13 +488,14 @@
 
 
   .sendMessage {
-    padding: 8px 0px;
-    width: 90%;
+    width: 100%;
     height: 68px;
     display: flex;
     //background: #f3f3f3;
     justify-content: center;
+    padding: 8px 12px;
 
+    border-top: 1px solid rgb(224, 224, 224);
 
     .inputMsg {
       border-radius: 999px;
@@ -555,7 +560,7 @@
 }
 
 body[data-theme="dark"] .widPaneCont {
-  --bg1: rgba(31, 31, 31, 0.25);
+  --bg1: rgba(31, 31, 31, 1);
   --bg2: rgba(255, 255, 255, 0.1);
   --clr1: #534f88;
   --clrWeather: #1b2257;
@@ -569,7 +574,6 @@ body[data-theme="dark"] .widPaneCont {
     bottom: 56px;
     width: 328px;
     height: 80%;
-    max-width: 66vw;
     max-height: 560px;
   }
 }
