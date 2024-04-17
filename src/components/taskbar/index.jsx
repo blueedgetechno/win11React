@@ -140,26 +140,26 @@ const Taskbar = () => {
             )}
             <div className="taskright" data-remote={remote.active}>
                 <>
-                    {available ? (
+                    {/*{available ? (
                         <div className="pointer green"></div>
                     ) : (
                         <div className="pointer orange"></div>
-                    )}
+                    )}*/}
                     <div
-                        className="px-2 prtclk handcr hvlight flex "
+                        className="p-2 prtclk handcr hvlight flex rounded "
                         onClick={clickDispatch}
                         data-action="sidepane/sidepane_bandtogg"
                         style={{ '--prefix': 'BAND' }}
                     >
                         <div
                             className="text-xm font-semibold"
-                            style={{ color: '#28bdb9' }}
+                            style={{ color: '#0167c0' }}
                         >
                             {t[Contents.SUPPORT]}
                         </div>
                     </div>
                     <div
-                        className="prtclk handcr my-1 px-1 hvlight flex rounded"
+                        className="prtclk handcr my-1 p-2 hvlight flex rounded"
                         onClick={clickDispatch}
                         style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
@@ -174,13 +174,14 @@ const Taskbar = () => {
                         ) : null}
                         <div
                             className="text-xm font-semibold"
-                            style={{ color: 'white' }}
+                        //style={{ color: 'white' }}
                         >
+                            <Icon src='setting'></Icon>
                             {t[Contents.SETTING]}
                         </div>
                     </div>
                 </>
-                <div className="taskDate m-1 handcr prtclk rounded hvlight">
+                <div className="taskDate p-2 m-1 handcr prtclk rounded hvlight">
                     <div>
                         {time.toLocaleTimeString('en-US', {
                             hour: 'numeric',
