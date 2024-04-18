@@ -93,14 +93,14 @@ export const ConnectApp = () => {
 			>
 				<LazyComponent show={!wnapp.hide}>
 					<div className="content">
-						<div className='title'><Icon src='monitor'></Icon>Sieunhankiet's PC</div>
+						<div className='title'><Icon src='monitor'></Icon>Your PC</div>
 
-						<div className=' flex-1 mt-10 display flex flex-col justify-between'>
+						<div className='containerSpec'>
 							<div className="flex flex-col gap-3">
 
 								{listSpec.map(spec => (
 									<div key={spec.text} className='spec'>
-										<b className='min-w-[100px]'>{spec.name}</b>
+										<b className=''>{spec.name}</b>
 										{spec.text}
 									</div>
 								))}
