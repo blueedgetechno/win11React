@@ -3,11 +3,14 @@ import './index.scss';
 
 
 export function RightFuncButton(props) {
-	const { Touch, name, className, size, ...rest } = props;
+	const { name, className, size, ...rest } = props;
 
 	const buttonSize = {
 		width: size,
 		height: size
+	}
+	const Touch = (index, type) => {
+		gamePadBtnCallback(index, type)
 	}
 	return (
 		<div
@@ -33,10 +36,13 @@ export function RightFuncButton(props) {
 }
 
 export function LeftFuncButton(props) {
-	const { Touch, size = 50, className } = props;
+	const { size = 50, className } = props;
 	const buttonSize = {
 		width: size,
 		height: size
+	}
+	const Touch = (index, type) => {
+		gamePadBtnCallback(index, type)
 	}
 	return (
 		<div

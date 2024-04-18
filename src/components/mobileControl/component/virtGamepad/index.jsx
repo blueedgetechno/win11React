@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useState, useTransition } from "react";
 import Draggable from "react-draggable";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { useAppSelector } from "../../../../backend/reducers";
+import { gamePadBtnCallback } from "../../../../backend/reducers/remote";
 import { CustomJoyStick } from '../joystick';
 import DPad from "./dpad";
 import { LeftFuncButton, RightFuncButton } from "./funcBtn";
@@ -183,14 +184,14 @@ export const ButtonGroupRight = (props) => {
 			>
 				<div className="containerSubButton" id="subBtn">
 					<div className="centerButton"
-						onTouchStart={() => props.ButtonCallback(8, "down")}
-						onTouchEnd={() => props.ButtonCallback(8, "up")}
+						onTouchStart={() => gamePadBtnCallback(8, "down")}
+						onTouchEnd={() => gamePadBtnCallback(8, "up")}
 					>
 						<MdArrowLeft />
 					</div>
 					<div className="centerButton"
-						onTouchStart={() => props.ButtonCallback(9, "down")}
-						onTouchEnd={() => props.ButtonCallback(9, "up")}
+						onTouchStart={() => gamePadBtnCallback(9, "down")}
+						onTouchEnd={() => gamePadBtnCallback(9, "up")}
 					>
 						<MdArrowRight />
 					</div>
@@ -207,8 +208,8 @@ export const ButtonGroupRight = (props) => {
 						id='rs'
 						className="defaultButton"
 						style={{ width: `${BUTTON_SIZE * rs}px`, height: `${BUTTON_SIZE * rs}px` }}
-						onTouchStart={() => props.ButtonCallback(11, "down")}
-						onTouchEnd={() => props.ButtonCallback(11, "up")}
+						onTouchStart={() => gamePadBtnCallback(11, "down")}
+						onTouchEnd={() => gamePadBtnCallback(11, "up")}
 					>RS</button>
 				</div>
 			</Draggable>
@@ -342,8 +343,8 @@ export const ButtonGroupLeft = (props) => {
 			>
 				<div id="ls" className="wrapperDraggable">
 					<button
-						onTouchStart={() => props.ButtonCallback(10, "down")}
-						onTouchEnd={() => props.ButtonCallback(10, "up")}
+						onTouchStart={() => gamePadBtnCallback(10, "down")}
+						onTouchEnd={() => gamePadBtnCallback(10, "up")}
 						draggable={props.draggable}
 						className="defaultButton"
 						style={{ width: `${BUTTON_SIZE * ls}px`, height: `${BUTTON_SIZE * ls}px` }}

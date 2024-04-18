@@ -1,12 +1,16 @@
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardArrowUp } from "react-icons/md";
 
 
+import { gamePadBtnCallback } from "../../../../backend/reducers/remote";
 import "./index.scss";
 
 
 
 const DPad = (props) => {
-	const { onTouch, size } = props;
+	const { size } = props;
+	const onTouch = (e, type, index) => {
+		gamePadBtnCallback(index, type)
+	}
 	return (
 		<div className="dpad" style={{ width: `${size ?? 20}px`, height: `${size ?? 20}px` }}>
 			<button
