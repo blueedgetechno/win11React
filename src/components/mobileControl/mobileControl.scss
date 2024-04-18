@@ -1,5 +1,5 @@
 .mobile-control {
-	z-index: 3;
+	z-index: 10;
 	display: flex;
 	position: fixed;
 	top: 0;
@@ -52,6 +52,9 @@
 	}
 
 	.button-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		outline: none;
 		border: none;
 		background: none;
@@ -61,14 +64,14 @@
 		height: 100%;
 		font-weight: 500;
 		color: black;
+		font-size: 20px;
+		cursor: pointer;
 	}
 
 	.btn-key {
 		@extend .button-icon;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		border-right: 1px solid;
+		font-size: 0.8rem;
 
 		&:last-child {
 			border-right: unset;
