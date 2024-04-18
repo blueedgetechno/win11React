@@ -20,16 +20,54 @@ export type Message = {
     timestamp: string;
     content: string;
 };
-
+type MobileControl = {
+    hide: boolean;
+    buttons: any[],
+    setting: ISettingState
+}
 type Data = {
     notifications: Notification[];
     message: Message[];
 
     quicks: any[];
+    mobileControl: MobileControl;
     hide: boolean;
     banhide: boolean;
 };
+interface ISettingState {
+    gamePad: IGamePadValue
+    virtMouse: any
+}
+interface IGamePadValue {
+    leftScale: number
+    rightScale: number
+    leftJt: number
+    rightJt: number
+    dpad: number
+    ybxa: number
+    rbRt: number
+    lbLt: number
+    subBtn: number
+    ls: number
+    rs: number
 
+}
+const initialSetting: ISettingState = {
+    gamePad: {
+        leftScale: 1,
+        rightScale: 1,
+        leftJt: 1,
+        rightJt: 1,
+        dpad: 1,
+        ybxa: 1,
+        rbRt: 1,
+        lbLt: 1,
+        subBtn: 1,
+        ls: 1,
+        rs: 1,
+    },
+    virtMouse: {}
+};
 const initialState: Data = {
     quicks: [
         {
@@ -88,6 +126,49 @@ const initialState: Data = {
             action: 'shutDownVm'
         }
     ],
+    mobileControl: {
+        hide: true,
+        buttons: [
+            {
+                ui: true,
+                src: 'MdOutlineResetTv',
+                name: [Contents.RESET_VIDEO],
+                state: 'network.airplane',
+                action: 'hard_reset_async'
+            },
+            {
+                ui: true,
+                src: 'MdFullscreen',
+                name: [Contents.FULLSCREEN],
+                state: 'fullscreen',
+                action: 'remote/toggle_fullscreen'
+            },
+            {
+                ui: true,
+                src: 'MdKeyboard',
+                name: [Contents.SCAN_CODE],
+                state: 'scancode',
+                action: 'remote/scancode_toggle'
+            },
+            {
+                ui: true,
+                src: 'FaExternalLinkAlt',
+                name: [Contents.EXTERNAL_TAB],
+                state: 'active',
+                action: 'remote/share_reference'
+            },
+            {
+                ui: true,
+                src: 'FaPowerOff',
+                name: [Contents.SHUT_DOWN],
+                state: 'shutdown',
+                action: 'shutDownVm'
+            }
+        ],
+        setting: initialSetting,
+
+    },
+
     notifications: [],
     message: [],
 
