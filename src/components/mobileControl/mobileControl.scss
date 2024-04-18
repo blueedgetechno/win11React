@@ -1,0 +1,109 @@
+.mobile-control {
+	z-index: 3;
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: auto;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: both;
+
+
+	.wrapper-content {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-right: 16px;
+		background: #5fccfbab;
+		color: black;
+	}
+
+	.wrapper-button {
+		width: 100%;
+		justify-content: center;
+		height: 45px;
+		display: flex;
+		align-items: center;
+	}
+
+	.wrapper-key {
+		width: 100%;
+		height: 45px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.text {
+		color: white;
+	}
+
+	.button {
+		position: absolute;
+		height: 100%;
+		right: -4px;
+		outline: none;
+		border: none;
+		background: none;
+	}
+
+	.button-icon {
+		outline: none;
+		border: none;
+		background: none;
+		width: auto;
+		padding: 0 8px;
+		min-width: 45px;
+		height: 100%;
+		font-weight: 500;
+		color: black;
+	}
+
+	.btn-key {
+		@extend .button-icon;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-right: 1px solid;
+
+		&:last-child {
+			border-right: unset;
+		}
+	}
+
+	&.slide-in {
+		animation-name: slide-in;
+	}
+
+	&.slide-out {
+		animation-name: slide-out;
+	}
+
+
+
+
+}
+
+@keyframes slide-in {
+	from {
+		transform: translateX(-95%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-out {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-95%);
+	}
+}
