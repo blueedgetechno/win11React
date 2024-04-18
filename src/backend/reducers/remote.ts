@@ -149,12 +149,17 @@ export async function gamePadBtnCallback(index: number, type: "up" | "down") {
     if (client == null) return;
     client?.hid?.VirtualGamepadButtonSlider(type == 'down', index);
 }
+
 export async function gamepadAxisCallback(x: number, y: number, type: "left" | "right") {
     if (client == null) return;
     client?.hid?.VirtualGamepadAxis(x, y, type);
 }
 
+export const setClipBoard = async (content: string) => {
+    if (client == null) return;
 
+    client?.hid?.SetClipboard(content)
+}
 
 export function openRemotePage(
     url: string,
