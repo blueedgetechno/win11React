@@ -23,6 +23,7 @@ export type Message = {
 type MobileControl = {
     hide: boolean;
     buttons: any[],
+    shortcuts: any[],
     setting: ISettingState,
     gamePadHide: boolean;
     keyboardHide: boolean;
@@ -32,6 +33,7 @@ type Data = {
     message: Message[];
 
     quicks: any[];
+    shortcuts: any[];
     mobileControl: MobileControl;
     hide: boolean;
     banhide: boolean;
@@ -71,15 +73,46 @@ const initialSetting: ISettingState = {
     },
     virtMouse: {}
 };
+const listMobileShortCut = [
+    {
+        name: 'Esc',
+        val: ['Escape']
+    },
+    {
+        name: 'Win+D',
+        val: ['lwin', 'd']
+    },
+    {
+        name: 'Ctrl C',
+        val: ['control', 'c']
+    },
+    {
+        name: 'Ctrl V',
+        val: ['control', 'v']
+    },
+    {
+        name: 'Back',
+        val: ['Backspace']
+    }
+
+]
+const listDesktopShortCut = [
+    {
+        name: 'Win+D',
+        val: ['lwin', 'd']
+    }
+
+]
+
 const initialState: Data = {
     quicks: [
-        {
-            ui: true,
-            src: 'FiVideoOff',
-            name: [Contents.VIDEO_TOGGLE],
-            state: 'active',
-            action: 'toggle_remote_async'
-        },
+        //{
+        //    ui: true,
+        //    src: 'FiVideoOff',
+        //    name: [Contents.VIDEO_TOGGLE],
+        //    state: 'active',
+        //    action: 'toggle_remote_async'
+        //},
         {
             ui: true,
             src: 'MdOutlineResetTv',
@@ -87,12 +120,12 @@ const initialState: Data = {
             state: 'network.airplane',
             action: 'hard_reset_async'
         },
-        {
-            ui: true,
-            src: 'FaWindows',
-            name: [Contents.HOMESCREEN],
-            action: 'remote/homescreen'
-        },
+        //{
+        //    ui: true,
+        //    src: 'FaWindows',
+        //    name: [Contents.HOMESCREEN],
+        //    action: 'remote/homescreen'
+        //},
         {
             ui: true,
             src: 'MdFullscreen',
@@ -126,9 +159,12 @@ const initialState: Data = {
             src: 'MdOutlinePowerSettingsNew',
             name: [Contents.SHUT_DOWN],
             state: 'shutdown',
-            action: 'shutDownVm'
+            action: 'shutDownVm',
+            style: { backgroundColor: '#d92d20', color: '#f3f4f5' }
         }
     ],
+    shortcuts: listDesktopShortCut,
+
     mobileControl: {
         hide: true,
         buttons: [
@@ -172,9 +208,12 @@ const initialState: Data = {
                 src: 'MdOutlinePowerSettingsNew',
                 name: [Contents.SHUT_DOWN],
                 state: 'shutdown',
-                action: 'shutDownVm'
+                action: 'shutDownVm',
+                style: { backgroundColor: '#d92d20', color: '#f3f4f5' }
+
             }
         ],
+        shortcuts: listMobileShortCut,
         setting: initialSetting,
         gamePadHide: true,
         keyboardHide: true
