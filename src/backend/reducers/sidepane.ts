@@ -23,7 +23,9 @@ export type Message = {
 type MobileControl = {
     hide: boolean;
     buttons: any[],
-    setting: ISettingState
+    setting: ISettingState,
+    gamePadHide: boolean;
+    keyboardHide: boolean;
 }
 type Data = {
     notifications: Notification[];
@@ -33,6 +35,7 @@ type Data = {
     mobileControl: MobileControl;
     hide: boolean;
     banhide: boolean;
+
 };
 interface ISettingState {
     gamePad: IGamePadValue
@@ -99,14 +102,14 @@ const initialState: Data = {
         },
         {
             ui: true,
-            src: 'MdKeyboard',
+            src: 'MdOutlineKeyboard',
             name: [Contents.SCAN_CODE],
             state: 'scancode',
             action: 'remote/scancode_toggle'
         },
         {
             ui: true,
-            src: 'FaExternalLinkAlt',
+            src: 'MdOutlineLink',
             name: [Contents.EXTERNAL_TAB],
             state: 'active',
             action: 'remote/share_reference'
@@ -120,7 +123,7 @@ const initialState: Data = {
         },
         {
             ui: true,
-            src: 'FaPowerOff',
+            src: 'MdOutlinePowerSettingsNew',
             name: [Contents.SHUT_DOWN],
             state: 'shutdown',
             action: 'shutDownVm'
@@ -145,28 +148,36 @@ const initialState: Data = {
             },
             {
                 ui: true,
-                src: 'MdKeyboard',
+                src: 'MdOutlineKeyboard',
                 name: [Contents.SCAN_CODE],
-                state: 'scancode',
-                action: 'remote/scancode_toggle'
+                state: 'keyboard',
+                action: 'sidepane/toggle_keyboard'
             },
             {
                 ui: true,
-                src: 'FaExternalLinkAlt',
+                src: 'MdOutlineSportsEsports',
+                name: [Contents.SCAN_CODE],
+                state: 'gamepad',
+                action: 'sidepane/toggle_gamepad'
+            },
+            {
+                ui: true,
+                src: 'MdOutlineLink',
                 name: [Contents.EXTERNAL_TAB],
                 state: 'active',
                 action: 'remote/share_reference'
             },
             {
                 ui: true,
-                src: 'FaPowerOff',
+                src: 'MdOutlinePowerSettingsNew',
                 name: [Contents.SHUT_DOWN],
                 state: 'shutdown',
                 action: 'shutDownVm'
             }
         ],
         setting: initialSetting,
-
+        gamePadHide: true,
+        keyboardHide: true
     },
 
     notifications: [],
@@ -263,6 +274,14 @@ export const sidepaneSlice = createSlice({
         push_notification: (state, action: PayloadAction<Notification>) => {
             state.notifications = [action.payload, ...state.notifications];
             state.banhide = false;
+        },
+        toggle_gamepad: (state) => {
+            let oldState = state.mobileControl.gamePadHide
+            state.mobileControl.gamePadHide = !oldState
+        },
+        toggle_keyboard: (state) => {
+            let oldState = state.mobileControl.keyboardHide
+            state.mobileControl.keyboardHide = !oldState
         }
     },
     extraReducers: (builder) => {

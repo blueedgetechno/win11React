@@ -13,13 +13,13 @@ const BUTTON_SIZE = 50;
 const JOYSTICK_SIZE = 100;
 
 export const VirtualGamepad = (props) => {
-	const { draggable = 'static', AxisCallback, ButtonCallback, isOpen = true } = props;
+	const { draggable = 'static', AxisCallback, ButtonCallback } = props;
+	const isClose = useAppSelector(state => state.sidepane.mobileControl.gamePadHide)
 
-	console.log('render gampad');
 	return (
 		<>
 			{(draggable === "static" || draggable === "draggable") && (
-				<div className={`virtGamepad ${isOpen ? 'slide-in' : 'slide-out'}`}>
+				<div className={`virtGamepad ${!isClose ? 'slide-in' : 'slide-out'}`}>
 					<ButtonGroupLeft
 						AxisCallback={AxisCallback}
 						ButtonCallback={ButtonCallback}

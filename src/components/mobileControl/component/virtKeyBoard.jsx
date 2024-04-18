@@ -2,14 +2,16 @@ import { useState } from "react";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { useShift } from '../../../../src-tauri/core/utils/convert';
+import { useAppSelector } from "../../../backend/reducers";
 import './index.scss';
 
 const VirtKeyboard = ({
-	isOpen = false,
+	//isClose = false,
 	keyBoardCallBack,
 	close
 }) => {
 	const [layoutName, setLayoutName] = useState("default");
+	const isClose = useAppSelector(state => state.sidepane.mobileControl.keyboardHide)
 	const onKeyPress = (button) => {
 		if (button === "Shift") {
 			setLayoutName(layoutName === "default" ? "shift" : "default");
@@ -36,7 +38,7 @@ const VirtKeyboard = ({
 
 
 	return (
-		<div id='keyboard' className={isOpen ? 'virtKeyBoard slide-in' : 'virtKeyBoard slide-out'}>
+		<div id='keyboard' className={!isClose ? 'virtKeyBoard slide-in' : 'virtKeyBoard slide-out'}>
 			<Keyboard
 				layoutName={layoutName}
 				onKeyPress={onKeyPress}
