@@ -84,8 +84,10 @@ body[data-theme="dark"] .bandpane {
     transition: all cubic-bezier(0.62, 0, 0.32, 1) 150ms;
   }
 
+
   .quickSettings {
     background: var(--bg2);
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -94,51 +96,62 @@ body[data-theme="dark"] .bandpane {
     padding-top: calc(var(--padding) + 0.4rem);
     padding-bottom: 2.4rem;
 
-    .listBtn {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      /* gap: 16px; */
-      padding: 0 var(--padding);
-      row-gap: 24px;
-      column-gap: 16px;
-      justify-items: center;
-      margin-bottom: 36px;
 
-      .qkGrp {
+  }
+
+  .listBtn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* gap: 16px; */
+    padding: 0 var(--padding);
+    row-gap: 24px;
+    column-gap: 16px;
+    justify-items: center;
+    //margin-bottom: 36px;
+
+    .qkGrp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .qkbtn {
+        overflow: hidden;
+        width: 6rem;
+        height: 3rem;
+        font-size: 1.35rem;
+        border-radius: 4px;
         display: flex;
-        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        background: var(--bg3);
+        border: solid 0.1px rgba(17, 17, 17, 0.1);
+        transition: all 0.1s ease;
 
-        .qkbtn {
-          width: 6rem;
-          height: 3rem;
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom-color: rgba(0, 0, 0, 0.2);
-          background: var(--bg3);
-          border: solid 0.1px rgba(17, 17, 17, 0.1);
-          transition: all 0.1s ease;
-
-          &[data-state="true"] {
-            background: var(--clrPrm);
-          }
-
-          &:hover {
-            background: var(--bg4);
-          }
+        &[data-state="true"] {
+          background: var(--clrPrm);
         }
 
-        .qktext {
-          width: max-content;
-          font-size: 0.75em;
-          text-align: center;
-          margin-top: 0.5rem;
+        &:hover {
+          background: var(--bg4);
+          opacity: 0.9;
         }
       }
+
+      .qktext {
+        width: max-content;
+        font-size: 0.75em;
+        text-align: center;
+        margin-top: 0.5rem;
+
+      }
     }
+  }
+
+  .shortcuts {
+    margin-bottom: 1.6rem;
+
   }
 
   .sliderCont {
@@ -258,6 +271,109 @@ body[data-theme="dark"] .bandpane {
       }
     }
   }
+}
+
+@media (1px < width < 768px) {
+  .sidePane {
+    position: absolute;
+    bottom: 56px;
+    right: 12px;
+    width: 240px;
+    height: calc(100% - 56px);
+    max-height: 280px;
+
+
+    .quickSettings {
+      background: var(--bg2);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      --padding: 1rem;
+
+      padding-top: calc(var(--padding));
+      padding-bottom: 2.4rem;
+    }
+
+    .listBtn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      /* gap: 16px; */
+      padding: 0 var(--padding);
+      row-gap: 4px;
+      column-gap: 0px;
+      justify-items: center;
+
+
+      .qkGrp {
+
+        .qkbtn {
+          width: 3.6rem;
+          height: 2rem;
+          font-size: 0.85rem;
+
+        }
+
+        .qktext {
+          display: none;
+        }
+      }
+    }
+
+    .shortcuts {
+      margin-bottom: 0rem;
+
+    }
+
+    .sliderCont {
+      gap: 12px;
+      padding: 0 var(--padding);
+
+      .containerSlider {
+
+        gap: 4px;
+      }
+
+      .sliderName {
+
+        font-size: 0.6rem;
+
+      }
+
+      .sliderWrapper {}
+
+      .sliders {
+        width: 100%;
+        height: 4px;
+        cursor: pointer;
+
+
+
+
+      }
+    }
+
+    .bottomBar {
+      box-sizing: border-box;
+      border-top: 1px solid var(--bg4);
+      height: 3rem;
+      display: flex;
+      align-items: center;
+
+      .battery-sidepane {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+
+        &:hover {
+          background: var(--bg4);
+        }
+      }
+    }
+  }
+
 }
 
 body[data-theme="dark"] .sidePane {
