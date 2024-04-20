@@ -1,3 +1,5 @@
+import { SupabaseFuncInvoke } from './createClient.ts';
+
 export const DownloadApplication = async (
     app_template_id: string,
     availability: string,
@@ -36,3 +38,46 @@ interface UserSettingUpdate {
 export async function UpdateUserSetting(
     params: UserSettingUpdate
 ): Promise<void> {}
+
+/**
+ *
+ * @param {string} email
+ * @param {'month_01' | 'month_02'} plan
+ * @returns
+ */
+export const AddSubscription = async ({
+    email,
+    free,
+    plan,
+    additional_time
+}: {
+    email: string;
+    plan: string;
+    free: boolean;
+    additional_time: number;
+}) => {
+    const result = await SupabaseFuncInvoke('add_sub', {
+        email,
+        plan,
+        free,
+        additional_time
+    });
+    if (result instanceof Error) throw result;
+    return result;
+};
+
+export interface IModifySubscriptionAction {
+    action: 'CANCEL' | 'RENEW' | 'UPGRADE' | 'ADJUST';
+    email: string;
+    created_at?: string;
+    ends_at?: string;
+    plan?: string;
+}
+export const ModifySubscription = async (input: IModifySubscriptionAction) => {
+    const result = await SupabaseFuncInvoke('modify_sub', {
+        ...input
+    });
+
+    if (result instanceof Error) throw result;
+    return result;
+};

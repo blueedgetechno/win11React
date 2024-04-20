@@ -29,71 +29,22 @@ export const WidPane = () => {
         <>
             <div style={{ '--prefix': 'BAND' }} className="widPaneCont">
                 <LazyComponent show={!widget.banhide}>
-                    <div className="WidPane win11Scroll">
-                        <div className="widtop">
-                            <Icon fafa="faEllipsisH" width={12} />
+                    <div className="WidPane ">
+                        <div className="title">
+                            Chat with <Icon width={48} src='thinkmay'></Icon>
                         </div>
-                        <div className="widTime">
-                            {new Date().toLocaleTimeString('en-US', {
-                                hour: 'numeric',
-                                minute: '2-digit'
-                            })}
-                        </div>
-                        <div className="widgetCont">
+                        <div className="widgetCont win11Scroll">
                             <div className="newsCont">
-                                <div className="allNewsCont">
-                                    {widget.notifications.map((article, i) => {
-                                        return (
-                                            <a
-                                                className={`articleCont  shadow-2xl ${
-                                                    article.type == 'pending'
-                                                        ? 'load'
-                                                        : null
-                                                }`}
-                                                target="_blank"
-                                                style={{
-                                                    '--backgrad':
-                                                        article.type ==
-                                                        'pending'
-                                                            ? '#8b670c'
-                                                            : article.type ==
-                                                                'rejected'
-                                                              ? '#c20c30'
-                                                              : '#0c41aa',
-                                                    backgroundImage: `url(img/wallpaper/${img})`
-                                                }}
-                                                href={article.url}
-                                                rel="noopener noreferrer"
-                                                key={i}
-                                                loading="lazy"
-                                            >
-                                                <div className="tpNews">
-                                                    <div className="tpSource">
-                                                        {article.name ??
-                                                            new Date().toUTCString()}
-                                                    </div>
-                                                    <div className="tpTitle">
-                                                        {article.title}
-                                                    </div>
-                                                    <div className="tpArticle">
-                                                        {article.content}
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        );
-                                    })}
-                                </div>
-
                                 <div className="allNewsCont">
                                     {widget.message.map((article, i) => {
                                         return (
                                             <a
-                                                className={`articleCont  shadow-2xl `}
+                                                className={`articleCont `}
                                                 href={article.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 key={i}
-                                                // loading="lazy"
+                                            // loading="lazy"
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
@@ -121,11 +72,30 @@ export const WidPane = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="relative flex sendMessage ">
+                            <input
+                                className="inputMsg"
+                                ref={value}
+                                onKeyDown={(e) =>
+                                    e.key == 'Enter' ? finish() : null
+                                }
+                                placeholder="Send us a message"
+                                type="text"
+                            />
+                            <Icon
+                                className="z-1 handcr ml-2 "
+                                src="mail"
+                                width={30}
+                                margin="0 10px"
+                                onClick={finish}
+                            />
+                        </div>
                     </div>
                 </LazyComponent>
             </div>
 
-            <div
+            {/*<div
                 style={{ '--prefix': 'BAND' }}
                 className="inputCont"
                 data-hide={widget.banhide}
@@ -152,7 +122,7 @@ export const WidPane = () => {
                         </div>
                     </div>
                 </LazyComponent>
-            </div>
+            </div>*/}
         </>
     );
 };

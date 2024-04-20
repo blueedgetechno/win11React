@@ -28,46 +28,35 @@ export const PaymentApp = () => {
     const [ListSubs, setListSubs] = useState([
         {
             highlight: false,
-            title: 'one month plan',
-            price_in_vnd: '300',
-
+            title: 'Cơ bản',
+            price_in_vnd: '299',
+            total_time: '110',
             name: 'week',
             period: 'month',
-            description: 'Perfect to get started using Cloud PC',
-            bonus: ['Normal customer support priority']
+            description: 'Khởi đầu với CloudPc',
+            bonus: ['100GB storage', '8GB ram', 'RTX 3060TI']
         },
         {
             highlight: true,
-            title: 'one year plan',
-            price_in_vnd: '4000',
+            title: 'Tiêu chuẩn',
+            price_in_vnd: '369',
+            total_time: '140',
 
             name: 'month',
-            period: 'year',
-            description: 'Perfect to individuals',
-            bonus: [
-                'Every thing in one month plan plus',
-                '1 year Thinkmay Personal Cloud Storage (1TB)',
-                '1 year OneDrive / Google Drive (1TB)',
-                '1 year Thinkmay Steam account',
-                'Highest priority feature request'
-            ]
+            period: 'month',
+            description: 'Thoải mái sử dụng',
+            bonus: ['250GB storage', '12GB ram', 'RTX 3060TI']
         },
         {
             highlight: false,
-            title: 'Enterprise',
-            price: 'charge based on number of account ',
-            description: 'Solution for your business',
+            title: 'Super',
+            price_in_vnd: '899',
+            description: 'Tối ưu & tiết kiệm nhất',
+            period: '3 months',
+            total_time: '125',
 
             name: 'Enterprise',
-            bonus: [
-                '1 year Adobe / AutoCAD  license',
-                '1 year Thinkmay Personal Cloud Storage (1TB)',
-                '1 year OneDrive / Google Drive (1TB)',
-                '1 year Thinkmay Steam account',
-                'Multitasking Cloud PC',
-                'Account management system for business',
-                'Highest priority feature request'
-            ]
+            bonus: ['100GB storage', '12GB ram', 'RTX 3060TI']
         }
     ]);
 
@@ -113,7 +102,7 @@ export const PaymentApp = () => {
                             {ListSubs.map((sub, index) => (
                                 <div key={index} className="sub relative">
                                     {sub.highlight ? (
-                                        <div className="rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%] h-[105%] top-[-4.5%] left-[-1%]">
+                                        <div className="rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%]  top-[-37px] bottom-[-6px] left-[-1%]">
                                             <p className="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">
                                                 Most Popular
                                             </p>
@@ -139,13 +128,7 @@ export const PaymentApp = () => {
                                                     <div className="flex items-end gap-2">
                                                         <div>
                                                             <div className="flex items-end">
-                                                                {sub.title ==
-                                                                'Enterprise' ? (
-                                                                    <p className="mt-2 gradient-text-500 pb-1 text-5xl">
-                                                                        Contact
-                                                                        Us
-                                                                    </p>
-                                                                ) : (
+                                                                {
                                                                     <>
                                                                         <p className="mt-2 gradient-text-500 pb-1 text-5xl">
                                                                             {sub.price_in_vnd
@@ -159,7 +142,7 @@ export const PaymentApp = () => {
                                                                             }{' '}
                                                                         </p>
                                                                     </>
-                                                                )}
+                                                                }
                                                             </div>
                                                             <p className="-mt-2">
                                                                 <span className="bg-background text-brand-600 border shadow-sm rounded-md bg-opacity-30 py-0.5 px-2 text-[13px] leading-4">
@@ -169,7 +152,7 @@ export const PaymentApp = () => {
                                                                         : sub.title ==
                                                                             'one year plan'
                                                                           ? `Unlimited remote usage`
-                                                                          : `Limit of ${sub.total_time} hours`}
+                                                                          : `Giới hạn ${sub.total_time} giờ sử dụng trong tháng`}
                                                                 </span>
                                                             </p>
                                                         </div>

@@ -1,12 +1,5 @@
-import { changeTheme } from '../../backend/actions';
-import {
-    appDispatch,
-    useAppSelector,
-    user_delete
-} from '../../backend/reducers';
-import { Contents } from '../../backend/reducers/locales';
-import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
-import { Icon } from '../shared/general';
+import { useAppSelector } from '../../backend/reducers';
+import UserManager from '../shared/userManager';
 
 export const StartMenu = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -27,8 +20,19 @@ export const StartMenu = () => {
     };
 
     const additionalTime = stats?.additional_time ?? 0;
-    const planUsageTime = stats?.plan_usage_time ?? 0;
+    const planUsageTime = stats?.plan_hour ?? 0;
     const totalTime = +planUsageTime + +additionalTime;
+
+    const renderPlanName = (planName) => {
+        let name = '';
+        if (planName == 'month_01') {
+            name = 'Cơ bản';
+        } else if (planName == 'month_02') {
+            name = 'Tiêu chuẩn';
+        }
+
+        return name;
+    };
 
     return (
         <div
@@ -38,7 +42,7 @@ export const StartMenu = () => {
             style={{ '--prefix': 'START' }}
         >
             <>
-                <div className="stmenu p-[14px]">
+                {/*<div className="stmenu p-[14px]">
                     <div className="pinnedApps mt-[16px] text-center font-semibold pb-1 flex items-center justify-center gap-2">
                         <span>{user.email ?? 'Admin'}</span>
                         <Icon
@@ -71,6 +75,12 @@ export const StartMenu = () => {
                         <div className="restWindow w-full  flex flex-col ">
                             <div className="w-full flex gap-4 justify-between mt-1">
                                 <span className="text-left">
+                                    {t[Contents.PLAN_NAME]}
+                                </span>
+                                <span>{renderPlanName(stats?.plan_name)}</span>
+                            </div>
+                            <div className="w-full flex gap-4 justify-between mt-1">
+                                <span className="text-left">
                                     {t[Contents.STARTAT]}
                                 </span>
                                 <span>{formatDate(stats?.start_time)}</span>
@@ -99,8 +109,8 @@ export const StartMenu = () => {
                                     {t[Contents.TIME]}
                                 </span>
                                 <span>
-                                    {stats?.total_time
-                                        ? stats?.total_time.toFixed(1)
+                                    {stats?.usage_hour
+                                        ? stats?.usage_hour.toFixed(1)
                                         : 0}
                                     h / {totalTime + 'h'}
                                 </span>
@@ -129,7 +139,9 @@ export const StartMenu = () => {
                         </svg>
                         <span>Log Out</span>
                     </div>
-                </div>
+                </div>*/}
+
+                <UserManager></UserManager>
             </>
         </div>
     );

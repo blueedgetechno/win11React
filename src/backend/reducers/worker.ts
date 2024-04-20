@@ -3,6 +3,7 @@ import {
     appDispatch,
     claim_volume,
     fetch_local_worker,
+    popup_open,
     remote_connect,
     RootState,
     save_reference,
@@ -10,6 +11,7 @@ import {
     vm_session_create,
     worker_vm_create_from_volume
 } from '.';
+import { isRunOutOfGpu } from '../utils/checking';
 import { fromComputer, RenderNode } from '../utils/tree';
 import { pb } from './fetch/createClient';
 import {
@@ -60,7 +62,7 @@ export const workerAsync = {
     ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer> => {
+        async (_: void, { getState }): Promise<Computer | string> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -79,7 +81,12 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                await appDispatch(worker_vm_create_from_volume(volume_id));
+                const resp = await appDispatch(
+                    worker_vm_create_from_volume(volume_id)
+                );
+                if (isRunOutOfGpu(resp.payload)) {
+                    return ('ran out of gpu');
+                }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
                 await appDispatch(vm_session_access(result.data.at(0).id));
@@ -171,8 +178,21 @@ export const workerAsync = {
             ).info;
             if (computer == undefined) throw new Error('invalid tree');
 
-            await StartVirtdaemon(computer, input);
+            const resp = await StartVirtdaemon(computer, input);
+            console.log(resp);
+            if (resp instanceof Error) {
+                console.log(resp.message);
+                appDispatch(
+                    popup_open({
+                        type: 'notify',
+                        data: { title: resp.message, loading: false }
+                    })
+                );
+
+                throw resp.message;
+            }
             await appDispatch(fetch_local_worker(computer.address));
+            return resp;
         }
     ),
     vm_session_create: createAsyncThunk(
@@ -283,38 +303,54 @@ export const workerSlice = createSlice({
         }
     },
     extraReducers: (build) => {
-        BuilderHelper<WorkerType, any, any>(build, {
-            fetch: workerAsync.fetch_local_worker,
-            hander: (state, action) => {
-                let target = new RenderNode<any>(state.data);
+        BuilderHelper<WorkerType, any, any>(
+            build,
+            {
+                fetch: workerAsync.fetch_local_worker,
+                hander: (state, action) => {
+                    let target = new RenderNode<any>(state.data);
 
-                const node = new RenderNode<Computer>(action.payload);
-                const overlapp = target.data.findIndex((x) => x.id == node.id);
-                if (overlapp == -1 && node.type != 'reject')
-                    target.data.push(node);
-                else if (overlapp == -1 && node.type == 'reject') return;
-                else if (node.type == 'reject')
-                    target.data = target.data.filter((v, i) => i != overlapp);
-                else target.data[overlapp] = node;
+                    const node = new RenderNode<Computer>(action.payload);
+                    const overlapp = target.data.findIndex(
+                        (x) => x.id == node.id
+                    );
+                    if (overlapp == -1 && node.type != 'reject')
+                        target.data.push(node);
+                    else if (overlapp == -1 && node.type == 'reject') return;
+                    else if (node.type == 'reject')
+                        target.data = target.data.filter(
+                            (v, i) => i != overlapp
+                        );
+                    else target.data[overlapp] = node;
 
-                state.data = target.any();
+                    state.data = target.any();
 
-                const paths = state.cpath
-                    .split('/')
-                    .filter((x) => x.length > 0);
-                if (paths.length == 0) {
-                    state.cdata = target.data.map((x) => x.any());
-                } else {
-                    paths.forEach(
-                        (x) =>
+                    const paths = state.cpath
+                        .split('/')
+                        .filter((x) => x.length > 0);
+                    if (paths.length == 0) {
+                        state.cdata = target.data.map((x) => x.any());
+                    } else {
+                        paths.forEach(
+                            (x) =>
                             (target =
                                 new RenderNode(target).data.find(
                                     (y) => y.id == x
                                 ) ?? target)
-                    );
-                    state.cdata = target.data.map((x) => x.any());
+                        );
+                        state.cdata = target.data.map((x) => x.any());
+                    }
                 }
-            }
-        });
+            },
+            {
+                fetch: workerAsync.worker_session_close,
+                hander: (state, action) => { }
+            },
+            //{
+
+            //    fetch: workerAsync.claim_volume,
+            //    hander: (state, action) => { }
+            //}
+        );
     }
 });

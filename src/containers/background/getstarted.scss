@@ -77,7 +77,7 @@
 
   .list_oobe_opt_wifi {
     //width: 306px;
-    padding: 12px 0px ;
+    padding: 12px 0px;
     display: flex;
     border-radius: 4px;
     margin-bottom: 6px;
@@ -104,10 +104,12 @@
     right: 150px;
     //animation: transition_effect 1.4s;
     bottom: 37px;
-    &:hover{
+
+    &:hover {
       opacity: 0.85;
     }
   }
+
   .yes_button {
     border-radius: 4px;
     background: var(--clrPrm);
@@ -124,7 +126,7 @@
     //animation: transition_effect 1.4s;
     bottom: 37px;
 
-    &:hover{
+    &:hover {
       opacity: 0.7;
     }
   }
@@ -146,11 +148,12 @@
     //animation: transition_effect 1.4s;
     bottom: 37px;
 
-    button{
+    button {
       border: none;
       cursor: pointer;
       background: transparent;
-      :hover{
+
+      :hover {
         opacity: 0.9;
       }
     }
@@ -290,13 +293,13 @@
   }
 }
 
-  @media (0px < width < 800px) {
-    .getstarted{
-      .left{
-        display: none;
-      }
+@media (0px < width < 800px) {
+  .getstarted {
+    .left {
+      display: none;
     }
   }
+}
 
 .langSwitcherTile {
   &::after {
@@ -304,6 +307,7 @@
   }
 
   select {
+    cursor: pointer;
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgb(238, 236, 235);
     border-bottom: 1px solid rgb(212, 211, 210);

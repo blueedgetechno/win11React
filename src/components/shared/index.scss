@@ -16,3 +16,20 @@
   font-weight: 500;
 }
 
+.userManager {
+  background: f5f6f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 360px;
+  //width: 40%;
+  min-width: 270px;
+  height: 100%;
+}
+
+@media (1px < width < 768px) {
+  .userManager {
+    font-size: 13.5px;
+    overflow: scroll;
+  }
+}

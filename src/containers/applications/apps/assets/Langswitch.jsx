@@ -8,7 +8,7 @@ function LangSwitch() {
 
     useLayoutEffect(() => {
         let languageLocal =
-            localStorage.getItem(localStorageKey.language) ?? 'ENG';
+            localStorage.getItem(localStorageKey.language) ?? 'VN';
         if (!allowed.includes(languageLocal)) languageLocal = 'ENG';
 
         setLanguageValue(languageLocal);

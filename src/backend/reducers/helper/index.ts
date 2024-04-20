@@ -132,32 +132,32 @@ const isRejected = (action: UnknownAction) =>
 
 export const isPendingAction =
     (prefixs: string[]) =>
-    (action: UnknownAction): action is UnknownAction => {
-        // Note: this cast to UnknownAction could also be `any` or whatever fits your case best
-        return (
-            prefixs.find((prefix) => action.type.includes(prefix)) !=
+        (action: UnknownAction): action is UnknownAction => {
+            // Note: this cast to UnknownAction could also be `any` or whatever fits your case best
+            return (
+                prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isPending(action)
-        );
-    };
+            );
+        };
 
 export const isRejectedAction =
     (prefixs: string[]) =>
-    (action: UnknownAction): action is UnknownAction => {
-        // Note: this cast to UnknownAction could also be `any` or whatever fits your case best - like if you had standardized errors and used `rejectWithValue`
-        return (
-            prefixs.find((prefix) => action.type.includes(prefix)) !=
+        (action: UnknownAction): action is UnknownAction => {
+            // Note: this cast to UnknownAction could also be `any` or whatever fits your case best - like if you had standardized errors and used `rejectWithValue`
+            return (
+                prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isRejected(action)
-        );
-    };
+            );
+        };
 
 export const isFulfilledAction =
     (prefixs: string[]) =>
-    (action: UnknownAction): action is UnknownAction => {
-        return (
-            prefixs.find((prefix) => action.type.includes(prefix)) !=
+        (action: UnknownAction): action is UnknownAction => {
+            return (
+                prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isFulfilled(action)
-        );
-    };
+            );
+        };
 
 export async function BuilderHelper<T, U, V>(
     builder: ActionReducerMapBuilder<T>,
@@ -210,7 +210,7 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                    await new Promise((r) => setTimeout(r, 3000));
+                    await new Promise((r) => setTimeout(r, 5000));
                     appDispatch(popup_close());
                     appDispatch(popup_close());
                 };
@@ -232,7 +232,7 @@ export async function BuilderHelper<T, U, V>(
                         })
                     );
 
-                    await new Promise((r) => setTimeout(r, 1000));
+                    await new Promise((r) => setTimeout(r, 2000));
                     appDispatch(popup_close());
                     appDispatch(popup_close());
                 };

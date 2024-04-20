@@ -1,0 +1,118 @@
+.connectToPcApp {
+	--bg1: rgba(242, 242, 242, 1);
+	--bg2: rgba(255, 255, 255, 1);
+	--bg3: rgba(0, 0, 0, 0.033);
+	--bg4: #aaa;
+	--rib-bg: #ffffffb8;
+
+	//background: linear-gradient(138deg, #060606 0%, rgb(117, 3, 146) 100%);
+	background: var(--bg1);
+	color: var(--dark-txt);
+
+	&[data-size="mini"] {
+		top: 1%;
+		right: 20%;
+		max-width: 768px;
+		max-height: 640px;
+		width: 100%;
+		height: 100%;
+	}
+
+	.title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		font-size: 22px;
+		font-weight: 600;
+		margin: 0 auto;
+	}
+
+	.spec {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		font-size: 16.5px;
+	}
+
+	.connectBtn {
+		margin-top: 40px;
+		border-radius: 8px;
+		outline: none;
+		border: none;
+		font-size: 18px;
+		font-weight: 500;
+		color: #fff;
+		padding: 12px 56px;
+		cursor: pointer;
+	}
+
+	.connectAppContent {
+		background: linear-gradient(180deg, #040218 0%, #140B7E 100%);
+		padding: 16px;
+		overflow-y: scroll;
+		width: 100%;
+		height: 100%;
+
+		.content {
+			display: flex;
+			flex-direction: column;
+			margin: auto;
+			padding: 0 35px;
+			padding-top: 44px;
+			padding-bottom: 40px;
+			width: 340px;
+			height: 480px;
+			color: aliceblue;
+			border: 2px solid #AD00FF;
+			border-radius: 16px;
+			background: #050433;
+
+
+
+
+
+
+		}
+	}
+
+	&[data-hide="true"] {
+		z-index: -1 !important;
+	}
+}
+
+@media (1px < width < 768px) {
+	.connectToPcApp {
+		border-radius: 0px;
+
+		&[data-size="mini"] {
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			max-width: 100%;
+			max-height: 100%;
+		}
+
+
+		.title {
+			font-size: 18px;
+
+		}
+
+		.spec {
+			font-size: 13.5px;
+		}
+
+		.connectBtn {
+
+			font-size: 16px;
+
+		}
+	}
+}
+
+body[data-theme="dark"] .connectToPcApp {
+	--bg1: #202020;
+	--bg2: #2b2b2b;
+}

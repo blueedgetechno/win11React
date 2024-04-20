@@ -1,5 +1,3 @@
-import { store } from '../reducers';
-
 export const isMobile = () => {
     let check = false;
     (function (a) {
@@ -15,3 +13,32 @@ export const isMobile = () => {
     })(navigator.userAgent || navigator.vendor);
     return check;
 };
+
+export const isDevEnv = () => {
+    return (
+        window.location.hostname == 'localhost' ||
+        window.location.hostname == 'tauri.localhost'
+    );
+};
+
+export const isAdmin = (email) => {
+    const listAdmin = [
+        'sieunhankiet@gmail.com',
+        'datdovan1502@gmail.com',
+        'thienvanlea1@gmail.com',
+        'huyhoangdo0205@gmail.com'
+    ];
+
+    // TODO: after release
+
+    return listAdmin.includes(email) ?? false;
+};
+
+export const isRunOutOfGpu = (respText: string): boolean => {
+    let check = true
+
+    check = JSON.stringify(respText).includes(' out of gpu');
+
+    return check
+
+}

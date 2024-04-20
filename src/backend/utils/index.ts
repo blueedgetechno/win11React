@@ -50,6 +50,20 @@ const apps: AppData[] = [
         payload: 'feedback'
     },
     {
+        name: 'Your Info',
+        id: 'usermanager',
+        action: 'apps/app_toggle',
+        payload: 'usermanager'
+    },
+    {
+        name: 'Connect YourPC',
+        id: 'connectPc',
+        action: 'apps/app_toggle',
+        payload: 'connectPc',
+        max: false,
+        size: 'mini'
+    },
+    {
         name: 'Guideline',
         id: 'about',
         action: 'apps/app_url',
@@ -77,14 +91,16 @@ var { taskbar, desktop } = {
         'Discord',
         'Thinkmay Fanpage',
         'Store',
-        'Payment'
+        'Connect YourPC',
+        'Payment',
+        'Your Info'
     ]
 };
 
 apps.map((x) => {
-    x.size = 'full';
+    x.size = x.size ?? 'full';
     x.hide = true;
-    x.max = null;
+    x.max = x.max ?? null;
     x.z = 0;
 });
 
@@ -99,4 +115,5 @@ export const desktopApps = apps
     )
     .map((x) => x.id);
 
+console.log(apps);
 export const allApps = apps;
