@@ -6,9 +6,9 @@ import {
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
 import LangSwitch from '../../containers/applications/apps/assets/Langswitch';
-import { Icon } from '../shared/general';
+import { Icon } from './general';
 import './index.scss';
-function UserManager() {
+function UserInfo() {
     const user = useAppSelector((state) => state.user);
     const stats = useAppSelector((state) => state.user.stat);
     const thm = useAppSelector((state) => state.setting.person.theme);
@@ -142,4 +142,4 @@ function UserManager() {
     );
 }
 
-export default UserManager;
+export default UserInfo;

@@ -28,11 +28,24 @@
 		margin: 0 auto;
 	}
 
+	.containerSpec {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		flex: 1;
+		margin-top: 2.5rem;
+
+	}
+
 	.spec {
 		display: flex;
 		gap: 12px;
 		align-items: center;
 		font-size: 16.5px;
+
+		b {
+			min-width: 100px;
+		}
 	}
 
 	.connectBtn {
@@ -96,18 +109,59 @@
 
 
 		.title {
-			font-size: 18px;
+			font-size: 14px;
 
 		}
 
+		.containerSpec {
+
+			margin-top: 1.5rem;
+		}
+
 		.spec {
-			font-size: 13.5px;
+			font-size: 10px;
+			gap: 0px;
+
+			b {
+				min-width: 80px;
+			}
 		}
 
 		.connectBtn {
 
-			font-size: 16px;
+			font-size: 12px;
 
+		}
+
+		.connectAppContent {
+			background: linear-gradient(180deg, #040218 0%, #140B7E 100%);
+			padding: 16px;
+			overflow-y: scroll;
+			width: 100%;
+			height: 100%;
+
+			.content {
+				display: flex;
+				flex-direction: column;
+				margin: auto;
+				padding: 0 24px;
+				padding-top: 24px;
+				padding-bottom: 28px;
+				width: 280px;
+				max-height: 340px;
+				//height: 100%;
+
+				color: aliceblue;
+				border: 2px solid #AD00FF;
+				border-radius: 16px;
+				background: #050433;
+
+
+
+
+
+
+			}
 		}
 	}
 }

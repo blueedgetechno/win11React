@@ -96,7 +96,9 @@ export const {
     sidepane_panehide,
     sidepane_panethem,
     render_message,
-    push_notification
+    push_notification,
+    toggle_gamepad,
+    toggle_keyboard
 } = sidepaneSlice.actions;
 
 export const {

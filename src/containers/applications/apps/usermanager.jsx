@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useAppSelector } from '../../../backend/reducers';
 import { LazyComponent, ToolBar } from '../../../components/shared/general';
-import UserManager from '../../../components/shared/userManager';
+import UserInfo from '../../../components/shared/userInfo';
 
 export const Usermanager = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -30,7 +30,7 @@ export const Usermanager = () => {
             />
             <div className="windowScreen flex flex-col pt-0" data-dock="true">
                 <LazyComponent show={!wnapp.hide}>
-                    <UserManager></UserManager>
+                    <UserInfo></UserInfo>
                 </LazyComponent>
             </div>
         </div>

@@ -1,0 +1,160 @@
+.virtGamepad {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	opacity: 0;
+	z-index: -1;
+
+	&.slide-in {
+		opacity: 1;
+		z-index: 9;
+
+	}
+
+	&.slide-out {
+		opacity: 0;
+
+	}
+
+	.containerSubButton {
+		display: flex;
+		gap: 8px;
+		width: max-content;
+		position: absolute;
+	}
+
+	.wrapperDraggable {
+		width: max-content;
+		position: absolute;
+	}
+
+	.defaultButton {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		outline: none;
+		width: inherit;
+		height: inherit;
+		color: rgba(255, 255, 255, 0.5);
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		background-color: transparent;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+
+	}
+
+	.centerButton {
+		width: 50px;
+		height: 25px;
+		outline: none;
+		background-color: transparent;
+		color: #C3B5B5;
+		border: 1px solid #C3B5B5;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.ybxa {
+		position: absolute;
+		top: 48%;
+		right: 30%;
+
+		.mainContent {
+			position: relative;
+
+			.button-y {
+				position: absolute;
+				@extend .defaultButton;
+				top: 0;
+				right: 50%;
+				transform: translate(50%, -100%);
+			}
+
+			.button-b {
+				position: absolute;
+				@extend .defaultButton;
+				bottom: 0;
+				right: 50%;
+				transform: translate(50%, 100%);
+			}
+
+			.button-x {
+				position: absolute;
+				@extend .defaultButton;
+				right: 0;
+				top: 50%;
+				transform: translate(100%, -50%);
+			}
+
+			.button-a {
+				position: absolute;
+				@extend .defaultButton;
+				top: 50%;
+				left: 0%;
+				transform: translate(-100%, -50%);
+			}
+		}
+	}
+
+	.dpad {
+		position: relative;
+
+		.top {
+			@extend .defaultButton;
+			position: absolute;
+			top: 0;
+			right: 50%;
+			transform: translate(50%, -100%);
+		}
+
+		.right {
+			@extend .defaultButton;
+			position: absolute;
+			bottom: 50%;
+			right: 0;
+			transform: translate(100%, 50%);
+		}
+
+		.left {
+			@extend .defaultButton;
+			position: absolute;
+			bottom: 50%;
+			left: 0;
+			transform: translate(-100%, 50%);
+		}
+
+		.bottom {
+			@extend .defaultButton;
+			position: absolute;
+			bottom: 0%;
+			right: 50%;
+			transform: translate(50%, 100%);
+		}
+
+
+	}
+
+	.funcBtn {
+		display: flex;
+		gap: 18px;
+		width: max-content;
+	}
+
+	.rightFuncBtn {
+		@extend .funcBtn;
+		align-items: flex-start;
+
+	}
+
+	.leftFuncBtn {
+		@extend .funcBtn;
+		align-items: flex-end;
+
+	}
+
+}

@@ -23,6 +23,7 @@ import {
     worker_session_close
 } from '../reducers/index';
 import { Contents } from '../reducers/locales';
+import { keyboardCallback } from '../reducers/remote';
 import { isRunOutOfGpu } from '../utils/checking';
 import { sleep } from '../utils/sleep';
 import { RenderNode } from '../utils/tree';
@@ -251,4 +252,13 @@ export const connectVm = async () => {
     }
     // until has available Gpu
     appDispatch(popup_close());
+};
+
+export const clickShortCut = (keys = []) => {
+    keys.forEach((k, i) => {
+        keyboardCallback(k, 'down');
+    });
+    keys.forEach((k, i) => {
+        keyboardCallback(k, 'up');
+    });
 };
