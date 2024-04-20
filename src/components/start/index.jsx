@@ -36,10 +36,12 @@ export const DesktopApp = () => {
     const desk = useAppSelector((state) => state.desktop);
     const [holding, setHolding] = useState(false);
     const timeoutRef = useRef(null);
+    const lastTap = useRef(null);
 
     const dispatch = useDispatch();
 
     const handleTouchStart = (e) => {
+        return
         Actions.afterMath(e);
         timeoutRef.current = setTimeout(() => {
             setHolding(true);
@@ -56,9 +58,16 @@ export const DesktopApp = () => {
         }, 300); // 1000 milliseconds = 1 second
     };
 
-    const handleTouchEnd = () => {
-        clearTimeout(timeoutRef.current);
-        //setHolding(false);
+
+    const handleTouchEnd = (e) => {
+        //clearTimeout(timeoutRef.current);
+
+        const now = Date.now();
+        if (now - lastTap?.current < 250) {
+            // Double tap detected!
+            clickDispatch(e);
+        }
+        lastTap.current = now;
     };
 
     const handleDouble = customClickDispatch((e) => e.stopPropagation());
