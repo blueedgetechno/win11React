@@ -367,7 +367,7 @@ export const remoteSlice = createSlice({
         internal_sync: (state) => {
             if (
                 (state.bitrate != state.prev_bitrate ||
-                state.prev_size != size()) &&
+                    state.prev_size != size()) &&
                 size() > 0
             ) {
                 client?.ChangeBitrate(

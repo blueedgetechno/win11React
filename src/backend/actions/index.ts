@@ -45,7 +45,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) { }
+    } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -159,9 +159,9 @@ export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
 
-export const loginWithEmail = async (email: string, password: string) => { };
+export const loginWithEmail = async (email: string, password: string) => {};
 
-export const signUpWithEmail = async (email: string, password: string) => { };
+export const signUpWithEmail = async (email: string, password: string) => {};
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     const {
@@ -214,37 +214,41 @@ export const shutDownVm = async () => {
     appDispatch(toggle_remote());
 };
 
-
-
 export const connectVm = async () => {
     //await appDispatch(worker_refresh());
 
     // run out of Gpu => reclaim volume per 1'
-    appDispatch(popup_open({
-        type: 'notify',
-        data: { loading: true, title: 'Connect to PC' }
-    }))
+    appDispatch(
+        popup_open({
+            type: 'notify',
+            data: { loading: true, title: 'Connect to PC' }
+        })
+    );
     for (let i = 0; i < 100; i++) {
         const resp = await appDispatch(claim_volume());
 
         if (!isRunOutOfGpu(resp.payload as string)) {
-            appDispatch(popup_close())
-            appDispatch(popup_close())
-            return
+            appDispatch(popup_close());
+            appDispatch(popup_close());
+            return;
         }
         //notify and wait 1' for the next loop
 
-        await sleep(60 * 1000)
-        appDispatch(popup_close())
-        appDispatch(popup_close())
+        await sleep(60 * 1000);
+        appDispatch(popup_close());
+        appDispatch(popup_close());
 
-        appDispatch(popup_open({
-            type: 'notify',
-            data: { loading: false, title: 'Connect to PC', text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY] }
-        }))
+        appDispatch(
+            popup_open({
+                type: 'notify',
+                data: {
+                    loading: false,
+                    title: 'Connect to PC',
+                    text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
+                }
+            })
+        );
     }
     // until has available Gpu
-    appDispatch(popup_close())
-
-
+    appDispatch(popup_close());
 };

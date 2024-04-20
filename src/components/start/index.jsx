@@ -207,10 +207,7 @@ export const SidePane = () => {
                 </div>*/}
                 <div className="sliderCont flex flex-col items-start">
                     <div className="containerSlider">
-
-                        <div className="sliderName">
-                            {t[Contents.QUALITY]}
-                        </div>
+                        <div className="sliderName">{t[Contents.QUALITY]}</div>
                         <div className=" sliderWrapper">
                             <span>1</span>
                             <input

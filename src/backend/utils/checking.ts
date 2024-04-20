@@ -35,10 +35,9 @@ export const isAdmin = (email) => {
 };
 
 export const isRunOutOfGpu = (respText: string): boolean => {
-    let check = true
+    let check = true;
 
     check = JSON.stringify(respText).includes(' out of gpu');
 
-    return check
-
-}
+    return check;
+};

@@ -85,7 +85,7 @@ export const workerAsync = {
                     worker_vm_create_from_volume(volume_id)
                 );
                 if (isRunOutOfGpu(resp.payload)) {
-                    return ('ran out of gpu');
+                    return 'ran out of gpu';
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
@@ -333,10 +333,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                            (target =
-                                new RenderNode(target).data.find(
-                                    (y) => y.id == x
-                                ) ?? target)
+                                (target =
+                                    new RenderNode(target).data.find(
+                                        (y) => y.id == x
+                                    ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -344,8 +344,8 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => { }
-            },
+                hander: (state, action) => {}
+            }
             //{
 
             //    fetch: workerAsync.claim_volume,
