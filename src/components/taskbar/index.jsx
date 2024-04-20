@@ -174,9 +174,9 @@ const Taskbar = () => {
                         ) : null}
                         <div
                             className="text-xm font-semibold"
-                        //style={{ color: 'white' }}
+                            //style={{ color: 'white' }}
                         >
-                            <Icon src='setting'></Icon>
+                            <Icon src="setting"></Icon>
                             {t[Contents.SETTING]}
                         </div>
                     </div>

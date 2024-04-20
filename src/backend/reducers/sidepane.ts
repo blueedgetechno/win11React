@@ -22,12 +22,12 @@ export type Message = {
 };
 type MobileControl = {
     hide: boolean;
-    buttons: any[],
-    shortcuts: any[],
-    setting: ISettingState,
+    buttons: any[];
+    shortcuts: any[];
+    setting: ISettingState;
     gamePadHide: boolean;
     keyboardHide: boolean;
-}
+};
 type Data = {
     notifications: Notification[];
     message: Message[];
@@ -37,25 +37,23 @@ type Data = {
     mobileControl: MobileControl;
     hide: boolean;
     banhide: boolean;
-
 };
 interface ISettingState {
-    gamePad: IGamePadValue
-    virtMouse: any
+    gamePad: IGamePadValue;
+    virtMouse: any;
 }
 interface IGamePadValue {
-    leftScale: number
-    rightScale: number
-    leftJt: number
-    rightJt: number
-    dpad: number
-    ybxa: number
-    rbRt: number
-    lbLt: number
-    subBtn: number
-    ls: number
-    rs: number
-
+    leftScale: number;
+    rightScale: number;
+    leftJt: number;
+    rightJt: number;
+    dpad: number;
+    ybxa: number;
+    rbRt: number;
+    lbLt: number;
+    subBtn: number;
+    ls: number;
+    rs: number;
 }
 const initialSetting: ISettingState = {
     gamePad: {
@@ -69,7 +67,7 @@ const initialSetting: ISettingState = {
         lbLt: 1,
         subBtn: 1,
         ls: 1,
-        rs: 1,
+        rs: 1
     },
     virtMouse: {}
 };
@@ -94,15 +92,13 @@ const listMobileShortCut = [
         name: 'Back',
         val: ['Backspace']
     }
-
-]
+];
 const listDesktopShortCut = [
     {
         name: 'Win+D',
         val: ['lwin', 'd']
     }
-
-]
+];
 
 const initialState: Data = {
     quicks: [
@@ -210,7 +206,6 @@ const initialState: Data = {
                 state: 'shutdown',
                 action: 'shutDownVm',
                 style: { backgroundColor: '#d92d20', color: '#f3f4f5' }
-
             }
         ],
         shortcuts: listMobileShortCut,
@@ -315,12 +310,12 @@ export const sidepaneSlice = createSlice({
             state.banhide = false;
         },
         toggle_gamepad: (state) => {
-            let oldState = state.mobileControl.gamePadHide
-            state.mobileControl.gamePadHide = !oldState
+            let oldState = state.mobileControl.gamePadHide;
+            state.mobileControl.gamePadHide = !oldState;
         },
         toggle_keyboard: (state) => {
-            let oldState = state.mobileControl.keyboardHide
-            state.mobileControl.keyboardHide = !oldState
+            let oldState = state.mobileControl.keyboardHide;
+            state.mobileControl.keyboardHide = !oldState;
         }
     },
     extraReducers: (builder) => {

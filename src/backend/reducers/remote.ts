@@ -62,7 +62,7 @@ export const ready = async () => {
     appDispatch(popup_close());
 };
 
-AddNotifier(async (message, text, source) => { });
+AddNotifier(async (message, text, source) => {});
 
 type ConnectStatus =
     | 'not started'
@@ -135,22 +135,30 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
 
-export async function keyboardCallback(val, action: "up" | "down") {
+export async function keyboardCallback(val, action: 'up' | 'down') {
     if (client == null) return;
 
-    client?.hid?.TriggerKey(action == "up" ? EventCode.KeyUp : EventCode.KeyDown, val)
-
+    client?.hid?.TriggerKey(
+        action == 'up' ? EventCode.KeyUp : EventCode.KeyDown,
+        val
+    );
 }
-export async function touchModeCallback(mode: 'trackpad' | 'gamepad' | 'mouse' | 'none') {
+export async function touchModeCallback(
+    mode: 'trackpad' | 'gamepad' | 'mouse' | 'none'
+) {
     if (client == null) return;
-    client?.hid?.setTouchMode(mode)
+    client?.hid?.setTouchMode(mode);
 }
-export async function gamePadBtnCallback(index: number, type: "up" | "down") {
+export async function gamePadBtnCallback(index: number, type: 'up' | 'down') {
     if (client == null) return;
     client?.hid?.VirtualGamepadButtonSlider(type == 'down', index);
 }
 
-export async function gamepadAxisCallback(x: number, y: number, type: "left" | "right") {
+export async function gamepadAxisCallback(
+    x: number,
+    y: number,
+    type: 'left' | 'right'
+) {
     if (client == null) return;
     client?.hid?.VirtualGamepadAxis(x, y, type);
 }
@@ -158,8 +166,8 @@ export async function gamepadAxisCallback(x: number, y: number, type: "left" | "
 export const setClipBoard = async (content: string) => {
     if (client == null) return;
 
-    client?.hid?.SetClipboard(content)
-}
+    client?.hid?.SetClipboard(content);
+};
 
 export function openRemotePage(
     url: string,
@@ -235,9 +243,9 @@ export const remoteAsync = {
 
         if (
             store.getState().remote.prev_bitrate !=
-            store.getState().remote.bitrate ||
+                store.getState().remote.bitrate ||
             store.getState().remote.prev_framerate !=
-            store.getState().remote.framerate ||
+                store.getState().remote.framerate ||
             store.getState().remote.prev_framerate != size()
         )
             appDispatch(remoteSlice.actions.internal_sync());
@@ -399,8 +407,8 @@ export const remoteSlice = createSlice({
                 client?.ChangeBitrate(
                     Math.round(
                         ((MAX_BITRATE() - MIN_BITRATE()) / 100) *
-                        state.bitrate +
-                        MIN_BITRATE()
+                            state.bitrate +
+                            MIN_BITRATE()
                     )
                 );
                 state.prev_bitrate = state.bitrate;
@@ -411,8 +419,8 @@ export const remoteSlice = createSlice({
                 client?.ChangeFramerate(
                     Math.round(
                         ((MAX_FRAMERATE - MIN_FRAMERATE) / 100) *
-                        state.framerate +
-                        MIN_FRAMERATE
+                            state.framerate +
+                            MIN_FRAMERATE
                     )
                 );
                 state.prev_framerate = state.framerate;
@@ -440,7 +448,7 @@ export const remoteSlice = createSlice({
             },
             {
                 fetch: remoteAsync.cache_setting,
-                hander: (state, action: PayloadAction<void>) => { }
+                hander: (state, action: PayloadAction<void>) => {}
             },
             {
                 fetch: remoteAsync.save_reference,
@@ -450,11 +458,11 @@ export const remoteSlice = createSlice({
             },
             {
                 fetch: remoteAsync.toggle_remote_async,
-                hander: (state, action: PayloadAction<void>) => { }
+                hander: (state, action: PayloadAction<void>) => {}
             },
             {
                 fetch: remoteAsync.hard_reset_async,
-                hander: (state, action: PayloadAction<void>) => { }
+                hander: (state, action: PayloadAction<void>) => {}
             }
         );
     }
