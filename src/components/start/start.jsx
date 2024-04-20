@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../backend/reducers';
-import UserManager from '../shared/userManager';
+import UserInfo from '../shared/userInfo';
 
 export const StartMenu = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -141,7 +141,7 @@ export const StartMenu = () => {
                     </div>
                 </div>*/}
 
-                <UserManager></UserManager>
+                <UserInfo></UserInfo>
             </>
         </div>
     );
