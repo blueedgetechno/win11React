@@ -169,7 +169,7 @@ export const login = async (provider: 'google' | 'facebook' | 'discord') => {
         record: { id }
     } = await pb
         .collection('users')
-        .authWithOAuth2({ provider: 'google', window: null });
+        .authWithOAuth2({ provider: 'google' });
     const record = await pb.collection('users').getOne(id);
     appDispatch(user_update(record));
 };
