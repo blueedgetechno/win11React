@@ -102,13 +102,13 @@ const listDesktopShortCut = [
 
 const initialState: Data = {
     quicks: [
-        //{
-        //    ui: true,
-        //    src: 'FiVideoOff',
-        //    name: [Contents.VIDEO_TOGGLE],
-        //    state: 'active',
-        //    action: 'toggle_remote_async'
-        //},
+        {
+            ui: true,
+            src: 'FiVideoOff',
+            name: [Contents.VIDEO_TOGGLE],
+            state: 'active',
+            action: 'toggle_remote_async'
+        },
         {
             ui: true,
             src: 'MdOutlineResetTv',

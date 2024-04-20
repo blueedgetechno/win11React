@@ -98,7 +98,7 @@ export const LockScreen = () => {
                 data-faded={!lock}
                 data-unlock={unlocked}
             >
-                <div className="w-[200px] h-[200px] ctn-logo rounded-full p-4">
+                <div className="w-[120px] md:w-[200px] h-[120px] md:h-[200px] ctn-logo rounded-full p-4">
                     <Image
                         className="rounded-2xl overflow-hidden"
                         src="img/asset/prof.png"

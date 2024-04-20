@@ -167,9 +167,7 @@ export const signUpWithEmail = async (email: string, password: string) => {};
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     const {
         record: { id }
-    } = await pb
-        .collection('users')
-        .authWithOAuth2({ provider: 'google', window: null });
+    } = await pb.collection('users').authWithOAuth2({ provider: 'google' });
     const record = await pb.collection('users').getOne(id);
     appDispatch(user_update(record));
 };
