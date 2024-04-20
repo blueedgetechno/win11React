@@ -99,6 +99,14 @@
   }
 }
 
+body[data-theme="dark"] .strBtn {
+
+  .uicon {
+    filter: invert(1);
+  }
+}
+
+
 body[data-theme="dark"] .startMenu {
   //--bg1: rgba(36, 36, 36, 0.8);
   //--bg2: rgba(255, 255, 255, 0.1);
@@ -115,6 +123,8 @@ body[data-theme="dark"] .startMenu {
   .blueicon {
     filter: brightness(4);
   }
+
+
 }
 
 .feedbackApp {
@@ -272,7 +282,7 @@ body[data-theme="dark"] .refundApp {
   --bg2: #242424;
   --bg3: #313131;
   --bg4: #444;
-  --rib-bg: #2f2e30b8;
+  --hover: rgba(255, 255, 255, 0.8) --rib-bg: #2f2e30b8;
 
 }
 
@@ -320,6 +330,16 @@ body[data-theme="dark"] .refundApp {
   align-items: center;
   background: var(--bg3);
   border-top: 1px solid var(--bg4);
+
+
+  &:hover {
+
+    background: var(--bg2);
+  }
+
+  span {
+    font-size: 14px;
+  }
 }
 
 .profile {
