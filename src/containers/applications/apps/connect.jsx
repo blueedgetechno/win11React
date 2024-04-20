@@ -21,27 +21,12 @@ export const ConnectApp = () => {
 	});
 	const user = useSelector((state) => state.user);
 
-	const handleSelectFeeling = (feeling) => {
-		setSelector((prev) => ({ ...prev, feeling }));
-	};
-	const handleSelectErr = (err) => {
-		setSelector((prev) => {
-			return {
-				...prev,
-				[err]: { ...prev[err], choose: !prev[err]?.choose }
-			};
-		});
-	};
+	const emailSplit = () => {
+		let result = ''
+		result = user?.email?.split('@')?.at(0) || 'Your'
 
-	const isSelector = (key) => {
-		return {
-			opacity: selector[key]?.choose ? 1 : 0.5
-		};
-	};
-
-	const handleInput = (value) => {
-		setSelector((prev) => ({ ...prev, text: value }));
-	};
+		return result
+	}
 
 	const listSpec = [
 		{
@@ -93,7 +78,7 @@ export const ConnectApp = () => {
 			>
 				<LazyComponent show={!wnapp.hide}>
 					<div className="content">
-						<div className='title'><Icon src='monitor'></Icon>Your PC</div>
+						<div className='title'><Icon src='monitor'></Icon>{emailSplit()} PC</div>
 
 						<div className='containerSpec'>
 							<div className="flex flex-col gap-3">
