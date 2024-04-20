@@ -754,8 +754,8 @@ export function language() {
     en.set(Contents.SCAN_CODE, 'Fix keyboard');
     vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');
 
-    en.set(Contents.EXTERNAL_TAB, 'Open external tab');
-    vn.set(Contents.EXTERNAL_TAB, 'Mở tab riêng');
+    en.set(Contents.EXTERNAL_TAB, 'Share link');
+    vn.set(Contents.EXTERNAL_TAB, 'Chia sẻ link');
 
     en.set(Contents.QUALITY, 'Quality');
     vn.set(Contents.QUALITY, 'MBps: Chất lượng video -> tốc độ mạng');

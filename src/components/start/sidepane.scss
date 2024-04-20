@@ -131,7 +131,7 @@ body[data-theme="dark"] .bandpane {
         transition: all 0.1s ease;
 
         &[data-state="true"] {
-          background: var(--clrPrm);
+          background: var(--clrPrm) !important;
         }
 
         &:hover,

@@ -140,7 +140,7 @@ const initialState: Data = {
             ui: true,
             src: 'MdOutlineLink',
             name: [Contents.EXTERNAL_TAB],
-            state: 'active',
+            state: 'share_reference',
             action: 'remote/share_reference'
         },
         {
@@ -182,21 +182,21 @@ const initialState: Data = {
                 ui: true,
                 src: 'MdOutlineKeyboard',
                 name: [Contents.SCAN_CODE],
-                state: 'keyboard',
+                state: 'keyboardOpen',
                 action: 'sidepane/toggle_keyboard'
             },
             {
                 ui: true,
                 src: 'MdOutlineSportsEsports',
                 name: [Contents.SCAN_CODE],
-                state: 'gamepad',
+                state: 'gamePadOpen',
                 action: 'sidepane/toggle_gamepad'
             },
             {
                 ui: true,
                 src: 'MdOutlineLink',
                 name: [Contents.EXTERNAL_TAB],
-                state: 'active',
+                state: 'network.airplane',
                 action: 'remote/share_reference'
             },
             {
@@ -311,6 +311,7 @@ export const sidepaneSlice = createSlice({
         },
         toggle_gamepad: (state) => {
             let oldState = state.mobileControl.gamePadHide;
+            state.mobileControl.gamePadHide = !oldState;
             state.mobileControl.gamePadHide = !oldState;
         },
         toggle_keyboard: (state) => {
