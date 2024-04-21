@@ -57,7 +57,7 @@ export const ready = async () => {
 
         await new Promise((r) => setTimeout(r, 1000));
     }
-
+    if (isMobile) client.PointerVisible(true)
     appDispatch(remoteSlice.actions.internal_sync());
     appDispatch(popup_close());
 };
@@ -116,7 +116,7 @@ const initialState: Data = {
     scancode: false,
     fullscreen: false,
     pointer_lock: false,
-    relative_mouse: isMobile() ? true : false,
+    relative_mouse: false,
 
     frame_drop: false,
     bitrate: 0,
