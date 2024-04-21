@@ -315,12 +315,10 @@ export const sidepaneSlice = createSlice({
             state.mobileControl.gamePadHide = !oldState;
 
             if (oldState) {
-                touchModeCallback('trackpad')
+                touchModeCallback('trackpad');
+            } else {
+                touchModeCallback('gamepad');
             }
-            else {
-                touchModeCallback('gamepad')
-            }
-
         },
         toggle_keyboard: (state) => {
             let oldState = state.mobileControl.keyboardHide;

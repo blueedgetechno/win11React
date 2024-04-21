@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import ringSound from '/audio/ring2.mp3';
 
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 
 import {
     appDispatch,
@@ -21,7 +21,7 @@ const Taskbar = () => {
     const remote = useAppSelector((state) => state.remote);
     const tasks = useAppSelector((state) => state.taskbar);
     const apps = useAppSelector((state) => state.apps);
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(true);
     const defaultapps = useAppSelector((state) =>
         state.apps.apps.filter((x) => state.taskbar.apps.includes(x.id))
     );
@@ -141,30 +141,29 @@ const Taskbar = () => {
                     </div>
                 </div>
             )}
-            <div className={`${open ? "slide-in" : 'slide-out'} taskright`}
-
+            <div
+                className={`${open ? 'slide-in' : 'slide-out'} taskright`}
                 data-remote={remote.active}
-            //data-remote={true}
-
+                //data-remote={true}
             >
-                {
-                    remote.active ?
-                        <button className='btn-show' onClick={() => setOpen(old => !old)}>
-                            {
-                                open ?
-                                    <MdArrowForwardIos style={{ fontSize: '1.2rem' }}></MdArrowForwardIos>
-                                    :
-                                    <MdArrowBackIos style={{ fontSize: '1.2rem' }}></MdArrowBackIos>
-
-                            }
-
-                        </button>
-
-                        : null
-                }
+                {remote.active ? (
+                    <button
+                        className="btn-show"
+                        onClick={() => setOpen((old) => !old)}
+                    >
+                        {open ? (
+                            <MdArrowForwardIos
+                                style={{ fontSize: '1.2rem' }}
+                            ></MdArrowForwardIos>
+                        ) : (
+                            <MdArrowBackIos
+                                style={{ fontSize: '1.2rem' }}
+                            ></MdArrowBackIos>
+                        )}
+                    </button>
+                ) : null}
 
                 <>
-
                     <div
                         className="p-2 prtclk handcr hvlight flex rounded "
                         onClick={clickDispatch}
@@ -192,9 +191,7 @@ const Taskbar = () => {
                                 width={16}
                             />
                         ) : null}
-                        <div
-                            className="text-xm font-semibold"
-                        >
+                        <div className="text-xm font-semibold">
                             <Icon src="setting"></Icon>
                             {t[Contents.SETTING]}
                         </div>
