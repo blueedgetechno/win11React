@@ -3,6 +3,7 @@ import { appDispatch, render_message, store } from '.';
 import { supabase } from './fetch/createClient';
 import { BuilderHelper, CacheRequest } from './helper';
 import { Contents } from './locales';
+import { touchModeCallback } from './remote';
 
 export type Notification = {
     urlToImage?: string;
@@ -312,7 +313,14 @@ export const sidepaneSlice = createSlice({
         toggle_gamepad: (state) => {
             let oldState = state.mobileControl.gamePadHide;
             state.mobileControl.gamePadHide = !oldState;
-            state.mobileControl.gamePadHide = !oldState;
+
+            if (oldState) {
+                touchModeCallback('trackpad')
+            }
+            else {
+                touchModeCallback('gamepad')
+            }
+
         },
         toggle_keyboard: (state) => {
             let oldState = state.mobileControl.keyboardHide;
