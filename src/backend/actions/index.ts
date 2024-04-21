@@ -165,9 +165,16 @@ export const loginWithEmail = async (email: string, password: string) => {};
 export const signUpWithEmail = async (email: string, password: string) => {};
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
+    let w = window.open();
+
     const {
         record: { id }
-    } = await pb.collection('users').authWithOAuth2({ provider: 'google' });
+    } = await pb.collection('users').authWithOAuth2({
+        provider: 'google',
+        urlCallback: (url) => {
+            w.location.href = url;
+        }
+    });
     const record = await pb.collection('users').getOne(id);
     appDispatch(user_update(record));
 };

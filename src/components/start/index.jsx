@@ -142,22 +142,29 @@ export const SidePane = () => {
     }
 
     useEffect(() => {
-        sidepane.quicks.map((item, i) => {
-            if (item.src == 'nightlight') {
-                if (pnstates[i]) document.body.dataset.sepia = true;
-                else document.body.dataset.sepia = false;
-            }
-        });
+        //sidepane.quicks.map((item, i) => {
+        //    if (item.src == 'nightlight') {
+        //        if (pnstates[i]) document.body.dataset.sepia = true;
+        //        else document.body.dataset.sepia = false;
+        //    }
+        //});
     });
 
     useEffect(() => {
         var tmp = [];
-        for (var i = 0; i < sidepane.quicks.length; i++) {
+        var states = isMobile()
+            ? sidepane.mobileControl.buttons
+            : sidepane.quicks;
+        const mobileState = {
+            gamePadOpen: !sidepane.mobileControl.gamePadHide,
+            keyboardOpen: !sidepane.mobileControl.keyboardHide
+        };
+        for (var i = 0; i < states.length; i++) {
             var val = getTreeValue(
-                { ...setting, ...remote },
-                sidepane.quicks[i].state
+                { ...setting, ...remote, ...mobileState },
+                states[i].state
             );
-            if (sidepane.quicks[i].name == 'Theme') val = val == 'dark';
+            if (states[i].name == 'Theme') val = val == 'dark';
             tmp.push(val);
         }
 
