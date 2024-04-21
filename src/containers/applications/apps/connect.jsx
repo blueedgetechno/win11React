@@ -14,6 +14,8 @@ export const ConnectApp = () => {
     const wnapp = useAppSelector((state) =>
         state.apps.apps.find((x) => x.id == 'connectPc')
     );
+    const stats = useAppSelector((state) => state.user.stat);
+
     const [selector, setSelector] = useState({
         feeling: '',
         control: {
@@ -30,6 +32,16 @@ export const ConnectApp = () => {
         return result;
     };
 
+    const renderPlanStorage = (planName) => {
+        let storage = '130GB';
+        if (planName == 'month_01') {
+            storage = '130GB';
+        } else if (planName == 'month_02') {
+            storage = '200GB';
+        }
+
+        return storage;
+    };
     const listSpec = [
         {
             name: 'GPU:',
@@ -45,7 +57,7 @@ export const ConnectApp = () => {
         },
         {
             name: 'STORAGE:',
-            text: '130GB'
+            text: renderPlanStorage(stats?.plan_name)
         },
         {
             name: 'OS:',
