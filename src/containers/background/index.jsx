@@ -32,7 +32,7 @@ export const BootScreen = ({ loadingText }) => {
                 <div className="text-l font-semibold text-gray-100">
                     {t[loadingText]}
                 </div>
-                <div className="mt-48" id="loader">
+                <div className="mt-4" id="loader">
                     <svg
                         className="progressRing"
                         height={48}
