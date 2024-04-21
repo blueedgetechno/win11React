@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import ringSound from '/audio/ring2.mp3';
 
-import { MdArrowBackIos, MdArrowForwardIos, MdOutlineVideoSettings } from 'react-icons/md';
+import {
+    MdArrowBackIos,
+    MdArrowForwardIos,
+    MdOutlineVideoSettings
+} from 'react-icons/md';
 
 import {
     appDispatch,
@@ -191,7 +195,9 @@ const Taskbar = () => {
                             />
                         ) : null}
                         <div className="text-xm flex gap-[4px] font-semibold">
-                            <MdOutlineVideoSettings fontSize={'1.2rem'}></MdOutlineVideoSettings>
+                            <MdOutlineVideoSettings
+                                fontSize={'1.2rem'}
+                            ></MdOutlineVideoSettings>
                             {t[Contents.SETTING]}
                         </div>
                     </div>
@@ -212,7 +218,7 @@ const Taskbar = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 
