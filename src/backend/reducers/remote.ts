@@ -12,8 +12,8 @@ import {
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { EventCode } from '../../../src-tauri/core/models/keys.model';
 import { AddNotifier } from '../../../src-tauri/core/utils/log';
-import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
+import { isMobile } from './../utils/checking';
 import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
 
@@ -116,7 +116,7 @@ const initialState: Data = {
     scancode: false,
     fullscreen: false,
     pointer_lock: false,
-    relative_mouse: false,
+    relative_mouse: isMobile() ? true : false,
 
     frame_drop: false,
     bitrate: 0,

@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import ringSound from '/audio/ring2.mp3';
 
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
+import {
+    MdArrowBackIos,
+    MdArrowForwardIos,
+    MdOutlineVideoSettings
+} from 'react-icons/md';
 
 import {
     appDispatch,
@@ -144,7 +148,6 @@ const Taskbar = () => {
             <div
                 className={`${open ? 'slide-in' : 'slide-out'} taskright`}
                 data-remote={remote.active}
-                //data-remote={true}
             >
                 {remote.active ? (
                     <button
@@ -178,7 +181,7 @@ const Taskbar = () => {
                         </div>
                     </div>
                     <div
-                        className="prtclk handcr my-1 p-2 hvlight flex rounded"
+                        className="prtclk handcr my-1 p-2 hvlight flex gap-[8px] rounded"
                         onClick={clickDispatch}
                         style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
@@ -191,8 +194,10 @@ const Taskbar = () => {
                                 width={16}
                             />
                         ) : null}
-                        <div className="text-xm font-semibold">
-                            <Icon src="setting"></Icon>
+                        <div className="text-xm flex gap-[4px] font-semibold">
+                            <MdOutlineVideoSettings
+                                fontSize={'1.2rem'}
+                            ></MdOutlineVideoSettings>
                             {t[Contents.SETTING]}
                         </div>
                     </div>

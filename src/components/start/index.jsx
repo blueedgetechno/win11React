@@ -21,6 +21,7 @@ import {
     clickDispatch,
     customClickDispatch
 } from '../../backend/utils/dispatch';
+import { sleep } from '../../backend/utils/sleep';
 import { VirtualGamepad } from '../mobileControl/component/virtGamepad';
 import VirtKeyboard from '../mobileControl/component/virtKeyBoard';
 import { Icon } from '../shared/general';
@@ -58,17 +59,11 @@ export const DesktopApp = () => {
         }, 300); // 1000 milliseconds = 1 second
     };
 
-    const handleTouchEnd = (e) => {
+    const handleTouchEnd = async (e) => {
         //clearTimeout(timeoutRef.current);
-
-        const now = Date.now();
-        if (now - lastTap?.current < 250) {
-            // Double tap detected!
-            clickDispatch(e);
-        }
-        lastTap.current = now;
+        await sleep(200);
+        clickDispatch(e);
     };
-
     const handleDouble = customClickDispatch((e) => e.stopPropagation());
 
     return (
