@@ -49,9 +49,10 @@ async function internalFetch<T>(
             });
 
             if (!resp.ok) return new Error('fail to request');
+            const clonedResponse = resp.clone();
 
             try {
-                return await resp.json();
+                return await clonedResponse.json();
             } catch (error) {
                 return new Error(await resp.text());
             }
