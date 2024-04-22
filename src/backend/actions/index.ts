@@ -219,7 +219,17 @@ export const shutDownVm = async () => {
 
     appDispatch(toggle_remote());
 };
+type ConnectVm = Computer | string;
 
+interface ConnectVmResp {
+    error: {
+        name: string;
+        stack: string;
+        message: string;
+    };
+    meta: any;
+    payload: ConnectVm;
+}
 export const connectVm = async () => {
     //await appDispatch(worker_refresh());
 
@@ -230,30 +240,51 @@ export const connectVm = async () => {
             data: { loading: true, title: 'Connect to PC' }
         })
     );
+
     for (let i = 0; i < 100; i++) {
-        const resp = await appDispatch(claim_volume());
+        const resp: ConnectVmResp = (await appDispatch(
+            claim_volume()
+        )) as ConnectVmResp;
 
-        if (!isRunOutOfGpu(resp.payload as string)) {
-            appDispatch(popup_close());
-            appDispatch(popup_close());
-            return;
+        if (
+            resp.error.message != '' ||
+            resp.error.message != undefined ||
+            resp.error.message != null
+        ) {
+            if (isRunOutOfGpu(resp.error.message as string)) {
+                console.log('______error_', resp);
+
+                appDispatch(
+                    popup_open({
+                        type: 'notify',
+                        data: {
+                            loading: false,
+                            title: 'Connect to PC',
+                            text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
+                        }
+                    })
+                );
+            } else {
+                appDispatch(popup_close());
+                appDispatch(popup_close());
+                appDispatch(
+                    popup_open({
+                        type: 'complete',
+                        data: {
+                            success: false,
+                            content: resp.error.message
+                        }
+                    })
+                );
+
+                return;
+            }
+            // Rest error
         }
-        //notify and wait 1' for the next loop
 
-        await sleep(60 * 1000);
+        await sleep(60 * 100);
         appDispatch(popup_close());
         appDispatch(popup_close());
-
-        appDispatch(
-            popup_open({
-                type: 'notify',
-                data: {
-                    loading: false,
-                    title: 'Connect to PC',
-                    text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
-                }
-            })
-        );
     }
     // until has available Gpu
     appDispatch(popup_close());

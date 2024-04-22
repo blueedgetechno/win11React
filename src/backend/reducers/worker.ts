@@ -12,7 +12,6 @@ import {
     worker_refresh,
     worker_vm_create_from_volume
 } from '.';
-import { isRunOutOfGpu } from '../utils/checking';
 import { fromComputer, RenderNode } from '../utils/tree';
 import { pb } from './fetch/createClient';
 import {
@@ -46,7 +45,15 @@ const initialState: WorkerType = {
     hist: [],
     hid: 0
 };
-
+interface DispatchCreateWorker {
+    error: {
+        name: string;
+        stack: string;
+        message: string;
+    };
+    meta: any;
+    payload: any;
+}
 export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
@@ -63,7 +70,7 @@ export const workerAsync = {
     ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer | string> => {
+        async (_: void, { getState }): Promise<Computer | string | Error> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -84,9 +91,13 @@ export const workerAsync = {
             else if (result.type == 'host_worker') {
                 const resp = await appDispatch(
                     worker_vm_create_from_volume(volume_id)
-                );
-                if (isRunOutOfGpu(resp.payload)) {
-                    return 'ran out of gpu';
+                ) as DispatchCreateWorker
+                if (
+                    resp?.error.message != '' ||
+                    resp?.error.message != undefined ||
+                    resp?.error.message != null
+                ) {
+                    throw new Error(resp.error.message);
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
