@@ -1,3 +1,4 @@
+import { gamePadBtnCallback } from '../../../../backend/reducers/remote';
 import './index.scss';
 
 export function RightFuncButton(props) {

@@ -28,9 +28,11 @@ export const Remote = () => {
     }, [remote.active]);
 
     useEffect(() => {
+        if (isMobile()) client?.PointerVisible(true);
         const handler = new TouchHandler(
             isMobile() ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
-            client?.SendRawHID
+            remoteVideo.current,
+            (val) => client?.SendRawHID(val)
         );
 
         return () => {
