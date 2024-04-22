@@ -20,6 +20,7 @@ import {
     toggle_remote,
     user_update,
     wall_set,
+    worker_refresh,
     worker_session_close
 } from '../reducers/index';
 import { Contents } from '../reducers/locales';
@@ -231,8 +232,6 @@ interface ConnectVmResp {
     payload: ConnectVm;
 }
 export const connectVm = async () => {
-    //await appDispatch(worker_refresh());
-
     // run out of Gpu => reclaim volume per 1'
     appDispatch(
         popup_open({
@@ -242,14 +241,15 @@ export const connectVm = async () => {
     );
 
     for (let i = 0; i < 100; i++) {
+        await appDispatch(worker_refresh());
         const resp: ConnectVmResp = (await appDispatch(
             claim_volume()
         )) as ConnectVmResp;
 
         if (
-            resp.error.message != '' ||
-            resp.error.message != undefined ||
-            resp.error.message != null
+            resp?.error?.message != '' ||
+            resp?.error?.message != undefined ||
+            resp?.error?.message != null
         ) {
             if (isRunOutOfGpu(resp.error.message as string)) {
                 console.log('______error_', resp);
@@ -267,6 +267,7 @@ export const connectVm = async () => {
             } else {
                 appDispatch(popup_close());
                 appDispatch(popup_close());
+
                 appDispatch(
                     popup_open({
                         type: 'complete',
@@ -281,12 +282,10 @@ export const connectVm = async () => {
             }
             // Rest error
         }
-
         await sleep(60 * 100);
-        appDispatch(popup_close());
-        appDispatch(popup_close());
     }
     // until has available Gpu
+    appDispatch(popup_close());
     appDispatch(popup_close());
 };
 

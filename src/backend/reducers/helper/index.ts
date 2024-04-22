@@ -116,19 +116,29 @@ export async function CacheRequest<T>(
 
     return cache;
 }
+const filterActions = ['fetch_local_worker', 'fetch_user', 'fetch_message'];
+
+const isFilterAction = (acctionType: string) => {
+    return filterActions.some((act) => acctionType.includes(act));
+};
 
 const isPending = (action: UnknownAction) =>
     action.type.endsWith('/pending') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
+
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
+
 const isRejected = (action: UnknownAction) =>
     action.type.endsWith('/rejected') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
 
 export const isPendingAction =
     (prefixs: string[]) =>
