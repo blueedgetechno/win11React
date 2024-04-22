@@ -4,6 +4,7 @@ import {
     claim_volume,
     fetch_local_worker,
     popup_close,
+    popup_open,
     remote_connect,
     RootState,
     save_reference,
@@ -26,6 +27,7 @@ import {
     StartVirtdaemon
 } from './fetch/local';
 import { BuilderHelper } from './helper';
+import { Contents } from './locales';
 
 type WorkerType = {
     data: any;
@@ -45,15 +47,7 @@ const initialState: WorkerType = {
     hist: [],
     hid: 0
 };
-interface DispatchCreateWorker {
-    error: {
-        name: string;
-        stack: string;
-        message: string;
-    };
-    meta: any;
-    payload: any;
-}
+
 export const workerAsync = {
     worker_refresh: createAsyncThunk(
         'worker_refresh',
@@ -68,9 +62,92 @@ export const workerAsync = {
             );
         }
     ),
+    wait_and_claim_volume: createAsyncThunk(
+        'wait_and_claim_volume',
+        async (_: void, { getState }) => {
+            await appDispatch(worker_refresh());
+            appDispatch(
+                popup_open({
+                    type: 'notify',
+                    data: { loading: true, title: 'Connect to PC' }
+                })
+            );
+
+            const all = await pb.collection('volumes').getFullList<{
+                local_id: string;
+            }>();
+            const volume_id = all.at(0)?.local_id;
+
+            for (let i = 0; i < 100; i++) {
+                let node = new RenderNode(
+                    (getState() as RootState).worker.data
+                );
+
+                let result: RenderNode<Computer> | undefined = undefined;
+                node.iterate((x) => {
+                    if (
+                        result == undefined &&
+                        (x.info as Computer)?.Volumes?.includes(volume_id)
+                    )
+                        result = x;
+                });
+
+                if (result == undefined) {
+                    appDispatch(popup_close());
+                    throw new Error('worker not found');
+                } else if (
+                    result.type == 'vm_worker' &&
+                    result.data.length > 0
+                ) {
+                    await appDispatch(vm_session_access(result.data.at(0).id));
+                    appDispatch(popup_close());
+                    return;
+                } else if (
+                    result.type == 'vm_worker' &&
+                    result.data.length == 0
+                ) {
+                    await appDispatch(vm_session_create(result.id));
+                    appDispatch(popup_close());
+                    return;
+                }
+
+                const computer: Computer = node.findParent<Computer>(
+                    result.id,
+                    'host_worker'
+                )?.info;
+                if (computer == undefined) {
+                    appDispatch(popup_close());
+                    throw new Error('invalid tree');
+                }
+
+                // TODO
+                const resp = await StartVirtdaemon(computer, volume_id);
+                if (resp instanceof Error) {
+                    appDispatch(popup_close());
+                    appDispatch(
+                        popup_open({
+                            type: 'notify',
+                            data: {
+                                loading: false,
+                                title: 'Connect to PC',
+                                text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
+                            }
+                        })
+                    );
+
+                    await new Promise((r) => setTimeout(r, 30000));
+                }
+
+                await appDispatch(worker_refresh());
+            }
+
+            appDispatch(popup_close());
+            return;
+        }
+    ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer | string | Error> => {
+        async (_: void, { getState }): Promise<Computer | Error> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -89,16 +166,7 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                const resp = (await appDispatch(
-                    worker_vm_create_from_volume(volume_id)
-                )) as DispatchCreateWorker;
-                if (
-                    resp?.error?.message != '' ||
-                    resp?.error?.message != undefined ||
-                    resp?.error?.message != null
-                ) {
-                    throw new Error(resp?.error?.message);
-                }
+                await appDispatch(worker_vm_create_from_volume(volume_id));
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
                 await appDispatch(vm_session_access(result.data.at(0).id));
@@ -351,12 +419,11 @@ export const workerSlice = createSlice({
             {
                 fetch: workerAsync.worker_session_close,
                 hander: (state, action) => {}
+            },
+            {
+                fetch: workerAsync.wait_and_claim_volume,
+                hander: (state, action) => {}
             }
-            //{
-
-            //    fetch: workerAsync.claim_volume,
-            //    hander: (state, action) => { }
-            //}
         );
     }
 });

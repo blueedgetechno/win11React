@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    useAppSelector,
+    wait_and_claim_volume
+} from '../../../backend/reducers';
 import {
     Icon,
     LazyComponent,
     ToolBar
 } from '../../../components/shared/general';
 
-import { connectVm } from '../../../backend/actions';
 import './assets/connect.scss';
 export const ConnectApp = () => {
     const t = useAppSelector((state) => state.globals.translation);
@@ -65,7 +68,7 @@ export const ConnectApp = () => {
         }
     ];
     const connect = () => {
-        connectVm();
+        appDispatch(wait_and_claim_volume());
     };
 
     return (

@@ -4,7 +4,6 @@ import { Computer } from '../reducers/fetch/local';
 import '../reducers/index';
 import {
     appDispatch,
-    claim_volume,
     desk_hide,
     desk_show,
     desk_size,
@@ -12,21 +11,15 @@ import {
     dispatch_generic,
     menu_chng,
     menu_hide,
-    popup_close,
-    popup_open,
     setting_theme,
     sidepane_panethem,
     store,
     toggle_remote,
     user_update,
     wall_set,
-    worker_refresh,
     worker_session_close
 } from '../reducers/index';
-import { Contents } from '../reducers/locales';
 import { keyboardCallback } from '../reducers/remote';
-import { isRunOutOfGpu } from '../utils/checking';
-import { sleep } from '../utils/sleep';
 import { RenderNode } from '../utils/tree';
 import { fetchApp } from './background';
 
@@ -47,7 +40,7 @@ export const afterMath = (event: any) => {
     var actionType = '';
     try {
         actionType = event.target.dataset.action || '';
-    } catch (err) {}
+    } catch (err) { }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
         '--prefix'
@@ -161,9 +154,9 @@ export const dispatchOutSide = (action: string, payload: any) => {
     appDispatch({ type: action, payload });
 };
 
-export const loginWithEmail = async (email: string, password: string) => {};
+export const loginWithEmail = async (email: string, password: string) => { };
 
-export const signUpWithEmail = async (email: string, password: string) => {};
+export const signUpWithEmail = async (email: string, password: string) => { };
 
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     let w = window.open();
@@ -220,73 +213,6 @@ export const shutDownVm = async () => {
 
     appDispatch(toggle_remote());
 };
-type ConnectVm = Computer | string;
-
-interface ConnectVmResp {
-    error: {
-        name: string;
-        stack: string;
-        message: string;
-    };
-    meta: any;
-    payload: ConnectVm;
-}
-export const connectVm = async () => {
-    // run out of Gpu => reclaim volume per 1'
-    appDispatch(
-        popup_open({
-            type: 'notify',
-            data: { loading: true, title: 'Connect to PC' }
-        })
-    );
-
-    for (let i = 0; i < 100; i++) {
-        await appDispatch(worker_refresh());
-        const resp: ConnectVmResp = (await appDispatch(
-            claim_volume()
-        )) as ConnectVmResp;
-
-        if (
-            resp?.error?.message != '' ||
-            resp?.error?.message != undefined ||
-            resp?.error?.message != null
-        ) {
-            if (isRunOutOfGpu(resp?.error?.message as string)) {
-                appDispatch(
-                    popup_open({
-                        type: 'notify',
-                        data: {
-                            loading: false,
-                            title: 'Connect to PC',
-                            text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
-                        }
-                    })
-                );
-            } else {
-                appDispatch(popup_close());
-                appDispatch(popup_close());
-
-                appDispatch(
-                    popup_open({
-                        type: 'complete',
-                        data: {
-                            success: false,
-                            content: resp.error.message
-                        }
-                    })
-                );
-
-                return;
-            }
-            // Rest error
-        }
-        await sleep(60 * 100);
-    }
-    // until has available Gpu
-    appDispatch(popup_close());
-    appDispatch(popup_close());
-};
-
 export const clickShortCut = (keys = []) => {
     keys.forEach((k, i) => {
         keyboardCallback(k, 'down');

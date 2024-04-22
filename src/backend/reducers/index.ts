@@ -136,6 +136,7 @@ export const {
     worker_vm_create,
     worker_vm_create_from_volume,
     worker_refresh,
+    wait_and_claim_volume,
     claim_volume,
     vm_session_create,
     vm_session_access,
