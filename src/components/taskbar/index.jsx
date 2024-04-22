@@ -69,13 +69,11 @@ const Taskbar = () => {
     }, []);
 
     const [play] = useSound(ringSound, { volume: 0.1 });
-    const available = useAppSelector(
-        (state) => state.worker.data?.data?.at(0)?.info?.GPUs?.length > 0
-    );
+
 
     useEffect(() => {
-        available ? play() : null;
-    }, [available]);
+        remote?.active ? play() : null;
+    }, [remote.active]);
 
     return (
         <div

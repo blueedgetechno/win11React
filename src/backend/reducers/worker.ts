@@ -3,6 +3,7 @@ import {
     appDispatch,
     claim_volume,
     fetch_local_worker,
+    popup_close,
     popup_open,
     remote_connect,
     RootState,
@@ -89,13 +90,13 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                const resp = await appDispatch(
+                const resp = (await appDispatch(
                     worker_vm_create_from_volume(volume_id)
-                ) as DispatchCreateWorker
+                )) as DispatchCreateWorker;
                 if (
-                    resp?.error.message != '' ||
-                    resp?.error.message != undefined ||
-                    resp?.error.message != null
+                    resp?.error?.message != '' ||
+                    resp?.error?.message != undefined ||
+                    resp?.error?.message != null
                 ) {
                     throw new Error(resp.error.message);
                 }
@@ -105,6 +106,7 @@ export const workerAsync = {
             else if (result.type == 'vm_worker' && result.data.length == 0)
                 await appDispatch(vm_session_create(result.id));
 
+            appDispatch(popup_close());
             return result.info;
         }
     ),
@@ -191,7 +193,6 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             const resp = await StartVirtdaemon(computer, input);
-            console.log(resp);
             if (resp instanceof Error) {
                 console.log(resp.message);
                 appDispatch(
@@ -347,10 +348,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                                (target =
-                                    new RenderNode(target).data.find(
-                                        (y) => y.id == x
-                                    ) ?? target)
+                            (target =
+                                new RenderNode(target).data.find(
+                                    (y) => y.id == x
+                                ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -358,7 +359,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             }
             //{
 

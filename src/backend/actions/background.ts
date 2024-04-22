@@ -43,6 +43,7 @@ const loadSettings = async () => {
 const fetchUser = async () => {
     await appDispatch(fetch_user());
     appDispatch(app_toggle('usermanager'));
+    appDispatch(app_toggle('connectPc'));
 };
 export const fetchApp = async () => {
     await appDispatch(worker_refresh());
@@ -92,7 +93,7 @@ export const preload = async () => {
     await Promise.all([
         loadSettings(),
         fetchUser(),
-        fetchApp(),
+        //fetchApp(),
         fetchSetting(),
         fetchMessage()
     ]);
