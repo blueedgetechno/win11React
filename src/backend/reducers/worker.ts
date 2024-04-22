@@ -9,6 +9,7 @@ import {
     save_reference,
     vm_session_access,
     vm_session_create,
+    worker_refresh,
     worker_vm_create_from_volume
 } from '.';
 import { isRunOutOfGpu } from '../utils/checking';
@@ -198,6 +199,8 @@ export const workerAsync = {
     vm_session_create: createAsyncThunk(
         'vm_session_create',
         async (ip: string, { getState }): Promise<any> => {
+            await appDispatch(worker_refresh());
+
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const host = node.findParent<Computer>(ip, 'host_worker');
@@ -333,10 +336,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                                (target =
-                                    new RenderNode(target).data.find(
-                                        (y) => y.id == x
-                                    ) ?? target)
+                            (target =
+                                new RenderNode(target).data.find(
+                                    (y) => y.id == x
+                                ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -344,7 +347,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => {}
+                hander: (state, action) => { }
             }
             //{
 
