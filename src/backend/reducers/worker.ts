@@ -62,7 +62,7 @@ export const workerAsync = {
     ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer | string> => {
+        async (_: void, { getState }): Promise<Computer | string | Error> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -85,7 +85,7 @@ export const workerAsync = {
                     worker_vm_create_from_volume(volume_id)
                 );
                 if (isRunOutOfGpu(resp.payload)) {
-                    return 'ran out of gpu';
+                    throw new Error('ran out of gpu');
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
