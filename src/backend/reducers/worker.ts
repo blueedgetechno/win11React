@@ -4,7 +4,6 @@ import {
     claim_volume,
     fetch_local_worker,
     popup_close,
-    popup_open,
     remote_connect,
     RootState,
     save_reference,
@@ -98,7 +97,7 @@ export const workerAsync = {
                     resp?.error?.message != undefined ||
                     resp?.error?.message != null
                 ) {
-                    throw new Error(resp.error.message);
+                    throw new Error(resp?.error?.message);
                 }
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
@@ -194,14 +193,6 @@ export const workerAsync = {
 
             const resp = await StartVirtdaemon(computer, input);
             if (resp instanceof Error) {
-                console.log(resp.message);
-                appDispatch(
-                    popup_open({
-                        type: 'notify',
-                        data: { title: resp.message, loading: false }
-                    })
-                );
-
                 throw resp.message;
             }
             await appDispatch(fetch_local_worker(computer.address));
