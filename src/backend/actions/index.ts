@@ -251,9 +251,7 @@ export const connectVm = async () => {
             resp?.error?.message != undefined ||
             resp?.error?.message != null
         ) {
-            if (isRunOutOfGpu(resp.error.message as string)) {
-                console.log('______error_', resp);
-
+            if (isRunOutOfGpu(resp?.error?.message as string)) {
                 appDispatch(
                     popup_open({
                         type: 'notify',
