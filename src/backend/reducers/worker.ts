@@ -9,6 +9,7 @@ import {
     save_reference,
     vm_session_access,
     vm_session_create,
+    worker_refresh,
     worker_vm_create_from_volume
 } from '.';
 import { fromComputer, RenderNode } from '../utils/tree';
@@ -209,6 +210,8 @@ export const workerAsync = {
     vm_session_create: createAsyncThunk(
         'vm_session_create',
         async (ip: string, { getState }): Promise<any> => {
+            await appDispatch(worker_refresh());
+
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const host = node.findParent<Computer>(ip, 'host_worker');

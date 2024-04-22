@@ -26,7 +26,8 @@ export const isAdmin = (email) => {
         'sieunhankiet@gmail.com',
         'datdovan1502@gmail.com',
         'thienvanlea1@gmail.com',
-        'huyhoangdo0205@gmail.com'
+        'huyhoangdo0205@gmail.com',
+        'huyhoangdo@contact.thinkmay.net'
     ];
 
     // TODO: after release
