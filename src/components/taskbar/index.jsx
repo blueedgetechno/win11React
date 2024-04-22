@@ -70,7 +70,6 @@ const Taskbar = () => {
 
     const [play] = useSound(ringSound, { volume: 0.1 });
 
-
     useEffect(() => {
         remote?.active ? play() : null;
     }, [remote.active]);

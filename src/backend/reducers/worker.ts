@@ -348,10 +348,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                            (target =
-                                new RenderNode(target).data.find(
-                                    (y) => y.id == x
-                                ) ?? target)
+                                (target =
+                                    new RenderNode(target).data.find(
+                                        (y) => y.id == x
+                                    ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -359,7 +359,7 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             }
             //{
 
