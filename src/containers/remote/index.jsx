@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
+import { TouchHandler } from '../../../src-tauri/core/hid/touch';
 import { AudioWrapper } from '../../../src-tauri/core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../src-tauri/core/pipeline/sink/video/wrapper';
 import {
@@ -7,12 +8,16 @@ import {
     set_fullscreen,
     useAppSelector
 } from '../../backend/reducers';
-import { assign } from '../../backend/reducers/remote';
+import { assign, client } from '../../backend/reducers/remote';
+import { isMobile } from '../../backend/utils/checking';
 import './remote.scss';
 
 export const Remote = () => {
     const relative_mouse = useAppSelector((x) => x.remote.relative_mouse);
     const wall = useAppSelector((state) => state.wallpaper);
+    const gamepad = useAppSelector(
+        (state) => !state.sidepane.mobileControl.gamePadHide
+    );
     const remote = useAppSelector((store) => store.remote);
     const remoteVideo = useRef(null);
     const remoteAudio = useRef(null);
@@ -21,6 +26,17 @@ export const Remote = () => {
         if (!remote.active || remote.auth == undefined) return;
         SetupWebRTC();
     }, [remote.active]);
+
+    useEffect(() => {
+        const handler = new TouchHandler(
+            isMobile() ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
+            client?.SendRawHID
+        );
+
+        return () => {
+            handler.Close();
+        };
+    }, [gamepad]);
 
     const pointerlock = () => {
         appDispatch(set_fullscreen(true));

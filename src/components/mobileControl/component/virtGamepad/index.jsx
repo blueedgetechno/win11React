@@ -198,9 +198,6 @@ export const ButtonGroupRight = (props) => {
             >
                 <div id="joystick" className="wrapperDraggable">
                     <CustomJoyStick
-                        moveCallback={async (x, y) => {
-                            return;
-                        }}
                         draggable={props.draggable}
                         size={JOYSTICK_SIZE * rightJt}
                     />
@@ -419,9 +416,6 @@ export const ButtonGroupLeft = (props) => {
             >
                 <div id="joystick" className="wrapperDraggable">
                     <CustomJoyStick
-                        moveCallback={async (x, y) => {
-                            return;
-                        }}
                         draggable={props.draggable}
                         size={JOYSTICK_SIZE * leftJt}
                     />
