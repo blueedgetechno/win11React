@@ -57,7 +57,7 @@ export const ready = async () => {
 
         await new Promise((r) => setTimeout(r, 1000));
     }
-    if (isMobile) client.PointerVisible(true)
+    if (isMobile) client.PointerVisible(true);
     appDispatch(remoteSlice.actions.internal_sync());
     appDispatch(popup_close());
 };

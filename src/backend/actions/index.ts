@@ -219,17 +219,16 @@ export const shutDownVm = async () => {
 
     appDispatch(toggle_remote());
 };
-type ConnectVm = Computer | string
+type ConnectVm = Computer | string;
 
 interface ConnectVmResp {
     error: {
-        name: string,
-        stack: string,
-        message: string
-    }
-    meta: any,
-    payload: ConnectVm
-
+        name: string;
+        stack: string;
+        message: string;
+    };
+    meta: any;
+    payload: ConnectVm;
 }
 export const connectVm = async () => {
     //await appDispatch(worker_refresh());
@@ -243,12 +242,17 @@ export const connectVm = async () => {
     );
 
     for (let i = 0; i < 100; i++) {
-        const resp: ConnectVmResp = await appDispatch(claim_volume()) as ConnectVmResp
+        const resp: ConnectVmResp = (await appDispatch(
+            claim_volume()
+        )) as ConnectVmResp;
 
-        if (resp.error.message != '' || resp.error.message != undefined || resp.error.message != null) {
-
+        if (
+            resp.error.message != '' ||
+            resp.error.message != undefined ||
+            resp.error.message != null
+        ) {
             if (isRunOutOfGpu(resp.error.message as string)) {
-                console.log('______error_', resp)
+                console.log('______error_', resp);
 
                 appDispatch(
                     popup_open({
@@ -260,8 +264,7 @@ export const connectVm = async () => {
                         }
                     })
                 );
-            }
-            else {
+            } else {
                 appDispatch(popup_close());
                 appDispatch(popup_close());
                 appDispatch(
@@ -274,7 +277,7 @@ export const connectVm = async () => {
                     })
                 );
 
-                return
+                return;
             }
             // Rest error
         }
@@ -282,7 +285,6 @@ export const connectVm = async () => {
         await sleep(60 * 100);
         appDispatch(popup_close());
         appDispatch(popup_close());
-
     }
     // until has available Gpu
     appDispatch(popup_close());
