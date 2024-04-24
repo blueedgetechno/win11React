@@ -23,7 +23,7 @@ const size = () =>
         : 1920 * 1080;
 export const MAX_BITRATE = () => (20000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
-export const MAX_FRAMERATE = 120;
+export const MAX_FRAMERATE = 240;
 export const MIN_FRAMERATE = 40;
 
 export let client: RemoteDesktopClient | null = null;
