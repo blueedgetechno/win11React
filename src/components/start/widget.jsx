@@ -31,7 +31,7 @@ export const WidPane = () => {
                 <LazyComponent show={!widget.banhide}>
                     <div className="WidPane ">
                         <div className="title">
-                            Chat with <Icon width={48} src='thinkmay'></Icon>
+                            Chat with <Icon width={48} src="thinkmay"></Icon>
                         </div>
                         <div className="widgetCont win11Scroll">
                             <div className="newsCont">
@@ -44,15 +44,18 @@ export const WidPane = () => {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 key={i}
-                                            // loading="lazy"
+                                                // loading="lazy"
+                                                style={{    
+                                                    backgroundColor: article.name.includes('to')? '#a8e0e3': 'white'
+                                                }}
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
                                                         {(article.name.includes(
-                                                            'from'
+                                                            'to'
                                                         )
                                                             ? 'thinkmay'
-                                                            : 'you') +
+                                                            : 'user') +
                                                             '  ' +
                                                             new Date(
                                                                 article.timestamp
