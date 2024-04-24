@@ -372,9 +372,11 @@ export const remoteSlice = createSlice({
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
+            client?.ResetVideo();
         },
         toggle_fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
+            client?.ResetVideo();
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
