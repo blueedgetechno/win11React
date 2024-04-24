@@ -45,14 +45,17 @@ export const WidPane = () => {
                                                 rel="noopener noreferrer"
                                                 key={i}
                                                 // loading="lazy"
+                                                style={{    
+                                                    backgroundColor: article.name.includes('to')? '#a8e0e3': 'white'
+                                                }}
                                             >
                                                 <div className="tpNews">
                                                     <div className="tpSource">
                                                         {(article.name.includes(
-                                                            'from'
+                                                            'to'
                                                         )
                                                             ? 'thinkmay'
-                                                            : 'you') +
+                                                            : 'user') +
                                                             '  ' +
                                                             new Date(
                                                                 article.timestamp

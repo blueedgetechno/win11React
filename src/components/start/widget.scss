@@ -416,24 +416,19 @@
       .tpSource {
         //color: var(--txt-col);
         color: #030303;
-
         font-size: 0.6em;
-        font-weight: 500;
-        text-shadow: 0 0 4px var(--comp-txt);
+        font-weight: 700;
       }
 
       .tpTitle {
 
-        font-size: 0.8rem;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 400;
         color: #030303;
 
-        //color: var(--txt-col); 
-        //max-height: 64px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        //-webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: justify;
       }

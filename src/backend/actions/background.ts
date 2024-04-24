@@ -84,17 +84,17 @@ const handleClipboard = async () => {
     }
 };
 
-const fetchMessage = async () => {
-    await appDispatch(fetch_message());
+const fetchMessage = async (email: string) => {
+    await appDispatch(fetch_message(email));
 };
 
 export const preload = async () => {
+    await fetchUser(),
     await Promise.all([
         loadSettings(),
-        fetchUser(),
         fetchApp(),
         fetchSetting(),
-        fetchMessage()
+        fetchMessage(store.getState().user.email)
     ]);
 
     setInterval(check_worker, 30 * 1000);
