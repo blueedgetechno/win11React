@@ -90,12 +90,12 @@ const fetchMessage = async (email: string) => {
 
 export const preload = async () => {
     await fetchUser(),
-    await Promise.all([
-        loadSettings(),
-        fetchApp(),
-        fetchSetting(),
-        fetchMessage(store.getState().user.email)
-    ]);
+        await Promise.all([
+            loadSettings(),
+            fetchApp(),
+            fetchSetting(),
+            fetchMessage(store.getState().user.email)
+        ]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);
