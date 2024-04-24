@@ -367,7 +367,10 @@ export function language() {
         'Chúng mình hiện tại đang tạm hết máy, bạn đợi thêm nhé!'
     );
 
-    en.set(Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY, 'We are running out of computer. Please hold tab, it will notify & connect when free');
+    en.set(
+        Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY,
+        'We are running out of computer. Please hold tab, it will notify & connect when free'
+    );
     vn.set(
         Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY,
         'Hệ thống đang hết máy, sẽ thông báo & tự động kết nối khi có máy trống. Bạn giữ tab và đợi xíu ạ!'
@@ -751,8 +754,8 @@ export function language() {
     en.set(Contents.SCAN_CODE, 'Fix keyboard');
     vn.set(Contents.SCAN_CODE, 'Fix lỗi phím');
 
-    en.set(Contents.EXTERNAL_TAB, 'Open external tab');
-    vn.set(Contents.EXTERNAL_TAB, 'Mở tab riêng');
+    en.set(Contents.EXTERNAL_TAB, 'Share link');
+    vn.set(Contents.EXTERNAL_TAB, 'Chia sẻ link');
 
     en.set(Contents.QUALITY, 'Quality');
     vn.set(Contents.QUALITY, 'MBps: Chất lượng video -> tốc độ mạng');

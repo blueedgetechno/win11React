@@ -96,7 +96,9 @@ export const {
     sidepane_panehide,
     sidepane_panethem,
     render_message,
-    push_notification
+    push_notification,
+    toggle_gamepad,
+    toggle_keyboard
 } = sidepaneSlice.actions;
 
 export const {
@@ -134,6 +136,7 @@ export const {
     worker_vm_create,
     worker_vm_create_from_volume,
     worker_refresh,
+    wait_and_claim_volume,
     claim_volume,
     vm_session_create,
     vm_session_access,

@@ -4,6 +4,7 @@
 
   display: flex;
   position: absolute;
+  overflow: hidden;
   width: 100vw;
   height: 56px;
   color: var(--dark-txt);
@@ -24,6 +25,13 @@ body[data-theme="dark"] {
   .taskbar {
     --bg1: rgba(32, 32, 32, 0.75);
     --bg2: rgba(255, 255, 255, 0.1);
+
+    .taskright {
+      .btn-show {
+        filter: invert(1);
+      }
+
+    }
   }
 
   .tsIconInvert {
@@ -46,12 +54,27 @@ body[data-theme="dark"] {
   position: absolute;
 
   &[data-remote="true"] {
+    padding-left: 15px;
+
     --bg1: rgba(32, 32, 32, 0.75);
     --bg2: rgba(255, 255, 255, 0.1);
     -webkit-backdrop-filter: saturate(3) blur(20px);
     backdrop-filter: saturate(3) blur(20px);
     border-radius: 15px;
+
+    transition: all ease-in-out 0.5s;
+    transform: translatex(0%);
+
+    &.slide-in {
+      transform: translateX(0%)
+    }
+
+    &.slide-out {
+      transform: translateX(95%)
+    }
   }
+
+
 
   top: 0;
   right: 0;
@@ -60,6 +83,20 @@ body[data-theme="dark"] {
   display: flex;
   align-items: center;
   gap: 4px;
+
+  .btn-show {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 100%;
+    outline: none;
+    border: none;
+    background: none;
+  }
 }
 
 .taskIcon {

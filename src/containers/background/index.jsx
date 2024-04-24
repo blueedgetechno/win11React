@@ -32,7 +32,7 @@ export const BootScreen = ({ loadingText }) => {
                 <div className="text-l font-semibold text-gray-100">
                     {t[loadingText]}
                 </div>
-                <div className="mt-48" id="loader">
+                <div className="mt-4" id="loader">
                     <svg
                         className="progressRing"
                         height={48}
@@ -98,7 +98,7 @@ export const LockScreen = () => {
                 data-faded={!lock}
                 data-unlock={unlocked}
             >
-                <div className="w-[200px] h-[200px] ctn-logo rounded-full p-4">
+                <div className="w-[120px] lg:w-[200px] h-[120px] lg:h-[200px] ctn-logo rounded-full p-4">
                     <Image
                         className="rounded-2xl overflow-hidden"
                         src="img/asset/prof.png"

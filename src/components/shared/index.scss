@@ -27,9 +27,9 @@
   height: 100%;
 }
 
-@media (1px < width < 768px) {
+@media (1px < width < 1024px) {
   .userManager {
     font-size: 13.5px;
-    overflow: scroll;
+    overflow-y: auto;
   }
 }

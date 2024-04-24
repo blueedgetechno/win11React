@@ -116,48 +116,58 @@ export async function CacheRequest<T>(
 
     return cache;
 }
+const filterActions = ['fetch_local_worker', 'fetch_user', 'fetch_message'];
+
+const isFilterAction = (acctionType: string) => {
+    return filterActions.some((act) => acctionType.includes(act));
+};
 
 const isPending = (action: UnknownAction) =>
     action.type.endsWith('/pending') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
+
 const isFulfilled = (action: UnknownAction) =>
     action.type.endsWith('/fulfilled') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
+
 const isRejected = (action: UnknownAction) =>
     action.type.endsWith('/rejected') &&
     !action.type.includes('setting') &&
-    !action.type.includes('ping');
+    !action.type.includes('ping') &&
+    !isFilterAction(action.type);
 
 export const isPendingAction =
     (prefixs: string[]) =>
-        (action: UnknownAction): action is UnknownAction => {
-            // Note: this cast to UnknownAction could also be `any` or whatever fits your case best
-            return (
-                prefixs.find((prefix) => action.type.includes(prefix)) !=
+    (action: UnknownAction): action is UnknownAction => {
+        // Note: this cast to UnknownAction could also be `any` or whatever fits your case best
+        return (
+            prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isPending(action)
-            );
-        };
+        );
+    };
 
 export const isRejectedAction =
     (prefixs: string[]) =>
-        (action: UnknownAction): action is UnknownAction => {
-            // Note: this cast to UnknownAction could also be `any` or whatever fits your case best - like if you had standardized errors and used `rejectWithValue`
-            return (
-                prefixs.find((prefix) => action.type.includes(prefix)) !=
+    (action: UnknownAction): action is UnknownAction => {
+        // Note: this cast to UnknownAction could also be `any` or whatever fits your case best - like if you had standardized errors and used `rejectWithValue`
+        return (
+            prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isRejected(action)
-            );
-        };
+        );
+    };
 
 export const isFulfilledAction =
     (prefixs: string[]) =>
-        (action: UnknownAction): action is UnknownAction => {
-            return (
-                prefixs.find((prefix) => action.type.includes(prefix)) !=
+    (action: UnknownAction): action is UnknownAction => {
+        return (
+            prefixs.find((prefix) => action.type.includes(prefix)) !=
                 undefined && isFulfilled(action)
-            );
-        };
+        );
+    };
 
 export async function BuilderHelper<T, U, V>(
     builder: ActionReducerMapBuilder<T>,

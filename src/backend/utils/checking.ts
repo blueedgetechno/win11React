@@ -26,7 +26,8 @@ export const isAdmin = (email) => {
         'sieunhankiet@gmail.com',
         'datdovan1502@gmail.com',
         'thienvanlea1@gmail.com',
-        'huyhoangdo0205@gmail.com'
+        'huyhoangdo0205@gmail.com',
+        'huyhoangdo@contact.thinkmay.net'
     ];
 
     // TODO: after release
@@ -35,10 +36,24 @@ export const isAdmin = (email) => {
 };
 
 export const isRunOutOfGpu = (respText: string): boolean => {
-    let check = true
+    let check = true;
 
     check = JSON.stringify(respText).includes(' out of gpu');
 
-    return check
+    return check;
+};
 
+export function isIos() {
+    return (
+        [
+            'iPad Simulator',
+            'iPhone Simulator',
+            'iPod Simulator',
+            'iPad',
+            'iPhone',
+            'iPod'
+        ].includes(navigator.platform) ||
+        // iPad on iOS 13 detection
+        (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+    );
 }

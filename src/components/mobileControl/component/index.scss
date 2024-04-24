@@ -1,0 +1,18 @@
+.virtKeyBoard {
+	position: fixed;
+	z-index: 6;
+
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transition: all ease-in-out 0.5s;
+	transform: translateY(100%);
+
+	&.slide-in {
+		transform: translateY(0%)
+	}
+
+	&.slide-out {
+		transform: translateY(100%)
+	}
+}

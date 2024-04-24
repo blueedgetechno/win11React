@@ -6,10 +6,10 @@ import { Contents } from '../../../backend/reducers/locales';
 
 export function notify({ data: { title, tips, loading, text } }) {
     const t = useAppSelector((state) => state.globals.translation);
-    const [textTrans, setTextTrans] = useState('')
+    const [textTrans, setTextTrans] = useState('');
     useEffect(() => {
-        setTextTrans(t[text])
-    }, [text])
+        setTextTrans(t[text]);
+    }, [text]);
 
     return (
         <div className="w-[330px] h-auto p-[14px]">
@@ -68,8 +68,7 @@ const Protip = () => {
         t[Contents.PRO_TIP_DEMO_0],
         t[Contents.PRO_TIP_DEMO_1],
         t[Contents.PRO_TIP_DEMO_2],
-        t[Contents.PRO_TIP_DEMO_3],
-
+        t[Contents.PRO_TIP_DEMO_3]
     ];
 
     useEffect(() => {

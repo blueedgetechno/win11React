@@ -12,8 +12,8 @@ import {
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { EventCode } from '../../../src-tauri/core/models/keys.model';
 import { AddNotifier } from '../../../src-tauri/core/utils/log';
-import { isMobile } from '../utils/checking';
 import { sleep } from '../utils/sleep';
+import { isMobile } from './../utils/checking';
 import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
 
@@ -23,7 +23,7 @@ const size = () =>
         : 1920 * 1080;
 export const MAX_BITRATE = () => (20000 / (1920 * 1080)) * size();
 export const MIN_BITRATE = () => (1000 / (1920 * 1080)) * size();
-export const MAX_FRAMERATE = 120;
+export const MAX_FRAMERATE = 240;
 export const MIN_FRAMERATE = 40;
 
 export let client: RemoteDesktopClient | null = null;
@@ -57,19 +57,11 @@ export const ready = async () => {
 
         await new Promise((r) => setTimeout(r, 1000));
     }
+    if (isMobile) client.PointerVisible(true);
 
     appDispatch(remoteSlice.actions.internal_sync());
     appDispatch(popup_close());
 };
-
-AddNotifier(async (message, text, source) => {});
-
-type ConnectStatus =
-    | 'not started'
-    | 'started'
-    | 'connecting'
-    | 'connected'
-    | 'closed';
 
 export type AuthSessionResp = {
     id: string;
@@ -134,6 +126,34 @@ export function WindowD() {
     client?.hid?.TriggerKey(EventCode.KeyUp, 'd');
     client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
 }
+
+export async function keyboardCallback(val, action: 'up' | 'down') {
+    if (client == null) return;
+
+    client?.hid?.TriggerKey(
+        action == 'up' ? EventCode.KeyUp : EventCode.KeyDown,
+        val
+    );
+}
+export async function gamePadBtnCallback(index: number, type: 'up' | 'down') {
+    if (client == null) return;
+    client?.hid?.VirtualGamepadButtonSlider(type == 'down', index);
+}
+
+export async function gamepadAxisCallback(
+    x: number,
+    y: number,
+    type: 'left' | 'right'
+) {
+    if (client == null) return;
+    client?.hid?.VirtualGamepadAxis(x, y, type);
+}
+
+export const setClipBoard = async (content: string) => {
+    if (client == null) return;
+
+    client?.hid?.SetClipboard(content);
+};
 
 export function openRemotePage(
     url: string,
@@ -352,9 +372,11 @@ export const remoteSlice = createSlice({
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
+            client?.ResetVideo();
         },
         toggle_fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
+            client?.ResetVideo();
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
@@ -367,7 +389,7 @@ export const remoteSlice = createSlice({
         internal_sync: (state) => {
             if (
                 (state.bitrate != state.prev_bitrate ||
-                state.prev_size != size()) &&
+                    state.prev_size != size()) &&
                 size() > 0
             ) {
                 client?.ChangeBitrate(

@@ -37,7 +37,7 @@ async function internalFetch<T>(
         }
     } else {
         if (command == 'info') {
-            const resp = await fetch(`http://${address}/info`);
+            const resp = await fetch(`https://${address}/info`);
 
             if (!resp.ok) return new Error('fail to request');
 
@@ -49,15 +49,13 @@ async function internalFetch<T>(
             });
 
             if (!resp.ok) return new Error('fail to request');
+            const clonedResponse = resp.clone();
 
-            const contentType = resp.headers.get('Content-Type');
-            if (contentType.includes('application/json')) {
-                return await resp.json(); // Parse as JSON
-            } else {
-                //@ts-ignore
-                return await resp.text(); // Treat as text
+            try {
+                return await clonedResponse.json();
+            } catch (error) {
+                return new Error(await resp.text());
             }
-            //return (await resp.json()) ;
         }
     }
 }
@@ -178,6 +176,8 @@ export async function StartThinkmayOnVM(
     };
 
     const resp = await internalFetch<StartRequest>(address, 'new', req);
+    console.log(resp, 'resp thinkmay');
+
     if (resp instanceof Error) throw resp;
 
     return {
@@ -236,6 +236,7 @@ export async function StartThinkmay(computer: Computer): Promise<Session> {
     };
 
     const resp = await internalFetch<StartRequest>(address, 'new', req);
+
     if (resp instanceof Error) throw resp;
 
     return {
@@ -269,6 +270,7 @@ export function ParseRequest(
     const { address } = computer;
     const { turn, thinkmay } = session;
 
+    console.log(session);
     return {
         audioUrl:
             client == null

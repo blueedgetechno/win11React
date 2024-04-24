@@ -16,10 +16,14 @@ import {
     useAppSelector
 } from '../../backend/reducers';
 import { Contents } from '../../backend/reducers/locales';
+import { isMobile } from '../../backend/utils/checking';
 import {
     clickDispatch,
     customClickDispatch
 } from '../../backend/utils/dispatch';
+import { sleep } from '../../backend/utils/sleep';
+import { VirtualGamepad } from '../mobileControl/component/virtGamepad';
+import VirtKeyboard from '../mobileControl/component/virtKeyBoard';
 import { Icon } from '../shared/general';
 import './searchpane.scss';
 import './sidepane.scss';
@@ -33,10 +37,12 @@ export const DesktopApp = () => {
     const desk = useAppSelector((state) => state.desktop);
     const [holding, setHolding] = useState(false);
     const timeoutRef = useRef(null);
+    const lastTap = useRef(null);
 
     const dispatch = useDispatch();
 
     const handleTouchStart = (e) => {
+        return;
         Actions.afterMath(e);
         timeoutRef.current = setTimeout(() => {
             setHolding(true);
@@ -53,11 +59,11 @@ export const DesktopApp = () => {
         }, 300); // 1000 milliseconds = 1 second
     };
 
-    const handleTouchEnd = () => {
-        clearTimeout(timeoutRef.current);
-        //setHolding(false);
+    const handleTouchEnd = async (e) => {
+        //clearTimeout(timeoutRef.current);
+        await sleep(200);
+        clickDispatch(e);
     };
-
     const handleDouble = customClickDispatch((e) => e.stopPropagation());
 
     return (
@@ -131,22 +137,29 @@ export const SidePane = () => {
     }
 
     useEffect(() => {
-        sidepane.quicks.map((item, i) => {
-            if (item.src == 'nightlight') {
-                if (pnstates[i]) document.body.dataset.sepia = true;
-                else document.body.dataset.sepia = false;
-            }
-        });
+        //sidepane.quicks.map((item, i) => {
+        //    if (item.src == 'nightlight') {
+        //        if (pnstates[i]) document.body.dataset.sepia = true;
+        //        else document.body.dataset.sepia = false;
+        //    }
+        //});
     });
 
     useEffect(() => {
         var tmp = [];
-        for (var i = 0; i < sidepane.quicks.length; i++) {
+        var states = isMobile()
+            ? sidepane.mobileControl.buttons
+            : sidepane.quicks;
+        const mobileState = {
+            gamePadOpen: !sidepane.mobileControl.gamePadHide,
+            keyboardOpen: !sidepane.mobileControl.keyboardHide
+        };
+        for (var i = 0; i < states.length; i++) {
             var val = getTreeValue(
-                { ...setting, ...remote },
-                sidepane.quicks[i].state
+                { ...setting, ...remote, ...mobileState },
+                states[i].state
             );
-            if (sidepane.quicks[i].name == 'Theme') val = val == 'dark';
+            if (states[i].name == 'Theme') val = val == 'dark';
             tmp.push(val);
         }
 
@@ -154,101 +167,226 @@ export const SidePane = () => {
     }, [setting, sidepane, remote]);
 
     return (
-        <div
-            style={{ '--prefix': 'PANE' }}
-            className="sidePane dpShad"
-            data-hide={sidepane.hide}
-        >
-            <div className="quickSettings ">
-                <div className="listBtn">
-                    {sidepane.quicks.map((qk, idx) => {
-                        return (
-                            <div key={idx} className="qkGrp">
-                                <div
-                                    className="qkbtn handcr prtclk"
-                                    onClick={clickDispatch}
-                                    data-action={qk.action}
-                                    data-payload={qk.payload || qk.state}
-                                    data-state={pnstates[idx]}
-                                >
-                                    {Object.keys(md).includes(qk.src) ? (
-                                        (() => {
-                                            const WinApp = md[qk.src];
-                                            return <WinApp />;
-                                        })()
-                                    ) : Object.keys(fi).includes(qk.src) ? (
-                                        (() => {
-                                            const WinApp = fi[qk.src];
-                                            return <WinApp />;
-                                        })()
-                                    ) : Object.keys(fa).includes(qk.src) ? (
-                                        (() => {
-                                            const WinApp = fa[qk.src];
-                                            return <WinApp />;
-                                        })()
-                                    ) : (
-                                        <Icon
-                                            className="quickIcon"
-                                            ui={qk.ui}
-                                            src={qk.src}
-                                            width={14}
-                                            invert={pnstates[idx] ? true : null}
-                                        />
-                                    )}
-                                </div>
-                                <div className="qktext">{t[qk.name]}</div>
+        <>
+            <div
+                style={{ '--prefix': 'PANE' }}
+                className="sidePane dpShad"
+                data-hide={sidepane.hide}
+            >
+                <div className="quickSettings ">
+                    <div className="listBtn">
+                        {isMobile()
+                            ? sidepane.mobileControl.buttons.map((qk, idx) => {
+                                  return (
+                                      <div key={idx} className="qkGrp">
+                                          <div
+                                              style={{ ...qk.style }}
+                                              className="qkbtn handcr prtclk"
+                                              onClick={clickDispatch}
+                                              data-action={qk.action}
+                                              data-payload={
+                                                  qk.payload || qk.state
+                                              }
+                                              data-state={pnstates[idx]}
+                                          >
+                                              {Object.keys(md).includes(
+                                                  qk.src
+                                              ) ? (
+                                                  (() => {
+                                                      const WinApp = md[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : Object.keys(fi).includes(
+                                                    qk.src
+                                                ) ? (
+                                                  (() => {
+                                                      const WinApp = fi[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : Object.keys(fa).includes(
+                                                    qk.src
+                                                ) ? (
+                                                  (() => {
+                                                      const WinApp = fa[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : (
+                                                  <Icon
+                                                      className="quickIcon"
+                                                      ui={qk.ui}
+                                                      src={qk.src}
+                                                      width={14}
+                                                      invert={
+                                                          pnstates[idx]
+                                                              ? true
+                                                              : null
+                                                      }
+                                                  />
+                                              )}
+                                          </div>
+                                          <div className="qktext">
+                                              {t[qk.name]}
+                                          </div>
+                                      </div>
+                                  );
+                              })
+                            : sidepane.quicks.map((qk, idx) => {
+                                  return (
+                                      <div key={idx} className="qkGrp">
+                                          <div
+                                              style={{ ...qk.style }}
+                                              className="qkbtn handcr prtclk"
+                                              onClick={clickDispatch}
+                                              data-action={qk.action}
+                                              data-payload={
+                                                  qk.payload || qk.state
+                                              }
+                                              data-state={pnstates[idx]}
+                                          >
+                                              {Object.keys(md).includes(
+                                                  qk.src
+                                              ) ? (
+                                                  (() => {
+                                                      const WinApp = md[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : Object.keys(fi).includes(
+                                                    qk.src
+                                                ) ? (
+                                                  (() => {
+                                                      const WinApp = fi[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : Object.keys(fa).includes(
+                                                    qk.src
+                                                ) ? (
+                                                  (() => {
+                                                      const WinApp = fa[qk.src];
+                                                      return <WinApp />;
+                                                  })()
+                                              ) : (
+                                                  <Icon
+                                                      className="quickIcon"
+                                                      ui={qk.ui}
+                                                      src={qk.src}
+                                                      width={14}
+                                                      invert={
+                                                          pnstates[idx]
+                                                              ? true
+                                                              : null
+                                                      }
+                                                  />
+                                              )}
+                                          </div>
+                                          <div className="qktext">
+                                              {t[qk.name]}
+                                          </div>
+                                      </div>
+                                  );
+                              })}
+                    </div>
+
+                    <div className="shortcuts">
+                        <hr className="mb-4" />
+                        <div className="listBtn">
+                            {isMobile()
+                                ? sidepane.mobileControl.shortcuts.map(
+                                      (qk, idx) => {
+                                          return (
+                                              <div
+                                                  key={idx}
+                                                  className="qkGrp t"
+                                              >
+                                                  <div
+                                                      style={{
+                                                          fontSize: '0.6rem'
+                                                      }}
+                                                      className="qkbtn handcr prtclk"
+                                                      onClick={() =>
+                                                          Actions.clickShortCut(
+                                                              qk.val
+                                                          )
+                                                      }
+                                                  >
+                                                      {qk.name}
+                                                  </div>
+                                                  {/*<div className="qktext">{t[qk.name]}</div>*/}
+                                              </div>
+                                          );
+                                      }
+                                  )
+                                : sidepane.shortcuts.map((qk, idx) => {
+                                      return (
+                                          <div key={idx} className="qkGrp t">
+                                              <div
+                                                  style={{ fontSize: '0.8rem' }}
+                                                  className="qkbtn handcr prtclk"
+                                                  onClick={() =>
+                                                      Actions.clickShortCut(
+                                                          qk.val
+                                                      )
+                                                  }
+                                              >
+                                                  {qk.name}
+                                              </div>
+                                              {/*<div className="qktext">{t[qk.name]}</div>*/}
+                                          </div>
+                                      );
+                                  })}
+                        </div>
+                    </div>
+
+                    <div className="sliderCont flex flex-col items-start">
+                        <div className="containerSlider">
+                            <div className="sliderName">
+                                {t[Contents.QUALITY]}
                             </div>
-                        );
-                    })}
+                            <div className=" sliderWrapper">
+                                <span>1</span>
+                                <input
+                                    className="sliders bitrateSlider"
+                                    onChange={setBitrate}
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={remote.bitrate}
+                                />
+                                <span>100</span>
+                            </div>
+                        </div>
+
+                        <div className="containerSlider">
+                            <div className="sliderName">
+                                {t[Contents.FRAMERATE]}
+                            </div>
+                            <div className=" sliderWrapper">
+                                <span>1</span>
+                                <input
+                                    className="sliders framerateSlider"
+                                    onChange={setFramerate}
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={remote.framerate}
+                                />
+                                <span>100</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/*<div className="shortCuts">
-                    <hr />
+                {/*<div className="p-1 bottomBar">
+                    <div className="px-3 battery-sidepane">
+                        <Battery pct />
+                    </div>
                 </div>*/}
-                <div className="sliderCont flex flex-col items-start">
-                    <div className="containerSlider">
-
-                        <div className="sliderName">
-                            {t[Contents.QUALITY]}
-                        </div>
-                        <div className=" sliderWrapper">
-                            <span>1</span>
-                            <input
-                                className="sliders bitrateSlider"
-                                onChange={setBitrate}
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={remote.bitrate}
-                            />
-                            <span>100</span>
-                        </div>
-                    </div>
-
-                    <div className="containerSlider">
-                        <div className="sliderName">
-                            {t[Contents.FRAMERATE]}
-                        </div>
-                        <div className=" sliderWrapper">
-                            <span>1</span>
-                            <input
-                                className="sliders framerateSlider"
-                                onChange={setFramerate}
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={remote.framerate}
-                            />
-                            <span>100</span>
-                        </div>
-                    </div>
-                </div>
             </div>
-            {/*<div className="p-1 bottomBar">
-                <div className="px-3 battery-sidepane">
-                    <Battery pct />
-                </div>
-            </div>*/}
-        </div>
+            {isMobile() ? (
+                <>
+                    <VirtKeyboard></VirtKeyboard>
+                    <VirtualGamepad></VirtualGamepad>
+                </>
+            ) : null}
+        </>
     );
 };

@@ -3,15 +3,16 @@ import {
     appDispatch,
     claim_volume,
     fetch_local_worker,
+    popup_close,
     popup_open,
     remote_connect,
     RootState,
     save_reference,
     vm_session_access,
     vm_session_create,
+    worker_refresh,
     worker_vm_create_from_volume
 } from '.';
-import { isRunOutOfGpu } from '../utils/checking';
 import { fromComputer, RenderNode } from '../utils/tree';
 import { pb } from './fetch/createClient';
 import {
@@ -26,6 +27,7 @@ import {
     StartVirtdaemon
 } from './fetch/local';
 import { BuilderHelper } from './helper';
+import { Contents } from './locales';
 
 type WorkerType = {
     data: any;
@@ -52,17 +54,100 @@ export const workerAsync = {
         async (): Promise<void> => {
             await appDispatch(
                 fetch_local_worker(
-                    window.location.host == 'localhost' ||
-                        window.location.host == 'tauri.localhost'
+                    (window.location.host.includes('localhost') ||
+                        window.location.host.includes('tauri.localhost'))
                         ? 'supabase.thinkmay.net'
                         : window.location.host
                 )
             );
         }
     ),
+    wait_and_claim_volume: createAsyncThunk(
+        'wait_and_claim_volume',
+        async (_: void, { getState }) => {
+            await appDispatch(worker_refresh());
+            appDispatch(
+                popup_open({
+                    type: 'notify',
+                    data: { loading: true, title: 'Connect to PC' }
+                })
+            );
+
+            const all = await pb.collection('volumes').getFullList<{
+                local_id: string;
+            }>();
+            const volume_id = all.at(0)?.local_id;
+
+            for (let i = 0; i < 100; i++) {
+                let node = new RenderNode(
+                    (getState() as RootState).worker.data
+                );
+
+                let result: RenderNode<Computer> | undefined = undefined;
+                node.iterate((x) => {
+                    if (
+                        result == undefined &&
+                        (x.info as Computer)?.Volumes?.includes(volume_id)
+                    )
+                        result = x;
+                });
+
+                if (result == undefined) {
+                    appDispatch(popup_close());
+                    throw new Error('worker not found');
+                } else if (
+                    result.type == 'vm_worker' &&
+                    result.data.length > 0
+                ) {
+                    await appDispatch(vm_session_access(result.data.at(0).id));
+                    appDispatch(popup_close());
+                    return;
+                } else if (
+                    result.type == 'vm_worker' &&
+                    result.data.length == 0
+                ) {
+                    await appDispatch(vm_session_create(result.id));
+                    appDispatch(popup_close());
+                    return;
+                }
+
+                const computer: Computer = node.findParent<Computer>(
+                    result.id,
+                    'host_worker'
+                )?.info;
+                if (computer == undefined) {
+                    appDispatch(popup_close());
+                    throw new Error('invalid tree');
+                }
+
+                // TODO
+                const resp = await StartVirtdaemon(computer, volume_id);
+                if (resp instanceof Error) {
+                    appDispatch(popup_close());
+                    appDispatch(
+                        popup_open({
+                            type: 'notify',
+                            data: {
+                                loading: false,
+                                title: 'Connect to PC',
+                                text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
+                            }
+                        })
+                    );
+
+                    await new Promise((r) => setTimeout(r, 30000));
+                }
+
+                await appDispatch(worker_refresh());
+            }
+
+            appDispatch(popup_close());
+            return;
+        }
+    ),
     claim_volume: createAsyncThunk(
         'claim_volume',
-        async (_: void, { getState }): Promise<Computer | string> => {
+        async (_: void, { getState }): Promise<Computer | Error> => {
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const all = await pb.collection('volumes').getFullList<{
@@ -81,18 +166,14 @@ export const workerAsync = {
 
             if (result == undefined) throw new Error('worker not found');
             else if (result.type == 'host_worker') {
-                const resp = await appDispatch(
-                    worker_vm_create_from_volume(volume_id)
-                );
-                if (isRunOutOfGpu(resp.payload)) {
-                    return ('ran out of gpu');
-                }
+                await appDispatch(worker_vm_create_from_volume(volume_id));
                 await appDispatch(claim_volume());
             } else if (result.type == 'vm_worker' && result.data.length > 0)
                 await appDispatch(vm_session_access(result.data.at(0).id));
             else if (result.type == 'vm_worker' && result.data.length == 0)
                 await appDispatch(vm_session_create(result.id));
 
+            appDispatch(popup_close());
             return result.info;
         }
     ),
@@ -179,16 +260,7 @@ export const workerAsync = {
             if (computer == undefined) throw new Error('invalid tree');
 
             const resp = await StartVirtdaemon(computer, input);
-            console.log(resp);
             if (resp instanceof Error) {
-                console.log(resp.message);
-                appDispatch(
-                    popup_open({
-                        type: 'notify',
-                        data: { title: resp.message, loading: false }
-                    })
-                );
-
                 throw resp.message;
             }
             await appDispatch(fetch_local_worker(computer.address));
@@ -198,6 +270,8 @@ export const workerAsync = {
     vm_session_create: createAsyncThunk(
         'vm_session_create',
         async (ip: string, { getState }): Promise<any> => {
+            await appDispatch(worker_refresh());
+
             const node = new RenderNode((getState() as RootState).worker.data);
 
             const host = node.findParent<Computer>(ip, 'host_worker');
@@ -333,10 +407,10 @@ export const workerSlice = createSlice({
                     } else {
                         paths.forEach(
                             (x) =>
-                            (target =
-                                new RenderNode(target).data.find(
-                                    (y) => y.id == x
-                                ) ?? target)
+                                (target =
+                                    new RenderNode(target).data.find(
+                                        (y) => y.id == x
+                                    ) ?? target)
                         );
                         state.cdata = target.data.map((x) => x.any());
                     }
@@ -344,13 +418,12 @@ export const workerSlice = createSlice({
             },
             {
                 fetch: workerAsync.worker_session_close,
-                hander: (state, action) => { }
+                hander: (state, action) => {}
             },
-            //{
-
-            //    fetch: workerAsync.claim_volume,
-            //    hander: (state, action) => { }
-            //}
+            {
+                fetch: workerAsync.wait_and_claim_volume,
+                hander: (state, action) => {}
+            }
         );
     }
 });

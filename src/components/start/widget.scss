@@ -32,7 +32,7 @@
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .widtop {
       width: 96%;
@@ -408,7 +408,10 @@
     .tpNews {
       //position: absolute;
       //bottom: 0;
-      padding: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
       .tpSource {
         //color: var(--txt-col);
@@ -567,8 +570,24 @@ body[data-theme="dark"] .widPaneCont {
   .widPaneCont {
     right: 8%;
     bottom: 56px;
-    width: 328px;
+    width: 280px;
     height: 80%;
     max-height: 560px;
+
+    .sendMessage {
+      height: 48px;
+
+      .inputMsg {
+        height: 34px;
+      }
+    }
+
+    .WidPane {
+
+      .title {
+        height: 40px;
+        font-size: 1rem;
+      }
+    }
   }
 }

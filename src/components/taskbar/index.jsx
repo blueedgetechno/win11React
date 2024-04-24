@@ -3,6 +3,12 @@ import useSound from 'use-sound';
 import ringSound from '/audio/ring2.mp3';
 
 import {
+    MdArrowBackIos,
+    MdArrowForwardIos,
+    MdOutlineVideoSettings
+} from 'react-icons/md';
+
+import {
     appDispatch,
     task_hide,
     task_show,
@@ -19,6 +25,7 @@ const Taskbar = () => {
     const remote = useAppSelector((state) => state.remote);
     const tasks = useAppSelector((state) => state.taskbar);
     const apps = useAppSelector((state) => state.apps);
+    const [open, setOpen] = useState(true);
     const defaultapps = useAppSelector((state) =>
         state.apps.apps.filter((x) => state.taskbar.apps.includes(x.id))
     );
@@ -62,13 +69,10 @@ const Taskbar = () => {
     }, []);
 
     const [play] = useSound(ringSound, { volume: 0.1 });
-    const available = useAppSelector(
-        (state) => state.worker.data?.data?.at(0)?.info?.GPUs?.length > 0
-    );
 
     useEffect(() => {
-        available ? play() : null;
-    }, [available]);
+        remote?.active ? play() : null;
+    }, [remote.active]);
 
     return (
         <div
@@ -138,13 +142,28 @@ const Taskbar = () => {
                     </div>
                 </div>
             )}
-            <div className="taskright" data-remote={remote.active}>
+            <div
+                className={`${open ? 'slide-in' : 'slide-out'} taskright`}
+                data-remote={remote.active}
+            >
+                {remote.active ? (
+                    <button
+                        className="btn-show"
+                        onClick={() => setOpen((old) => !old)}
+                    >
+                        {open ? (
+                            <MdArrowForwardIos
+                                style={{ fontSize: '1.2rem' }}
+                            ></MdArrowForwardIos>
+                        ) : (
+                            <MdArrowBackIos
+                                style={{ fontSize: '1.2rem' }}
+                            ></MdArrowBackIos>
+                        )}
+                    </button>
+                ) : null}
+
                 <>
-                    {/*{available ? (
-                        <div className="pointer green"></div>
-                    ) : (
-                        <div className="pointer orange"></div>
-                    )}*/}
                     <div
                         className="p-2 prtclk handcr hvlight flex rounded "
                         onClick={clickDispatch}
@@ -159,7 +178,7 @@ const Taskbar = () => {
                         </div>
                     </div>
                     <div
-                        className="prtclk handcr my-1 p-2 hvlight flex rounded"
+                        className="prtclk handcr my-1 p-2 hvlight flex gap-[8px] rounded"
                         onClick={clickDispatch}
                         style={{ '--prefix': 'PANE' }}
                         data-action="sidepane_panetogg"
@@ -172,11 +191,10 @@ const Taskbar = () => {
                                 width={16}
                             />
                         ) : null}
-                        <div
-                            className="text-xm font-semibold"
-                        //style={{ color: 'white' }}
-                        >
-                            <Icon src='setting'></Icon>
+                        <div className="text-xm flex gap-[4px] font-semibold">
+                            <MdOutlineVideoSettings
+                                fontSize={'1.2rem'}
+                            ></MdOutlineVideoSettings>
                             {t[Contents.SETTING]}
                         </div>
                     </div>
