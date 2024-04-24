@@ -89,9 +89,9 @@ const fetchMessage = async (email: string) => {
 };
 
 export const preload = async () => {
+    await fetchUser(),
     await Promise.all([
         loadSettings(),
-        await fetchUser(),
         fetchApp(),
         fetchSetting(),
         fetchMessage(store.getState().user.email)

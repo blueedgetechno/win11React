@@ -156,9 +156,7 @@ export const sidepaneAsync = {
                         };
                     })
                     .filter((x) => {
-                        console.log(email);
                         if (x.name.toString().includes(email)) {
-                            console.log(x.name);
                             return x;
                         }
                     });
