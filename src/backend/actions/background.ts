@@ -47,7 +47,6 @@ const fetchUser = async () => {
 };
 export const fetchApp = async () => {
     await appDispatch(worker_refresh());
-    await appDispatch(claim_volume());
 };
 const fetchSetting = async () => {
     let bitrateLocal: number = +localStorage.getItem('bitrate');
@@ -93,7 +92,7 @@ export const preload = async () => {
     await Promise.all([
         loadSettings(),
         fetchUser(),
-        //fetchApp(),
+        fetchApp(),
         fetchSetting(),
         fetchMessage()
     ]);
