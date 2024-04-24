@@ -173,9 +173,13 @@ body[data-theme="dark"] .bandpane {
     .sliderName {
       width: 100%;
       display: flex;
+      gap: 4px;
       align-items: center;
       font-size: 0.8rem;
 
+      span {
+        font-weight: 600;
+      }
     }
 
     .sliderWrapper {
