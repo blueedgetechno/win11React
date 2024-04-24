@@ -15,6 +15,7 @@ import { UserSession } from './backend/reducers/fetch/analytics';
 import { Contents } from './backend/reducers/locales';
 import { isMobile } from './backend/utils/checking';
 import ActMenu from './components/menu';
+import MobileControl from './components/mobileControl/control';
 import { DesktopApp, SidePane, StartMenu } from './components/start';
 import { WidPane } from './components/start/widget';
 import Taskbar from './components/taskbar';
@@ -180,6 +181,8 @@ function App() {
                             <Popup />
                         </>
                     )}
+                    {isMobile() ? <MobileControl /> : null}
+
                     {remote.active ? <Remote /> : <Background />}
                     {!remote.active ? (
                         <div className="desktop" data-menu="desk">

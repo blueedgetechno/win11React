@@ -7,8 +7,6 @@ import { useAppSelector } from '../../backend/reducers';
 import { keyboardCallback, setClipBoard } from '../../backend/reducers/remote';
 import { isIos } from '../../backend/utils/checking';
 import { clickDispatch } from '../../backend/utils/dispatch';
-import { VirtualGamepad } from './component/virtGamepad';
-import VirtKeyboard from './component/virtKeyBoard';
 import './mobileControl.scss';
 const listKeyBroad = [
     {
@@ -41,7 +39,7 @@ const MobileControl = ({
     onOkey,
     onDefault
 }) => {
-    const [isClose, setClose] = useState();
+    const [isClose, setClose] = useState(true);
 
     const mobileBtns = useAppSelector(
         (state) => state.sidepane.mobileControl.buttons
@@ -174,8 +172,8 @@ const MobileControl = ({
                 </button>
             </div>
 
-            <VirtKeyboard />
-            <VirtualGamepad />
+            {/*<VirtKeyboard />
+            <VirtualGamepad />*/}
         </>
     );
 };
