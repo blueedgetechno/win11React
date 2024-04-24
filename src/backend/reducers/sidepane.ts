@@ -102,7 +102,7 @@ export const sidepaneAsync = {
             const email = store.getState().user.email;
             await supabase.from('generic_events').insert({
                 type: 'MESSAGE',
-                name: `message from user`,
+                name: `message from ${email}`,
                 value: { email, ...input }
             });
         }
@@ -117,7 +117,7 @@ export const sidepaneAsync = {
     },
     fetch_message: createAsyncThunk(
         'fetch_message',
-        async (_: void, { getState }): Promise<Message[]> => {
+        async (email: string, { getState }): Promise<Message[]> => {
             supabase
                 .channel('schema-message-changes')
                 .on(
@@ -149,7 +149,18 @@ export const sidepaneAsync = {
                             new Date(a.timestamp).getTime()
                     )
                     .map((x) => {
-                        return { ...JSON.parse(x.value), name: x.name };
+                        return {
+                            content: x.value.content,
+                            name: x.name,
+                            timestamp: x.timestamp
+                        };
+                    })
+                    .filter((x) => {
+                        console.log(email);
+                        if (x.name.toString().includes(email)) {
+                            console.log(x.name);
+                            return x;
+                        }
                     });
             });
         }
