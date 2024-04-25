@@ -334,7 +334,6 @@ export const remoteSlice = createSlice({
             client?.hid?.ResetKeyStuck();
         },
         have_focus: (state) => {
-            client?.ResetVideo();
             state.focus = true;
         },
         close_remote: (state) => {
@@ -372,11 +371,9 @@ export const remoteSlice = createSlice({
         },
         set_fullscreen: (state, action: PayloadAction<boolean>) => {
             state.fullscreen = action.payload;
-            client?.ResetVideo();
         },
         toggle_fullscreen: (state) => {
             state.fullscreen = !state.fullscreen;
-            client?.ResetVideo();
         },
         pointer_lock: (state, action: PayloadAction<boolean>) => {
             state.pointer_lock = action.payload;
