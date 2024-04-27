@@ -3,16 +3,23 @@ import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
 let client: Client = null;
-getClient().then((x) => (client = x));
+export const http_available = () => client != null || new URL(window.location.href).protocol == 'http:'
+export const ValidateIPaddress = (ipaddress: string) => (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) 
+export const userHttp = (addr: string) : boolean => http_available() && ValidateIPaddress(addr)
+
+getClient().then((x) => (client = x)).catch(r => console.log('not using tauri'));
 async function internalFetch<T>(
     address: string,
     command: string,
     body?: any
 ): Promise<T | Error> {
+    const url = userHttp(address) 
+        ? `http://${address}:${WS_PORT}/${command}`
+        : `https://${address}/${command}`
+
     if (client != null) {
         if (command == 'info') {
-            const { data, ok } = await client.get<T>(
-                `http://${address}:${WS_PORT}/info`,
+            const { data, ok } = await client.get<T>( url,
                 {
                     timeout: { secs: 3, nanos: 0 },
                     responseType: ResponseType.JSON
@@ -23,8 +30,7 @@ async function internalFetch<T>(
 
             return data;
         } else {
-            const { data, ok } = await client.post<T>(
-                `http://${address}:${WS_PORT}/${command}`,
+            const { data, ok } = await client.post<T>( url,
                 Body.json(body),
                 {
                     responseType: ResponseType.JSON
@@ -37,13 +43,12 @@ async function internalFetch<T>(
         }
     } else {
         if (command == 'info') {
-            const resp = await fetch(`https://${address}/info`);
-
+            const resp = await fetch(url);
             if (!resp.ok) return new Error('fail to request');
 
             return await resp.json();
         } else {
-            const resp = await fetch(`https://${address}/${command}`, {
+            const resp = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(body)
             });
@@ -182,11 +187,11 @@ export async function StartThinkmayOnVM(
 
     return {
         audioUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}&target=${target}`,
         videoUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}&target=${target}`,
         rtc_config: {
@@ -241,11 +246,11 @@ export async function StartThinkmay(computer: Computer): Promise<Session> {
 
     return {
         audioUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${resp.thinkmay.audioToken}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.audioToken}`,
         videoUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${resp.thinkmay.videoToken}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${resp.thinkmay.videoToken}`,
         rtc_config: {
@@ -273,11 +278,11 @@ export function ParseRequest(
     console.log(session);
     return {
         audioUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${thinkmay.audioToken}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}`,
         videoUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${thinkmay.videoToken}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}`,
         rtc_config: {
@@ -305,11 +310,11 @@ export function ParseVMRequest(
 
     return {
         audioUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${thinkmay.audioToken}&target=${target}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.audioToken}&target=${target}`,
         videoUrl:
-            client == null
+            !userHttp(address)
                 ? `https://${address}/handshake/client?token=${thinkmay.videoToken}&target=${target}`
                 : `http://${address}:${WS_PORT}/handshake/client?token=${thinkmay.videoToken}&target=${target}`,
         rtc_config: {
