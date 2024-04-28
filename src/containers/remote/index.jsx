@@ -15,6 +15,9 @@ import './remote.scss';
 export const Remote = () => {
     const relative_mouse = useAppSelector((x) => x.remote.relative_mouse);
     const wall = useAppSelector((state) => state.wallpaper);
+    const keyboard = useAppSelector(
+        (state) => !state.sidepane.mobileControl.keyboardHide
+    );
     const gamepad = useAppSelector(
         (state) => !state.sidepane.mobileControl.gamePadHide
     );
@@ -28,9 +31,16 @@ export const Remote = () => {
     }, [remote.active]);
 
     useEffect(() => {
-        if (isMobile()) client?.PointerVisible(true);
+        if (client == null) return
+        else if (isMobile()) client?.PointerVisible(true);
+        
+        if (keyboard || gamepad) 
+            client.hid.disable = true
+        else
+            client.hid.disable = false
+
         const handler = new TouchHandler(
-            isMobile() ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
+            isMobile() && !keyboard ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
             remoteVideo.current,
             (val) => client?.SendRawHID(val)
         );
@@ -38,7 +48,7 @@ export const Remote = () => {
         return () => {
             handler.Close();
         };
-    }, [gamepad]);
+    }, [gamepad,keyboard]);
 
     const pointerlock = () => {
         appDispatch(set_fullscreen(true));
