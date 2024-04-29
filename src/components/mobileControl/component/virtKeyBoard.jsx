@@ -21,12 +21,12 @@ const VirtKeyboard = ({ close }) => {
             return;
         }
         const shift = useShift(button);
-        if (shift) keyBoardCallBack('Shift', 'down');
+        if (shift) keyBoardCallback('Shift', 'down');
 
         keyboardCallback(button, 'down');
-        keyBoardCallBack(button, 'up');
+        keyBoardCallback(button, 'up');
 
-        if (shift) keyBoardCallBack('Shift', 'up');
+        if (shift) keyBoardCallback('Shift', 'up');
 
         if (button === 'Enter' || button == 'Close') {
             appDispatch(toggle_keyboard());
