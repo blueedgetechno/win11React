@@ -36,12 +36,12 @@ export const Remote = () => {
         if (keyboard || gamepad) client.hid.disable = true;
         else client.hid.disable = false;
 
-        client.touch?.mode = isMobile() && !keyboard
+        client.touch.mode =
+            isMobile() && !keyboard
                 ? gamepad
                     ? 'gamepad'
                     : 'trackpad'
-                : 'none'
-
+                : 'none';
     }, [gamepad, keyboard]);
 
     const pointerlock = () => {

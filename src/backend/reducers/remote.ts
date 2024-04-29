@@ -119,7 +119,6 @@ const initialState: Data = {
     prev_size: 0
 };
 
-
 function VirtualGamepadButtonSlider(isDown: boolean, index: number) {
     if (index == 6 || index == 7) {
         // slider
@@ -135,9 +134,7 @@ function VirtualGamepadButtonSlider(isDown: boolean, index: number) {
 
     client?.SendRawHID(
         new HIDMsg(
-            !isDown
-                ? EventCode.GamepadButtonDown
-                : EventCode.GamepadButtonUp,
+            !isDown ? EventCode.GamepadButtonDown : EventCode.GamepadButtonUp,
             {
                 gamepad_id: 0,
                 index: index
@@ -175,12 +172,12 @@ function VirtualGamepadAxis(x: number, y: number, type: AxisType) {
     );
 }
 
-const trigger = (code: EventCode,jsKey: string) => {
+const trigger = (code: EventCode, jsKey: string) => {
     const key = convertJSKey(jsKey, 0);
     if (key == undefined) return;
-    const data = new HIDMsg(code, { key }).ToString()
+    const data = new HIDMsg(code, { key }).ToString();
     client?.SendRawHID(data);
-}
+};
 
 export function WindowD() {
     if (client == null) return;
@@ -192,7 +189,7 @@ export function WindowD() {
 
 export async function keyboardCallback(val, action: 'up' | 'down') {
     if (client == null) return;
-    trigger( action == 'up' ? EventCode.KeyUp : EventCode.KeyDown, val);
+    trigger(action == 'up' ? EventCode.KeyUp : EventCode.KeyDown, val);
 }
 export async function gamePadBtnCallback(index: number, type: 'up' | 'down') {
     if (client == null) return;
@@ -253,7 +250,10 @@ export const remoteAsync = {
         else if (client == null) return;
         // else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
-        else if (client?.hid?.last_active() > 5 * 60) {
+        else if (
+            Math.min(client?.hid?.last_active(), client?.touch?.last_active()) >
+            5 * 60
+        ) {
             if (store.getState().popup.data_stack.length > 0) return;
 
             appDispatch(
@@ -267,7 +267,12 @@ export const remoteAsync = {
                 })
             );
 
-            while (client?.hid?.last_active() > 2)
+            while (
+                Math.min(
+                    client?.hid?.last_active(),
+                    client?.touch?.last_active()
+                ) > 2
+            )
                 await new Promise((r) => setTimeout(r, 1000));
 
             appDispatch(popup_close());
