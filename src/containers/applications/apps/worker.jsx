@@ -166,12 +166,15 @@ const ContentArea = ({ searchtxt, data }) => {
         clearTimeout(timeoutRef.current);
         //setHolding(false);
     };
-    const renderIconName = (info) => {
-        if (info.state == 'STOPPED') return 'worker_disconnect';
-        if (info.state == 'RUNNING') return 'worker_connect';
-        if (info.menu == 'worker') return 'thispc';
-        if (info.menu == 'proxy') return 'onedrive';
-        else return 'folder3d';
+    const renderIconName = (node) => {
+        switch (node.type) {
+            case 'host_session':
+                return 'net';
+            default:
+                return isUUID(renderName(node)) 
+                    ? 'folder3d' 
+                    : 'onedrive';
+        }
     };
 
     const renderSubdata = (data) => {
@@ -246,9 +249,7 @@ const ContentArea = ({ searchtxt, data }) => {
                                     onTouchEnd={handleTouchEnd}
                                 >
                                     <Image
-                                        src={`icon/win/${renderIconName(
-                                            item.info
-                                        )}`}
+                                        src={`icon/win/${renderIconName( item)}`}
                                     />
                                     <span>
                                         {renderName(item)}
