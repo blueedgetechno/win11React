@@ -14,7 +14,7 @@ export const userHttp = (addr: string): boolean =>
 
 getClient()
     .then((x) => (client = x))
-    .catch((r) => console.log('not using tauri'));
+    .catch((r) => console.log('You are not using on webbrowser, tauri API will be limited'));
 async function internalFetch<T>(
     address: string,
     command: string,
