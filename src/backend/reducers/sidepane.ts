@@ -234,6 +234,8 @@ export const sidepaneAsync = {
         }
     ),
     handle_message: async (payload) => {
+        if(!payload.new.name.includes(store.getState().user.email) )
+            return;
         appDispatch(
             render_message({
                 ...payload.new.value,
