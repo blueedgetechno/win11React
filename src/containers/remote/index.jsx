@@ -31,16 +31,18 @@ export const Remote = () => {
     }, [remote.active]);
 
     useEffect(() => {
-        if (client == null) return
+        if (client == null) return;
         else if (isMobile()) client?.PointerVisible(true);
-        
-        if (keyboard || gamepad) 
-            client.hid.disable = true
-        else
-            client.hid.disable = false
+
+        if (keyboard || gamepad) client.hid.disable = true;
+        else client.hid.disable = false;
 
         const handler = new TouchHandler(
-            isMobile() && !keyboard ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
+            isMobile() && !keyboard
+                ? gamepad
+                    ? 'gamepad'
+                    : 'trackpad'
+                : 'none',
             remoteVideo.current,
             (val) => client?.SendRawHID(val)
         );
@@ -48,7 +50,7 @@ export const Remote = () => {
         return () => {
             handler.Close();
         };
-    }, [gamepad,keyboard]);
+    }, [gamepad, keyboard]);
 
     const pointerlock = () => {
         appDispatch(set_fullscreen(true));
