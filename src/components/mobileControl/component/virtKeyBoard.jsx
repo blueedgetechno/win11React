@@ -2,14 +2,15 @@ import { useState } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import { useShift } from '../../../../src-tauri/core/utils/convert';
-import { useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    toggle_keyboard,
+    useAppSelector
+} from '../../../backend/reducers';
+import { keyboardCallback } from '../../../backend/reducers/remote';
 import './index.scss';
 
-const VirtKeyboard = ({
-    //isClose = false,
-    keyBoardCallBack,
-    close
-}) => {
+const VirtKeyboard = ({ close }) => {
     const [layoutName, setLayoutName] = useState('default');
     const isClose = useAppSelector(
         (state) => state.sidepane.mobileControl.keyboardHide
@@ -19,17 +20,17 @@ const VirtKeyboard = ({
             setLayoutName(layoutName === 'default' ? 'shift' : 'default');
             return;
         }
-
         const shift = useShift(button);
-
         if (shift) keyBoardCallBack('Shift', 'down');
 
-        keyBoardCallBack(button, 'down');
+        keyboardCallback(button, 'down');
         keyBoardCallBack(button, 'up');
 
         if (shift) keyBoardCallBack('Shift', 'up');
 
-        if (button === 'Enter' || button == 'Close') close();
+        if (button === 'Enter' || button == 'Close') {
+            appDispatch(toggle_keyboard());
+        }
     };
 
     return (
@@ -42,7 +43,6 @@ const VirtKeyboard = ({
             <Keyboard
                 layoutName={layoutName}
                 onKeyPress={onKeyPress}
-                onRender={() => console.log('Rendered')}
                 disableButtonHold={true}
                 display={{
                     Backspace: 'Back',

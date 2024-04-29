@@ -171,9 +171,7 @@ const ContentArea = ({ searchtxt, data }) => {
             case 'host_session':
                 return 'net';
             default:
-                return isUUID(renderName(node)) 
-                    ? 'folder3d' 
-                    : 'onedrive';
+                return isUUID(renderName(node)) ? 'folder3d' : 'onedrive';
         }
     };
 
@@ -197,30 +195,41 @@ const ContentArea = ({ searchtxt, data }) => {
         return list;
     };
 
-    const [usermap,setUsermap] = useState([])
+    const [usermap, setUsermap] = useState([]);
     useEffect(() => {
-        const pb = new PocketBase('https://supabase.thinkmay.net')
+        const pb = new PocketBase('https://supabase.thinkmay.net');
         // todo
-        pb.admins.authWithPassword('','').then(() => {
-            pb.collection('volumes').getFullList({expand:'user'}).then(x => {
-                setUsermap(x.map(y => {return{
-                    user: y.expand.user.email,
-                    volume: y.local_id
-                }}))
-            })
-        })
-    },[])
+        pb.admins.authWithPassword('', '').then(() => {
+            pb.collection('volumes')
+                .getFullList({ expand: 'user' })
+                .then((x) => {
+                    setUsermap(
+                        x.map((y) => {
+                            return {
+                                user: y.expand.user.email,
+                                volume: y.local_id
+                            };
+                        })
+                    );
+                });
+        });
+    }, []);
 
-    const isUUID = uuid => uuid.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$') != null
+    const isUUID = (uuid) =>
+        uuid.match(
+            '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        ) != null;
 
     const renderName = (node) => {
-        const id = node.id
-        if (!isUUID(id)) 
-            return id
+        const id = node.id;
+        if (!isUUID(id)) return id;
 
-        return usermap.find(x => x.volume == id)?.user 
-            ?? usermap.find(x => JSON.stringify(node.data).includes(x.volume))?.user 
-            ?? id
+        return (
+            usermap.find((x) => x.volume == id)?.user ??
+            usermap.find((x) => JSON.stringify(node.data).includes(x.volume))
+                ?.user ??
+            id
+        );
     };
     return (
         <div
@@ -232,29 +241,32 @@ const ContentArea = ({ searchtxt, data }) => {
             <div className="contentwrap win11Scroll">
                 <div className="gridshow" data-size="lg">
                     {data.cdata.map((item, i) => {
-                        if (searchtxt != '' && !renderName(item).includes(searchtxt))
-                            return
+                        if (
+                            searchtxt != '' &&
+                            !renderName(item).includes(searchtxt)
+                        )
+                            return;
 
-                        return <div
-                                    key={i}
-                                    className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
-                                    title={item.id}
-                                    data-action={'worker/worker_view'}
-                                    data-payload={item.id}
-                                    data-menu={item.type}
-                                    data-focus={selected.id == item.id}
-                                    onClick={handleClick}
-                                    onDoubleClick={handleDouble}
-                                    onTouchStart={handleTouchStart}
-                                    onTouchEnd={handleTouchEnd}
-                                >
-                                    <Image
-                                        src={`icon/win/${renderIconName( item)}`}
-                                    />
-                                    <span>
-                                        {renderName(item)}
-                                    </span>
-                                </div>
+                        return (
+                            <div
+                                key={i}
+                                className="!p-4 conticon hvtheme flex flex-col items-center prtclk"
+                                title={item.id}
+                                data-action={'worker/worker_view'}
+                                data-payload={item.id}
+                                data-menu={item.type}
+                                data-focus={selected.id == item.id}
+                                onClick={handleClick}
+                                onDoubleClick={handleDouble}
+                                onTouchStart={handleTouchStart}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                <Image
+                                    src={`icon/win/${renderIconName(item)}`}
+                                />
+                                <span>{renderName(item)}</span>
+                            </div>
+                        );
                     })}
                 </div>
             </div>
