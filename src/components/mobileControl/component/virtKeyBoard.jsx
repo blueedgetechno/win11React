@@ -19,12 +19,12 @@ const VirtKeyboard = ({
             return;
         }
         const shift = useShift(button);
-        if (shift) keyBoardCallBack('Shift', 'down');
+        if (shift) keyboardCallback('Shift', 'down');
 
         keyboardCallback(button, 'down');
-        keyBoardCallBack(button, 'up');
+        keyboardCallback(button, 'up');
 
-        if (shift) keyBoardCallBack('Shift', 'up');
+        if (shift) keyboardCallback('Shift', 'up');
 
         if (button === 'Enter' || button == 'Close') {
             appDispatch(toggle_keyboard())
@@ -45,7 +45,7 @@ const VirtKeyboard = ({
                 disableButtonHold={true}
                 display={{
                     Backspace: 'Back',
-                    Close: 'X'
+                    Close: '🅇'
                 }}
                 layout={{
                     default: [
