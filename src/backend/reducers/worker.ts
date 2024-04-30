@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+    app_toggle,
     appDispatch,
     claim_volume,
     fetch_local_worker,
@@ -94,7 +95,18 @@ export const workerAsync = {
 
                 if (result == undefined) {
                     appDispatch(popup_close());
-                    throw new Error('worker not found');
+
+                    const userStat = (getState() as RootState).user.stat;
+                    if (userStat == null){
+                        appDispatch(app_toggle('payment'));
+                        throw new Error("Bạn chưa đăng ký dịch vụ. Đăng ký ngay bên trong website hoặc nhắn tin qua Facebook Thinkmay")
+                    }
+                    if(new Date() > new Date(userStat.end_time)){
+                        appDispatch(app_toggle('payment'));
+                        throw new Error("Bạn chưa giai hạn dịch vụ. Tiếp tục giai hạn bên trong website hoặc nhắn tin qua Facebook Thinkmay")
+                    }
+                    
+                    throw new Error('Không tìm thấy ổ cứng, đợi 5 - 10p hoặc liên hệ Admin ở Hỗ trợ ngay!');
                 } else if (
                     result.type == 'vm_worker' &&
                     result.data.length > 0

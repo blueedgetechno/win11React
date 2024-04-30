@@ -28,35 +28,34 @@ export const PaymentApp = () => {
     const [ListSubs, setListSubs] = useState([
         {
             highlight: false,
-            title: 'Cơ bản',
+            title: 'Tiết kiệm',
             price_in_vnd: '299',
             total_time: '110',
             name: 'week',
-            period: 'month',
-            description: 'Khởi đầu với CloudPc',
-            bonus: ['100GB storage', '8GB ram', 'RTX 3060TI']
+            period: 'tháng',
+            description: 'Khởi đầu với Cloud PC',
+            bonus: ['130GB dung lượng', '16GB ram', 'RTX 3060TI']
         },
         {
             highlight: true,
-            title: 'Tiêu chuẩn',
+            title: 'Tối ưu',
             price_in_vnd: '369',
-            total_time: '140',
-
+            total_time: '160',
             name: 'month',
-            period: 'month',
+            period: 'tháng',
             description: 'Thoải mái sử dụng',
-            bonus: ['250GB storage', '12GB ram', 'RTX 3060TI']
+            bonus: ['200GB dung lượng', '16GB ram', 'RTX 3060TI']
         },
         {
             highlight: false,
             title: 'Super',
             price_in_vnd: '899',
             description: 'Tối ưu & tiết kiệm nhất',
-            period: '3 months',
+            period: '3 tháng',
             total_time: '125',
 
             name: 'Enterprise',
-            bonus: ['100GB storage', '12GB ram', 'RTX 3060TI']
+            bonus: ['130GB dung lượng', '16GB ram', 'RTX 3060TI']
         }
     ]);
 
@@ -103,8 +102,8 @@ export const PaymentApp = () => {
                                 <div key={index} className="sub relative">
                                     {sub.highlight ? (
                                         <div className="rounded-[36px] bg-amber-600 absolute inset-0 z-[-1] w-[102%]  top-[-37px] bottom-[-6px] left-[-1%]">
-                                            <p className="text-[16px] leading-4 text-center py-2 mt-[8px] text-background">
-                                                Most Popular
+                                            <p className="text-[16px] leading-4 text-center py-2 mt-[4px] text-background">
+                                                Gói phổ biến nhất
                                             </p>
                                         </div>
                                     ) : null}
@@ -163,7 +162,7 @@ export const PaymentApp = () => {
                                         </div>
                                         <div className="border-default bg-surface-100 flex h-full rounded-bl-[4px] rounded-br-[4px] flex-1 flex-col px-8 xl:px-4 2xl:px-8 py-6 ">
                                             <p className="text-foreground-light text-[13px] mt-2 mb-4">
-                                                Get started with:
+                                                Bắt đầu với:
                                             </p>
 
                                             {sub.bonus.map((x, i) => (
@@ -214,10 +213,7 @@ export const PaymentApp = () => {
                                                         className="border-none h-[48px] relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-button hover:bg-brand-button/80 text-white border-brand focus-visible:outline-brand-600 shadow-sm w-full flex items-center justify-center text-sm leading-4 px-3 py-2 bg-[#328cff]"
                                                     >
                                                         <span className="truncate">
-                                                            {sub.title ==
-                                                            'Enterprise'
-                                                                ? 'Contact Us'
-                                                                : 'Get Started'}
+                                                            {'Bắt đầu'}
                                                         </span>
                                                     </button>
                                                 </a>
@@ -237,6 +233,7 @@ export const PaymentApp = () => {
 const Payment = ({ onClose, price }) => {
     const t = useAppSelector((state) => state.globals.translation);
     const { id } = useAppSelector((state) => state.user);
+    const { email } = useAppSelector((state) => state.user);
 
     const [pageNo, setPageNo] = useState(0);
     const nextPage = () =>
@@ -303,7 +300,7 @@ const Payment = ({ onClose, price }) => {
 
     const QR = () => (
         <div className="left">
-            <Image absolute src={qrurl} />
+            <Image absolute src= "qr_code.png"/>
         </div>
     );
     const Logo = () => (
@@ -323,9 +320,11 @@ const Payment = ({ onClose, price }) => {
                             {t[Contents.PAYMENT_FOLLOW_UP_TITLE1]}
                         </div>
                         <p>
-                            MB Bank <br />
-                            Tên Chủ Tk: DO VAN DAT <br />
-                            Số TK: 1502200344444
+                            <b>MB Bank</b> <br />
+                            Tên Chủ Tk: <b>DO VAN DAT</b> <br />
+                            Số TK: <b>1502200344444</b> <br />
+                            Nội dung: <b>{email.replace("@gmail.com", "")}</b> <br />
+                            [Email của bạn không bao gồm @gmail.com] 
                         </p>
                     </div>
                     <Navigate />
