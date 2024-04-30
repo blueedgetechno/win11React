@@ -15,4 +15,15 @@
 	&.slide-out {
 		transform: translateY(100%)
 	}
+
+
+	.hg-standardBtn {
+
+
+		&[data-skbtn='Close'] {
+			background: red !important;
+			color: white;
+			font-weight: bold;
+		}
+	}
 }
