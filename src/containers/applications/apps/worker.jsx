@@ -25,11 +25,19 @@ export const Worker = () => {
     const handleEnter = () => appDispatch(fetch_local_worker(ip));
 
     const [searchtxt, setShText] = useState('');
+    const [adminPw, setAdminPw] = useState('');
+    const pwRef = useRef('')
     const handleSearchChange = (e) => setShText(e.target.value);
     useEffect(() => {
         setShText('');
     }, [files.cpath]);
 
+    const loginAdmin = (e) => {
+        e.preventDefault()
+        const value = pwRef.current
+        setAdminPw(value)
+
+    }
     return (
         <div
             className="msfiles floatTab dpShad"
@@ -65,7 +73,7 @@ export const Worker = () => {
                                     className="path-field"
                                     type="text"
                                     value={files.cpath}
-                                    onChange={() => {}}
+                                    onChange={() => { }}
                                 />
                             </div>
                             <div className="srchbar">
@@ -105,9 +113,23 @@ export const Worker = () => {
                                     placeholder="Search"
                                 />
                             </div>
+                            <form onSubmit={loginAdmin} className="srchbar">
+                                <Icon
+                                    className="searchIcon"
+                                    src="search"
+                                    width={12}
+                                    onClick={loginAdmin}
+                                />
+                                <input
+                                    type="password"
+                                    ref={pwRef}
+                                    onChange={(e) => { pwRef.current = e.target.value }}
+                                    placeholder="password"
+                                />
+                            </form>
                         </div>
                         <div className="sec2">
-                            <ContentArea searchtxt={searchtxt} data={files} />
+                            <ContentArea adminPw={adminPw} searchtxt={searchtxt} data={files} />
                         </div>
                     </div>
                 </div>
@@ -118,10 +140,10 @@ export const Worker = () => {
     );
 };
 
-const ContentArea = ({ searchtxt, data }) => {
+const ContentArea = ({ searchtxt, data, adminPw }) => {
     const [selected, setSelect] = useState({});
     const timeoutRef = useRef(null);
-
+    const email = useAppSelector((state) => state.user.email);
     const dispatch = appDispatch;
     const handleClick = (e) => {
         e.stopPropagation();
@@ -199,7 +221,8 @@ const ContentArea = ({ searchtxt, data }) => {
     useEffect(() => {
         const pb = new PocketBase('https://supabase.thinkmay.net');
         // todo
-        pb.admins.authWithPassword('', '').then(() => {
+        if (!adminPw) return
+        pb.admins.authWithPassword(email, adminPw).then(() => {
             pb.collection('volumes')
                 .getFullList({ expand: 'user' })
                 .then((x) => {
@@ -213,7 +236,7 @@ const ContentArea = ({ searchtxt, data }) => {
                     );
                 });
         });
-    }, []);
+    }, [adminPw]);
 
     const isUUID = (uuid) =>
         uuid.match(
