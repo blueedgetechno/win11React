@@ -300,7 +300,7 @@ const Payment = ({ onClose, price }) => {
 
     const QR = () => (
         <div className="left">
-            <Image absolute src= "qr_code.png"/>
+            <Image absolute src="qr_code.png" />
         </div>
     );
     const Logo = () => (
@@ -323,8 +323,11 @@ const Payment = ({ onClose, price }) => {
                             <b>MB Bank</b> <br />
                             Tên Chủ Tk: <b>DO VAN DAT</b> <br />
                             Số TK: <b>1502200344444</b> <br />
-                            Nội dung: <b>{email.replace("@gmail.com", "")}</b> <br />
-                            [Email của bạn không bao gồm @gmail.com] 
+                            Nội dung: <b>
+                                {email.replace('@gmail.com', '')}
+                            </b>{' '}
+                            <br />
+                            [Email của bạn không bao gồm @gmail.com]
                         </p>
                     </div>
                     <Navigate />
