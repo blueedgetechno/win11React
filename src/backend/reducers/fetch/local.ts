@@ -2,6 +2,18 @@ import { Body, Client, ResponseType, getClient } from '@tauri-apps/api/http';
 import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
+const TurnCredential = () => {
+    const max = 65535
+    const min = 30000
+    return {
+        minPort: min,
+        maxPort: max,
+        port: getRandomInt(min,max),
+        username: crypto.randomUUID(),
+        password: crypto.randomUUID()
+    };
+}
+
 let client: Client = null;
 export const http_available = () =>
     client != null || new URL(window.location.href).protocol == 'http:';
@@ -157,13 +169,7 @@ export async function StartThinkmayOnVM(
 ): Promise<Session> {
     const { address } = computer;
 
-    const turn = {
-        minPort: WS_PORT,
-        maxPort: 65535,
-        port: getRandomInt(WS_PORT, 65535),
-        username: crypto.randomUUID(),
-        password: crypto.randomUUID()
-    };
+    const turn = TurnCredential();
 
     const thinkmay = {
         stunAddress: `stun:${address}:${turn.port}`,
@@ -216,13 +222,7 @@ export async function StartThinkmayOnVM(
 export async function StartThinkmay(computer: Computer): Promise<Session> {
     const { address } = computer;
 
-    const turn = {
-        minPort: WS_PORT,
-        maxPort: 65535,
-        port: getRandomInt(WS_PORT, 65535),
-        username: crypto.randomUUID(),
-        password: crypto.randomUUID()
-    };
+    const turn = TurnCredential();
 
     const thinkmay = {
         stunAddress: `stun:${address}:${turn.port}`,
