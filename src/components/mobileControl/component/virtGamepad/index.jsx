@@ -25,8 +25,7 @@ export const VirtualGamepad = (props) => {
         <>
             {/*{(draggable === 'static' || draggable === 'draggable') && (*/}
             <div
-                className={`virtGamepad ${!isClose ? 'slide-in' : 'slide-out'
-                    }`}
+                className={`virtGamepad ${!isClose ? 'slide-in' : 'slide-out'}`}
             >
                 <ButtonGroupLeft
                     AxisCallback={AxisCallback}
@@ -61,7 +60,6 @@ export const ButtonGroupRight = (props) => {
     const DefaultPosition = useAppSelector(
         (state) => state.sidepane.mobileControl.gamepadSetting.isDefaultPos
     );
-
 
     const [posBtn, setPosBtn] = useState(defaultButtonGroupRightValue);
 

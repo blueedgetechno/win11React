@@ -23,9 +23,9 @@ export type Message = {
 type IGamePadSetting = {
     open: boolean;
     btnSize: 1 | 2 | 3;
-    draggable: 'static' | 'draggable'
-    isDefaultPos: boolean
-}
+    draggable: 'static' | 'draggable';
+    isDefaultPos: boolean;
+};
 type MobileControl = {
     hide: boolean;
     buttons: any[];
@@ -33,8 +33,7 @@ type MobileControl = {
     setting: ISettingState;
     gamePadHide: boolean;
     keyboardHide: boolean;
-    gamepadSetting: IGamePadSetting
-
+    gamepadSetting: IGamePadSetting;
 };
 type Data = {
     notifications: Notification[];
@@ -345,23 +344,24 @@ export const sidepaneSlice = createSlice({
             state.mobileControl.gamePadHide = !state.mobileControl.gamePadHide;
         },
         toggle_gamepad_setting: (state) => {
-            state.mobileControl.gamepadSetting.open = !state.mobileControl.gamepadSetting.open!
+            state.mobileControl.gamepadSetting.open =
+                !state.mobileControl.gamepadSetting.open!;
         },
         change_btnGp_size: (state, action) => {
-            state.mobileControl.gamepadSetting.btnSize = action.payload
+            state.mobileControl.gamepadSetting.btnSize = action.payload;
         },
         toggle_gamepad_draggable: (state, action) => {
             state.mobileControl.gamePadHide = !state.mobileControl.gamePadHide;
-            const prev = state.mobileControl.gamepadSetting.draggable
+            const prev = state.mobileControl.gamepadSetting.draggable;
             if (prev == 'static') {
-                state.mobileControl.gamepadSetting.draggable = 'draggable'
-            }
-            else if (prev == 'draggable') {
-                state.mobileControl.gamepadSetting.draggable = 'static'
+                state.mobileControl.gamepadSetting.draggable = 'draggable';
+            } else if (prev == 'draggable') {
+                state.mobileControl.gamepadSetting.draggable = 'static';
             }
         },
         toggle_default_gamepad_position: (state) => {
-            state.mobileControl.gamepadSetting.isDefaultPos = !state.mobileControl.gamepadSetting.isDefaultPos;
+            state.mobileControl.gamepadSetting.isDefaultPos =
+                !state.mobileControl.gamepadSetting.isDefaultPos;
         },
         toggle_keyboard: (state) => {
             let oldState = state.mobileControl.keyboardHide;

@@ -103,7 +103,7 @@ export const {
     toggle_gamepad_setting,
     change_btnGp_size,
     toggle_gamepad_draggable,
-    toggle_default_gamepad_position,
+    toggle_default_gamepad_position
 } = sidepaneSlice.actions;
 
 export const {

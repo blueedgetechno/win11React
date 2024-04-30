@@ -3,16 +3,16 @@ import { Child, Command } from '@tauri-apps/api/shell';
 
 export const WS_PORT = 60000;
 const TurnCredential = () => {
-    const max = 65535
-    const min = 30000
+    const max = 65535;
+    const min = 30000;
     return {
         minPort: min,
         maxPort: max,
-        port: getRandomInt(min,max),
+        port: getRandomInt(min, max),
         username: crypto.randomUUID(),
         password: crypto.randomUUID()
     };
-}
+};
 
 let client: Client = null;
 export const http_available = () =>
