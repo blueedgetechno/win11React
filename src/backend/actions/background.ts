@@ -77,7 +77,7 @@ const handleClipboard = async () => {
         if (clipboard == old_clipboard) return;
 
         old_clipboard = clipboard;
-        client?.hid?.SetClipboard(clipboard);
+        client?.SetClipboard(clipboard);
     } catch {
         if ((store.getState() as RootState).remote.focus)
             appDispatch(loose_focus());

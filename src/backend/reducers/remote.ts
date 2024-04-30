@@ -10,12 +10,13 @@ import {
     toggle_remote
 } from '.';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
-import { EventCode } from '../../../src-tauri/core/models/keys.model';
-import { AddNotifier } from '../../../src-tauri/core/utils/log';
+import { EventCode, HIDMsg } from '../../../src-tauri/core/models/keys.model';
+import { convertJSKey } from '../../../src-tauri/core/utils/convert';
 import { sleep } from '../utils/sleep';
 import { isMobile } from './../utils/checking';
 import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
+import { AxisType } from '../../../src-tauri/core/models/hid.model';
 
 const size = () =>
     client != null
@@ -118,26 +119,81 @@ const initialState: Data = {
     prev_size: 0
 };
 
+function VirtualGamepadButtonSlider(isDown: boolean, index: number) {
+    if (index == 6 || index == 7) {
+        // slider
+        client?.SendRawHID(
+            new HIDMsg(EventCode.GamepadSlide, {
+                gamepad_id: 0,
+                index: index,
+                val: !isDown ? 0 : 1
+            }).ToString()
+        );
+        return;
+    }
+
+    client?.SendRawHID(
+        new HIDMsg(
+            !isDown ? EventCode.GamepadButtonDown : EventCode.GamepadButtonUp,
+            {
+                gamepad_id: 0,
+                index: index
+            }
+        ).ToString()
+    );
+}
+
+function VirtualGamepadAxis(x: number, y: number, type: AxisType) {
+    let axisx, axisy: number;
+    switch (type) {
+        case 'left':
+            axisx = 0;
+            axisy = 1;
+            break;
+        case 'right':
+            axisx = 2;
+            axisy = 3;
+            break;
+    }
+
+    client?.SendRawHID(
+        new HIDMsg(EventCode.GamepadAxis, {
+            gamepad_id: 0,
+            index: axisx,
+            val: x
+        }).ToString()
+    );
+    client?.SendRawHID(
+        new HIDMsg(EventCode.GamepadAxis, {
+            gamepad_id: 0,
+            index: axisy,
+            val: y
+        }).ToString()
+    );
+}
+
+const trigger = (code: EventCode, jsKey: string) => {
+    const key = convertJSKey(jsKey, 0);
+    if (key == undefined) return;
+    const data = new HIDMsg(code, { key }).ToString();
+    client?.SendRawHID(data);
+};
+
 export function WindowD() {
     if (client == null) return;
-
-    client?.hid?.TriggerKey(EventCode.KeyDown, 'lwin');
-    client?.hid?.TriggerKey(EventCode.KeyDown, 'd');
-    client?.hid?.TriggerKey(EventCode.KeyUp, 'd');
-    client?.hid?.TriggerKey(EventCode.KeyUp, 'lwin');
+    trigger(EventCode.KeyDown, 'lwin');
+    trigger(EventCode.KeyDown, 'd');
+    trigger(EventCode.KeyUp, 'd');
+    trigger(EventCode.KeyUp, 'lwin');
 }
 
 export async function keyboardCallback(val, action: 'up' | 'down') {
     if (client == null) return;
-
-    client?.hid?.TriggerKey(
-        action == 'up' ? EventCode.KeyUp : EventCode.KeyDown,
-        val
-    );
+    trigger(action == 'up' ? EventCode.KeyUp : EventCode.KeyDown, val);
 }
 export async function gamePadBtnCallback(index: number, type: 'up' | 'down') {
     if (client == null) return;
-    client?.hid?.VirtualGamepadButtonSlider(type == 'down', index);
+    VirtualGamepadButtonSlider(type == 'down', index);
 }
 
 export async function gamepadAxisCallback(
@@ -146,13 +202,13 @@ export async function gamepadAxisCallback(
     type: 'left' | 'right'
 ) {
     if (client == null) return;
-    client?.hid?.VirtualGamepadAxis(x, y, type);
+    VirtualGamepadAxis(x, y, type);
 }
 
 export const setClipBoard = async (content: string) => {
     if (client == null) return;
 
-    client?.hid?.SetClipboard(content);
+    client?.SetClipboard(content);
 };
 
 export function openRemotePage(
@@ -194,7 +250,10 @@ export const remoteAsync = {
         else if (client == null) return;
         // else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
-        else if (client?.hid?.last_active() > 5 * 60) {
+        else if (
+            Math.min(client?.hid?.last_active(), client?.touch?.last_active()) >
+            5 * 60
+        ) {
             if (store.getState().popup.data_stack.length > 0) return;
 
             appDispatch(
@@ -208,7 +267,12 @@ export const remoteAsync = {
                 })
             );
 
-            while (client?.hid?.last_active() > 2)
+            while (
+                Math.min(
+                    client?.hid?.last_active(),
+                    client?.touch?.last_active()
+                ) > 2
+            )
                 await new Promise((r) => setTimeout(r, 1000));
 
             appDispatch(popup_close());

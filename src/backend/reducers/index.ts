@@ -20,8 +20,9 @@ import { UserEvents } from './fetch/analytics.js';
 
 const blacklist = ['framerate', 'bitrate'];
 const middleware: ThunkMiddleware = () => (next) => async (action) => {
-    // if (window.location.href.includes('localhost')) // TODO
-    console.log({ ...(action as any) });
+    if (window.location.href.includes('localhost'))
+        // TODO
+        console.log({ ...(action as any) });
     if (blacklist.filter((x) => (action as any).type.includes(x)).length == 0)
         UserEvents(action as any);
 

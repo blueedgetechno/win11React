@@ -115,5 +115,4 @@ export const desktopApps = apps
     )
     .map((x) => x.id);
 
-console.log(apps);
 export const allApps = apps;

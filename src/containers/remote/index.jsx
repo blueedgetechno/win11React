@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
-import { TouchHandler } from '../../../src-tauri/core/hid/touch';
 import { AudioWrapper } from '../../../src-tauri/core/pipeline/sink/audio/wrapper';
 import { VideoWrapper } from '../../../src-tauri/core/pipeline/sink/video/wrapper';
 import {
@@ -31,24 +30,19 @@ export const Remote = () => {
     }, [remote.active]);
 
     useEffect(() => {
-        if (client == null) return
+        if (client == null) return;
         else if (isMobile()) client?.PointerVisible(true);
-        
-        if (keyboard || gamepad) 
-            client.hid.disable = true
-        else
-            client.hid.disable = false
 
-        const handler = new TouchHandler(
-            isMobile() && !keyboard ? (gamepad ? 'gamepad' : 'trackpad') : 'none',
-            remoteVideo.current,
-            (val) => client?.SendRawHID(val)
-        );
+        if (keyboard || gamepad) client.hid.disable = true;
+        else client.hid.disable = false;
 
-        return () => {
-            handler.Close();
-        };
-    }, [gamepad,keyboard]);
+        client.touch.mode =
+            isMobile() && !keyboard
+                ? gamepad
+                    ? 'gamepad'
+                    : 'trackpad'
+                : 'none';
+    }, [gamepad, keyboard]);
 
     const pointerlock = () => {
         appDispatch(set_fullscreen(true));
@@ -75,7 +69,7 @@ export const Remote = () => {
             <video
                 className="remote"
                 ref={remoteVideo}
-                onClick={relative_mouse ? pointerlock : () => {}}
+                onClick={relative_mouse ? pointerlock : () => { }}
                 style={{ backgroundImage: `url(img/wallpaper/${wall.src})` }}
                 autoPlay
                 muted
