@@ -57,6 +57,7 @@ body[data-theme="dark"] .bandpane {
   --bg3: #fbfbfb;
   --bg4: rgb(0 0 0 / 5%);
   --sliderThumbClr: white;
+  --padding: 1.25rem;
 
   position: absolute;
   bottom: 56px;
@@ -72,6 +73,11 @@ body[data-theme="dark"] .bandpane {
   z-index: 9999;
   transform: translateX(0);
 
+
+  .mainContent {
+    position: relative;
+  }
+
   &.bd-blur {
     --bg1: rgb(242 242 242 / 90%);
     --bg2: rgb(255 255 255 / 20%);
@@ -84,14 +90,52 @@ body[data-theme="dark"] .bandpane {
     transition: all cubic-bezier(0.62, 0, 0.32, 1) 150ms;
   }
 
+  .gamepadSetting {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 2;
+    transition: all ease-in-out 0.5s;
+
+    transform: translateX(100%);
+
+    padding: 0 var(--padding);
+    background: var(--bg2);
+
+    &.slide-in {
+      transform: translateX(0%)
+    }
+
+    &.slide-out {
+      transform: translateX(100%)
+    }
+
+    .size-choosen {
+      display: flex;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    .ctnBtn {
+      display: flex;
+
+      button {
+        padding: 6px 16px;
+        border: none;
+        outline: none;
+      }
+    }
+  }
 
   .quickSettings {
     background: var(--bg2);
     height: 100%;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    --padding: 1.25rem;
 
     padding-top: calc(var(--padding) + 0.4rem);
     padding-bottom: 2.4rem;
@@ -277,6 +321,8 @@ body[data-theme="dark"] .bandpane {
       }
     }
   }
+
+
 }
 
 @media (1px < width < 1024px) {
@@ -304,7 +350,7 @@ body[data-theme="dark"] .bandpane {
     .listBtn {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       /* gap: 16px; */
       padding: 0 var(--padding);
       row-gap: 5px;

@@ -3,6 +3,7 @@ import { AiOutlineCloudDownload } from 'react-icons/ai';
 import * as fa from 'react-icons/fa';
 import * as fi from 'react-icons/fi';
 import * as md from 'react-icons/md';
+import { MdOutlineClose } from "react-icons/md";
 import { PiPauseBold } from 'react-icons/pi';
 import * as Actions from '../../backend/actions';
 import { getTreeValue } from '../../backend/actions';
@@ -11,8 +12,12 @@ import { useDispatch } from 'react-redux';
 import {
     appDispatch,
     change_bitrate,
+    change_btnGp_size,
     change_framerate,
     menu_show,
+    toggle_default_gamepad_position,
+    toggle_gamepad_draggable,
+    toggle_gamepad_setting,
     useAppSelector
 } from '../../backend/reducers';
 import {
@@ -178,225 +183,237 @@ export const SidePane = () => {
                 className="sidePane dpShad"
                 data-hide={sidepane.hide}
             >
-                <div className="quickSettings ">
-                    <div className="listBtn">
-                        {isMobile()
-                            ? sidepane.mobileControl.buttons.map((qk, idx) => {
-                                  return (
-                                      <div key={idx} className="qkGrp">
-                                          <div
-                                              style={{ ...qk.style }}
-                                              className="qkbtn handcr prtclk"
-                                              onClick={clickDispatch}
-                                              data-action={qk.action}
-                                              data-payload={
-                                                  qk.payload || qk.state
-                                              }
-                                              data-state={pnstates[idx]}
-                                          >
-                                              {Object.keys(md).includes(
-                                                  qk.src
-                                              ) ? (
-                                                  (() => {
-                                                      const WinApp = md[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : Object.keys(fi).includes(
-                                                    qk.src
-                                                ) ? (
-                                                  (() => {
-                                                      const WinApp = fi[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : Object.keys(fa).includes(
-                                                    qk.src
-                                                ) ? (
-                                                  (() => {
-                                                      const WinApp = fa[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : (
-                                                  <Icon
-                                                      className="quickIcon"
-                                                      ui={qk.ui}
-                                                      src={qk.src}
-                                                      width={14}
-                                                      invert={
-                                                          pnstates[idx]
-                                                              ? true
-                                                              : null
-                                                      }
-                                                  />
-                                              )}
-                                          </div>
-                                          <div className="qktext">
-                                              {t[qk.name]}
-                                          </div>
-                                      </div>
-                                  );
-                              })
-                            : sidepane.quicks.map((qk, idx) => {
-                                  return (
-                                      <div key={idx} className="qkGrp">
-                                          <div
-                                              style={{ ...qk.style }}
-                                              className="qkbtn handcr prtclk"
-                                              onClick={clickDispatch}
-                                              data-action={qk.action}
-                                              data-payload={
-                                                  qk.payload || qk.state
-                                              }
-                                              data-state={pnstates[idx]}
-                                          >
-                                              {Object.keys(md).includes(
-                                                  qk.src
-                                              ) ? (
-                                                  (() => {
-                                                      const WinApp = md[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : Object.keys(fi).includes(
-                                                    qk.src
-                                                ) ? (
-                                                  (() => {
-                                                      const WinApp = fi[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : Object.keys(fa).includes(
-                                                    qk.src
-                                                ) ? (
-                                                  (() => {
-                                                      const WinApp = fa[qk.src];
-                                                      return <WinApp />;
-                                                  })()
-                                              ) : (
-                                                  <Icon
-                                                      className="quickIcon"
-                                                      ui={qk.ui}
-                                                      src={qk.src}
-                                                      width={14}
-                                                      invert={
-                                                          pnstates[idx]
-                                                              ? true
-                                                              : null
-                                                      }
-                                                  />
-                                              )}
-                                          </div>
-                                          <div className="qktext">
-                                              {t[qk.name]}
-                                          </div>
-                                      </div>
-                                  );
-                              })}
-                    </div>
 
-                    <div className="shortcuts">
-                        <hr className="mb-4" />
-                        <div className="listBtn">
-                            {isMobile()
-                                ? sidepane.mobileControl.shortcuts.map(
-                                      (qk, idx) => {
-                                          return (
-                                              <div
-                                                  key={idx}
-                                                  className="qkGrp t"
-                                              >
-                                                  <div
-                                                      style={{
-                                                          fontSize: '0.6rem'
-                                                      }}
-                                                      className="qkbtn handcr prtclk"
-                                                      onClick={() =>
-                                                          Actions.clickShortCut(
-                                                              qk.val
-                                                          )
-                                                      }
-                                                  >
-                                                      {qk.name}
-                                                  </div>
-                                                  {/*<div className="qktext">{t[qk.name]}</div>*/}
-                                              </div>
-                                          );
-                                      }
-                                  )
-                                : sidepane.shortcuts.map((qk, idx) => {
-                                      return (
-                                          <div key={idx} className="qkGrp t">
-                                              <div
-                                                  style={{ fontSize: '0.8rem' }}
-                                                  className="qkbtn handcr prtclk"
-                                                  onClick={() =>
-                                                      Actions.clickShortCut(
-                                                          qk.val
-                                                      )
-                                                  }
-                                              >
-                                                  {qk.name}
-                                              </div>
-                                              {/*<div className="qktext">{t[qk.name]}</div>*/}
-                                          </div>
-                                      );
-                                  })}
-                        </div>
-                    </div>
+                <div className='mainContent'>
+                    <div className="quickSettings ">
+                        {
 
-                    <div className="sliderCont flex flex-col items-start">
-                        <div className="containerSlider">
-                            <div className="sliderName">
-                                {/*{t[Contents.QUALITY]}*/}
-                                Bitrate:
-                                <span>
-                                    {Math.round(
-                                        (((MAX_BITRATE() - MIN_BITRATE()) /
-                                            100) *
-                                            remote.bitrate +
-                                            MIN_BITRATE()) /
-                                            1000
-                                    )}
-                                </span>
-                            </div>
-                            <div className=" sliderWrapper">
-                                <span>1mbs</span>
-                                <input
-                                    className="sliders bitrateSlider"
-                                    onChange={setBitrate}
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={remote.bitrate}
-                                />
-                                <span>20mbs</span>
-                            </div>
-                        </div>
+                            <>
+                                <div className="listBtn">
+                                    {isMobile()
+                                        ? sidepane.mobileControl.buttons.map((qk, idx) => {
+                                            return (
+                                                <div key={idx} className="qkGrp">
+                                                    <div
+                                                        style={{ ...qk.style }}
+                                                        className="qkbtn handcr prtclk"
+                                                        onClick={clickDispatch}
+                                                        data-action={qk.action}
+                                                        data-payload={
+                                                            qk.payload || qk.state
+                                                        }
+                                                        data-state={pnstates[idx]}
+                                                    >
+                                                        {Object.keys(md).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = md[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : Object.keys(fi).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = fi[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : Object.keys(fa).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = fa[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : (
+                                                            <Icon
+                                                                className="quickIcon"
+                                                                ui={qk.ui}
+                                                                src={qk.src}
+                                                                width={14}
+                                                                invert={
+                                                                    pnstates[idx]
+                                                                        ? true
+                                                                        : null
+                                                                }
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className="qktext">
+                                                        {t[qk.name]}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })
+                                        : sidepane.quicks.map((qk, idx) => {
+                                            return (
+                                                <div key={idx} className="qkGrp">
+                                                    <div
+                                                        style={{ ...qk.style }}
+                                                        className="qkbtn handcr prtclk"
+                                                        onClick={clickDispatch}
+                                                        data-action={qk.action}
+                                                        data-payload={
+                                                            qk.payload || qk.state
+                                                        }
+                                                        data-state={pnstates[idx]}
+                                                    >
+                                                        {Object.keys(md).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = md[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : Object.keys(fi).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = fi[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : Object.keys(fa).includes(
+                                                            qk.src
+                                                        ) ? (
+                                                            (() => {
+                                                                const WinApp = fa[qk.src];
+                                                                return <WinApp />;
+                                                            })()
+                                                        ) : (
+                                                            <Icon
+                                                                className="quickIcon"
+                                                                ui={qk.ui}
+                                                                src={qk.src}
+                                                                width={14}
+                                                                invert={
+                                                                    pnstates[idx]
+                                                                        ? true
+                                                                        : null
+                                                                }
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className="qktext">
+                                                        {t[qk.name]}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
 
-                        <div className="containerSlider">
-                            <div className="sliderName">
-                                {/*{t[Contents.FRAMERATE]}*/}
-                                Fps:
-                                <span>
-                                    {Math.round(
-                                        ((MAX_FRAMERATE - MIN_FRAMERATE) /
-                                            100) *
-                                            remote.framerate +
-                                            MIN_FRAMERATE
-                                    )}
-                                </span>
-                            </div>
-                            <div className=" sliderWrapper">
-                                <span>40</span>
-                                <input
-                                    className="sliders framerateSlider"
-                                    onChange={setFramerate}
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={remote.framerate}
-                                />
-                                <span>240</span>
-                            </div>
-                        </div>
+                                <div className="shortcuts">
+                                    <hr className="mb-4" />
+                                    <div className="listBtn">
+                                        {isMobile()
+                                            ? sidepane.mobileControl.shortcuts.map(
+                                                (qk, idx) => {
+                                                    return (
+                                                        <div
+                                                            key={idx}
+                                                            className="qkGrp t"
+                                                        >
+                                                            <div
+                                                                style={{
+                                                                    fontSize: '0.6rem'
+                                                                }}
+                                                                className="qkbtn handcr prtclk"
+                                                                onClick={() =>
+                                                                    Actions.clickShortCut(
+                                                                        qk.val
+                                                                    )
+                                                                }
+                                                            >
+                                                                {qk.name}
+                                                            </div>
+                                                            {/*<div className="qktext">{t[qk.name]}</div>*/}
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                            : sidepane.shortcuts.map((qk, idx) => {
+                                                return (
+                                                    <div key={idx} className="qkGrp t">
+                                                        <div
+                                                            style={{ fontSize: '0.8rem' }}
+                                                            className="qkbtn handcr prtclk"
+                                                            onClick={() =>
+                                                                Actions.clickShortCut(
+                                                                    qk.val
+                                                                )
+                                                            }
+                                                        >
+                                                            {qk.name}
+                                                        </div>
+                                                        {/*<div className="qktext">{t[qk.name]}</div>*/}
+                                                    </div>
+                                                );
+                                            })}
+                                    </div>
+                                </div>
+
+                                <div className="sliderCont flex flex-col items-start">
+                                    <div className="containerSlider">
+                                        <div className="sliderName">
+                                            {/*{t[Contents.QUALITY]}*/}
+                                            Bitrate:
+                                            <span>
+                                                {Math.round(
+                                                    (((MAX_BITRATE() - MIN_BITRATE()) /
+                                                        100) *
+                                                        remote.bitrate +
+                                                        MIN_BITRATE()) /
+                                                    1000
+                                                )}
+                                            </span>
+                                        </div>
+                                        <div className=" sliderWrapper">
+                                            <span>1mbs</span>
+                                            <input
+                                                className="sliders bitrateSlider"
+                                                onChange={setBitrate}
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={remote.bitrate}
+                                            />
+                                            <span>20mbs</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="containerSlider">
+                                        <div className="sliderName">
+                                            {/*{t[Contents.FRAMERATE]}*/}
+                                            Fps:
+                                            <span>
+                                                {Math.round(
+                                                    ((MAX_FRAMERATE - MIN_FRAMERATE) /
+                                                        100) *
+                                                    remote.framerate +
+                                                    MIN_FRAMERATE
+                                                )}
+                                            </span>
+                                        </div>
+                                        <div className=" sliderWrapper">
+                                            <span>40</span>
+                                            <input
+                                                className="sliders framerateSlider"
+                                                onChange={setFramerate}
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={remote.framerate}
+                                            />
+                                            <span>240</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+
+                        }
+
                     </div>
+                    <GamePadSetting></GamePadSetting>
+
                 </div>
 
                 {/*<div className="p-1 bottomBar">
@@ -414,3 +431,96 @@ export const SidePane = () => {
         </>
     );
 };
+
+const GamePadSetting = () => {
+    const sidepane = useAppSelector((state) => state.sidepane);
+
+    const gamepadDraggable = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.draggable
+    );
+    const gamepadSettingOpen = sidepane.mobileControl.gamepadSetting.open
+
+    const selectedOption = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.btnSize
+    );
+
+    const handleChange = (e) => {
+        appDispatch(change_btnGp_size(e.target.value))
+    };
+
+    return (
+        <div className={
+            !gamepadSettingOpen
+                ? 'gamepadSetting slide-out'
+                : 'gamepadSetting slide-in'
+        }
+        >
+            <button className='bg-none outline-none border-none text-[1.4rem] ml-[96%] mt-2' onClick={() => {
+                appDispatch(toggle_gamepad_setting())
+            }}>
+                <MdOutlineClose></MdOutlineClose>
+            </button>
+            <div className=''>
+                <p className='text-[0.9rem] mb-[4px]'>Button size:</p>
+                <form className='flex gap-4' >
+                    <label className='size-choosen'>
+                        Small
+                        <input
+                            type="radio"
+                            value="1"
+                            checked={selectedOption == '1'}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label className='size-choosen'>
+                        Medium
+                        <input
+                            type="radio"
+                            value="2"
+                            checked={selectedOption == '2'}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label className='size-choosen'>
+                        Big
+                        <input
+                            type="radio"
+                            value="3"
+                            checked={selectedOption == '3'}
+                            onChange={handleChange}
+                        />
+                    </label>
+                </form>
+            </div>
+
+
+
+            <button
+                className='instbtn outline-none border-none w-full py-3 bold mt-4'
+                onClick={() => {
+                    appDispatch(toggle_gamepad_draggable())
+                }}>Change gamepad button position</button>
+
+
+            {
+                gamepadDraggable == 'draggable'
+                    ?
+                    <div className='ctnBtn flex mt-4 gap-4 justify-end'>
+                        <button
+                            className='bg-slate-400 rounded-md'
+                            onClick={() =>
+                                appDispatch(toggle_default_gamepad_position())
+                            }
+                        >Default</button>
+                        <button
+                            className='bg-[#0167c0] rounded-md'
+
+                            onClick={() =>
+                                appDispatch(toggle_gamepad_draggable())
+                            }>Save</button>
+                    </div>
+                    : null
+            }
+        </div>
+    )
+}

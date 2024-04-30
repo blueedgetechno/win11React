@@ -13,32 +13,34 @@ const BUTTON_SIZE = 50;
 const JOYSTICK_SIZE = 100;
 
 export const VirtualGamepad = (props) => {
-    const { draggable = 'static', AxisCallback, ButtonCallback } = props;
+    const { AxisCallback, ButtonCallback } = props;
+    const draggable = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.draggable
+    );
     const isClose = useAppSelector(
         (state) => state.sidepane.mobileControl.gamePadHide
     );
 
     return (
         <>
-            {(draggable === 'static' || draggable === 'draggable') && (
-                <div
-                    className={`virtGamepad ${
-                        !isClose ? 'slide-in' : 'slide-out'
+            {/*{(draggable === 'static' || draggable === 'draggable') && (*/}
+            <div
+                className={`virtGamepad ${!isClose ? 'slide-in' : 'slide-out'
                     }`}
-                >
-                    <ButtonGroupLeft
-                        AxisCallback={AxisCallback}
-                        ButtonCallback={ButtonCallback}
-                        draggable={draggable}
-                    />
+            >
+                <ButtonGroupLeft
+                    AxisCallback={AxisCallback}
+                    ButtonCallback={ButtonCallback}
+                    draggable={draggable}
+                />
 
-                    <ButtonGroupRight
-                        AxisCallback={AxisCallback}
-                        ButtonCallback={ButtonCallback}
-                        draggable={draggable}
-                    />
-                </div>
-            )}
+                <ButtonGroupRight
+                    AxisCallback={AxisCallback}
+                    ButtonCallback={ButtonCallback}
+                    draggable={draggable}
+                />
+            </div>
+            {/*)}*/}
         </>
     );
 };
@@ -52,14 +54,14 @@ const defaultButtonGroupRightValue = {
 };
 
 export const ButtonGroupRight = (props) => {
-    const settingValue = useAppSelector(
-        (state) => state.sidepane.mobileControl.setting
+    const btnSize = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.btnSize
     );
     const [isPending, startTransition] = useTransition();
-    const { DefaultPosition } = { DefaultPosition: true };
+    const DefaultPosition = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.isDefaultPos
+    );
 
-    const { leftJt, rightJt, dpad, ybxa, rbRt, lbLt, rs } =
-        settingValue.gamePad;
 
     const [posBtn, setPosBtn] = useState(defaultButtonGroupRightValue);
 
@@ -171,7 +173,7 @@ export const ButtonGroupRight = (props) => {
                         Touch={(index, type) =>
                             props.ButtonCallback(index, type)
                         }
-                        size={BUTTON_SIZE * rbRt}
+                        size={BUTTON_SIZE * btnSize}
                     />
                 </div>
             </Draggable>
@@ -183,7 +185,7 @@ export const ButtonGroupRight = (props) => {
             >
                 <div id="ybxa" className="wrapperDraggable">
                     <YBXA
-                        size={BUTTON_SIZE * ybxa}
+                        size={BUTTON_SIZE * btnSize}
                         onTouch={(e, type, index) =>
                             props.ButtonCallback(index, type)
                         }
@@ -199,7 +201,7 @@ export const ButtonGroupRight = (props) => {
                 <div id="joystick" className="wrapperDraggable">
                     <CustomJoyStick
                         draggable={props.draggable}
-                        size={JOYSTICK_SIZE * rightJt}
+                        size={JOYSTICK_SIZE * btnSize}
                     />
                 </div>
             </Draggable>
@@ -237,8 +239,8 @@ export const ButtonGroupRight = (props) => {
                         id="rs"
                         className="defaultButton"
                         style={{
-                            width: `${BUTTON_SIZE * rs}px`,
-                            height: `${BUTTON_SIZE * rs}px`
+                            width: `${BUTTON_SIZE * btnSize}px`,
+                            height: `${BUTTON_SIZE * btnSize}px`
                         }}
                         onTouchStart={() => gamePadBtnCallback(11, 'down')}
                         onTouchEnd={() => gamePadBtnCallback(11, 'up')}
@@ -259,14 +261,13 @@ const defaultButtonGroupLeftValue = {
 };
 
 export const ButtonGroupLeft = (props) => {
-    const settingValue = useAppSelector(
-        (state) => state.sidepane.mobileControl.setting
+    const btnSize = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.btnSize
     );
     const [isPending, startTransition] = useTransition();
-    const { DefaultPosition } = { DefaultPosition: false };
-
-    const { leftJt, rightJt, dpad, ybxa, rbRt, lbLt, ls } =
-        settingValue.gamePad;
+    const DefaultPosition = useAppSelector(
+        (state) => state.sidepane.mobileControl.gamepadSetting.isDefaultPos
+    );
 
     const [posBtn, setPosBtn] = useState(defaultButtonGroupLeftValue);
 
@@ -368,7 +369,7 @@ export const ButtonGroupLeft = (props) => {
                         Touch={(index, type) =>
                             props.ButtonCallback(index, type)
                         }
-                        size={BUTTON_SIZE * lbLt}
+                        size={BUTTON_SIZE * btnSize}
                     />
                 </div>
             </Draggable>
@@ -380,7 +381,7 @@ export const ButtonGroupLeft = (props) => {
             >
                 <div id="dpad" className="wrapperDraggable">
                     <DPad
-                        size={BUTTON_SIZE * dpad}
+                        size={BUTTON_SIZE * btnSize}
                         onTouch={(e, type, index) =>
                             props.ButtonCallback(index, type)
                         }
@@ -400,8 +401,8 @@ export const ButtonGroupLeft = (props) => {
                         draggable={props.draggable}
                         className="defaultButton"
                         style={{
-                            width: `${BUTTON_SIZE * ls}px`,
-                            height: `${BUTTON_SIZE * ls}px`
+                            width: `${BUTTON_SIZE * btnSize}px`,
+                            height: `${BUTTON_SIZE * btnSize}px`
                         }}
                     >
                         LS
@@ -417,7 +418,7 @@ export const ButtonGroupLeft = (props) => {
                 <div id="joystick" className="wrapperDraggable">
                     <CustomJoyStick
                         draggable={props.draggable}
-                        size={JOYSTICK_SIZE * leftJt}
+                        size={JOYSTICK_SIZE * btnSize}
                     />
                 </div>
             </Draggable>
