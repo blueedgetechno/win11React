@@ -58,14 +58,16 @@ body[data-theme="dark"] {
     bottom: 0;
     top: unset;
     height: max-content;
-    z-index: 6;
+    z-index: 10;
     padding-left: 15px;
 
     --bg1: rgba(32, 32, 32, 0.75);
-    --bg2: rgba(255, 255, 255, 0.1);
-    -webkit-backdrop-filter: saturate(3) blur(20px);
-    backdrop-filter: saturate(3) blur(20px);
+    --bg2: rgba(255, 255, 255, 0.3);
+    //-webkit-backdrop-filter: saturate(3) blur(20px);
+    //backdrop-filter: saturate(3) blur(20px);
+    background-color: var(--bg2);
     border-radius: 15px;
+
 
     transition: all ease-in-out 0.5s;
     transform: translatex(0%);
@@ -97,10 +99,35 @@ body[data-theme="dark"] {
     align-items: center;
     justify-content: center;
     width: 24px;
-    height: 100%;
+    height: 48px;
     outline: none;
     border: none;
     background: none;
+  }
+}
+
+@media (1px < width < 1024px) {
+  .taskright {
+    position: absolute;
+
+    &[data-remote="true"] {
+      //bottom: 0;
+      top: 0;
+      height: max-content;
+      z-index: 10;
+      padding-left: 15px;
+
+
+
+      transition: all ease-in-out 0.5s;
+      transform: translatex(0%);
+
+
+    }
+
+
+
+
   }
 }
 

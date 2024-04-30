@@ -566,10 +566,10 @@ body[data-theme="dark"] .widPaneCont {
 }
 
 
-@media (1px < width< 800px) {
+@media (1px < width< 1024px) {
   .widPaneCont {
     right: 8%;
-    bottom: 56px;
+    bottom: 30px;
     width: 280px;
     height: 80%;
     max-height: 560px;
