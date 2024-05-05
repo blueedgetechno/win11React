@@ -35,15 +35,19 @@ jobs:
           npm run crowdin upload
           npm run crowdin download
           npm run ghbuild
-          sleep 1m
         env:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: build
+
+      - name: Sleep
+        run: sleep 15s
+        shell: bash    
 
       - id: deployment
         uses: actions/deploy-pages@v4
