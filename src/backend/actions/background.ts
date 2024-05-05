@@ -1,4 +1,3 @@
-import { getVolumeIdByEmail } from '.';
 import {
     RootState,
     appDispatch,
@@ -6,7 +5,6 @@ import {
     change_bitrate,
     change_framerate,
     check_worker,
-    claim_volume,
     fetch_message,
     fetch_user,
     have_focus,
@@ -19,7 +17,6 @@ import {
     wall_set,
     worker_refresh
 } from '../reducers';
-import { supabase } from '../reducers/fetch/createClient';
 import { client } from '../reducers/remote';
 
 const loadSettings = async () => {
@@ -84,7 +81,8 @@ const handleClipboard = async () => {
     }
 };
 
-const fetchMessage = async (email: string) => {
+const fetchMessage = async () => {
+    const email = store.getState().user.email;
     await appDispatch(fetch_message(email));
 };
 
@@ -94,31 +92,11 @@ export const preload = async () => {
             loadSettings(),
             fetchApp(),
             fetchSetting(),
-            fetchMessage(store.getState().user.email)
+            fetchMessage()
         ]);
 
     setInterval(check_worker, 30 * 1000);
     setInterval(sync, 2 * 1000);
-
-    try {
-        const volume_id = await getVolumeIdByEmail();
-
-        const { data, error } = await supabase.rpc('start_new_session', {
-            email: store.getState().user.email,
-            volume_id
-        });
-        if (error) {
-            console.log('can not start new session remote');
-        }
-
-        if (data != null || data != undefined) {
-            setInterval(function () {
-                ping_session(data);
-            }, 5 * 1000);
-        }
-    } catch (e) {
-        console.log('can not start new session remote', e);
-    }
-
     setInterval(handleClipboard, 100);
+    setInterval(ping_session, 100);
 };

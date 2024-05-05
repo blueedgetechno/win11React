@@ -2,13 +2,15 @@ import { useState } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import { useShift } from '../../../../src-tauri/core/utils/convert';
-import { appDispatch, toggle_keyboard, useAppSelector } from '../../../backend/reducers';
+import {
+    appDispatch,
+    toggle_keyboard,
+    useAppSelector
+} from '../../../backend/reducers';
 import { keyboardCallback } from '../../../backend/reducers/remote';
 import './index.scss';
 
-const VirtKeyboard = ({
-    close
-}) => {
+const VirtKeyboard = ({ close }) => {
     const [layoutName, setLayoutName] = useState('default');
     const isClose = useAppSelector(
         (state) => state.sidepane.mobileControl.keyboardHide
@@ -27,9 +29,8 @@ const VirtKeyboard = ({
         if (shift) keyboardCallback('Shift', 'up');
 
         if (button === 'Enter' || button == 'Close') {
-            appDispatch(toggle_keyboard())
-        };
-
+            appDispatch(toggle_keyboard());
+        }
     };
 
     return (

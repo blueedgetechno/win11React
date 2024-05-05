@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     appDispatch,
     close_remote,
@@ -6,17 +6,19 @@ import {
     popup_close,
     popup_open,
     remote_connect,
+    RootState,
     store,
-    toggle_remote
+    toggle_remote,
+    track_remote_session
 } from '.';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
+import { AxisType } from '../../../src-tauri/core/models/hid.model';
 import { EventCode, HIDMsg } from '../../../src-tauri/core/models/keys.model';
 import { convertJSKey } from '../../../src-tauri/core/utils/convert';
 import { sleep } from '../utils/sleep';
 import { isMobile } from './../utils/checking';
 import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
-import { AxisType } from '../../../src-tauri/core/models/hid.model';
 
 const size = () =>
     client != null
@@ -82,6 +84,7 @@ export type Metric = {
 };
 
 type Data = {
+    tracker_id?: string;
     active: boolean;
     fullscreen: boolean;
     pointer_lock: boolean;
@@ -245,8 +248,10 @@ export const remoteAsync = {
 
         // TODO
     },
-    ping_session: async (session_id: number) => {
+    ping_session: async () => {
         if (!store.getState().remote.active) return;
+        const session_id = store.getState().remote.tracker_id;
+        if (session_id == undefined) return;
         else if (client == null) return;
         // else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
@@ -300,6 +305,18 @@ export const remoteAsync = {
         )
             appDispatch(remoteSlice.actions.internal_sync());
     },
+    track_remote_session: createAsyncThunk(
+        'track_remote_session',
+        async (_: void, { getState }): Promise<string> => {
+            const { data, error } = await supabase.rpc('start_new_session', {
+                email: (getState() as RootState).user.email,
+                volume_id: ""
+            });
+            if (error) throw new Error(error.message);
+
+            return data as string;
+        }
+    ),
     direct_access: createAsyncThunk(
         'direct_access',
         async ({ ref }: { ref: string }) => {
@@ -308,6 +325,7 @@ export const remoteAsync = {
                 .getFirstListItem(`token = "${ref}"`);
 
             appDispatch(remote_connect({ ...(resultList as any) }));
+            await appDispatch(track_remote_session());
         }
     ),
     save_reference: createAsyncThunk(
@@ -512,6 +530,12 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.hard_reset_async,
                 hander: (state, action: PayloadAction<void>) => {}
+            },
+            {
+                fetch: remoteAsync.track_remote_session,
+                hander: (state, action: PayloadAction<string>) => {
+                    state.tracker_id = action.payload;
+                }
             }
         );
     }

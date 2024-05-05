@@ -1,4 +1,5 @@
 import { getResolution } from '../../../../src-tauri/core/utils/platform';
+import { supabase } from './createClient';
 
 export function getOS() {
     let OSName = 'unknown';
@@ -63,26 +64,26 @@ export async function UserSession(email: string) {
     };
 
     // TODO
-    // const { data, error } = await supabase
-    //     .from('generic_events')
-    //     .insert({
-    //         value,
-    //         name: `new session ${window.location.href}`,
-    //         type: 'ANALYTICS'
-    //     })
-    //     .select('id');
-    // if (error || data?.length == 0) return;
+    const { data, error } = await supabase
+        .from('generic_events')
+        .insert({
+            value,
+            name: `new session ${window.location.href}`,
+            type: 'ANALYTICS'
+        })
+        .select('id');
+    if (error || data?.length == 0) return;
 
-    // const session = data.at(0).id;
-    // setInterval(async () => {
-    //     if (stack.length == current_stack_length) return;
+    const session = data.at(0).id;
+    setInterval(async () => {
+        if (stack.length == current_stack_length) return;
 
-    //     value.stack = stack;
-    //     await supabase
-    //         .from('generic_events')
-    //         .update({ value })
-    //         .eq('id', session);
+        value.stack = stack;
+        await supabase
+            .from('generic_events')
+            .update({ value })
+            .eq('id', session);
 
-    //     current_stack_length = stack.length;
-    // }, 10 * 1000);
+        current_stack_length = stack.length;
+    }, 10 * 1000);
 }
