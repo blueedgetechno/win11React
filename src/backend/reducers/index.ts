@@ -99,7 +99,11 @@ export const {
     render_message,
     push_notification,
     toggle_gamepad,
-    toggle_keyboard
+    toggle_keyboard,
+    toggle_gamepad_setting,
+    change_btnGp_size,
+    toggle_gamepad_draggable,
+    toggle_default_gamepad_position
 } = sidepaneSlice.actions;
 
 export const {

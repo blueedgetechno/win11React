@@ -157,7 +157,6 @@ export const dispatchOutSide = (action: string, payload: any) => {
 export const loginWithEmail = async (email: string, password: string) => {};
 
 export const signUpWithEmail = async (email: string, password: string) => {};
-
 export const login = async (provider: 'google' | 'facebook' | 'discord') => {
     let w = window.open();
 
@@ -204,12 +203,10 @@ export const getVolumeIdByEmail = async (): Promise<string> => {
     return all.at(0)?.local_id ?? '';
 };
 export const shutDownVm = async () => {
-    let volumeId = '';
-
     // get volume id
-    volumeId = await getHostSessionIdByEmail();
+    const host_session_id = await getHostSessionIdByEmail();
     // call worker_ss_close
-    await appDispatch(worker_session_close(volumeId));
+    await appDispatch(worker_session_close(host_session_id));
 
     appDispatch(toggle_remote());
 };

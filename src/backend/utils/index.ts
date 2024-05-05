@@ -38,7 +38,7 @@ const apps: AppData[] = [
         payload: 'edge'
     },
     {
-        name: 'Payment',
+        name: 'Đăng ký dịch vụ',
         id: 'payment',
         action: 'apps/app_toggle',
         payload: 'payment'
@@ -92,7 +92,7 @@ var { taskbar, desktop } = {
         'Thinkmay Fanpage',
         'Store',
         'Connect YourPC',
-        'Payment',
+        'Đăng ký dịch vụ',
         'Your Info'
     ]
 };
