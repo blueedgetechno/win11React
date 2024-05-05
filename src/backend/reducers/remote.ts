@@ -19,6 +19,7 @@ import { sleep } from '../utils/sleep';
 import { isMobile } from './../utils/checking';
 import { CAUSE, pb, supabase } from './fetch/createClient';
 import { BuilderHelper } from './helper';
+import { getVolumeIdByEmail } from '../actions';
 
 const size = () =>
     client != null
@@ -308,9 +309,11 @@ export const remoteAsync = {
     track_remote_session: createAsyncThunk(
         'track_remote_session',
         async (_: void, { getState }): Promise<string> => {
+            const email = (getState() as RootState).user.email
+            const volume_id = await getVolumeIdByEmail()
             const { data, error } = await supabase.rpc('start_new_session', {
-                email: (getState() as RootState).user.email,
-                volume_id: ""
+                email,
+                volume_id
             });
             if (error) throw new Error(error.message);
 
