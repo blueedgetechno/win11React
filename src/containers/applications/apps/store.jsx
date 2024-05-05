@@ -115,7 +115,9 @@ export const MicroStore = () => {
   useEffect(() => {
     if (!wnapp.hide && fetchState == 0) {
       var url = queryParams.get("customstore");
-      if (!url) url = "https://raw.githubusercontent.com/win11react/store/main/store/index.json";
+      if (!url)
+        url =
+          "https://raw.githubusercontent.com/win11react/store/main/store/index.json";
 
       axios
         .get(url)
