@@ -40,9 +40,8 @@ jobs:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v1
         with:
-          name: github-pages
           path: build
 
       - name: Sleep
