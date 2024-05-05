@@ -35,6 +35,7 @@ jobs:
           npm run crowdin upload
           npm run crowdin download
           npm run ghbuild
+          sleep 1m
         env:
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
