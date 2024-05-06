@@ -49,4 +49,4 @@ jobs:
         shell: bash    
 
       - id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
