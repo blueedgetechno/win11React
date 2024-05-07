@@ -8,7 +8,7 @@ import {
     remote_connect,
     RootState,
     store,
-    toggle_remote,
+    toggle_remote
 } from '.';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { AxisType } from '../../../src-tauri/core/models/hid.model';
@@ -280,8 +280,8 @@ export const remoteAsync = {
 
             appDispatch(popup_close());
         }
-        const email = (store.getState() as RootState).user.email
-        const volume_id = await getVolumeIdByEmail()
+        const email = (store.getState() as RootState).user.email;
+        const volume_id = await getVolumeIdByEmail();
 
         const { error } = await supabase.rpc(`ping_session`, {
             email,
@@ -291,7 +291,7 @@ export const remoteAsync = {
         if (error) {
             console.log('ping session error' + error.message);
         }
-        },
+    },
     sync: async () => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
