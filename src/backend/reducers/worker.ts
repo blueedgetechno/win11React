@@ -9,7 +9,6 @@ import {
     remote_connect,
     RootState,
     save_reference,
-    track_remote_session,
     vm_session_access,
     vm_session_create,
     worker_refresh,
@@ -219,7 +218,6 @@ export const workerAsync = {
             const result = await StartThinkmay(computer);
             appDispatch(fetch_local_worker(computer.address));
             appDispatch(remote_connect(result));
-            await appDispatch(track_remote_session());
             await appDispatch(save_reference(result));
         }
     ),
@@ -239,7 +237,6 @@ export const workerAsync = {
 
             const result = ParseRequest(computer, session);
             appDispatch(remote_connect(result));
-            await appDispatch(track_remote_session());
             await appDispatch(save_reference(result));
         }
     ),
@@ -306,7 +303,6 @@ export const workerAsync = {
 
             const result = await StartThinkmayOnVM(host.info, vm_session.id);
             appDispatch(remote_connect(result));
-            await appDispatch(track_remote_session());
             await appDispatch(fetch_local_worker(host.info.address));
             await appDispatch(save_reference(result));
         }
@@ -332,7 +328,6 @@ export const workerAsync = {
                 target: vm_session_id
             });
             appDispatch(remote_connect(result));
-            await appDispatch(track_remote_session());
             await appDispatch(save_reference(result));
         }
     ),

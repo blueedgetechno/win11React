@@ -150,7 +150,6 @@ export const {
 export const { fetch_user } = userAsync;
 export const {
     ping_session,
-    track_remote_session,
     sync,
     direct_access,
     save_reference,

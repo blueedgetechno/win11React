@@ -9,7 +9,6 @@ import {
     RootState,
     store,
     toggle_remote,
-    track_remote_session
 } from '.';
 import { RemoteDesktopClient } from '../../../src-tauri/core/app';
 import { AxisType } from '../../../src-tauri/core/models/hid.model';
@@ -251,8 +250,6 @@ export const remoteAsync = {
     },
     ping_session: async () => {
         if (!store.getState().remote.active) return;
-        const session_id = store.getState().remote.tracker_id;
-        if (session_id == undefined) return;
         else if (client == null) return;
         // else if (store.getState().remote.local) return;
         else if (!client.ready()) return;
@@ -283,15 +280,18 @@ export const remoteAsync = {
 
             appDispatch(popup_close());
         }
+        const email = (store.getState() as RootState).user.email
+        const volume_id = await getVolumeIdByEmail()
 
         const { error } = await supabase.rpc(`ping_session`, {
-            session_id
+            email,
+            volume_id
         });
 
         if (error) {
             console.log('ping session error' + error.message);
         }
-    },
+        },
     sync: async () => {
         if (!store.getState().remote.active) return;
         else if (client == null) return;
@@ -306,20 +306,6 @@ export const remoteAsync = {
         )
             appDispatch(remoteSlice.actions.internal_sync());
     },
-    track_remote_session: createAsyncThunk(
-        'track_remote_session',
-        async (_: void, { getState }): Promise<string> => {
-            const email = (getState() as RootState).user.email
-            const volume_id = await getVolumeIdByEmail()
-            const { data, error } = await supabase.rpc('start_new_session', {
-                email,
-                volume_id
-            });
-            if (error) throw new Error(error.message);
-
-            return data as string;
-        }
-    ),
     direct_access: createAsyncThunk(
         'direct_access',
         async ({ ref }: { ref: string }) => {
@@ -328,7 +314,6 @@ export const remoteAsync = {
                 .getFirstListItem(`token = "${ref}"`);
 
             appDispatch(remote_connect({ ...(resultList as any) }));
-            await appDispatch(track_remote_session());
         }
     ),
     save_reference: createAsyncThunk(
@@ -533,12 +518,6 @@ export const remoteSlice = createSlice({
             {
                 fetch: remoteAsync.hard_reset_async,
                 hander: (state, action: PayloadAction<void>) => {}
-            },
-            {
-                fetch: remoteAsync.track_remote_session,
-                hander: (state, action: PayloadAction<string>) => {
-                    state.tracker_id = action.payload;
-                }
             }
         );
     }
