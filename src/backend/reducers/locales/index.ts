@@ -173,7 +173,10 @@ export enum Contents {
     THINKMAY_DESC,
     PLAN_USAGE_TIME,
     ADDITIONAL_TIME,
-    SHUT_DOWN
+    SHUT_DOWN,
+    OPEN_GAMEPAD,
+    OPEN_KEYBOARD,
+    ADJUST_GAMEPAD,
 }
 
 export function language() {
@@ -874,5 +877,14 @@ export function language() {
     vn.set(Contents.ADDITIONAL_TIME, 'Thời gian cộng thêm');
     en.set(Contents.SHUT_DOWN, 'Shut down');
     vn.set(Contents.SHUT_DOWN, 'Shut down');
+
+    en.set(Contents.OPEN_GAMEPAD, 'Gamepad');
+    vn.set(Contents.OPEN_GAMEPAD, 'Gamepad');
+
+    en.set(Contents.OPEN_KEYBOARD, 'KeyBoard');
+    vn.set(Contents.OPEN_KEYBOARD, 'KeyBoard');
+
+    en.set(Contents.ADJUST_GAMEPAD, 'Gamepad Setting');
+    vn.set(Contents.ADJUST_GAMEPAD, 'Chỉnh Gamepad');
     return t;
 }
