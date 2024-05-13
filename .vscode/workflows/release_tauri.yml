@@ -1,9 +1,7 @@
 name: 'publish'
 
 on:
-    push:
-        branches:
-            - release
+  workflow_dispatch:
 
 jobs:
     publish-tauri:
