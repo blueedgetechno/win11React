@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 dist/
 tsconfig.tsbuildinfo
+
+*ps1
