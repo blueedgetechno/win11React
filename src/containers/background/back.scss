@@ -17,13 +17,19 @@
   object-fit: fill;
   width: 100vw;
   height: 100vh;
-  background-color: var(--wintheme);
+  //background-color: var(--wintheme);
+  background-color: rgb(0, 0, 0);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   transition: all 0.2s ease;
 }
 
+@media (1px < width < 1024px) {
+  .remote {
+    object-fit: contain;
+  }
+}
 
 .bootscreen {
   position: absolute;
@@ -155,22 +161,24 @@
     }
   }
 
-  .ctn_btn_login{
+  .ctn_btn_login {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    button{
+
+    button {
       background: transparent;
       border: none;
       outline: none;
       cursor: pointer;
-      :hover{
+
+      :hover {
         opacity: 0.7;
       }
     }
 
-    .ml_button{
+    .ml_button {
       width: 120px;
       display: flex;
       align-items: center;
@@ -186,24 +194,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all  0.1s ease-in;
+    transition: all 0.1s ease-in;
     transform: scale(1.1);
+
     .login-form {
       background-color: #f0f0f0;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    
+
     .form-group {
       margin-bottom: 15px;
     }
-    
+
     label {
       display: block;
       margin-bottom: 5px;
     }
-    
+
     input[type='text'],
     input[type='password'] {
       width: 100%;
@@ -212,7 +221,7 @@
       border-radius: 4px;
       box-sizing: border-box;
     }
-  
+
     .btn-login {
       width: 100%;
       padding: 10px;
@@ -222,15 +231,16 @@
       color: #fff;
       cursor: pointer;
       transition: background-color 0.3s;
-    &:hover {
-      background-color: #0056b3;
+
+      &:hover {
+        background-color: #0056b3;
+      }
     }
-    }
-    
-    
-    
+
+
+
   }
-  
+
 }
 
 .lockOpt {
@@ -298,5 +308,3 @@
   background: rgb(144, 144, 144);
   background: linear-gradient(224deg, rgb(56 56 56 / 33%) 0%, rgb(255 255 255 / 33%) 100%);
 }
-
-
