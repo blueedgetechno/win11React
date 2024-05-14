@@ -32,10 +32,10 @@ jobs:
                 token: ${{ secrets.PAT_TOKEN }}
 
             - name: Change directory for Windows
-                  if: runner.os == 'Windows'
-                  run: |
-                    New-Item -ItemType Directory -Path C:\workspace
-                    cd C:\workspace
+              if: runner.os == 'Windows'
+              run: |
+                New-Item -ItemType Directory -Path C:\workspace
+                cd C:\workspace
 
             - name: install dependencies (ubuntu only)
               if: matrix.settings.platform == 'ubuntu-22.04' # This must match the platform value defined above.
