@@ -77,4 +77,23 @@ jobs:
                   releaseDraft: false
                   prerelease: false
                   args: ${{ matrix.settings.args }}
-                  
+
+            - name: Update Gist
+              env:
+                GIST_ID: 85b62c4b7084ed8e9818992ef2501102
+                GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+              run: |
+                # Update this with the path to your file to update the gist
+                FILE_TO_UPDATE='/Users/runner/work/virtualOS-win11/virtualOS-win11/latest.json'
+                
+                # Get the content of the file
+                FILE_CONTENT=$(cat $FILE_TO_UPDATE)
+                
+                # Prepare the JSON payload
+                PAYLOAD=$(jq -n --arg content "$FILE_CONTENT" '{files: {("thinkmay-tauri-app.json"): {content: $content}}}')
+                
+                # Update the gist
+                curl -X PATCH \
+                  -H "Authorization: token $GIST_TOKEN" \
+                  -d "$PAYLOAD" \
+                  https://api.github.com/gists/$GIST_ID
