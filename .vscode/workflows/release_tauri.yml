@@ -1,6 +1,9 @@
 name: 'publish'
 
 on:
+  push:
+    branches:
+      - pocketbase
   workflow_dispatch:
 
 jobs:
@@ -23,6 +26,11 @@ jobs:
         runs-on: ${{ matrix.settings.platform }}
         steps:
             - uses: actions/checkout@v4
+              with:
+                ref: pocketbase
+                submodules: recursive
+                token: ${{ secrets.PAT_TOKEN }}
+
 
             - name: install dependencies (ubuntu only)
               if: matrix.settings.platform == 'ubuntu-22.04' # This must match the platform value defined above.
@@ -36,7 +44,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: lts/*
-                  cache: 'yarn' # Set this to npm, yarn or pnpm.
+                  cache: 'npm' # Set this to npm, yarn or pnpm.
 
             - name: install Rust stable
               uses: dtolnay/rust-toolchain@stable
@@ -53,11 +61,14 @@ jobs:
 
             - name: install frontend dependencies
               # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
-              run: yarn install # change this to npm or pnpm depending on which one you use.
+              run: npm install # change this to npm or pnpm depending on which one you use.
+
 
             - uses: tauri-apps/tauri-action@v0
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAURI_PRIVATE_KEY: ${{secrets.TAURI_PRIVATE_KEY}}
+                  TAURI_KEY_PASSWORD: ${{secrets.TAURI_KEY_PASSWORD}}
               with:
                   tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
                   releaseName: 'App v__VERSION__'
