@@ -78,19 +78,19 @@ jobs:
                   prerelease: false
                   args: ${{ matrix.settings.args }}
 
-            - name: Change directory for Windows
-              if: runner.os == 'Windows'
-              run: |
-                cd D:\a\virtualOS-win11\virtualOS-win11
-
             - name: Update Gist
               env:
                 GIST_ID: 85b62c4b7084ed8e9818992ef2501102
                 GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
               run: |
                 # Update this with the path to your file to update the gist
-                FILE_TO_UPDATE='latest.json'
-                
+                if [ "$(cmd.exe /c ver)" ]; then
+                  FILE_TO_UPDATE='D:\a\virtualOS-win11\virtualOS-win11\latest.json'
+                else
+                  FILE_TO_UPDATE='latest.json'
+                fi
+
+
                 # Get the content of the file
                 FILE_CONTENT=$(cat $FILE_TO_UPDATE)
                 
