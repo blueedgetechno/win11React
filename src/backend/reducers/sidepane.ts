@@ -188,21 +188,21 @@ const initialState: Data = {
             {
                 ui: true,
                 src: 'MdOutlineKeyboard',
-                name: [Contents.SCAN_CODE],
+                name: [Contents.OPEN_KEYBOARD],
                 state: 'keyboardOpen',
                 action: 'sidepane/toggle_keyboard'
             },
             {
                 ui: true,
                 src: 'MdOutlineSportsEsports',
-                name: [Contents.SCAN_CODE],
+                name: [Contents.OPEN_GAMEPAD],
                 state: 'gamePadOpen',
                 action: 'sidepane/toggle_gamepad'
             },
             {
                 ui: true,
                 src: 'MdOutlineSettingsInputComponent',
-                name: [Contents.EXTERNAL_TAB],
+                name: [Contents.ADJUST_GAMEPAD],
                 state: 'network.airplane',
                 action: 'sidepane/toggle_gamepad_setting'
             },
