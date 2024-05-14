@@ -82,14 +82,10 @@ jobs:
               env:
                 GIST_ID: 85b62c4b7084ed8e9818992ef2501102
                 GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+              if: runner.os != 'Windows'
               run: |
                 # Update this with the path to your file to update the gist
-                if [ "$(cmd.exe /c ver)" ]; then
-                  FILE_TO_UPDATE='D:\a\virtualOS-win11\virtualOS-win11\latest.json'
-                else
-                  FILE_TO_UPDATE='latest.json'
-                fi
-
+                FILE_TO_UPDATE='latest.json'
 
                 # Get the content of the file
                 FILE_CONTENT=$(cat $FILE_TO_UPDATE)
