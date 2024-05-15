@@ -3,7 +3,7 @@ name: 'publish tauri'
 on:
   push:
     branches:
-      - pocketbase
+      - master
   workflow_dispatch:
 
 jobs:
@@ -27,7 +27,6 @@ jobs:
         steps:    
             - uses: actions/checkout@v4
               with:
-                ref: pocketbase
                 submodules: recursive
                 token: ${{ secrets.PAT_TOKEN }}
 
