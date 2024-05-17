@@ -67,7 +67,6 @@ export const workerAsync = {
     wait_and_claim_volume: createAsyncThunk(
         'wait_and_claim_volume',
         async (_: void, { getState }) => {
-
             const email = (getState() as RootState).user.email;
             await appDispatch(worker_refresh());
             appDispatch(
@@ -83,11 +82,12 @@ export const workerAsync = {
             const volume_id = all.at(0)?.local_id;
 
             UserEvents({
-                type: 'remote/join_queue_list', 
+                type: 'remote/join_queue_list',
                 payload: {
                     email,
                     created_at: new Date().toISOString()
-            }})
+                }
+            });
 
             for (let i = 0; i < 100; i++) {
                 let node = new RenderNode(
@@ -133,7 +133,7 @@ export const workerAsync = {
                             email,
                             end_at: new Date().toISOString()
                         }
-                    })
+                    });
                     await appDispatch(vm_session_access(result.data.at(0).id));
                     appDispatch(popup_close());
                     return;
@@ -147,7 +147,7 @@ export const workerAsync = {
                             email,
                             end_at: new Date().toISOString()
                         }
-                    })
+                    });
                     await appDispatch(vm_session_create(result.id));
                     appDispatch(popup_close());
                     return;

@@ -16,10 +16,16 @@
 
 export const isMobile = () => {
     const userAgent = navigator?.userAgent?.toLowerCase();
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-    const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+    const isMobile =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+            userAgent
+        );
+    const isTablet =
+        /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(
+            userAgent
+        );
     return isMobile || isTablet;
-}
+};
 export const isDevEnv = () => {
     return (
         window.location.hostname == 'localhost' ||

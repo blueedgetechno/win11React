@@ -176,7 +176,7 @@ export enum Contents {
     SHUT_DOWN,
     OPEN_GAMEPAD,
     OPEN_KEYBOARD,
-    ADJUST_GAMEPAD,
+    ADJUST_GAMEPAD
 }
 
 export function language() {
