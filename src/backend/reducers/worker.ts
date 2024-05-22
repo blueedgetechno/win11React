@@ -79,84 +79,72 @@ export const workerAsync = {
             }>();
             const volume_id = all.at(0)?.local_id;
 
-            for (let i = 0; i < 100; i++) {
-                let node = new RenderNode(
-                    (getState() as RootState).worker.data
+            const node = new RenderNode((getState() as RootState).worker.data);
+
+            let result: RenderNode<Computer> | undefined = undefined;
+            node.iterate((x) => {
+                if (
+                    result == undefined &&
+                    (x.info as Computer)?.Volumes?.includes(volume_id)
+                )
+                    result = x;
+            });
+
+            if (result == undefined) {
+                appDispatch(popup_close());
+
+                const userStat = (getState() as RootState).user.stat;
+                if (userStat == null) {
+                    appDispatch(app_toggle('payment'));
+                    throw new Error(
+                        'Bạn chưa đăng ký dịch vụ. Đăng ký ngay bên trong website hoặc nhắn tin qua Facebook Thinkmay'
+                    );
+                }
+                if (new Date() > new Date(userStat.end_time)) {
+                    appDispatch(app_toggle('payment'));
+                    throw new Error(
+                        'Bạn chưa giai hạn dịch vụ. Tiếp tục giai hạn bên trong website hoặc nhắn tin qua Facebook Thinkmay'
+                    );
+                }
+
+                throw new Error(
+                    'Không tìm thấy ổ cứng, đợi 5 - 10p hoặc liên hệ Admin ở Hỗ trợ ngay!'
+                );
+            } else if (result.type == 'vm_worker' && result.data.length > 0) {
+                await appDispatch(vm_session_access(result.data.at(0).id));
+                appDispatch(popup_close());
+                return;
+            } else if (result.type == 'vm_worker' && result.data.length == 0) {
+                await appDispatch(vm_session_create(result.id));
+                appDispatch(popup_close());
+                return;
+            }
+
+            const computer: Computer = node.findParent<Computer>(
+                result.id,
+                'host_worker'
+            )?.info;
+            if (computer == undefined) {
+                appDispatch(popup_close());
+                throw new Error('invalid tree');
+            }
+
+            // TODO
+            const resp = await StartVirtdaemon(computer, volume_id);
+            if (resp instanceof Error) {
+                appDispatch(popup_close());
+                appDispatch(
+                    popup_open({
+                        type: 'notify',
+                        data: {
+                            loading: false,
+                            title: 'Connect to PC',
+                            text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
+                        }
+                    })
                 );
 
-                let result: RenderNode<Computer> | undefined = undefined;
-                node.iterate((x) => {
-                    if (
-                        result == undefined &&
-                        (x.info as Computer)?.Volumes?.includes(volume_id)
-                    )
-                        result = x;
-                });
-
-                if (result == undefined) {
-                    appDispatch(popup_close());
-
-                    const userStat = (getState() as RootState).user.stat;
-                    if (userStat == null) {
-                        appDispatch(app_toggle('payment'));
-                        throw new Error(
-                            'Bạn chưa đăng ký dịch vụ. Đăng ký ngay bên trong website hoặc nhắn tin qua Facebook Thinkmay'
-                        );
-                    }
-                    if (new Date() > new Date(userStat.end_time)) {
-                        appDispatch(app_toggle('payment'));
-                        throw new Error(
-                            'Bạn chưa giai hạn dịch vụ. Tiếp tục giai hạn bên trong website hoặc nhắn tin qua Facebook Thinkmay'
-                        );
-                    }
-
-                    throw new Error(
-                        'Không tìm thấy ổ cứng, đợi 5 - 10p hoặc liên hệ Admin ở Hỗ trợ ngay!'
-                    );
-                } else if (
-                    result.type == 'vm_worker' &&
-                    result.data.length > 0
-                ) {
-                    await appDispatch(vm_session_access(result.data.at(0).id));
-                    appDispatch(popup_close());
-                    return;
-                } else if (
-                    result.type == 'vm_worker' &&
-                    result.data.length == 0
-                ) {
-                    await appDispatch(vm_session_create(result.id));
-                    appDispatch(popup_close());
-                    return;
-                }
-
-                const computer: Computer = node.findParent<Computer>(
-                    result.id,
-                    'host_worker'
-                )?.info;
-                if (computer == undefined) {
-                    appDispatch(popup_close());
-                    throw new Error('invalid tree');
-                }
-
-                // TODO
-                const resp = await StartVirtdaemon(computer, volume_id);
-                if (resp instanceof Error) {
-                    appDispatch(popup_close());
-                    appDispatch(
-                        popup_open({
-                            type: 'notify',
-                            data: {
-                                loading: false,
-                                title: 'Connect to PC',
-                                text: [Contents.RUN_OUT_OF_GPU_STOCK_NOTIFY]
-                            }
-                        })
-                    );
-
-                    await new Promise((r) => setTimeout(r, 30000));
-                }
-
-                await appDispatch(worker_refresh());
+                return;
             }
 
             appDispatch(popup_close());
