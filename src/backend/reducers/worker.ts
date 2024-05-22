@@ -57,7 +57,7 @@ export const workerAsync = {
                 fetch_local_worker(
                     window.location.host.includes('localhost') ||
                         window.location.host.includes('tauri.localhost')
-                        ? 'supabase.thinkmay.net'
+                        ? 'play.thinkmay.net'
                         : window.location.host
                 )
             );
