@@ -151,7 +151,12 @@ export async function StartVirtdaemon(
         }
     };
 
+    const interval = setInterval(
+        () => internalFetch<StartRequest>(address, '_new', req),
+        3000
+    );
     const resp = await internalFetch(address, 'new', req);
+    clearInterval(interval);
     if (resp instanceof Error) return resp;
 
     return resp;
