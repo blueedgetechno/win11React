@@ -58,7 +58,7 @@ export const workerAsync = {
                 fetch_local_worker(
                     window.location.host.includes('localhost') ||
                         window.location.host.includes('tauri.localhost')
-                        ? 'supabase.thinkmay.net'
+                        ? 'play.thinkmay.net'
                         : window.location.host
                 )
             );
@@ -81,16 +81,8 @@ export const workerAsync = {
             }>();
             const volume_id = all.at(0)?.local_id;
 
-            UserEvents({
-                type: 'remote/join_queue_list',
-                payload: {
-                    email,
-                    created_at: new Date().toISOString()
-                }
-            });
-
-            for (let i = 0; i < 100; i++) {
-                let node = new RenderNode(
+            for (let i = 0; i < 2; i++) {
+                const node = new RenderNode(
                     (getState() as RootState).worker.data
                 );
 

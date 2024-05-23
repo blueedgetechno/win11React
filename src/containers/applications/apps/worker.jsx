@@ -224,7 +224,7 @@ const ContentArea = ({ searchtxt, data, adminPw }) => {
 
     const [usermap, setUsermap] = useState([]);
     useEffect(() => {
-        const pb = new PocketBase('https://supabase.thinkmay.net');
+        const pb = new PocketBase('https://play.thinkmay.net');
         // todo
         if (!adminPw) return;
         pb.admins.authWithPassword(email, adminPw).then(() => {
