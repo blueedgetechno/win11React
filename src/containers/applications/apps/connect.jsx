@@ -52,7 +52,7 @@ export const ConnectApp = () => {
         },
         {
             name: 'RAM:',
-            text: '12Gb Ram'
+            text: '16Gb Ram'
         },
         {
             name: 'CPU:',
