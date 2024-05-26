@@ -10,7 +10,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@fortawesome/react-fontawesome": "^0.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@sentry/react": "^7.116.0",
     "@sentry/tracing": "^7.114.0",
     "@tauri-apps/api": "^1.5.6",
