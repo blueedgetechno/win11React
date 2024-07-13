@@ -1,0 +1,28 @@
+{
+    "about.opensource": "win11 是一个开源项目，旨在通过React、css、JavaScript等标准web技术，在web上复制window11的桌面体验",
+    "about.notmicrosoft": "这个项目不属于Microsoft,不应与它的操作系统或产品混淆",
+    "about.Creative-Commons": "Creative-Commons",
+    "about.title": "About",
+    "about.licensed": "本项目的开源协议",
+    "about.alsonot": "这同样不是",
+    "about.microsoftcopywrite": "这个项目的Microsoft、Windows和其他演示产品均为Microsoft公司的商标",
+    "about.understand": "好的",
+    "about.contact": "联系方式",
+  
+    "store.featured-app": "精选应用",
+    "store.featured-app.info": "用这些必备的应用把你的体验带到新的高度",
+    "store.featured-game": "精选游戏",
+    "store.featured-game.info": "探索Xbox游戏的乐趣，并发现你的最爱",
+    "store.featured-film": "精选电影",
+    "store.featured-film.info": "租赁或购买最新热门电影，在家或者旅途中观看",
+    "store.free": "免费",
+    "store.owned": "已拥有",
+    "store.rent": "租赁",
+    "store.features": "精选",
+    "store.ratings": "评分与评论",
+    "store.description": "描述",
+    "camera.take-photo": "拍照",
+    "oobe.country": "国家和地区是否正确?",
+    "oobe.keyboard": "键盘布局或输入法是否正确",
+    "oobe.anotherkeyboard": "如果你使用其他的键盘布局，你可以在下方添加"
+}
