@@ -7,9 +7,9 @@
   "dependencies": {
     "-": "^0.0.1",
     "@crowdin/cli": "^3.19.4",
-    "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-regular-svg-icons": "^6.5.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@sentry/react": "^7.118.0",
     "@sentry/tracing": "^7.114.0",
@@ -70,7 +70,7 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "prettier": "^2.8.8",
-    "tailwindcss": "^3.4.4",
+    "tailwindcss": "^3.4.6",
     "vite": "3.2.10",
     "vite-plugin-pwa": "^0.12.8"
   }
