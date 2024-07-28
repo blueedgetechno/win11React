@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch, useSelector } from "react-redux";
 import "./i18nextConf";
@@ -70,6 +70,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 function App() {
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
+  const isfullScreen = useSelector((state) => state.menus.fullScreen);
   const dispatch = useDispatch();
 
   const afterMath = (event) => {
@@ -88,7 +89,7 @@ function App() {
     } catch (err) {}
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
-      "--prefix",
+      "--prefix"
     );
 
     ess.forEach((item, i) => {
@@ -125,7 +126,44 @@ function App() {
   window.onload = (e) => {
     dispatch({ type: "WALLBOOTED" });
   };
+  document.addEventListener("fullscreenchange", ()=>{
+    if(document.fullscreenElement===null){
+      // exit
+      console.log('exit');
+      dispatch({type:"FULLSREEN"})
+    }
+  },true);
+  
+  function fullScreen(element) {
+    const runfullScreen =
+      element.requestFullscreen ||
+      element.mozRequestFullScreen ||
+      element.webkitRequestFullScreen ||
+      element.msRequestFullscreen;
+    if (runfullScreen) runfullScreen.call(element);
+    else {
+      console.error("当前浏览器不支持部分全屏！");
+    }
+  }
+  function exitFullScreen() {
+    const runExit =
+      document.exitFullscreen ||
+      document.mozCancelFullScreen ||
+      document.webkitExitFullscreen ||
+      document.msExitFullscreen;
 
+    if (runExit) runExit.call(document);
+    else {
+      console.error("当前浏览器不支持退出全屏！");
+    }
+  }
+  const App = useRef(null);
+  if (isfullScreen) {
+    fullScreen(App.current);
+  } else if (document.fullscreenElement !== null) {
+    exitFullScreen();
+    dispatch({type:"FULLSREEN"})
+  }
   useEffect(() => {
     if (!window.onstart) {
       loadSettings();
@@ -137,7 +175,7 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <div className="App" ref={App}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
         {wall.locked ? <LockScreen dir={wall.dir} /> : null}
@@ -149,7 +187,7 @@ function App() {
               var WinApp = Applications[key];
               return <WinApp key={idx} />;
             })}
-            {Object.keys(apps)
+            {/* {Object.keys(apps)
               .filter((x) => x != "hz")
               .map((key) => apps[key])
               .map((app, i) => {
@@ -157,7 +195,7 @@ function App() {
                   var WinApp = Drafts[app.data.type];
                   return <WinApp key={i} icon={app.icon} {...app.data} />;
                 }
-              })}
+              })} */}
             <StartMenu />
             <BandPane />
             <SidePane />

@@ -335,7 +335,10 @@ export const WnTerminal = () => {
       tmpStack.push("Network Org: " + IP.org);
       tmpStack.push("Region: " + IP.region);
       tmpStack.push("Postal: " + IP.postal);
-    } else {
+    }else if(type=="ls"){
+      tmpStack.push("visit https://github.com/blueedgetechno/win11React");
+    } 
+    else {
       tmpStack.push(
         `'${type}' is not recognized as an internal or external command,`,
       );

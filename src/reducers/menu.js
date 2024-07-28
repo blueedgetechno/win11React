@@ -5,6 +5,7 @@ const defState = {
   opts: "desk",
   attr: null,
   dataset: null,
+  fullScreen:false,
   data: {
     desk: {
       width: "310px",
@@ -74,6 +75,11 @@ const defState = {
             payload: "date",
           },
         ],
+      },
+      {
+        name:"fullScreen",
+        action:"FULLSCREEN",
+        type:"svg",
       },
       {
         name: "Refresh",
@@ -264,6 +270,15 @@ const menusReducer = (state = defState, action) => {
     tmpState = {
       ...action.payload,
     };
+  } else if(action.type==="FULLSCREEN"){
+    tmpState.fullScreen=!tmpState.fullScreen
+    tmpState.menus.desk.forEach(obj=>{
+      if(obj.name==='fullScreen'){
+        obj.name='exit fullSreen'
+      }else if(obj.name==='exit fullSreen'){
+        obj.name='fullScreen'
+      }
+    })
   }
 
   return tmpState;
