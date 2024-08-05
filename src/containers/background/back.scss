@@ -23,6 +23,7 @@
   z-index: 2;
   display: grid;
   place-items: center;
+  // 设置鼠标指针在悬停于该元素上时显示为一个进度指示器，通常是一个旋转的等待图标，表明正在执行一个后台操作或等待某个过程完成。  挺好玩的  手机端没这个属性
   cursor: progress;
 }
 
@@ -153,6 +154,7 @@
   align-items: center;
   justify-content: center;
 }
+
 // https://docs.microsoft.com/en-us/fluent-ui/web-components/components/progress-ring
 
 .progressRing circle {
@@ -170,10 +172,12 @@
     stroke-dasharray: 0.01px, 43.97px;
     transform: rotate(0deg);
   }
+
   50% {
     stroke-dasharray: 21.99px, 21.99px;
     transform: rotate(450deg);
   }
+
   100% {
     stroke-dasharray: 0.01px, 43.97px;
     transform: rotate(1080deg);
