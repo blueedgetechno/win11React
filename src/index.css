@@ -150,9 +150,11 @@ i[data-flip="true"] {
 .dpShad {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }
+
 .mdShad {
   box-shadow: 0 0 8px rgba(41, 41, 41, 0.1);
 }
+
 .ltShad {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
@@ -264,6 +266,7 @@ a {
   width: 100%;
   position: relative;
   height: 100%;
+  /* 这部分是用于设置子元素居中 */
   display: flex;
   justify-content: center;
   align-items: center;

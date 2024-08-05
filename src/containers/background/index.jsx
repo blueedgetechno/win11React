@@ -18,11 +18,14 @@ export const Background = () => {
   );
 };
 
+// 只有WALLRESTART和WALLSHUTDN会将booted设置成false 触发这个组件
+// 这两个动作也会将dir设置成 -1
+// dir为-1，就会触发下面的如果dir小于0，就给一个几秒后图片和圈圈都消失，然后触发WALLBOOTED这个动作  又将 booted: true, dir: 0,
 export const BootScreen = (props) => {
   const dispatch = useDispatch();
   const wall = useSelector((state) => state.wallpaper);
   const [blackout, setBlackOut] = useState(false);
-
+  // 如果dir小于0，就给一个几秒后图片和圈圈都消失，然后触发WALLBOOTED这个动作
   useEffect(() => {
     if (props.dir < 0) {
       setTimeout(() => {
@@ -40,6 +43,7 @@ export const BootScreen = (props) => {
             setBlackOut(false);
             setTimeout(() => {
               dispatch({ type: "WALLBOOTED" });
+              //WALLBOOTED booted: true, dir: 0,
             }, 4000);
           }, 2000);
         }

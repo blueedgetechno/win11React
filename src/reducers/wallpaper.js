@@ -1,3 +1,4 @@
+// 从localStorage拿到壁纸
 var wps = localStorage.getItem("wps") || 0;
 var locked = localStorage.getItem("locked");
 
@@ -29,15 +30,19 @@ const defState = {
   wps: wps,
   src: walls[wps],
   locked: !(locked == "false"),
+  // import.meta.env.MODE == "development" 这段代码是用来检查当前运行环境是否为开发模式  为true
   booted: false || import.meta.env.MODE == "development",
   act: "",
+  // 这个属性应该是用来控制锁屏的吧
   dir: 0,
 };
-
+// state 管理的数据初始状态
+// action是个对象，必须有一个type属性，用来表示将要执行的动作
 const wallReducer = (state = defState, action) => {
   switch (action.type) {
     case "WALLUNLOCK":
       localStorage.setItem("locked", false);
+      // 修改之后返回新的state
       return {
         ...state,
         locked: false,
@@ -100,6 +105,7 @@ const wallReducer = (state = defState, action) => {
         wps: wps,
         src: src,
       };
+    // 如果都不符合 返回原来的state
     default:
       return state;
   }
