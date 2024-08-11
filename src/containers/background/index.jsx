@@ -72,7 +72,7 @@ export const BootScreen = (props) => {
 
 export const LockScreen = (props) => {
   const wall = useSelector((state) => state.wallpaper);
-  const [lock, setLock] = useState(false);
+  const [lock, setLock] = useState(false);//这个变量用来做解锁的作用，false展示锁屏 true展示登录那个界面
   const [unlocked, setUnLock] = useState(false);
   const [password, setPass] = useState("");
   const [passType, setType] = useState(1);
@@ -114,15 +114,20 @@ export const LockScreen = (props) => {
 
   return (
     <div
+      // wall.dir  -1标识锁屏了 
       className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
         backgroundImage: `url(${`img/wallpaper/lock.jpg`})`,
+        //给一个锁屏的背景
       }}
+      //点击触发解锁动作
       onClick={action}
       data-action="splash"
       data-blur={lock}
     >
+      {/* 时间  data-faded={lock} 这个属性是为了控制解锁时时间隐藏*/}
+      {/* mt-40 Tailwind CSS中 margin-top  40乘以默认Tailwind的单位  一般是 0.25rem*/}
       <div className="splashScreen mt-40" data-faded={lock}>
         <div className="text-6xl font-semibold text-gray-100">
           {new Date().toLocaleTimeString("en-US", {
@@ -139,8 +144,12 @@ export const LockScreen = (props) => {
           })}
         </div>
       </div>
+      {/* 图片 */}
       <div className="fadeinScreen" data-faded={!lock} data-unlock={unlocked}>
+        {/* 用的是作者写的通用组件 */}
         <Image
+          // rounded-full 是ailwind CSS的  相当于图片圆角效果border-radius: 50%; 
+          // overflow-hidden 元素的内容超出了其边界，这些超出的部分将被裁剪
           className="rounded-full overflow-hidden"
           src="img/asset/prof.jpg"
           w={200}

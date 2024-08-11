@@ -168,9 +168,12 @@ function App() {
         {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
         {/* 锁屏 */}
         {wall.locked ? <LockScreen dir={wall.dir} /> : null}
+        {/* appwrap position: relative; */}
         <div className="appwrap">
           <Background />
+          {/* desktop  position: absolute;*/}
           <div className="desktop" data-menu="desk">
+            {/* DesktopApp居然才是桌面图标  后面map两个不是 */}
             <DesktopApp />
             {Object.keys(Applications).map((key, idx) => {
               var WinApp = Applications[key];

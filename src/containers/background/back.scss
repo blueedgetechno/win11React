@@ -10,6 +10,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  // 这个属性使得.background类的任何CSS属性变化时，都能在0.2秒内平滑过渡。ease表示过渡的速度曲线将从慢到快再到慢，产生更自然的加速和减速效果。
   transition: all 0.2s ease;
 }
 
@@ -28,7 +29,7 @@
 }
 
 .lockscreen {
-  position: absolute;
+  position: absolute; //这里加个绝对定位  脱离文档流 可以实现覆盖全屏的同时不影响正常页面  否则你注释掉看看
   top: 0;
   left: 0;
   min-width: 100vw;
@@ -39,7 +40,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out; //这个属性控制慢入慢出的效果  注释掉看看改变屏幕尺寸的效果
 
   &[data-unlock="true"] {
     opacity: 0;
@@ -51,6 +52,7 @@
     transition: all 200ms ease-in-out;
   }
 
+  // 为了美观 data-blur="true"时给一个半透明的模糊层
   &[data-blur="true"]::after {
     content: "";
     position: absolute;
@@ -98,7 +100,7 @@
 
   &[data-faded="false"] {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: auto; // 上面pointer-events: none;把鼠标事件禁止了  这里元素展示了 可以放开了
     transform: translateY(0px);
   }
 

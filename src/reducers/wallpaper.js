@@ -33,7 +33,7 @@ const defState = {
   // import.meta.env.MODE == "development" 这段代码是用来检查当前运行环境是否为开发模式  为true
   booted: false || import.meta.env.MODE == "development",
   act: "",
-  // 这个属性应该是用来控制锁屏的吧
+  // 这个属性应该是用来控制锁屏的吧  -1表示锁屏了
   dir: 0,
 };
 // state 管理的数据初始状态
